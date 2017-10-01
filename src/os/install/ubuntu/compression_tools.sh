@@ -9,4 +9,3 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 print_in_purple "\n   Compression Tools\n\n"
 
 install_package "Brotli" "brotli"
-install_package "Zopfli" "zopfli"
