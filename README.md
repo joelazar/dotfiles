@@ -8,7 +8,7 @@ terminal:
 (:warning: **DO NOT** run the `setup` snippet if you don't fully
 understand [what it does](src/os/setup.sh). Seriously, **DON'T**!)
 
-| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/alrra/dotfiles/master/src/os/setup.sh)"` |
+| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
 
 That's it! :sparkles:
 
@@ -92,14 +92,6 @@ such as the `git` user credentials, e.g.:
 The `~/.vimrc.local` file it will be automatically sourced after
 `~/.vimrc`, thus, allowing its content to add or overwrite the
 settings from `~/.vimrc`.
-
-
-### Forks
-
-If you decide to fork this project, don't forget to substitute my
-username with your own in the [`setup` snippets](#setup) and [in the
-`setup` script](https://github.com/alrra/dotfiles/blob/1503cf23ef23f6e31342b140bcd246625160b94f/src/os/setup.sh#L3).
-
 
 ## Update
 
