@@ -5,11 +5,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_npm_package() {
+install_pip_package() {
 
     execute \
         ". $HOME/.bash.local \
-            && npm install --global --silent $2" \
+            && pip install -q  $2" \
         "$1"
 
 }
@@ -18,19 +18,19 @@ install_npm_package() {
 
 main() {
 
-    print_in_purple "\n   npm\n\n"
+    print_in_purple "\n   python\n\n"
 
+    install_package "python" "python"
+    install_package "python3" "python3"
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    install_npm_package "npm (update)" "npm"
+    install_pip_package "pip (update)" "--upgrade pip"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     printf "\n"
 
-    install_npm_package "!nstant-markdown-d" "instant-markdown-d"
-    install_npm_package "Babel" "babel-cli"
-    install_npm_package "JSHint" "jshint"
+    install_pip_package "thefuck" "thefuck"
 
 }
 

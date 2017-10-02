@@ -10,15 +10,14 @@ update
 upgrade
 
 ./build-essentials.sh
-./../nvm.sh
 
 ./browsers.sh
 ./compression_tools.sh
-./git.sh
+./development.sh
 ./image_tools.sh
 ./misc.sh
 ./misc_tools.sh
-./../npm.sh
+./../python.sh
 ./tmux.sh
 ./../vim.sh
 
