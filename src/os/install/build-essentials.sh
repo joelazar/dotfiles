@@ -16,4 +16,4 @@ install_package "GnuPG archive keys" "debian-archive-keyring"
 
 # Software which is not included by default
 # in Ubuntu due to legal or copyright reasons.
-install_package "Ubuntu Restricted Extras" "ubuntu-restricted-extras"
+# install_package "Ubuntu Restricted Extras" "ubuntu-restricted-extras"
