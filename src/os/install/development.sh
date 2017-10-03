@@ -12,24 +12,13 @@ install_package "Git" "git"
 install_package "kdiff3" "kdiff3"
 install_package "meld" "meld"
 install_package "Wireshark" "wireshark"
-# deb http://download.virtualbox.org/virtualbox/debian xenial contrib
-
-install_package "Virtualbox" "virtualbox-5.1" # 5.1?
-
-print_in_purple "\n   tmux\n\n"
-
+install_package "Virtualbox" "virtualbox"
 install_package "tmux" "tmux"
-
 install_package "GNOME Vim" "vim-gnome"
-#neovim
-
 install_package "The Silver Searcher" "silversearcher-ag"
-
 install_package "Go" "go"
-
-install_package "Texlive" "texlive-full" # TODO - not full!
+#install_package "Texlive" "texlive-full" # TODO - not full!
 install_package "Texmaker" "texmaker"
-
 install_package "JRE" "default-jre"
 install_package "JDK" "default-jdk"
 
@@ -48,5 +37,6 @@ if ! package_is_installed "code"; then
 
 fi
 
+# later - neovim, eclipse
 
 

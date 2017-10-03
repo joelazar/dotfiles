@@ -25,8 +25,4 @@ fi
 
 install_package "Chrome Canary" "google-chrome-stable"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-printf "\n"
-
 install_package "Flash" "flashplugin-installer"
