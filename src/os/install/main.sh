@@ -15,7 +15,6 @@ upgrade
 
 ./build-essentials.sh
 ./browsers.sh
-./compression_tools.sh
 ./development.sh
 ./image_tools.sh
 ./misc.sh
