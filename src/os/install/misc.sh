@@ -48,18 +48,6 @@ if ! package_is_installed "grive"; then
     install_package "grive" "grive"
 fi
 
-if ! package_is_installed "mutate"; then
-
-    add_ppa "mutate/ppa" \
-        || print_error "mutate (add PPA)"
-
-    update &> /dev/null \
-        || print_error "mutate (resync package index files)"
-
-    install_package "mutate" "mutate"
-fi
-
-# security
-
 install_package "Firejail" "firejail"
 # TODO - config
+# later - mutate

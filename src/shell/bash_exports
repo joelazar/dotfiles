@@ -57,15 +57,6 @@ export MANPAGER="less -X"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Increase the maximum number of lines of history persisted
-# in the `Node` REPL history file (default value is 1000).
-#
-# https://github.com/nodejs/node/blob/c948877688ff2b6a37f2c88724b656aae495c7b2/doc/api/repl.md#persistent-history
-
-export NODE_REPL_HISTORY_SIZE=10000
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history.
 

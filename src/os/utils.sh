@@ -114,46 +114,6 @@ get_answer() {
     printf "%s" "$REPLY"
 }
 
-get_os() {
-
-    local os=""
-    local kernelName=""
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    kernelName="$(uname -s)"
-
-    if [ "$kernelName" == "Darwin" ]; then
-        os="macos"
-    elif [ "$kernelName" == "Linux" ] && [ -e "/etc/lsb-release" ]; then
-        os="ubuntu"
-    else
-        os="$kernelName"
-    fi
-
-    printf "%s" "$os"
-
-}
-
-get_os_version() {
-
-    local os=""
-    local version=""
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    os="$(get_os)"
-
-    if [ "$os" == "macos" ]; then
-        version="$(sw_vers -productVersion)"
-    elif [ "$os" == "ubuntu" ]; then
-        version="$(lsb_release -d | cut -f2 | cut -d' ' -f2)"
-    fi
-
-    printf "%s" "$version"
-
-}
-
 is_git_repository() {
     git rev-parse &> /dev/null
 }
