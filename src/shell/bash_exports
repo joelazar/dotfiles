@@ -20,7 +20,7 @@ export HISTCONTROL=ignoreboth
 # Increase the maximum number of lines of history
 # persisted in the history file (default value is 500).
 
-export HISTFILESIZE=10000
+export HISTFILESIZE=20000
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
