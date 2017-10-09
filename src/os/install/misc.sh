@@ -49,5 +49,19 @@ if ! package_is_installed "grive"; then
 fi
 
 install_package "Firejail" "firejail"
+
+if ! package_is_installed "tlp"; then
+
+    add_ppa "linrunner/tlp" \
+        || print_error "tlp (add PPA)"
+
+    update &> /dev/null \
+        || print_error "tlp (resync package index files)"
+
+    install_package "tlp" "tlp"
+    install_package "tlp-rdw" "tlp-rdw" # ?
+
+fi
+
 # TODO - config
 # later - mutate

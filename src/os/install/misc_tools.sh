@@ -12,4 +12,4 @@ install_package "cURL" "curl"
 install_package "xclip" "xclip"
 install_package "Brotli" "brotli"
 install_package "caffeine" "caffeine"
-
+install_package "hfsprogs" "hfsprogs"
