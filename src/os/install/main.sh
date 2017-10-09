@@ -21,6 +21,6 @@ upgrade
 ./misc_tools.sh
 ./python.sh
 ./tmux.sh
-./vim.sh
+#./vim.sh
 
 ./cleanup.sh
