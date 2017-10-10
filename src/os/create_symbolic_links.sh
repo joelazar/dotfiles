@@ -11,6 +11,7 @@ create_symlinks() {
 
         "shell/bash_aliases"
         "shell/bash_autocomplete"
+        "shell/bash_colors"
         "shell/bash_exports"
         "shell/bash_functions"
         "shell/bash_logout"
