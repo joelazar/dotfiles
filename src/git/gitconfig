@@ -1,30 +1,28 @@
-[user]
-
-    name = joelazar
-    email = jozsef.gabor.lazar@gmail.com
-
 [alias]
 
-    a   = commit --amend
-    br  = branch
-    c   = commit
-    ca  = !git add -A && git commit             # Commit all changes.
-    co  = checkout
-    cp  = cherry-pick
-    d   = diff
-    dc  = diff --cached
-    f   = fetch
-    g   = log --graph --pretty=custom           # Show custom graph.
-    l   = log --pretty=custom                   # Show custom log.
-    lc  = shortlog --email --numbered --summary # List contributors.
-    lg  = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    p   = push
-    r   = rebase
+    a    = commit --amend
+    br   = branch --list --remote
+    c    = commit
+    ca   = !git add -A && git commit             # Commit all changes.
+    co   = checkout
+    cp   = cherry-pick
+    d    = diff
+    dc   = diff --cached
+    f    = fetch
+    g    = log --graph --pretty=custom           # Show custom graph.
+    l    = log --pretty=custom                   # Show custom log.
+    lc   = shortlog --email --numbered --summary # List contributors.
+    lg   = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
+    lh   = log -p 10 # Show custom log.
+    p    = push
     rank = shortlog -sn --no-merges
-    rlc = reset --hard HEAD~1                   # Remove last commit.
-    s   = status
-    ulc = reset --soft HEAD~1                   # Undo last commit.
-    w   = instaweb --httpd=webrick              # Start web-based visualizer.
+    rlc  = reset --hard HEAD~1                   # Remove last commit.
+    s    = status
+    sres = reset --soft HEAD~1                   # Undo last commit.
+    res  = reset --hard HEAD
+    cl   = clean -fxd 
+    sub  = submodule update --init --recursive
+    w    = instaweb --httpd=webrick              # Start web-based visualizer.
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -62,33 +60,6 @@
     }; f"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Merge GitHub pull request on top of the current branch or,
-    # if a branch name is specified, on top of the specified branch.
-
-    mpr = "!f() { \
-        declare currentBranch=\"$(git symbolic-ref --short HEAD)\"; \
-        declare branch=\"${2:-$currentBranch}\"; \
-        if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
-            git fetch origin refs/pull/$1/head:pr/$1 && \
-            git checkout -B $branch && \
-            git rebase $branch pr/$1 && \
-            git checkout -B $branch && \
-            git merge pr/$1 && \
-            git branch -D pr/$1 && \
-            git commit --amend -m \"$(git log -1 --pretty=%B)\n\nClose #$1\"; \
-        fi \
-    }; f"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Remove the tag with the specified tag name if
-    # exists and tag the latest commit with that name.
-
-    retag = "!f() { \
-        git tag -d "$1" &> /dev/null; \
-        git tag $1; \
-    }; f"
 
 [merge]
 
