@@ -14,6 +14,9 @@ install_package "VLC" "vlc"
 install_package "KeePassX" "keepassx"
 install_package "Pidgin" "pidgin"
 install_package "htop" "htop"
+install_package "wine" "wine-stable"
+install_package "youtube-dl" "youtube-dl"
+install_package "nmap" "nmap"
 
 if ! package_is_installed "skype"; then
 
@@ -35,17 +38,6 @@ if ! package_is_installed "spotify-client"; then
         || print_error "Spotify (resync package index files)"
 
     install_package "Spotify" "spotify-client"
-fi
-
-if ! package_is_installed "grive"; then
-
-    add_ppa "nilarimogard/webupd8" \
-        || print_error "grive (add PPA)"
-
-    update &> /dev/null \
-        || print_error "grive (resync package index files)"
-
-    install_package "grive" "grive"
 fi
 
 install_package "Firejail" "firejail"
