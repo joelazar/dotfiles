@@ -16,20 +16,21 @@ install_plugins() {
     # Install plugins.
 
     execute \
-        "rm -rf $NVIM_CONFIG_DIR \
-            ln -s $NVIM_DOT_CONFIG $NVIM_CONFIG_DIR \ 
-         rm -rf '$NVIM_PLUG_DIR' \
-            && curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL \
-            && printf '\n' | nvim +PlugInstall" \
-        "Install plugins" \
-        || return 1
+        "rm -rf '$NVIM_CONFIG_DIR' \
+         && ln -s $NVIM_DOT_CONFIG $NVIM_CONFIG_DIR" \
+        "Update config" \
+
+    execute \
+        "curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL \
+         && printf '\n' | nvim +PlugInstall +qall" \
+        "Install plugins"
 
 }
 
 update_plugins() {
 
     execute \
-        "vim +PlugUpdate +qall" \
+        "nvim +PlugUpdate +qall" \
         "Update plugins"
 
 }
