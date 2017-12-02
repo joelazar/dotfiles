@@ -8,6 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 create_directories() {
 
     declare -a DIRECTORIES=(
+        "$HOME/bin"
         "$HOME/Downloads/torrents"
         "$HOME/University"
         "$HOME/Work"

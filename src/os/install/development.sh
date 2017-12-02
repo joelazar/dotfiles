@@ -35,3 +35,4 @@ if ! package_is_installed "code"; then
     install_package "Visual Studio Code" "code"
 
 fi
+

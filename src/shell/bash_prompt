@@ -11,12 +11,6 @@ enable_color_support() {
         export TERM="xterm-256color"
     fi
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Load OS specific color support.
-
-    . "bash_colors"
-
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
