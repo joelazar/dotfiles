@@ -57,6 +57,10 @@ export MANPAGER="less -X"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+export PATH=$HOME/bin:$PATH
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history.
 

@@ -142,3 +142,6 @@ qt() {
     #     │└─ search all files under each directory, recursively
     #     └─ ignore case
 }
+
+gp() { grep -rnIi "$1" . --color; }
+gpf() { grep -nrIi --include \*."$1" "$2" . --color; }
