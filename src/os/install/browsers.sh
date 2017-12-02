@@ -24,5 +24,6 @@ if ! package_is_installed "google-chrome-stable"; then
 fi
 
 install_package "Chrome" "google-chrome-stable"
+install_package "Firefox" "firefox"
 
 install_package "Flash" "flashplugin-installer"

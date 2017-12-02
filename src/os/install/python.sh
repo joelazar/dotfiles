@@ -19,7 +19,7 @@ install_pip_package() {
 
 main() {
 
-    print_in_purple "\n   python\n\n"
+    print_in_purple "\n   Python\n\n"
 
     install_package "python" "python"
     install_package "python-pip" "python-pip"
@@ -32,8 +32,6 @@ main() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     printf "\n"
-
-    install_pip_package "thefuck" "thefuck"
 
 }
 

@@ -20,6 +20,6 @@ upgrade
 ./misc.sh
 ./misc_tools.sh
 ./python.sh
-#./vim.sh
+./nvim.sh
 
 ./cleanup.sh

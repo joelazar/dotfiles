@@ -11,10 +11,8 @@ print_in_purple "\n   Development\n\n"
 install_package "Git" "git"
 install_package "kdiff3" "kdiff3"
 install_package "meld" "meld"
-install_package "Wireshark" "wireshark-qt"
-install_package "Virtualbox" "virtualbox"
 install_package "tmux" "tmux"
-install_package "Vim" "vim"
+install_package "Neovim" "neovim"
 install_package "The Silver Searcher" "silversearcher-ag"
 install_package "Go" "golang"
 install_package "Texlive-base" "texlive-base"
@@ -37,7 +35,3 @@ if ! package_is_installed "code"; then
     install_package "Visual Studio Code" "code"
 
 fi
-
-# later - neovim, eclipse
-
-
