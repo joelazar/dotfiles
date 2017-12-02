@@ -17,6 +17,8 @@ install_package "htop" "htop"
 install_package "wine" "wine-stable"
 install_package "youtube-dl" "youtube-dl"
 install_package "nmap" "nmap"
+install_package "Wireshark" "wireshark-qt"
+install_package "Virtualbox" "virtualbox"
 
 if ! package_is_installed "skype"; then
 
@@ -51,9 +53,6 @@ if ! package_is_installed "tlp"; then
         || print_error "tlp (resync package index files)"
 
     install_package "tlp" "tlp"
-    install_package "tlp-rdw" "tlp-rdw" # ?
+    install_package "tlp-rdw" "tlp-rdw" # ? config?
 
 fi
-
-# TODO - config
-# later - mutate

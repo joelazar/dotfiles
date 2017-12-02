@@ -26,7 +26,8 @@ alias rm='rm -I' # 'rm -i' prompts for every file
 alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
-alias vi='vim'
+alias vi='nvim'
+alias vim='nvim'
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 alias logme="script -f $HOME/logs/$(date +"%d-%b-%y_%H-%M-%S")_shell.log"
 

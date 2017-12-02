@@ -22,14 +22,10 @@ create_symlinks() {
         "shell/curlrc"
         "shell/inputrc"
 
-        "git/gitattributes"
         "git/gitconfig"
         "git/gitignore"
 
         "tmux/tmux.conf"
-
-        #"vim/vim"
-        #"vim/vimrc"
 
     )
 
