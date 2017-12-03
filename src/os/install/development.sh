@@ -18,6 +18,7 @@ install_package "Go" "golang"
 install_package "Texlive-base" "texlive-base"
 install_package "Texlive-latex" "texlive-latex-base"
 install_package "Texmaker" "texmaker"
+install_package "Geany" "geany"
 install_package "JRE" "default-jre"
 install_package "JDK" "default-jdk"
 
@@ -32,7 +33,21 @@ if ! package_is_installed "code"; then
     update &> /dev/null \
         || print_error "Visual Studio Code (resync package index files)"
 
-    install_package "Visual Studio Code" "code"
+fi
+
+install_package "Visual Studio Code" "code"
+
+if ! package_is_installed "docker-ce"; then
+
+    add_key "https://download.docker.com/linux/ubuntu/gpg" \
+        || print_error "Docker (add key)"
+
+    add_to_source_list "[arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) edge" "docker.list" \
+        || print_error "Docker (add to package resource list)"
+
+    update &> /dev/null \
+        || print_error "Docker (resync package index files)"
 
 fi
 
+install_package "Docker" "docker-ce"

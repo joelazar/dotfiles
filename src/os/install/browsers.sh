@@ -25,5 +25,5 @@ fi
 
 install_package "Chrome" "google-chrome-stable"
 install_package "Firefox" "firefox"
-
 install_package "Flash" "flashplugin-installer"
+install_package "Thunderbird" "thunderbird"
