@@ -12,6 +12,17 @@ install_package "Git" "git"
 install_package "kdiff3" "kdiff3"
 install_package "meld" "meld"
 install_package "tmux" "tmux"
+
+if ! package_is_installed "neovim"; then
+
+    add_ppa "neovim-ppa/stable" \
+        || print_error "neovim (add PPA)"
+
+    update &> /dev/null \
+        || print_error "neovim (resync package index files)"
+
+fi
+
 install_package "Neovim" "neovim"
 install_package "The Silver Searcher" "silversearcher-ag"
 install_package "Go" "golang"
