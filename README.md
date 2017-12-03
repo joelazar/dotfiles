@@ -20,12 +20,12 @@ The setup process will:
 * [Symlink](src/os/create_symbolic_links.sh) the
   [`git`](src/git),
   [`shell`](src/shell), and
-  [`vim`](src/vim) files
+  [`neovim`](src/nvim) files
 * Install applications / command-line tools for
   [`Ubuntu`](src/os/install/ubuntu)
 * Set custom
   [`Ubuntu`](src/os/preferences/ubuntu) preferences
-* Install [`vim` plugins](src/vim/vim/plugins)
+* Install [`nvim` plugins](src/nvim/plugged)
 
 ## Customize
 
@@ -72,26 +72,12 @@ __Note:__ Use `~/.gitconfig.local` to store sensitive information
 such as the `git` user credentials, e.g.:
 
 ```bash
-[commit]
-
-    # Sign commits using GPG.
-    # https://help.github.com/articles/signing-commits-using-gpg/
-
-    gpgsign = true
-
-
 [user]
 
-    name = Cătălin Mariș
-    email = alrra@example.com
-    signingkey = XXXXXXXX
+    name = Agi
+    email = agi@example.com
+
 ```
-
-#### `~/.vimrc.local`
-
-The `~/.vimrc.local` file it will be automatically sourced after
-`~/.vimrc`, thus, allowing its content to add or overwrite the
-settings from `~/.vimrc`.
 
 ## Update
 
@@ -103,7 +89,7 @@ part, run the appropriate [`os` script](src/os).
 ## Acknowledgements
 
 Inspiration and code was taken from alrra, thus this is mainly a fork from his repo.
-However, I removed macos part of it and try to improve some lines here and there.
+However, I removed macos part of it and tried to improve some lines here and there.
 * [Cătălin](https://github.com/alrra)
   [dotfiles](https://github.com/alrra/dotfiles)
 
