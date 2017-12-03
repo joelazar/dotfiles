@@ -6,15 +6,19 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 add_key() {
-
     wget -qO - "$1" | sudo apt-key add - &> /dev/null
-    #     │└─ write output to file
-    #     └─ don't show output
+}
 
+add_key_by_hash() {
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$1" &> /dev/null
 }
 
 add_ppa() {
     sudo add-apt-repository -y ppa:"$1" &> /dev/null
+}
+
+add_repo() {
+    sudo add-apt-repository -y "$1" &> /dev/null
 }
 
 add_to_source_list() {
@@ -22,18 +26,12 @@ add_to_source_list() {
 }
 
 autoremove() {
-
-    # Remove packages that were automatically installed to satisfy
-    # dependencies for other packages and are no longer needed.
-
     execute \
         "sudo apt-get autoremove -qqy" \
         "APT (autoremove)"
-
 }
 
 install_package() {
-
     declare -r PACKAGE="$2"
     declare -r PACKAGE_READABLE_NAME="$1"
 
@@ -44,7 +42,6 @@ install_package() {
     else
         print_success "$PACKAGE_READABLE_NAME"
     fi
-
 }
 
 package_is_installed() {
@@ -52,22 +49,14 @@ package_is_installed() {
 }
 
 update() {
-
-    # Resynchronize the package index files from their sources.
-
     execute \
         "sudo apt-get update -qqy" \
         "APT (update)"
-
 }
 
 upgrade() {
-
-    # Install the newest versions of all packages installed.
-
     execute \
         "export DEBIAN_FRONTEND=\"noninteractive\" \
             && sudo apt-get -o Dpkg::Options::=\"--force-confnew\" upgrade -qqy" \
         "APT (upgrade)"
-
 }

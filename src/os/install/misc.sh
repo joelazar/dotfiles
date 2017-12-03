@@ -28,8 +28,9 @@ if ! package_is_installed "skype"; then
     update &> /dev/null \
         || print_error "Skype (resync package index files)"
 
-    install_package "Skype" "skypeforlinux"
 fi
+
+install_package "Skype" "skypeforlinux"
 
 if ! package_is_installed "spotify-client"; then
 
@@ -39,9 +40,9 @@ if ! package_is_installed "spotify-client"; then
     update &> /dev/null \
         || print_error "Spotify (resync package index files)"
 
-    install_package "Spotify" "spotify-client"
 fi
 
+install_package "Spotify" "spotify-client"
 install_package "Firejail" "firejail"
 
 if ! package_is_installed "tlp"; then
@@ -52,7 +53,22 @@ if ! package_is_installed "tlp"; then
     update &> /dev/null \
         || print_error "tlp (resync package index files)"
 
-    install_package "tlp" "tlp"
-    install_package "tlp-rdw" "tlp-rdw" # ? config?
+fi
+
+install_package "tlp" "tlp"
+install_package "tlp-rdw" "tlp-rdw"
+# install_package "tp-smapi-dkms" "tp-smapi-dkms"   # Thinkpad only
+# install_package "acpi-call-dkms" "acpi-call-dkms" # Thinkpad only
+# manual config -> /etc/default/tlp
+
+if ! package_is_installed "drive"; then
+
+    add_ppa "twodopeshaggy/drive" \
+        || print_error "drive (add PPA)"
+
+    update &> /dev/null \
+        || print_error "drive (resync package index files)"
 
 fi
+
+install_package "drive" "drive"

@@ -6,54 +6,53 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 create_symlinks() {
+ 
+     create_symlink   "shell/bash_aliases"
+     create_symlink   "shell/bash_autocomplete"
+     create_symlink   "shell/bash_exports"
+     create_symlink   "shell/bash_functions"
+     create_symlink   "shell/bash_logout"
+     create_symlink   "shell/bash_options"
+     create_symlink   "shell/bash_profile"
+     create_symlink   "shell/bash_prompt"
+     create_symlink   "shell/bashrc"
+     create_symlink   "shell/curlrc"
+     create_symlink   "shell/inputrc"
+     create_symlink   "git/gitconfig"
+     create_symlink   "git/gitignore"
+     create_symlink   "tmux/tmux.conf"
+     create_symlink   "nvim" "$HOME/.config/nvim"
 
-    declare -a FILES_TO_SYMLINK=(
+}
 
-        "shell/bash_aliases"
-        "shell/bash_autocomplete"
-        "shell/bash_colors"
-        "shell/bash_exports"
-        "shell/bash_functions"
-        "shell/bash_logout"
-        "shell/bash_options"
-        "shell/bash_profile"
-        "shell/bash_prompt"
-        "shell/bashrc"
-        "shell/curlrc"
-        "shell/inputrc"
+create_symlink(){
 
-        "git/gitconfig"
-        "git/gitignore"
+        local i=""
+        local sourceFile=""
+        local targetFile=""
+        local skipQuestions=false
 
-        "tmux/tmux.conf"
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    )
+        skip_questions "$@" \
+            && skipQuestions=true
 
-    local i=""
-    local sourceFile=""
-    local targetFile=""
-    local skipQuestions=false
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    skip_questions "$@" \
-        && skipQuestions=true
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    for i in "${FILES_TO_SYMLINK[@]}"; do
-
-        sourceFile="$(cd .. && pwd)/$i"
-        targetFile="$HOME/.$(printf "%s" "$i" | sed "s/.*\/\(.*\)/\1/g")"
+        sourceFile="$(cd .. && pwd)/$1"
+        if [ -z "$2" ]
+        then
+                targetFile="$HOME/.$(printf "%s" "$1" | sed "s/.*\/\(.*\)/\1/g")"
+        else
+                targetFile="$2"
+        fi
 
         if [ ! -e "$targetFile" ] || $skipQuestions; then
 
             execute \
                 "ln -fs $sourceFile $targetFile" \
-                "$targetFile → $sourceFile"
+                "$sourceFile → $targetFile"
 
         elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
-            print_success "$targetFile → $sourceFile"
+            print_success "$sourceFile → $targetFile"
         else
 
             if ! $skipQuestions; then
@@ -65,20 +64,16 @@ create_symlinks() {
 
                     execute \
                         "ln -fs $sourceFile $targetFile" \
-                        "$targetFile → $sourceFile"
+                        "$sourceFile → $targetFile"
 
                 else
-                    print_error "$targetFile → $sourceFile"
+                    print_error "$sourceFile → $targetFile"
                 fi
 
             fi
 
         fi
-
-    done
-
 }
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
