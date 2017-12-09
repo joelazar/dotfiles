@@ -21,6 +21,8 @@ install_package "Wireshark" "wireshark-qt"
 install_package "Virtualbox" "virtualbox" # not working yet!
 install_package "net-tools" "net-tools"
 install_package "gconftool" "gconf2"
+install_package "sshfs" "sshfs"
+install_package "gnome-tweak-tool" "gnome-tweak-tool"
 
 if ! package_is_installed "skypeforlinux"; then
 
