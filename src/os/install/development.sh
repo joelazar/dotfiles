@@ -10,6 +10,8 @@ print_in_purple "\n   Development\n\n"
 
 install_package "Git" "git"
 install_package "kdiff3" "kdiff3"
+install_package "gitk" "gitk"
+install_package "git-gui" "git-gui"
 install_package "meld" "meld"
 install_package "tmux" "tmux"
 

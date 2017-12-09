@@ -17,8 +17,8 @@ upgrade
 ./browsers.sh
 ./development.sh
 ./image_tools.sh
-./misc.sh
 ./misc_tools.sh
+./misc.sh
 ./python.sh
 ./nvim.sh
 
