@@ -23,6 +23,7 @@ install_package "net-tools" "net-tools"
 install_package "gconftool" "gconf2"
 install_package "sshfs" "sshfs"
 install_package "gnome-tweak-tool" "gnome-tweak-tool"
+install_package "calibre" "calibre"
 
 if ! package_is_installed "skypeforlinux"; then
 
