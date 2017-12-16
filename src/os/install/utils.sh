@@ -27,8 +27,8 @@ add_to_source_list() {
 
 autoremove() {
     execute \
-        "sudo apt-get autoremove -qqy" \
-        "APT (autoremove)"
+        "pacman -Rsn $(pacman -Qdtq)" \
+        "PACMAN (autoremove)"
 }
 
 install_package() {
@@ -36,7 +36,20 @@ install_package() {
     declare -r PACKAGE_READABLE_NAME="$1"
 
     if ! package_is_installed "$PACKAGE"; then
-        execute "sudo apt-get install --allow-unauthenticated -qqy $PACKAGE" "$PACKAGE_READABLE_NAME"
+        execute "sudo pacman -S $PACKAGE"
+        #                                      suppress output ─┘│
+        #            assume "yes" as the answer to all prompts ──┘
+    else
+        print_success "$PACKAGE_READABLE_NAME"
+    fi
+}
+
+install_package_with_yaourt() {
+    declare -r PACKAGE="$2"
+    declare -r PACKAGE_READABLE_NAME="$1"
+
+    if ! package_is_installed_yaourt "$PACKAGE"; then
+        execute "sudo yaourt -Sq $PACKAGE"
         #                                      suppress output ─┘│
         #            assume "yes" as the answer to all prompts ──┘
     else
@@ -45,18 +58,17 @@ install_package() {
 }
 
 package_is_installed() {
-    dpkg -s "$1" &> /dev/null
+    pacman -Q | grep -q "$1" &> /dev/null
 }
 
 update() {
     execute \
-        "sudo apt-get update -qqy" \
-        "APT (update)"
+        "sudo pacman -Syyu" \
+        "PACMAN (update)"
 }
 
-upgrade() {
+rank() {
     execute \
-        "export DEBIAN_FRONTEND=\"noninteractive\" \
-            && sudo apt-get -o Dpkg::Options::=\"--force-confnew\" upgrade -qqy" \
-        "APT (upgrade)"
+        "sudo pacman-mirrors -f 0 && sudo pacman -Syy" \
+        "PACMAN (rank mirrors)"
 }
