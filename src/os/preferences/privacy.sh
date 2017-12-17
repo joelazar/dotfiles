@@ -7,8 +7,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_in_purple "\n   Privacy\n\n"
 
-# execute "sudo firecfg" "Firejail auto config" # Not working yet - update profiles somehow
-
-execute "gsettings set com.canonical.Unity.Lenses remote-content-search 'none'" \
-    "Turn off 'Remote Search' so that search terms in Dash do not get sent over the internet"
+execute "sudo firecfg" "Firejail auto config" 
 

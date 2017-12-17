@@ -14,3 +14,4 @@ install_package "Brotli" "brotli"
 install_package "hfsprogs" "hfsprogs"
 install_package "colordiff" "colordiff"
 install_package "sshpass" "sshpass"
+

@@ -95,7 +95,6 @@ execute() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Print output based on what happened.
-
     print_result $exitCode "$MSG"
 
     if [ $exitCode -ne 0 ]; then
