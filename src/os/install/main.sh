@@ -10,10 +10,9 @@ print_in_purple "\n • Installs\n\n"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+pacaur
 update
-upgrade
 
-./build-essentials.sh
 ./browsers.sh
 ./development.sh
 ./image_tools.sh

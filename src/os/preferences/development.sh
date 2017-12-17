@@ -17,5 +17,3 @@ execute "getent group pcap || (sudo groupadd pcap && sudo usermod -aG pcap $USER
          && sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump)" \
         "No sudo required for tcpdumping (logout required!)"
 
-execute "gsettings set com.canonical.Unity.Lenses remote-content-search 'none'" \
-        "Turn off 'Remote Search' so that search terms in Dash do not get sent over the internet"
