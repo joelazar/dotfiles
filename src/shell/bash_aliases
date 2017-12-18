@@ -34,33 +34,9 @@ alias vim='nvim'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Lock screen.
-
-alias afk="gnome-screensaver-command --lock"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Shorter commands for the `Advanced Packaging Tool`
-
-alias apti="sudo apt install"
-alias aptr="sudo apt remove"
-alias apts="sudo apt search"
-alias aptu="sudo apt update \
-            && sudo apt upgrade \
-            && sudo apt autoremove"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Empty trash.
 
 alias empty-trash="rm -rf ~/.local/share/Trash/files/*"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Hide/Show desktop icons.
-
-alias hide-desktop-icons="gsettings set org.gnome.desktop.background show-desktop-icons false"
-alias show-desktop-icons="gsettings set org.gnome.desktop.background show-desktop-icons true"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
