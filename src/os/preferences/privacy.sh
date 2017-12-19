@@ -7,5 +7,5 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 print_in_purple "\n   Privacy\n\n"
 
-execute "sudo firecfg" "Firejail auto config" 
+#execute "sudo firecfg" "Firejail auto config"
 

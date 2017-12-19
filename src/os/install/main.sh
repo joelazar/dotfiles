@@ -10,7 +10,7 @@ print_in_purple "\n • Installs\n\n"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-pacaur
+install_pacaur
 update
 
 ./browsers.sh

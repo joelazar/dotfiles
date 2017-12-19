@@ -20,6 +20,6 @@ install_package "Texlive-science" "texlive-science"
 install_package "Texmaker" "texmaker"
 install_package "Geany" "geany"
 install_package "OpenJDK" "jdk9-openjdk"
-install_package "Visual Studio Code" "visual-studio-code"
+install_package "Visual Studio Code" "visual-studio-code-bin"
 install_package "Docker" "docker"
 

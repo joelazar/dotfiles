@@ -22,9 +22,9 @@ main() {
     print_in_purple "\n   Python\n\n"
 
     install_package "python" "python"
-    install_package "python-pip" "python-pip"
+    install_package "python2-pip" "python2-pip"
     install_package "python3" "python3"
-    install_package "python3-pip" "python3-pip"
+    install_package "python-pip" "python-pip"
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     install_pip_package "pip (update)" "--upgrade pip"
