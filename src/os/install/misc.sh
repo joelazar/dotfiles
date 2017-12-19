@@ -28,7 +28,7 @@ install_package "Spotify" "spotify"
 install_package "Firejail" "firejail"
 install_package "tlp" "tlp"
 install_package "tlp-rdw" "tlp-rdw"
-# install_package "tp-smapi-dkms" "tp-smapi-dkms"   # Thinkpad only
-# install_package "acpi-call-dkms" "acpi-call-dkms" # Thinkpad only
+install_package "tp_smapi-dkms" "tp_smapi-dkms"   # Thinkpad only
+install_package "acpi_call" "acpi_call" # Thinkpad only
 # manual config -> /etc/default/tlp
 install_package "drive" "drive"

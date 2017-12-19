@@ -5,14 +5,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-pacaur() {
-    sudo pacman -Sq --needed --noconfirm pacaur &> /dev/null
-    print_success "PACAUR"
+install_pacaur() {
+    execute "sudo pacman -Syy --needed --noconfirm pacaur" "PACAUR"
 }
 
 autoremove() {
-    sudo pacaur -Qtd --noconfirm
-    print_success "PACAUR (autoremove)"
+    execute "sudo pacaur -Qtd --noconfirm" "PACAUR (autoremove)"
 }
 
 install_package() {
@@ -31,8 +29,6 @@ package_is_installed() {
 }
 
 update() {
-    execute \
-        "pacaur -Syyu" \
-        "PACAUR (update)"
+    execute "pacaur -Syyu" "PACAUR (update)"
 }
 
