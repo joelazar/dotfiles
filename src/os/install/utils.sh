@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 install_pacaur() {
-    execute "sudo pacman -Syy --needed --noconfirm pacaur" "PACAUR"
+    execute "sudo pacman-mirrors -f10 && sudo pacman -Syy --needed --noconfirm pacaur" "PACAUR"
 }
 
 autoremove() {
