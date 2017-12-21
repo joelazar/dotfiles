@@ -11,7 +11,7 @@ create_directories() {
         "$HOME/bin"
         "$HOME/Downloads/torrents"
         "$HOME/University"
-        "$HOME/Work"
+        "$HOME/work"
     )
 
     for i in "${DIRECTORIES[@]}"; do

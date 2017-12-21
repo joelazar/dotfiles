@@ -18,7 +18,7 @@ set cursorline           "highlight the current line.
 " Theme
 set termguicolors
 set background=dark
-colorscheme jitterbug
+colorscheme one
 
 " Remaps
 map <C-n> :NERDTree<CR>

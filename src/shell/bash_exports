@@ -37,13 +37,6 @@ export HISTSIZE=10000
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Prefer US English and use UTF-8 encoding.
-
-export LANG="en_US"
-#export LC_ALL="en_GB.UTF-8"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Use custom `less` colors for `man` pages.
 
 export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
