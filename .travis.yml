@@ -1,0 +1,31 @@
+# For more information about the configurations used
+# in this file, please see the Travis CI documentation.
+#
+# https://docs.travis-ci.com
+
+before_install:
+  - ./test/customize_environment.sh
+
+install:
+  - ./src/os/setup.sh -y
+
+language: generic
+
+matrix:
+  include:
+
+    - os: linux
+      dist: trusty
+
+    - os: osx
+      osx_image: xcode8.1
+
+notifications:
+  email:
+    on_failure: always
+    on_success: never
+
+script:
+  - ./test/main.sh
+
+sudo: required
