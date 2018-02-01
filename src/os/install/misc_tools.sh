@@ -14,4 +14,5 @@ install_package "Brotli" "brotli"
 install_package "hfsprogs" "hfsprogs"
 install_package "colordiff" "colordiff"
 install_package "sshpass" "sshpass"
+install_package "bing-wallpaper-git" "bing-wallpaper-git"
 

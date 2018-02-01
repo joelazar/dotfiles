@@ -13,7 +13,7 @@ export EDITOR="nvim"
 
 # Ignore commands that start with spaces and duplicates.
 
-export HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth:erasedups
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -26,7 +26,7 @@ export HISTFILESIZE=20000
 
 # Don't add certain commands to the history file.
 
-export HISTIGNORE="&:[bf]g:c:clear:history:exit:q:pwd:* --help"
+export HISTIGNORE="&:[bf]g:c:clear:history:exit:q:pwd:ls:cd ..:* --help"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -57,8 +57,11 @@ export PATH=$HOME/bin:$PATH
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history.
 
-export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-
+#export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+if [ ! -z "$PROMPT_COMMAND" ]
+then
+    export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Make Python use UTF-8 encoding for output to stdin/stdout/stderr.

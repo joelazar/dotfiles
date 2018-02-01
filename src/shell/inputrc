@@ -20,3 +20,4 @@ set completion-ignore-case on
 # Auto list TAB completions.
 
 set show-all-if-ambiguous off
+

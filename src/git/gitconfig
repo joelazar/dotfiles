@@ -13,7 +13,7 @@
     l    = log --pretty=custom                   # Show custom log.
     lc   = shortlog --email --numbered --summary # List contributors.
     lg   = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    lh   = log -p 10 # Show custom log.
+    lh   = log -p -10 # Show custom log.
     p    = push
     rank = shortlog -sn --no-merges
     rlc  = reset --hard HEAD~1                   # Remove last commit.
@@ -89,7 +89,7 @@
 
     abbrev = 12
     attributesfile = ~/.gitattributes
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore
     eol = lf
     autocrlf = false
@@ -136,3 +136,5 @@
     #     by the local ones
 
     path = ~/.gitconfig.local
+[mergetool]
+	keepBackup = false
