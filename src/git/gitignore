@@ -16,5 +16,4 @@
 *.un~
 .netrwhist
 Session.vim
-src/nvim/plugged
-src/nvim/local.vim
+
