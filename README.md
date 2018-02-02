@@ -8,7 +8,7 @@ terminal:
 (:warning: **DO NOT** run the `setup` snippet if you don't fully
 understand [what it does](src/os/setup.sh). Seriously, **DON'T**!)
 
-| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
+| `Manjaro` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
 
 That's it! :sparkles:
 
@@ -21,10 +21,8 @@ The setup process will:
   [`git`](src/git),
   [`shell`](src/shell), and
   [`neovim`](src/nvim) files
-* Install applications / command-line tools for
-  [`Ubuntu`](src/os/install/ubuntu)
-* Set custom
-  [`Ubuntu`](src/os/preferences/ubuntu) preferences
+* Install applications / command-line tools for Manjaro
+  [`Install`](src/os/install)
 * Install [`nvim` plugins](src/nvim/plugged)
 
 ## Customize
@@ -83,7 +81,7 @@ such as the `git` user credentials, e.g.:
 
 To update the dotfiles you can either run the [`setup`
 script](src/os/setup.sh) or, if you want to just update one particular
-part, run the appropriate [`os` script](src/os).
+part, run that part.
 
 
 ## Acknowledgements
