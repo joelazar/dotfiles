@@ -24,4 +24,6 @@ install_package "OpenJDK" "jdk9-openjdk"
 install_package "Visual Studio Code" "visual-studio-code-bin"
 install_package "Docker" "docker"
 install_package "Eclipse" "eclipse-java"
+install_package "nodejs" "nodejs"
+install_package "npm" "npm"
 
