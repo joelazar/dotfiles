@@ -27,4 +27,4 @@ install_package "Eclipse" "eclipse-java"
 install_package "nodejs" "nodejs"
 install_package "npm" "npm"
 install_package "exercism" "exercism-cli"
-
+install_package "git-standup" "git-standup"
