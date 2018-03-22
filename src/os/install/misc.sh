@@ -38,3 +38,6 @@ install_package "Teamviewer" "teamviewer"
 # manual config -> /etc/default/tlp
 install_package "drive" "drive"
 install_package "bash-completion" "bash-completion"
+install_package "wunderline" "wunderline" # config needed!
+install_package "workflowy" "workflowy"
+install_package "mdless" "mdless" # gem install rdoc was needed...
