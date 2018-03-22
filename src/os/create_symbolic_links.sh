@@ -51,7 +51,7 @@ create_symlink(){
         if [ ! -e "$targetFile" ] || $skipQuestions; then
 
             execute \
-                "ln -fs $sourceFile $targetFile" \
+                "sudo ln -fs $sourceFile $targetFile" \
                 "$sourceFile → $targetFile"
 
         elif [ "$(readlink "$targetFile")" == "$sourceFile" ]; then
