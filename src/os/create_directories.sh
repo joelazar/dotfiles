@@ -10,7 +10,8 @@ create_directories() {
     declare -a DIRECTORIES=(
         "$HOME/bin"
         "$HOME/Downloads/torrents"
-        "$HOME/University"
+        "$HOME/notes"
+        "$HOME/university"
         "$HOME/work"
     )
 

@@ -144,4 +144,19 @@ qt() {
 }
 
 gp() { grep -rnIi "$1" . --color; }
+
 gpf() { grep -nrIi --include \*."$1" "$2" . --color; }
+
+# Note functions
+
+qn() {
+    echo $1 >> $HOME/notes/quicknotes.md
+}
+
+n() {
+        $EDITOR $HOME/notes/"$*".md
+}
+
+nls() {
+        ls -c $HOME/notes/ | grep "$*"
+}

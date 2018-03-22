@@ -11,5 +11,5 @@ add_cronjob() {
    execute "crontab -l | { grep -A1 -vF "$1"; echo -e \"#$1\n$2\"; } | crontab -" "Adding $1 cronjob"
 }
 
-add_cronjob "bing-wallpaper" "0 6 * * * ~/bin/bing-wallpaper en-US false"
+#add_cronjob "bing-wallpaper" "@hourly /usr/bin/bing-wallpaper en-US false"
 
