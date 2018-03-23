@@ -24,7 +24,7 @@ create_symlinks() {
      create_symlink   "nvim" "$HOME/.config/nvim"
      mkdir -p $HOME/.config/wireshark/plugins/
      create_symlink   "other/sip_coloring.lua" "$HOME/.config/wireshark/plugins/sip_coloring.lua"
-     create_symlink   "other/daily.sh" "/etc/cron.daily/daily.sh"
+     create_symlink   "other/hourly.sh" "/etc/cron.hourly/hourly.sh"
 
 }
 
