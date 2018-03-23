@@ -72,6 +72,9 @@ set pastetoggle=<F2>
 " F5 - delete all trailing spaces
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
+" Sudo save
+command W w !sudo tee % > /dev/null
+
 " Automagically delete trailing spaces in specific filetypes
 autocmd FileType c,cpp,sdl,sdt,h,hpp,txt,py autocmd BufWritePre <buffer> %s/\s\+$//e
 
