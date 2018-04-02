@@ -1,3 +1,4 @@
+#!/bin/sh
 /usr/bin/bing-wallpaper en-US false
 
 if [[ $? -ne 0 ]]; then
