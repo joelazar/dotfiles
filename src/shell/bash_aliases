@@ -48,8 +48,3 @@ alias local-ip="ifconfig \
                     | cut -d: -f2 \
                     | cut -d' ' -f1"
 
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Open from the terminal.
-
-alias o="xdg-open"

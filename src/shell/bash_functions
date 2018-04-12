@@ -147,6 +147,8 @@ gp() { grep -rnIi "$1" . --color; }
 
 gpf() { grep -nrIi --include \*."$1" "$2" . --color; }
 
+op() { xdg-open $1 &> /dev/null & }
+
 # Note functions
 
 qn() {
@@ -154,9 +156,9 @@ qn() {
 }
 
 n() {
-        $EDITOR $HOME/notes/"$*".md
+    $EDITOR $HOME/notes/"$*".md
 }
 
 nls() {
-        ls -c $HOME/notes/ | grep "$*"
+    ls -c $HOME/notes/ | grep "$*"
 }
