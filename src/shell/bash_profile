@@ -47,6 +47,8 @@ source_bash_files() {
 source_bash_files
 unset -f source_bash_files
 
+tac $HISTFILE | awk '!x[$0]++' | tac | sponge $HISTFILE
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Clear system messages (system copyright notice, the date
