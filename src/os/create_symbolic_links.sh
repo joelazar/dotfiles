@@ -22,9 +22,9 @@ create_symlinks() {
      create_symlink   "git/gitignore"
      create_symlink   "tmux/tmux.conf"
      create_symlink   "nvim" "$HOME/.config/nvim"
+     create_symlink   "services/bing-wallpaper.service" "$HOME/.config/systemd/user/bing-wallpaper.service"
      mkdir -p $HOME/.config/wireshark/plugins/
      create_symlink   "other/sip_coloring.lua" "$HOME/.config/wireshark/plugins/sip_coloring.lua"
-     create_symlink   "other/hourly" "/etc/cron.hourly/hourly.sh"
 
 }
 
