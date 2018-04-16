@@ -28,6 +28,7 @@ main() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     install_pip_package "pip (update)" "--upgrade pip"
+    install_pip_package "pipenv" "pipenv"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
