@@ -2,6 +2,7 @@ call plug#begin()
 Plug 'terryma/vim-smooth-scroll'
 Plug 'scrooloose/nerdtree'
 "Plug 'tmhedberg/SimpylFold'
+Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
@@ -20,7 +21,7 @@ set hlsearch             "highlight search
 set autoindent
 set expandtab
 set shiftwidth=2
-set tabstop=2
+set softtabstop=2
 set cursorline           "highlight the current line.
 set encoding=utf-8
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
@@ -46,6 +47,8 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <space> za
 " CD to vim, print current directory
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+"paste multiple times the same register
+xnoremap p pgvy
 "no need for arrows
 map <up> <nop>
 map <down> <nop>

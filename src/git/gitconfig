@@ -12,7 +12,8 @@
     g    = log --graph --pretty=custom           # Show custom graph.
     l    = log --pretty=custom                   # Show custom log.
     lc   = shortlog --email --numbered --summary # List contributors.
-    lg   = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
+    lg   = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
+    lgall= log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
     lh   = log -p -10 # Show custom log.
     p    = push
     rank = shortlog -sn --no-merges
