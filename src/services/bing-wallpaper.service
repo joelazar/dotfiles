@@ -7,8 +7,7 @@ After=network.target
 Type=simple
 Environment="XDG_CURRENT_DESKTOP=xfce"
 ExecStart=/usr/bin/bing-wallpaper en-US true
-Restart=on-failure
+Restart=Always
 
 [Install]
-WantedBy=multi-user.target
-
+WantedBy=default.target
