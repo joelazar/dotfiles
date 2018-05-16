@@ -16,9 +16,10 @@ update
 ./browsers.sh
 ./development.sh
 ./image_tools.sh
-./misc_tools.sh
 ./misc.sh
-./python.sh
+./misc_tools.sh
 ./nvim.sh
+./python.sh
+./ruby.sh
 
 ./cleanup.sh
