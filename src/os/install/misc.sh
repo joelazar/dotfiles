@@ -30,8 +30,7 @@ install_package "Spotify" "spotify"
 install_package "Firejail" "firejail"
 install_package "Redshift" "redshift"
 install_package "Teamviewer" "teamviewer"
-#install_package "Laverna" "laverna"
-#install_package "tlp" "tlp"
+install_package "tlp" "tlp"
 #install_package "tlp-rdw" "tlp-rdw"
 #install_package "tp_smapi-dkms" "tp_smapi-dkms"   # Thinkpad only
 #install_package "acpi_call" "acpi_call" # Thinkpad only
@@ -40,6 +39,5 @@ install_package "drive" "drive"
 install_package "bash-completion" "bash-completion"
 install_package "wunderline" "wunderline" # config needed!
 install_package "workflowy" "workflowy"
-install_package "mdless" "ruby-mdless" # gem install rdoc was needed...
 install_package "guake" "guake" # config needed later
 install_package "moreutils" "moreutils" # gem install rdoc was needed...

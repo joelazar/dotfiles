@@ -1,7 +1,8 @@
 call plug#begin()
 Plug 'terryma/vim-smooth-scroll'
 Plug 'scrooloose/nerdtree'
-"Plug 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold'
+Plug 'morhetz/gruvbox'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
@@ -33,8 +34,14 @@ set showmode
 
 " Theme
 set termguicolors
-set background=dark
-colorscheme one
+"set background=dark " for the dark version
+set background=light " for the light version
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_contrast_dark  = 'soft'
+colorscheme gruvbox
+
+set foldlevel=10
 
 " Remaps
 map <C-n> :NERDTree<CR>
@@ -47,19 +54,19 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <space> za
 " CD to vim, print current directory
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
-"paste multiple times the same register
+" paste multiple times the same register
 xnoremap p pgvy
-"no need for arrows
+" no need for arrows
 map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-"no arrows in insertmode either
+" no arrows in insertmode either
 imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
-"visual selection search
+" visual selection search
 vnoremap K y:Ag! <C-R>"<CR>
 vnoremap // y/<C-R>"<CR>
 nmap oo o<Esc>k
@@ -105,7 +112,7 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 
 let g:airline_powerline_fonts=1
 
-"Short quickfix list
+" Short quickfix list
 au FileType qf call AdjustWindowHeight(3, 10)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
@@ -113,7 +120,7 @@ endfunction
 
 source ~/.config/nvim/local.vim
 
-"syntastic begin
+" syntastic begin
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -125,6 +132,6 @@ let g:syntastic_mode_map = {
     \ "active_filetypes": [""],
     \ "passive_filetypes": [""] }
 
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
-"syntastic end
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 1
+" syntastic end
