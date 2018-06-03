@@ -31,6 +31,8 @@ main() {
     install_pip_package "2" "pip2 (update)" "--upgrade pip"
     install_pip_package "3" "pip3 (update)" "--upgrade pip"
     install_pip_package "3" "pipenv" "pipenv"
+    install_pip_package "2" "pipdeptree" "pipdeptree"
+    install_pip_package "3" "pipdeptree" "pipdeptree"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
