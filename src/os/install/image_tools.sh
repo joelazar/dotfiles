@@ -10,4 +10,3 @@ print_in_purple "\n   Image Tools\n\n"
 
 install_package "GIMP" "gimp"
 install_package "ImageMagick" "imagemagick"
-
