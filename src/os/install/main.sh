@@ -17,9 +17,10 @@ update
 ./development.sh
 ./image_tools.sh
 ./misc.sh
-./misc_tools.sh
 ./nvim.sh
+./penetration.sh
 ./python.sh
 ./ruby.sh
+./utilities.sh
 
 ./cleanup.sh
