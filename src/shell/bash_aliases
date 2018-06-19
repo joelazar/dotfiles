@@ -34,6 +34,14 @@ alias vim='nvim'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Always enable colored `grep` output`
+
+alias grep="grep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias egrep="egrep --color=auto"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Empty trash.
 
 alias empty-trash="rm -rf ~/.local/share/Trash/files/*"
@@ -43,8 +51,7 @@ alias empty-trash="rm -rf ~/.local/share/Trash/files/*"
 # Get local IP.
 
 alias local-ip="ifconfig \
-                    | grep 'inet addr' \
+                    | grep 'inet ' \
                     | grep -v '127.0.0.1' \
-                    | cut -d: -f2 \
-                    | cut -d' ' -f1"
+                    | awk '{print $2}'" 
 
