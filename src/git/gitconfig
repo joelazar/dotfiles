@@ -65,7 +65,7 @@
 [merge]
 
     tool = kdiff3
-  	keepBackup = false
+    keepBackup = false
 
 [color "branch"]
 
@@ -137,5 +137,7 @@
     #     by the local ones
 
     path = ~/.gitconfig.local
+
 [mergetool]
-	keepBackup = false
+
+    keepBackup = false
