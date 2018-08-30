@@ -50,8 +50,15 @@ alias empty-trash="rm -rf ~/.local/share/Trash/files/*"
 
 # Get local IP.
 
-alias local-ip="ifconfig \
+alias get-local-ip="ifconfig \
                     | grep 'inet ' \
                     | grep -v '127.0.0.1' \
                     | awk '{print $2}'" 
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Get ext IP.
+
+alias get-ext-ip="curl ipinfo.io/ip"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

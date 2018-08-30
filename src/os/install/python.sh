@@ -33,6 +33,8 @@ main() {
     install_pip_package "3" "pipenv" "pipenv"
     install_pip_package "2" "pipdeptree" "pipdeptree"
     install_pip_package "3" "pipdeptree" "pipdeptree"
+    install_pip_package "3" "neovim" "neovim"
+    install_pip_package "3" "jedi" "jedi"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

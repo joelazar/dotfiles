@@ -162,3 +162,11 @@ n() {
 nls() {
     ls -c $HOME/notes/ | grep "$*"
 }
+
+agv() {
+	CHOICE=$(ag --color $* | fzf -0 -1 --ansi)
+	if [ ! -z "$CHOICE" ]
+	then
+		nvim $( echo "$CHOICE" | awk 'BEGIN { FS=":" } { printf "+%d %s\n", $2, $1 } ') +"LAg! '$*'" "+wincmd k"
+	fi
+}

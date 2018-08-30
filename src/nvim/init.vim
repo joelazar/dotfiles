@@ -2,16 +2,38 @@ call plug#begin()
 Plug 'terryma/vim-smooth-scroll'
 Plug 'scrooloose/nerdtree'
 Plug 'tmhedberg/SimpylFold'
+Plug 'lambdalisue/suda.vim'
 Plug 'morhetz/gruvbox'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-jedi'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'rking/ag.vim'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-syntastic/syntastic'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf'
 call plug#end()
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+let g:deoplete#sources#go#gocode_binary	= '/home/jlazar/go/bin/gocode'
+
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+let g:go_doc_keywordprg_enabled = 0
 
 " General
 syntax on
@@ -28,6 +50,8 @@ set encoding=utf-8
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wrap
 set linebreak
+set nobackup
+
 " note trailing space at end of next line
 set showbreak=>\ \ \
 set showmode
@@ -84,7 +108,8 @@ set pastetoggle=<F2>
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " Sudo save
-command W w !sudo tee % > /dev/null
+" command W w !sudo tee > /dev/null % TODO - currently not working - https://github.com/neovim/neovim/issues/1716
+command W w suda://%
 
 " Automagically delete trailing spaces in specific filetypes
 autocmd FileType c,cpp,sdl,sdt,h,hpp,txt,py autocmd BufWritePre <buffer> %s/\s\+$//e
@@ -97,13 +122,13 @@ nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR><Paste>
 " customize ag arguments here - this is the default one
 let g:ag_prg="ag --vimgrep --smart-case"
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-let g:ctrlp_working_path_mode = 'r'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ }
+"let g:ctrlp_working_path_mode = 'r'
+"let g:ctrlp_custom_ignore = {
+"  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+"  \ 'file': '\v\.(exe|so|dll)$',
+"  \ }
 
 " ag is fast enough that CtrlP doesn't need to cache
 "let g:ctrlp_use_caching = 0
@@ -135,3 +160,13 @@ let g:syntastic_mode_map = {
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 1
 " syntastic end
+"
+
+if &diff
+    map <C-1> :diffget BA<CR>
+    map <C-2> :diffget LO<CR>
+    map <C-3> :diffget RE<CR>
+    highlight! link DiffText MatchParen
+endif
+
+nnoremap <C-t> :FZF<Cr>
