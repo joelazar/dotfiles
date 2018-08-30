@@ -3,11 +3,14 @@ set $mod Mod4
 
 font pango:Hack, FontAwesome 12
 
-# screenshot
-bindsym Print exec xfce4-screenshooter
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+# window border settings
+default_border pixel 1
+default_floating_border none
+
+# Keybindings
 
 # start a terminal
 bindsym $mod+Return exec termite
@@ -15,33 +18,17 @@ bindsym $mod+Return exec termite
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# window border settings
-default_border          none
-default_floating_border none
-
-# switching window with win+tab
-bindsym $mod+Tab exec --no-startup-id rofi -show window
-
-# start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show drun
-
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+eacute focus right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+eacute move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -50,7 +37,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -72,20 +59,17 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# focus the child container
-#bindsym $mod+d focus child
-
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 ""
-set $ws2 ""
-set $ws3 ""
-set $ws4 ""
-set $ws5 "5"
-set $ws6 "6"
+set $ws1 "1:   Terminal "
+set $ws2 "2:  Chrome "
+set $ws3 "3:  Chat "
+set $ws4 "4:  Notes "
+set $ws5 "5:  Wireshark "
+set $ws6 "6:  Windows "
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
+set $ws9 "9:  Spotify "
 set $ws10 "10"
 
 # switch to workspace
@@ -99,6 +83,9 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+odiaeresis workspace $ws10
+
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -116,7 +103,9 @@ bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 assign [class="Google-chrome"] $ws2
 assign [class="Pidgin"] $ws3
 assign [class="TelegramDesktop"] $ws3
-for_window [class="Spotify"] move to workspace $ws4
+assign [class="Gedit"] $ws4
+assign [class="Remmina"] $ws6
+for_window [class="Spotify"] move to workspace $ws9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -127,30 +116,31 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit?'
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym eacute resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
+
+# screenshot
+bindsym Print exec xfce4-screenshooter
+
+# switching window with win+tab
+bindsym $mod+Tab exec --no-startup-id rofi -show window
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
@@ -162,84 +152,59 @@ mode "$mode_system" {
     bindsym r exec --no-startup-id ~/bin/i3exit reboot, mode "default"
     bindsym Shift+s exec --no-startup-id ~/bin/i3exit shutdown, mode "default"
 
-    # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 
 bindsym $mod+shift+x mode "$mode_system"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#set_from_resource $darkred     color1  #000000
-#set_from_resource $red         color9  #000000
-#set_from_resource $darkgreen   color2  #000000
-#set_from_resource $green       color10 #000000
-#set_from_resource $darkyellow  color3  #000000
-#set_from_resource $yellow      color11 #000000
-#set_from_resource $darkblue    color4  #000000
-#set_from_resource $blue        color12 #000000
-#set_from_resource $darkmagenta color5  #000000
-#set_from_resource $magenta     color13 #000000
-#set_from_resource $darkcyan    color6  #000000
-#set_from_resource $cyan        color14 #000000
-#set_from_resource $darkwhite   color7  #000000
-#set_from_resource $white       color15 #000000
-# Use custom colors for black
-#set $black       #282828
-#set $darkblack   #1d2021
-#set $transparent #00000000
-#
-#set $height 34
-#bar {
-#    verbose yes
-#    status_command i3blocks
-#    i3bar_command i3bar -t
-#    position top
-#    strip_workspace_numbers yes
-#    separator_symbol "■"
-#    bindsym button4 nop
-#    bindsym button5 nop
-#    tray_output eDP1
-#    tray_output LVDS-0
-#    tray_padding 0
-#    height 50
-#    colors {
-#        statusline         $white
-#        background         $transparent
-#        separator          $transparent
+# color defines for zenburn styled i3
+set $bg     #2c2c2e
+set $fg     #9f9f9f
+set $hi     #efef8f
+set $ac     #a0afa0
+set $tx     #040404
+set $ia     #8f8f8f
+set $be     #8faf9f
+set $yw     #ccdc90
+set $gn     #88b090
+set $rd     #e89393
 
-#                          BORDER       BACKGROUND   TEXT
-#        focused_workspace  $transparent $transparent $darkwhite
-#        inactive_workspace $transparent $transparent $white
-#        active_workspace   $transparent $transparent $white
-#        urgent_workspace   $darkred     $darkred     $transparent
-#        binding_mode       $darkred     $darkred     $transparent
-#    }
-#}
+# set some nice colors      border     background  text
+client.focused              $ac        $ac         $tx
+client.unfocused            $bg        $bg         $ia
+client.focused_inactive     $bg        $bg         $ac
+client.urgent               $rd        $rd         $tx
 
 bar {
-        font pango:Hack, FontAwesome 11
-        position top
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-  colors {
-    separator #268bd2
-    background #002b36
-    statusline #839496
-    focused_workspace #fdf6e3 #6c71c4 #fdf6e3
-    active_workspace #fdf6e3 #6c71c4 #fdf6e3
-    inactive_workspace #002b36 #586e75 #002b36
-    urgent_workspace #d33682 #d33682 #fdf6e3
-  }
+#    verbose yes
+    font pango:Hack, FontAwesome 12
+    position top
+    tray_padding 0
+    tray_output eDP1
+    tray_output LVDS-0
+    strip_workspace_numbers no
+    height 28
+    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    colors {
+        background          $bg
+        statusline          $fg
+        separator           $hi
+        focused_workspace   $gn        $bg        $ac
+        active_workspace    $gn        $ac        $tx
+        inactive_workspace  $bg        $bg        $ia
+        urgent_workspace    $rd        $bg        $ac
+    }
 }
-
-client.focused #6c71c4 #6c71c4 #fdf6e3 #6c71c4
-client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
-client.unfocused #073642 #073642 #93a1a1 #586e75
-client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 
 # rename a workspace
 bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+
+# Put this window on the primary output.
+bindsym $mod+x move workspace to output right
+
+bindsym $mod+m         exec xrandr --output DP2-2 --off
+bindsym $mod+shift+m   exec xrandr --output DP2-2 --auto --left-of eDP1 --primary
 
 # Multimedia keys
 # Pulse Audio controls
@@ -247,28 +212,31 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #i
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
-# Sreen brightness controls
-# bindsym XF86MonBrightnessDown exec --no-startup-id ${HOME}/bin/backlight.sh -dec 10
-# bindsym XF86MonBrightnessUp exec --no-startup-id ${HOME}/bin/backlight.sh -inc 10
-
+# brightness
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
-
-# Touchpad controls
-#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
 
 for_window [window_role="app"]                      floating enable
 for_window [window_role="pop-up"]                   floating enable
 for_window [window_role="task_dialog"]              floating enable
 for_window [class="Galculator"]                     floating enable
+for_window [class="Gitk"]                           floating enable
+for_window [class="Git-gui"]                        floating enable
+for_window [class="Viewnior"]                       floating enable
 
 # Wallpaper
-exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Bing/* &
+exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Bing/*
 
 # Startup applications
-exec --no-startup-id compton -b &
-exec --no-startup-id pa-applet &
-exec --no-startup-id nm-applet &
 exec --no-startup-id blueman-applet &
+exec --no-startup-id compton -b &
+exec --no-startup-id dunst &
+exec --no-startup-id nm-applet &
+exec --no-startup-id pa-applet &
 exec --no-startup-id redshift-gtk &
+exec --no-startup-id i3-battery-popup -n -t 2m &
+exec --no-startup-id parcellite &
 
+for_window [class="^.*"] border pixel 5
+#gaps inner 5
+#gaps outer 5

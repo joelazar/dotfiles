@@ -47,6 +47,17 @@ source_bash_files() {
 source_bash_files
 unset -f source_bash_files
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Source other files
+
+source /usr/share/fzf/key-bindings.bash
+source /usr/share/fzf/completion.bash
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# History file tweaks
+
 tac $HISTFILE | awk '!x[$0]++' | tac | sponge $HISTFILE
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

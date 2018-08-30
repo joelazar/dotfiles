@@ -21,7 +21,7 @@
     s    = status
     sres = reset --soft HEAD~1                   # Undo last commit.
     res  = reset --hard HEAD
-    cl   = clean -fxd 
+    cl   = clean -fxd
     sub  = submodule update --init --recursive
     w    = instaweb --httpd=webrick              # Start web-based visualizer.
 
@@ -62,10 +62,32 @@
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+[mergetool]
+
+    prompt = true
+    keepBackup = false
+
+[mergetool "nvimdiff"]
+
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    #cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[difftool]
+
+    prompt = false
+
+
+[difftool "nvimdiff"]
+
+    cmd = nvim -d $LOCAL $REMOTE
+
+[diff]
+
+    tool = nvimdiff
+
 [merge]
 
-    tool = kdiff3
-    keepBackup = false
+    tool = nvimdiff
 
 [color "branch"]
 
@@ -137,7 +159,3 @@
     #     by the local ones
 
     path = ~/.gitconfig.local
-
-[mergetool]
-
-    keepBackup = false

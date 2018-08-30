@@ -5,9 +5,16 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Make `vim` the default editor.
+# Make `neovim` the default editor.
 
 export EDITOR="nvim"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Make `chrome` the default browser.
+
+export BROWSER="google-chrome-stable"
+export browser="google-chrome"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -54,6 +61,14 @@ export PATH=$HOME/bin:$PATH
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Add user installed gems to PATH
+
+if which ruby >/dev/null && which gem >/dev/null; then
+    export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history.
 
@@ -67,3 +82,23 @@ fi
 # Make Python use UTF-8 encoding for output to stdin/stdout/stderr.
 
 export PYTHONIOENCODING="UTF-8"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# For Go development
+
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/lib/go/bin:$GOPATH/bin
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# FZF options
+
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border "
+
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_R_OPTS='--sort --exact'
+export FZF_CTRL_T_OPTS="--preview 'cat {}'"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
