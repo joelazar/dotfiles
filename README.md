@@ -8,7 +8,7 @@ terminal:
 (:warning: **DO NOT** run the `setup` snippet if you don't fully
 understand [what it does](src/os/setup.sh). Seriously, **DON'T**!)
 
-| `Manjaro` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
+| `Manjaro - i3 edition` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
 
 That's it! :sparkles:
 

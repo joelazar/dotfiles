@@ -4,8 +4,11 @@ Description=Lock the screen automatically after a timeout
 [Service]
 Type=simple
 User=jlazar
+# Time to wait after booting before activation
+OnBootSec=5min
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/xautolock -time 10 -locker /usr/bin/i3lock-fancy -detectsleep
+Restart=on-failure
+ExecStart=/usr/bin/xautolock -detectsleep -time 5 -locker "usr/bin/i3lock-fancy" -nowlocker "/usr/bin/i3lock-fancy"
 
 [Install]
 WantedBy=graphical.target
