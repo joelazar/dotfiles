@@ -1,28 +1,28 @@
 call plug#begin()
-Plug 'terryma/vim-smooth-scroll'
-Plug 'scrooloose/nerdtree'
-Plug 'tmhedberg/SimpylFold'
-Plug 'lambdalisue/suda.vim'
-Plug 'morhetz/gruvbox'
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-rooter'
-Plug 'airblade/vim-gitgutter'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'zchee/deoplete-jedi'
+Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-rooter'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'rking/ag.vim'
-"Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-syntastic/syntastic'
-Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
+Plug 'google/vim-maktaba'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'lambdalisue/suda.vim'
+Plug 'morhetz/gruvbox'
+Plug 'rking/ag.vim'
+Plug 'sbdchd/neoformat'
+Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-smooth-scroll'
+Plug 'tmhedberg/SimpylFold'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'junegunn/fzf'
-Plug 'sbdchd/neoformat'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-syntastic/syntastic'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'zchee/deoplete-jedi'
 call plug#end()
 
 " Use deoplete.
@@ -123,17 +123,6 @@ set grepprg=ag\ --nogroup\ --nocolor
 nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR><Paste>
 " customize ag arguments here - this is the default one
 let g:ag_prg="ag --vimgrep --smart-case"
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-"let g:ctrlp_working_path_mode = 'r'
-"let g:ctrlp_custom_ignore = {
-"  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-"  \ 'file': '\v\.(exe|so|dll)$',
-"  \ }
-
-" ag is fast enough that CtrlP doesn't need to cache
-"let g:ctrlp_use_caching = 0
 
 let g:rooter_change_directory_for_non_project_files = 'current'
 
