@@ -13,7 +13,6 @@ install_package "curl" "curl"
 install_package "firejail" "firejail"
 install_package "guake" "guake" # config needed later
 install_package "htop" "htop"
-install_package "midnight commander" "mc"
 install_package "net-tools" "net-tools"
 install_package "nethogs" "nethogs"
 install_package "tcpdump" "tcpdump"

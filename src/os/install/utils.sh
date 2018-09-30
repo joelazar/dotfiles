@@ -5,12 +5,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_pacaur() {
-    execute "sudo pacman-mirrors -f10 && sudo pacman -Syy --needed --noconfirm pacaur" "PACAUR"
-}
-
 autoremove() {
-    execute "sudo pacaur -Qtd --noconfirm" "PACAUR (autoremove)"
+    execute "sudo yaourt -Qtd" "YAOURT (autoremove)"
 }
 
 install_package() {
@@ -18,17 +14,17 @@ install_package() {
     declare -r PACKAGE_READABLE_NAME="$1"
 
     if ! package_is_installed "$PACKAGE"; then
-        execute "pacaur -S --noedit --noconfirm --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
+        execute "yaourt -S --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
     else
         print_success "$PACKAGE_READABLE_NAME"
     fi
 }
 
 package_is_installed() {
-    pacaur -Q | grep -q "^$1 " &> /dev/null
+    yaourt -Q | grep -q "^$1 " &> /dev/null
 }
 
 update() {
-    execute "pacaur -Syyu" "PACAUR (update)"
+    execute "yaourt -Syyu" "YAOURT (update)"
 }
 
