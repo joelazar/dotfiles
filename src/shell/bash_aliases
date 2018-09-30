@@ -20,7 +20,6 @@ alias logme="script -f $HOME/logs/$(date +"%d-%b-%y_%H-%M-%S")_shell.log"
 alias ls='ls -l --color=auto'
 alias m="man"
 alias map="xargs -n1"
-alias mc='. /usr/lib/mc/mc-wrapper.sh'
 alias mkdir='mkdir -p -v'
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 alias ping='ping -c 5'

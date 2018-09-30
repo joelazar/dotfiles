@@ -20,7 +20,9 @@ Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf'
+Plug 'sbdchd/neoformat'
 call plug#end()
 
 " Use deoplete.

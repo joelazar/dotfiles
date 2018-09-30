@@ -19,6 +19,7 @@ install_package "drive" "drive"
 install_package "hfsprogs" "hfsprogs"
 install_package "keePassX" "keepassx2"
 install_package "moreutils" "moreutils" # gem install rdoc was needed...
+install_package "ncdu" "ncdu"
 install_package "pidgin facebook plugin" "purple-facebook"
 install_package "pidgin" "pidgin"
 install_package "putty" "putty" # for puttygen ppk keys
