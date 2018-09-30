@@ -4,6 +4,7 @@ import re
 from ranger.api.commands import Command
 from ranger.core.loader import CommandLoader
 
+
 class extracthere(Command):
     def execute(self):
         """ Extract copied files to current directory """
