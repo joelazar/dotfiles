@@ -22,9 +22,15 @@ create_symlinks() {
      create_symlink   "git/gitignore"
      create_symlink   "tmux/tmux.conf"
      create_symlink   "nvim" "$HOME/.config/nvim"
-     create_symlink   "services/bing-wallpaper.service" "$HOME/.config/systemd/user/bing-wallpaper.service"
-     mkdir -p $HOME/.config/wireshark/plugins/
+#     create_symlink   "services/bing-wallpaper.service" "$HOME/.config/systemd/user/bing-wallpaper.service"
+     create_symlink   "services/xautolock.service" "/usr/lib/systemd/system/xautolock.service"
+     create_symlink   "i3/config" "$HOME/.config/i3/config"
+     create_symlink   "i3/i3blocks.conf" "$HOME/.config/i3/i3blocks.conf"
      create_symlink   "other/sip_coloring.lua" "$HOME/.config/wireshark/plugins/sip_coloring.lua"
+     create_symlink   "other/commands.py" "$HOME/.config/ranger/commands.py"
+     create_symlink   "other/redshift.conf" "$HOME/.config/redshift.conf"
+     create_symlink   "other/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
+     create_symlink   "other/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
 
 }
 
