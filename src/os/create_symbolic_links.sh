@@ -6,11 +6,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 create_symlinks() {
- 
+
      create_symlink   "git/gitconfig"
      create_symlink   "git/gitignore"
      create_symlink   "i3/config" "$HOME/.config/i3/config"
      create_symlink   "i3/i3blocks.conf" "$HOME/.config/i3/i3blocks.conf"
+     create_symlink   "i3/i3-scrot.conf" "$HOME/.config/i3-scrot.conf"
      create_symlink   "nvim" "$HOME/.config/nvim"
      create_symlink   "other/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf"
      create_symlink   "other/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
