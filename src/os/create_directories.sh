@@ -16,6 +16,7 @@ create_directories() {
         "$HOME/private"
         "$HOME/work"
         "$HOME/.config/wireshark/plugins"
+        "$HOME/.config/i3"
         "$HOME/Pictures/screenshots"
     )
 

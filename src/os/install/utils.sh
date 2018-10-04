@@ -14,7 +14,7 @@ install_package() {
     declare -r PACKAGE_READABLE_NAME="$1"
 
     if ! package_is_installed "$PACKAGE"; then
-        execute "yaourt -S --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
+        execute "yaourt -S --noconfirm --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
     else
         print_success "$PACKAGE_READABLE_NAME"
     fi
