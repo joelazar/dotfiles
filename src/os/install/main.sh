@@ -21,5 +21,6 @@ update
 ./python.sh
 ./ruby.sh
 ./utilities.sh
+./i3.sh
 
 ./cleanup.sh
