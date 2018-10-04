@@ -19,7 +19,6 @@ create_symlinks() {
      create_symlink   "other/compton.conf" "$HOME/.config/compton.conf"
      create_symlink   "other/redshift.conf" "$HOME/.config/redshift.conf"
      create_symlink   "other/sip_coloring.lua" "$HOME/.config/wireshark/plugins/sip_coloring.lua"
-     create_symlink   "services/xautolock.service" "/usr/lib/systemd/system/xautolock.service"
      create_symlink   "shell/bash_aliases"
      create_symlink   "shell/bash_autocomplete"
      create_symlink   "shell/bash_exports"
@@ -74,7 +73,7 @@ create_symlink(){
                     rm -rf "$targetFile"
 
                     execute \
-                        "ln -fs $sourceFile $targetFile" \
+                        "sudo ln -fs $sourceFile $targetFile" \
                         "$sourceFile → $targetFile"
 
                 else
