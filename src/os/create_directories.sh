@@ -16,6 +16,7 @@ create_directories() {
         "$HOME/private"
         "$HOME/work"
         "$HOME/.config/wireshark/plugins"
+        "$HOME/Pictures/screenshots"
     )
 
     for i in "${DIRECTORIES[@]}"; do

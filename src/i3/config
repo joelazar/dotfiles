@@ -134,7 +134,9 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # screenshot
-bindsym Print exec xfce4-screenshooter
+bindsym Print --release exec --no-startup-id i3-scrot
+bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 
 # switching window with win+tab
 bindsym $mod+Tab exec --no-startup-id rofi -show window
@@ -145,12 +147,12 @@ bindsym $mod+d exec --no-startup-id rofi -show drun
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/bin/i3exit lock, mode "default"
-    bindsym e exec --no-startup-id ~/bin/i3exit logout, mode "default"
-    bindsym s exec --no-startup-id ~/bin/i3exit suspend, mode "default"
-    bindsym h exec --no-startup-id ~/bin/i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id ~/bin/i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id ~/bin/i3exit shutdown, mode "default"
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -236,7 +238,11 @@ exec --no-startup-id pa-applet &
 exec --no-startup-id redshift-gtk &
 exec --no-startup-id i3-battery-popup -n -t 2m &
 exec --no-startup-id parcellite &
+exec --no-startup-id xautolock -time 10 -locker blurlock
 
 for_window [class="^.*"] border pixel 5
-#gaps inner 5
-#gaps outer 5
+#gaps inner 1
+#gaps outer 2
+
+#smart_gaps on
+#smart_borders on
