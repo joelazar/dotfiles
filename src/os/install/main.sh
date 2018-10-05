@@ -18,8 +18,6 @@ update
 ./misc.sh
 ./nvim.sh
 ./penetration.sh
-./python.sh
-./ruby.sh
 ./utilities.sh
 ./i3.sh
 
