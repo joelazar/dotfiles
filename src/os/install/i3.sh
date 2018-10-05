@@ -22,7 +22,7 @@ main() {
     install_package "sysstat" "sysstat"
     install_package "xautolock" "xautolock"
     install_package "xorg-xbacklight" "xorg-xbacklight"
-    install_package "xprop" "xprop"
+    install_package "xprop" "xorg-xprop"
 
 }
 

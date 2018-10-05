@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 autoremove() {
-    execute "sudo yaourt -Qtd --noconfirm" "YAOURT (autoremove)"
+    execute "sudo yaourt -Qtd --noconfirm || true" "YAOURT (autoremove)"
 }
 
 install_package() {
