@@ -18,6 +18,7 @@ main() {
         install_package "hfsprogs" "hfsprogs"
         install_package "onedrive-git" "onedrive-git"
         install_package "restic-git" "restic-git"
+        install_package "pipdeptree" "pipdeptree"
         install_package "spotify" "spotify"
         install_package "teamviewer" "teamviewer"
         install_package "wunderline" "wunderline"

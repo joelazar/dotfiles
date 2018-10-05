@@ -19,11 +19,15 @@ The setup process will:
 * Create some additional [directories](src/os/create_directories.sh)
 * [Symlink](src/os/create_symbolic_links.sh) the
   [`git`](src/git),
-  [`shell`](src/shell), and
-  [`neovim`](src/nvim) files
+  [`i3`](src/i3),
+  [`shell`](src/shell),
+  [`neovim`](src/nvim),
+  [`services`](src/services) and
+  [`other`](src/other)
 * Install applications / command-line tools for Manjaro
   [`Install`](src/os/install)
 * Install [`nvim` plugins](src/nvim/plugged)
+* Set some [`services`](src/os/preferences/services.sh) and [`crondjobs`](src/os/preferences/cronjobs.sh)
 
 ## Customize
 

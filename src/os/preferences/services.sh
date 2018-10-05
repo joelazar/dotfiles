@@ -11,4 +11,4 @@ add_service() {
    execute "systemctl --user enable $1 && systemctl --user start $1" "Adding/starting $1 service"
 }
 
-add_service "bing-wallpaper.service"
+#add_service "bing-wallpaper.service"
