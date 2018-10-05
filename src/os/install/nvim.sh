@@ -18,15 +18,23 @@ install_plugins() {
         execute "curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL" "Install vim-plug"
     fi
 
-    execute "nvim +PlugUpdate +qall" "Install plugins"
+    execute "nvim +PlugInstall! +qall" "Install plugins"
 
 }
 
 update_plugins() {
 
     execute \
+        "nvim +PlugUpgrade +qall" \
+        "Upgrade vim-plug"
+
+    execute \
         "nvim +PlugUpdate +qall" \
         "Update plugins"
+
+    execute \
+        "nvim +PlugClean! +qall" \
+        "Cleanup plugins"
 
 }
 
