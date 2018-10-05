@@ -14,10 +14,11 @@ install_plugins() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Install plugins.
 
-    execute \
-        "curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL \
-         && printf '\n' | nvim +PlugInstall +qall" \
-        "Install plugins"
+    if [ ! -f $NVIM_PLUG_DIR/site/autoload/plug.vim ]; then
+        execute "curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL" "Install vim-plug"
+    fi
+
+    execute "nvim +PlugUpdate +qall" "Install plugins"
 
 }
 
