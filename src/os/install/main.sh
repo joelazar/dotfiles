@@ -20,5 +20,6 @@ update
 ./penetration.sh
 ./utilities.sh
 ./i3.sh
+./aur.sh
 
 ./cleanup.sh
