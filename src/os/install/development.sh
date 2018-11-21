@@ -10,6 +10,7 @@ print_in_purple "\n   Development\n\n"
 
 install_package "clang" "clang"
 install_package "ctags" "ctags"
+install_package "delve" "delve"
 install_package "docker" "docker"
 install_package "exercism" "exercism-cli"
 install_package "fd" "fd"
@@ -32,6 +33,7 @@ install_package "texlive-science" "texlive-science"
 install_package "texmaker" "texmaker"
 install_package "the Silver Searcher" "the_silver_searcher"
 install_package "tmux" "tmux"
+install_package "yapf" "yapf"
 
 print_in_purple "\n   Python packages\n\n"
 

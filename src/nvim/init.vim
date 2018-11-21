@@ -24,6 +24,8 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'zchee/deoplete-jedi'
 call plug#end()
 
+nnoremap <C-t> :FZF<Cr>
+
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 
@@ -159,8 +161,7 @@ if &diff
     highlight! link DiffText MatchParen
 endif
 
-nnoremap <C-t> :FZF<Cr>
-
+" Neoformat
 " Enable alignment
 let g:neoformat_basic_format_align = 1
 
@@ -169,3 +170,11 @@ let g:neoformat_basic_format_retab = 1
 
 " Enable trimmming of trailing whitespace
 let g:neoformat_basic_format_trim = 1
+
+" Vim-GO
+let g:go_term_enabled = 0
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_function_calls = 1
+let g:go_def_mapping_enabled = 0
+autocmd FileType go nmap gd <Plug>(go-def)
