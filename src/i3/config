@@ -61,15 +61,15 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1:   Terminal "
-set $ws2 "2:  Chrome "
-set $ws3 "3:  Chat "
-set $ws4 "4:  Notes "
-set $ws5 "5:  Wireshark "
-set $ws6 "6:  Windows "
+set $ws1 "1:  "
+set $ws2 "2:  "
+set $ws3 "3:  "
+set $ws4 "4:  "
+set $ws5 "5:  "
+set $ws6 "6:  "
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9:  Spotify "
+set $ws9 "9:  "
 set $ws10 "10"
 
 # switch to workspace
@@ -207,6 +207,7 @@ bindsym $mod+x move workspace to output right
 
 bindsym $mod+m         exec xrandr --output DP2-2 --off
 bindsym $mod+shift+m   exec xrandr --output DP2-2 --auto --left-of eDP1 --primary
+bindsym $mod+shift+b   exec xrandr --output HDMI2 --auto --left-of eDP1 --primary
 
 # Multimedia keys
 # Pulse Audio controls
@@ -238,6 +239,7 @@ exec --no-startup-id pa-applet &
 exec --no-startup-id redshift-gtk &
 exec --no-startup-id i3-battery-popup -n -t 2m &
 exec --no-startup-id parcellite &
+exec --no-startup-id caffeine &
 exec --no-startup-id xautolock -time 10 -locker blurlock
 
 for_window [class="^.*"] border pixel 5
