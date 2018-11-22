@@ -10,7 +10,6 @@ print_in_purple "\n   Utilities\n\n"
 
 install_package "bash-completion" "bash-completion"
 install_package "curl" "curl"
-install_package "caffeine-ng" "caffeine-ng"
 install_package "firejail" "firejail"
 install_package "htop" "htop"
 install_package "net-tools" "net-tools"

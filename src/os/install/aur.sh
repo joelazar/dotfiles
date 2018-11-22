@@ -11,9 +11,11 @@ main() {
 
     ask_for_confirmation "Do you want really want to install AUR packages now? Warning, they will be installed with noconfirm flag."
 
-    if ! answer_is_yes; then
+    if answer_is_yes; then
+        install_package "caffeine-ng" "caffeine-ng"
         install_package "ctop" "ctop"
-        install_package "google-chrome" "google-chrome"
+        install_package "exercism" "exercism-cli"
+#        install_package "google-chrome" "google-chrome"
         install_package "heroku-cli" "heroku-cli"
         install_package "hfsprogs" "hfsprogs"
         install_package "onedrive-git" "onedrive-git"
@@ -21,6 +23,7 @@ main() {
         install_package "pipdeptree" "pipdeptree"
         install_package "spotify" "spotify"
         install_package "teamviewer" "teamviewer"
+        install_package "widevine plugin for Chromium" "chromium-widevine"
         install_package "wunderline" "wunderline"
     fi
 

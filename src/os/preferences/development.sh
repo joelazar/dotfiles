@@ -23,5 +23,5 @@ execute "getent group vboxusers | grep $USER || echo joe && sudo usermod -aG vbo
         "User added to vboxusers group (logout required!)"
 
 execute "if [ ! -e ~/.config/exercism/exercism_completion.bash ]; then mkdir -p ~/.config/exercism/ \
-         && curl http://cli.exercism.io/exercism_completion.bash > ~/.config/exercism/exercism_completion.bash; fi" \
+         && curl https://raw.githubusercontent.com/exercism/cli/v3.0.11/shell/exercism_completion.bash > ~/.config/exercism/exercism_completion.bash; fi" \
          "Exercism bash completions"

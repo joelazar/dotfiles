@@ -19,6 +19,7 @@ install_package "moreutils" "moreutils" # gem install rdoc was needed...
 install_package "ncdu" "ncdu"
 install_package "pidgin" "pidgin"
 install_package "putty" "putty" # for puttygen ppk keys
+install_package "otf-font-awesome" "otf-font-awesome"
 install_package "ranger" "ranger"
 install_package "rdesktop" "rdesktop"
 install_package "remmina" "remmina"
