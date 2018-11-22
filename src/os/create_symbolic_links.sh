@@ -17,7 +17,7 @@ create_symlinks() {
      create_symlink   "other/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf"
      create_symlink   "other/clang-format"
      create_symlink   "other/commands.py" "$HOME/.config/ranger/commands.py"
-     create_symlink   "other/compton.conf" "$HOME/.config/compton.conf"
+#     create_symlink   "other/compton.conf" "$HOME/.config/compton.conf"
      create_symlink   "other/redshift.conf" "$HOME/.config/redshift.conf"
      create_symlink   "other/sip_coloring.lua" "$HOME/.config/wireshark/plugins/sip_coloring.lua"
      create_symlink   "shell/bash_aliases"
@@ -71,7 +71,7 @@ create_symlink(){
                 ask_for_confirmation "'$targetFile' already exists, do you want to overwrite it?"
                 if answer_is_yes; then
 
-                    rm -rf "$targetFile"
+                    sudo rm -rf "$targetFile"
 
                     execute \
                         "sudo ln -fs $sourceFile $targetFile" \
