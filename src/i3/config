@@ -58,6 +58,7 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+bindsym $mod+z focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -238,7 +239,7 @@ bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart du
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Wallpaper
-exec --no-startup-id feh --randomize --bg-scale ~/Pictures/Bing/*
+exec --no-startup-id feh --randomize --scale-down --bg-scale ~/Pictures/Bing/*
 
 # Startup applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 # not quite sure about it
