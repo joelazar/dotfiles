@@ -14,6 +14,7 @@ install_package "brotli" "brotli"
 install_package "calibre" "calibre"
 install_package "colordiff" "colordiff"
 install_package "freerdp" "freerdp"
+install_package "galculator" "galculator"
 install_package "keePassX" "keepassx2"
 install_package "moreutils" "moreutils" # gem install rdoc was needed...
 install_package "ncdu" "ncdu"
