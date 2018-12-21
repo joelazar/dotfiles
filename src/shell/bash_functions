@@ -141,7 +141,7 @@ gp() { grep -rnIi "$1" . --color; }
 
 gpf() { grep -nrIi --include \*."$1" "$2" . --color; }
 
-op() { xdg-open $1 &>/dev/null &;}
+op() { xdg-open $1 &> /dev/null & }
 
 # Note functions
 
