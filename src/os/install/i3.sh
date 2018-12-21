@@ -18,6 +18,7 @@ main() {
     install_package "i3blocks" "i3blocks"
     install_package "i3exit" "i3exit"
     install_package "pulseaudio" "pulseaudio"
+    install_package "pulseaudio-bluetooth" "pulseaudio-bluetooth"
     install_package "pcmanfm" "pcmanfm"
     install_package "pa-applet" "pa-applet"
     install_package "rofi" "rofi"
