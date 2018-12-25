@@ -101,7 +101,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 
 # Assign applications to workspaces
-assign [class="Google-chrome"] $ws2
+assign [class="Chromium"] $ws2
 assign [class="Pidgin"] $ws3
 assign [class="TelegramDesktop"] $ws3
 assign [class="Gedit"] $ws4
