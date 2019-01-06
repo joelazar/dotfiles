@@ -19,6 +19,7 @@ main() {
         install_package "heroku-cli" "heroku-cli"
         install_package "hfsprogs" "hfsprogs"
         install_package "onedrive-git" "onedrive-git"
+        install_package "realvnc-vnc-viewer" "realvnc-vnc-viewer"
         install_package "restic-git" "restic-git"
         install_package "pipdeptree" "pipdeptree"
         install_package "spotify" "spotify"
