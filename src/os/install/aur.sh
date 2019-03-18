@@ -22,6 +22,7 @@ main() {
         install_package "realvnc-vnc-viewer" "realvnc-vnc-viewer"
         install_package "restic-git" "restic-git"
         install_package "pipdeptree" "pipdeptree"
+        install_package "signal" "signal"
         install_package "spotify" "spotify"
         install_package "teamviewer" "teamviewer"
         install_package "widevine plugin for Chromium" "chromium-widevine"

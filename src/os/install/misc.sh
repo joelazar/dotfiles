@@ -9,6 +9,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 print_in_purple "\n   Miscellaneous\n\n"
 
 # install_package "bing-wallpaper-git" "bing-wallpaper-git" # TODO - not working yet on i3, but I'm on it
+install_package "aspell-en" "aspell-en"
 install_package "bleachbit" "bleachbit"
 install_package "brotli" "brotli"
 install_package "calibre" "calibre"
@@ -28,6 +29,7 @@ install_package "redshift" "redshift"
 install_package "sshfs" "sshfs"
 install_package "sshpass" "sshpass"
 install_package "tlp" "tlp"
+install_package "tk" "tk"
 install_package "transmission" "transmission-qt"
 install_package "virtualbox" "virtualbox" # not working yet
 install_package "vlc" "vlc"
