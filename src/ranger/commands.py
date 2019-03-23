@@ -29,12 +29,15 @@ class extracthere(Command):
         if len(copied_files) == 1:
             descr = "extracting: " + os.path.basename(one_file.path)
         else:
-            descr = "extracting files from: " + os.path.basename(one_file.dirname)
-        obj = CommandLoader(args=['aunpack'] + au_flags \
-                + [f.path for f in copied_files], descr=descr)
+            descr = "extracting files from: " + os.path.basename(
+                one_file.dirname)
+        obj = CommandLoader(
+            args=['aunpack'] + au_flags + [f.path for f in copied_files],
+            descr=descr)
 
         obj.signal_bind('after', refresh)
         self.fm.loader.add(obj)
+
 
 class compress(Command):
     def execute(self):
@@ -64,7 +67,11 @@ class compress(Command):
         """ Complete with current folder name """
 
         extension = ['.zip', '.tar.gz', '.rar', '.7z']
-        return ['compress ' + os.path.basename(self.fm.thisdir.path) + ext for ext in extension]
+        return [
+            'compress ' + os.path.basename(self.fm.thisdir.path) + ext
+            for ext in extension
+        ]
+
 
 class ag(Command):
     """:ag 'regex'
@@ -74,6 +81,7 @@ class ag(Command):
     acmd = 'ag --smart-case --group --nocolor --hidden'  # --search-zip
     qarg = re.compile(r"""^(".*"|'.*')$""")
     patterns = []
+
     # THINK:USE: set_clipboard on each direct ':ag' search? So I could find in vim easily
 
     def _sel(self):
@@ -82,7 +90,8 @@ class ag(Command):
             return [f.relative_path for f in d.marked_items]
         # WARN: permanently hidden files like .* are searched anyways
         #   << BUG: files skipped in .agignore are grep'ed being added on cmdline
-        if d.temporary_filter and d.files_all and (len(d.files_all) != len(d.files)):
+        if d.temporary_filter and d.files_all and (len(d.files_all) != len(
+                d.files)):
             return [f.relative_path for f in d.files]
         return []
 
@@ -121,7 +130,8 @@ class ag(Command):
                 cmdl.append(opt)
                 opt = self.arg(iarg)
             # TODO: save -Q/-w into ag.patterns =NEED rewrite plugin to join _aug*()
-            patt = self._bare(self._arg(iarg))  # THINK? use shlex.split() also/instead
+            patt = self._bare(
+                self._arg(iarg))  # THINK? use shlex.split() also/instead
             cmdl.append(patt)
         if '-g' not in flags:
             cmdl += self._sel()

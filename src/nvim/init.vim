@@ -1,42 +1,21 @@
 call plug#begin()
-Plug 'MattesGroeger/vim-bookmarks'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'google/vim-codefmt'
-Plug 'google/vim-glaive'
-Plug 'google/vim-maktaba'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/suda.vim'
+Plug 'MattesGroeger/vim-bookmarks'
 Plug 'morhetz/gruvbox'
-Plug 'rking/ag.vim'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'terryma/vim-smooth-scroll'
-Plug 'tmhedberg/SimpylFold'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-syntastic/syntastic'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
-Plug 'zchee/deoplete-jedi'
+Plug 'w0rp/ale'
 call plug#end()
-
-nnoremap <C-t> :FZF<Cr>
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-
-let g:deoplete#sources#go#gocode_binary	= '/home/jlazar/go/bin/gocode'
-
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-let g:go_doc_keywordprg_enabled = 0
 
 " General
 syntax on
@@ -94,14 +73,11 @@ imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
 " visual selection search
-vnoremap K y:Ag! <C-R>"<CR>
+" vnoremap K y:Rg <C-R>"<CR>
 vnoremap // y/<C-R>"<CR>
 nmap oo o<Esc>k
 nmap OO O<Esc>j
 nmap <CR> o<Esc>
-" Ag to Ag! always
-ca Ag Ag!
-ca ag Ag!
 
 " F2 - paste mode
 nnoremap <F2> :set invpaste paste?<CR>
@@ -117,13 +93,8 @@ command W w suda://%
 " Automagically delete trailing spaces in specific filetypes
 autocmd FileType c,cpp,sdl,sdt,h,hpp,txt,py autocmd BufWritePre <buffer> %s/\s\+$//e
 
-" Use The Silver Searcher as grepprg
-set grepprg=ag\ --nogroup\ --nocolor
-
 " bind K to grep word under cursor
-nnoremap K :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR><Paste>
-" customize ag arguments here - this is the default one
-let g:ag_prg="ag --vimgrep --smart-case"
+nnoremap K :Rg <C-R><C-W><CR>
 
 let g:rooter_change_directory_for_non_project_files = 'current'
 
@@ -135,25 +106,7 @@ function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
-source ~/.config/nvim/local.vim
-
-" syntastic begin
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_mode_map = {
-    \ "mode": "passive",
-    \ "active_filetypes": [""],
-    \ "passive_filetypes": [""] }
-
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 1
-" syntastic end
-"
-
+" Diffmode
 if &diff
     map <C-1> :diffget BA<CR>
     map <C-2> :diffget LO<CR>
@@ -164,10 +117,8 @@ endif
 " Neoformat
 " Enable alignment
 let g:neoformat_basic_format_align = 1
-
 " Enable tab to spaces conversion
 let g:neoformat_basic_format_retab = 1
-
 " Enable trimmming of trailing whitespace
 let g:neoformat_basic_format_trim = 1
 
@@ -178,3 +129,27 @@ let g:go_highlight_fields = 1
 let g:go_highlight_function_calls = 1
 let g:go_def_mapping_enabled = 0
 autocmd FileType go nmap gd <Plug>(go-def)
+
+" FZF
+nnoremap <C-t> :FZF<Cr>
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#go#gocode_binary	= '/home/joelazar/go/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+let g:go_doc_keywordprg_enabled = 0
+
+" ALE
+let g:ale_completion_enabled = 0
+
+" In ~/.vim/vimrc, or somewhere similar.
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['yapf'],
+\}
+
+source ~/.config/nvim/local.vim
