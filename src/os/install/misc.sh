@@ -10,6 +10,7 @@ print_in_purple "\n   Miscellaneous\n\n"
 
 # install_package "bing-wallpaper-git" "bing-wallpaper-git" # TODO - not working yet on i3, but I'm on it
 install_package "aspell-en" "aspell-en"
+install_package "bind-tools" "bind-tools"
 install_package "bleachbit" "bleachbit"
 install_package "brotli" "brotli"
 install_package "calibre" "calibre"
