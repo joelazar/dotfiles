@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -eq 1 ]; then
+  if [[ $1 == "enable" ]]; then
+    sudo systemctl start wg-quick@wg0.service
+  elif [[ $1 == "disable" ]]; then
+    sudo systemctl stop wg-quick@wg0.service
+  else
+    echo Only enable and disable are the acceptable options 
+  fi
+else
+  echo "Not correct argument supplied. vpn disable or vpn enable"
+fi
