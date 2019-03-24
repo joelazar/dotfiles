@@ -9,6 +9,7 @@ declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSIT
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 declare dotfilesDirectory="$HOME/dotfiles"
+declare setupDirectory="$dotfilesDirectory/src/os"
 declare skipQuestions=false
 
 # ----------------------------------------------------------------------
@@ -155,8 +156,7 @@ main() {
     # Ensure that the following actions
     # are made relative to this file's path.
 
-    cd "$(dirname "${BASH_SOURCE[0]}")" \
-        || exit 1
+    pushd $setupDirectory || exit 1
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -212,6 +212,7 @@ main() {
         ./restart.sh
     fi
 
+    popd
 }
 
 main "$@"

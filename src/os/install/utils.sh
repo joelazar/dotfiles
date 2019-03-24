@@ -5,6 +5,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+declare -r INSTALLED_PACKAGES=`yaourt -Q`
+
 autoremove() {
     execute "sudo yaourt -Qtd --noconfirm || true" "YAOURT (autoremove)"
 }
@@ -21,7 +23,7 @@ install_package() {
 }
 
 package_is_installed() {
-    yaourt -Q | grep -q "^$1 " &> /dev/null
+    echo $INSTALLED_PACKAGES | grep -q "$1 " &> /dev/null
 }
 
 update() {
