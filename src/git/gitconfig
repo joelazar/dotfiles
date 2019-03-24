@@ -87,8 +87,8 @@
 
 [merge]
 
-    #tool = nvimdiff
-    tool = kdiff3
+    tool = nvimdiff
+    #tool = kdiff3
 
 [color "branch"]
 
