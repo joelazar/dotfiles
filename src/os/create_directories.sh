@@ -8,14 +8,12 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 create_directories() {
 
     declare -a DIRECTORIES=(
-        "$HOME/Downloads/torrents"
         "$HOME/bin"
         "$HOME/git"
         "$HOME/go"
         "$HOME/notes"
         "$HOME/private"
         "$HOME/work"
-        "$HOME/.config/wireshark/plugins"
         "$HOME/.config/i3"
         "$HOME/Pictures/screenshots"
     )

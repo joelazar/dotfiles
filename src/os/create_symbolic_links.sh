@@ -16,6 +16,7 @@ create_symlinks() {
      create_symlink   "i3/i3blocks.conf" "$HOME/.config/i3/i3blocks.conf"
      create_symlink   "nvim" "$HOME/.config/nvim"
      create_symlink   "ranger/commands.py" "$HOME/.config/ranger/commands.py"
+     create_symlink   "os/setup.sh" "$HOME/bin/setup.sh"
      create_symlink   "scripts/backup" "$HOME/bin/backup"
      create_symlink   "scripts/untilfail" "$HOME/bin/untilfail"
      create_symlink   "shell/bash_aliases"
