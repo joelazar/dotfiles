@@ -1,10 +1,18 @@
-restic -r ~/OneDrive/backup backup ~/.ssh \
-                                   ~/Documents \
-                                   ~/Pictures \
-                                   ~/private \
-                                   ~/logs \
-                                   ~/notes
+#!/bin/bash
+#
+# Backup script
+#
 
-# restic -r ~/OneDrive/backup snapshots 
-# restic -r ~/OneDrive/backup forget snapshothash
-# restic -r ~/OneDrive/backup prune 
+case "$1" in
+"do") restic --repo /mnt/usb/restic/ backup ~/.ssh \
+    ~/Documents \
+    ~/Downloads \
+    ~/Pictures \
+    ~/bin \
+    ~/logs \
+    ~/notes \
+    ~/private;;
+"snapshots") restic --repo /mnt/usb/restic/ snapshots;;
+"prune") restic --repo /mnt/usb/restic/ prune;;
+*)            echo "Do nothing" $@;;
+esac

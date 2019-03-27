@@ -11,6 +11,7 @@ create_directories() {
         "$HOME/bin"
         "$HOME/git"
         "$HOME/go"
+        "$HOME/logs"
         "$HOME/notes"
         "$HOME/private"
         "$HOME/work"
