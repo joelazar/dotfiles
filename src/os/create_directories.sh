@@ -16,6 +16,7 @@ create_directories() {
         "$HOME/private"
         "$HOME/work"
         "$HOME/.config/i3"
+        "$HOME/.config/mpv/scripts"
         "$HOME/Pictures/screenshots"
     )
 

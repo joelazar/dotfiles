@@ -5,10 +5,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-declare -r INSTALLED_PACKAGES=`yaourt -Q`
+declare -r INSTALLED_PACKAGES=`yay -Q`
+
+install_package_manager() {
+    execute "which yay && ( [ $? -eq 0 ] || yaourt -S --noconfirm yay)" "YAY"
+}
 
 autoremove() {
-    execute "sudo yaourt -Qtd --noconfirm || true" "YAOURT (autoremove)"
+    execute "sudo yay -Qtd --noconfirm || true" "YAY (autoremove)"
 }
 
 install_package() {
@@ -16,7 +20,7 @@ install_package() {
     declare -r PACKAGE_READABLE_NAME="$1"
 
     if ! package_is_installed "$PACKAGE"; then
-        execute "yaourt -S --noconfirm --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
+        execute "yay -S --noconfirm --needed $PACKAGE" "$PACKAGE_READABLE_NAME"
     else
         print_success "$PACKAGE_READABLE_NAME"
     fi
@@ -27,6 +31,6 @@ package_is_installed() {
 }
 
 update() {
-    execute "yaourt -Syyu --noconfirm" "YAOURT (update)"
+    execute "yay -Syyu --noconfirm" "YAY (update)"
 }
 

@@ -71,7 +71,7 @@ set $ws6 "6."
 set $ws7 "7."
 set $ws8 "8."
 set $ws9 "9.  "
-set $ws10 "10"
+set $ws10 "10."
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -104,7 +104,7 @@ bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 assign [class="Chromium"] $ws2
 assign [class="Pidgin"] $ws3
 assign [class="TelegramDesktop"] $ws3
-assign [class="Gedit"] $ws4
+assign [class="Mousepad"] $ws4
 assign [class="Remmina"] $ws6
 for_window [class="Spotify"] move to workspace $ws9
 

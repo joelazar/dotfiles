@@ -135,7 +135,7 @@ nnoremap <C-t> :FZF<Cr>
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary	= '/home/joelazar/go/bin/gocode'
+let g:deoplete#sources#go#gocode_binary	= '$HOME/go/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"

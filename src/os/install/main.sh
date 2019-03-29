@@ -10,6 +10,8 @@ print_in_purple "\n • Installs\n\n"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+install_package_manager
+
 update
 
 ./browsers.sh
