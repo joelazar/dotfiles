@@ -157,10 +157,10 @@ nls() {
   ls -c $HOME/notes/ | grep "$*"
 }
 
-agv() {
-  CHOICE=$(ag --color $* | fzf -0 -1 --ansi)
+rgv() {
+  CHOICE=$(rg $* | fzf -0 -1 --ansi)
   if [ ! -z "$CHOICE" ]; then
-    nvim $(echo "$CHOICE" | awk 'BEGIN { FS=":" } { printf "+%d %s\n", $2, $1 } ') +"LAg! '$*'" "+wincmd k"
+    nvim $(echo "$CHOICE" | awk 'BEGIN { FS=":" } { printf "+%d %s\n", $2, $1 } ') +"Rg $*"
   fi
 }
 
