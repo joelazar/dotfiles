@@ -1,5 +1,7 @@
 # [joelazar](https://github.com/joelazar)’s dotfiles
 
+![joedotfiles - vim + htop](https://user-images.githubusercontent.com/16268238/55280833-608c0900-532b-11e9-954f-08cbe0514d29.png)
+
 ## Details
 
 This is the dotfiles setup which I use for my [`Manjaro i3 edition`](https://manjaro.org/download/i3/).

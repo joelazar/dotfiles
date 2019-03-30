@@ -231,9 +231,8 @@ for_window [class="Viewnior"]                       floating enable
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F2 exec chromium
-bindsym $mod+F3 exec pcmanfm
-# bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec gksu pcmanfm
+bindsym $mod+F3 exec ranger
+bindsym $mod+Shift+F3 exec gksu ranger
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
@@ -249,18 +248,12 @@ exec --no-startup-id dunst
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-#exec --no-startup-id pulseaudio
+exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
 exec --no-startup-id redshift-gtk
-#exec --no-startup-id i3-battery-popup -n -t 2m
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor # not quite sure about this either
 
 for_window [class="^.*"] border pixel 5
-#gaps inner 1
-#gaps outer 2
-
-#smart_gaps on
-#smart_borders on
