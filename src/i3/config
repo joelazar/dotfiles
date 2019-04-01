@@ -207,9 +207,8 @@ bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
 # Put this window on the primary output.
 bindsym $mod+x move workspace to output right
 
-bindsym $mod+m         exec xrandr --output DP2-2 --off
-bindsym $mod+shift+m   exec xrandr --output DP2-2 --auto --left-of eDP1 --primary
-bindsym $mod+shift+b   exec xrandr --output HDMI2 --auto --left-of eDP1 --primary
+bindsym $mod+m         exec xrandr --output HDMI1 --off
+bindsym $mod+shift+m   exec xrandr --output HDMI1 --auto --left-of eDP1 --primary
 
 # Multimedia keys
 # Pulse Audio controls

@@ -137,16 +137,28 @@ qh() {
 
 # Search for text within the current directory.
 
-gp() { grep -rnIi "$1" . --color; }
+gp() {
+  grep -rnIi "$1" . --color
+}
 
-gpf() { grep -nrIi --include \*."$1" "$2" . --color; }
+gpf() {
+  grep -nrIi --include \*."$1" "$2" . --color
+}
 
-op() { xdg-open $1 &> /dev/null & }
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Open everything
+
+op() {
+  xdg-open "$1" &>/dev/null &
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Note functions
 
 qn() {
-  echo $1 >>$HOME/notes/quicknotes.md
+  echo "$1" >>$HOME/notes/quicknotes.md
 }
 
 n() {
@@ -207,16 +219,15 @@ function cleandocker() {
 
 function cleannone() { docker rmi $(docker images | grep "<none>" | awk '{print $3}'); }
 
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # SSH functions
 
-function start_agent {
-     echo "Initialising new SSH agent..."
-     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-     echo succeeded
-     chmod 600 "${SSH_ENV}"
-     . "${SSH_ENV}" > /dev/null
-     /usr/bin/ssh-add $HOME/.ssh/id_rsa;
+function start_agent() {
+  echo "Initialising new SSH agent..."
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" >/dev/null
+  /usr/bin/ssh-add $HOME/.ssh/id_rsa
 }
