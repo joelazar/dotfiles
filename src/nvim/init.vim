@@ -10,6 +10,9 @@ Plug 'morhetz/gruvbox'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'zchee/deoplete-clang'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
@@ -128,6 +131,7 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_function_calls = 1
 let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
 autocmd FileType go nmap gd <Plug>(go-def)
 
 " FZF
@@ -141,10 +145,8 @@ let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-let g:go_doc_keywordprg_enabled = 0
-
 " ALE
-let g:ale_completion_enabled = 0
+let g:ale_completion_enabled = 1
 
 " In ~/.vim/vimrc, or somewhere similar.
 let g:ale_fixers = {
