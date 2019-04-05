@@ -2,7 +2,6 @@
 
 declare -r GITHUB_REPOSITORY="joelazar/dotfiles"
 
-declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
 declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
 declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/src/os/utils.sh"
 
@@ -156,7 +155,7 @@ main() {
     # Ensure that the following actions
     # are made relative to this file's path.
 
-    pushd $setupDirectory || exit 1
+    pushd "$setupDirectory" || exit 1
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -212,7 +211,7 @@ main() {
         ./restart.sh
     fi
 
-    popd
+    popd || exit 1
 }
 
 main "$@"

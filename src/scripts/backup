@@ -14,5 +14,5 @@ case "$1" in
     ~/private;;
 "snapshots") restic --repo /mnt/usb/restic/ snapshots;;
 "prune") restic --repo /mnt/usb/restic/ prune;;
-*)            echo "Do nothing" $@;;
+*)            echo "Do nothing" "$@";;
 esac

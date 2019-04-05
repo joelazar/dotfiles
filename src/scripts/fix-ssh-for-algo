@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 declare -r ANSIBLE_CP=`ls $HOME/.ansible/cp/ | grep -v total | awk '{print $9}'`
 
