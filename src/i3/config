@@ -230,9 +230,9 @@ for_window [class="Viewnior"]                       floating enable
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
+bindsym $mod+F1 exec alacritty -e ranger
+bindsym $mod+Shift+F1 exec gksu alacritty -e ranger
 bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec ranger
-bindsym $mod+Shift+F3 exec gksu ranger
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
