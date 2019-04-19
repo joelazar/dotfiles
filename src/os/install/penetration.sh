@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
     && . "./utils.sh"
 
 install_blackarch_repo() {
-    if ! yaourt -Sg | grep -q "^blackarch" &> /dev/null; then
+    if ! yay -Sg | grep -q "^blackarch" &> /dev/null; then
         execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
     fi
 }
