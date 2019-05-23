@@ -9,6 +9,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 print_in_purple "\n   Utilities\n\n"
 
 install_package "alacritty" "alacritty"
+install_package "atool" "atool"
 install_package "bash-completion" "bash-completion"
 install_package "curl" "curl"
 install_package "firejail" "firejail"
