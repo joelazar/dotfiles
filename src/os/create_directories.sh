@@ -14,7 +14,6 @@ create_directories() {
         "$HOME/logs"
         "$HOME/notes"
         "$HOME/private"
-        "$HOME/work"
         "$HOME/.config/i3"
         "$HOME/.config/mpv/scripts"
         "$HOME/Pictures/screenshots"
