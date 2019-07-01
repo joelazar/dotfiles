@@ -10,6 +10,7 @@ print_in_purple "\n   Development\n\n"
 
 install_package "clang" "clang"
 install_package "ctags" "ctags"
+install_package "code" "code"
 install_package "delve" "delve"
 install_package "docker" "docker"
 install_package "fd" "fd"
