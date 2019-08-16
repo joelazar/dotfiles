@@ -253,7 +253,7 @@ exec --no-startup-id pa-applet
 exec --no-startup-id redshift-gtk
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
-exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id xautolock -time 10 -locker blurlock -corners ----
 exec_always --no-startup-id fix_xcursor # not quite sure about this either
 
 for_window [class="^.*"] border pixel 5
