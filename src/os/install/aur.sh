@@ -13,7 +13,7 @@ main() {
 
     if answer_is_yes; then
         install_package "ctop" "ctop"
-        install_package "exercism" "exercism-cli"
+        install_package "exercism" "exercism-bin"
         install_package "heroku-cli" "heroku-cli"
         install_package "hfsprogs" "hfsprogs"
         install_package "realvnc-vnc-viewer" "realvnc-vnc-viewer"
