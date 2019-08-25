@@ -19,6 +19,7 @@ update
 ./image_tools.sh
 ./misc.sh
 ./nvim.sh
+./code.sh
 ./penetration.sh
 ./utilities.sh
 ./i3.sh

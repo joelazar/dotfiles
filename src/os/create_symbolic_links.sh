@@ -9,6 +9,8 @@ create_symlinks() {
 
      create_symlink   "alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
      create_symlink   "development/clang-format"
+     create_symlink   "development/settings.json" "$HOME/.config/Code\ -\ OSS/User/settings.json"
+     create_symlink   "development/keybindings.json" "$HOME/.config/Code\ -\ OSS/User/keybindings.json"
      create_symlink   "git/gitconfig"
      create_symlink   "git/gitignore"
      create_symlink   "i3/config" "$HOME/.config/i3/config"
