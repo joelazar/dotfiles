@@ -1,0 +1,42 @@
+{
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.renderSideBySide": true,
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "git.enableSmartCommit": true,
+    "todo-tree.tags":[
+        "TODO",
+        "todo",
+        "ToDo",
+        "\\todo",
+        "FIXME",
+        "fixme",
+        "HACK",
+        "hack"
+    ],
+    "todo-tree.defaultHighlight": {
+        "icon": "alert",
+        "type": "text",
+        "foreground": "red",
+        "background": "white",
+        "opacity": 50,
+        "iconColour": "blue"
+    },
+    "todo-tree.customHighlight": {
+        "TODO": {
+            "icon": "check",
+            "type": "line"
+        },
+        "FIXME": {
+            "foreground": "black",
+            "iconColour": "yellow"
+        }
+    },
+    "vim.highlightedyank.enable": true,
+    "vim.hlsearch": true,
+    "vim.replaceWithRegister": true,
+    "vim.useSystemClipboard": true,
+    "workbench.colorTheme": "Solarized Light",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.startupEditor": "newUntitledFile"
+}
