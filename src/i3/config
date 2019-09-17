@@ -63,7 +63,7 @@ bindsym $mod+z focus child
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1.  "
-set $ws2 "2.  "
+set $ws2 "2.  "
 set $ws3 "3.  "
 set $ws4 "4.  "
 set $ws5 "5."
@@ -113,8 +113,6 @@ for_window [class="Spotify"] move to workspace $ws9
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit?' -b 'Exit' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -212,13 +210,13 @@ bindsym $mod+shift+m   exec xrandr --output HDMI1 --auto --left-of eDP1 --primar
 
 # Multimedia keys
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
 # brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 for_window [window_role="app"]                      floating enable
 for_window [window_role="pop-up"]                   floating enable
@@ -241,8 +239,6 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 exec --no-startup-id feh --randomize --scale-down --bg-scale ~/Pictures/Bing/*
 
 # Startup applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 # not quite sure about it
-exec --no-startup-id blueman-applet
 exec --no-startup-id compton -b
 exec --no-startup-id dunst
 exec --no-startup-id nm-applet
@@ -253,7 +249,6 @@ exec --no-startup-id pa-applet
 exec --no-startup-id redshift-gtk
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
-exec --no-startup-id xautolock -time 10 -locker blurlock -corners ----
-exec_always --no-startup-id fix_xcursor # not quite sure about this either
+exec --no-startup-id xautolock -time 10 -locker blurlock -corners +00-
 
 for_window [class="^.*"] border pixel 5
