@@ -11,4 +11,3 @@ print_in_purple "\n   Browsers\n\n"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 install_package "Firefox" "firefox"
-install_package "Chromium" "chromium"

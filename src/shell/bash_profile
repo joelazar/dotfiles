@@ -4,41 +4,41 @@
 
 source_bash_files() {
 
-    declare -r CURRENT_DIRECTORY="$(pwd)"
+  declare -r CURRENT_DIRECTORY="$(pwd)"
 
-    declare -r -a FILES_TO_SOURCE=(
-        "bash_aliases"
-        "bash_autocomplete"
-        "bash_exports"
-        "bash_functions"
-        "bash_options"
-        "bash_prompt"
-        "bash.local"  # For local settings that should
-                      # not be under version control.
-    )
+  declare -r -a FILES_TO_SOURCE=(
+    "bash_aliases"
+    "bash_autocomplete"
+    "bash_exports"
+    "bash_functions"
+    "bash_options"
+    "bash_prompt"
+    "bash.local" # For local settings that should
+    # not be under version control.
+  )
 
-    local file=""
-    local i=""
+  local file=""
+  local i=""
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" \
-        && . "../os/utils.sh"
+  cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" &&
+    . "../os/utils.sh"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    for i in ${!FILES_TO_SOURCE[*]}; do
+  for i in ${!FILES_TO_SOURCE[*]}; do
 
-        file="$HOME/.${FILES_TO_SOURCE[$i]}"
+    file="$HOME/.${FILES_TO_SOURCE[$i]}"
 
-        [ -r "$file" ] \
-            && . "$file"
+    [ -r "$file" ] &&
+      . "$file"
 
-    done
+  done
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    cd "$CURRENT_DIRECTORY"
+  cd "$CURRENT_DIRECTORY"
 
 }
 
@@ -59,13 +59,13 @@ source /usr/share/fzf/completion.bash
 # Source SSH settings, if applicable
 
 if [ -f "${SSH_ENV}" ]; then
-     . "${SSH_ENV}" > /dev/null
-     #ps ${SSH_AGENT_PID} doesn't work under cywgin
-     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-         start_agent;
-     }
+  . "${SSH_ENV}" >/dev/null
+  #ps ${SSH_AGENT_PID} doesn't work under cywgin
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ >/dev/null || {
+    start_agent
+  }
 else
-     start_agent;
+  start_agent
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
