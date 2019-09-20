@@ -38,5 +38,15 @@
     "vim.useSystemClipboard": true,
     "workbench.colorTheme": "Solarized Light",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "todo-tree.general.tags": [
+        "TODO",
+        "todo",
+        "ToDo",
+        "\\todo",
+        "FIXME",
+        "fixme",
+        "HACK",
+        "hack"
+    ]
 }

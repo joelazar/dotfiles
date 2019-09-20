@@ -41,8 +41,7 @@ create_symlinks() {
      create_symlink   "thinkpad/20-intel.conf" "/etc/X11/xorg.conf.d/20-intel.conf" "sudo-needed"
      create_symlink   "thinkpad/30-touchpad.conf" "/etc/X11/xorg.conf.d/30-touchpad.conf" "sudo-needed"
      create_symlink   "tmux/tmux.conf"
-#     create_symlink   "other/compton.conf" "$HOME/.config/compton.conf"
-#     create_symlink   "services/bing-wallpaper.service" "$HOME/.config/systemd/user/bing-wallpaper.service" # TODO - fix bing-wallpaper for i3
+     create_symlink   "services/bing-wallpaper.service" "$HOME/.config/systemd/user/bing-wallpaper.service" # TODO - fix bing-wallpaper for i3
 }
 
 create_symlink(){

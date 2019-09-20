@@ -64,8 +64,8 @@ bindsym $mod+z focus child
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1.  "
 set $ws2 "2.  "
-set $ws3 "3.  "
-set $ws4 "4.  "
+set $ws3 "3.  "
+set $ws4 "4."
 set $ws5 "5."
 set $ws6 "6."
 set $ws7 "7."
@@ -101,12 +101,8 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 
 # Assign applications to workspaces
-assign [class="Chromium"] $ws2
-assign [class="Firefox"] $ws2
-assign [class="Pidgin"] $ws3
-assign [class="TelegramDesktop"] $ws3
-assign [class="Mousepad"] $ws4
-assign [class="Remmina"] $ws6
+assign [class="Google-chrome"] $ws2
+assign [class="Mousepad"] $ws3
 for_window [class="Spotify"] move to workspace $ws9
 
 # reload the configuration file
@@ -230,13 +226,10 @@ for_window [class="Viewnior"]                       floating enable
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec alacritty -e ranger
 bindsym $mod+Shift+F1 exec gksu alacritty -e ranger
-bindsym $mod+F2 exec firefox
+bindsym $mod+F2 exec google-chrome-stable
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-
-# Wallpaper
-exec --no-startup-id feh --randomize --scale-down --bg-scale ~/Pictures/Bing/*
 
 # Startup applications
 exec --no-startup-id compton -b

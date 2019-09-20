@@ -11,10 +11,10 @@ export EDITOR="nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Make `firefox` the default browser.
+# Make `google-chrome-stable` the default browser.
 
-export BROWSER="firefox"
-export browser="firefox"
+export BROWSER="google-chrome-stable"
+export browser="google-chrome-stable"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
