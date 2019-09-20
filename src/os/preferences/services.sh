@@ -15,4 +15,4 @@ execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
 execute "sudo systemctl enable tlp" "Turn on tlp"
 
-#add_service "bing-wallpaper.service"
+add_service "bing-wallpaper.service"
