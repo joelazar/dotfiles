@@ -235,13 +235,10 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 exec --no-startup-id compton -b
 exec --no-startup-id dunst
 exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
 exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
-exec --no-startup-id redshift-gtk
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
-exec --no-startup-id xautolock -time 10 -locker blurlock -corners +00-
+exec --no-startup-id xautolock -time 10 -locker blurlock -corners +00- -cornersize 100
 
 for_window [class="^.*"] border pixel 5

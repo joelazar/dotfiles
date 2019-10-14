@@ -7,8 +7,6 @@ cd "$(dirname "${BASH_SOURCE[0]}")" &&
 
 print_in_purple "\n   Development configuration\n\n"
 
-execute "sudo systemctl enable docker" "Autostart docker"
-
 execute "getent group docker | grep $USER || (sudo groupadd docker && \
          sudo usermod -aG docker $USER)" \
         "Docker group created. No sudo required for docker users (logout required!)"
