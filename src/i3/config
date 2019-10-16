@@ -13,7 +13,7 @@ default_floating_border none
 # Keybindings
 
 # start a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec --no-startup-id alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -225,10 +225,9 @@ for_window [class="Viewnior"]                       floating enable
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec alacritty -e ranger
-bindsym $mod+Shift+F1 exec gksu alacritty -e ranger
-bindsym $mod+F2 exec google-chrome-stable
+bindsym $mod+F2 exec --no-startup-id google-chrome-stable
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
-bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
+bindsym $mod+Shift+d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # Startup applications
