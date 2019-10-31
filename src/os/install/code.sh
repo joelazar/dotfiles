@@ -20,7 +20,6 @@ main() {
 
   print_in_purple "\n   Code\n\n"
 
-  install_extension "Gruntfuggly.todo-tree"
   install_extension "alefragnani.Bookmarks"
   install_extension "eamodio.gitlens"
   install_extension "ms-azuretools.vscode-docker"

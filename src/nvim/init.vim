@@ -7,17 +7,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'morhetz/gruvbox'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-go', { 'do': 'make' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'zchee/deoplete-clang'
-Plug 'terryma/vim-smooth-scroll'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'w0rp/ale'
 call plug#end()
 
 " General
@@ -90,7 +85,7 @@ set pastetoggle=<F2>
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
 " Sudo save
-" command W w !sudo tee > /dev/null % TODO - currently not working - https://github.com/neovim/neovim/issues/1716
+" command W w !sudo tee > /dev/null
 command W w suda://%
 
 " Automagically delete trailing spaces in specific filetypes
@@ -137,21 +132,30 @@ autocmd FileType go nmap gd <Plug>(go-def)
 " FZF
 nnoremap <C-t> :FZF<Cr>
 
-" Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go#gocode_binary	= '$HOME/go/bin/gocode'
-let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
-
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" ALE
-let g:ale_completion_enabled = 1
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" In ~/.vim/vimrc, or somewhere similar.
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'python': ['yapf'],
-\}
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
 
 source ~/.config/nvim/local.vim
