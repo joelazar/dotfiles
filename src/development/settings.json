@@ -4,68 +4,12 @@
     "editor.minimap.enabled": false,
     "files.trimTrailingWhitespace": true,
     "git.enableSmartCommit": true,
-    "todo-tree.tags":[
-        "TODO",
-        "todo",
-        "ToDo",
-        "\\todo",
-        "FIXME",
-        "fixme",
-        "HACK",
-        "hack"
-    ],
-    "todo-tree.defaultHighlight": {
-        "icon": "alert",
-        "type": "text",
-        "foreground": "red",
-        "background": "white",
-        "opacity": 50,
-        "iconColour": "blue"
-    },
-    "todo-tree.customHighlight": {
-        "TODO": {
-            "icon": "check",
-            "type": "line"
-        },
-        "FIXME": {
-            "foreground": "black",
-            "iconColour": "yellow"
-        }
-    },
     "vim.highlightedyank.enable": true,
     "vim.hlsearch": true,
     "vim.replaceWithRegister": true,
     "vim.useSystemClipboard": true,
+    "vsicons.dontShowNewVersionMessage": true,
     "workbench.colorTheme": "Solarized Light",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.startupEditor": "newUntitledFile",
-    "todo-tree.general.tags": [
-        "TODO",
-        "todo",
-        "ToDo",
-        "\\todo",
-        "FIXME",
-        "fixme",
-        "HACK",
-        "hack"
-    ],
-    "todo-tree.highlights.customHighlight": {
-        "TODO": {
-            "icon": "check",
-            "type": "line"
-        },
-        "FIXME": {
-            "foreground": "black",
-            "iconColour": "yellow"
-        }
-    },
-    "todo-tree.highlights.defaultHighlight": {
-        "icon": "alert",
-        "type": "text",
-        "foreground": "red",
-        "background": "white",
-        "opacity": 50,
-        "iconColour": "blue"
-    },
-    "vsicons.dontShowNewVersionMessage": true
+    "workbench.startupEditor": "newUntitledFile"
 }
