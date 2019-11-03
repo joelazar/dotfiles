@@ -238,6 +238,5 @@ exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
-exec --no-startup-id xautolock -time 10 -locker blurlock -corners +00- -cornersize 100
 
 for_window [class="^.*"] border pixel 5
