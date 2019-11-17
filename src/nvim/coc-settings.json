@@ -21,7 +21,21 @@
     },
     "bash": {
       "command": "shellcheck",
-      "filetypes": ["sh"]
+      "filetypes": [
+        "sh"
+      ]
+    },
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": [
+        "go"
+      ]
     }
   }
 }
