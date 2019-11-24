@@ -24,6 +24,7 @@ create_symlinks() {
      create_symlink   "os/setup.sh" "$HOME/bin/setup.sh"
      create_symlink   "scripts/backup" "$HOME/bin/backup"
      create_symlink   "scripts/fix-ssh-for-algo" "$HOME/bin/fix-ssh-for-algo"
+     create_symlink   "scripts/op.sh" "$HOME/bin/op.sh"
      create_symlink   "scripts/setup-algovpn" "$HOME/bin/setup-algovpn"
      create_symlink   "scripts/untilfail" "$HOME/bin/untilfail"
      create_symlink   "scripts/vpn" "$HOME/bin/vpn"
