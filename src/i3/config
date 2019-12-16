@@ -130,8 +130,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # screenshot
-bindsym Print --release exec --no-startup-id i3-scrot
-bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+bindsym $mod+Print --release exec --no-startup-id i3-scrot
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 
 # switching window with win+tab
@@ -239,4 +238,4 @@ exec --no-startup-id pa-applet
 exec --no-startup-id clipit
 exec --no-startup-id caffeine
 
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 2
