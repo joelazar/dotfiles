@@ -63,7 +63,7 @@ bindsym $mod+z focus child
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1.  "
-set $ws2 "2.  "
+set $ws2 "2.  "
 set $ws3 "3.  "
 set $ws4 "4."
 set $ws5 "5."
@@ -101,7 +101,7 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 
 # Assign applications to workspaces
-assign [class="Google-chrome"] $ws2
+assign [class="firefox"] $ws2
 assign [class="Mousepad"] $ws3
 for_window [class="Spotify"] move to workspace $ws9
 
@@ -224,7 +224,7 @@ for_window [class="Viewnior"]                       floating enable
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+F1 exec alacritty -e ranger
-bindsym $mod+F2 exec --no-startup-id google-chrome-stable
+bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'"
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
