@@ -7,7 +7,8 @@
 
 # Make `neovim` the default editor.
 
-export EDITOR="nvim"
+export EDITOR="/usr/bin/nvim"
+export VISUAL="/usr/bin/nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -106,3 +107,13 @@ export FZF_CTRL_T_OPTS="--preview 'cat {}'"
 # SSH environment file
 
 export SSH_ENV="$HOME/.ssh/environment"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# nnn settings
+
+export NNN_SSHFS_OPTS="sshfs -o follow_symlinks"
+export NNN_USE_EDITOR=1
+export NNN_CONTEXT_COLORS="2136"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

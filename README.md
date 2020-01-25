@@ -26,7 +26,7 @@ Let me try to summarize the installed packages without attempting to be too comp
 * [`compton`](https://github.com/chjj/compton) - Compositor for Xorg
 * [`rofi`](https://github.com/davatorium/rofi) - A smart and fancy windows switcher, application launcher
 * [`dunst`](https://dunst-project.org/) - Notification daemon
-* [`ranger`](https://github.com/ranger/ranger) - File manager
+* [`nnn`](https://github.com/jarun/nnn) - File manager
 * [`alacritty`](https://github.com/jwilm/alacritty) - Terminal with GPU-acceleration written in Rust
 * [`font awesome`](https://origin.fontawesome.com/) - Fonts
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
@@ -67,7 +67,6 @@ The setup process will:
   [`development`](src/development),
   [`i3`](src/i3),
   [`mpv`](src/mpv),
-  [`ranger`](src/ranger),
   [`scripts`](src/scripts),
   [`tmux`](src/tmux),
   [`shell`](src/shell),

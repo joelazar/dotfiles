@@ -10,7 +10,8 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sbdchd/neoformat'
-Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree'
+Plug 'mcchrish/nnn.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
@@ -50,7 +51,21 @@ colorscheme gruvbox
 set foldlevel=10
 
 " Remaps
-map <C-n> :NERDTree<CR>
+" map <C-n> :NERDTree<CR>
+" Disable default mappings
+let g:nnn#set_default_mappings = 0
+
+" Then set your own
+"nnoremap <silent> <C-nn> :NnnPicker<CR>
+
+" Or override
+" Start nnn in the current file's directory
+nnoremap <C-n> :NnnPicker '%:p:h'<CR>
+
+" Or pass a dictionary with window size
+let g:nnn#layout = { 'left': '~20%' } " or right, up, down
+
+
 " Movement mapping between split screens
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
