@@ -20,7 +20,6 @@ create_symlinks() {
      create_symlink   "i3/compton.conf" "$HOME/.config/compton.conf"
      create_symlink   "mpv" "$HOME/.config/mpv/scripts"
      create_symlink   "nvim" "$HOME/.config/nvim"
-     create_symlink   "ranger/commands.py" "$HOME/.config/ranger/commands.py"
      create_symlink   "os/setup.sh" "$HOME/bin/setup.sh"
      create_symlink   "scripts/backup" "$HOME/bin/backup"
      create_symlink   "scripts/fix-ssh-for-algo" "$HOME/bin/fix-ssh-for-algo"
