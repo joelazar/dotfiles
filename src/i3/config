@@ -65,7 +65,7 @@ bindsym $mod+z focus child
 set $ws1 "1.  "
 set $ws2 "2.  "
 set $ws3 "3.  "
-set $ws4 "4."
+set $ws4 "4.  "
 set $ws5 "5."
 set $ws6 "6."
 set $ws7 "7."
@@ -102,7 +102,9 @@ bindsym $mod+Shift+odiaeresis move container to workspace $ws10
 
 # Assign applications to workspaces
 assign [class="firefox"] $ws2
+assign [class="Firefox Beta"] $ws2
 assign [class="Mousepad"] $ws3
+assign [class="Caprine"] $ws4
 for_window [class="Spotify"] move to workspace $ws9
 
 # reload the configuration file
@@ -112,19 +114,19 @@ bindsym $mod+Shift+r restart
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+    bindsym h resize shrink width 10 px or 10 ppt
+    bindsym j resize grow height 10 px or 10 ppt
+    bindsym k resize shrink height 10 px or 10 ppt
+    bindsym l resize grow width 10 px or 10 ppt
 
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -210,8 +212,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
 # brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
 
 for_window [window_role="app"]                      floating enable
 for_window [window_role="pop-up"]                   floating enable
@@ -222,8 +224,8 @@ for_window [class="Git-gui"]                        floating enable
 for_window [class="Viewnior"]                       floating enable
 
 # Start Applications
-bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F1 exec alacritty -e ranger
+bindsym $mod+Ctrl+b exec alacritty -e 'bmenu'
+bindsym $mod+F1 exec --no-startup-id alacritty -e ranger
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+Ctrl+t exec --no-startup-id compton -b
 bindsym $mod+Shift+d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'"
@@ -236,6 +238,5 @@ exec --no-startup-id nm-applet
 exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
 exec --no-startup-id clipit
-exec --no-startup-id caffeine
 
 for_window [class="^.*"] border pixel 2

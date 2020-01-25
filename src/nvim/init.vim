@@ -2,6 +2,7 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/suda.vim'
