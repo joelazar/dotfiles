@@ -15,6 +15,7 @@ main() {
         install_package "exercism" "exercism-bin"
         install_package "hfsprogs" "hfsprogs"
         install_package "google chrome" "google-chrome"
+        install_package "joplin" "joplin"
         install_package "restic-git" "restic-git"
         install_package "spotify" "spotify"
         install_package "teamviewer" "teamviewer"
