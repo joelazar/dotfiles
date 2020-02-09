@@ -35,5 +35,5 @@ update() {
 }
 
 clean_up_cache() {
-  execute "paccache -rk1 && paccache -ruk0" "Clean up cached packages"
+  execute "paccache -rk2 && paccache -ruk1" "Clean up cached packages"
 }

@@ -2,7 +2,7 @@
     frame_width = 1
     frame_color = "#788388"
     
-    font = Noto Sans 10
+    font = Hack Sans 10
     
     # Allow a small subset of html markup:
     #   <b>bold</b>
@@ -106,7 +106,7 @@
     sticky_history = yes
     
     # Maximum amount of notifications kept in history
-    history_length = 20
+    history_length = 40
     
     # Display indicators for URLs (U) and actions (A).
     show_indicators = yes
@@ -122,11 +122,10 @@
     separator_height = 1
     
     # Padding between text and separator.
-    # padding = 8
-    padding = 8
+    padding = 4
     
     # Horizontal padding.
-    horizontal_padding = 10
+    horizontal_padding = 1
     
     # Define a color for the separator.
     # possible values are:
@@ -145,7 +144,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
     
     # Browser for opening urls in context menu.
-    browser = palemoon
+    browser = firefox
 
     # Align icons left/right/off
     icon_position = left
@@ -154,7 +153,7 @@
     icon_path = /usr/share/icons/Adwaita/16x16/status/:/usr/share/icons/Adwaita/16x16/devices/
 
     # Limit icons size.
-    max_icon_size=128
+    max_icon_size=64
 
 [shortcuts]
 
@@ -162,10 +161,9 @@
     # Available modifiers are "ctrl", "mod1" (the alt-key), "mod2",
     # "mod3" and "mod4" (windows-key).
     # Xev might be helpful to find names for keys.
-    
     # Close notification.
     close = mod1+space
-    
+
     # Close all notifications.
     # close_all = ctrl+shift+space
     close_all = ctrl+mod1+space
@@ -174,13 +172,11 @@
     # On the US keyboard layout "grave" is normally above TAB and left
     # of "1".
     history = ctrl+mod4+h 
-    
+
     # Context menu.
     context = ctrl+mod1+c
 
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
     background = "#263238"
     foreground = "#556064"
     timeout = 10
@@ -195,108 +191,3 @@
     foreground = "#F9FAF9"
     timeout = 0
 
-
-# Every section that isn't one of the above is interpreted as a rules to
-# override settings for certain messages.
-# Messages can be matched by "appname", "summary", "body", "icon", "category",
-# "msg_urgency" and you can override the "timeout", "urgency", "foreground",
-# "background", "new_icon" and "format".
-# Shell-like globbing will get expanded.
-#
-# SCRIPTING
-# You can specify a script that gets run when the rule matches by
-# setting the "script" option.
-# The script will be called as follows:
-#   script appname summary body icon urgency
-# where urgency can be "LOW", "NORMAL" or "CRITICAL".
-# 
-# NOTE: if you don't want a notification to be displayed, set the format
-# to "".
-# NOTE: It might be helpful to run dunst -print in a terminal in order
-# to find fitting options for rules.
-
-#[espeak]
-#    summary = "*"
-#    script = dunst_espeak.sh
-
-#[script-test]
-#    summary = "*script*"
-#    script = dunst_test.sh
-
-#[ignore]
-#    # This notification will not be displayed
-#    summary = "foobar"
-#    format = ""
-
-#[signed_on]
-#    appname = Pidgin
-#    summary = "*signed on*"
-#    urgency = low
-#
-#[signed_off]
-#    appname = Pidgin
-#    summary = *signed off*
-#    urgency = low
-#
-#[says]
-#    appname = Pidgin
-#    summary = *says*
-#    urgency = critical
-#
-#[twitter]
-#    appname = Pidgin
-#    summary = *twitter.com*
-#    urgency = normal
-#
-#[Claws Mail]
-#    appname = claws-mail
-#    category = email.arrived
-#    urgency = normal
-#    background = "#2F899E"
-#    foreground = "#FFA247"
-#
-#[mute.sh]
-#     appname = mute
-#     category = mute.sound
-#     script = mute.sh
-#
-#[JDownloader]
-#    appname = JDownloader
-#    category = JD
-#    background = "#FFA247"
-#    foreground = "#FFFFFF"
-#
-#[newsbeuter]
-#    summary = *Feeds*
-#    background = "#A8EB41"
-#    foreground = "#FFFFFF"
-#
-[irc]
-        appname = weechat
-        timeout = 0
-        background = "#0033bb"
-        foreground = "#dddddd"
-#
-[weechat hl]
-     appname = weechat
-     category = weechat.HL
-     background = "#FF5C47"
-     foreground = "#FFFFFF"
-#
-[weechat pn]
-     appname = weechat
-     category = weechat.PM
-     background = "#D53B84"
-     foreground = "#FFFFFF"
-#
-#[CMUS]
-#    appname = CMUS
-#    category = cmus
-#    background = "#6C4AB7"
-#    foreground = "#FFE756"
-#
-#
-#     background = "#30AB70"
-#     foreground = "#F67245"
-#
-# vim: ft=cfg
