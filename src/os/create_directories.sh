@@ -14,10 +14,10 @@ create_directories() {
         "$HOME/logs"
         "$HOME/notes"
         "$HOME/private"
-        "$HOME/.config/i3"
+        "$HOME/.config/sway"
         "$HOME/.config/mpv/scripts"
         "$HOME/.config/Code\ -\ OSS/User/"
-        "$HOME/Pictures/screenshots"
+        "$HOME/pictures/screenshots"
     )
 
     for i in "${DIRECTORIES[@]}"; do

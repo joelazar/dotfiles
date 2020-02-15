@@ -1,21 +1,16 @@
 #!/bin/bash
 
-# Bash Variables.
-# https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Make `neovim` the default editor.
-
-export EDITOR="/usr/bin/nvim"
-export VISUAL="/usr/bin/nvim"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Make `firefox` the default browser.
+# Make default programs
 
 export BROWSER="firefox"
-export browser="firefox"
+export EDITOR="/usr/bin/nvim"
+export FILE="nnn"
+export READER="zathura"
+export STATUSBAR="i3blocks"
+export TERMINAL="alacritty"
+export VISUAL="/usr/bin/nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -26,9 +21,9 @@ export HISTCONTROL=ignoreboth:erasedups
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Increase the maximum number of lines of history
-# persisted in the history file (default value is 500).
+# persisted in the history file.
 
-export HISTFILESIZE=20000
+export HISTFILESIZE=30000
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -39,9 +34,9 @@ export HISTIGNORE="&:[bf]g:c:clear:history:exit:q:pwd:ls:cd ..:* --help"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Increase the maximum number of commands recorded
-# in the command history (default value is 500).
+# in the command history.
 
-export HISTSIZE=20000
+export HISTSIZE=30000
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -58,15 +53,9 @@ export MANPAGER="less -X"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Add my scripts to PATH.
+
 export PATH=$HOME/bin:$HOME/.local/bin:$PATH
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Add user installed gems to PATH
-
-if which ruby >/dev/null && which gem >/dev/null; then
-    export PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -117,3 +106,7 @@ export NNN_USE_EDITOR=1
 export NNN_CONTEXT_COLORS="2136"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
+
+export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
