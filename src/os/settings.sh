@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd "$(dirname "${BASH_SOURCE[0]}")" &&
-  . "../utils.sh"
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -24,3 +23,7 @@ execute "getent group vboxusers | grep $USER && sudo usermod -aG vboxusers $USER
 execute "if [ ! -e ~/.config/exercism/exercism_completion.bash ]; then mkdir -p ~/.config/exercism/ \
          && curl https://raw.githubusercontent.com/exercism/cli/v3.0.11/shell/exercism_completion.bash > ~/.config/exercism/exercism_completion.bash; fi" \
         "Exercism bash completions"
+
+execute "sudo firecfg" "Firejail auto config"
+execute "sudo timedatectl set-ntp true" "Turn on ntp"
+execute "sudo systemctl enable tlp" "Turn on tlp"

@@ -8,7 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" &&
 declare -r INSTALLED_PACKAGES=$(yay -Q)
 
 install_package_manager() {
-  execute "which yay && ( [ $? -eq 0 ] || yaourt -S --noconfirm yay)" "YAY"
+  execute "which yay && ( [ $? -eq 0 ] || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
 }
 
 autoremove() {
@@ -36,4 +36,10 @@ update() {
 
 clean_up_cache() {
   execute "paccache -rk2 && paccache -ruk1" "Clean up cached packages"
+}
+
+install_blackarch_repo() {
+    if ! yay -Sg | grep -q "^blackarch" &> /dev/null; then
+        execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
+    fi
 }

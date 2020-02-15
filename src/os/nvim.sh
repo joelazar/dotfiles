@@ -46,7 +46,6 @@ main() {
 
     install_plugins
     update_plugins
-    install_package "powerline-fonts" "powerline-fonts"
 
     printf "\n"
 
