@@ -26,7 +26,7 @@ rgv() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Extract archives
-# usage: ex <file>
+# usage: extract <file>
 
 extract() {
   if [ -f $1 ]; then

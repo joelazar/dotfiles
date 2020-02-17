@@ -5,12 +5,12 @@
 # Make default programs
 
 export BROWSER="firefox"
-export EDITOR="/usr/bin/nvim"
+export EDITOR="nvim"
 export FILE="nnn"
 export READER="zathura"
 export STATUSBAR="i3blocks"
 export TERMINAL="alacritty"
-export VISUAL="/usr/bin/nvim"
+export VISUAL="nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -55,7 +55,7 @@ export MANPAGER="less -X"
 
 # Add my scripts to PATH.
 
-export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -107,6 +107,13 @@ export NNN_CONTEXT_COLORS="2136"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Grim settings
+
 export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Use dmenu for sudo pass insert
+
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+
