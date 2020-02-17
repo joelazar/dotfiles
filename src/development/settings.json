@@ -1,0 +1,18 @@
+{
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.renderSideBySide": true,
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "git.enableSmartCommit": true,
+    "vim.highlightedyank.enable": true,
+    "vim.hlsearch": true,
+    "vim.replaceWithRegister": true,
+    "vim.useSystemClipboard": true,
+    "vim.enableNeovim": true,
+    "vim.neovimPath": "/usr/bin/nvim",
+    "vscode-neovim.neovimPath": "/usr/bin/nvim",
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.colorTheme": "Solarized Light",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.startupEditor": "newUntitledFile"
+}
