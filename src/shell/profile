@@ -1,0 +1,10 @@
+# Profile file. Runs on login. Environmental variables are set here.
+
+# Start graphical server on tty1 if not already running.
+if [ "$(tty)" = "/dev/tty1" && ! pgrep -x sway ]; then
+  exec sway
+fi
+
+# Switch escape and caps if tty and no passwd required:
+sudo -n loadkeys ~/.local/share/keymaps/ttymaps.kmap 2>/dev/null
+
