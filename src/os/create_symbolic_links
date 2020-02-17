@@ -1,13 +1,14 @@
 #!/bin/bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && . "utils.sh"
+    && . "utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 create_symlinks() {
 
      create_symlink   "alacritty/alacritty.yml" "$HOME/.config/alacritty/alacritty.yml"
+     create_symlink   "development/clang-format"
      create_symlink   "development/settings.json" "$HOME/.config/Code\ -\ OSS/User/settings.json"
      create_symlink   "development/keybindings.json" "$HOME/.config/Code\ -\ OSS/User/keybindings.json"
      create_symlink   "git/gitconfig"
@@ -16,7 +17,7 @@ create_symlinks() {
      create_symlink   "sway/config" "$HOME/.config/sway/config"
      create_symlink   "mpv" "$HOME/.config/mpv/scripts"
      create_symlink   "nvim" "$HOME/.config/nvim"
-     create_symlink   "os/setup.sh" "$HOME/bin/setup.sh"
+     create_symlink   "os/run_setup" "$HOME/bin/run_setup"
      create_symlink   "scripts/*" "$HOME/bin/"
      create_symlink   "shell/bash_aliases"
      create_symlink   "shell/bash_autocomplete"
