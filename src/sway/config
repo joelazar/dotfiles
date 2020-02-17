@@ -94,7 +94,7 @@ input "Synaptics TM3075-002" {
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
     set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-    
+
     mode "$mode_system" {
         bindsym l exec --no-startup-id swaylock -f -c 000000, mode "default"
         bindsym e exec --no-startup-id logout, mode "default"
@@ -102,11 +102,11 @@ input "Synaptics TM3075-002" {
         bindsym h exec --no-startup-id systemctl hibernate, mode "default"
         bindsym r exec --no-startup-id reboot, mode "default"
         bindsym Shift+s exec --no-startup-id shutdown -h now, mode "default"
-    
+
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
-    
+
     bindsym $mod+shift+x mode "$mode_system"
 
 #
@@ -256,6 +256,10 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+bindsym $mod+F9		exec --no-startup-id dmenumount
+bindsym $mod+F10	exec --no-startup-id dmenuumount
+bindsym $mod+F11	exec --no-startup-id dmenuunicode
 
 # Start Applications
 bindsym $mod+Ctrl+b exec alacritty -e 'bmenu'
