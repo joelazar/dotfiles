@@ -15,8 +15,9 @@ create_symlinks() {
      create_symlink   "git/gitignore"
      create_symlink   "sway/dunstrc" "$HOME/.config/dunst/dunstrc"
      create_symlink   "sway/config" "$HOME/.config/sway/config"
-     create_symlink   "mpv" "$HOME/.config/mpv/scripts"
-     create_symlink   "nvim" "$HOME/.config/nvim"
+     create_symlink   "sway/status.sh" "$HOME/.config/sway/status.sh"
+     create_symlink   "mpv/*" "$HOME/.config/mpv/scripts/"
+     create_symlink   "nvim/*" "$HOME/.config/nvim/"
      create_symlink   "os/run_setup" "$HOME/.local/bin/run_setup"
      create_symlink   "scripts/*" "$HOME/.local/bin/"
      create_symlink   "shell/bash_aliases"
@@ -32,7 +33,7 @@ create_symlinks() {
      create_symlink   "shell/inputrc"
      create_symlink   "shell/profile"
      create_symlink   "tmux/tmux.conf"
-     create_symlink   "share/*" "$HOME/.local/share/"
+     create_symlink   "share/applications/*" "$HOME/.local/share/applications/"
 }
 
 create_symlink(){

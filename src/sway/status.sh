@@ -9,4 +9,4 @@ bat0=$(acpi -b | awk '{print $4}' | cut -d % -f 1 | head -n 1)
 bat1=$(acpi -b | awk '{print $4}' | cut -d % -f 1 | tail -n 1)
 
 # Emojis and characters for the status bar
-echo $bat0 | $bat1 | $date_formatted
+echo "$bat0 | $bat1 | $date_formatted"

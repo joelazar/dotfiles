@@ -28,7 +28,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term st
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -169,11 +169,9 @@ input "Synaptics TM3075-002" {
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
     # Assign applications to workspaces
-    assign [class="firefox"] $ws2
-    assign [class="Firefox Beta"] $ws2
-    assign [class="Mousepad"] $ws3
-    assign [class="Caprine"] $ws4
-    for_window [class="Spotify"] move to workspace $ws9
+    assign [class="firefox"] 2
+    assign [class="Caprine"] 4
+    for_window [class="Spotify"] 9
 #
 # Layout stuff:
 #
