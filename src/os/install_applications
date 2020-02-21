@@ -15,7 +15,7 @@ install_package_manager
 update
 
 print_in_purple "\n   Browsers\n\n"
-install_package "Firefox" "firefox"
+install_package "firefox"
 
 print_in_purple "\n   Development\n\n"
 
@@ -120,8 +120,8 @@ install_package "swayidle"
 install_package "swaylock"
 install_package "xorg-server-xwayland"
 
-#install_package "rofi" "rofi"
-#install_package "sysstat" "sysstat" for what?
+#install_package "rofi"
+#install_package "sysstat" for what?
 
 print_in_purple "\n   AUR packages\n\n"
 install_package "exercism-bin"
