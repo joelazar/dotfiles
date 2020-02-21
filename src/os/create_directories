@@ -15,9 +15,12 @@ create_directories() {
         "$HOME/private"
         "$HOME/.local"
         "$HOME/.local/bin"
-        "$HOME/.config/sway"
-        "$HOME/.config/mpv/scripts"
+        "$HOME/.config/alacritty"
         "$HOME/.config/Code\ -\ OSS/User/"
+        "$HOME/.config/dunst"
+        "$HOME/.config/mpv/scripts"
+        "$HOME/.config/mpv/scripts"
+        "$HOME/.config/sway"
         "$HOME/pictures/screenshots"
     )
 
