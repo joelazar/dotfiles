@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 cd "$(dirname "${BASH_SOURCE[0]}")" &&
   . "./utils_install" &&
   . "./utils"
@@ -12,9 +13,12 @@ print_in_purple "\n • Installs\n\n"
 
 install_package_manager
 
+enable_multilib
+
 update
 
 print_in_purple "\n   Browsers\n\n"
+
 install_package "firefox"
 
 print_in_purple "\n   Development\n\n"
@@ -41,7 +45,6 @@ install_package "texlive-science"
 install_package "texmaker"
 install_package "tmux"
 install_package "yapf"
-install_package "grip"
 
 print_in_purple "\n   Image Tools\n\n"
 
@@ -50,6 +53,7 @@ install_package "imagemagick"
 
 print_in_purple "\n   Miscellaneous\n\n"
 
+install_package "acpi"
 install_package "aspell-en"
 install_package "bind-tools"
 install_package "bleachbit"
@@ -57,6 +61,7 @@ install_package "brotli"
 install_package "caprine"
 install_package "calibre"
 install_package "colordiff"
+install_package "diff-so-fancy"
 install_package "libqalculate"
 install_package "keepassxc"
 install_package "mpv"
@@ -75,18 +80,19 @@ install_package "zathura"
 install_package "zathura-pdf-poppler"
 
 print_in_purple "\n   Fonts\n\n"
+
 install_package "powerline-fonts"
 
 print_in_purple "\n   Penetration testing\n\n"
 
 install_blackarch_repo
-install_package "blackarch/aircrack-ng"
-install_package "blackarch/bettercap"
-install_package "blackarch/dirb"
-install_package "blackarch/hydra"
-install_package "blackarch/macchanger"
-install_package "blackarch/reaver"
-install_package "blackarch/whatweb"
+install_package "aircrack-ng"
+install_package "bettercap"
+install_package "dirb"
+install_package "hydra"
+install_package "macchanger"
+install_package "reaver"
+install_package "whatweb"
 install_package "nmap" "nmap"
 install_package "wireshark-qt"
 
@@ -109,12 +115,9 @@ install_package "wireguard-tools"
 
 print_in_purple "\n   Sway\n\n"
 
-install_package "bmenu"
-install_package "clipit"
 install_package "dunst"
 install_package "pulseaudio"
 install_package "pulseaudio-bluetooth"
-install_package "pa-applet"
 install_package "sway"
 install_package "swayidle"
 install_package "swaylock"
@@ -124,13 +127,17 @@ install_package "xorg-server-xwayland"
 #install_package "sysstat" for what?
 
 print_in_purple "\n   AUR packages\n\n"
+install_package "clipit" # does it working on wayland?
+install_package "downgrade"
 install_package "exercism-bin"
 install_package "hfsprogs"
 install_package "google-chrome"
-install_package "joplin"
-install_package "restic-git"
-install_package "spotify"
-install_package "teamviewer"
+install_package "pa-applet-git"
+install_package "python-grip"
+#install_package "joplin"
+#install_package "restic-git"
+#install_package "spotify"
+#install_package "teamviewer"
 
 ./nvim
 ./code

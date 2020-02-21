@@ -6,12 +6,22 @@ cd "$(dirname "${BASH_SOURCE[0]}")" &&
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+declare -r INSTALLED_CODE_EXTENSIONS=$(code --list-extensions 2> /dev/null)
+
+extension_is_installed() {
+  echo $INSTALLED_CODE_EXTENSIONS | grep -q "$1" &>/dev/null
+}
+
 install_extension() {
+  declare -r EXTENSION="$1"
 
-  execute \
-    "code --install-extension $1" \
-    "Installing $1 extension to Code"
-
+  if ! extension_is_installed "$EXTENSION"; then
+    execute \
+      "code --install-extension $EXTENSION" \
+      "Installing $EXTENSION extension to Code"
+  else
+    print_success "$EXTENSION"
+  fi
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
