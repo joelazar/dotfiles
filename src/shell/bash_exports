@@ -14,6 +14,36 @@ export VISUAL="nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Wayland environment variables
+
+# GTK
+CLUTTER_BACKEND=wayland
+#GDK_BACKEND=wayland             # this can prevent programs from starting (e.g. chromium and electron apps). therefore, this should be set per app instead of globally.
+MOZ_ENABLE_WAYLAND=1 # only start firefox in wayland mode and no other GTK apps
+
+# Qt
+XDG_SESSION_TYPE=wayland
+QT_QPA_PLATFORM=wayland
+QT_QPA_PLATFORMTHEME=qt5ct
+QT_WAYLAND_FORCE_DPI=physical
+QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+# elementary
+ECORE_EVAS_ENGINE=wayland_egl
+ELM_ENGINE=wayland_egl
+ELM_DISPLAY=wl
+ELM_ACCEL=gl
+
+# clutter
+CLUTTER_BACKEND=wayland
+
+# sdl
+SDL_VIDEODRIVER=wayland
+
+# java
+_JAVA_AWT_WM_NONREPARENTING=1
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Ignore commands that start with spaces and duplicates.
 
 export HISTCONTROL=ignoreboth:erasedups
@@ -42,8 +72,11 @@ export HISTSIZE=30000
 
 # Use custom `less` colors for `man` pages.
 
-export LESS_TERMCAP_md="$(tput bold 2> /dev/null; tput setaf 2 2> /dev/null)"
-export LESS_TERMCAP_me="$(tput sgr0 2> /dev/null)"
+export LESS_TERMCAP_md="$(
+  tput bold 2>/dev/null
+  tput setaf 2 2>/dev/null
+)"
+export LESS_TERMCAP_me="$(tput sgr0 2>/dev/null)"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -63,9 +96,8 @@ export PATH=$HOME/.local/bin:$PATH
 # shells instead of the default "last window closed" history.
 
 #export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
-if [ ! -z "$PROMPT_COMMAND" ]
-then
-    export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+if [ ! -z "$PROMPT_COMMAND" ]; then
+  export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -116,4 +148,3 @@ export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
 # Use dmenu for sudo pass insert
 
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-

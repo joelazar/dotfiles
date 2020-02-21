@@ -4,7 +4,3 @@
 if [ "$(tty)" = "/dev/tty1" && ! pgrep -x sway ]; then
   exec sway
 fi
-
-# Switch escape and caps if tty and no passwd required:
-sudo -n loadkeys ~/.local/share/keymaps/ttymaps.kmap 2>/dev/null
-
