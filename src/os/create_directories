@@ -15,6 +15,7 @@ create_directories() {
         "$HOME/private"
         "$HOME/.local"
         "$HOME/.local/bin"
+        "$HOME/.local/share"
         "$HOME/.config/alacritty"
         "$HOME/.config/Code\ -\ OSS/User/"
         "$HOME/.config/dunst"
