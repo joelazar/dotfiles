@@ -7,6 +7,7 @@
 date_formatted=$(date "+%a %F %H:%M")
 bat0=$(acpi -b | awk '{print $4}' | cut -d % -f 1 | head -n 1)
 bat1=$(acpi -b | awk '{print $4}' | cut -d % -f 1 | tail -n 1)
-
+volume=$(pactl list sinks | grep '^[[:space:]]Volume:' |
+  head -n $(($SINK + 1)) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')
 # Emojis and characters for the status bar
 echo "$bat0 | $bat1 | $date_formatted"
