@@ -36,7 +36,8 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 
 ### Output configuration
 #
-output * bg $HOME/pictures/wallpaper/* fill
+set $wallpapers_path $HOME/pictures/wallpaper/
+output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 #
 # Example configuration:
 #
