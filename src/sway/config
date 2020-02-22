@@ -322,6 +322,6 @@ for_window [class="^.*"] border pixel 2
 for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
 
 # Notifications
-bindsym $mod+space exec makoctl dismiss
+bindsym Mod1+space exec makoctl dismiss
 
 include /etc/sway/config.d/*
