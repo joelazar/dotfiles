@@ -70,7 +70,7 @@ input "2:6:ImExPS\/2_Generic_Explorer_Mouse" {
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
-  }
+}
 
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
@@ -295,5 +295,11 @@ exec --no-startup-id clipman
 exec --no-startup-id joplin server start
 
 for_window [class="^.*"] border pixel 2
+
+# Tag xwayland windows as such
+for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
+
+# Notifications
+bindsym $mod+space exec makoctl dismiss
 
 include /etc/sway/config.d/*
