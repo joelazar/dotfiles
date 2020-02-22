@@ -82,6 +82,7 @@ install_package "zathura-pdf-poppler"
 print_in_purple "\n   Fonts\n\n"
 
 install_package "powerline-fonts"
+install_package "ttf-font-awesome"
 
 print_in_purple "\n   Penetration testing\n\n"
 
