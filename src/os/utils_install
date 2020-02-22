@@ -30,7 +30,7 @@ install_package() {
 }
 
 package_is_installed() {
-  echo $INSTALLED_PACKAGES | grep -q "$1 " &>/dev/null
+  echo $INSTALLED_PACKAGES | grep -q " $1 "
 }
 
 update() {
