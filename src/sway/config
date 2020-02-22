@@ -314,6 +314,14 @@ bindsym $mod+c exec clipman pick -t dmenu
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
 
+# GTK themes
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+  gsettings set $gnome-schema gtk-theme 'Materia'
+  gsettings set $gnome-schema icon-theme 'Materia'
+  gsettings set $gnome-schema cursor-theme 'Capitaine'
+}
+
 # Startup applications
 exec --no-startup-id mako 
 exec --no-startup-id pulseaudio
