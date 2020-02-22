@@ -30,6 +30,7 @@ create_symlinks() {
      create_symlink   "shell/bashrc"
      create_symlink   "shell/curlrc"
      create_symlink   "shell/inputrc"
+     create_symlink   "shell/environment" "/etc/environment" "sudo-needed"
      create_symlink   "tmux/tmux.conf"
      create_symlink   "share/applications/*" "$HOME/.local/share/applications/"
 }
