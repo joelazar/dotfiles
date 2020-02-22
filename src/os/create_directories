@@ -23,6 +23,7 @@ create_directories() {
         "$HOME/.config/nvim"
         "$HOME/.config/sway"
         "$HOME/pictures/screenshots"
+        "$HOME/pictures/wallpaper"
     )
 
     for i in "${DIRECTORIES[@]}"; do
