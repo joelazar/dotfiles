@@ -13,7 +13,6 @@ create_symlinks() {
      create_symlink   "development/keybindings.json" "$HOME/.config/Code\ -\ OSS/User/keybindings.json"
      create_symlink   "git/gitconfig"
      create_symlink   "git/gitignore"
-     create_symlink   "sway/dunstrc" "$HOME/.config/dunst/dunstrc"
      create_symlink   "sway/config" "$HOME/.config/sway/config"
      create_symlink   "sway/status.sh" "$HOME/.config/sway/status.sh"
      create_symlink   "mpv/*" "$HOME/.config/mpv/scripts/"
