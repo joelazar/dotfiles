@@ -115,6 +115,7 @@ install_package "wireguard-tools"
 
 print_in_purple "\n   Sway\n\n"
 
+install_package "light"
 install_package "mako"
 install_package "network-manager"
 install_package "pulseaudio"
