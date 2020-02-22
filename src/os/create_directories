@@ -18,7 +18,6 @@ create_directories() {
         "$HOME/.local/share/applications"
         "$HOME/.config/alacritty"
         "$HOME/.config/Code\ -\ OSS/User/"
-        "$HOME/.config/dunst"
         "$HOME/.config/mpv/scripts"
         "$HOME/.config/nvim"
         "$HOME/.config/sway"

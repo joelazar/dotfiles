@@ -115,25 +115,24 @@ install_package "wireguard-tools"
 
 print_in_purple "\n   Sway\n\n"
 
-install_package "dunst"
+install_package "mako"
 install_package "pulseaudio"
 install_package "pulseaudio-bluetooth"
 install_package "sway"
 install_package "swayidle"
 install_package "swaylock"
 install_package "xorg-server-xwayland"
-
-#install_package "rofi"
-#install_package "sysstat" for what?
+install_package "wl-clipboard"
 
 print_in_purple "\n   AUR packages\n\n"
-install_package "clipit" # does it working on wayland?
+install_package "clipman"
 install_package "downgrade"
 install_package "exercism-bin"
 install_package "hfsprogs"
 install_package "google-chrome"
 install_package "pa-applet-git"
 install_package "python-grip"
+install_package "wlr-randr"
 #install_package "joplin"
 #install_package "restic-git"
 #install_package "spotify"

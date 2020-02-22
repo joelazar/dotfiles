@@ -15,7 +15,6 @@ default_border pixel 1
 default_floating_border none
 
 # Keyboard layout
-
 input type:keyboard {
     xkb_layout hu,us
     xkb_options caps:escape
@@ -268,17 +267,15 @@ bindsym $mod+F10	exec --no-startup-id dmenuumount
 bindsym $mod+F11	exec --no-startup-id dmenuunicode
 
 # Start Applications
-bindsym $mod+Ctrl+b exec alacritty -e 'bmenu'
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
-bindsym $mod+Shift+d --release exec --no-startup-id "killall dunst; exec notify-send 'restart dunst'"
 
 # Startup applications
-exec --no-startup-id dunst
+exec --no-startup-id mako 
 exec --no-startup-id nm-applet
 exec --no-startup-id pulseaudio
 exec --no-startup-id pa-applet
-exec --no-startup-id clipit
+exec --no-startup-id clipman
 exec --no-startup-id joplin server start
 
 for_window [class="^.*"] border pixel 2
