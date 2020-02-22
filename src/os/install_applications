@@ -126,6 +126,7 @@ install_package "pulseaudio-bluetooth"
 install_package "sway"
 install_package "swayidle"
 install_package "swaylock"
+install_package "qt5-wayland"
 install_package "xorg-server-xwayland"
 install_package "wl-clipboard"
 
