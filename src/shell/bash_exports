@@ -148,3 +148,6 @@ export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
 # Use dmenu for sudo pass insert
 
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+
+# TEMP
+export WLR_NO_HARDWARE_CURSORS=1
