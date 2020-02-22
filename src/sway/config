@@ -15,11 +15,9 @@ default_border pixel 1
 default_floating_border none
 
 # Keyboard layout
-input type:keyboard {
-    xkb_layout hu,us
-    xkb_options caps:escape
-    xkb_options grp:alt_shift_toggle
-}
+input * xkb_layout "hu,us"
+input * xkb_options caps:escape
+input * xkb_options grp:alt_shift_toggle
 
 # Home row direction keys, like vim
 set $left h
@@ -27,7 +25,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term st
+set $term termite
 #set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -310,18 +308,21 @@ bindsym $mod+shift+m   exec wlr-randr --output HDMI1 --auto --left-of eDP1 --pri
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 
+# Clipboard manager
+bindsym $mod+c exec clipman pick -t dmenu
+
+# Notifications
+bindsym $mod+ctrl+space exec makoctl dismiss
+
 # Startup applications
 exec --no-startup-id mako 
 exec --no-startup-id pulseaudio
-exec --no-startup-id clipman
+exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id joplin server start
 
 for_window [class="^.*"] border pixel 2
 
 # Tag xwayland windows as such
 for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
-
-# Notifications
-bindsym Mod1+space exec makoctl dismiss
 
 include /etc/sway/config.d/*

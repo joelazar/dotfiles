@@ -83,6 +83,7 @@ print_in_purple "\n   Fonts\n\n"
 
 install_package "powerline-fonts"
 install_package "ttf-font-awesome"
+install_package "ttf-hack"
 
 print_in_purple "\n   Penetration testing\n\n"
 
@@ -117,6 +118,7 @@ install_package "wireguard-tools"
 print_in_purple "\n   Sway\n\n"
 
 install_package "blueman"
+install_package "grim"
 install_package "light"
 install_package "mako"
 install_package "networkmanager"
@@ -137,7 +139,6 @@ install_package "exercism-bin"
 install_package "hfsprogs"
 install_package "google-chrome"
 install_package "networkmanager-dmenu"
-install_package "pa-applet-git"
 install_package "python-grip"
 install_package "wlr-randr"
 install_package "joplin"
