@@ -64,7 +64,8 @@ exec swayidle -w \
 # Example configuration:
 #
 
-input "Synaptics TM3075-002" {
+#input "Synaptics TM3075-002" {
+input "2:6:ImExPS\/2_Generic_Explorer_Mouse" {
     dwt enabled
     tap enabled
     natural_scroll enabled
