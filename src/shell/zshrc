@@ -19,6 +19,7 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.zsh_aliases
 source $HOME/.zsh_exports
 source $HOME/.zsh_functions
+source $HOME/.zsh.local
 
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
