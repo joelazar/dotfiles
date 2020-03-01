@@ -104,7 +104,7 @@ input "2:6:ImExPS\/2_Generic_Explorer_Mouse" {
 
     mode "$mode_system" {
         bindsym l exec --no-startup-id swaylock -f -c 000000, mode "default"
-        bindsym e exec --no-startup-id logout, mode "default"
+        bindsym e exec --no-startup-id pkill sway, mode "default"
         bindsym s exec --no-startup-id systemctl suspend, mode "default"
         bindsym h exec --no-startup-id systemctl hibernate, mode "default"
         bindsym r exec --no-startup-id reboot, mode "default"
