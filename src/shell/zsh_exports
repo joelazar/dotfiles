@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -64,10 +64,10 @@ export PATH=$HOME/.local/bin:$PATH
 # Make new shells get the history lines from all previous
 # shells instead of the default "last window closed" history.
 
-#export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 if [ ! -z "$PROMPT_COMMAND" ]; then
   export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 fi
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Make Python use UTF-8 encoding for output to stdin/stdout/stderr.
@@ -117,6 +117,8 @@ export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
 # Use dmenu for sudo pass insert
 
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # TEMP
 export WLR_NO_HARDWARE_CURSORS=1
