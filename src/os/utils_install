@@ -5,10 +5,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")" &&
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-declare -r INSTALLED_PACKAGES=$(yay -Q)
+declare -r INSTALLED_PACKAGES=$((which yay &> /dev/null && [ ! $? -eq 0 ]) || yay -Q)
 
 install_package_manager() {
-  execute "which yay && ( [ $? -eq 0 ] || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay))" "YAY"
+  execute "( which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
 }
 
 enable_multilib() {

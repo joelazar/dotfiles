@@ -84,6 +84,7 @@ print_in_purple "\n   Fonts\n\n"
 install_package "powerline-fonts"
 install_package "ttf-font-awesome"
 install_package "ttf-hack"
+install_package "ttf-nerd-fonts-symbols"
 
 print_in_purple "\n   Penetration testing\n\n"
 
@@ -113,16 +114,22 @@ install_package "tcpdump"
 install_package "vnstat"
 install_package "wireguard-dkms"
 install_package "wireguard-tools"
+install_package "zsh"
+
+# TODO - oh my zsh
 
 print_in_purple "\n   Sway\n\n"
 
 install_package "blueman"
+install_package "dmenu"
 install_package "grim"
 install_package "light"
 install_package "mako"
 install_package "networkmanager"
 install_package "pamixer"
+install_package "pavucontrol-qt"
 install_package "pulseaudio"
+install_package "pulseaudio-alsa"
 install_package "pulseaudio-bluetooth"
 install_package "sway"
 install_package "swayidle"

@@ -119,6 +119,3 @@ export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# TEMP
-export WLR_NO_HARDWARE_CURSORS=1
