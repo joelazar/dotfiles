@@ -15,9 +15,11 @@ default_border pixel 1
 default_floating_border none
 
 # Keyboard layout
-input * xkb_layout "hu,us"
-input * xkb_options caps:escape
-input * xkb_options grp:alt_shift_toggle
+input type:keyboard {
+    xkb_layout "hu,us"
+    xkb_options caps:escape
+    xkb_options grp:alt_shift_toggle
+}
 
 # Home row direction keys, like vim
 set $left h
@@ -25,17 +27,17 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term termite
-#set $term alacritty
+set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu dmenu_path | dmenu | xargs swaymsg exec --
+#set $menu bemenu | xargs swaymsg exec --
 
 ### Output configuration
 #
-set $wallpapers_path $HOME/pictures/wallpaper/
-output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+#set $wallpapers_path $HOME/pictures/wallpaper/
+#output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 #
 # Example configuration:
 #
@@ -62,12 +64,12 @@ exec swayidle -w \
 # Example configuration:
 #
 
-#input "Synaptics TM3075-002" {
-input "2:6:ImExPS\/2_Generic_Explorer_Mouse" {
+input type:touchpad {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+    scroll_factor 0.3
 }
 
 #
@@ -107,7 +109,7 @@ input "2:6:ImExPS\/2_Generic_Explorer_Mouse" {
         bindsym e exec --no-startup-id pkill sway, mode "default"
         bindsym s exec --no-startup-id systemctl suspend, mode "default"
         bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-        bindsym r exec --no-startup-id reboot, mode "default"
+        bindsym r exec --no-startup-id sudo reboot, mode "default"
         bindsym Shift+s exec --no-startup-id shutdown -h now, mode "default"
 
         bindsym Return mode "default"
@@ -324,7 +326,6 @@ exec_always {
 
 # Startup applications
 exec --no-startup-id mako 
-exec --no-startup-id pulseaudio
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id joplin server start
 
