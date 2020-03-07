@@ -1,6 +1,8 @@
 # [joelazar](https://github.com/joelazar)’s dotfiles
 
-![joedotfiles - vim + htop](https://user-images.githubusercontent.com/16268238/55280833-608c0900-532b-11e9-954f-08cbe0514d29.png)
+![joedotfiles - neofetch](https://user-images.githubusercontent.com/16268238/76142019-d1728f80-6069-11ea-9d44-a46382414c5c.png)
+
+![joedotfiles - second workspace](https://user-images.githubusercontent.com/16268238/76142030-fb2bb680-6069-11ea-9d5f-c955479af682.png)
 
 ## Details
 
