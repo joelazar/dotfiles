@@ -1,0 +1,42 @@
+#!/bin/bash
+
+cd "$(dirname "${BASH_SOURCE[0]}")" \
+    && . "utils"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+create_directories() {
+
+    declare -a DIRECTORIES=(
+        "$HOME/Downloads"
+        "$HOME/git"
+        "$HOME/go"
+        "$HOME/logs"
+        "$HOME/notes"
+        "$HOME/private"
+        "$HOME/.local"
+        "$HOME/.local/bin"
+        "$HOME/.local/share/applications"
+        "$HOME/.config/alacritty"
+        "$HOME/.config/Code\ -\ OSS/User/"
+        "$HOME/.config/mpv/scripts"
+        "$HOME/.config/nvim"
+        "$HOME/.config/sway"
+        "$HOME/pictures/screenshots"
+        "$HOME/pictures/wallpaper"
+    )
+
+    for i in "${DIRECTORIES[@]}"; do
+        mkd "$i"
+    done
+
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+main() {
+    print_in_purple "\n • Create directories\n\n"
+    create_directories
+}
+
+main

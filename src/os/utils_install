@@ -1,0 +1,48 @@
+#!/bin/bash
+
+cd "$(dirname "${BASH_SOURCE[0]}")" &&
+  . "./utils"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+declare -r INSTALLED_PACKAGES=$((which yay &> /dev/null && [ ! $? -eq 0 ]) || yay -Q)
+
+install_package_manager() {
+  execute "( which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
+}
+
+enable_multilib() {
+  execute "(yay -Syy | grep -q multilib) || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
+}
+
+autoremove() {
+  execute "sudo yay -Qtd --noconfirm || true" "YAY (autoremove)"
+}
+
+install_package() {
+  declare -r PACKAGE="$1"
+
+  if ! package_is_installed "$PACKAGE"; then
+    execute "yay -S --noconfirm --needed $PACKAGE" "$PACKAGE"
+  else
+    print_success "$PACKAGE"
+  fi
+}
+
+package_is_installed() {
+  echo $INSTALLED_PACKAGES | grep -q " $1 "
+}
+
+update() {
+  execute "yay -Syyu --noconfirm" "YAY (update)"
+}
+
+clean_up_cache() {
+  execute "paccache -rk2 && paccache -ruk1" "Clean up cached packages"
+}
+
+install_blackarch_repo() {
+  if ! yay -Sg | grep -q "^blackarch" &>/dev/null; then
+    execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
+  fi
+}

@@ -2,7 +2,6 @@ call plug#begin()
 Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'lambdalisue/suda.vim'
@@ -10,8 +9,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sbdchd/neoformat'
-"Plug 'scrooloose/nerdtree'
-Plug 'mcchrish/nnn.vim'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
@@ -51,20 +49,7 @@ colorscheme gruvbox
 set foldlevel=10
 
 " Remaps
-" map <C-n> :NERDTree<CR>
-" Disable default mappings
-let g:nnn#set_default_mappings = 0
-
-" Then set your own
-"nnoremap <silent> <C-nn> :NnnPicker<CR>
-
-" Or override
-" Start nnn in the current file's directory
-nnoremap <C-n> :NnnPicker '%:p:h'<CR>
-
-" Or pass a dictionary with window size
-let g:nnn#layout = { 'left': '~20%' } " or right, up, down
-
+map <C-n> :NERDTree<CR>
 
 " Movement mapping between split screens
 nnoremap <C-J> <C-W><C-J>
@@ -123,10 +108,10 @@ endfunction
 
 " Diffmode
 if &diff
-    map <C-1> :diffget BA<CR>
-    map <C-2> :diffget LO<CR>
-    map <C-3> :diffget RE<CR>
-    highlight! link DiffText MatchParen
+  map <C-1> :diffget BA<CR>
+  map <C-2> :diffget LO<CR>
+  map <C-3> :diffget RE<CR>
+  highlight! link DiffText MatchParen
 endif
 
 " Neoformat
@@ -148,16 +133,14 @@ let g:go_doc_keywordprg_enabled = 0
 
 " FZF
 nnoremap <C-t> :FZF<Cr>
-
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Coc settings
-
 let g:coc_global_extensions = [
-  \ 'coc-python',
-  \ 'coc-json',
-  \ ]
+      \ 'coc-python',
+      \ 'coc-json',
+      \ ]
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
