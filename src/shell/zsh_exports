@@ -13,6 +13,14 @@ export TERMINAL="alacritty"
 export VISUAL="nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Make cursors
+
+export XCURSOR_THEME="Capitaine Cursor"
+export XCURSOR_SIZE=48
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Ignore commands that start with spaces and duplicates.
 
 export HISTCONTROL=ignoreboth:erasedups
@@ -110,7 +118,7 @@ export NNN_CONTEXT_COLORS="2136"
 
 # Grim settings
 
-export GRIM_DEFAULT_DIR="$HOME/Pictures/screenshots"
+export GRIM_DEFAULT_DIR="$HOME/pictures/screenshots"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
