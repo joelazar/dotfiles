@@ -1,0 +1,48 @@
+#!/bin/zsh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Oh-My-Zsh config
+
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="avit"
+
+plugins=(docker encode64 extract fzf git git-extras vi-mode z)
+
+source $ZSH/oh-my-zsh.sh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Source files
+
+source $HOME/.zsh_aliases
+source $HOME/.zsh_exports
+source $HOME/.zsh_functions
+source $HOME/.zsh.local
+
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+  . "${SSH_ENV}" >/dev/null
+  ps ${SSH_AGENT_PID} >/dev/null || {
+    start_agent
+  }
+else
+  start_agent
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Start graphical server on tty1 if not already running.
+
+if [[ "$(tty)" = /dev/tty1 ]] && [[ -z $(pgrep sway) ]]; then
+  exec sway
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

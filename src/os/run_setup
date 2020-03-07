@@ -1,0 +1,60 @@
+#!/bin/bash
+
+declare dotfilesDirectory="$HOME/dotfiles"
+declare setupDirectory="$dotfilesDirectory/src/os"
+declare skipQuestions=false
+
+# ----------------------------------------------------------------------
+# | Main                                                               |
+# ----------------------------------------------------------------------
+
+main() {
+
+  # Ensure that the following actions
+  # are made relative to this file's path.
+
+  pushd "$setupDirectory" || exit 1
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # Load utils
+
+  if [ -x "utils" ]; then
+    . "utils" || exit 1
+  fi
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  skip_questions "$@" &&
+    skipQuestions=true
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ask_for_sudo
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ./create_directories
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ./create_symbolic_links "$@"
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ./create_local_config_files
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ./install_applications
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ./settings
+ 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  popd || exit 1
+}
+
+main "$@"

@@ -1,0 +1,60 @@
+#!/bin/zsh
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Note functions
+
+qn() {
+  echo "$1" >>$HOME/notes/quicknotes.md
+}
+
+n() {
+  $EDITOR $HOME/notes/"$*".md
+}
+
+nls() {
+  ls -c $HOME/notes/ | grep "$*"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Ripgrep search on steroids
+
+rgv() {
+  CHOICE=$(rg $* | fzf -0 -1 --ansi)
+  if [ ! -z "$CHOICE" ]; then
+    nvim $(echo "$CHOICE" | awk 'BEGIN { FS=":" } { printf "+%d %s\n", $2, $1 } ') +"Rg $*"
+  fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# Docker functions
+
+function cleandocker() {
+  if [ -z "$1" ]; then
+    echo "No param given, I guess you do not want to delete all your containers. :)"
+    return
+  fi
+  for i in $(docker images | sed '1d' | grep "$1" | awk '{print $3}'); do
+    echo ${i}
+    docker rmi -f ${i}
+  done
+}
+
+function cleannone() { docker rmi $(docker images | grep "<none>" | awk '{print $3}'); }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# SSH functions
+
+function start_agent() {
+  echo "Initialising new SSH agent..."
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" >/dev/null
+  /usr/bin/ssh-add $HOME/.ssh/id_rsa
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

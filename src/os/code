@@ -1,0 +1,46 @@
+#!/bin/bash
+
+cd "$(dirname "${BASH_SOURCE[0]}")" &&
+  . "./utils_install" &&
+  . "./utils"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+declare -r INSTALLED_CODE_EXTENSIONS=$(code --list-extensions 2> /dev/null)
+
+extension_is_installed() {
+  echo $INSTALLED_CODE_EXTENSIONS | grep -q "$1" &>/dev/null
+}
+
+install_extension() {
+  declare -r EXTENSION="$1"
+
+  if ! extension_is_installed "$EXTENSION"; then
+    execute \
+      "code --install-extension $EXTENSION" \
+      "Installing $EXTENSION extension to Code"
+  else
+    print_success "$EXTENSION"
+  fi
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+main() {
+
+  print_in_purple "\n   Code\n\n"
+
+  install_extension "alefragnani.Bookmarks"
+  install_extension "eamodio.gitlens"
+  install_extension "ms-azuretools.vscode-docker"
+  install_extension "ms-python.python"
+  install_extension "ms-vscode.Go"
+  install_extension "ms-vscode.cpptools"
+  install_extension "vscode-icons-team.vscode-icons"
+  install_extension "vscodevim.vim"
+
+  printf "\n"
+
+}
+
+main
