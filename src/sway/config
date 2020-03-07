@@ -223,8 +223,8 @@ bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 
 # Screenshot
-bindsym $mod+Print --release exec --no-startup-id grim
-bindsym $mod+Shift+Print --release exec --no-startup-id grim -g "$(slurp)"
+bindsym --release $mod+Print exec grim
+bindsym --release $mod+Shift+Print exec grim -g "$(slurp)"
 
 # color defines for zenburn styled i3
 set $bg     #2c2c2e
@@ -284,9 +284,11 @@ bindsym $mod+ctrl+space exec makoctl dismiss
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
   gsettings set $gnome-schema gtk-theme 'Materia'
-    gsettings set $gnome-schema icon-theme 'Materia'
-    gsettings set $gnome-schema cursor-theme 'Capitaine Cursors'
+  gsettings set $gnome-schema icon-theme 'Materia'
+  gsettings set $gnome-schema cursor-theme 'Capitaine Cursors'
 }
+
+seat seat0 xcursor_theme 'Capitaine Cursors' 48
 
 for_window [window_role="app"]          floating enable
 for_window [window_role="pop-up"]       floating enable
