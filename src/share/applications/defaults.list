@@ -1,0 +1,17 @@
+[Default Applications]
+application/pdf=pdf.desktop
+application/x-bittorrent=torrent.desktop;
+application/x-xpinstall=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
+application/xhtml_xml=firefox.desktop;
+image/jpeg=img.desktop;
+image/png=img.desktop;
+image/webp=firefox.desktop;
+inode/directory=file.desktop;
+text/html=firefox.desktop;
+text/plain=text.desktop;
+text/xml=firefox.desktop;
+video/x-matroska=video.desktop;
+x-scheme-handler/ftp=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;

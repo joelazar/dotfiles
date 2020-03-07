@@ -19,6 +19,18 @@ audio_is_muted=$(pamixer --sink $sink_id --get-mute)
 # Network
 ipaddress=$(ifconfig wlp3s0 | grep inet | head -n 1 | awk '{print $2}')
 
+if ifconfig wg0 | grep -q inet; then
+  vpn=''
+else
+  vpn=''
+fi
+
+if [ -z $(pgrep bluetoothd) ]; then
+  bluetooth=''
+else
+  bluetooth=''
+fi
+
 # Others
 language=$(swaymsg -r -t get_inputs | awk '/$keyboard_input_name/;/xkb_active_layout_name/' | grep "xkb_active_layout_name" | awk -F '"' '{print $4}' | sed -n 2p)
 loadavg_5min=$(cat /proc/loadavg | awk -F ' ' '{print $2}')
@@ -44,4 +56,4 @@ fi
 date_formatted=$(date "+%a %F %H:%M")
 
 # Emojis and characters for the status bar
-echo " $loadavg_5min |  $ipaddress | $battery0_pluggedin $battery0_charge | $battery1_pluggedin $battery1_charge | $audio_active $audio_volume | $language |  $date_formatted "
+echo " $loadavg_5min | $bluetooth | $vpn |  $ipaddress | $battery0_pluggedin $battery0_charge | $battery1_pluggedin $battery1_charge | $audio_active $audio_volume | $language |  $date_formatted "

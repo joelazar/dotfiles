@@ -4,15 +4,18 @@
 
 ## Details
 
-This is the dotfiles setup which I use for my [`Manjaro i3 edition`](https://manjaro.org/download/i3/).
-Theoritically, it could work on any non unorthodox Arch based
-distributions but I didn't tested and I'm pretty sure that
-some parts would need a little more attention to get them work.
+This is the dotfiles setup which I use for my [`Arch Linux`](https://archlinux.org/).
+Theoritically, it could (and should) work on any non unorthodox Arch based
+distributions too, but I didn't test it.
 
-Let me try to summarize the installed packages without attempting to be too comprehensive:
+Let me try to briefly list the installed and configured packages:
 
-* [`yay`](https://github.com/Jguer/yay) - As a aur helper
-* [`bash`](https://www.gnu.org/software/bash/) - Good ol' Bourne Again Shell
+* [`yay`](https://github.com/Jguer/yay) - As an aur helper
+* [`zsh`](http://zsh.sourceforge.net/) - Z shell
+* [`oh my zsh`](https://ohmyz.sh/) - oh my zsh framework for zsh configurations
+* [`sway`](https://swaywm.org/) - I3 compatible window manager with wayland
+* [`mako`](https://github.com/emersion/mako) - Notification daemon
+* [`dmenu`](https://git.suckless.org/dmenu/) - Application launcher for WMs
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
 * [`git`](https://git-scm.com/) - No comment
@@ -21,16 +24,12 @@ Let me try to summarize the installed packages without attempting to be too comp
 * [`fzf`](https://github.com/junegunn/fzf) - Command-line fuzzy finder
 * [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Grep on drugs
 * [`mpv`](https://mpv.io/) - For media
-* [`i3`](https://i3wm.org/) - Window manager
-* [`i3blocks`](https://github.com/vivien/i3blocks) - Status bar for i3
-* [`compton`](https://github.com/chjj/compton) - Compositor for Xorg
-* [`rofi`](https://github.com/davatorium/rofi) - A smart and fancy windows switcher, application launcher
-* [`dunst`](https://dunst-project.org/) - Notification daemon
 * [`nnn`](https://github.com/jarun/nnn) - File manager
 * [`alacritty`](https://github.com/jwilm/alacritty) - Terminal with GPU-acceleration written in Rust
 * [`font awesome`](https://origin.fontawesome.com/) - Fonts
+* [`nerd fonts symbols`](https://www.nerdfonts.com/) - Symbols
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
-* [`chromium`](https://www.chromium.org/) and [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Browsers
+* [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
 * [`spotify`](https://www.spotify.com/) - For music
 * [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
 * [`zathura`](https://github.com/pwmt/zathura) - Document viewer
@@ -39,43 +38,38 @@ Let me try to summarize the installed packages without attempting to be too comp
 * [`wine`](https://www.winehq.org/) - In case of need
 * [`gimp`](https://www.gimp.org/) - For image manupulation
 * [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
-* some useful scripts for exmaple setting up [`algo vpn`](https://github.com/trailofbits/algo)
+* some useful scripts for example setting up [`algo vpn`](https://github.com/trailofbits/algo)
 * and many more other useful stuff
 
 ## Setup
 
-To set up the `dotfiles` just run the appropriate snippet in the
-terminal:
+To set up the `dotfiles` just clone and execute [run_setup](src/os/run_setup).
 
-(:warning: **DO NOT** run the `setup` snippet if you don't fully
-understand [what it does](src/os/setup.sh). Seriously, **DON'T**!)
+(:warning: **DO NOT** run it until you don't fully
+understand [what it does](src/os/run_setup). Seriously, **DON'T**!)
 
 ![Just don't :)](https://i.imgflip.com/pms4m.jpg)
-
-| `Manjaro - i3 edition` | `bash -c "$(wget -qO - https://raw.github.com/joelazar/dotfiles/master/src/os/setup.sh)"` |
 
 That's it! :sparkles:
 
 The setup process will:
 
-* Download the dotfiles on your computer (by default it will suggest
-  `~/dotfiles`)
-* Create some additional [directories](src/os/create_directories.sh)
-* [Symlink](src/os/create_symbolic_links.sh) the
-  [`git`](src/git),
+* Create some additional [directories](src/os/create_directories)
+* [Symlink](src/os/create_symbolic_links) the
   [`alacritty`](src/alacritty),
   [`development`](src/development),
-  [`i3`](src/i3),
+  [`git`](src/git),
   [`mpv`](src/mpv),
-  [`scripts`](src/scripts),
-  [`tmux`](src/tmux),
-  [`shell`](src/shell),
   [`neovim`](src/nvim),
-  [`services`](src/services)
+  [`scripts`](src/scripts),
+  [`share`](src/share),
+  [`shell`](src/shell),
+  [`sway`](src/sway),
+  [`tmux`](src/tmux),
 * Install applications / command-line tools for Manjaro
   [`Install`](src/os/install)
 * Install [`nvim` plugins](src/nvim/init.vim)
-* Set some [`services`](src/os/preferences/services.sh) and [`crondjobs`](src/os/preferences/cronjobs.sh)
+* Set some [`settings`](src/os/settings)
 
 ## Customize
 
@@ -131,8 +125,8 @@ such as the `git` user credentials, e.g.:
 
 ## Update
 
-To update your system you can either run the [`setup`
-script](src/os/setup.sh) (which is linked to your PATH btw.) or,
+To update your system you can either run the [`run_setup`
+script](src/os/run_setup) (which is linked to your PATH btw.) or,
 if you want to just update one particular part, run that part, it should work.
 Everything was designed to be idempotent so you can use this as a system update
 as well.
@@ -140,9 +134,9 @@ as well.
 
 ## Acknowledgements
 
-Inspiration and code was taken from alrra, thus this is mainly a fork from his repo.
+Inspiration and code was taken from alrra, thus this is/was mainly a fork from his repo.
 However, I removed macos part of it and tried to improve some lines here and there
-and converted it to Manjaro compatible.
+and converted it to be Manjaro compatible and later Arch compatible.
 * [Cătălin](https://github.com/alrra)
   [dotfiles](https://github.com/alrra/dotfiles)
 
