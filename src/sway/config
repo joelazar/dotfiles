@@ -262,7 +262,6 @@ bar {
 
 bindsym $mod+F9         exec --no-startup-id dmenumount
 bindsym $mod+F10        exec --no-startup-id dmenuumount
-bindsym $mod+F11        exec --no-startup-id dmenuunicode
 
 # Put this window on the primary output.
 bindsym $mod+x move workspace to output right
