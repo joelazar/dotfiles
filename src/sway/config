@@ -281,13 +281,12 @@ bindsym $mod+ctrl+space exec makoctl dismiss
 
 # GTK themes
 set $gnome-schema org.gnome.desktop.interface
+
 exec_always {
   gsettings set $gnome-schema gtk-theme 'Materia'
   gsettings set $gnome-schema icon-theme 'Materia'
-  gsettings set $gnome-schema cursor-theme 'Capitaine Cursors'
+  gsettings set $gnome-schema cursor-theme 'Adwaita'
 }
-
-seat seat0 xcursor_theme 'Capitaine Cursors' 48
 
 for_window [window_role="app"]          floating enable
 for_window [window_role="pop-up"]       floating enable
