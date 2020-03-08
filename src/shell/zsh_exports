@@ -14,10 +14,12 @@ export VISUAL="nvim"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Make cursors
+# Set cursor theme
 
-export XCURSOR_THEME="Capitaine Cursor"
-export XCURSOR_SIZE=48
+export XCURSOR_THEME="Adwaita"
+export XCURSOR_SIZE="24"
+export SWAY_CURSOR_THEME="Adwaita"
+export SWAY_CURSOR_SIZE="24"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
