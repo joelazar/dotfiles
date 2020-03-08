@@ -26,10 +26,10 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 
 ### Idle configuration
 exec swayidle -w \
-       timeout 600 'swaylock -f -c 000000' \
+       timeout 600 'swaylock-fancy' \
        timeout 900 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
-       before-sleep 'swaylock -f -c 000000'
+       before-sleep 'swaylock-fancy'
 
 ### Input configuration
 
@@ -73,11 +73,11 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
 mode "$mode_system" {
-  bindsym l exec --no-startup-id swaylock -f -c 000000, mode "default"
+  bindsym l exec --no-startup-id swaylock-fancy, mode "default"
     bindsym e exec --no-startup-id pkill sway, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id sudo reboot, mode "default"
+    bindsym r exec --no-startup-id reboot, mode "default"
     bindsym Shift+s exec --no-startup-id shutdown -h now, mode "default"
 
     bindsym Return mode "default"
