@@ -73,7 +73,7 @@ install_package "sxiv"
 install_package "tlp"
 install_package "tk"
 install_package "transmission-cli"
-install_package "virtualbox" # NOT WORKING
+install_package "virtualbox"
 install_package "wine"
 install_package "xclip"
 install_package "youtube-dl"
@@ -111,13 +111,14 @@ install_package "neofetch"
 install_package "net-tools"
 install_package "nethogs"
 install_package "rkhunter"
+install_package "strace"
 install_package "tcpdump"
 install_package "vnstat"
 install_package "wireguard-dkms"
 install_package "wireguard-tools"
 install_package "zsh"
+install_ohmyzsh
 
-# TODO - oh my zsh
 
 print_in_purple "\n   Sway\n\n"
 
