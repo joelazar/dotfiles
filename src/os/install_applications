@@ -37,6 +37,7 @@ install_package "kdiff3"
 install_package "neovim"
 install_package "jdk-openjdk"
 install_package "python"
+install_package "python-pip"
 install_package "python-virtualenv"
 install_package "ripgrep"
 install_package "rust"
@@ -118,7 +119,6 @@ install_package "wireguard-dkms"
 install_package "wireguard-tools"
 install_package "zsh"
 install_ohmyzsh
-
 
 print_in_purple "\n   Sway\n\n"
 
