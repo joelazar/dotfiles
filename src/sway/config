@@ -74,11 +74,11 @@ set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) re
 
 mode "$mode_system" {
   bindsym l exec --no-startup-id swaylock-fancy, mode "default"
-    bindsym e exec --no-startup-id pkill sway, mode "default"
+    bindsym e exec --no-startup-id swaymsg exit, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id systemctl hibernate, mode "default"
-    bindsym r exec --no-startup-id reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id shutdown -h now, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -296,7 +296,7 @@ for_window [window_role="task_dialog"]  floating enable
 exec --no-startup-id mako
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id joplin server start
-exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s happy_confirmation.wav
+exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 
 for_window [class="^.*"] border pixel 2
 
