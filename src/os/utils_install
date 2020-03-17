@@ -8,15 +8,22 @@ cd "$(dirname "${BASH_SOURCE[0]}")" &&
 declare -r INSTALLED_PACKAGES=$((which yay &> /dev/null && [ ! $? -eq 0 ]) || yay -Q)
 
 install_package_manager() {
-  execute "( which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
+  execute "(which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
 }
 
 enable_multilib() {
-  execute "(yay -Syy | grep -q multilib) || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
+  execute "(yay -Sy | grep -q multilib) || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
 }
 
 autoremove() {
   execute "sudo yay -Qtd --noconfirm || true" "YAY (autoremove)"
+}
+
+install_ohmyzsh() {
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
+  print_result $? "ohmyzsh"
 }
 
 install_package() {

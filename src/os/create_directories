@@ -8,11 +8,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 create_directories() {
 
     declare -a DIRECTORIES=(
-        "$HOME/Downloads"
+        "$HOME/documents"
+        "$HOME/downloads"
         "$HOME/git"
         "$HOME/go"
         "$HOME/logs"
         "$HOME/notes"
+        "$HOME/pictures/screenshots"
+        "$HOME/pictures/wallpaper"
         "$HOME/private"
         "$HOME/.local"
         "$HOME/.local/bin"
@@ -22,8 +25,7 @@ create_directories() {
         "$HOME/.config/mpv/scripts"
         "$HOME/.config/nvim"
         "$HOME/.config/sway"
-        "$HOME/pictures/screenshots"
-        "$HOME/pictures/wallpaper"
+        "$HOME/.config/zathura"
     )
 
     for i in "${DIRECTORIES[@]}"; do
