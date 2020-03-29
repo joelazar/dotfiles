@@ -39,6 +39,30 @@ fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Fix keybindings in zsh
+
+typeset -A key
+
+key[Home]=${terminfo[khome]}
+key[End]=${terminfo[kend]}
+key[Delete]=${terminfo[kdch1]}
+key[PageUp]=${terminfo[kpp]}
+key[PageDown]=${terminfo[knp]}
+
+[[ -n "${key[Home]}"     ]] && bindkey "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]] && bindkey "${key[End]}"      end-of-line
+[[ -n "${key[Delete]}"   ]] && bindkey "${key[Delete]}"   delete-char
+[[ -n "${key[PageUp]}"   ]] && bindkey "${key[PageUp]}"   beginning-of-buffer-or-history
+[[ -n "${key[PageDown]}" ]] && bindkey "${key[PageDown]}" end-of-buffer-or-history
+
+[[ -n "${key[Home]}"     ]] && bindkey -M vicmd "${key[Home]}"     beginning-of-line
+[[ -n "${key[End]}"      ]] && bindkey -M vicmd "${key[End]}"      end-of-line
+[[ -n "${key[Delete]}"   ]] && bindkey -M vicmd "${key[Delete]}"   delete-char
+[[ -n "${key[PageUp]}"   ]] && bindkey -M vicmd "${key[PageUp]}"   beginning-of-buffer-or-history
+[[ -n "${key[PageDown]}" ]] && bindkey -M vicmd "${key[PageDown]}" end-of-buffer-or-history
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Start graphical server on tty1 if not already running.
 
 if [[ "$(tty)" = /dev/tty1 ]] && [[ -z $(pgrep sway) ]]; then

@@ -39,7 +39,8 @@ input type:touchpad {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
-  scroll_factor 0.3
+  scroll_factor 0.2
+#  accel_profile flat
 }
 
 input type:keyboard {
@@ -294,7 +295,7 @@ for_window [window_role="pop-up"]       floating enable
 for_window [window_role="task_dialog"]  floating enable
 
 # Startup applications
-exec --no-startup-id mako
+exec --no-startup-id mako --default-timeout=8000
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id joplin server start
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
