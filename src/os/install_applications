@@ -64,13 +64,13 @@ install_package "caprine"
 install_package "calibre"
 install_package "colordiff"
 install_package "diff-so-fancy"
+install_package "imv"
 install_package "libqalculate"
 install_package "keepassxc"
 install_package "mpv"
 install_package "moreutils"
 install_package "ncdu"
 install_package "nnn"
-install_package "sxiv"
 install_package "tlp"
 install_package "tk"
 install_package "transmission-cli"
@@ -80,6 +80,8 @@ install_package "xclip"
 install_package "youtube-dl"
 install_package "zathura"
 install_package "zathura-pdf-poppler"
+
+install_nnn_plugins
 
 print_in_purple "\n   Fonts\n\n"
 

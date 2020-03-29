@@ -115,6 +115,7 @@ export SSH_ENV="$HOME/.ssh/environment"
 export NNN_SSHFS_OPTS="sshfs -o follow_symlinks"
 export NNN_USE_EDITOR=1
 export NNN_CONTEXT_COLORS="2136"
+export NNN_PLUG='o:fzopen;m:nmount;p:-pdfview'
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -12,7 +12,7 @@ install_package_manager() {
 }
 
 enable_multilib() {
-  execute "(yay -Sy | grep -q multilib) || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
+  execute "(cat /etc/pacman.conf | grep -q '^\[multilib\]') || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
 }
 
 autoremove() {
@@ -24,6 +24,13 @@ install_ohmyzsh() {
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   fi
   print_result $? "ohmyzsh"
+}
+
+install_nnn_plugins() {
+  if [ ! -d "$HOME/.config/nnn/plugins" ]; then
+    execute "curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh" "Install NNN plugins"
+  fi
+  print_result $? "NNN plugins"
 }
 
 install_package() {
