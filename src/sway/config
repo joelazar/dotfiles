@@ -28,6 +28,7 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 exec swayidle -w \
        timeout 600 'swaylock-fancy' \
        timeout 900 'swaymsg "output * dpms off"' \
+       timeout 3600 'systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
        before-sleep 'swaylock-fancy'
 
