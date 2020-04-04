@@ -114,6 +114,7 @@ install_package "neofetch"
 install_package "net-tools"
 install_package "nethogs"
 install_package "rkhunter"
+install_package "p7zip"
 install_package "strace"
 install_package "tcpdump"
 install_package "vnstat"
@@ -159,7 +160,6 @@ install_package "wlr-randr"
 install_package "joplin"
 install_package "restic-git"
 install_package "spotify"
-install_package "teamviewer"
 
 ./nvim
 ./code
