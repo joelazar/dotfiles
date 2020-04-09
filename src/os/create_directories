@@ -24,6 +24,7 @@ create_directories() {
         "$HOME/.config/Code\ -\ OSS/User/"
         "$HOME/.config/mpv/scripts"
         "$HOME/.config/nvim"
+        "$HOME/.config/pulse"
         "$HOME/.config/sway"
         "$HOME/.config/zathura"
     )

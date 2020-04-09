@@ -125,6 +125,7 @@ install_ohmyzsh
 
 print_in_purple "\n   Sway\n\n"
 
+install_package "alsa-utils"
 install_package "blueman"
 install_package "dmenu"
 install_package "grim"

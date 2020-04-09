@@ -14,6 +14,7 @@ create_symlinks() {
      create_symlink   "git/gitconfig"
      create_symlink   "git/gitignore"
      create_symlink   "sway/config" "$HOME/.config/sway/config"
+     create_symlink   "sway/default.pa" "$HOME/.config/pulse/default.pa"
      create_symlink   "sway/status.sh" "$HOME/.config/sway/status.sh"
      create_symlink   "sway/happy_confirmation.wav" "$HOME/.config/sway/happy_confirmation.wav"
      create_symlink   "sway/99-lowbat.rules" "/etc/udev/rules.d/99-lowbat.rules" "sudo-needed"
