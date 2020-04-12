@@ -1,0 +1,68 @@
+[options]
+  colorscheme = "gruvbox"
+  colorscheme_bg = "dark"
+  enable_guicolors = true
+  statusline_separator = "arrow"
+  statusline_inactive_separator = "bar"
+  buffer_index_type = 4
+  windows_index_type = 3
+  enable_tabline_filetype_icon = false
+  enable_statusline_mode = true
+  statusline_unicode_symbols = false
+  enable_vimfiler_gitstatus = true
+  filemanager = "nerdtree"
+  filetree_direction = "left"
+  windows_leader = "s"
+  vimcompatible = false
+
+[[layers]]
+  name = 'autocomplete'
+  auto_completion_return_key_behavior = "complete"
+  auto_completion_tab_key_behavior = "cycle"
+
+[[layers]]
+  name = 'shell'
+  default_position = 'top'
+  default_height = 35
+
+[[layers]]
+  name = "colorscheme"
+  
+[[layers]]
+  name = "git"
+
+[[layers]]
+  name = "denite"
+
+[[layers]]
+  name = "sudo"
+
+[[layers]]
+  name = "lang#c"
+
+[[layers]]
+  name = "lang#dockerfile"
+  
+[[layers]]
+  name = "lang#go"
+  
+[[layers]]
+  name = "lang#javascript"
+
+[[layers]]
+  name = "lang#json"
+
+[[layers]]
+  name = "lang#latex"
+
+[[layers]]
+  name = "lang#markdown"
+
+[[layers]]
+  name = "lang#python"
+
+[[layers]]
+  name = "lang#sh"
+
+[[layers]]
+  name = "lang#toml"

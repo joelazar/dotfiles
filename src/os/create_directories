@@ -27,6 +27,7 @@ create_directories() {
         "$HOME/.config/pulse"
         "$HOME/.config/sway"
         "$HOME/.config/zathura"
+        "$HOME/.SpaceVim.d"
     )
 
     for i in "${DIRECTORIES[@]}"; do
