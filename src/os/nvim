@@ -1,53 +1,44 @@
 #!/bin/bash
 
-cd "$(dirname "${BASH_SOURCE[0]}")" \
-    && . "./utils_install" \
-    && . "./utils"
+cd "$(dirname "${BASH_SOURCE[0]}")" &&
+  . "./utils_install" &&
+  . "./utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_plugins() {
+install_spacevim() {
 
-    declare -r NVIM_PLUG_DIR="$HOME/.local/share/nvim/"
-    declare -r VIMPLUG_URL="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  declare -r SPACEVIM_DIR="$HOME/.SpaceVim/"
+  declare -r SPACEVIM_SCRIPT="https://spacevim.org/install.sh"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Install plugins.
-
-    if [ ! -f $NVIM_PLUG_DIR/site/autoload/plug.vim ]; then
-        execute "curl -fLo $NVIM_PLUG_DIR/site/autoload/plug.vim --create-dirs $VIMPLUG_URL" "Install vim-plug"
-    fi
-
-    execute "nvim +PlugInstall +qall" "Install plugins"
+  if [ ! -d "$SPACEVIM_DIR" ]; then
+    execute "curl -sLf $SPACEVIM_SCRIPT | bash -s -- --install neovim" "Install SpaceVim"
+  fi
 
 }
 
 update_plugins() {
 
-    execute \
-        "nvim +PlugUpgrade +sleep 0.1 +qall" \
-        "Upgrade vim-plug"
+  execute \
+    "nvim +SPUpdate SpaceVim +sleep 0.1 +qall" \
+    "Update SpaceVim"
 
-    execute \
-        "nvim +PlugUpdate +qall" \
-        "Update plugins"
-
-    execute \
-        "nvim +PlugClean! +sleep 0.1 +qall" \
-        "Cleanup plugins"
-
+  execute \
+    "nvim +SPUpdate +sleep 0.1 +qall" \
+    "Update SpaceVim plugins"
+# TODO hellp
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
 
-    print_in_purple "\n   NeoVim\n\n"
+  print_in_purple "\n   NeoVim with SpaceVim <3\n\n"
 
-    install_plugins
-    update_plugins
+  install_spacevim
+  update_plugins
 
-    printf "\n"
+  printf "\n"
 
 }
 

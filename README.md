@@ -20,6 +20,7 @@ Let me try to briefly list the installed and configured packages:
 * [`dmenu`](https://git.suckless.org/dmenu/) - Application launcher for WMs
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
+  * [`SpaceVim`](https://spacevim.org/) - A community-driven vim distribution, which handles collections of plugins in layers.
 * [`git`](https://git-scm.com/) - No comment
   * [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Pretty discriptive add-on for git
 * [`htop`](https://hisham.hm/htop/) - As a monitoring tool
@@ -68,9 +69,9 @@ The setup process will:
   [`shell`](src/shell),
   [`sway`](src/sway),
   [`tmux`](src/tmux),
-* Install applications / command-line tools for Manjaro
-  [`Install`](src/os/install)
-* Install [`nvim` plugins](src/nvim/init.vim)
+* Install applications / command-line tools for Arch
+  [`Install`](src/os/install_applications)
+* Install [`SpaceVim` setup](src/nvim/init.toml)
 * Set some [`settings`](src/os/settings)
 
 ## Customize
