@@ -14,11 +14,27 @@
   filetree_direction = "left"
   windows_leader = "s"
   vimcompatible = false
+  disabled_plugins = ["vim-import-js", "deoplete-go"] # TODO - temp solution
 
 [[layers]]
   name = 'autocomplete'
+  autocomplete_method = "coc"
   auto_completion_return_key_behavior = "complete"
   auto_completion_tab_key_behavior = "cycle"
+  autocomplete_parens = false
+
+[[layers]]
+  name = 'lsp'
+  filetypes = [
+    'c',
+    'cpp',
+    'go',
+    'javascript',
+    'python',
+    'sh'
+  ]
+    [layers.override_cmd]
+      go = ['gopls']
 
 [[layers]]
   name = 'shell'
@@ -27,12 +43,13 @@
 
 [[layers]]
   name = "colorscheme"
-  
+
 [[layers]]
   name = "git"
 
 [[layers]]
-  name = "denite"
+  #name = "denite"
+  name = "fzf"
 
 [[layers]]
   name = "sudo"
@@ -42,10 +59,10 @@
 
 [[layers]]
   name = "lang#dockerfile"
-  
+
 [[layers]]
   name = "lang#go"
-  
+
 [[layers]]
   name = "lang#javascript"
 
