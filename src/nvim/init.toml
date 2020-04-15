@@ -45,6 +45,9 @@
   name = "colorscheme"
 
 [[layers]]
+  name = "debug"
+
+[[layers]]
   name = "git"
 
 [[layers]]

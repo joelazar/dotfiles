@@ -7,9 +7,9 @@ keyboard_input_name="1:1:AT_Translated_Set_2_keyboard"
 
 # Battery or charger
 battery0_charge=$(acpi -b | awk '{print $4}' | cut -d , -f 1 | head -n 1)
-battery0_status=$(acpi -b | awk '{print $3}' | cut -d % -f 1 | head -n 1)
+battery0_status=$(acpi -b | awk '{print $3}' | cut -d , -f 1 | head -n 1)
 battery1_charge=$(acpi -b | awk '{print $4}' | cut -d , -f 1 | tail -n 1)
-battery1_status=$(acpi -b | awk '{print $3}' | cut -d % -f 1 | tail -n 1)
+battery1_status=$(acpi -b | awk '{print $3}' | cut -d , -f 1 | tail -n 1)
 
 # Audio and multimedia
 sink_id=$(pactl list sinks short | grep 'IDLE\|SUSPENDED\|RUNNING' | awk '{print $1}')
@@ -25,7 +25,7 @@ else
   vpn=''
 fi
 
-if [ -z $(pgrep bluetoothd) ]; then
+if [ -z "$(pgrep bluetoothd)" ]; then
   bluetooth=''
 else
   bluetooth=''
@@ -35,19 +35,19 @@ fi
 language=$(swaymsg -r -t get_inputs | awk '/$keyboard_input_name/;/xkb_active_layout_name/' | grep "xkb_active_layout_name" | awk -F '"' '{print $4}' | sed -n 2p)
 loadavg_5min=$(cat /proc/loadavg | awk -F ' ' '{print $2}')
 
-if [ $battery0_status = "Discharging" ]; then
-  battery0_pluggedin='⚠'
+if [ "$battery0_status" = "Discharging" ]; then
+  battery0_pluggedin=''
 else
-  battery0_pluggedin='⚡'
+  battery0_pluggedin=''
 fi
 
-if [ $battery1_status = "Discharging" ]; then
-  battery1_pluggedin='⚠'
+if [ "$battery1_status" = "Discharging" ]; then
+  battery1_pluggedin=''
 else
-  battery1_pluggedin='⚡'
+  battery1_pluggedin=''
 fi
 
-if [ $audio_is_muted = "true" ]; then
+if [ "$audio_is_muted" = "true" ]; then
   audio_active='婢'
 else
   audio_active='墳'

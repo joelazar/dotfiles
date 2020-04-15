@@ -6,7 +6,7 @@ set $mod Mod4
 font pango:Hack, FontAwesome 11
 
 default_border pixel 1
-default_floating_border none
+default_floating_border normal
 
 # Home row direction keys, like vim
 set $left h
