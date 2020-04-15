@@ -1,20 +1,22 @@
 [options]
+  bootstrap_after = "myconfig#after"
+  buffer_index_type = 4
   colorscheme = "gruvbox"
   colorscheme_bg = "dark"
+  disabled_plugins = ["vim-import-js", "deoplete-go"] # @todo - temp solution
   enable_guicolors = true
-  statusline_separator = "arrow"
-  statusline_inactive_separator = "bar"
-  buffer_index_type = 4
-  windows_index_type = 3
-  enable_tabline_filetype_icon = false
   enable_statusline_mode = true
-  statusline_unicode_symbols = false
+  enable_tabline_filetype_icon = true
   enable_vimfiler_gitstatus = true
   filemanager = "nerdtree"
   filetree_direction = "left"
-  windows_leader = "s"
+  relativenumber = false
+  statusline_inactive_separator = "bar"
+  statusline_separator = "arrow"
+  statusline_unicode_symbols = true
   vimcompatible = false
-  disabled_plugins = ["vim-import-js", "deoplete-go"] # TODO - temp solution
+  windows_index_type = 3
+  windows_leader = "s"
 
 [[layers]]
   name = 'autocomplete'
@@ -56,6 +58,12 @@
 
 [[layers]]
   name = "sudo"
+
+[[layers]]
+  name = 'test'
+
+[[layers]]
+  name = 'tools#zeal'
 
 [[layers]]
   name = "lang#c"
