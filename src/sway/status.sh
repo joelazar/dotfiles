@@ -25,7 +25,7 @@ else
   vpn=''
 fi
 
-if [ -z "$(pgrep bluetoothd)" ]; then
+if [ -z "$(ps ax | grep "[b]luetoothd")" ]; then
   bluetooth=''
 else
   bluetooth=''
