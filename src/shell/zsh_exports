@@ -112,6 +112,7 @@ export SSH_ENV="$HOME/.ssh/environment"
 
 # nnn settings
 
+export NNN_OPENER=xdg-open
 export NNN_SSHFS_OPTS="sshfs -o follow_symlinks"
 export NNN_USE_EDITOR=1
 export NNN_CONTEXT_COLORS="2136"

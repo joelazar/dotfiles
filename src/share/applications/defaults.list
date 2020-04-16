@@ -1,4 +1,5 @@
 [Default Applications]
+application/json=text.desktop
 application/pdf=pdf.desktop
 application/x-bittorrent=torrent.desktop;
 application/x-xpinstall=firefox.desktop;
