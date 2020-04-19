@@ -91,3 +91,8 @@ shell:
   program: /bin/zsh
   args:
     - --login
+
+key_bindings:
+  - { key: Key7,  mods: Control, action: ResetFontSize }
+  - { key: Key8,  mods: Control, action: IncreaseFontSize }
+  - { key: Key9,  mods: Control, action: DecreaseFontSize }
