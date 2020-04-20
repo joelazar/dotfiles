@@ -20,6 +20,7 @@ create_directories() {
         "$HOME/.local"
         "$HOME/.local/bin"
         "$HOME/.local/share/applications"
+        "$HOME/.local/share/systemd"
         "$HOME/.config/alacritty"
         "$HOME/.config/Code\ -\ OSS/User/"
         "$HOME/.config/mpv/scripts"
@@ -28,6 +29,7 @@ create_directories() {
         "$HOME/.config/sway"
         "$HOME/.config/zathura"
         "$HOME/.SpaceVim.d"
+        "$HOME/.SpaceVim.d/autoload"
     )
 
     for i in "${DIRECTORIES[@]}"; do

@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="avit"
 
-plugins=(docker encode64 extract fzf git git-extras vi-mode z)
+plugins=(docker encode64 extract fzf git git-extras kubectl vi-mode z)
 
 source $ZSH/oh-my-zsh.sh
 
