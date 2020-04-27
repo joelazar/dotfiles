@@ -51,6 +51,7 @@ install_package "shellcheck"
 install_package "shfmt"
 install_package "texlive-science"
 install_package "yapf"
+install_package "yarn"
 install_package "zeal"
 
 print_in_purple "\n   Image Tools\n\n"
@@ -157,6 +158,7 @@ install_package "swaylock"
 install_package "qt5-wayland"
 install_package "xorg-server-xwayland"
 install_package "wl-clipboard"
+install_package "x11docker"
 
 print_in_purple "\n   AUR packages\n\n"
 

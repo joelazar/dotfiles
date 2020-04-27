@@ -39,7 +39,7 @@ input type:touchpad {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
-  scroll_factor 0.2
+  scroll_factor 0.25
 #  accel_profile flat
 }
 
@@ -117,9 +117,9 @@ bindsym $mod+Shift+Right move right
 #
 set $ws1 "1.  "
 set $ws2 "2.  "
-set $ws3 "3.  "
+set $ws3 "3.  "
 set $ws4 "4.  "
-set $ws5 "5."
+set $ws5 "5.  "
 set $ws6 "6."
 set $ws7 "7."
 set $ws8 "8."
@@ -152,7 +152,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Assign applications to workspaces
 assign [app_id="firefox"] $ws2
+for_window [class="Google-chrome"] move window to workspace $ws3
 assign [class="Caprine"] $ws4
+for_window [class="Slack"] move window to workspace $ws4
 for_window [class="Spotify"] move window to workspace $ws9
 
 #
@@ -220,13 +222,13 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
-# brightness
+# Brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
 bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
 
 # Screenshot
-bindsym --release $mod+Print exec grim
-bindsym --release $mod+Shift+Print exec grim -g "$(slurp)"
+bindsym --release $mod+Print exec grim - | wl-copy
+bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy
 
 # color defines for zenburn styled i3
 set $bg     #2c2c2e

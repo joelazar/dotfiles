@@ -67,7 +67,7 @@ export MANPAGER="less -X"
 
 # Add my scripts to PATH.
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.yarn/bin/:$HOME/.local/bin:$PATH
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
