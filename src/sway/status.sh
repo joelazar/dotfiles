@@ -12,9 +12,8 @@ battery1_charge=$(acpi -b | awk '{print $4}' | cut -d , -f 1 | tail -n 1)
 battery1_status=$(acpi -b | awk '{print $3}' | cut -d , -f 1 | tail -n 1)
 
 # Audio and multimedia
-sink_id=$(pactl list sinks short | grep 'IDLE\|SUSPENDED\|RUNNING' | awk '{print $1}')
-audio_volume=$(pamixer --sink $sink_id --get-volume-human)
-audio_is_muted=$(pamixer --sink $sink_id --get-mute)
+audio_volume=$(pamixer --sink @DEFAULT_SINK@ --get-volume-human)
+audio_is_muted=$(pamixer --sink @DEFAULT_SINK@ --get-mute)
 
 # Network
 ipaddress=$(ifconfig wlp3s0 | grep inet | head -n 1 | awk '{print $2}')
