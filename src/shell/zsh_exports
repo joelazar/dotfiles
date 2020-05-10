@@ -23,6 +23,12 @@ export SWAY_CURSOR_SIZE="24"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+# Desktop settings for screen casting
+
+export XDG_CURRENT_DESKTOP="sway"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Ignore commands that start with spaces and duplicates.
 
 export HISTCONTROL=ignoreboth:erasedups
@@ -55,6 +61,7 @@ export LESS_TERMCAP_md="$(
   tput bold 2>/dev/null
   tput setaf 2 2>/dev/null
 )"
+
 export LESS_TERMCAP_me="$(tput sgr0 2>/dev/null)"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -67,7 +74,7 @@ export MANPAGER="less -X"
 
 # Add my scripts to PATH.
 
-export PATH=$HOME/.yarn/bin/:$HOME/.local/bin:$PATH
+export PATH=$HOME/.node/bin:$HOME/.yarn/bin/:$HOME/.local/bin:$PATH
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -129,5 +136,12 @@ export GRIM_DEFAULT_DIR="$HOME/pictures/screenshots"
 # Use dmenu for sudo pass insert
 
 export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+# NPM exports
+
+export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"
+export MANPATH="$HOME/.node/share/man:$MANPATH"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

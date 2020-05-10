@@ -3,15 +3,18 @@
 # Backup script
 #
 
+BACKUPDIR="/mnt/sdcard/restic/"
+
 case "$1" in
-"do") restic --repo /mnt/usb/restic/ backup ~/.ssh \
-    ~/Documents \
-    ~/Downloads \
-    ~/Pictures \
-    ~/logs \
-    ~/notes \
-    ~/private;;
-"snapshots") restic --repo /mnt/usb/restic/ snapshots;;
-"prune") restic --repo /mnt/usb/restic/ prune;;
-*)            echo "Do nothing" "$@";;
+"do") sudo restic --repo "$BACKUPDIR" backup \
+  ~/.ssh \
+  ~/documents \
+  ~/Downloads \
+  ~/logs \
+  ~/notes \
+  ~/pictures \
+  ~/private ;;
+"list") sudo restic --repo "$BACKUPDIR" snapshots ;;
+"prune") sudo restic --repo "$BACKUPDIR" prune ;;
+*) echo "Do nothing" "$@" ;;
 esac

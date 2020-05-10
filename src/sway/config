@@ -152,7 +152,9 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Assign applications to workspaces
 assign [app_id="firefox"] $ws2
+for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [class="Google-chrome"] move window to workspace $ws3
+for_window [class="Google-chrome"] inhibit_idle fullscreen
 assign [class="Caprine"] $ws4
 for_window [class="Slack"] move window to workspace $ws4
 for_window [class="Spotify"] move window to workspace $ws9

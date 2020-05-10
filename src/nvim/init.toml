@@ -3,7 +3,7 @@
   buffer_index_type = 4
   colorscheme = "gruvbox"
   colorscheme_bg = "dark"
-  disabled_plugins = ["vim-import-js", "deoplete-go"] # @todo - temp solution
+  disabled_plugins = ["deoplete-go"]
   enable_guicolors = true
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
@@ -31,7 +31,6 @@
     'c',
     'cpp',
     'go',
-    'javascript',
     'python',
     'sh'
   ]
