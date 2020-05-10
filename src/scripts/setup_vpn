@@ -2,6 +2,7 @@
 #
 # Example usage: setup-algo "External-IP-of-the-VPS"
 #
+# @todo - something not okay with PPA installations
 
 declare -r ALGO_DIRECTORY="$HOME/git/algo"
 
@@ -24,6 +25,6 @@ vi "$ALGO_DIRECTORY"/config.cfg
 
 deactivate
 
-sudo ln -sf "$ALGO_DIRECTORY"/configs/"$1"/wireguard/laptop.conf /etc/wireguard/wg0.conf
+sudo ln -sf "$ALGO_DIRECTORY"/configs/"$1"/wireguard/joelazar.conf /etc/wireguard/wg0.conf
 
 popd || exit &>/dev/null

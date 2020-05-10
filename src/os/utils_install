@@ -43,6 +43,26 @@ install_package() {
   fi
 }
 
+install_go_package() {
+  declare -r PACKAGEPATH="$1"
+  declare -r PACKAGENAME="$2"
+
+  execute "go get -u $PACKAGEPATH" "$PACKAGENAME"
+}
+
+install_yarn_package() {
+  declare -r PACKAGEPATH="$1"
+  declare -r PACKAGENAME="$2"
+
+  execute "yarn global add $PACKAGEPATH" "$PACKAGENAME"
+}
+
+install_npm_package() {
+  declare -r PACKAGENAME="$1"
+
+  execute "npm install -g $PACKAGENAME"
+}
+
 package_is_installed() {
   echo $INSTALLED_PACKAGES | grep -q " $1 "
 }
