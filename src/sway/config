@@ -275,6 +275,9 @@ bindsym $mod+x move workspace to output right
 bindsym $mod+m         exec wlr-randr --output HDMI1 --off
 bindsym $mod+shift+m   exec wlr-randr --output HDMI1 --auto --left-of eDP1 --primary
 
+# Network manager
+bindsym $mod+n         exec networkmanager_dmenu
+
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox

@@ -164,6 +164,7 @@ print_in_purple "\n   GO packages\n\n"
 
 install_go_package "github.com/odeke-em/drive/cmd/drive" "drive"
 install_go_package "github.com/swaggo/swag/cmd/swag" "swag"
+install_go_package "golang.org/x/tools/cmd/godoc" "godoc"
 
 print_in_purple "\n   JS packages\n\n"
 
