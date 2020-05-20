@@ -56,6 +56,9 @@
   name = "fzf"
 
 [[layers]]
+  name = "incsearch"
+
+[[layers]]
   name = "sudo"
 
 [[layers]]
