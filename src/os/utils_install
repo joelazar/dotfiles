@@ -60,7 +60,7 @@ install_yarn_package() {
 install_npm_package() {
   declare -r PACKAGENAME="$1"
 
-  execute "npm install -g $PACKAGENAME"
+  execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
 }
 
 package_is_installed() {
