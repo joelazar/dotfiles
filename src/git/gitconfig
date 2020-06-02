@@ -174,3 +174,7 @@
     #     by the local ones
 
     path = ~/.gitconfig.local
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[pull]
+	rebase = false
