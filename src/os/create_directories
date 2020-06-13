@@ -27,6 +27,7 @@ create_directories() {
         "$HOME/.config/nvim"
         "$HOME/.config/pulse"
         "$HOME/.config/sway"
+        "$HOME/.config/waybar"
         "$HOME/.config/zathura"
         "$HOME/.node"
         "$HOME/.SpaceVim.d"
