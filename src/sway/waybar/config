@@ -113,7 +113,7 @@
 
     "sway/mode": {
         "format": "<span style=\"italic\">  {}</span>", // Icon: expand-arrows-alt
-        "tooltip": false
+        "tooltip": true
     },
 
     "sway/window": {
