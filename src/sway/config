@@ -225,8 +225,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5
-bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # Screenshot
 bindsym --release $mod+Print exec grim - | wl-copy
