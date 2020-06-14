@@ -122,20 +122,20 @@
     },
 
     "sway/workspaces": {
-        "all-outputs": false,
+        "all-outputs": true,
         "disable-scroll": true,
         "format": "{icon}",
         "format-icons": {
-            "terminals": "",
-            "www": "龜",
-            "editor": "",
-            "chat": "",
-            "notes": "",
+            "1.terminals": "",
+            "2.www": "龜",
+            "3.editor": "",
+            "4.chat": "",
+            "5.notes": "",
             "6.": "6.",
             "7.": "7.",
             "8.": "8.",
-            "spotify": "",
-            "10.": "10.",
+            "9.spotify": "",
+            "10.arch": "",
             "urgent": "",
             "focused": "",
             "default": ""

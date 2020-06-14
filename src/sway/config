@@ -115,16 +115,16 @@ bindsym $mod+Shift+Right move right
 #
 # Workspaces:
 #
-set $ws1 "terminals"
-set $ws2 "www"
-set $ws3 "editor"
-set $ws4 "chat"
-set $ws5 "notes"
+set $ws1 "1.terminals"
+set $ws2 "2.www"
+set $ws3 "3.editor"
+set $ws4 "4.chat"
+set $ws5 "5.notes"
 set $ws6 "6."
 set $ws7 "7."
 set $ws8 "8."
-set $ws9 "spotify"
-set $ws10 "10."
+set $ws9 "9.spotify"
+set $ws10 "10.arch"
 
 # Switch to workspace
 bindsym $mod+1 workspace $ws1
