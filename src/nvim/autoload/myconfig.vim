@@ -12,3 +12,5 @@ nnoremap oo o<Esc>k
 nnoremap OO O<Esc>j 
 "start new line for RETURN
 nnoremap <CR> o<Esc>
+
+let g:neoformat_enabled_yaml = ['prettier']
