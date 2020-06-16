@@ -9,7 +9,6 @@ MOZ_ENABLE_WAYLAND=1 # only start firefox in wayland mode and no other GTK apps
 XDG_SESSION_TYPE=wayland
 QT_QPA_PLATFORM=wayland
 QT_QPA_PLATFORMTHEME=qt5ct
-QT_WAYLAND_FORCE_DPI=physical
 QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 
 # elementary
