@@ -272,7 +272,7 @@ bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 
 # Clipboard manager
-bindsym $mod+c exec clipman pick -t dmenu -b
+bindsym $mod+c exec clipman pick -t dmenu
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
