@@ -14,5 +14,7 @@
     "vsicons.dontShowNewVersionMessage": true,
     "workbench.colorTheme": "Solarized Light",
     "workbench.iconTheme": "vscode-icons",
-    "workbench.startupEditor": "newUntitledFile"
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.fontSize": 12,
+    "window.zoomLevel": 0.5
 }

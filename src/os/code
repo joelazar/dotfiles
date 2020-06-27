@@ -34,7 +34,7 @@ main() {
   install_extension "eamodio.gitlens"
   install_extension "ms-azuretools.vscode-docker"
   install_extension "ms-python.python"
-  install_extension "ms-vscode.Go"
+  install_extension "golang.Go"
   install_extension "ms-vscode.cpptools"
   install_extension "vscode-icons-team.vscode-icons"
   install_extension "vscodevim.vim"

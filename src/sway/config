@@ -3,7 +3,7 @@
 ### Variables
 set $mod Mod4
 
-font pango:Hack, FontAwesome 11
+font pango:Hack, FontAwesome 7
 
 default_border pixel 1
 default_floating_border normal
@@ -23,6 +23,9 @@ set $menu dmenu_path | dmenu -b -i -fn Hack-11 | xargs swaymsg exec --
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+# scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
+# scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
+output eDP-1 scale 2.0 scale_filter nearest
 
 ### Idle configuration
 exec swayidle -w \
@@ -280,10 +283,12 @@ bindsym $mod+ctrl+space exec makoctl dismiss
 # GTK themes
 set $gnome-schema org.gnome.desktop.interface
 
+seat seat0 xcursor_theme 'Adwaita' 16
 exec_always {
   gsettings set $gnome-schema gtk-theme 'Materia'
   gsettings set $gnome-schema icon-theme 'Materia'
   gsettings set $gnome-schema cursor-theme 'Adwaita'
+  gsettings set org.gnome.desktop.interface cursor-size 16
 }
 
 for_window [window_role="app"]          floating enable
