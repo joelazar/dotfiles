@@ -26,6 +26,8 @@ execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
 execute "sudo systemctl enable tlp" "Turn on tlp"
 
+execute "sudo systemctl enable NetworkManager.service" "Turn on networkmanager"
+
 execute "systemctl --user enable pulseaudio" "Pulseaudio started by systemd"
 
 execute "(cat /usr/share/fzf/key-bindings.zsh | grep \"bindkey '^P' fzf-file-widget\") || \
