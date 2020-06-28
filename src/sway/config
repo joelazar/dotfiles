@@ -18,7 +18,7 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu dmenu_path | dmenu -b -i -fn Hack-11 | xargs swaymsg exec --
+set $menu dmenu_path | bemenu -b -i -fn Hack-11 | xargs swaymsg exec --
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/
@@ -258,8 +258,8 @@ bar {
   swaybar_command waybar
 }
 
-bindsym $mod+F9         exec --no-startup-id dmenumount
-bindsym $mod+F10        exec --no-startup-id dmenuumount
+bindsym $mod+F9         exec --no-startup-id bemenumount
+bindsym $mod+F10        exec --no-startup-id bemenuumount
 
 # Put this window on the primary output.
 bindsym $mod+x move workspace to output right
@@ -268,14 +268,14 @@ bindsym $mod+m         exec wlr-randr --output HDMI1 --off
 bindsym $mod+shift+m   exec wlr-randr --output HDMI1 --auto --left-of eDP1 --primary
 
 # Network manager
-bindsym $mod+n         exec networkmanager_dmenu -b
+bindsym $mod+n         exec networkmanager_dmenu -b -fn Hack-8
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 
 # Clipboard manager
-bindsym $mod+c exec clipman pick -t dmenu
+bindsym $mod+c exec clipman pick -t bemenu
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
@@ -291,9 +291,9 @@ exec_always {
   gsettings set org.gnome.desktop.interface cursor-size 16
 }
 
-for_window [window_role="app"]          floating enable
-for_window [window_role="pop-up"]       floating enable
-for_window [window_role="task_dialog"]  floating enable
+for_window [window_role="app"]         floating enable
+for_window [window_role="pop-up"]      floating enable
+for_window [window_role="task_dialog"] floating enable
 
 # Startup applications
 exec --no-startup-id mako --default-timeout=8000 --layer=overlay
