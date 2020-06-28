@@ -200,7 +200,7 @@ install_package "hfsprogs"
 install_package "i3-battery-popup-git"
 install_package "joplin"
 install_package "kubeval"
-install_package "librewolf" # @todo - settings missing
+install_package "librewolf-bin" # @todo - settings missing
 install_package "networkmanager-dmenu-git"
 install_package "postman-bin"
 install_package "python-grip"
@@ -210,7 +210,6 @@ install_package "spotify"
 install_package "spotifyd-bin" # @todo - config missing, spotifyd.conf, notification.sh, systemd service
 install_package "spotify-tui"  # @todo - manual config with client/secret
 install_package "teamviewer"
-install_package "tuitube"
 install_package "wlr-randr"
 install_package "x11docker"
 install_package "xdg-desktop-portal-wlr"
