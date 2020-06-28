@@ -19,7 +19,7 @@ update
 
 print_in_purple "\n   Browsers\n\n"
 
-install_package "firefox"
+#install_package "firefox" until librewolf is under testing
 
 print_in_purple "\n   Development\n\n"
 
