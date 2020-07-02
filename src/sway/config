@@ -264,8 +264,8 @@ bindsym $mod+F10        exec --no-startup-id bemenuumount
 # Put this window on the primary output.
 bindsym $mod+x move workspace to output right
 
-bindsym $mod+m         exec wlr-randr --output HDMI1 --off
-bindsym $mod+shift+m   exec wlr-randr --output HDMI1 --auto --left-of eDP1 --primary
+bindsym $mod+m         exec wlr-randr --output DP-3 --off
+bindsym $mod+shift+m   exec wlr-randr --output DP-3 --scale 1.5 --on
 
 # Network manager
 bindsym $mod+n         exec networkmanager_dmenu -b -fn Hack-8
