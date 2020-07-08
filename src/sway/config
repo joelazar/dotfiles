@@ -3,7 +3,7 @@
 ### Variables
 set $mod Mod4
 
-font pango:Hack, FontAwesome 7
+font pango:Hack, FontAwesome 18
 
 default_border pixel 1
 default_floating_border normal
@@ -18,14 +18,14 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu dmenu_path | bemenu -b -i -fn Hack-11 | xargs swaymsg exec --
+set $menu dmenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
-output eDP-1 scale 2.0 scale_filter nearest
+output eDP-1 scale 1.0 scale_filter nearest
 
 ### Idle configuration
 exec swayidle -w \
@@ -268,7 +268,7 @@ bindsym $mod+m         exec wlr-randr --output DP-3 --off
 bindsym $mod+shift+m   exec wlr-randr --output DP-3 --scale 1.5 --on
 
 # Network manager
-bindsym $mod+n         exec networkmanager_dmenu -b -fn Hack-8
+bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 18"
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn

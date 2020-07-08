@@ -32,7 +32,7 @@ font:
     family: Hack
     style: Bold Italic
 
-  size: 10.0
+  size: 18.0
 
   offset:
     x: 0
