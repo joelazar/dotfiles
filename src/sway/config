@@ -265,7 +265,7 @@ bindsym $mod+F10        exec --no-startup-id bemenuumount
 bindsym $mod+x move workspace to output right
 
 bindsym $mod+m         exec wlr-randr --output DP-3 --off
-bindsym $mod+shift+m   exec wlr-randr --output DP-3 --scale 1.5 --on
+bindsym $mod+shift+m   exec wlr-randr --output DP-3 --scale 0.8 --on
 
 # Network manager
 bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 18"
@@ -296,7 +296,7 @@ for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Startup applications
-exec --no-startup-id mako --default-timeout=8000 --layer=overlay
+exec --no-startup-id mako --default-timeout=8000 --layer=overlay --font Hack-18
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 

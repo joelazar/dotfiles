@@ -14,3 +14,7 @@ nnoremap OO O<Esc>j
 nnoremap <CR> o<Esc>
 
 let g:neoformat_enabled_yaml = ['prettier']
+
+let g:go_fmt_options = {
+  \ 'gofmt': '-s',
+  \ }
