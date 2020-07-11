@@ -40,21 +40,6 @@ create_gitconfig_local() {
 
 }
 
-create_nvim_local() {
-
-    declare -r FILE_PATH="$HOME/.config/nvim/local.vim"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    if [ ! -e "$FILE_PATH" ] || [ -z "$FILE_PATH" ]; then
-        printf "%s\n\n" "#!/bin/zsh" >> "$FILE_PATH"
-    fi
-
-    print_result $? "$FILE_PATH"
-
-}
-
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 main() {
@@ -63,7 +48,6 @@ main() {
 
     create_zsh_local
     create_gitconfig_local
-    create_nvim_local
 
 }
 
