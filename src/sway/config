@@ -265,7 +265,7 @@ bindsym $mod+F10        exec --no-startup-id bemenuumount
 bindsym $mod+x move workspace to output right
 
 bindsym $mod+m         exec wlr-randr --output DP-3 --off
-bindsym $mod+shift+m   exec wlr-randr --output DP-3 --scale 0.8 --on
+bindsym $mod+shift+m   exec wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 3197,0
 
 # Network manager
 bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 18"
