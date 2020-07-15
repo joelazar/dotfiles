@@ -20,7 +20,7 @@ alias :q="exit"
 alias get-local-ip="ifconfig \
                     | grep 'inet ' \
                     | grep -v '127.0.0.1' \
-                    | awk '{print $2}'" 
+                    | awk '{print $2}'"
 
 alias get-ext-ip="curl ipinfo.io/ip"
 
