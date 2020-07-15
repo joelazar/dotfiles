@@ -18,3 +18,10 @@ let g:neoformat_enabled_yaml = ['prettier']
 let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
+
+let g:neoformat_python_black = {
+    \ 'exe': 'black',
+    \ 'stdin': 1,
+    \ 'args': ['-q', '-', '-l', '100'],
+    \ }
+let g:neoformat_enabled_python = ['black']
