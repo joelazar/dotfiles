@@ -3,11 +3,11 @@
 # GTK
 #CLUTTER_BACKEND=wayland
 ##GDK_BACKEND=wayland             # this can prevent programs from starting (e.g. chromium and electron apps). therefore, this should be set per app instead of globally.
-#MOZ_ENABLE_WAYLAND=1 # only start firefox in wayland mode and no other GTK apps
+MOZ_ENABLE_WAYLAND=1 # only start firefox in wayland mode and no other GTK apps
 #
 ## Qt , although virtualbox does not start with this qt config...
 XDG_SESSION_TYPE=wayland
-QT_QPA_PLATFORM=wayland
+QT_QPA_PLATFORM=wayland;xcb
 #QT_QPA_PLATFORMTHEME=qt5ct
 #QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 #

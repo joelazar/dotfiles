@@ -42,7 +42,7 @@ input type:touchpad {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
-  scroll_factor 0.25
+  scroll_factor 0.30
 #  accel_profile flat
 }
 
@@ -275,7 +275,7 @@ bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 
 # Clipboard manager
-bindsym $mod+c exec clipman pick -t bemenu
+bindsym $mod+c exec clipman pick -t bemenu --tool-args="--fn 'Hack 14'"
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
@@ -296,7 +296,7 @@ for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Startup applications
-exec --no-startup-id mako --default-timeout=8000 --layer=overlay --font Hack-18
+exec --no-startup-id mako --default-timeout=15000 --layer=overlay --font 'Hack 20' --height 300 --width 500 --background-color '#2c2c2e' --border-color '#9f9f9f'
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 

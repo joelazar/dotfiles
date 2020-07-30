@@ -127,7 +127,7 @@
         "format": "{icon}",
         "format-icons": {
             "1.terminals": "",
-            "2.www": "龜",
+            "2.www": "",
             "3.editor": "",
             "4.chat": "",
             "5.notes": "",
