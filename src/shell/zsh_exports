@@ -67,9 +67,9 @@ export LESS_TERMCAP_me="$(tput sgr0 2>/dev/null)"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Don't clear the screen after quitting a `man` page.
+# Set bat as pager
 
-export MANPAGER="less -X"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
