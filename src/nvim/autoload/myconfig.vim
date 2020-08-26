@@ -19,9 +19,12 @@ let g:go_fmt_options = {
   \ 'gofmt': '-s',
   \ }
 
-let g:neoformat_python_black = {
-    \ 'exe': 'black',
-    \ 'stdin': 1,
-    \ 'args': ['-q', '-', '-l', '100'],
-    \ }
+"let g:neoformat_python_black = {
+"    \ 'exe': 'black',
+"    \ 'stdin': 1,
+"    \ 'args': ['-q', '-', '-l', '100'],
+"    \ }
+
 let g:neoformat_enabled_python = ['black']
+
+command Exec set splitright | vnew | set filetype=sh | read !sh #
