@@ -3,18 +3,23 @@
 # Backup script
 #
 
-BACKUPDIR="/mnt/sdcard/restic/"
+BACKUPDIR="rclone:onedrive:backup"
 
 case "$1" in
-"do") sudo restic --repo "$BACKUPDIR" backup \
+"do") restic --repo "$BACKUPDIR" backup \
+  ~/.config \
+  ~/.gitconfig.local \
   ~/.ssh \
+  ~/.zsh.local \
   ~/documents \
   ~/Downloads \
+  ~/git \
   ~/logs \
   ~/notes \
   ~/pictures \
-  ~/private ;;
-"list") sudo restic --repo "$BACKUPDIR" snapshots ;;
-"prune") sudo restic --repo "$BACKUPDIR" prune ;;
+  ~/private \
+  ~/work ;;
+"list") restic --repo "$BACKUPDIR" snapshots ;;
+"prune") restic --repo "$BACKUPDIR" prune ;;
 *) echo "Do nothing" "$@" ;;
 esac
