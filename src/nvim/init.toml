@@ -52,7 +52,8 @@
   name = "git"
 
 [[layers]]
-  #name = "denite"
+# name = "denite"
+# name = "ctrlp"
   name = "fzf"
 
 [[layers]]
@@ -63,6 +64,9 @@
 
 [[layers]]
   name = 'test'
+
+[[layers]]
+  name = "tools"
 
 [[layers]]
   name = 'tools#zeal'

@@ -18,6 +18,7 @@ update
 
 print_in_purple "\n   Browsers\n\n"
 
+install_package "chromium"
 install_package "firefox"
 
 print_in_purple "\n   Development\n\n"
@@ -76,6 +77,7 @@ install_package "colordiff"
 install_package "diff-so-fancy"
 install_package "dust"
 install_package "exa"
+install_package "graphviz"
 install_package "imv"
 install_package "keepassxc"
 install_package "lazygit"
@@ -183,10 +185,10 @@ install_package "xorg-server-xwayland"
 
 print_in_purple "\n   GO packages\n\n"
 
-install_go_package "github.com/odeke-em/drive/cmd/drive" "drive"
-install_go_package "github.com/swaggo/swag/cmd/swag" "swag"
-install_go_package "golang.org/x/tools/cmd/godoc" "godoc"
-install_go_package "golang.org/x/tools/gopls" "gopls"
+#install_go_package "github.com/odeke-em/drive/cmd/drive" "drive"
+#install_go_package "github.com/swaggo/swag/cmd/swag" "swag"
+#install_go_package "golang.org/x/tools/cmd/godoc" "godoc"
+#install_go_package "golang.org/x/tools/gopls" "gopls"
 
 print_in_purple "\n   JS packages\n\n"
 
@@ -212,6 +214,7 @@ install_package "i3-battery-popup-git"
 install_package "joplin"
 install_package "kubeval"
 install_package "librewolf-bin" # @todo - settings missing
+install_package "neovim-remote"
 install_package "networkmanager-dmenu-git"
 install_package "postman-bin"
 install_package "python-grip"
