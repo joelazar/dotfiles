@@ -10,7 +10,7 @@ export FILE="nnn"
 export READER="zathura"
 export STATUSBAR="i3blocks"
 export TERMINAL="alacritty"
-export VISUAL="nvim"
+export VISUAL="ewrap"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

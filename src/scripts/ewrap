@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if ! { [ "$TERM" = "tmux-256color" ] && [ -n "$TMUX" ]; } then
+    alacritty -e nsvc "$*"
+else
+    tmux new-window "nsvc $*"
+fi
