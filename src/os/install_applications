@@ -217,6 +217,7 @@ install_package "spotify"
 install_package "spotify-tui" # @todo - manual config with client/secret
 install_package "subliminal"
 install_package "teamviewer"
+install_package "tllocalmgr-git" # @todo - tllocalmgr install moderncv
 install_package "wlr-randr"
 install_package "x11docker"
 install_package "xdg-desktop-portal-wlr"
