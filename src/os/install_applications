@@ -140,6 +140,7 @@ install_package "ntfs-3g"
 install_package "p7zip"
 install_package "rclone"
 install_package "rkhunter"
+install_package "rlwrap"
 install_package "strace"
 install_package "system-config-printer"
 install_package "tcpdump"
@@ -182,6 +183,10 @@ install_package "wayvnc"
 install_package "wdisplays"
 install_package "wl-clipboard"
 install_package "xorg-server-xwayland"
+
+print_in_purple "\n   GO packages\n\n"
+
+install_go_package "github.com/traefik/yaegi/cmd/yaegi" "yaegi"
 
 print_in_purple "\n   JS packages\n\n"
 
