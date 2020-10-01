@@ -15,6 +15,7 @@ alias path='printf "%b\n" "${PATH//:/\\n}"'
 alias ping='ping -c 5'
 alias q="exit"
 alias rm='rm -I'
+alias yaegi='rlwrap yaegi'
 alias vi='nvim'
 alias vim='nvim'
 alias :q="exit"
