@@ -3,9 +3,9 @@
 ### Variables
 set $mod Mod4
 
-font pango:Hack, FontAwesome 18
+font pango:Hack, FontAwesome 15
 
-default_border pixel 1
+default_border pixel 0
 default_floating_border normal
 
 # Home row direction keys, like vim
