@@ -12,9 +12,9 @@
     "vim.neovimPath": "/usr/bin/nvim",
     "vscode-neovim.neovimPath": "/usr/bin/nvim",
     "vsicons.dontShowNewVersionMessage": true,
-    "workbench.colorTheme": "Solarized Light",
+    "workbench.colorTheme": "Visual Studio Dark",
     "workbench.iconTheme": "vscode-icons",
     "workbench.startupEditor": "newUntitledFile",
     "editor.fontSize": 12,
-    "window.zoomLevel": 0.5
+    "window.zoomLevel": 3
 }
