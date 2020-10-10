@@ -17,7 +17,6 @@ Let me try to briefly list the installed and configured packages:
 * [`oh my zsh`](https://ohmyz.sh/) - oh my zsh framework for zsh configurations
 * [`sway`](https://swaywm.org/) - I3 compatible window manager with wayland
 * [`mako`](https://github.com/emersion/mako) - Notification daemon
-* [`dmenu`](https://git.suckless.org/dmenu/) - Application launcher for WMs
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
   * [`SpaceVim`](https://spacevim.org/) - A community-driven vim distribution, which handles collections of plugins in layers.
@@ -39,7 +38,6 @@ Let me try to briefly list the installed and configured packages:
 * [`docker`](https://www.docker.com/) - Container framework for OS level virtualization
 * [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer
 * [`wine`](https://www.winehq.org/) - In case of need
-* [`gimp`](https://www.gimp.org/) - For image manupulation
 * [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
 * some useful scripts for example setting up [`algo vpn`](https://github.com/trailofbits/algo)
 * and many more other useful stuff

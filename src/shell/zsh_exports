@@ -134,12 +134,6 @@ export GRIM_DEFAULT_DIR="$HOME/pictures/screenshots"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Use dmenu for sudo pass insert
-
-export SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # NPM exports
 
 export NODE_PATH="$HOME/.node/lib/node_modules:$NODE_PATH"

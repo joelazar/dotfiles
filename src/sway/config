@@ -18,10 +18,12 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu dmenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
+# set $menu bemenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
+# set $menu dmenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
+set $menu bemenu-run -b -i --fn "Hack 18" | xargs swaymsg exec --
 
 ### Output configuration
-set $wallpapers_path $HOME/pictures/wallpaper/
+set $wallpapers_path $HOME/pictures/wallpaper/new/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
