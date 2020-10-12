@@ -39,8 +39,8 @@
 
 [[layers]]
   name = 'shell'
-  default_position = 'top'
-  default_height = 35
+  default_position = 'bottom'
+  default_height = 30
 
 [[layers]]
   name = "colorscheme"
