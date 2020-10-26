@@ -16,5 +16,9 @@
     "workbench.iconTheme": "vscode-icons",
     "workbench.startupEditor": "newUntitledFile",
     "editor.fontSize": 12,
-    "window.zoomLevel": 3
+    "window.zoomLevel": 3,
+    "breadcrumbs.enabled": true,
+    "editor.renderWhitespace": "all",
+    "window.menuBarVisibility": "default",
+    "workbench.statusBar.visible": true
 }
