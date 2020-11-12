@@ -1,7 +1,8 @@
 [options]
   bootstrap_after = "myconfig#after"
   buffer_index_type = 4
-  colorscheme = "gruvbox"
+  colorscheme = "one"
+#  colorscheme = "gruvbox"
   colorscheme_bg = "dark"
   disabled_plugins = ["deoplete-go", "srcery-vim"]
   enable_guicolors = true
