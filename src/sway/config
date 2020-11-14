@@ -18,8 +18,6 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-# set $menu bemenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
-# set $menu dmenu_path | bemenu -b -i --fn "Hack 18" | xargs swaymsg exec --
 set $menu bemenu-run -b -i --fn "Hack 18" | xargs swaymsg exec --
 
 ### Output configuration
@@ -29,13 +27,30 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
 output eDP-1 scale 1.0 scale_filter nearest
 
+# set custom swaylock command (swaylock-effects)
+set $lock swaylock --screenshots \
+      --clock \
+      --indicator \
+      --indicator-radius 100 \
+      --indicator-thickness 7 \
+      --effect-blur 7x5 \
+      --effect-vignette 0.5:0.5 \
+      --ring-color 39373b \
+      --key-hl-color 880033 \
+      --line-color 00000000 \
+      --inside-color 00000088 \
+      --separator-color 00000000 \
+      --grace 3 \
+      --fade-in 0.5 \
+      --effect-greyscale
+
 ### Idle configuration
 exec swayidle -w \
-       timeout 600 'swaylock-fancy &' \
+       timeout 600 $lock & \
        timeout 900 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
        timeout 3600 'systemctl suspend' \
-       before-sleep 'swaylock-fancy'
+       before-sleep $lock 
 
 ### Input configuration
 
@@ -80,7 +95,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
 mode "$mode_system" {
-    bindsym l exec --no-startup-id swaylock-fancy, mode "default"
+    bindsym l exec --no-startup-id $lock, mode "default"
     bindsym e exec --no-startup-id swaymsg exit, mode "default"
     bindsym s exec --no-startup-id systemctl suspend, mode "default"
     bindsym h exec --no-startup-id systemctl hibernate, mode "default"
@@ -234,8 +249,8 @@ bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # Screenshot
-bindsym --release $mod+Print exec grim - | wl-copy
-bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | wl-copy
+bindsym --release $mod+Print exec grim - | swappy -f -
+bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f -
 
 # color defines for zenburn styled i3
 set $bg     #2c2c2e
