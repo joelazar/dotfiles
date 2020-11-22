@@ -46,11 +46,11 @@ set $lock swaylock --screenshots \
 
 ### Idle configuration
 exec swayidle -w \
-       timeout 600 $lock & \
+       timeout 600 '$lock' \
        timeout 900 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
        timeout 3600 'systemctl suspend' \
-       before-sleep $lock 
+       before-sleep '$lock'
 
 ### Input configuration
 
