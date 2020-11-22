@@ -4,7 +4,7 @@
   colorscheme = "one"
 #  colorscheme = "gruvbox"
   colorscheme_bg = "dark"
-  disabled_plugins = ["deoplete-go", "srcery-vim"]
+#   disabled_plugins = ["deoplete-go", "srcery-vim"]
   github_username = 'joelazar'
   enable_guicolors = true
   enable_statusline_mode = true
