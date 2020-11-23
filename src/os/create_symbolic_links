@@ -19,6 +19,7 @@ create_symlinks() {
   create_symlink "os/run_setup" "$HOME/.local/bin/run_setup"
   create_symlink "other/config.ini" "$HOME/.config/networkmanager-dmenu/config.ini"
   create_symlink "other/npmrc"
+  create_symlink "other/pgcli_config" "$HOME/.config/pgcli/config"
   create_symlink "other/zathurarc" "$HOME/.config/zathura/zathurarc"
   create_symlink "scripts/*" "$HOME/.local/bin/"
   create_symlink "share/applications/*" "$HOME/.local/share/applications/"

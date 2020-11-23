@@ -26,6 +26,7 @@ create_directories() {
         "$HOME/.config/mpv/scripts"
         "$HOME/.config/networkmanager-dmenu"
         "$HOME/.config/nvim"
+        "$HOME/.config/pgcli"
         "$HOME/.config/pulse"
         "$HOME/.config/sway"
         "$HOME/.config/swappy"
