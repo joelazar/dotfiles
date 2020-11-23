@@ -7,6 +7,7 @@ alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias diff='colordiff'
+alias g="git"
 alias lg='lazygit'
 alias ls='exa'
 alias logme="script -f $HOME/logs/$(date +"%d-%b-%y_%H-%M-%S")_shell.log"
