@@ -7,7 +7,9 @@
         "sway/mode"
     ],
     "modules-right": [
+        "custom/spotify",
         "custom/separator",
+        "custom/vpn",
         "network",
         "custom/separator",
         "memory",
@@ -47,11 +49,11 @@
         // Not connected to AC
         "format-discharging": "{icon} {capacity}%",
         "format-icons": [
-            "", // Icon: battery-full
-            "", // Icon: battery-three-quarters
+            "", // Icon: battery-empty
+            "", // Icon: battery-quarter
             "", // Icon: battery-half
-            "", // Icon: battery-quarter
-            ""  // Icon: battery-empty
+            "", // Icon: battery-three-quarters
+            ""  // Icon: battery-full
         ]
     },
 
@@ -109,6 +111,22 @@
         "format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
         "format-disconnected": "⚠  Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+    "custom/vpn":{
+        "format": " {icon}",
+        "tooltip-format": "{icon}",
+        "exec": "$HOME/.local/bin/vpn_echo.sh",
+        "return-type": "json",
+        "interval": 5,
+        "format-icons": ["",""]
+    },
+
+    "custom/spotify": {
+        "format": " {}",
+        "interval": 3,
+        "exec": "$HOME/.local/bin/spotify.py",
+        "exec-if": "pgrep spotify"
     },
 
     "sway/mode": {
