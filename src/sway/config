@@ -46,7 +46,7 @@ set $lock swaylock --screenshots \
 
 ### Idle configuration
 exec swayidle -w \
-       timeout 600 '$lock' \
+       timeout 600 '$lock &' \
        timeout 900 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
        timeout 3600 'systemctl suspend' \
@@ -317,6 +317,7 @@ exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack 1
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
+exec --no-startup-id cadmus
 
 for_window [class="^.*"] border pixel 2
 

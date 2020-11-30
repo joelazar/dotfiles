@@ -63,6 +63,12 @@ install_npm_package() {
   execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
 }
 
+install_pip_package() {
+  declare -r PACKAGENAME="$1"
+
+  execute "pip install --upgrade $PACKAGENAME" "$PACKAGENAME"
+}
+
 package_is_installed() {
   echo $INSTALLED_PACKAGES | grep -q " $1 "
 }
