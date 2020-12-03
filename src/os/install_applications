@@ -198,11 +198,13 @@ install_yarn_package "@mermaid-js/mermaid-cli" "mermaid-cli"
 print_in_purple "\n   Python packages\n\n"
 
 install_pip_package "subliminal" "subliminal"
+install_pip_package "az-cli" "azure-cli"
+install_pip_package "pgcli" "pgcli"
 
 print_in_purple "\n   AUR packages\n\n"
 
 install_package "ancient-packages"
-install_package "azure-cli"
+# install_package "azure-cli"
 install_package "bitwarden-bin"
 install_package "bitwarden-cli"
 install_package "cadmus-deb"
