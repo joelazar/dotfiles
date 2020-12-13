@@ -3,9 +3,9 @@
 ### Variables
 set $mod Mod4
 
-font pango:Hack, FontAwesome 15
+font pango:Hack, FontAwesome 14
 
-default_border pixel 0
+default_border pixel 1
 default_floating_border normal
 
 # Home row direction keys, like vim
@@ -18,7 +18,7 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu bemenu-run -b -i --fn "Hack 18" | xargs swaymsg exec --
+set $menu bemenu-run -b -i --fn "Hack 14" | xargs swaymsg exec --
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/new/
@@ -285,11 +285,12 @@ bindsym $mod+m         exec wlr-randr --output DP-3 --off
 bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 3197,0"
 
 # Network manager
-bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 18"
+bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 14"
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id alacritty -e nnn
 bindsym $mod+F2 exec --no-startup-id firefox
+bindsym $mod+F3 exec --no-startup-id chromium-wayland
 
 # Clipboard manager
 bindsym $mod+c exec clipman pick -t bemenu --tool-args="--fn 'Hack 14'"
@@ -313,7 +314,7 @@ for_window [window_role="pop-up"]      floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # Startup applications
-exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack 16' --height 300 --width 500 --background-color '#2c2c2e' --border-color '#9f9f9f'
+exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack 14' --height 300 --width 500 --background-color '#2c2c2e' --border-color '#9f9f9f'
 exec --no-startup-id wl-paste -t text --watch clipman store
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
