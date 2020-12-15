@@ -7,6 +7,7 @@ font pango:Hack, FontAwesome 14
 
 default_border pixel 1
 default_floating_border normal
+hide_edge_borders smart
 
 # Home row direction keys, like vim
 set $left h
