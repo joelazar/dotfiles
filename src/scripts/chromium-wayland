@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-chromium -enable-features=UseOzonePlatform --ozone-platform=wayland
