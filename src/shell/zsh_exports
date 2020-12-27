@@ -11,6 +11,7 @@ export READER="zathura"
 export STATUSBAR="i3blocks"
 export TERMINAL="alacritty"
 export VISUAL="nvim"
+export SUDO_ASKPASS="/usr/bin/ksshaskpass"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
