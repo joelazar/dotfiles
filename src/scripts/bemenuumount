@@ -6,19 +6,19 @@
 
 unmountusb() {
   [ -z "$drives" ] && exit
-  chosen=$(echo "$drives" | bemenu -b -i -p "Unmount which drive?" | awk '{print $1}')
+  chosen=$(echo "$drives" | bemenu -b -i --fn "Hack 14" -p "Unmount which drive?" | awk '{print $1}')
   [ -z "$chosen" ] && exit
   sudo -A umount "$chosen" && notify-send "💻 USB unmounting" "$chosen unmounted."
 }
 
 unmountandroid() {
-  chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | bemenu -b -i -p "Unmount which device?")
+  chosen=$(awk '/simple-mtpfs/ {print $2}' /etc/mtab | bemenu -b -i --fn "Hack 14" -p "Unmount which device?")
   [ -z "$chosen" ] && exit
   sudo -A umount -l "$chosen" && notify-send "🤖 Android unmounting" "$chosen unmounted."
 }
 
 asktype() {
-  case "$(printf "USB\\nAndroid" | bemenu -b -i -p "Unmount a USB drive or Android device?")" in
+  case "$(printf "USB\\nAndroid" | bemenu -b -i --fn "Hack 14" -p "Unmount a USB drive or Android device?")" in
   USB) unmountusb ;;
   Android) unmountandroid ;;
   esac
