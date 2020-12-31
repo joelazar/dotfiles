@@ -2,22 +2,6 @@
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# Note functions
-
-qn() {
-  echo "$1" >>$HOME/notes/quicknotes.md
-}
-
-n() {
-  $EDITOR $HOME/notes/"$*".md
-}
-
-nls() {
-  ls -c $HOME/notes/ | grep "$*"
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 # Ripgrep search on steroids
 
 rgv() {
@@ -30,17 +14,6 @@ rgv() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Docker functions
-
-function cleandocker() {
-  if [ -z "$1" ]; then
-    echo "No param given, I guess you do not want to delete all your containers. :)"
-    return
-  fi
-  for i in $(docker images | sed '1d' | grep "$1" | awk '{print $3}'); do
-    echo ${i}
-    docker rmi -f ${i}
-  done
-}
 
 function cleannone() { docker rmi $(docker images | grep "<none>" | awk '{print $3}'); }
 
@@ -81,7 +54,7 @@ n ()
     # stty lwrap undef
     # stty lnext undef
 
-    nnn -e -cd "$@"
+    nnn -d -e "$@"
 
     if [ -f "$NNN_TMPFILE" ]; then
             . "$NNN_TMPFILE"

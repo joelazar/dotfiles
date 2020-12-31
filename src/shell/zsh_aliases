@@ -12,6 +12,7 @@ alias lg='lazygit'
 alias ls='exa'
 alias logme="script -f $HOME/logs/$(date +"%d-%b-%y_%H-%M-%S")_shell.log"
 alias mkdir='mkdir -p -v'
+alias N='sudo -E nnn -deH'
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 alias ping='ping -c 5'
 alias q="exit"
