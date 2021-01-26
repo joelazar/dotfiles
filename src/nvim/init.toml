@@ -4,18 +4,18 @@
   colorscheme = "one"
 #  colorscheme = "gruvbox"
   colorscheme_bg = "dark"
-#   disabled_plugins = ["deoplete-go", "srcery-vim"]
-  github_username = 'joelazar'
   enable_guicolors = true
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
   enable_vimfiler_gitstatus = true
   filemanager = "nerdtree"
   filetree_direction = "left"
+  github_username = 'joelazar'
   relativenumber = false
   statusline_inactive_separator = "bar"
   statusline_separator = "arrow"
   statusline_unicode_symbols = true
+  terminal_cursor_shape = 1
   vimcompatible = false
   windows_index_type = 3
   windows_leader = "s"
@@ -48,7 +48,7 @@
 [[layers]]
   name = 'shell'
   default_position = 'bottom'
-  default_height = 30
+  default_height = 40
 
 [[layers]]
   name = "colorscheme"
@@ -74,8 +74,8 @@
 [[layers]]
   name = "tools"
 
-[[layers]]
-  name = 'tools#zeal'
+# [[layers]]
+#   name = 'tools#zeal'
 
 [[layers]]
   name = "lang#c"
@@ -109,8 +109,8 @@
 [[layers]]
   name = "lang#toml"
 
-[[layers]]
-  name = "lang#ipynb"
+# [[layers]]
+#   name = "lang#ipynb"
 
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"
