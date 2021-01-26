@@ -74,9 +74,6 @@
 [[layers]]
   name = "tools"
 
-# [[layers]]
-#   name = 'tools#zeal'
-
 [[layers]]
   name = "lang#c"
 
@@ -92,6 +89,7 @@
 
 [[layers]]
   name = "lang#json"
+  format_on_save = true
 
 [[layers]]
   name = "lang#latex"
