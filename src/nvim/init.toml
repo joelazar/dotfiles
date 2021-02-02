@@ -1,8 +1,7 @@
 [options]
   bootstrap_after = "myconfig#after"
   buffer_index_type = 4
-  colorscheme = "one"
-#  colorscheme = "gruvbox"
+  colorscheme = "hybrid"
   colorscheme_bg = "dark"
   enable_guicolors = true
   enable_statusline_mode = true
@@ -11,7 +10,7 @@
   filemanager = "nerdtree"
   filetree_direction = "left"
   github_username = 'joelazar'
-  relativenumber = false
+  relativenumber = true
   statusline_inactive_separator = "bar"
   statusline_separator = "arrow"
   statusline_unicode_symbols = true
@@ -39,6 +38,7 @@
     'c',
     'cpp',
     'go',
+    'javascript',
     'python',
     'sh'
   ]
