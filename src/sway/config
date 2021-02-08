@@ -19,7 +19,7 @@ set $right l
 set $term foot
 
 # Your preferred application launcher
-set $menu bemenu-run -b -i --fn "Hack 14" | xargs swaymsg exec --
+set $menu dmenu_path | wofi --show drun -i | xargs swaymsg exec --
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/new/
@@ -67,6 +67,8 @@ input type:touchpad {
 input type:keyboard {
   xkb_layout "hu,us"
   xkb_options caps:escape,grp:alt_shift_toggle
+  repeat_delay 300
+  repeat_rate 40
 }
 
 ### Key bindings
@@ -138,7 +140,7 @@ bindsym $mod+Shift+Right move right
 #
 set $ws1 "1.terminals"
 set $ws2 "2.www"
-set $ws3 "3.editor"
+set $ws3 "3.chrome"
 set $ws4 "4.chat"
 set $ws5 "5.notes"
 set $ws6 "6."
@@ -174,9 +176,11 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Assign applications to workspaces
 assign [app_id="firefox"] $ws2
 for_window [app_id="firefox"] inhibit_idle fullscreen
-for_window [class="Google-chrome"] move window to workspace $ws3
-for_window [class="Google-chrome"] inhibit_idle fullscreen
+for_window [app_id="Chromium"] move window to workspace $ws3
+for_window [app_id="Chromium"] inhibit_idle fullscreen
 assign [class="Caprine"] $ws4
+assign [class="Signal"] $ws4
+assign [class="discord"] $ws4
 for_window [class="Slack"] move window to workspace $ws4
 for_window [class="Spotify"] move window to workspace $ws9
 
@@ -276,8 +280,8 @@ bar {
   swaybar_command waybar
 }
 
-bindsym $mod+F9         exec --no-startup-id bemenumount
-bindsym $mod+F10        exec --no-startup-id bemenuumount
+bindsym $mod+F9         exec --no-startup-id wofimount
+bindsym $mod+F10        exec --no-startup-id wofiumount
 
 # Put this window on the primary output.
 bindsym $mod+x move workspace to output right
@@ -294,7 +298,7 @@ bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id chromium
 
 # Clipboard manager
-bindsym $mod+c exec clipman pick -t bemenu --tool-args="--fn 'Hack 14'"
+bindsym $mod+c exec clipman pick -t wofi --tool-args="-d"
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
