@@ -74,6 +74,7 @@ source /usr/share/bash-completion/completions/azure-cli
 source /usr/share/bash-completion/completions/fd
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
+source $HOME/.local/share/chezmoi.zsh
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

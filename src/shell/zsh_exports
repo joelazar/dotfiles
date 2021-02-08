@@ -11,7 +11,7 @@ export READER="zathura"
 export STATUSBAR="waybar"
 export TERMINAL="alacritty"
 export VISUAL="ewrap"
-export SUDO_ASKPASS="/usr/bin/ksshaskpass"
+export SUDO_ASKPASS="$HOME/.local/bin/wofipass"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -114,7 +114,7 @@ export PYTHONIOENCODING="UTF-8"
 
 # FZF options
 
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border "
 
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"

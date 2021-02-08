@@ -124,6 +124,7 @@ install_package "wireshark-qt"
 
 print_in_purple "\n   Utilities\n\n"
 
+install_package "asciinema"
 install_package "alacritty"
 install_package "atool"
 install_package "bpytop"
@@ -160,11 +161,11 @@ install_package "wireguard-tools"
 install_package "ytop"
 install_package "zsh"
 install_ohmyzsh
+update_ohmyzsh
 
 print_in_purple "\n   Sway\n\n"
 
 install_package "alsa-utils"
-install_package "bemenu"
 install_package "blueman"
 install_package "bluez-utils"
 install_package "brightnessctl"
@@ -192,6 +193,7 @@ install_package "wayvnc"
 install_package "wl-clipboard"
 install_package "xdg-desktop-portal-wlr"
 install_package "xorg-server-xwayland"
+install_package "wofi"
 
 print_in_purple "\n   GO packages\n\n"
 

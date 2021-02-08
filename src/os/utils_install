@@ -26,6 +26,10 @@ install_ohmyzsh() {
   print_result $? "ohmyzsh"
 }
 
+update_ohmyzsh() {
+  execute "omz update" "Updating Oh-My-Zsh"
+}
+
 install_nnn_plugins() {
   if [ ! -d "$HOME/.config/nnn/plugins" ]; then
     execute "curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh" "Install NNN plugins"
