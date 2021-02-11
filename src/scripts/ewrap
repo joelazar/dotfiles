@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-if ! { [ "$TERM" = "tmux-256color" ] && [ -n "$TMUX" ]; }; then
-  # new window
-  alacritty -e sh -c "sleep 0.1 && /usr/bin/nvim $*" &
-else
-  # tmux session running
-  tmux split-window -h "nvim \"$*\""
-fi
