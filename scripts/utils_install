@@ -1,0 +1,112 @@
+#!/bin/bash
+
+SOURCE_DIR=$(chezmoi source-path)
+
+. "$SOURCE_DIR/scripts/utils"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+declare -r INSTALLED_PACKAGES=$((which yay &> /dev/null && [ ! $? -eq 0 ]) || yay -Q)
+
+install_package_manager() {
+  execute "(which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
+}
+
+enable_multilib() {
+  execute "(cat /etc/pacman.conf | grep -q '^\[multilib\]') || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
+}
+
+install_ohmyzsh() {
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
+  print_result $? "ohmyzsh"
+}
+
+update_ohmyzsh() {
+  execute "zsh -i -c \"omz update\"" "Updating Oh-My-Zsh"
+}
+
+update_p10k() {
+  execute "git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull" "Updating Powerlevel10k"
+}
+
+install_nnn_plugins() {
+  curl -Lsf https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
+  print_result $? "Install/update nnn plugins"
+}
+
+install_package() {
+  declare -r PACKAGE="$1"
+
+  if ! package_is_installed "$PACKAGE"; then
+    execute "yay -S --noconfirm --needed $PACKAGE" "$PACKAGE"
+  else
+    print_success "$PACKAGE"
+  fi
+}
+
+install_go_package() {
+  declare -r PACKAGEPATH="$1"
+  declare -r PACKAGENAME="$2"
+
+  execute "go get -u $PACKAGEPATH" "$PACKAGENAME"
+}
+
+install_yarn_package() {
+  declare -r PACKAGEPATH="$1"
+  declare -r PACKAGENAME="$2"
+
+  execute "yarn global add $PACKAGEPATH" "$PACKAGENAME"
+}
+
+install_npm_package() {
+  declare -r PACKAGENAME="$1"
+
+  execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
+}
+
+install_pip_package() {
+  declare -r PACKAGENAME="$1"
+
+  execute "pip install --upgrade $PACKAGENAME" "$PACKAGENAME"
+}
+
+package_is_installed() {
+  echo $INSTALLED_PACKAGES | grep -q " $1 "
+}
+
+update() {
+  yay -Syyu
+}
+
+clean_up_cache() {
+  execute "paccache -rk2 && paccache -ruk1" "Clean up cached packages"
+}
+
+install_blackarch_repo() {
+  if ! yay -Sg | grep -q "^blackarch" &>/dev/null; then
+    execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
+  fi
+}
+
+install_spacevim() {
+  declare -r SPACEVIM_DIR="$HOME/.SpaceVim/"
+  declare -r SPACEVIM_SCRIPT="https://spacevim.org/install.sh"
+
+  if [ ! -d "$SPACEVIM_DIR" ]; then
+    execute "curl -sLf $SPACEVIM_SCRIPT | bash -s -- --install neovim" "Install SpaceVim"
+  fi
+  
+  print_result $? "Install SpaceVim"
+}
+
+update_spacevim_plugins() {
+  execute \
+    "nvim +SPUpdate SpaceVim +sleep 0.1 +qall" \
+    "Update SpaceVim"
+
+  execute \
+    "nvim +SPUpdate +sleep 0.1 +qall" \
+    "Update SpaceVim plugins"
+}
