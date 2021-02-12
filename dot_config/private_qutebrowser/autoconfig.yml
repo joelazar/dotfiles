@@ -100,7 +100,7 @@ settings:
     - -c
     - normal {line}G{column0}l
   fonts.default_size:
-    global: 18pt
+    global: 14pt
   fonts.web.size.default:
     global: 20
   fonts.web.size.default_fixed:
@@ -118,7 +118,7 @@ settings:
     - en-GB
     - hu-HU
   statusbar.show:
-    global: always
+    global: in-mode
   tabs.background:
     global: true
   tabs.favicons.scale:
