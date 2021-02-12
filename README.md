@@ -1,8 +1,10 @@
 # [joelazar](https://github.com/joelazar)’s dotfiles
 
-![joedotfiles - neofetch](https://user-images.githubusercontent.com/16268238/76142019-d1728f80-6069-11ea-9d44-a46382414c5c.png)
+![joedotfiles - wallpaper](screenshots/wallpaper.png)
 
-![joedotfiles - second workspace](https://user-images.githubusercontent.com/16268238/76142030-fb2bb680-6069-11ea-9d5f-c955479af682.png)
+![joedotfiles - spacevim](screenshots/spacevim.png)
+
+![joedotfiles - diff](screenshots/diff.png)
 
 ## Details
 
@@ -57,6 +59,8 @@ chezmoi init https://github.com/joelazar/dotfiles.git
 ## Acknowledgements
 
 Some of the [utils functions](scripts/) which I'm using for the initial [setup](run_once_install_packages.sh) and later for my update [script](private_dot_local/bin/executable_update_everything) was taken from [alrra](https://github.com/alrra)'s [dotfiles](https://github.com/alrra/dotfiles) repo and I'm really grateful for it.
+
+I usually take my wallpapers from [Unsplash](https://unsplash.com/) and the one which is present in my screenshot is from [Michal Zych](https://unsplash.com/@enzu).
 
 ## License
 
