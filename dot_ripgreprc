@@ -1,0 +1,9 @@
+# Search hidden files and directories also.
+--hidden
+
+# Limit the length of lines printed by ripgrep.
+--max-columns=150
+--max-columns-preview
+
+# Make search case insensitive, unless an uppercase letter is used.
+--smart-case

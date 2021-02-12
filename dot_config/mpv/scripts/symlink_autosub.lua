@@ -1,0 +1,1 @@
+/home/joelazar/dotfiles/src/mpv/autosub.lua

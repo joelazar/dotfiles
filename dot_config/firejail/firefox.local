@@ -1,0 +1,3 @@
+include whitelist-runuser-common.inc
+dbus-user.talk org.freedesktop.Notifications
+dbus-user.talk org.freedesktop.portal.Desktop

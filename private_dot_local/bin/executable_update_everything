@@ -1,0 +1,53 @@
+#!/bin/bash
+
+SOURCE_DIR=$(chezmoi source-path)
+
+. "$SOURCE_DIR/scripts/utils_install" &&
+  . "$SOURCE_DIR/scripts/utils"
+
+print_in_purple "Update packages\n"
+update
+
+install_nnn_plugins
+
+ask_for_confirmation "Do you want to update GO packages now? It could take a while."
+if answer_is_yes; then
+  print_in_purple "Update GO packages\n"
+
+  install_go_package "github.com/klauspost/asmfmt/cmd/asmfmt" "asmfmt"
+  install_go_package "github.com/go-delve/delve/cmd/dlv" "dlv"
+  install_go_package "github.com/kisielk/errcheck" "errcheck"
+  install_go_package "github.com/davidrjenni/reftools/cmd/fillstruct" "fillstruct"
+  install_go_package "github.com/rogpeppe/godef" "godef"
+  install_go_package "golang.org/x/tools/cmd/goimports" "goimports"
+  install_go_package "golang.org/x/lint/golint" "golint"
+  install_go_package "golang.org/x/tools/gopls" "gopls"
+  install_go_package "github.com/golangci/golangci-lint/cmd/golangci-lint" "golangci-lint"
+  install_go_package "honnef.co/go/tools/cmd/staticcheck" "staticcheck"
+  install_go_package "github.com/fatih/gomodifytags" "gomodifytags"
+  install_go_package "golang.org/x/tools/cmd/gorename" "gorename"
+  install_go_package "github.com/jstemmer/gotags" "gotags"
+  install_go_package "golang.org/x/tools/cmd/guru" "guru"
+  install_go_package "github.com/josharian/impl" "impl"
+  install_go_package "honnef.co/go/tools/cmd/keyify" "keyify"
+  install_go_package "github.com/fatih/motion" "motion"
+  install_go_package "github.com/koron/iferr" "iferr"
+  install_go_package "github.com/go-swagger/go-swagger" "go-swagger"
+fi
+
+print_in_purple "Update JS packages\n"
+
+install_npm_package "bash-language-server"
+install_npm_package "javascript-typescript-langserver"
+install_yarn_package "@mermaid-js/mermaid-cli" "mermaid-cli"
+
+print_in_purple "Update Python packages\n"
+
+install_pip_package "subliminal" "subliminal"
+install_pip_package "pgcli" "pgcli"
+
+print_in_purple "Update SpaceVim\n"
+
+update_spacevim_plugins
+
+clean_up_cache

@@ -1,0 +1,20 @@
+[MIME Cache]
+application/pdf=chromium.desktop;google-chrome.desktop;
+application/rdf+xml=chromium.desktop;google-chrome.desktop;
+application/rss+xml=chromium.desktop;google-chrome.desktop;
+application/x-xpinstall=firefox.desktop;
+application/xhtml+xml=chromium.desktop;firefox.desktop;google-chrome.desktop;
+application/xhtml_xml=chromium.desktop;google-chrome.desktop;
+application/xml=chromium.desktop;google-chrome.desktop;
+image/gif=chromium.desktop;google-chrome.desktop;
+image/jpeg=chromium.desktop;google-chrome.desktop;
+image/png=chromium.desktop;google-chrome.desktop;
+image/webp=chromium.desktop;google-chrome.desktop;
+inode/directory=file.desktop;
+text/html=chromium.desktop;firefox.desktop;google-chrome.desktop;
+text/plain=code-oss.desktop;text.desktop;
+text/xml=chromium.desktop;firefox.desktop;google-chrome.desktop;
+x-scheme-handler/ftp=chromium.desktop;google-chrome.desktop;
+x-scheme-handler/http=chromium.desktop;firefox.desktop;google-chrome.desktop;
+x-scheme-handler/https=chromium.desktop;firefox.desktop;google-chrome.desktop;
+x-scheme-handler/slack=slack.desktop;

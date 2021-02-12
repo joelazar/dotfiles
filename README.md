@@ -1,8 +1,10 @@
 # [joelazar](https://github.com/joelazar)’s dotfiles
 
-![joedotfiles - neofetch](https://user-images.githubusercontent.com/16268238/76142019-d1728f80-6069-11ea-9d44-a46382414c5c.png)
+![joedotfiles - wallpaper](screenshots/wallpaper.png)
 
-![joedotfiles - second workspace](https://user-images.githubusercontent.com/16268238/76142030-fb2bb680-6069-11ea-9d5f-c955479af682.png)
+![joedotfiles - spacevim](screenshots/spacevim.png)
+
+![joedotfiles - diff](screenshots/diff.png)
 
 ## Details
 
@@ -15,23 +17,26 @@ Let me try to briefly list the installed and configured packages:
 * [`yay`](https://github.com/Jguer/yay) - As an aur helper
 * [`zsh`](http://zsh.sourceforge.net/) - Z shell
 * [`oh my zsh`](https://ohmyz.sh/) - oh my zsh framework for zsh configurations
-* [`sway`](https://swaywm.org/) - I3 compatible window manager with wayland
+* [`sway`](https://swaywm.org/) - I3 compatible window manager, but with wayland
+* [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar
 * [`mako`](https://github.com/emersion/mako) - Notification daemon
+* [`wofi`](https://hg.sr.ht/~scoopta/wofi) - Application launcher
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
   * [`SpaceVim`](https://spacevim.org/) - A community-driven vim distribution, which handles collections of plugins in layers.
 * [`git`](https://git-scm.com/) - No comment
-  * [`diff-so-fancy`](https://github.com/so-fancy/diff-so-fancy) - Pretty discriptive add-on for git
-* [`htop`](https://hisham.hm/htop/) - As a monitoring tool
+  * [`delta`](https://github.com/dandavison/delta) - Diff tool with syntax highlighting
+* [`bpytop`](https://github.com/aristocratos/bpytop) - As a monitoring tool
 * [`fzf`](https://github.com/junegunn/fzf) - Command-line fuzzy finder
 * [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Grep on drugs
 * [`mpv`](https://mpv.io/) - For media
 * [`nnn`](https://github.com/jarun/nnn) - File manager
-* [`alacritty`](https://github.com/jwilm/alacritty) - Terminal with GPU-acceleration written in Rust
+* [`foot`](https://codeberg.org/dnkl/foot) - A blazing fast and lightweight Wayland terminal emulator
 * [`font awesome`](https://origin.fontawesome.com/) - Fonts
 * [`nerd fonts symbols`](https://www.nerdfonts.com/) - Symbols
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
 * [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
+* [`qutebrowser`](https://github.com/qutebrowser/qutebrowser) - A vim-like browser
 * [`spotify`](https://www.spotify.com/) - For music
 * [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
 * [`zathura`](https://github.com/pwmt/zathura) - Document viewer
@@ -39,109 +44,24 @@ Let me try to briefly list the installed and configured packages:
 * [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer
 * [`wine`](https://www.winehq.org/) - In case of need
 * [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
-* some useful scripts for example setting up [`algo vpn`](https://github.com/trailofbits/algo)
 * and many more other useful stuff
 
 ## Setup
 
-To set up the `dotfiles` just clone and execute [run_setup](src/os/run_setup).
+These dotfiles are managed with [chezmoi](https://github.com/twpayne/chezmoi).
 
-(:warning: **DO NOT** run it until you don't fully
-understand [what it does](src/os/run_setup). Seriously, **DON'T**!)
+Install them with:
 
-![Just don't :)](https://i.imgflip.com/pms4m.jpg)
-
-That's it! :sparkles:
-
-The setup process will:
-
-* Create some additional [directories](src/os/create_directories)
-* [Symlink](src/os/create_symbolic_links) the
-  [`alacritty`](src/alacritty),
-  [`development`](src/development),
-  [`git`](src/git),
-  [`mpv`](src/mpv),
-  [`neovim`](src/nvim),
-  [`scripts`](src/scripts),
-  [`share`](src/share),
-  [`shell`](src/shell),
-  [`sway`](src/sway),
-  [`tmux`](src/tmux),
-* Install applications / command-line tools for Arch
-  [`Install`](src/os/install_applications)
-* Install [`SpaceVim` setup](src/nvim/init.toml)
-* Set some [`settings`](src/os/settings)
-
-## Customize
-
-### Local Settings
-
-The `dotfiles` can be easily extended to suit additional local
-requirements by using the following files:
-
-#### `~/.bash.local`
-
-The `~/.bash.local` file it will be automatically sourced after
-all the other [`bash` related files](src/shell), thus, allowing
-its content to add to or overwrite the existing aliases, settings,
-PATH, etc.
-
-Here is a very simple example of a `~/.bash.local` file:
-
-```bash
-#!/bin/bash
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Set local aliases.
-
-alias starwars="telnet towel.blinkenlights.nl"
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-# Set PATH additions.
-
-PATH="$PATH:$HOME/dotfiles/src/bin"
-
-export PATH
-
+```sh
+chezmoi init https://github.com/joelazar/dotfiles.git
 ```
-
-#### `~/.gitconfig.local`
-
-The `~/.gitconfig.local` file it will be automatically included
-after the configurations from `~/.gitconfig`, thus, allowing its
-content to overwrite or add to the existing `git` configurations.
-
-__Note:__ Use `~/.gitconfig.local` to store sensitive information
-such as the `git` user credentials, e.g.:
-
-```bash
-[user]
-
-    name = Agi
-    email = agi@example.com
-
-```
-
-## Update
-
-To update your system you can either run the [`run_setup`
-script](src/os/run_setup) (which is linked to your PATH btw.) or,
-if you want to just update one particular part, run that part, it should work.
-Everything was designed to be idempotent so you can use this as a system update
-as well.
-
 
 ## Acknowledgements
 
-Inspiration and code was taken from alrra, thus this is/was mainly a fork from his repo.
-However, I removed macos part of it and tried to improve some lines here and there
-and converted it to be Manjaro compatible and later Arch compatible.
-* [Cătălin](https://github.com/alrra)
-  [dotfiles](https://github.com/alrra/dotfiles)
+Some of the [utils functions](scripts/) which I'm using for the initial [setup](run_once_install_packages.sh) and later for my update [script](private_dot_local/bin/executable_update_everything) was taken from [alrra](https://github.com/alrra)'s [dotfiles](https://github.com/alrra/dotfiles) repo and I'm really grateful for it.
 
+I usually take my wallpapers from [Unsplash](https://unsplash.com/) and the one which is present in my screenshot is from [Michal Zych](https://unsplash.com/@enzu).
 
 ## License
 
-The code is available under the [MIT license](LICENSE.txt).
+The code is available under the [MIT license](LICENSE).

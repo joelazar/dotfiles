@@ -1,0 +1,4 @@
+result=( ${(Q)"${(z)$(<<\EO:result
+
+EO:result
+)}"} )

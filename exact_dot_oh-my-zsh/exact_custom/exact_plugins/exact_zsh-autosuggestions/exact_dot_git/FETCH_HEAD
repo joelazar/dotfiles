@@ -1,0 +1,11 @@
+ae315ded4dba10685dbbafbfa2ff3c1aefeb490d		branch 'master' of ssh://github.com/zsh-users/zsh-autosuggestions
+eff0894a138f64f2752c0e2f0612055d71b0af4f	not-for-merge	branch 'develop' of ssh://github.com/zsh-users/zsh-autosuggestions
+b27277e7ff0f877f3189211ccd57da9ebec5e743	not-for-merge	branch 'experiments/strategies-by-pattern' of ssh://github.com/zsh-users/zsh-autosuggestions
+767d55eba0355d9ef9270df3ca257a936cf0eac5	not-for-merge	branch 'features/background-initialization' of ssh://github.com/zsh-users/zsh-autosuggestions
+36dae44064a7bf088fb1dec74c8463d5b6f3d3c8	not-for-merge	branch 'features/hist-words-suggestions' of ssh://github.com/zsh-users/zsh-autosuggestions
+161de32912a3426dc686db38250913227dd91948	not-for-merge	branch 'features/redraw-hook' of ssh://github.com/zsh-users/zsh-autosuggestions
+15bcfd712664bb301113761f886718fd3bea7bc2	not-for-merge	branch 'fixes/copy-earlier-word' of ssh://github.com/zsh-users/zsh-autosuggestions
+141f497d1751ea7c8f3bd7e4fb0e2e031d6d302b	not-for-merge	branch 'fixes/kill-multiple-words' of ssh://github.com/zsh-users/zsh-autosuggestions
+4ccfdb2435ea4b82983bf22bb2913c0773992cce	not-for-merge	branch 'fixes/partial-accept-duplicate-word' of ssh://github.com/zsh-users/zsh-autosuggestions
+9fb96753069b919deaaacb6f659be2339dfeb4d2	not-for-merge	branch 'fixes/slow_bracketed_paste_magic' of ssh://github.com/zsh-users/zsh-autosuggestions
+20c0ea841bafa78d8fb75c767e780248bfdf11a4	not-for-merge	branch 'no-server' of ssh://github.com/zsh-users/zsh-autosuggestions
