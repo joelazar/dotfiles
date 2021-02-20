@@ -33,6 +33,8 @@ if answer_is_yes; then
   install_go_package "github.com/fatih/motion" "motion"
   install_go_package "github.com/koron/iferr" "iferr"
   install_go_package "github.com/go-swagger/go-swagger" "go-swagger"
+  install_go_package "github.com/cosmos72/gomacro" "gomacro"
+  install_go_package "github.com/traefik/yaegi/cmd/yaegi" "yaegi"
 fi
 
 print_in_purple "Update JS packages\n"

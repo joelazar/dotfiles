@@ -1,5 +1,5 @@
 [options]
-  bootstrap_after = "myconfig#after"
+  bootstrap_after = "myspacevim#after"
   buffer_index_type = 4
   colorscheme = "hybrid"
   colorscheme_bg = "dark"

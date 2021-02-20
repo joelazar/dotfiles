@@ -1,27 +1,3 @@
-"case-insensitive search
-set ignorecase smartcase 
-"wrap lines
-set wrap
-"search for visually selected text
-vnoremap // y/<C-R>"<CR>
-"have the same buffer on clipboard for multiple pastes
-xnoremap p pgvy 
-"add new line below
-nnoremap oo o<Esc>k
-"add new line above
-nnoremap OO O<Esc>j 
-"start new line for RETURN
-nnoremap <CR> o<Esc>
-
-let g:neoformat_enabled_yaml = ['prettier']
-let g:neoformat_enabled_python = ['black']
-
-let g:go_fmt_options = {
-  \ 'gofmt': '-s',
-  \ }
-
-command Exec set splitright | vnew | set filetype=sh | read !sh #
-
 "parse Makefiles automatically for tasks plugin
 function! s:make_tasks() abort
     if filereadable('Makefile')
@@ -48,4 +24,32 @@ function! s:make_tasks() abort
     endif
 endfunction
 
-call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
+function! myspacevim#after() abort
+
+  "case-insensitive search
+  set ignorecase smartcase
+  "wrap lines
+  set wrap
+  "search for visually selected text
+  vnoremap // y/<C-R>"<CR>
+  "have the same buffer on clipboard for multiple pastes
+  xnoremap p pgvy
+  "add new line below
+  nnoremap oo o<Esc>k
+  "add new line above
+  nnoremap OO O<Esc>j
+  "start new line for RETURN
+  nnoremap <CR> o<Esc>
+
+  let g:neoformat_enabled_yaml = ['prettier']
+  let g:neoformat_enabled_python = ['black']
+
+  let g:go_fmt_options = {
+    \ 'gofmt': '-s',
+    \ }
+
+  command Exec set splitright | vnew | set filetype=sh | read !sh #
+
+  call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))
+
+endfunction
