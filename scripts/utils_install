@@ -23,16 +23,15 @@ install_ohmyzsh() {
   print_result $? "ohmyzsh"
 }
 
-update_ohmyzsh() {
-  execute "zsh -i -c \"omz update\"" "Updating Oh-My-Zsh"
-}
-
-update_p10k() {
-  execute "git -C ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k pull" "Updating Powerlevel10k"
-}
-
 install_nnn_plugins() {
-  curl -Lsf https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
+  script_path="$HOME/.config/nnn/plugins/getplugs"
+  
+  if [ ! -f "$script_path" ]; then
+    wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -o "$script_path"
+  fi
+
+  bash "$script_path"
+
   print_result $? "Install/update nnn plugins"
 }
 
