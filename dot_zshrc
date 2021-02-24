@@ -19,6 +19,7 @@ plugins=(
   gitfast
   httpie
   kubectl
+  kubetail
   ripgrep
   pip
   urltools

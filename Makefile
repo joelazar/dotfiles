@@ -1,9 +1,10 @@
 none:
 
-update-third-party: \
+update-all: \
 	update-oh-my-zsh \
 	update-p10k \
-	update-zsh-syntax-highlighting
+	update-zsh-syntax-highlighting \
+	update-kubetail
 
 update-p10k:
 	mkdir -p dot_oh-my-zsh/custom/themes
@@ -18,3 +19,8 @@ update-zsh-syntax-highlighting:
 	mkdir -p dot_oh-my-zsh/custom/plugins
 	curl -s -L -o zsh-syntax-highlighting-master.tar.gz https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz
 	chezmoi import --strip-components 1 --destination ${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting zsh-syntax-highlighting-master.tar.gz
+
+update-kubetail:
+	mkdir -p dot_oh-my-zsh/custom/plugins
+	curl -s -L -o kubetail-master.tar.gz https://github.com/johanhaleby/kubetail/archive/master.tar.gz
+	chezmoi import --strip-components 1 --destination ${HOME}/.oh-my-zsh/custom/plugins/kubetail kubetail-master.tar.gz
