@@ -1,0 +1,24 @@
+stylesheet=style.css
+
+allow_images=true
+allow_markup=true
+always_parse_args=true
+content_align=center
+display_generic=true
+haligh=center
+hide_scroll=true
+image_size=20px
+insensitive=true
+layer=overlay
+line_wrap=off
+lines=10
+orientation=vertical
+print_command=true
+# prompt=
+show=drun
+show_all=true
+term=foot
+valigh=center
+width=100%
+# location=bottom
+xoffset=0px
