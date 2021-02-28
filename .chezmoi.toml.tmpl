@@ -15,3 +15,11 @@
     email = "{{ $email }}"
     name = "{{ $name }}"
     host = "{{ $host }}"
+
+[diff]
+    format = "git"
+    pager = "delta"
+
+[merge]
+    command = "nvim"
+    args = "-d"
