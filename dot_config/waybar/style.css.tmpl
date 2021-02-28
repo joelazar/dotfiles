@@ -39,7 +39,11 @@
     background: #323232;
     color: white;
     font-family: Hack, Fontawesome, sans-serif;
+{{- if eq .host "thinkpad-x250" }}
+    font-size: 12px;
+{{- else }}
     font-size: 18px;
+{{- end }}
 }
 
 /* Each module */
@@ -53,8 +57,13 @@
 #pulseaudio,
 #temperature,
 #tray {
+{{- if eq .host "thinkpad-x250" }}
+    padding-left: 4px;
+    padding-right: 4px;
+{{- else }}
     padding-left: 10px;
     padding-right: 10px;
+{{- end }}
 }
 
 

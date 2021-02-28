@@ -19,9 +19,14 @@ export SUDO_ASKPASS="$HOME/.local/bin/wofipass"
 
 # These environment variables probably not working properly
 export XCURSOR_THEME="Adwaita"
-export XCURSOR_SIZE="16"
 export SWAY_CURSOR_THEME="Adwaita"
+{{- if eq .host "thinkpad-x250" }}
+export XCURSOR_SIZE="12"
+export SWAY_CURSOR_SIZE="12"
+{{- else }}
+export XCURSOR_SIZE="16"
 export SWAY_CURSOR_SIZE="16"
+{{- end }}
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

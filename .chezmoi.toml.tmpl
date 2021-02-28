@@ -9,7 +9,9 @@
 
 {{- $email := promptString "Git email address for the author/committer" }}
 {{- $name := promptString "Git username for the author/committer" }}
+{{- $host := promptString "Host? (default(thinkpad-x1) or thinkpad-x250)" }}
 
 [data]
     email = "{{ $email }}"
     name = "{{ $name }}"
+    host = "{{ $host }}"

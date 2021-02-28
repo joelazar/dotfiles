@@ -1,7 +1,11 @@
 {
     "layer": "top",
     "position": "top",
+{{- if eq .host "thinkpad-x250" }}
+    "height": 16,
+{{- else }}
     "height": 32,
+{{- end }}
     "modules-left": [
         "sway/workspaces",
         "sway/mode"
