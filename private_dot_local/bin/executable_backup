@@ -7,12 +7,10 @@ BACKUPDIR="rclone:onedrive:backup"
 
 case "$1" in
 "do") restic --repo "$BACKUPDIR" backup \
-  ~/.gitconfig.local \
   ~/.ssh \
   ~/.zsh.local \
   ~/documents \
   ~/Downloads \
-  ~/git \
   ~/logs \
   ~/notes \
   ~/pictures \

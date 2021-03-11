@@ -24,12 +24,24 @@ function! s:make_tasks() abort
     endif
 endfunction
 
+function! myspacevim#before() abort
+
+  let g:gruvbox_italic = 1
+  " contrast options: soft, medium or hard
+  let g:gruvbox_contrast_dark = "soft"
+  let g:gruvbox_contrast_light = "medium"
+
+endfunction
+
 function! myspacevim#after() abort
 
+  let g:gruvbox_hls_cursor = 'purple'
   "case-insensitive search
   set ignorecase smartcase
   "wrap lines
   set wrap
+  "automatically save before :next, :make etc.
+  set autowrite
   "search for visually selected text
   vnoremap // y/<C-R>"<CR>
   "have the same buffer on clipboard for multiple pastes

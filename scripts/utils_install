@@ -108,4 +108,9 @@ update_spacevim_plugins() {
   execute \
     "nvim +SPUpdate +sleep 0.1 +qall" \
     "Update SpaceVim plugins"
+
+  execute \
+    "nvim +SPLayer Go +GoUpdateBinaries +sleep 0.1 +qall" \
+    "Update VimGo SpaceVim plugins"
+
 }

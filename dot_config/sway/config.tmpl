@@ -143,6 +143,19 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# Move the focused workspace with the same, but add Shift
+bindsym $mod+Control+Shift+$right move workspace to output right
+bindsym $mod+Control+Shift+$left move workspace to output left
+bindsym $mod+Control+Shift+$down move workspace to output down
+bindsym $mod+Control+Shift+$up move workspace to output up
+# Ditto, with arrow keys
+bindsym $mod+Control+Shift+Right move workspace to output right
+bindsym $mod+Control+Shift+Left move workspace to output left
+bindsym $mod+Control+Shift+Down move workspace to output down
+bindsym $mod+Control+Shift+Up move workspace to output up
+
+
 #
 # Workspaces:
 #
@@ -290,9 +303,6 @@ bar {
 
 bindsym $mod+F9         exec --no-startup-id wofimount
 bindsym $mod+F10        exec --no-startup-id wofiumount
-
-# Put this window on the primary output.
-bindsym $mod+x move workspace to output right
 
 bindsym $mod+m         exec wlr-randr --output DP-3 --off
 bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 3197,0"

@@ -1,7 +1,8 @@
 [options]
+  bootstrap_before = "myspacevim#before"
   bootstrap_after = "myspacevim#after"
   buffer_index_type = 4
-  colorscheme = "hybrid"
+  colorscheme = "gruvbox"
   colorscheme_bg = "dark"
   enable_guicolors = true
   enable_statusline_mode = true
@@ -9,11 +10,12 @@
   enable_vimfiler_gitstatus = true
   filemanager = "nerdtree"
   filetree_direction = "left"
-  github_username = 'joelazar'
+  github_username = "joelazar"
   relativenumber = true
   statusline_inactive_separator = "bar"
   statusline_separator = "arrow"
-  statusline_unicode_symbols = true
+  statusline_unicode_symbols = false
+  enable_statusline_bfpath = true
   terminal_cursor_shape = 1
   vimcompatible = false
   windows_index_type = 3
@@ -24,6 +26,8 @@
 
 [[layers]]
   name = 'format'
+  enable = true
+  format_on_save = true
 
 [[layers]]
   name = 'autocomplete'
@@ -85,11 +89,9 @@
 
 [[layers]]
   name = "lang#javascript"
-  format_on_save = true
 
 [[layers]]
   name = "lang#json"
-  format_on_save = true
 
 [[layers]]
   name = "lang#latex"
@@ -99,7 +101,6 @@
 
 [[layers]]
   name = "lang#python"
-  format_on_save = true
 
 [[layers]]
   name = "lang#sh"
@@ -107,8 +108,15 @@
 [[layers]]
   name = "lang#toml"
 
-# [[layers]]
-#   name = "lang#ipynb"
+[[layers]]
+  name = "lang#html"
+
+[[layers]]
+  name = "lang#ipynb"
 
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"
+
+[[custom_plugins]]
+  repo = "iamcco/coc-tailwindcss"
+  on_cmd = ["yarn install --frozen-lockfile && yarn run build"]

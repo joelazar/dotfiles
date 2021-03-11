@@ -1,6 +1,4 @@
-none:
-
-update-all: \
+all: \
 	update-oh-my-zsh \
 	update-p10k \
 	update-zsh-syntax-highlighting \
