@@ -189,6 +189,7 @@ install_package "wayvnc"
 install_package "wl-clipboard"
 install_package "xdg-desktop-portal-wlr"
 install_package "xorg-server-xwayland"
+install_package "wf-recorder"
 install_package "wofi"
 
 print_in_purple "GO packages\n"
