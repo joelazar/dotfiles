@@ -234,6 +234,7 @@ print_in_purple "AUR packages\n"
 
 install_package "ancient-packages"
 install_package "azure-cli"
+install_package "bat-extras"
 install_package "bitwarden-bin"
 install_package "bitwarden-cli"
 install_package "circleci-cli-bin"

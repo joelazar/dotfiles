@@ -1,4 +1,5 @@
 all: \
+	update-forgit \
 	update-oh-my-zsh \
 	update-p10k \
 	update-zsh-syntax-highlighting \
@@ -22,3 +23,8 @@ update-kubetail:
 	mkdir -p dot_oh-my-zsh/custom/plugins
 	curl -s -L -o kubetail-master.tar.gz https://github.com/johanhaleby/kubetail/archive/master.tar.gz
 	chezmoi import --strip-components 1 --destination ${HOME}/.oh-my-zsh/custom/plugins/kubetail kubetail-master.tar.gz
+
+update-forgit:
+	mkdir -p dot_oh-my-zsh/custom/plugins
+	curl -s -L -o forgit-master.tar.gz https://github.com/wfxr/forgit/archive/master.tar.gz
+	chezmoi import --strip-components 1 --destination ${HOME}/.oh-my-zsh/custom/plugins/forgit forgit-master.tar.gz
