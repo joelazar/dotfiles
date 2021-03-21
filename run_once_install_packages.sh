@@ -177,7 +177,23 @@ install_package "pamixer"
 install_package "pavucontrol"
 install_package "pipewire"
 install_package "pulseaudio"
-install_package "pulseaudio-bluetooth"
+# install_package "pulseaudio-bluetooth" # until pulseaudio 15.0 released?
+
+# fisher install evanlucas/fish-kubectl-completions
+# fisher install jethrokuan/z
+# fisher install jorgebucaran/fish-bax
+# fisher install joseluisq/gitnow
+# fisher install franciscolourenco/done
+# fisher install danhper/fish-ssh-agent
+# fisher install PatrickF1/fzf.fish
+# fisher install IlanCosman/tide
+# hyperfine
+# direnv
+# fisher
+# fish
+# nerd-fonts-complete
+# pulseaudio-modules-bt
+
 install_package "qt5-wayland"
 install_package "slurp"
 install_package "sof-firmware"
@@ -223,6 +239,9 @@ print_in_purple "JS packages\n"
 
 install_npm_package "bash-language-server"
 install_npm_package "javascript-typescript-langserver"
+install_npm_package "typescript-language-server"
+install_npm_package "vscode-css-languageserver-bin"
+install_npm_package "vscode-html-languageserver-bin"
 install_yarn_package "@mermaid-js/mermaid-cli" "mermaid-cli"
 
 print_in_purple "Python packages\n"

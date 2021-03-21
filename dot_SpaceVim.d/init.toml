@@ -4,6 +4,8 @@
   buffer_index_type = 4
   colorscheme = "gruvbox"
   colorscheme_bg = "dark"
+  default_indent = 4
+  expand_tab = true
   enable_guicolors = true
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
@@ -14,7 +16,7 @@
   relativenumber = true
   statusline_inactive_separator = "bar"
   statusline_separator = "arrow"
-  statusline_unicode_symbols = false
+  statusline_unicode_symbols = true
   enable_statusline_bfpath = true
   terminal_cursor_shape = 1
   vimcompatible = false
@@ -27,7 +29,7 @@
 [[layers]]
   name = 'format'
   enable = true
-  format_on_save = true
+  format_on_save = false
 
 [[layers]]
   name = 'autocomplete'
@@ -40,11 +42,14 @@
   name = 'lsp'
   filetypes = [
     'c',
+    'css',
     'cpp',
     'go',
+    'html',
     'javascript',
     'python',
-    'sh'
+    'sh',
+    'typescript'
   ]
     [layers.override_cmd]
       go = ['gopls']
@@ -86,9 +91,11 @@
 
 [[layers]]
   name = "lang#go"
+  format_on_save = true
 
 [[layers]]
   name = "lang#javascript"
+  format_on_save = true
 
 [[layers]]
   name = "lang#json"
@@ -101,6 +108,7 @@
 
 [[layers]]
   name = "lang#python"
+  format_on_save = true
 
 [[layers]]
   name = "lang#sh"
@@ -114,9 +122,14 @@
 [[layers]]
   name = "lang#ipynb"
 
-# [[custom_plugins]]
-#   repo = "glacambre/firenvim"
+[[layers]]
+  name = "VersionControl"
 
 [[custom_plugins]]
-  repo = "iamcco/coc-tailwindcss"
-  on_cmd = ["yarn install --frozen-lockfile && yarn run build"]
+  repo = "metakirby5/codi.vim"
+
+[[custom_plugins]]
+  repo = "nvim-treesitter/nvim-treesitter"
+
+# [[custom_plugins]]
+#   repo = "glacambre/firenvim"

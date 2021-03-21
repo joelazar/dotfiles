@@ -1,6 +1,6 @@
 all: \
-	update-forgit \
 	update-oh-my-zsh \
+	update-forgit \
 	update-p10k \
 	update-zsh-syntax-highlighting \
 	update-kubetail

@@ -33,9 +33,20 @@ function! myspacevim#before() abort
 
 endfunction
 
+
 function! myspacevim#after() abort
 
-  let g:gruvbox_hls_cursor = 'purple'
+"treesitter configuration - TSInstall go, javascript, yaml, lua, python
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  -- Modules and its options go here
+  highlight = { enable = true },
+  incremental_selection = { enable = true },
+  textobjects = { enable = true },
+}
+EOF
+
+  let g:codi#width = 50.0
   "case-insensitive search
   set ignorecase smartcase
   "wrap lines
@@ -52,6 +63,8 @@ function! myspacevim#after() abort
   nnoremap OO O<Esc>j
   "start new line for RETURN
   nnoremap <CR> o<Esc>
+  "start async build job
+  nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
 
   let g:neoformat_enabled_yaml = ['prettier']
   let g:neoformat_enabled_python = ['black']
