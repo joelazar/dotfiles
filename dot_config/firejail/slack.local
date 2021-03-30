@@ -8,3 +8,6 @@ noblacklist ${PATH}/tclsh
 noblacklist ${PATH}/tcsh
 noblacklist ${PATH}/zsh
 ignore private-bin
+ignore private-cache
+ignore private-dev
+ignore private-tmp

@@ -1,0 +1,27 @@
+sort=-time
+layer=overlay
+font='Hack 14'
+background-color=#2c2c2e
+width=500
+height=300
+border-size=2
+border-color=#9f9f9f
+border-radius=15
+icons=1
+max-icon-size=64
+default-timeout=10000
+# ignore-timeout=1
+
+[urgency=low]
+border-color=#cccccc
+
+[urgency=normal]
+border-color=#d08770
+
+[urgency=high]
+border-color=#bf616a
+default-timeout=0
+
+[category=mpd]
+default-timeout=2000
+group-by=category

@@ -28,6 +28,7 @@ install_package "qutebrowser"
 
 print_in_purple "Development\n"
 
+install_package "code"
 install_package "clang"
 install_package "ctags"
 install_package "docker"
@@ -47,6 +48,7 @@ install_package "kubectx"
 install_package "k9s"
 install_package "minikube"
 install_package "neovim"
+install_package "neovim-nightly-bin"
 install_package "npm"
 install_package "prettier"
 install_package "python"
@@ -56,12 +58,13 @@ install_package "python-isort"
 install_package "python-language-server"
 install_package "python-pip"
 install_package "python-pynvim"
-install_package "python-sqlparse"
-install_package "python-virtualenv"
+# install_package "python-sqlparse"
+# install_package "python-virtualenv"
 install_package "rust"
 install_package "shellcheck"
 install_package "shfmt"
 install_package "texlive-science"
+install_package "texlive-latexextra"
 install_package "yarn"
 
 print_in_purple "Image Tools\n"
@@ -77,7 +80,6 @@ install_package "bat"
 install_package "bleachbit"
 install_package "brotli"
 install_package "calibre"
-install_package "colordiff"
 install_package "exa"
 install_package "github-cli"
 install_package "graphviz"
@@ -102,11 +104,12 @@ install_nnn_plugins
 
 print_in_purple "Fonts\n"
 
-install_package "noto-fonts-emoji"
-install_package "powerline-fonts"
+# install_package "noto-fonts-emoji"
+# install_package "powerline-fonts"
 install_package "ttf-font-awesome"
 install_package "ttf-hack"
-install_package "ttf-nerd-fonts-symbols"
+install_package "nerd-fonts-complete"
+# install_package "ttf-nerd-fonts-symbols"
 
 print_in_purple "Penetration testing\n"
 
@@ -123,9 +126,10 @@ install_package "wireshark-qt"
 
 print_in_purple "Utilities\n"
 
-install_package "atool"
+# install_package "atool"
 install_package "asciinema"
-install_package "bpytop"
+# install_package "bpytop"
+# change this
 install_package "cups"
 install_package "curl"
 install_package "dog"
@@ -136,6 +140,9 @@ install_package "htop"
 install_package "httpie"
 install_package "jq"
 install_package "linux-lts"
+install_package "linux-lts-headers"
+install_package "linux-zen"
+install_package "linux-zen-headers"
 install_package "lsof"
 install_package "neofetch"
 install_package "net-tools"
@@ -155,9 +162,6 @@ install_package "tree"
 install_package "unzip"
 install_package "wireguard-dkms"
 install_package "wireguard-tools"
-install_package "zsh"
-
-install_ohmyzsh
 
 print_in_purple "Sway\n"
 
@@ -176,13 +180,13 @@ install_package "networkmanager"
 install_package "pamixer"
 install_package "pavucontrol"
 install_package "pipewire"
+install_package "polkit-kde-agent"
 install_package "pulseaudio"
 # install_package "pulseaudio-bluetooth" # until pulseaudio 15.0 released?
 
 # fisher install evanlucas/fish-kubectl-completions
 # fisher install jethrokuan/z
 # fisher install jorgebucaran/fish-bax
-# fisher install joseluisq/gitnow
 # fisher install franciscolourenco/done
 # fisher install danhper/fish-ssh-agent
 # fisher install PatrickF1/fzf.fish
@@ -191,9 +195,9 @@ install_package "pulseaudio"
 # direnv
 # fisher
 # fish
-# nerd-fonts-complete
-# pulseaudio-modules-bt
+# alacritty
 
+install_package "pgformatter-git"
 install_package "qt5-wayland"
 install_package "slurp"
 install_package "sof-firmware"
@@ -251,29 +255,47 @@ install_pip_package "pgcli" "pgcli"
 
 print_in_purple "AUR packages\n"
 
+# install_package "navi"
+
+install_package "starship"
+
+install_package "spicetify-cli"
+install_package "spicetify-themes-git"
+install_package "pulseaudio-modules-bt"
+
+install_package "pulseaudio-modules-bt"
 install_package "ancient-packages"
 install_package "azure-cli"
-install_package "bat-extras"
 install_package "bitwarden-bin"
 install_package "bitwarden-cli"
 install_package "circleci-cli-bin"
 install_package "clipman"
+install_package "cointop"
+install_package "direnv"
 install_package "downgrade"
 install_package "dust"
 install_package "earbuds"
+install_package "etcher-bin"
 install_package "exercism-bin"
+install_package "fisher"
 install_package "foot"
 install_package "gitbatch-bin"
 install_package "git-delta"
+install_package "go-swagger"
 install_package "golang-mockery"
+install_package "google-chrome"
 install_package "hfsprogs"
 install_package "i3-battery-popup-git"
 install_package "joplin"
+install_package "kubeval"
+install_package "kubetail"
+install_package "kubeseal-bin"
 install_package "kubeval"
 install_package "lazydocker"
 install_package "lazygit"
 install_package "networkmanager-dmenu-git"
 install_package "noisetorch-bin"
+install_package "python-notedown"
 install_package "postman-bin"
 install_package "redoc-cli"
 install_package "slack-desktop"
@@ -286,6 +308,7 @@ install_package "theme.sh"
 install_package "wdisplays"
 install_package "wlr-randr"
 install_package "x11docker"
+install_package "ytfzf-git"
 
 print_in_purple "SpaceVim\n"
 

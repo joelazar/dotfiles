@@ -68,10 +68,16 @@ EOF
 
   let g:neoformat_enabled_yaml = ['prettier']
   let g:neoformat_enabled_python = ['black']
+  let g:neoformat_enabled_sql = ['pg_format']
 
-  let g:go_fmt_options = {
-    \ 'gofmt': '-s',
-    \ }
+  " let g:go_fmt_options = {
+  "   \ 'gofmt': '-s',
+  "   \ }
+
+  let g:go_fmt_command="gopls"
+  let g:go_gopls_gofumpt=1
+
+  set ttimeoutlen=5
 
   command Exec set splitright | vnew | set filetype=sh | read !sh #
 

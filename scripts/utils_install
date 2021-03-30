@@ -16,13 +16,6 @@ enable_multilib() {
   execute "(cat /etc/pacman.conf | grep -q '^\[multilib\]') || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
 }
 
-install_ohmyzsh() {
-  if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  fi
-  print_result $? "ohmyzsh"
-}
-
 install_nnn_plugins() {
   script_path="$HOME/.config/nnn/plugins/getplugs"
   

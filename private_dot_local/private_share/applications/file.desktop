@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=File Manager
-Exec=/usr/bin/foot n %u
+Exec=/usr/bin/alacritty --command nnn %u
 Terminal=true
 MimeType=inode/directory
 Categories=System;FileTools;FileManager;ConsoleOnly

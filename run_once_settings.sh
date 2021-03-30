@@ -21,7 +21,7 @@ execute "sudo chgrp pcap /usr/sbin/tcpdump && sudo chmod 750 /usr/sbin/tcpdump \
 execute "(getent group vboxusers | grep $USER) || sudo usermod -aG vboxusers $USER" \
   "User added to vboxusers group (logout required!)"
 
-execute "sudo firecfg" "Firejail auto config" # consider activating firefox-common-addons.inc
+execute "sudo firecfg" "Firejail auto config"
 
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
@@ -30,10 +30,6 @@ execute "sudo systemctl enable tlp" "Turn on tlp"
 execute "sudo systemctl enable NetworkManager.service" "Turn on networkmanager"
 
 execute "systemctl --user enable pulseaudio" "Pulseaudio started by systemd"
-
-execute "(cat /usr/share/fzf/key-bindings.zsh | grep \"bindkey '^P' fzf-file-widget\") || \
-          sudo sed -i \"s/bindkey '^T' fzf-file-widget/bindkey '^P' fzf-file-widget/g\" \
-          /usr/share/fzf/key-bindings.zsh" "Mapping FZF search to CTRL+P"
 
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \

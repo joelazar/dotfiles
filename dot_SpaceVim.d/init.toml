@@ -122,8 +122,9 @@
 [[layers]]
   name = "lang#ipynb"
 
-[[layers]]
-  name = "VersionControl"
+# https://github.com/SpaceVim/SpaceVim/issues/4142
+# [[layers]]
+#   name = "VersionControl"
 
 [[custom_plugins]]
   repo = "metakirby5/codi.vim"

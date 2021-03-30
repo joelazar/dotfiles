@@ -24,7 +24,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term foot
+set $term alacritty
 
 # Your preferred application launcher
 set $menu dmenu_path | wofi --show drun -i | xargs swaymsg exec --
@@ -311,7 +311,7 @@ bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0
 bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 14"
 
 # Start Applications
-bindsym $mod+F1 exec --no-startup-id foot nnn
+bindsym $mod+F1 exec --no-startup-id alacritty --command nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id chromium
 
