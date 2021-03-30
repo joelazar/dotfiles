@@ -38,6 +38,17 @@ install_package() {
   fi
 }
 
+install_fish_plugin() {
+  declare -r PACKAGEPATH="$1"
+  declare -r PACKAGENAME="$2"
+
+  execute "fish -c \"fisher install $PACKAGEPATH\"" "$PACKAGENAME"
+}
+
+update_fish_plugins() {
+  execute "fisher update" "updating fish plugins"
+}
+
 install_go_package() {
   declare -r PACKAGEPATH="$1"
   declare -r PACKAGENAME="$2"

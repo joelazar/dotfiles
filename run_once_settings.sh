@@ -21,6 +21,8 @@ execute "sudo chgrp pcap /usr/sbin/tcpdump && sudo chmod 750 /usr/sbin/tcpdump \
 execute "(getent group vboxusers | grep $USER) || sudo usermod -aG vboxusers $USER" \
   "User added to vboxusers group (logout required!)"
 
+execute "sudo chsh -s /usr/bin/fish" "Set shell to fish"
+
 execute "sudo firecfg" "Firejail auto config"
 
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
