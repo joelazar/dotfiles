@@ -38,11 +38,11 @@
 #waybar {
     background: #323232;
     color: white;
-    font-family: Hack, Fontawesome, sans-serif;
+    font-family: Hack;
 {{- if eq .host "thinkpad-x250" }}
     font-size: 12px;
 {{- else }}
-    font-size: 18px;
+    font-size: 20px;
 {{- end }}
 }
 
@@ -65,7 +65,6 @@
     padding-right: 10px;
 {{- end }}
 }
-
 
 /* -----------------------------------------------------------------------------
  * Module styles
@@ -186,6 +185,7 @@
     background-color: transparent;
     padding: 0 2px;
     color: #ffffff;
+    font-size: 32px;
 }
 
 #workspaces button.focused {

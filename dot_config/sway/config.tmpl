@@ -11,7 +11,7 @@ set $font_size 14
 set $cursor_size 16
 {{- end }}
 
-font pango:Hack, FontAwesome $font_size
+font pango:Hack $font_size
 
 default_border pixel 1
 default_floating_border normal
@@ -69,14 +69,13 @@ input type:touchpad {
   natural_scroll enabled
   middle_emulation enabled
   scroll_factor 0.30
-#  accel_profile flat
 }
 
 input type:keyboard {
   xkb_layout "hu,us"
   xkb_options caps:escape,grp:alt_shift_toggle
-  repeat_delay 300
-  repeat_rate 40
+  repeat_delay 250
+  repeat_rate 50
 }
 
 ### Key bindings
@@ -155,7 +154,6 @@ bindsym $mod+Control+Shift+Left move workspace to output left
 bindsym $mod+Control+Shift+Down move workspace to output down
 bindsym $mod+Control+Shift+Up move workspace to output up
 
-
 #
 # Workspaces:
 #
@@ -164,9 +162,9 @@ set $ws2 "2.www"
 set $ws3 "3.chrome"
 set $ws4 "4.chat"
 set $ws5 "5.notes"
-set $ws6 "6."
-set $ws7 "7."
-set $ws8 "8."
+set $ws6 "6.mail"
+set $ws7 "7.movie"
+set $ws8 "8.steam"
 set $ws9 "9.spotify"
 set $ws10 "10.arch"
 
@@ -199,6 +197,8 @@ assign [app_id="firefox"] $ws2
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="Chromium"] move window to workspace $ws3
 for_window [app_id="Chromium"] inhibit_idle fullscreen
+for_window [app_id="Google-chrome"] move window to workspace $ws3
+for_window [app_id="Google-chrome"] inhibit_idle fullscreen
 assign [class="Caprine"] $ws4
 assign [class="Signal"] $ws4
 assign [class="discord"] $ws4
@@ -305,7 +305,8 @@ bindsym $mod+F9         exec --no-startup-id wofimount
 bindsym $mod+F10        exec --no-startup-id wofiumount
 
 bindsym $mod+m         exec wlr-randr --output DP-3 --off
-bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 3197,0"
+bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 323,1798"
+bindsym $mod+x move workspace to output up
 
 # Network manager
 bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 14"
@@ -345,6 +346,7 @@ exec --no-startup-id wl-paste -t text --watch clipman store --max-items=50
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
+exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 
 for_window [class="^.*"] border pixel 2
 
