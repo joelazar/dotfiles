@@ -64,7 +64,7 @@ if type -q direnv
   eval (direnv hook fish)
 end
 
-replay source $HOME/.zsh.local
+replay source $HOME/.config/fish/functions/local.bash
 
 alias c="clear"
 alias cat="bat"

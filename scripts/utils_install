@@ -46,7 +46,7 @@ install_fish_plugin() {
 }
 
 update_fish_plugins() {
-  execute "fisher update" "updating fish plugins"
+  execute "fish -c \"fisher update\"" "Update Fish plugins"
 }
 
 install_go_package() {

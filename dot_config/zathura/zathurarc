@@ -1,1 +1,31 @@
+set incremental-search true
 set selection-clipboard clipboard
+
+# set recolor "true"
+# set recolor-darkcolor ""
+# set recolor-lightcolor ""
+
+set default-bg ""
+set default-fg ""
+
+set completion-bg ""
+set completion-fg ""
+set completion-highlight-bg ""
+set completion-highlight-fg ""
+
+set statusbar-bg ""
+set statusbar-fg ""
+
+set inputbar-bg ""
+set inputbar-fg ""
+
+set window-height "800"
+set window-width "600"
+
+set adjust-open "width"
+set smooth-scroll true
+set statusbar-home-tilde "true"
+set statusbar-h-padding "50"
+set statusbar-v-padding "50"
+
+set font "Hack 16"

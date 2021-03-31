@@ -3,8 +3,8 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 cd "$SOURCE_DIR" &&
-  . "./scripts/utils_install" &&
-  . "./scripts/utils"
+    . "./scripts/utils_install" &&
+    . "./scripts/utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -154,16 +154,16 @@ print_in_purple "Penetration testing\n"
 
 ask_for_confirmation "Do you want to install penetration tools?"
 if answer_is_yes; then
-install_blackarch_repo
-install_package "aircrack-ng"
-install_package "bettercap"
-install_package "dirb"
-install_package "hydra"
-install_package "macchanger"
-install_package "nmap"
-install_package "reaver"
-install_package "whatweb"
-install_package "wireshark-qt"
+    install_blackarch_repo
+    install_package "aircrack-ng"
+    install_package "bettercap"
+    install_package "dirb"
+    install_package "hydra"
+    install_package "macchanger"
+    install_package "nmap"
+    install_package "reaver"
+    install_package "whatweb"
+    install_package "wireshark-qt"
 fi
 
 print_in_purple "Shell\n"
@@ -265,19 +265,22 @@ print_in_purple "GO packages\n"
 
 ask_for_confirmation "Do you want to install GO packages now? It could take a while."
 if answer_is_yes; then
-  install_go_package "github.com/cosmos72/gomacro" "gomacro"
-  install_go_package "github.com/traefik/yaegi/cmd/yaegi" "yaegi"
-  install_go_package "mvdan.cc/gofumpt" "gofumpt"
+    install_go_package "github.com/cosmos72/gomacro" "gomacro"
+    install_go_package "github.com/traefik/yaegi/cmd/yaegi" "yaegi"
+    install_go_package "mvdan.cc/gofumpt" "gofumpt"
 fi
 
 print_in_purple "JS packages\n"
 
-install_npm_package "bash-language-server"
-install_npm_package "javascript-typescript-langserver"
-install_npm_package "typescript-language-server"
-install_npm_package "vscode-css-languageserver-bin"
-install_npm_package "vscode-html-languageserver-bin"
-install_yarn_package "@mermaid-js/mermaid-cli" "mermaid-cli"
+ask_for_confirmation "Do you want to install JS packages now? It could take a while."
+if answer_is_yes; then
+    install_npm_package "bash-language-server"
+    install_npm_package "javascript-typescript-langserver"
+    install_npm_package "typescript-language-server"
+    install_npm_package "vscode-css-languageserver-bin"
+    install_npm_package "vscode-html-languageserver-bin"
+    install_yarn_package "@mermaid-js/mermaid-cli" "mermaid-cli"
+fi
 
 print_in_purple "Python packages\n"
 

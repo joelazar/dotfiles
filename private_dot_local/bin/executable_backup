@@ -8,6 +8,7 @@ BACKUPDIR="rclone:onedrive:backup"
 case "$1" in
 "do") restic --repo "$BACKUPDIR" backup \
   ~/.ssh \
+  ~/.config/fish/functions/local.bash \
   ~/documents \
   ~/Downloads \
   ~/logs \
