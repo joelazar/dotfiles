@@ -15,8 +15,8 @@ distributions too, but I didn't test it.
 Let me try to briefly list the installed and configured packages:
 
 * [`yay`](https://github.com/Jguer/yay) - As an aur helper
-* [`zsh`](http://zsh.sourceforge.net/) - Z shell
-* [`oh my zsh`](https://ohmyz.sh/) - oh my zsh framework for zsh configurations
+* [`fish`](https://fishshell.com/) - Fish shell
+* [`fisher`](https://github.com/jorgebucaran/fisher) - A plugin manager for fish
 * [`sway`](https://swaywm.org/) - I3 compatible window manager, but with wayland
 * [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar
 * [`mako`](https://github.com/emersion/mako) - Notification daemon
@@ -31,18 +31,19 @@ Let me try to briefly list the installed and configured packages:
 * [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Grep on drugs
 * [`mpv`](https://mpv.io/) - For media
 * [`nnn`](https://github.com/jarun/nnn) - File manager
-* [`foot`](https://codeberg.org/dnkl/foot) - A blazing fast and lightweight Wayland terminal emulator
+* [`alacritty`](https://github.com/alacritty/alacritty) - A GPU-Accelerated terminal emulator
 * [`font awesome`](https://origin.fontawesome.com/) - Fonts
-* [`nerd fonts symbols`](https://www.nerdfonts.com/) - Symbols
+* [`nerd fonts`](https://www.nerdfonts.com/) - Complete nerd fonts package
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
 * [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
 * [`qutebrowser`](https://github.com/qutebrowser/qutebrowser) - A vim-like browser
 * [`spotify`](https://www.spotify.com/) - For music
+* [`spicetify`](https://github.com/khanhas/spicetify-cli) - For customizing the spotify client
 * [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
 * [`zathura`](https://github.com/pwmt/zathura) - Document viewer
 * [`docker`](https://www.docker.com/) - Container framework for OS level virtualization
 * [`ncdu`](https://dev.yorhel.nl/ncdu) - Disk usage analyzer
-* [`wine`](https://www.winehq.org/) - In case of need
+* [`proton`](https://github.com/ValveSoftware/Proton)- In case of need
 * [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
 * and many more other useful stuff
 

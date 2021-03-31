@@ -64,7 +64,6 @@ if type -q direnv
   eval (direnv hook fish)
 end
 
-# replay source $HOME/.zsh_functions
 replay source $HOME/.zsh.local
 
 alias c="clear"
