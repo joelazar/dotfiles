@@ -269,6 +269,7 @@ mode "resize" {
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
@@ -336,6 +337,7 @@ exec_always {
 
 for_window [app_id=pavucontrol] floating enable
 for_window [app_id=blueman-manager] floating enable
+for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=imv] floating enable
 for_window [app_id=imv] resize set 1980 1290
 for_window [title=".+[Ss]haring (Indicator|your screen)"] floating enable, move to scratchpad, nofocus
