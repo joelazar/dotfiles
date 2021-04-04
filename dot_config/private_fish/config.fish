@@ -58,7 +58,6 @@ set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
 
 # NPM exports
 set -gx NODE_PATH $HOME/.node/lib/node_modules $NODE_PATH
-set -gx MANPATH $HOME/.node/share/man $MANPATH
 
 if type -q direnv
   eval (direnv hook fish)
