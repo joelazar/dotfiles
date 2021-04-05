@@ -151,6 +151,7 @@ print_in_purple "Fonts\n"
 install_package "nerd-fonts-complete"
 install_package "ttf-font-awesome"
 install_package "ttf-hack"
+install_package "emoji-font"
 
 print_in_purple "Penetration testing\n"
 
