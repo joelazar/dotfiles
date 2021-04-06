@@ -177,7 +177,7 @@ install_package "fisher"
 install_package "hyperfine"
 install_package "starship"
 install_package "theme.sh"
-install_package "ytfzf-git"
+install_package "ytfzf"
 
 print_in_purple "Fish plugins\n"
 install_fish_plugin "evanlucas/fish-kubectl-completions" "kubectl-completions"
