@@ -106,10 +106,6 @@ install_spacevim() {
 
 update_spacevim_plugins() {
   execute \
-    "nvim +SPUpdate SpaceVim +sleep 0.1 +qall" \
-    "Update SpaceVim"
-
-  execute \
     "nvim +SPUpdate +sleep 0.1 +qall" \
     "Update SpaceVim plugins"
 

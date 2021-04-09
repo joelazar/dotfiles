@@ -1,0 +1,4 @@
+reporting: "off"
+startuppopupversion: 1
+gui:
+  skipUnstageLineWarning: true
