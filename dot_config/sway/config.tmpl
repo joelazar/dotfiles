@@ -72,8 +72,8 @@ input type:touchpad {
 }
 
 input type:keyboard {
-  xkb_layout "hu,us"
-  xkb_options caps:escape,grp:alt_shift_toggle
+  xkb_layout "us,hu"
+  xkb_options caps:escape,grp:rctrl_rshift_toggle
   repeat_delay 250
   repeat_rate 50
 }
@@ -202,6 +202,7 @@ assign [class="Caprine"] $ws4
 assign [class="Signal"] $ws4
 assign [class="discord"] $ws4
 for_window [class="Slack"] move window to workspace $ws4
+for_window [class="Steam"] move window to workspace $ws8
 for_window [class="Spotify"] move window to workspace $ws9
 
 #

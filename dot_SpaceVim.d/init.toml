@@ -22,6 +22,7 @@
   vimcompatible = false
   windows_index_type = 3
   windows_leader = "s"
+  guifont = "Hack:h20"
 
 [[layers]]
   name = 'core'
@@ -131,6 +132,9 @@
 
 [[custom_plugins]]
   repo = "nvim-treesitter/nvim-treesitter"
+
+[[custom_plugins]]
+  repo = "equalsraf/neovim-gui-shim"
 
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"
