@@ -4,6 +4,7 @@ fish_vi_key_bindings
 
 # Wayland specific envvars
 set -gx MOZ_ENABLE_WAYLAND 1
+set -gx MOZ_DBUS_REMOTE 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 

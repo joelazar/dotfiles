@@ -1,28 +1,34 @@
 [options]
-  bootstrap_before = "myspacevim#before"
+  autocomplete_method = "coc"
+  autocomplete_parens = false
   bootstrap_after = "myspacevim#after"
+  bootstrap_before = "myspacevim#before"
   buffer_index_type = 4
   colorscheme = "gruvbox"
   colorscheme_bg = "dark"
   default_indent = 4
-  expand_tab = true
   enable_guicolors = true
+  enable_statusline_bfpath = true
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
   enable_vimfiler_gitstatus = true
+  expand_tab = true
   filemanager = "nerdtree"
   filetree_direction = "left"
   github_username = "joelazar"
+  guifont = "Hack:h20"
+  # lint_engine = "ale"
+  lint_on_the_fly = true
+  max_column = 120
   relativenumber = true
+  snippet_engine = "ultisnips"
   statusline_inactive_separator = "bar"
   statusline_separator = "arrow"
   statusline_unicode_symbols = true
-  enable_statusline_bfpath = true
   terminal_cursor_shape = 1
   vimcompatible = false
   windows_index_type = 3
   windows_leader = "s"
-  guifont = "Hack:h20"
 
 [[layers]]
   name = 'core'
@@ -34,10 +40,8 @@
 
 [[layers]]
   name = 'autocomplete'
-  autocomplete_method = "coc"
   auto_completion_return_key_behavior = "complete"
   auto_completion_tab_key_behavior = "cycle"
-  autocomplete_parens = false
 
 [[layers]]
   name = 'lsp'
@@ -113,6 +117,7 @@
 
 [[layers]]
   name = "lang#sh"
+  format_on_save = true
 
 [[layers]]
   name = "lang#toml"

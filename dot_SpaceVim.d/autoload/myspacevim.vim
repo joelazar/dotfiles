@@ -31,6 +31,14 @@ function! myspacevim#before() abort
   let g:gruvbox_contrast_dark = "soft"
   let g:gruvbox_contrast_light = "medium"
 
+ "  let g:ale_linters = {
+ " \   'go': ['golangci-lint', 'gofmt', 'gopls', 'govet', 'golangserver', 'revive', 'staticcheck'],
+ " \}
+ "  let g:ale_linters_explicit = 1
+
+  " Paste with <CTRL> + <Shift> + V - for gui mode
+  imap <C-S-V> <C-R>*
+
 endfunction
 
 
