@@ -314,6 +314,7 @@ install_package "teamviewer"
 install_package "x11docker"
 # install_package "duf"
 # install_package "glow"
+# install_package "firefox-tridactyl-native"
 
 print_in_purple "SpaceVim\n"
 

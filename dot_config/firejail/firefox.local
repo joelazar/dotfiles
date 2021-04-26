@@ -20,5 +20,6 @@ ignore noroot
 ignore private-tmp
 
 whitelist ${HOME}/pictures
+whitelist ${HOME}/.config/tridactyl
 
 include firefox-common-addons.inc

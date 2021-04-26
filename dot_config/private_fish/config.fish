@@ -36,10 +36,10 @@ set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin $HOME/.SpaceVim/bi
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
-set -gx FZF_DEFAULT_OPTS "--height 40% --layout=reverse --border "
-set -gx FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
-set -gx FZF_CTRL_R_OPTS '--sort --exact --history-size=30000'
-set -gx FZF_CTRL_T_OPTS "--preview 'cat {}'"
+set -gx FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
+set fzf_history_opts --sort --exact --history-size=30000
+set fzf_fd_opts --hidden --follow --exclude=.git
+set fzf_preview_dir_cmd exa --all --color=always
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
