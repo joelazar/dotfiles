@@ -64,6 +64,7 @@ exec swayidle -w \
 ### Input configuration
 
 input type:touchpad {
+  drag enabled
   dwt enabled
   tap enabled
   natural_scroll enabled
@@ -327,6 +328,7 @@ bindsym $mod+ctrl+space exec makoctl dismiss
 set $gnome-schema org.gnome.desktop.interface
 
 seat seat0 xcursor_theme 'Adwaita' $cursor_size
+seat seat0 hide_cursor when-typing enable
 
 exec_always {
   gsettings set $gnome-schema gtk-theme 'Materia'
