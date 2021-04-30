@@ -13,6 +13,7 @@ set -gx BROWSER firefox
 set -gx EDITOR nvim
 set -gx FILE nnn
 set -gx READER zathura
+set -gx PAGER bat
 set -gx STATUSBAR waybar
 set -gx TERMINAL alacritty
 set -gx VISUAL ewrap
@@ -48,11 +49,13 @@ set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
 set -gx SSH_ENV $HOME/.ssh/environment
 
 # nnn settings
-set -gx NNN_OPENER xdg-open
+set -gx NNN_FIFO /tmp/nnn.fifo
+set -gx NNN_OPENER handlr-open
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
+set -gx NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'
 set -gx NNN_CONTEXT_COLORS 2136
-set -gx NNN_PLUG 'o:fzopen;m:nmount;p:pdfview;l:launch'
+set -gx NNN_PLUG 'k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs'
 
 # Grim settings
 set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
@@ -68,6 +71,7 @@ replay source $HOME/.config/fish/functions/local.bash
 
 alias c="clear"
 alias cat="bat"
+alias xdg-open="handlr open"
 alias ch="clipman pick --print0 --tool=CUSTOM --tool-args=\"fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0\""
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'

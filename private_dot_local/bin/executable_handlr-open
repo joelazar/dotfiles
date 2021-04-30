@@ -1,0 +1,3 @@
+#!/bin/sh
+
+handlr open "$1"

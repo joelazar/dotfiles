@@ -1,6 +1,6 @@
 [options]
   autocomplete_method = "coc"
-  autocomplete_parens = false
+  autocomplete_parens = true
   bootstrap_after = "myspacevim#after"
   bootstrap_before = "myspacevim#before"
   buffer_index_type = 4
@@ -12,9 +12,11 @@
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
   enable_vimfiler_gitstatus = true
+  enable_vimfiler_welcome = false
   expand_tab = true
   filemanager = "nerdtree"
   filetree_direction = "left"
+  filetree_show_hidden = true
   github_username = "joelazar"
   guifont = "Hack:h20"
   # lint_engine = "ale"
@@ -140,6 +142,9 @@
 
 [[custom_plugins]]
   repo = "equalsraf/neovim-gui-shim"
+
+[[custom_plugins]]
+  repo = "mcchrish/nnn.vim"
 
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"

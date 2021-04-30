@@ -85,6 +85,13 @@ EOF
   let g:go_fmt_command="gopls"
   let g:go_gopls_gofumpt=1
 
+  let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
+
+  let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
+
   set ttimeoutlen=5
 
   command Exec set splitright | vnew | set filetype=sh | read !sh #
