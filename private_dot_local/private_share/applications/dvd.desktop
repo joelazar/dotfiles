@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=mpv Media Player DVD 
+GenericName=Multimedia player
+Comment=Play movies and songs
+Icon=mpv
+Exec=mpv dvd:// --player-operation-mode=pseudo-gui --force-window --idle --dvd-device=%f
+Terminal=false
+Categories=AudioVideo;Audio;Video;Player;TV;
+# (MimeType and X-KDE-Protocols omitted, see orginianl mpv.desktop file)
