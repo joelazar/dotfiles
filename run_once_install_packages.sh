@@ -281,6 +281,7 @@ if answer_is_yes; then
     install_go_package "github.com/cosmos72/gomacro" "gomacro"
     install_go_package "github.com/traefik/yaegi/cmd/yaegi" "yaegi"
     install_go_package "mvdan.cc/gofumpt" "gofumpt"
+    install_go_package "gotest.tools/gotestsum" "gotestsum"
 fi
 
 print_in_purple "JS packages\n"
