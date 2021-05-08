@@ -56,7 +56,7 @@ install_package "kubectl"
 install_package "kubectx"
 install_package "kubeseal-bin"
 install_package "kubetail"
-install_package "kubeval"
+install_package "kubeval-bin"
 install_package "minikube"
 
 print_in_purple "Development\n"
@@ -94,7 +94,6 @@ install_package "yarn"
 
 print_in_purple "Development tools\n"
 
-install_package "code"
 install_package "curl"
 install_package "direnv"
 install_package "git-delta"
@@ -103,6 +102,7 @@ install_package "lazydocker"
 install_package "lazygit"
 install_package "pgcli"
 install_package "postman-bin"
+install_package "visual-studio-code-bin"
 
 print_in_purple "Communication\n"
 

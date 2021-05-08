@@ -1,10 +1,9 @@
-# converted by firecfg
 [Desktop Entry]
 Name=Slack
 StartupWMClass=Slack
 Comment=Slack Desktop
 GenericName=Slack Client for Linux
-Exec=slack -s %U
+Exec=slack --enable-features=UseOzonePlatform --ozone-platform=wayland -s %U
 Icon=slack
 Type=Application
 StartupNotify=true

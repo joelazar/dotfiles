@@ -1,1 +1,14 @@
 noblacklist ${HOME}
+noblacklist ${PATH}/bash
+noblacklist ${PATH}/csh
+noblacklist ${PATH}/dash
+noblacklist ${PATH}/fish
+noblacklist ${PATH}/ksh
+noblacklist ${PATH}/sh
+noblacklist ${PATH}/tclsh
+noblacklist ${PATH}/tcsh
+noblacklist ${PATH}/zsh
+ignore private-bin
+ignore private-cache
+ignore private-dev
+ignore private-tmp

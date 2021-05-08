@@ -48,11 +48,11 @@ bind ;c hint -Jc [class*="expand"],[class="togg"],[class="comment_folder"]
 bindurl wikiwand.com yy composite js document.location.href.replace("wikiwand.com/en","wikipedia.org/wiki") | clipboard yank
 
 " Only hint search results on Google and DDG
-bindurl www.google.com f hint -Jc #search div:not(.action-menu) > a
-bindurl www.google.com F hint -Jbc #search div:not(.action-menu) > a
+" bindurl www.google.com f hint -Jc #search div:not(.action-menu) > a
+" bindurl www.google.com F hint -Jbc #search div:not(.action-menu) > a
 
-bindurl ^https://duckduckgo.com f hint -Jc [class=result__a]
-bindurl ^https://duckduckgo.com F hint -Jbc [class=result__a]
+bindurl https://duckduckgo.com f hint -Jc [class="result__a js-result-title-link"]
+bindurl https://duckduckgo.com F hint -Jbc [class="result__a js-result-title-link"]
 
 " Allow Ctrl-a to select all in the commandline
 unbind --mode=ex <C-a>

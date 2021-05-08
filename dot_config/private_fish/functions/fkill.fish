@@ -1,5 +1,5 @@
 function fkill
-    set -l signal ''
+    set -l signal '2'
     test -z $argv[1]
     or set signal $argv[1]
 
@@ -10,7 +10,9 @@ function fkill
     else
         set pid (ps -ef | sed 1d | fzf -m | awk '{ print $2; }')
     end
+    echo pid: $pid
+    echo signal: $signal
 
-    test -z $pid
-    or echo $pid | xargs kill $signal
+    test -z $pid 
+    or echo $pid | xargs kill -$signal
 end
