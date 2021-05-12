@@ -57,6 +57,10 @@ set -gx NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'
 set -gx NNN_CONTEXT_COLORS 2136
 set -gx NNN_PLUG 'k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs'
 
+# z settings
+set -U Z_DATA "$HOME/.z"
+set -U ZO_METHOD "nvim"
+
 # Grim settings
 set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
 
