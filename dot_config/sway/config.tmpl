@@ -193,18 +193,23 @@ bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Assign applications to workspaces
+# for wayland apps: assign X $wsY
+assign [app_id="Caprine"] $ws4
+assign [app_id="Google-chrome"] $ws3
+assign [app_id="Slack"] $ws4
 assign [app_id="firefox"] $ws2
-for_window [app_id="firefox"] inhibit_idle fullscreen
-for_window [app_id="Chromium"] move window to workspace $ws3
-for_window [app_id="Chromium"] inhibit_idle fullscreen
-for_window [app_id="Google-chrome"] move window to workspace $ws3
-for_window [app_id="Google-chrome"] inhibit_idle fullscreen
-assign [class="Caprine"] $ws4
-assign [class="Signal"] $ws4
-assign [class="discord"] $ws4
-for_window [class="Slack"] move window to workspace $ws4
-for_window [class="Steam"] move window to workspace $ws8
+
+# for X11 apps: for_window X move window to workspace $wsY
+for_window [class="Signal"] move window to workspace $ws4
 for_window [class="Spotify"] move window to workspace $ws9
+for_window [class="Steam"] move window to workspace $ws8
+for_window [class="discord"] move window to workspace $ws4
+
+# prevent idle state at fullscreen mode for some apps
+for_window [app_id="Caprine"] inhibit_idle fullscreen
+for_window [app_id="Google-chrome"] inhibit_idle fullscreen
+for_window [app_id="Slack"] inhibit_idle fullscreen
+for_window [app_id="firefox"] inhibit_idle fullscreen
 
 #
 # Layout stuff:

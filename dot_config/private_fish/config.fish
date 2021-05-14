@@ -101,7 +101,9 @@ alias get-local-ip="ifconfig \
                     | grep -v '127.0.0.1' \
                     | awk '{print $2}'"
 
-alias get-ext-ip="curl ipinfo.io/ip"
+alias get-ext-ip="http -b ipinfo.io/ip"
+
+alias weather="http -b wttr.in"
 
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'

@@ -36,7 +36,6 @@ Let me try to briefly list the installed and configured packages:
 * [`nerd fonts`](https://www.nerdfonts.com/) - Complete nerd fonts package
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
 * [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
-* [`qutebrowser`](https://github.com/qutebrowser/qutebrowser) - A vim-like browser
 * [`spotify`](https://www.spotify.com/) - For music
 * [`spicetify`](https://github.com/khanhas/spicetify-cli) - For customizing the spotify client
 * [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
