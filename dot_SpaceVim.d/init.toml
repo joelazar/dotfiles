@@ -12,7 +12,7 @@
   enable_statusline_mode = true
   enable_tabline_filetype_icon = true
   enable_vimfiler_gitstatus = true
-  enable_vimfiler_welcome = false
+  enable_vimfiler_welcome = true
   expand_tab = true
   filemanager = "nerdtree"
   filetree_direction = "left"

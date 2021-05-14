@@ -74,7 +74,6 @@ install_package "helm"
 install_package "hey"
 install_package "hugo"
 install_package "ipython"
-install_package "javascript-typescript-langserver"
 install_package "jdk-openjdk"
 install_package "jupyter-notebook"
 install_package "jupyterlab"
@@ -95,9 +94,6 @@ install_package "shellcheck"
 install_package "shfmt"
 install_package "texlive-latexextra"
 install_package "texlive-science"
-install_package "typescript-language-server-bin"
-install_package "vscode-css-languageserver-bin"
-install_package "vscode-html-languageserver"
 install_package "yaegi"
 install_package "yarn"
 
@@ -137,7 +133,7 @@ install_package "acpi"
 install_package "acpi_call"
 install_package "aspell-en"
 install_package "bitwarden-bin"
-install_package "bitwarden-cli"
+install_package "bitwarden-cli-bin"
 install_package "bleachbit"
 install_package "brotli"
 install_package "calibre"
@@ -290,6 +286,13 @@ if answer_is_yes; then
     install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
     install_go_package "gotest.tools/gotestsum" "gotestsum" # missing from aur
 fi
+
+print_in_purple "NPM packages\n"
+
+install_npm_package "javascript-typescript-langserver"
+install_npm_package "typescript-language-server"
+install_npm_package "vscode-css-languageserver-bin"
+install_npm_package "vscode-html-languageserver-bin"
 
 print_in_purple "Extra packages\n"
 
