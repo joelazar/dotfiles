@@ -82,6 +82,7 @@ alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias diff='colordiff'
 alias g="git"
+alias gt="gotestsum --format standard-verbose -- -cover"
 alias lg='lazygit'
 alias lzd='lazydocker'
 alias ls='exa'

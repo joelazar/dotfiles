@@ -5,3 +5,9 @@ dbus-user.talk org.freedesktop.portal.Desktop
 ignore noroot
 whitelist ${RUNUSER}/pipewire-0
 dbus-user.talk org.freedesktop.portal.Desktop
+
+whitelist ${HOME}/pictures
+whitelist ${HOME}/go
+whitelist ${HOME}/git
+whitelist ${HOME}/documents
+

@@ -84,6 +84,7 @@ EOF
 
   let g:go_fmt_command="gopls"
   let g:go_gopls_gofumpt=1
+  let g:go_test_timeout= '20s'
 
   let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 
