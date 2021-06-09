@@ -71,7 +71,7 @@ if type -q direnv
   eval (direnv hook fish)
 end
 
-replay source $HOME/.config/fish/functions/local.bash
+source $HOME/.config/fish/functions/local.fish
 
 alias c="clear"
 alias cat="bat"
@@ -96,6 +96,18 @@ alias yaegi='rlwrap yaegi'
 alias vi='nvim'
 alias vim='nvim'
 alias :q="exit"
+
+# kubectl
+alias k='kubectl'
+alias kg='kubectl get'
+alias kd='kubectl describe'
+alias krm='kubectl delete'
+alias kgall='kubectl get --all-namespaces all'
+alias kgp='kubectl get pod'
+alias kgd='kubectl get deployments'
+alias kgsvc='kubectl get service'
+alias kl='kubectl logs'
+alias kei='kubectl exec -it'
 
 alias get-local-ip="ifconfig \
                     | grep 'inet ' \
@@ -138,4 +150,3 @@ if status is-login
        	sway
     end
 end
-
