@@ -10,12 +10,9 @@ dbus-user.own org.mpris.MediaPlayer2.plasma-browser-integration
 dbus-user.talk org.kde.JobViewServer
 dbus-user.talk org.kde.kuiserver
 # Uncomment or put in your firefox.local to allow screen sharing under wayland.
+ignore noroot
 whitelist ${RUNUSER}/pipewire-0
 dbus-user.talk org.freedesktop.portal.*
-# Also uncomment or put in your firefox.local if screen sharing sharing still
-# does not work with the above lines (might depend on the portal
-# implementation)
-ignore noroot
 
 ignore private-tmp
 
@@ -24,5 +21,6 @@ whitelist ${HOME}/go
 whitelist ${HOME}/git
 whitelist ${HOME}/documents
 whitelist ${HOME}/.config/tridactyl
+whitelist /usr/share/pipewire/
 
 include firefox-common-addons.inc

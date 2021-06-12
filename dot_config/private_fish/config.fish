@@ -121,26 +121,8 @@ alias weather="http -b wttr.in"
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
 alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
-set --universal fzf_fish_custom_keybindings
 
-# \cp is Ctrl+p
-bind \cp __fzf_search_current_dir
-bind \cr __fzf_search_history
-bind \cv $fzf_search_vars_cmd
-# The following two key binding use Alt as an additional modifier key to avoid conflicts
-bind \e\cl __fzf_search_git_log
-bind \e\cs __fzf_search_git_status
-
-# set up the same key bindings for insert mode if using fish_vi_key_bindings
-if test "$fish_key_bindings" = fish_vi_key_bindings -o "$fish_key_bindings" = fish_hybrid_key_bindings
-    bind --mode insert \cp __fzf_search_current_dir
-    bind --mode insert \cr __fzf_search_history
-    bind --mode insert \cv $fzf_search_vars_cmd
-    bind --mode insert \e\cl __fzf_search_git_log
-    bind --mode insert \e\cs __fzf_search_git_status
-end
-
-replay source $HOME/.zsh.local
+fzf_configure_bindings --directory=\cp
 
 starship init fish | source
 
