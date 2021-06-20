@@ -77,13 +77,12 @@
     },
 
     "backlight": {
-        // "device": "acpi_video1",
         "format": " {icon} {percent}% ",
         "format-icons": ["", ""]
     },
 
     "custom/keyboard-layout": {
-      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '(' -f2 | cut -d ')' -f1",
+      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
       // Interval set only as a fallback, as the value is updated by signal
       "interval": 30,
       "format": " {}", // Icon: keyboard
@@ -123,12 +122,12 @@
         "exec": "$HOME/.local/bin/vpn_echo.sh",
         "return-type": "json",
         "interval": 5,
-        "format-icons": ["",""]
+        "format": "{}",
     },
 
     "custom/spotify": {
         "format": " {}",
-        "interval": 3,
+        "interval": 10,
         "exec": "$HOME/.local/bin/spotify.py",
         "exec-if": "pgrep spotify"
     },
@@ -185,7 +184,7 @@
     },
 
     "temperature": {
-      "critical-threshold": 80,
+      "critical-threshold": 90,
       "interval": 5,
       "format": "{icon} {temperatureC}°C",
       "format-icons": [

@@ -131,8 +131,11 @@
   name = "lang#ipynb"
 
 # https://github.com/SpaceVim/SpaceVim/issues/4142
-# [[layers]]
-#   name = "VersionControl"
+[[layers]]
+  name = "VersionControl"
+
+[[layers]]
+  name = "foldsearch"
 
 [[custom_plugins]]
   repo = "metakirby5/codi.vim"

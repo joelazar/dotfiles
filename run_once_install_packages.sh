@@ -146,7 +146,6 @@ install_package "qrencode"
 install_package "step-cli"
 install_package "tk"
 install_package "tlp"
-install_package "throttle"
 install_package "tokei"
 install_package "translate-shell"
 install_package "transmission-cli"
@@ -284,6 +283,9 @@ ask_for_confirmation "Do you want to install GO packages now? It could take a wh
 if answer_is_yes; then
     install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
     install_go_package "gotest.tools/gotestsum" "gotestsum" # missing from aur
+
+    # slides in terminal - pretty new project with limited feature set, but worth to keep an eye on it
+    install_go_package "github.com/maaslalani/slides" "slides"
 fi
 
 print_in_purple "NPM packages\n"
@@ -292,6 +294,8 @@ install_npm_package "javascript-typescript-langserver"
 install_npm_package "typescript-language-server"
 install_npm_package "vscode-css-languageserver-bin"
 install_npm_package "vscode-html-languageserver-bin"
+# slidev - markdown based presentations with a lot of feature, but still in beta
+install_npm_package "@slidev/cli"
 
 print_in_purple "Extra packages\n"
 
