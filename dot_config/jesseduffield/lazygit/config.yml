@@ -2,3 +2,50 @@ reporting: "off"
 startuppopupversion: 1
 gui:
   skipUnstageLineWarning: true
+  showCommandLog: false
+notARepository: 'skip'
+customCommands:
+  - key: "n"
+    prompts:
+      - type: "menu"
+        title: "Creating new branch. What kind of branch is it?"
+        options:
+          - name: "feature"
+            value: "feature"
+          - name: "hotfix"
+            value: "hotfix"
+          - name: "bugfix"
+            value: "bugfix"
+      - type: "input"
+        title: "What is the new branch name?"
+        initialValue: ""
+    command: "git flow {{index .PromptResponses 0}} start {{index .PromptResponses 1}}"
+    context: "localBranches"
+    loadingText: "creating branch"
+  - key: "<c-r>"
+    prompts:
+      - type: "menu"
+        title: "Creating pull request for branch. What kind of branch is it?"
+        options:
+          - name: "backend"
+            value: "-r madskrogh -r madss"
+          - name: "frontend"
+            value: "-r jobn -r adicuco -r hriczzoli"
+    command: "gh pr create --fill {{index .PromptResponses 0}}"
+    context: "global"
+    loadingText: "Creating pull request on GitHub"
+  - key: "<c-p>"
+    command: "git remote prune {{.SelectedRemote.Name}}"
+    context: "remotes"
+    loadingText: "Pruning..."
+    description: "prune deleted remote branches"
+  - key: "M"
+    command: "git mergetool {{ .SelectedFile.Name }}"
+    context: "files"
+    loadingText: "opening git mergetool"
+    subprocess: true
+  - key: "C"
+    command: "gitmoji -c"
+    context: "files"
+    loadingText: "opening gitmoji cli tool"
+    subprocess: true

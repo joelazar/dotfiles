@@ -296,6 +296,8 @@ install_npm_package "vscode-css-languageserver-bin"
 install_npm_package "vscode-html-languageserver-bin"
 # slidev - markdown based presentations with a lot of feature, but still in beta
 install_npm_package "@slidev/cli"
+# gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
+install_npm_package "gitmoji-cli"
 
 print_in_purple "Extra packages\n"
 
