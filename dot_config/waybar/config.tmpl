@@ -44,7 +44,7 @@
     // -------------------------------------------------------------------------
 
     "battery": {
-        "interval": 10,
+        "interval": 30,
         "states": {
             "warning": 30,
             "critical": 15
@@ -93,7 +93,7 @@
     },
 
     "memory": {
-        "interval": 5,
+        "interval": 10,
         "format": " {}%", // Icon: memory
         "states": {
             "warning": 70,
@@ -118,17 +118,17 @@
     },
 
     "custom/vpn":{
+        "interval": 5,
         "format": " {icon}",
         "tooltip-format": "{icon}",
         "exec": "$HOME/.local/bin/vpn_echo.sh",
         "return-type": "json",
-        "interval": 5,
         "format": "{}",
     },
 
     "custom/spotify": {
-        "format": " {}",
         "interval": 10,
+        "format": " {}",
         "exec": "$HOME/.local/bin/spotify.py",
         "exec-if": "pgrep spotify"
     },
