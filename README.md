@@ -20,7 +20,7 @@ Let me try to briefly list the installed and configured packages:
 * [`sway`](https://swaywm.org/) - I3 compatible window manager, but with wayland
 * [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar
 * [`mako`](https://github.com/emersion/mako) - Notification daemon
-* [`wofi`](https://hg.sr.ht/~scoopta/wofi) - Application launcher
+* [`sway-launcher-desktop`](https://github.com/Biont/sway-launcher-desktop) - Application launcher
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
   * [`SpaceVim`](https://spacevim.org/) - A community-driven vim distribution, which handles collections of plugins in layers.

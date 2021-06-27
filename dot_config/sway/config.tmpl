@@ -3,18 +3,17 @@
 ### Variables
 set $mod Mod4
 
+set $font_size 0
 {{- if eq .host "thinkpad-x250" }}
-set $font_size 8
 set $cursor_size 12
 {{- else }}
-set $font_size 14 
 set $cursor_size 16
 {{- end }}
 
 font pango:Hack $font_size
 
 default_border pixel 1
-default_floating_border normal
+default_floating_border pixel 1
 hide_edge_borders smart
 
 # Home row direction keys, like vim
@@ -27,7 +26,7 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu dmenu_path | wofi --show drun -i | xargs swaymsg exec --
+set $menu exec $term --class=launcher -e sway-launcher-desktop
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/new/
@@ -99,8 +98,6 @@ floating_modifier $mod normal
 
 # Reload the configuration file
 bindsym $mod+Shift+c reload
-
-bindsym $mod+Shift+e exec rofimoji --selector wofi --clipboarder wl-copy --typer wtype --action copy
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 
@@ -308,23 +305,21 @@ bar {
   swaybar_command waybar
 }
 
-bindsym $mod+F9         exec --no-startup-id wofimount
-bindsym $mod+F10        exec --no-startup-id wofiumount
-
 bindsym $mod+m         exec wlr-randr --output DP-3 --off
 bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 323,1798"
 bindsym $mod+x move workspace to output up
 
 # Network manager
-bindsym $mod+n         exec networkmanager_dmenu -b --fn "Hack 14"
+bindsym $mod+n         exec $term --class=launcher -e nmtui-connect
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id alacritty --command nnn
 bindsym $mod+F2 exec --no-startup-id firefox
-bindsym $mod+F3 exec --no-startup-id chromium
+bindsym $mod+F3 exec --no-startup-id google-chrome-stable
+bindsym $mod+F4 exec --no-startup-id nvim-qt
 
 # Clipboard manager
-bindsym $mod+c exec clipman pick -t wofi --tool-args="-d"
+bindsym $mod+c exec $term --class=launcher-clipboard -e clipboard
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
@@ -347,6 +342,8 @@ for_window [app_id=blueman-manager] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=imv] floating enable
 for_window [app_id=imv] resize set 1980 1290
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
+for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resize set 60 ppt 60 ppt, border pixel 10
 for_window [title=".+[Ss]haring (Indicator|your screen)"] floating enable, move to scratchpad, nofocus
 
 # Startup applications

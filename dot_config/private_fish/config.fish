@@ -13,7 +13,7 @@ set -gx BROWSER firefox
 set -gx EDITOR nvim
 set -gx FILE nnn
 set -gx READER zathura
-set -gx PAGER bat
+set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
 set -gx TERMINAL alacritty
 set -gx VISUAL ewrap
@@ -37,10 +37,12 @@ set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin $HOME/.SpaceVim/bi
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
-set -gx FZF_DEFAULT_OPTS '--height 40% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
+set -gx FZF_DEFAULT_OPTS '--height 90% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
 set fzf_preview_dir_cmd exa --all --color=always
+
+fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
@@ -122,7 +124,6 @@ alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
 alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
 
-fzf_configure_bindings --directory=\cp
 
 starship init fish | source
 

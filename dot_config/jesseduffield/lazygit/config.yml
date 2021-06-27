@@ -19,7 +19,7 @@ customCommands:
       - type: "input"
         title: "What is the new branch name?"
         initialValue: ""
-    command: "git flow {{index .PromptResponses 0}} start {{index .PromptResponses 1}}"
+    command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
     context: "localBranches"
     loadingText: "creating branch"
   - key: "<c-r>"
