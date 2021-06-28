@@ -31,7 +31,8 @@ execute "sudo systemctl enable tlp" "Turn on tlp"
 
 execute "sudo systemctl enable NetworkManager.service" "Turn on networkmanager"
 
-execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
+# execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
+execute "systemctl --user enable pulseaudio.service" "Turn on pulseaudio server"
 
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
