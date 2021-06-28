@@ -54,10 +54,11 @@ set $lock swaylock --screenshots \
 
 ### Idle configuration
 exec swayidle -w \
-       timeout 600 '$lock &' \
-       timeout 900 'swaymsg "output * dpms off"' \
-       resume 'swaymsg "output * dpms on"' \
+       timeout 120 'brightnessctl set -10%' \
+       timeout 300 '$lock &' \
+       timeout 10 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
        timeout 3600 'systemctl suspend' \
+       resume 'brightnessctl set +10% && swaymsg "output * dpms on"' \
        before-sleep '$lock'
 
 ### Input configuration
@@ -275,8 +276,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $(brightnessctl get | awk '{ print int(($1 + .72) * 1.4)}')
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set $(brightnessctl get | awk '{ print int($1 / 1.4)}')
 
 # Screenshot
 bindsym --release $mod+Print exec grim - | swappy -f -
