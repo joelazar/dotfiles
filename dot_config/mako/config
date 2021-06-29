@@ -1,6 +1,6 @@
 sort=-time
 layer=overlay
-font='Hack 14'
+font='Hack Nerd Font 14'
 background-color=#2c2c2e
 width=500
 height=300

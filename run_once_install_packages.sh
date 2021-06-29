@@ -159,10 +159,9 @@ install_nnn_plugins
 
 print_in_purple "Fonts\n"
 
-install_package "nerd-fonts-complete" # temporary
-install_package "ttf-font-awesome"
-install_package "ttf-hack"
-install_package "emoji-font"
+install_package "nerd-fonts-hack"
+install_package "noto-fonts"
+install_package "noto-fonts-emoji"
 
 print_in_purple "Penetration testing\n"
 

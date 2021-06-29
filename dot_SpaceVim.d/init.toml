@@ -18,7 +18,7 @@
   filetree_direction = "left"
   filetree_show_hidden = true
   github_username = "joelazar"
-  guifont = "Hack:h20"
+  guifont = "Hack Nerd Font:h20"
   # lint_engine = "ale"
   lint_on_the_fly = true
   max_column = 120
