@@ -50,15 +50,15 @@
             "critical": 15
         },
         // Connected to AC
-        "format": "{icon} {capacity}%", // Icon: bolt
+        "format": "{icon} {capacity}%",
         // Not connected to AC
         "format-discharging": "{icon} {capacity}%",
         "format-icons": [
-            "", // Icon: battery-empty
-            "", // Icon: battery-quarter
-            "", // Icon: battery-half
-            "", // Icon: battery-three-quarters
-            ""  // Icon: battery-full
+            "", // Icon: battery-empty
+            "", // Icon: battery-quarter
+            "", // Icon: battery-half
+            "", // Icon: battery-three-quarters
+            ""  // Icon: battery-full
         ]
     },
 
@@ -86,7 +86,7 @@
       "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
       // Interval set only as a fallback, as the value is updated by signal
       "interval": 30,
-      "format": " {}", // Icon: keyboard
+      "format": "  {}", // Icon: keyboard
       // Signal sent by Sway key binding (~/.config/sway/key-bindings)
       "signal": 1, // SIGHUP
       "tooltip": false
@@ -102,7 +102,7 @@
     },
 
     "idle_inhibitor": {
-        "format": " {icon} ",
+        "format": "{icon}",
         "format-icons": {
             "activated": "",
             "deactivated": ""
@@ -111,7 +111,7 @@
 
     "network": {
         "interval": 5,
-        "format-wifi": " {essid} ({signalStrength}%)", // Icon: wifi
+        "format-wifi": "  {essid} ({signalStrength}%)", // Icon: wifi
         "format-ethernet": "  {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
         "format-disconnected": "⚠  Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}"
@@ -119,8 +119,8 @@
 
     "custom/vpn":{
         "interval": 5,
-        "format": " {icon}",
         "tooltip-format": "{icon}",
+        "format": " {icon} ",
         "exec": "$HOME/.local/bin/vpn_echo.sh",
         "return-type": "json",
         "format": "{}",

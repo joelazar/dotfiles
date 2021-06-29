@@ -50,19 +50,22 @@
 #battery,
 #clock,
 #cpu,
+#custom-spotify,
 #custom-keyboard-layout,
+#custom-vpn,
 #memory,
 #mode,
 #network,
 #pulseaudio,
+#idle_inhibitor,
 #temperature,
 #tray {
 {{- if eq .host "thinkpad-x250" }}
     padding-left: 4px;
     padding-right: 4px;
 {{- else }}
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 8px;
+    padding-right: 8px;
 {{- end }}
 }
 
@@ -139,6 +142,10 @@
     padding-bottom: 2px;
 }
 
+#idle_inhibitor {
+    padding-right: 12px;
+}
+
 #network {
     /* No styles */
 }
@@ -183,9 +190,10 @@
 #workspaces button {
     border-top: 2px solid transparent;
     background-color: transparent;
-    padding: 0 2px;
+    padding-left: 0;
+    padding-right: 4px;
     color: #ffffff;
-    font-size: 32px;
+    font-size: 18px;
 }
 
 #workspaces button.focused {
@@ -200,7 +208,7 @@
 }
 
 #custom-separator {
-  font-size: 17px;
+    font-size: 17px;
 	color: #484848;
 	background: transparent
 }
