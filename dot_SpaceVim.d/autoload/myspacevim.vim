@@ -95,6 +95,9 @@ EOF
 
   set ttimeoutlen=5
 
+  " setup mapping to call :LazyGit
+  nnoremap <silent> <leader>lg :LazyGit<CR>
+
   command Exec set splitright | vnew | set filetype=sh | read !sh #
 
   call SpaceVim#plugins#tasks#reg_provider(function('s:make_tasks'))

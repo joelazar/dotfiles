@@ -149,5 +149,8 @@
 [[custom_plugins]]
   repo = "mcchrish/nnn.vim"
 
+[[custom_plugins]]
+  repo = "kdheepak/lazygit.nvim"
+
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"
