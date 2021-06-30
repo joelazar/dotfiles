@@ -136,7 +136,6 @@ install_package "aspell-en"
 install_package "bitwarden-bin"
 # install_package "bitwarden-cli-bin"
 install_package "bleachbit"
-install_package "brotli"
 install_package "calibre"
 install_package "graphviz"
 install_package "libqalculate"
@@ -154,6 +153,7 @@ install_package "youtube-dl"
 install_package "zathura"
 install_package "zathura-pdf-poppler"
 install_package "zbar"
+install_package "zstd"
 
 install_nnn_plugins
 
