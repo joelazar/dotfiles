@@ -72,11 +72,15 @@ EOF
   "start new line for RETURN
   nnoremap <CR> o<Esc>
   "start async build job
-  nnoremap <silent> <F5> :call SpaceVim#plugins#runner#open('make')
+  nnoremap <silent> <F9> :call SpaceVim#plugins#runner#open('make')<CR>
+  nnoremap <silent> <F10> :call SpaceVim#plugins#runner#open('make test')<CR>
 
   let g:neoformat_enabled_yaml = ['prettier']
   let g:neoformat_enabled_python = ['black']
   let g:neoformat_enabled_sql = ['pg_format']
+
+  " https://youtu.be/PEm0QJ46hNo
+  inoremap <C-H> <C-W>
 
   " let g:go_fmt_options = {
   "   \ 'gofmt': '-s',

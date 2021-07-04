@@ -152,5 +152,11 @@
 [[custom_plugins]]
   repo = "kdheepak/lazygit.nvim"
 
+[[custom_plugins]]
+  repo = "tyru/open-browser.vim"
+
+[[custom_plugins]]
+  repo = "tyru/open-browser-github.vim"
+
 # [[custom_plugins]]
 #   repo = "glacambre/firenvim"
