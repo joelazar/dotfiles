@@ -124,8 +124,6 @@ install_package "imagemagick"
 install_package "imv"
 install_package "inkscape"
 install_package "mpv"
-install_package "spicetify-cli"
-install_package "spicetify-themes-git"
 install_package "spotify"
 
 print_in_purple "Miscellaneous\n"

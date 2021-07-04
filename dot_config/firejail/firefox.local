@@ -23,4 +23,4 @@ whitelist ${HOME}/documents
 whitelist ${HOME}/.config/tridactyl
 whitelist /usr/share/pipewire/
 
-include firefox-common-addons.inc
+# include firefox-common-addons.inc

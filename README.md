@@ -37,7 +37,6 @@ Let me try to briefly list the installed and configured packages:
 * [`blackarch`](https://blackarch.org/) repo added with some basic penetration tool set
 * [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
 * [`spotify`](https://www.spotify.com/) - For music
-* [`spicetify`](https://github.com/khanhas/spicetify-cli) - For customizing the spotify client
 * [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
 * [`zathura`](https://github.com/pwmt/zathura) - Document viewer
 * [`docker`](https://www.docker.com/) - Container framework for OS level virtualization

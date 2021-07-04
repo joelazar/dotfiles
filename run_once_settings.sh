@@ -27,9 +27,15 @@ execute "sudo firecfg" "Firejail auto config"
 
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
-execute "sudo systemctl enable tlp" "Turn on tlp"
+execute "sudo systemctl enable powertop.service" "Turn on powertop"
 
-execute "sudo systemctl enable NetworkManager.service" "Turn on networkmanager"
+execute "sudo systemctl enable NetworkManager.service" "Turn on nm"
+
+execute "sudo systemctl disable NetworkManager-wait-online.service" "Disable wait online nm service"
+
+execute "sudo ln -sf $SOURCE_DIR/other/powertop.service /etc/systemd/system/powertop.service" "Link powertop.service to systemd"
+
+execute "sudo systemctl enable powertop.service" "Turn on powertop.service"
 
 # execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
 execute "systemctl --user enable pulseaudio.service" "Turn on pulseaudio server"
