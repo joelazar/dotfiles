@@ -118,7 +118,7 @@ alias get-local-ip="ifconfig \
 
 alias get-ext-ip="http -b ipinfo.io/ip"
 
-alias weather="http -b wttr.in"
+alias weather="http -b v2.wttr.in"
 
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
