@@ -5,6 +5,8 @@ fish_vi_key_bindings
 # Wayland specific envvars
 set -gx MOZ_ENABLE_WAYLAND 1
 set -gx MOZ_DBUS_REMOTE 1
+set -gx MOZ_WEBRENDER 1
+set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
@@ -47,6 +49,9 @@ fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
 
+# ripgrep options
+set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
+
 # SSH environment file
 set -gx SSH_ENV $HOME/.ssh/environment
 
@@ -82,7 +87,6 @@ alias ch="clipman pick --print0 --tool=CUSTOM --tool-args=\"fzf --prompt 'pick >
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
-alias diff='colordiff'
 alias g="git"
 alias gt="gotestsum --format standard-verbose -- -cover"
 alias lg='lazygit'

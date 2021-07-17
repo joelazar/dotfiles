@@ -332,6 +332,7 @@ set $gnome-schema org.gnome.desktop.interface
 
 seat seat0 xcursor_theme 'Adwaita' $cursor_size
 seat seat0 hide_cursor when-typing enable
+seat seat0 hide_cursor 20000
 
 exec_always {
   gsettings set $gnome-schema gtk-theme 'Materia'

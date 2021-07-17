@@ -11,19 +11,19 @@
     a    = commit --amend
     br   = branch --list --remote
     c    = commit
-    ca   = !git add -A && git commit             # Commit all changes.
+    ca   = !git add -A && gitmoji -c             # Commit all changes.
     co   = checkout
     cp   = cherry-pick
     d    = diff
     dc   = diff --cached
-    f    = fetch
+    f    = fetch --prune
     g    = log --graph --pretty=custom           # Show custom graph.
     l    = log --pretty=custom                   # Show custom log.
     lc   = shortlog --email --numbered --summary # List contributors.
     lg   = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
     lgall= log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    lh   = log -p -10 # Show custom log.
-    p    = push
+    lh   = log -p -10                            # Show custom log.
+    p    = pull
     rank = shortlog -sn --no-merges
     rlc  = reset --hard HEAD~1                   # Remove last commit.
     s    = status
@@ -138,24 +138,22 @@
     eol = lf
     autocrlf = false
     fileMode = false
-    # pager = diff-so-fancy | less --tabs=4 -RFX
     pager = delta
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
 
 [interactive]
 
     diffFilter = delta --color-only
 
 [delta]
-
     features = line-numbers decorations
-    # features = side-by-side line-numbers
     whitespace-error-style = 22 reverse
-    syntax-theme = gruvbox
-
-# [delta "decorations"]
-#     commit-decoration-style = bold yellow box ul
-#     file-style = bold yellow ul
-#     file-decoration-style = none
+    syntax-theme = Github
 
 [diff "bin"]
 
