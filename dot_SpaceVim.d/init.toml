@@ -90,8 +90,8 @@
 [[layers]]
   name = "tools"
 
-[[layers]]
-  name = "lang#c"
+# [[layers]]
+#   name = "lang#c"
 
 [[layers]]
   name = "lang#dockerfile"
@@ -131,11 +131,11 @@
   name = "lang#ipynb"
 
 # https://github.com/SpaceVim/SpaceVim/issues/4142
-[[layers]]
-  name = "VersionControl"
+# [[layers]]
+#   name = "VersionControl"
 
-[[layers]]
-  name = "foldsearch"
+# [[layers]]
+#   name = "foldsearch"
 
 [[custom_plugins]]
   repo = "metakirby5/codi.vim"
