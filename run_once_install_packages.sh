@@ -277,9 +277,6 @@ print_in_purple "GO packages\n"
 ask_for_confirmation "Do you want to install GO packages now? It could take a while."
 if answer_is_yes; then
     install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
-
-    # slides in terminal - pretty new project with limited feature set, but worth to keep an eye on it
-    install_go_package "github.com/maaslalani/slides" "slides"
 fi
 
 print_in_purple "NPM packages\n"
@@ -295,6 +292,8 @@ install_npm_package "gitmoji-cli"
 
 print_in_purple "Extra packages\n"
 
+# slides in terminal - pretty new project with limited feature set, but worth to keep an eye on it
+install_package "slides"
 install_package "ancient-packages"
 install_package "circleci-cli-bin"
 install_package "cointop"
