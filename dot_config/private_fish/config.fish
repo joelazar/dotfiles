@@ -19,7 +19,6 @@ set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
 set -gx TERMINAL alacritty
 set -gx VISUAL ewrap
-set -gx SUDO_ASKPASS $HOME/.local/bin/wofipass
 
 # Set cursor theme
 set -gx XCURSOR_THEME Adwaita
@@ -32,7 +31,7 @@ set -gx XDG_CURRENT_DESKTOP sway
 
 # Set bat as man pager
 set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
- 
+
 # Customize PATH
 set -gx GOPATH $HOME/go
 set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin $HOME/.SpaceVim/bin /usr/lib/go/bin $GOPATH/bin $PATH
@@ -60,13 +59,13 @@ set -gx NNN_FIFO /tmp/nnn.fifo
 set -gx NNN_OPENER handlr-open
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
-set -gx NNN_FCOLORS 'c1e2272e006033f7c6d6abc4'
+set -gx NNN_FCOLORS c1e2272e006033f7c6d6abc4
 set -gx NNN_CONTEXT_COLORS 2136
 set -gx NNN_PLUG 'k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs'
 
 # z settings
 set -U Z_DATA "$HOME/.z"
-set -U ZO_METHOD "nvim"
+set -U ZO_METHOD nvim
 
 # Grim settings
 set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
@@ -75,10 +74,12 @@ set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
 set -gx NODE_PATH $HOME/.node/lib/node_modules $NODE_PATH
 
 if type -q direnv
-  eval (direnv hook fish)
+    eval (direnv hook fish)
 end
 
-source $HOME/.config/fish/functions/local.fish
+if test -e $HOME/.config/fish/functions/local.fish
+    source $HOME/.config/fish/functions/local.fish
+end
 
 alias c="clear"
 alias cat="bat"
@@ -133,7 +134,7 @@ starship init fish | source
 
 # Start Sway at login
 if status is-login
-    if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = "/dev/tty1" -a "(pgrep sway)"
-       	sway
+    if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
+        sway
     end
 end
