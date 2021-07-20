@@ -19,7 +19,6 @@
   filetree_show_hidden = true
   github_username = "joelazar"
   guifont = "Hack Nerd Font:h20"
-  # lint_engine = "ale"
   lint_on_the_fly = true
   max_column = 120
   relativenumber = true
@@ -58,8 +57,6 @@
     'sh',
     'typescript'
   ]
-    [layers.override_cmd]
-      go = ['gopls']
 
 [[layers]]
   name = 'shell'
