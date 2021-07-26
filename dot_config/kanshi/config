@@ -1,0 +1,23 @@
+# profile {
+# 	output eDP-1 disable
+# 	output "Lenovo Group Limited P24h-10 VTJ83236" mode 2560x1440 position 0,0 scale 0.75
+# }
+
+profile {
+	output eDP-1 enable position 0,0 scale 1
+}
+
+profile {
+	output eDP-1 enable position 430,1920 scale 1
+	output "Lenovo Group Limited P24h-10 VTJ83236" mode 2560x1440 position 0,0 scale 0.75
+}
+
+profile {
+	output eDP-1 enable position 0,1440 scale 1
+	output "Samsung Electric Company SAMSUNG 0x00000F00" enable mode 2560x1440 position 0,0 scale 1
+}
+
+profile {
+	output eDP-1 enable position 0,1080 scale 1
+	output "Sony SONY TV 0x00000101" enable mode 1920x1080 position 0,0 scale 1
+}
