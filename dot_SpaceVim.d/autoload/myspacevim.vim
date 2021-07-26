@@ -29,13 +29,14 @@ function! myspacevim#before() abort
   let g:gruvbox_contrast_dark = "soft"
   let g:gruvbox_contrast_light = "medium"
 
- "  let g:ale_linters = {
- " \   'go': ['golangci-lint', 'gofmt', 'gopls', 'govet', 'golangserver', 'revive', 'staticcheck'],
- " \}
- "  let g:ale_linters_explicit = 1
-
   " Paste with <CTRL> + <Shift> + V - for gui mode
   imap <C-S-V> <C-R>*
+
+  set guifont=Hack\ Nerd\ Font:h20
+  " let g:neovide_refresh_rate=50
+  " let g:neovide_fullscreen=v:true
+  let g:neovide_cursor_animation_length=0.0
+  let g:neovide_cursor_trail_length=0.0
 
 endfunction
 
