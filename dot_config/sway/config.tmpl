@@ -308,8 +308,11 @@ bar {
   swaybar_command waybar
 }
 
-bindsym $mod+m         exec wlr-randr --output DP-3 --off
-bindsym $mod+shift+m   exec bash -c "wlr-randr --output DP-3 --pos 0,0 --scale 0.8 --on && wlr-randr --output eDP-1 --pos 323,1798"
+# Clamshell mode
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
 bindsym $mod+x move workspace to output up
 
 # Network manager
