@@ -116,19 +116,22 @@ alias kgsvc='kubectl get service'
 alias kl='kubectl logs'
 alias kei='kubectl exec -it'
 
-alias get-local-ip="ifconfig \
-                    | grep 'inet ' \
-                    | grep -v '127.0.0.1' \
-                    | awk '{print $2}'"
-
-alias get-ext-ip="http -b ipinfo.io/ip"
-
-alias weather="http -b v2.wttr.in"
-
+# docker
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
 alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
 
+# other
+alias get-local-ip="ifconfig \
+                    | grep 'inet ' \
+                    | grep -v '127.0.0.1' \
+                    | awk '{print $2}'"
+alias get-ext-ip="http -b ipinfo.io/ip"
+alias urldecode='python3 -c "import sys, urllib.parse as ul; \
+    print(ul.unquote_plus(sys.argv[1]))"'
+alias urlencode='python3 -c "import sys, urllib.parse as ul; \
+    print (ul.quote_plus(sys.argv[1]))"'
+alias weather="http -b v2.wttr.in"
 
 starship init fish | source
 

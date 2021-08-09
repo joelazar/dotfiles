@@ -9,7 +9,7 @@ profile {
 
 profile {
 	output eDP-1 enable position 430,1920 scale 1
-	output "Lenovo Group Limited P24h-10 VTJ83236" mode 2560x1440 position 0,0 scale 0.75
+	output "Lenovo Group Limited P24h-10 VTJ83236" enable mode 2560x1440 position 0,0 scale 0.75
 }
 
 profile {

@@ -1,0 +1,66 @@
+k9s:
+  refreshRate: 2
+  maxConnRetry: 5
+  enableMouse: false
+  headless: false
+  logoless: false
+  crumbsless: false
+  readOnly: false
+  noIcons: false
+  logger:
+    tail: 100
+    buffer: 5000
+    sinceSeconds: 60
+    fullScreenLogs: false
+    textWrap: false
+    showTime: false
+  currentContext: aks
+  currentCluster: aks
+  clusters:
+    aks:
+      namespace:
+        active: production
+        favorites:
+        - production
+        - all
+      view:
+        active: pod
+      featureGates:
+        nodeShell: true
+      shellPod:
+        image: busybox:latest
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+    aks-staging:
+      namespace:
+        active: staging
+        favorites:
+        - staging
+        - debug
+        - all
+        - ambassador
+      view:
+        active: pod
+      featureGates:
+        nodeShell: false
+      shellPod:
+        image: busybox:latest
+        command: []
+        args: []
+        namespace: default
+        limits:
+          cpu: 100m
+          memory: 100Mi
+      portForwardAddress: localhost
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 85
