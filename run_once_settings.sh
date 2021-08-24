@@ -33,10 +33,6 @@ execute "sudo systemctl enable NetworkManager.service" "Turn on nm"
 
 execute "sudo systemctl disable NetworkManager-wait-online.service" "Disable wait online nm service"
 
-execute "sudo ln -sf $SOURCE_DIR/other/powertop.service /etc/systemd/system/powertop.service" "Link powertop.service to systemd"
-
-execute "sudo systemctl enable powertop.service" "Turn on powertop.service"
-
 # execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
 execute "systemctl --user enable pulseaudio.service" "Turn on pulseaudio server"
 
@@ -49,3 +45,5 @@ sudo ls /etc/wireguard/ | grep -q mullvad || curl -Ls https://mullvad.net/media/
 print_result $? "Setup mullvad"
 
 execute "sudo ln -sf $SOURCE_DIR/other/99-lowbat.rules /etc/udev/rules.d/99-lowbat.rules" "Setup low battery suspend"
+
+execute "sudo ln -sf $SOURCE_DIR/other/90-powertop.rules /etc/udev/rules.d/90-powertop.rules" "Setup powertop"

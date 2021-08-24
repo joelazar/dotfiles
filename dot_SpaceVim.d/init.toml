@@ -159,4 +159,7 @@
   repo = "tyru/open-browser-github.vim"
 
 # [[custom_plugins]]
+#   repo = "soywod/himalaya"
+
+# [[custom_plugins]]
 #   repo = "glacambre/firenvim"
