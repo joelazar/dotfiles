@@ -27,8 +27,6 @@ execute "sudo firecfg" "Firejail auto config"
 
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
-execute "sudo systemctl enable powertop.service" "Turn on powertop"
-
 execute "sudo systemctl enable NetworkManager.service" "Turn on nm"
 
 execute "sudo systemctl disable NetworkManager-wait-online.service" "Disable wait online nm service"
