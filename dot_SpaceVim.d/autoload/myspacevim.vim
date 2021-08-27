@@ -99,8 +99,8 @@ EOF
   "start new line for RETURN
   nnoremap <CR> o<Esc>
   "start async build job
-  nnoremap <silent> <F9> :call SpaceVim#plugins#runner#open('make')<CR>
-  nnoremap <silent> <F10> :call SpaceVim#plugins#runner#open('make test')<CR>
+  "nnoremap <silent> <F9> :call SpaceVim#plugins#runner#open('make')<CR>
+  "nnoremap <silent> <F10> :call SpaceVim#plugins#runner#open('make test')<CR>
 
   let g:neoformat_enabled_yaml = ['prettier']
   let g:neoformat_enabled_python = ['black']
@@ -116,6 +116,18 @@ EOF
   let g:go_fmt_command="gopls"
   let g:go_gopls_gofumpt=1
   let g:go_test_timeout= '60s'
+  let g:go_debug_preserve_layout = 1
+
+  let g:go_debug_windows = {
+            \ 'vars':       'leftabove 60vnew',
+  \ }
+
+  " let g:go_debug_windows = {
+  "           \ 'vars':       'leftabove 30vnew',
+  "           \ 'stack':      'leftabove 20new',
+  "           \ 'goroutines': 'botright 10new',
+  "           \ 'out':        'botright 5new',
+  " \ }
 
   let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6, 'highlight': 'Debug' } }
 
