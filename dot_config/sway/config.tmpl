@@ -54,10 +54,10 @@ set $lock swaylock --screenshots \
 
 ### Idle configuration
 exec swayidle -w \
-       timeout 60 'brightnessctl set 20%-' \
+       timeout 180 'brightnessctl set 20%-' \
        resume 'brightnessctl set 20%+' \
-       timeout 120 '$lock &' \
-       timeout 150 'swaymsg "output * dpms off"' \
+       timeout 300 '$lock &' \
+       timeout 480 'swaymsg "output * dpms off"' \
        resume 'swaymsg "output * dpms on"' \
        timeout 3600 'systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
@@ -72,6 +72,11 @@ input type:touchpad {
   natural_scroll enabled
   middle_emulation enabled
   scroll_factor 0.30
+}
+
+input type:pointer {
+  accel_profile adaptive
+  pointer_accel -0.40
 }
 
 input type:keyboard {

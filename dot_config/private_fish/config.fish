@@ -10,6 +10,8 @@ set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
+set -gx SPACEVIM_LUA 1
+
 # Make default programs
 set -gx BROWSER firefox
 set -gx EDITOR nvim

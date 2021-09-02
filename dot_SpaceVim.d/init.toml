@@ -33,6 +33,7 @@
 
 [[layers]]
   name = 'core'
+  enable_smooth_scrolling = false
 
 [[layers]]
   name = 'format'
@@ -87,8 +88,8 @@
 [[layers]]
   name = "tools"
 
-# [[layers]]
-#   name = "lang#c"
+[[layers]]
+  name = "lang#c"
 
 [[layers]]
   name = "lang#dockerfile"
@@ -134,9 +135,6 @@
 # [[layers]]
 #   name = "VersionControl"
 
-# [[layers]]
-#   name = "foldsearch"
-
 [[custom_plugins]]
   repo = "metakirby5/codi.vim"
 
@@ -152,14 +150,5 @@
 [[custom_plugins]]
   repo = "kdheepak/lazygit.nvim"
 
-[[custom_plugins]]
-  repo = "tyru/open-browser.vim"
-
-[[custom_plugins]]
-  repo = "tyru/open-browser-github.vim"
-
 # [[custom_plugins]]
 #   repo = "soywod/himalaya"
-
-# [[custom_plugins]]
-#   repo = "glacambre/firenvim"
