@@ -49,6 +49,7 @@ print_in_purple "Infrastructure\n"
 
 install_package "azure-cli"
 install_package "docker-compose"
+install_package "google-cloud-sdk"
 install_package "k9s"
 install_package "kubectl"
 install_package "kubectx"

@@ -113,7 +113,7 @@
 
 [[layers]]
   name = "lang#python"
-  format_on_save = true
+  format_on_save = false
 
 [[layers]]
   name = "lang#sh"

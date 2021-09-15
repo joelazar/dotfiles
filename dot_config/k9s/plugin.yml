@@ -1,0 +1,24 @@
+plugin:
+  full_container_logs:
+    shortCut: Ctrl-L
+    confirm: false
+    description: Full logs
+    scopes:
+      - containers
+    command: sh
+    background: false
+    args:
+      - -c
+      - kubectl -n $NAMESPACE logs $POD -c $NAME --context $CONTEXT | bat
+
+  full_pod_logs:
+    shortCut: Ctrl-L
+    confirm: false
+    description: Full logs
+    scopes:
+      - pods
+    command: sh
+    background: false
+    args:
+      - -c
+      - kubectl -n $NAMESPACE logs $NAME --all-containers --context $CONTEXT | bat
