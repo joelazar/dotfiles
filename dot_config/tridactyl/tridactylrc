@@ -74,6 +74,13 @@ command hint_focus hint -;
 " Open right click menu on links
 bind ;C composite hint_focus; !s xdotool key Menu
 
+bind q tabclose
+bind <A-p> pin
+bind <A-m> mute toggle
+bind gc tabduplicate
+bind gC tabduplicate
+bind \<Space> nohlsearch
+
 " Defaults to 300ms but I'm a 'move fast and close the wrong tabs' kinda chap
 set hintdelay 100
 
