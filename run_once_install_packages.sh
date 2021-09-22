@@ -120,11 +120,13 @@ install_package "slack-desktop"
 
 print_in_purple "Multimedia\n"
 
+install_package "gimp"
 install_package "imagemagick"
 install_package "imv"
 install_package "inkscape"
 install_package "mpv"
 install_package "spotify"
+install_package "xournal"
 
 print_in_purple "Miscellaneous\n"
 
