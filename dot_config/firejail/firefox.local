@@ -20,6 +20,7 @@ whitelist ${HOME}/pictures
 whitelist ${HOME}/go
 whitelist ${HOME}/git
 whitelist ${HOME}/documents
+whitelist ${HOME}/work
 whitelist ${HOME}/.config/tridactyl
 whitelist /usr/share/pipewire/
 

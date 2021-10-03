@@ -95,6 +95,7 @@ alias gt="gotestsum --format standard-verbose -- -cover"
 alias lg='lazygit'
 alias lzd='lazydocker'
 alias ls='exa'
+alias ll='exa -la'
 alias logme="script -f /tmp/(date)+\"%d-%b-%y_%H-%M-%S\"_shell.log"
 alias mkdir='mkdir -p -v'
 alias N='sudo -E nnn -deH'
