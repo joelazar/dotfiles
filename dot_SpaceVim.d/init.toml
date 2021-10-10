@@ -49,10 +49,8 @@
   name = 'lsp'
   filetypes = [
     'c',
-    'css',
     'cpp',
     'go',
-    'html',
     'javascript',
     'python',
     'sh',
