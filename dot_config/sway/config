@@ -22,7 +22,7 @@ set $right l
 set $term alacritty
 
 # Your preferred application launcher
-set $menu exec $term --class=launcher -e sway-launcher-desktop
+set $menu exec $term --class=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpaper/new/

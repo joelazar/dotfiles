@@ -37,8 +37,8 @@ set -gx GOPATH $HOME/go
 set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin /usr/lib/go/bin $GOPATH/bin $PATH
 
 # FZF options
-set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'
-set -gx FZF_DEFAULT_OPTS '--height 90% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
+set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
+set -gx FZF_DEFAULT_OPTS '--height 50% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
 set fzf_preview_dir_cmd exa --all --color=always
@@ -101,6 +101,7 @@ alias ping='ping -c 5'
 alias q="exit"
 alias rm='rm -I'
 alias yaegi='rlwrap yaegi'
+alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 alias :q="exit"

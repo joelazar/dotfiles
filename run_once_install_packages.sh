@@ -3,8 +3,8 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 cd "$SOURCE_DIR" &&
-    . "./scripts/utils_install" &&
-    . "./scripts/utils"
+	. "./scripts/utils_install" &&
+	. "./scripts/utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -43,7 +43,6 @@ install_package "python"
 install_package "ripgrep"
 install_package "sd"
 install_package "tmux"
-install_package "viu"
 
 print_in_purple "Infrastructure\n"
 
@@ -86,7 +85,7 @@ install_package "lua-format"
 install_package "lua-language-server"
 install_package "mermaid-cli"
 install_package "npm"
-install_package "pgformatter-git"
+install_package "pgformatter"
 install_package "prettier"
 install_package "pyright"
 install_package "python-black"
@@ -172,19 +171,17 @@ install_package "noto-fonts-emoji"
 
 print_in_purple "Penetration testing\n"
 
-ask_for_confirmation "Do you want to install penetration tools?"
-if answer_is_yes; then
-    install_blackarch_repo
-    install_package "aircrack-ng"
-    install_package "bettercap"
-    install_package "dirb"
-    install_package "hydra"
-    install_package "macchanger"
-    install_package "nmap"
-    install_package "reaver"
-    install_package "whatweb"
-    install_package "wireshark-qt"
-fi
+install_blackarch_repo
+
+install_package "aircrack-ng"
+install_package "bettercap"
+install_package "dirb"
+install_package "hydra"
+install_package "macchanger"
+install_package "nmap"
+install_package "reaver"
+install_package "whatweb"
+install_package "wireshark-qt"
 
 print_in_purple "Shell\n"
 
@@ -283,10 +280,7 @@ install_package "xorg-server-xwayland"
 
 print_in_purple "GO packages\n"
 
-ask_for_confirmation "Do you want to install GO packages now? It could take a while."
-if answer_is_yes; then
-    install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
-fi
+install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
 
 print_in_purple "NPM packages\n"
 
