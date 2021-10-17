@@ -39,11 +39,7 @@
     background: #323232;
     color: white;
     font-family: Hack Nerd Font;
-{{- if eq .host "thinkpad-x250" }}
-    font-size: 12px;
-{{- else }}
     font-size: 20px;
-{{- end }}
 }
 
 /* Each module */
@@ -60,13 +56,8 @@
 #idle_inhibitor,
 #temperature,
 #tray {
-{{- if eq .host "thinkpad-x250" }}
-    padding-left: 4px;
-    padding-right: 4px;
-{{- else }}
     padding-left: 8px;
     padding-right: 8px;
-{{- end }}
 }
 
 /* -----------------------------------------------------------------------------

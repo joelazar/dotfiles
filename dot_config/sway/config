@@ -4,11 +4,7 @@
 set $mod Mod4
 
 set $font_size 0
-{{- if eq .host "thinkpad-x250" }}
-set $cursor_size 12
-{{- else }}
 set $cursor_size 16
-{{- end }}
 
 font pango:Hack Nerd Font $font_size
 
