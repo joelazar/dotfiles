@@ -2,8 +2,6 @@
 
 ![joedotfiles - wallpaper](screenshots/wallpaper.png)
 
-![joedotfiles - spacevim](screenshots/spacevim.png)
-
 ![joedotfiles - diff](screenshots/diff.png)
 
 ## Details
@@ -23,7 +21,7 @@ Let me try to briefly list the installed and configured packages:
 * [`sway-launcher-desktop`](https://github.com/Biont/sway-launcher-desktop) - Application launcher
 * [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer
 * [`neovim`](https://neovim.io/) - Vim on drugs
-  * [`SpaceVim`](https://spacevim.org/) - A community-driven vim distribution, which handles collections of plugins in layers.
+  * [`my neovim config`](https://github.com/joelazar/nvim-config) - My own neovim config written in lua
 * [`git`](https://git-scm.com/) - No comment
   * [`delta`](https://github.com/dandavison/delta) - Diff tool with syntax highlighting
 * [`bpytop`](https://github.com/aristocratos/bpytop) - As a monitoring tool

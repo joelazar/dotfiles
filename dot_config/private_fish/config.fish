@@ -10,8 +10,6 @@ set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
-set -gx SPACEVIM_LUA 1
-
 # Make default programs
 set -gx BROWSER firefox
 set -gx EDITOR nvim
@@ -36,7 +34,7 @@ set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # Customize PATH
 set -gx GOPATH $HOME/go
-set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin $HOME/.SpaceVim/bin /usr/lib/go/bin $GOPATH/bin $PATH
+set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin /usr/lib/go/bin $GOPATH/bin $PATH
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git'

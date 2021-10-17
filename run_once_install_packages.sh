@@ -320,8 +320,4 @@ install_package "topgrade"
 install_package "tldr"
 install_package "x11docker"
 
-print_in_purple "SpaceVim\n"
-
-install_spacevim
-
 clean_up_cache

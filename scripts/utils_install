@@ -92,25 +92,3 @@ install_blackarch_repo() {
     execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
   fi
 }
-
-install_spacevim() {
-  declare -r SPACEVIM_DIR="$HOME/.SpaceVim/"
-  declare -r SPACEVIM_SCRIPT="https://spacevim.org/install.sh"
-
-  if [ ! -d "$SPACEVIM_DIR" ]; then
-    execute "curl -sLf $SPACEVIM_SCRIPT | bash -s -- --install neovim" "Install SpaceVim"
-  fi
-  
-  print_result $? "Install SpaceVim"
-}
-
-update_spacevim_plugins() {
-  execute \
-    "nvim +SPUpdate +sleep 0.1 +qall" \
-    "Update SpaceVim plugins"
-
-  execute \
-    "nvim +SPLayer Go +GoUpdateBinaries +sleep 0.1 +qall" \
-    "Update VimGo plugins"
-
-}
