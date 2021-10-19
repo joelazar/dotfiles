@@ -323,7 +323,7 @@ bindsym $mod+F3 exec --no-startup-id google-chrome-stable
 bindsym $mod+F4 exec --no-startup-id nvim-qt
 
 # Clipboard manager
-bindsym $mod+c exec $term --class=launcher-clipboard -e clipboard
+bindsym $mod+c exec $term --class=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
@@ -347,13 +347,14 @@ for_window [app_id=blueman-manager] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=imv] floating enable
 for_window [app_id=imv] resize set 1980 1290
+for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 82 ppt 64 ppt, border pixel 1
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resize set 60 ppt 60 ppt, border pixel 10
 for_window [title="Firefox — Sharing Indicator"] kill
 
 # Startup applications
 exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack Nerd Font 14' --height 300 --width 500 --background-color '#2c2c2e' --border-color '#9f9f9f'
-exec --no-startup-id wl-paste -t text --watch clipman store --max-items=50
+exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator

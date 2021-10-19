@@ -14,7 +14,8 @@ colors dark
 set modeindicatormodes {"normal":"false","insert":"true","input":"true","ignore":"true","ex":"true","hint":"true","visual":"true"}
 
 " Use neovim in tmux for editor.
-" set editorcmd alacritty --command nvim
+set editorcmd alacritty --class=floating-editor --command nvim
+" set editorcmd nvim-qt
 
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>
