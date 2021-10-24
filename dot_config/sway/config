@@ -302,7 +302,7 @@ bar {
 }
 
 # Hide/unhide waybar
-bindsym $mod+x exec killall -SIGUSR1 waybar
+bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
 
 # Clamshell mode
 set $laptop eDP-1
