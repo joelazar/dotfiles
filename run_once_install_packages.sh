@@ -23,6 +23,7 @@ update
 print_in_purple "Browsers\n"
 
 install_package "firefox"
+install_package "firefox-tridactyl"
 install_package "google-chrome"
 
 print_in_purple "Basics\n"
@@ -298,7 +299,6 @@ install_package "duf"
 install_package "earbuds"
 install_package "etcher-bin"
 install_package "exercism-bin"
-install_package "firefox-tridactyl-native"
 install_package "gitbatch"
 install_package "hfsprogs"
 install_package "neovide-bin"
