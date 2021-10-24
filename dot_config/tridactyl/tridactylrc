@@ -15,7 +15,6 @@ set modeindicatormodes {"normal":"false","insert":"true","input":"true","ignore"
 
 " Use neovim in tmux for editor.
 set editorcmd alacritty --class=floating-editor --command nvim
-" set editorcmd nvim-qt
 
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>

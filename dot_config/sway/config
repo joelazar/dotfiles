@@ -25,7 +25,7 @@ set $term alacritty
 set $menu exec $term --class=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
 
 ### Output configuration
-set $wallpapers_path $HOME/pictures/wallpaper/new/
+set $wallpapers_path $HOME/pictures/wallpapers/unsplash/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
@@ -39,11 +39,11 @@ set $lock swaylock --screenshots \
       --indicator-thickness 7 \
       --effect-blur 7x5 \
       --effect-vignette 0.5:0.5 \
-      --ring-color 39373b \
-      --key-hl-color 880033 \
-      --line-color 00000000 \
-      --inside-color 00000088 \
-      --separator-color 00000000 \
+      --ring-color 192330 \
+      --key-hl-color 9d79d6 \
+      --line-color 000000 \
+      --inside-color c94f6d \
+      --separator-color 000000 \
       --grace 3 \
       --fade-in 0.5 \
       --effect-greyscale
@@ -315,7 +315,7 @@ bindsym $mod+n         exec $term --class=launcher -e nmtui-connect
 bindsym $mod+F1 exec --no-startup-id alacritty --command nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id google-chrome-stable
-bindsym $mod+F4 exec --no-startup-id nvim-qt
+bindsym $mod+F4 exec --no-startup-id neovide
 
 # Clipboard manager
 bindsym $mod+c exec $term --class=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
@@ -348,7 +348,7 @@ for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resiz
 for_window [title="Firefox — Sharing Indicator"] kill
 
 # Startup applications
-exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack Nerd Font 14' --height 300 --width 500 --background-color '#2c2c2e' --border-color '#9f9f9f'
+exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Hack Nerd Font 14' --height 300 --width 500 --background-color '#192330' --border-color '#63cdcf'
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
