@@ -43,6 +43,7 @@ install_package "python"
 install_package "ripgrep"
 install_package "sd"
 install_package "tmux"
+install_package "zoxide"
 
 print_in_purple "Infrastructure\n"
 
@@ -195,7 +196,6 @@ install_package "ytfzf"
 
 print_in_purple "Fish plugins\n"
 install_fish_plugin "evanlucas/fish-kubectl-completions" "kubectl-completions"
-install_fish_plugin "jethrokuan/z" "z"
 install_fish_plugin "jorgebucaran/fish-bax" "fish-bax"
 install_fish_plugin "franciscolourenco/done" "done"
 install_fish_plugin "danhper/fish-ssh-agent" "fish-ssh-agent"

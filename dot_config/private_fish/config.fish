@@ -136,6 +136,7 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
 alias weather="http -b v2.wttr.in"
 
 starship init fish | source
+zoxide init fish | source
 
 # Start Sway at login
 if status is-login
