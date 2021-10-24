@@ -123,6 +123,12 @@ alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\'
 alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
 alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
 
+# git pull++
+
+alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
+
+alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -P10 -I{} git -C {} pull'
+
 # other
 alias get-local-ip="ifconfig \
                     | grep 'inet ' \

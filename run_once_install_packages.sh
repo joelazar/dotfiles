@@ -156,7 +156,7 @@ install_package "tokei"
 install_package "translate-shell"
 install_package "transmission-cli"
 install_package "virtualbox"
-install_package "youtube-dl"
+install_package "yt-dlp"
 install_package "zathura"
 install_package "zathura-pdf-poppler"
 install_package "zbar"
@@ -192,7 +192,6 @@ install_package "fisher"
 install_package "hyperfine"
 install_package "starship"
 install_package "theme.sh"
-install_package "ytfzf"
 
 print_in_purple "Fish plugins\n"
 install_fish_plugin "evanlucas/fish-kubectl-completions" "kubectl-completions"
@@ -291,6 +290,10 @@ install_npm_package "@slidev/cli"
 # gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
 install_npm_package "gitmoji-cli"
 
+print_in_purple "PIP packages\n"
+
+# install_pip_package "" ""
+
 print_in_purple "Extra packages\n"
 
 install_package "ancient-packages"
@@ -310,7 +313,6 @@ install_package "redoc-cli"
 install_package "sad"
 install_package "subliminal"
 install_package "teamviewer"
-install_package "topgrade"
 install_package "tldr"
 install_package "x11docker"
 

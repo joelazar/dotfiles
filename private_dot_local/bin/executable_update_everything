@@ -3,24 +3,31 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils_install" &&
-    . "$SOURCE_DIR/scripts/utils"
+	. "$SOURCE_DIR/scripts/utils"
 
-print_in_purple "Update packages\n"
+print_in_purple "Update yay packages\n"
 update
 
+print_in_purple "Update nnn plugins\n"
 install_nnn_plugins
 
+print_in_purple "Update fish\n"
 update_fish_plugins
+execute "fish -c 'fish_update_completions'" "Update fish completions"
+
+print_in_purple "Update neovim plugins\n"
+execute "nvim +PackerCompile +PackerSync +qall" "Update neovim plugins"
 
 print_in_purple "Update GO packages\n"
-
 install_go_package "github.com/cosmos72/gomacro" "gomacro"
 
-print_in_purple "Update NPM packages\n"
+print_in_purple "Update pip packages\n"
+execute "pip freeze --user | cut -d'=' -f2 | xargs -n1 pip install -U" "Update pip packages"
 
-install_npm_package "typescript-language-server"
-install_npm_package "vscode-langservers-extracted"
-install_npm_package "@slidev/cli"
-install_npm_package "gitmoji-cli"
+print_in_purple "Update npm packages\n"
+execute "npm update -g" "Update NPM packages"
+
+print_in_purple "Update tldr cache\n"
+execute "tldr -u" "Update tldr cache"
 
 clean_up_cache
