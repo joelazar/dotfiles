@@ -284,16 +284,11 @@ bindsym --release $mod+Print exec grim - | swappy -f -
 bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f -
 
 # color defines for zenburn styled i3
-set $bg     #2c2c2e
-set $fg     #9f9f9f
-set $hi     #efef8f
-set $ac     #909090
-set $tx     #040404
-set $ia     #8f8f8f
-set $be     #8faf9f
-set $yw     #ccdc90
-set $gn     #88b090
-set $rd     #e89393
+set $bg     #192330
+set $ac     #719cd6
+set $tx     #dfdfe0
+set $ia     #cdcecf
+set $rd     #c94f6d
 
 # set some nice colors      border     background  text
 client.focused              $ac        $ac         $tx

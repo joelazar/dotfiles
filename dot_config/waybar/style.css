@@ -1,25 +1,54 @@
-@keyframes blink-warning {
-    70% {
-        color: white;
-    }
+/*
+* nightfox
+  primary:
+    background: "#192330"
+    foreground: "#cdcecf"
+  # Normal colors
+  normal:
+    black: "#393b44"
+    red: "#c94f6d"
+    green: "#81b29a"
+    yellow: "#dbc074"
+    blue: "#719cd6"
+    magenta: "#9d79d6"
+    cyan: "#63cdcf"
+    white: "#dfdfe0"
+  # Bright colors
+  bright:
+    black: "#475072"
+    red: "#d6616b"
+    green: "#58cd8b"
+    yellow: "#ffe37e"
+    blue: "#84cee4"
+    magenta: "#b8a1e3"
+    cyan: "#59f0ff"
+    white: "#f2f2f2"
+  indexed_colors:
+    - { index: 16, color: "#f4a261" }
+    - { index: 17, color: "#d67ad2" }
+*/
 
-    to {
-        color: white;
-        background-color: orange;
-    }
+@keyframes blink-warning {
+  70% {
+    color: #dfdfe0;
+  }
+
+  to {
+    color: #dfdfe0;
+    background-color: #f4a261;
+  }
 }
 
 @keyframes blink-critical {
-    70% {
-      color: white;
-    }
+  70% {
+    color: #dfdfe0;
+  }
 
-    to {
-        color: white;
-        background-color: red;
-    }
+  to {
+    color: #dfdfe0;
+    background-color: #c94f6d;
+  }
 }
-
 
 /* -----------------------------------------------------------------------------
  * Base styles
@@ -27,19 +56,19 @@
 
 /* Reset all styles */
 * {
-    border: none;
-    border-radius: 0;
-    min-height: 0;
-    margin: 0;
-    padding: 0;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
 }
 
 /* The whole bar */
 #waybar {
-    background: #323232;
-    color: white;
-    font-family: Hack Nerd Font;
-    font-size: 20px;
+  background: #192330;
+  color: #dfdfe0;
+  font-family: Hack Nerd Font;
+  font-size: 20px;
 }
 
 /* Each module */
@@ -56,8 +85,8 @@
 #idle_inhibitor,
 #temperature,
 #tray {
-    padding-left: 8px;
-    padding-right: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -65,35 +94,35 @@
  * -------------------------------------------------------------------------- */
 
 #battery {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #battery.warning {
-    color: orange;
-    font-weight: bold;
+  color: #f4a261;
+  font-weight: bold;
 }
 
 #battery.critical {
-    color: red;
-    font-weight: bold;
+  color: #c94f6d;
+  font-weight: bold;
 }
 
 #battery.warning.discharging {
-    /* animation-name: blink-warning; */
-    /* animation-duration: 3s; */
-    font-weight: bold;
+  /* animation-name: blink-warning; */
+  /* animation-duration: 3s; */
+  font-weight: bold;
 }
 
 #battery.critical.discharging {
-    animation-name: blink-critical;
-    animation-duration: 1s;
-    font-weight: bold;
+  animation-name: blink-critical;
+  animation-duration: 1s;
+  font-weight: bold;
 }
 
 #clock {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #cpu {
@@ -101,105 +130,101 @@
 }
 
 #cpu.warning {
-    color: orange;
+  color: #f4a261;
 }
 
 #cpu.critical {
-    color: red;
-    font-weight: bold;
+  color: #c94f6d;
+  font-weight: bold;
 }
 
 #memory {
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
 
 #memory.warning {
-    color: orange;
+  color: #f4a261;
 }
 
 #memory.critical {
-    color: red;
-    animation-name: blink-critical;
-    animation-duration: 2s;
-    font-weight: bold;
+  color: #c94f6d;
+  animation-name: blink-critical;
+  animation-duration: 2s;
+  font-weight: bold;
 }
 
 #mode {
-    background: #64727D;
-    border-top: 2px solid white;
-    /* To compensate for the top border and still have vertical centering */
-    padding-bottom: 2px;
+  background: #64727d;
+  border-top: 2px solid #dfdfe0;
+  /* To compensate for the top border and still have vertical centering */
+  padding-bottom: 2px;
 }
 
 #idle_inhibitor {
-    padding-right: 12px;
+  padding-right: 12px;
 }
 
 #network {
-    /* No styles */
+  /* No styles */
 }
 
 #network.disconnected {
-    color: orange;
+  color: #f4a261;
 }
 
 #pulseaudio {
-    /* No styles */
+  /* No styles */
 }
 
 #pulseaudio.muted {
-    /* No styles */
+  /* No styles */
 }
 
 #temperature {
-    /* No styles */
+  /* No styles */
 }
 
 #temperature.critical {
-    color: red;
-    font-weight: bold;
+  color: #c94f6d;
+  font-weight: bold;
 }
 
 #tray {
-    /* No styles */
+  /* No styles */
 }
 
 #window {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-  background: rgba(0, 1, 51, 0.2);
-  color: #ffffff;
-  box-shadow: inherit;
-  border-top: 2px solid pink;
+  border-top: 2px solid #dbc074;
 }
 
 #workspaces button {
-    border-top: 2px solid transparent;
-    background-color: transparent;
-    padding-left: 0;
-    padding-right: 4px;
-    color: #ffffff;
-    font-size: 18px;
+  border-top: 2px solid transparent;
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 4px;
+  color: #dfdfe0;
+  font-size: 18px;
 }
 
 #workspaces button.focused {
-    border-color: #909090;
-    color: white;
-    background-color: #252424;
+  border-color: #9d79d6;
+  color: #dfdfe0;
+  background-color: #393b44;
 }
 
 #workspaces button.urgent {
-    border-color: #c9545d;
-    color: #c9545d;
+  border-color: #c9545d;
+  color: #c9545d;
 }
 
 #custom-separator {
-    font-size: 17px;
-	color: #484848;
-	background: transparent
+  font-size: 17px;
+  color: #393b44;
+  background: transparent;
 }
