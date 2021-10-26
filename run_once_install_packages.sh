@@ -194,7 +194,9 @@ install_package "starship"
 install_package "theme.sh"
 
 print_in_purple "Fish plugins\n"
+
 install_fish_plugin "evanlucas/fish-kubectl-completions" "kubectl-completions"
+install_fish_plugin "lgathy/google-cloud-sdk-fish-completion" "gcloud-completion"
 install_fish_plugin "jorgebucaran/fish-bax" "fish-bax"
 install_fish_plugin "franciscolourenco/done" "done"
 install_fish_plugin "danhper/fish-ssh-agent" "fish-ssh-agent"
