@@ -18,22 +18,22 @@ scrolling:
 
 font:
   normal:
-    family: Hack Nerd Font
+    family: Courier Prime
     style: Regular
 
   bold:
-    family: Hack Nerd Font
+    family: Courier Prime
     style: Bold
 
   italic:
-    family: Hack Nerd Font
+    family: Courier Prime
     style: Italic
 
   bold_italic:
-    family: Hack Nerd Font
+    family: Courier Prime
     style: Bold Italic
 
-  size: 20.0
+  size: 23.0
 
   offset:
     x: 0

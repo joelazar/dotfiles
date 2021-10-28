@@ -67,8 +67,8 @@
 #waybar {
   background: #192330;
   color: #dfdfe0;
-  font-family: Hack Nerd Font;
-  font-size: 20px;
+  font-family: Courier Prime;
+  font-size: 22px;
 }
 
 /* Each module */
@@ -206,10 +206,10 @@
 #workspaces button {
   border-top: 2px solid transparent;
   background-color: transparent;
-  padding-left: 0;
-  padding-right: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
   color: #dfdfe0;
-  font-size: 18px;
+  font-size: 26px;
 }
 
 #workspaces button.focused {
@@ -224,7 +224,7 @@
 }
 
 #custom-separator {
-  font-size: 17px;
-  color: #393b44;
+  font-size: 26px;
+  color: #63cdcf;
   background: transparent;
 }

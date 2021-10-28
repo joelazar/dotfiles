@@ -170,6 +170,7 @@ print_in_purple "Fonts\n"
 install_package "nerd-fonts-hack"
 install_package "noto-fonts"
 install_package "noto-fonts-emoji"
+install_package "ttf-courier-prime"
 
 print_in_purple "Penetration testing\n"
 
