@@ -18,6 +18,8 @@ install_package_manager
 
 enable_multilib
 
+install_blackarch_repo
+
 update
 
 print_in_purple "Browsers\n"
@@ -117,7 +119,7 @@ install_package "git-delta"
 install_package "github-cli"
 install_package "lazydocker"
 install_package "lazygit"
-install_package "pgcli"
+install_package "python-pgcli"
 install_package "visual-studio-code-bin"
 
 print_in_purple "Communication\n"
@@ -174,8 +176,6 @@ install_package "noto-fonts-emoji"
 install_package "ttf-courier-prime"
 
 print_in_purple "Penetration testing\n"
-
-install_blackarch_repo
 
 install_package "aircrack-ng"
 install_package "bettercap"

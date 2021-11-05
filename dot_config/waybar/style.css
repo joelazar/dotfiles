@@ -68,7 +68,7 @@
   background: #192330;
   color: #dfdfe0;
   font-family: Courier Prime;
-  font-size: 22px;
+  font-size: 20px;
 }
 
 /* Each module */
@@ -85,8 +85,8 @@
 #idle_inhibitor,
 #temperature,
 #tray {
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -159,11 +159,11 @@
   background: #64727d;
   border-top: 2px solid #dfdfe0;
   /* To compensate for the top border and still have vertical centering */
-  padding-bottom: 2px;
+  padding-bottom: 0px;
 }
 
 #idle_inhibitor {
-  padding-right: 12px;
+  /* padding-right: 12px; */
 }
 
 #network {
@@ -206,8 +206,8 @@
 #workspaces button {
   border-top: 2px solid transparent;
   background-color: transparent;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
   color: #dfdfe0;
   font-size: 26px;
 }
@@ -221,6 +221,9 @@
 #workspaces button.urgent {
   border-color: #c9545d;
   color: #c9545d;
+}
+
+#custom-spotify {
 }
 
 #custom-separator {
