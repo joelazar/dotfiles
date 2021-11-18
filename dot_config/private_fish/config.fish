@@ -110,12 +110,14 @@ alias :q="exit"
 alias k='kubectl'
 alias kg='kubectl get'
 alias kd='kubectl describe'
+alias kdp='kubectl describe pod'
+alias kdd='kubectl describe deployment'
 alias krm='kubectl delete'
 alias kgall='kubectl get --all-namespaces all'
 alias kgp='kubectl get pod'
 alias kgd='kubectl get deployments'
 alias kgsvc='kubectl get service'
-alias kl='kubectl logs'
+alias kl='kubectl logs --all-containers=true'
 alias kei='kubectl exec -it'
 
 # docker
