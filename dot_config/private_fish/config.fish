@@ -61,7 +61,8 @@ set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_FCOLORS c1e2272e006033f7c6d6abc4
 set -gx NNN_CONTEXT_COLORS 2136
-set -gx NNN_PLUG 'k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs'
+set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs"
+set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/git/joelazar/nvim-config/;"
 
 # z settings
 set -U Z_DATA "$HOME/.z"
