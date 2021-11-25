@@ -30,4 +30,7 @@ execute "npm update -g" "Update NPM packages"
 print_in_purple "Update tldr cache\n"
 execute "tldr -u" "Update tldr cache"
 
+print_in_purple "Update gh extensions\n"
+execute "gh extension upgrade --all" "Update gh extensions"
+
 clean_up_cache
