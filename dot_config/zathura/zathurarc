@@ -28,4 +28,4 @@ set statusbar-home-tilde "true"
 set statusbar-h-padding "50"
 set statusbar-v-padding "50"
 
-set font "Courier Prime 16"
+set font "Roboto Mono 16"

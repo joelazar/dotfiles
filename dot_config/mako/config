@@ -1,6 +1,6 @@
 sort=-time
 layer=overlay
-font='Courier Prime 14'
+font='Roboto Mono 14'
 background-color=#2c2c2e
 width=500
 height=300

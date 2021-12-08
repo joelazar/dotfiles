@@ -67,8 +67,8 @@
 #waybar {
   background: #192330;
   color: #dfdfe0;
-  font-family: Courier Prime;
-  font-size: 20px;
+  font-family: Roboto Mono;
+  font-size: 18px;
 }
 
 /* Each module */

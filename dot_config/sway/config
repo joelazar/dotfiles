@@ -6,7 +6,7 @@ set $mod Mod4
 set $font_size 0
 set $cursor_size 16
 
-font pango:Courier Prime $font_size
+font pango:Roboto Mono $font_size
 
 default_border pixel 1
 default_floating_border pixel 1
@@ -352,7 +352,7 @@ for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resiz
 for_window [title="Firefox — Sharing Indicator"] kill
 
 # Startup applications
-exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Courier Prime 14' --height 300 --width 500 --background-color '#192330' --border-color '#63cdcf'
+exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Roboto Mono 14' --height 300 --width 500 --background-color '#192330' --border-color '#63cdcf'
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id i3-battery-popup -L 15 -m "Battery is low!" -t 1m -n -s $HOME/.config/sway/happy_confirmation.wav
 exec --no-startup-id blueman-applet
