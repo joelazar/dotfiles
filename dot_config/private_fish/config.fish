@@ -86,28 +86,29 @@ end
 
 alias c="clear"
 alias cat="bat"
-alias xdg-open="handlr open"
 alias ch="clipman pick --print0 --tool=CUSTOM --tool-args=\"fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0\""
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
+alias ff='firefox'
 alias g="git"
 alias gt="gotestsum --format standard-verbose -- -cover"
 alias lg='lazygit'
-alias lzd='lazydocker'
-alias ls='exa'
 alias ll='exa -la'
 alias logme="script -f /tmp/(date)+\"%d-%b-%y_%H-%M-%S\"_shell.log"
+alias ls='exa'
+alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias N='sudo -E nnn -deH'
 alias ping='ping -c 5'
 alias q="exit"
+alias :q="exit"
 alias rm='rm -I'
-alias yaegi='rlwrap yaegi'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
-alias :q="exit"
+alias xdg-open="handlr open"
+alias yaegi='rlwrap yaegi'
 
 # kubectl
 alias k='kubectl'
