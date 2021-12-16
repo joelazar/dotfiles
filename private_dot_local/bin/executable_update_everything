@@ -22,7 +22,7 @@ print_in_purple "Update GO packages\n"
 install_go_package "github.com/cosmos72/gomacro" "gomacro"
 
 print_in_purple "Update pip packages\n"
-execute "pip freeze --user | cut -d'=' -f2 | xargs -n1 pip install -U" "Update pip packages"
+execute "pip list --user | cut -d'=' -f1 | xargs -n1 pip install -U" "Update pip packages"
 
 print_in_purple "Update npm packages\n"
 execute "npm update -g" "Update NPM packages"
