@@ -1,13 +1,14 @@
 # Inserts a blank line between shell prompts
 add_newline = false
 
-# Replace the "❯" symbol in the prompt with "➜"
-# [character]                            # The name of the module we are configuring is "character"
-# success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-
 [gcloud]
 disabled = true
 
-# [kubernetes]
-# format = '[⛵$namespace](green) '
-# disabled = false
+[env_var]
+variable = "NNNLVL"
+format = "[n³](yellow)"
+disabled = false
+
+[kubernetes]
+format = '[⛵$context](green) '
+disabled = true
