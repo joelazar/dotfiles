@@ -94,7 +94,7 @@ alias ff='firefox'
 alias g="git"
 alias gt="gotestsum --format standard-verbose -- -cover"
 alias lg='lazygit'
-alias ll='exa -la'
+alias ll='exa -la --git --icons'
 alias logme="script -f /tmp/(date)+\"%d-%b-%y_%H-%M-%S\"_shell.log"
 alias ls='exa'
 alias lzd='lazydocker'
@@ -185,6 +185,9 @@ set -g fish_pager_color_progress $comment
 set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
+
+set -U __done_min_cmd_duration 10000
+set -U __done_exclude 'n'
 
 # Start Sway at login
 if status is-login

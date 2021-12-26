@@ -1,2 +1,0 @@
-# Suspend the system when battery level drops to 10% or lower
-SUBSYSTEM=="power_supply", ATTR{name}=="BAT0", ATTR{status}=="Discharging", ATTR{capacity}=="[0-10]", RUN+="/usr/bin/systemctl suspend"

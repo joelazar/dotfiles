@@ -29,10 +29,15 @@ execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
 execute "sudo systemctl enable NetworkManager.service" "Turn on nm"
 
-execute "sudo systemctl disable NetworkManager-wait-online.service" "Disable wait online nm service"
+execute "sudo systemctl enable NetworkManager-dispatcher.service" "Turn on nm-dispatcher"
 
-# execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
-execute "systemctl --user enable pulseaudio.service" "Turn on pulseaudio server"
+execute "sudo systemctl disable NetworkManager-wait-online.service" "Turn off nm-wait-online"
+
+execute "sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket" "Turn off rfkill"
+
+execute "sudo systemctl enable tlp.service" "Turn on tlp"
+
+execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
 
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
@@ -41,7 +46,3 @@ execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
 
 sudo ls /etc/wireguard/ | grep -q mullvad || curl -Ls https://mullvad.net/media/files/mullvad-wg.sh | bash
 print_result $? "Setup mullvad"
-
-execute "sudo ln -sf $SOURCE_DIR/other/99-lowbat.rules /etc/udev/rules.d/99-lowbat.rules" "Setup low battery suspend"
-
-execute "sudo ln -sf $SOURCE_DIR/other/90-powertop.rules /etc/udev/rules.d/90-powertop.rules" "Setup powertop"
