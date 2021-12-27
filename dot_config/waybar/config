@@ -128,7 +128,7 @@
         "interval": 10,
         "format": " {}",
         "exec": "$HOME/.local/bin/spotify.py",
-        "exec-if": "pgrep spotify"
+        "exec-if": "pgrep 'spotify|ncspot'"
     },
 
     "sway/mode": {
