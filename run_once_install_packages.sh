@@ -330,6 +330,7 @@ install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
 
 print_in_purple "NPM packages\n"
 
+install_npm_package "typescript"
 install_npm_package "typescript-language-server"
 install_npm_package "vscode-langservers-extracted"
 # slidev - markdown based presentations with a lot of feature, but still in beta
