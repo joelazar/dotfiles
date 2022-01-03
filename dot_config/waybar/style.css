@@ -223,7 +223,9 @@
   color: #c9545d;
 }
 
-#custom-spotify {
+.custom-spotify {
+  padding: 0 10px;
+  margin: 0 4px;
 }
 
 #custom-separator {

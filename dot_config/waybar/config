@@ -125,9 +125,12 @@
     },
 
     "custom/spotify": {
-        "interval": 10,
+        "exec": "$HOME/.local/bin/mediaplayer.py",
         "format": " {}",
-        "exec": "$HOME/.local/bin/spotify.py",
+        "return-type": "json",
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
         "exec-if": "pgrep 'spotify|ncspot'"
     },
 
