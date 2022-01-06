@@ -25,6 +25,8 @@ execute "(getent group vboxusers | grep $USER) || sudo usermod -aG vboxusers $US
 
 execute "sudo chsh -s /usr/bin/fish" "Set shell to fish"
 
+execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
+
 execute "sudo firecfg" "Firejail auto config"
 
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
