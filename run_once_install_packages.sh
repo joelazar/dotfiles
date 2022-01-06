@@ -142,8 +142,8 @@ install_package "jupyterlab"
 install_package "lazydocker"
 install_package "lazygit"
 install_package "mermaid-cli"
+install_package "pgcli"
 install_package "python-jupytext"
-install_package "python-pgcli"
 install_package "redoc-cli"
 install_package "visual-studio-code-bin"
 
@@ -321,7 +321,7 @@ install_package "wlr-randr"
 install_package "wtype"
 install_package "x11docker"
 install_package "xdg-desktop-portal-wlr"
-install_package "xorg-server-xwayland"
+install_package "xorg-xwayland"
 
 print_in_purple "GO packages\n"
 

@@ -1,7 +1,5 @@
 scripts
-other
-*.tar.gz
-Makefile
 README.md
 LICENSE
 screenshots
+archinstall.json
