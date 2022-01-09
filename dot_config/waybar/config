@@ -131,7 +131,7 @@
         "on-click": "playerctl play-pause",
         "on-scroll-up": "playerctl next",
         "on-scroll-down": "playerctl previous",
-        "exec-if": "pgrep 'spotify|ncspot'"
+        "exec-if": "pgrep \"spotify|ncspot\""
     },
 
     "sway/mode": {
