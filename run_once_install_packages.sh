@@ -81,12 +81,12 @@ install_package "yarn"
 print_in_purple "Formatters\n"
 
 install_package "gofumpt"
-install_package "lua-format"
 install_package "pgformatter"
 install_package "prettier"
 install_package "python-black"
 install_package "python-isort"
 install_package "shfmt"
+install_package "stylua"
 
 print_in_purple "Linters\n"
 
