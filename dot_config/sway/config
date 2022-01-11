@@ -57,6 +57,7 @@ exec swayidle -w \
        resume 'swaymsg "output * dpms on"' \
        timeout 3600 'systemctl suspend' \
        resume 'swaymsg "output * dpms on"' \
+       before-sleep 'playerctl pause' \
        before-sleep '$lock'
 
 ### Input configuration
