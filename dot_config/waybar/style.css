@@ -72,21 +72,25 @@
 }
 
 /* Each module */
-#battery,
-#clock,
-#cpu,
-#custom-spotify,
-#custom-keyboard-layout,
-#custom-vpn,
-#memory,
-#mode,
-#network,
-#pulseaudio,
-#idle_inhibitor,
-#temperature,
+#backlight
+#battery
+#clock
+#cpu
+#custom-keyboard-layout
+#custom-scratchpad-indicator
+#custom-separator
+#custom-spotify
+#custom-vpn
+#idle_inhibitor
+#memory
+#network
+#pulseaudio
+#temperature
 #tray {
   padding-left: 4px;
   padding-right: 4px;
+  padding-bottom: 4px;
+  padding-top: 4px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -157,9 +161,11 @@
 
 #mode {
   background: #64727d;
+  padding-left: 4px;
+  padding-right: 4px;
   border-top: 2px solid #dfdfe0;
   /* To compensate for the top border and still have vertical centering */
-  padding-bottom: 0px;
+  padding-bottom: 2px;
 }
 
 #idle_inhibitor {
@@ -191,14 +197,6 @@
   font-weight: bold;
 }
 
-#tray {
-  /* No styles */
-}
-
-#window {
-  font-weight: bold;
-}
-
 #workspaces button:hover {
   border-top: 2px solid #dbc074;
 }
@@ -206,8 +204,6 @@
 #workspaces button {
   border-top: 2px solid transparent;
   background-color: transparent;
-  padding-left: 1px;
-  padding-right: 1px;
   color: #dfdfe0;
   font-size: 26px;
 }
@@ -223,13 +219,8 @@
   color: #c9545d;
 }
 
-.custom-spotify {
-  padding: 0 10px;
-  margin: 0 4px;
-}
-
 #custom-separator {
   font-size: 26px;
-  color: #63cdcf;
+  color: #393b44;
   background: transparent;
 }
