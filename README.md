@@ -2,7 +2,19 @@
 
 ![joedotfiles - wallpaper](screenshots/wallpaper.png)
 
-![joedotfiles - diff](screenshots/diff.png)
+![joedotfiles - neovim](screenshots/neovim.png)
+
+![joedotfiles - exa+fzf](screenshots/exa-fzf.png)
+
+![joedotfiles - lazygit](screenshots/lazygit.png)
+
+![joedotfiles - firefox](screenshots/firefox.png)
+
+![joedotfiles - nnn+zathura+launcher](screenshots/nnn+zathura+launcher.png)
+
+![joedotfiles - ncspot](screenshots/ncspot.png)
+
+![joedotfiles - btop+neofetch](screenshots/btop+neofetch.png)
 
 ## Details
 
@@ -65,7 +77,7 @@ chezmoi apply
 
 Some [utils functions](scripts/) which I'm using for the initial [setup](run_once_install_packages.sh) and later for my update [script](private_dot_local/bin/executable_update_everything) was taken from [alrra](https://github.com/alrra)'s [dotfiles](https://github.com/alrra/dotfiles) repo, and I'm truly grateful for it.
 
-I usually take my wallpapers from [Unsplash](https://unsplash.com/) and the one which is present in my screenshot is from [Michal Zych](https://unsplash.com/@enzu).
+I usually take my wallpapers from [Unsplash](https://unsplash.com/) and the one which is present in my screenshot is from [Arnaud Steckle](https://unsplash.com/@arnaudsteckle).
 
 ## License
 
