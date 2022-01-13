@@ -1,18 +1,34 @@
 # [joelazar](https://github.com/joelazar)’s dotfiles
 
+## Wallpaper
+
 ![joedotfiles - wallpaper](screenshots/wallpaper.png)
+
+## Neovim with my [custom config](https://github.com/joelazar/nvim-config)
 
 ![joedotfiles - neovim](screenshots/neovim.png)
 
-![joedotfiles - exa+fzf](screenshots/exa-fzf.png)
+## Exa + FZF
+
+![joedotfiles - exa+fzf](screenshots/exa+fzf.png)
+
+## Lazygit
 
 ![joedotfiles - lazygit](screenshots/lazygit.png)
 
+## Firefox + Tridactyl
+
 ![joedotfiles - firefox](screenshots/firefox.png)
+
+## nnn + zathura + sway-launcher-desktop
 
 ![joedotfiles - nnn+zathura+launcher](screenshots/nnn+zathura+launcher.png)
 
+## ncspot
+
 ![joedotfiles - ncspot](screenshots/ncspot.png)
+
+## btop + a mandatory neofetch in the corner
 
 ![joedotfiles - btop+neofetch](screenshots/btop+neofetch.png)
 
