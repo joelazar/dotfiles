@@ -90,11 +90,15 @@ install_package "stylua"
 
 print_in_purple "Linters\n"
 
+install_package "checkmake"
 install_package "eslint"
 install_package "flake8"
 install_package "python-pylint"
 install_package "rust-analyzer"
 install_package "shellcheck"
+install_package "sqlfluff"
+install_package "stylelint"
+install_package "quick-lint-js"
 
 print_in_purple "LSPs\n"
 
@@ -325,7 +329,8 @@ install_package "xorg-xwayland"
 
 print_in_purple "GO packages\n"
 
-install_go_package "github.com/cosmos72/gomacro" "gomacro" # aur - outdated
+install_go_package "github.com/cosmos72/gomacro@latest" "gomacro" # aur - outdated
+install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver" # no aur (yet)
 
 print_in_purple "NPM packages\n"
 

@@ -53,7 +53,7 @@ install_go_package() {
   declare -r PACKAGEPATH="$1"
   declare -r PACKAGENAME="$2"
 
-  execute "go get -u $PACKAGEPATH" "$PACKAGENAME"
+  execute "go install $PACKAGEPATH" "$PACKAGENAME"
 }
 
 install_yarn_package() {
