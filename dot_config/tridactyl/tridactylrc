@@ -19,6 +19,9 @@ set editorcmd alacritty --class=floating-editor --command nvim
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>
 
+" closing windows only with q, not d
+unbind d
+
 " But also support Tridactyl search too.
 bind / fillcmdline find
 bind ? fillcmdline find -?
