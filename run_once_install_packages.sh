@@ -108,6 +108,7 @@ install_package "efm-langserver"
 install_package "gopls"
 install_package "lua-language-server"
 install_package "pyright"
+install_package "tailwindcss-language-server"
 install_package "texlab"
 install_package "yaml-language-server"
 
