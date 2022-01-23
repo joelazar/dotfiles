@@ -19,10 +19,10 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term alacritty
+set $term footclient 
 
 # Your preferred application launcher
-set $menu exec $term --class=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
+set $menu exec $term --app-id=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpapers/unsplash/
@@ -312,15 +312,16 @@ bindswitch --reload --locked lid:off output $laptop enable
 bindsym $mod+x move workspace to output up
 
 # Network manager
-bindsym $mod+n exec $term --class=floating-editor -e nmtui-connect
+bindsym $mod+n exec $term --app-id=floating-editor -e nmtui-connect
 
 # Start Applications
-bindsym $mod+F1 exec --no-startup-id alacritty --command nnn
+bindsym $mod+F1 exec --no-startup-id footclient nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id chromium
+bindsym $mod+F4 exec --no-startup-id foot
 
 # Clipboard manager
-bindsym $mod+c exec $term --class=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
+bindsym $mod+c exec $term --app-id=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
 
 # Notifications
 bindsym $mod+ctrl+space exec makoctl dismiss
@@ -358,6 +359,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi
+exec --no-startup-id foot --server
 
 for_window [class="^.*"] border pixel 2
 

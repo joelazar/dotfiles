@@ -17,7 +17,7 @@ set -gx FILE nnn
 set -gx READER zathura
 set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
-set -gx TERMINAL alacritty
+set -gx TERMINAL footclient
 set -gx VISUAL ewrap
 
 # Set cursor theme

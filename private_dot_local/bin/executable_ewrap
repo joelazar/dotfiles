@@ -5,5 +5,5 @@ if [ -n "$TMUX" ]; then
 	tmux split-window -h "nvim \"$*\""
 else
 	# new window
-	alacritty --command nvim "$*"
+	footclient nvim "$*"
 fi
