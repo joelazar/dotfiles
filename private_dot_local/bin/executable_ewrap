@@ -2,7 +2,7 @@
 
 if [ -n "$TMUX" ]; then
 	# tmux session running
-	tmux split-window -h "nvim \"$*\""
+	tmux split-window -h nvim "$*"
 else
 	# new window
 	footclient nvim "$*"
