@@ -359,7 +359,6 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi
-exec --no-startup-id foot --server
 
 for_window [class="^.*"] border pixel 2
 

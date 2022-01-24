@@ -1,5 +1,5 @@
 function record-screen --description "record-screen <window|focused-output|zone, using it a second time will end the recording"
-    if pgrep -f wf-recorder > /dev/null
+    if pgrep -f wf-recorder >/dev/null
         killall -s SIGINT wf-recorder
         pkill -RTMIN+9 waybar
         notify-send "Video saved" "Path copied to buffer"

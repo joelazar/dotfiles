@@ -125,7 +125,7 @@
     },
 
     "custom/spotify": {
-        "exec": "$HOME/.local/bin/mediaplayer.py 2> /dev/null",
+        "exec": "$HOME/.local/bin/mediaplayer.py",
         "format": " {}",
         /* "max-length": 60, */
         "return-type": "json",

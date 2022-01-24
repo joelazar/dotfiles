@@ -187,11 +187,12 @@ set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 
 set -U __done_min_cmd_duration 10000
-set -U __done_exclude 'n'
+set -U __done_exclude n
 
 # Start Sway at login
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
         sway
+        foot --server
     end
 end
