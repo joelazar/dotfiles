@@ -240,6 +240,7 @@ install_fish_plugin "PatrickF1/fzf.fish" "fzf.fish"
 
 print_in_purple "Utilities\n"
 
+install_package "advcpmv"
 install_package "age"
 install_package "ancient-packages"
 install_package "asciinema"

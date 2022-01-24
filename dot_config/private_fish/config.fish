@@ -60,6 +60,7 @@ set -gx NNN_OPENER handlr-open
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
+set -gx NNN_TRASH 2 # configure gio trash
 set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/git/joelazar/nvim-config/;"
 
@@ -193,6 +194,5 @@ set -U __done_exclude n
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
         sway
-        foot --server
     end
 end

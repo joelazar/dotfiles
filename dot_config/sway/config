@@ -352,6 +352,7 @@ for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resiz
 for_window [title="Firefox — Sharing Indicator"] kill
 
 # Startup applications
+exec --no-startup-id foot --server
 exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Roboto Mono 14' --height 300 --width 500 --background-color '#192330' --border-color '#63cdcf'
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -d 3 -D "systemctl suspend"
