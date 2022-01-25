@@ -11,19 +11,22 @@ print_in_purple "System configuration\n"
 ask_for_sudo
 
 execute "(getent group docker | grep $USER) || sudo usermod -aG docker $USER" \
-  "No sudo required for docker users (logout required!)"
+	"No sudo required for docker users (logout required!)"
 
 execute "getent group pcap || (sudo groupadd pcap && sudo usermod -aG pcap $USER)" \
-  "Create pcap group (logout required!)"
+	"Create pcap group (logout required!)"
 
 execute "sudo chgrp pcap /usr/sbin/tcpdump && sudo chmod 750 /usr/sbin/tcpdump \
          && sudo setcap cap_net_raw,cap_net_admin=eip /usr/sbin/tcpdump" \
-  "No sudo required for tcpdumping"
+	"No sudo required for tcpdumping"
 
 execute "(getent group vboxusers | grep $USER) || sudo usermod -aG vboxusers $USER" \
-  "User added to vboxusers group (logout required!)"
+	"User added to vboxusers group (logout required!)"
 
-execute "sudo chsh -s /usr/bin/fish" "Set shell to fish"
+if [ "$SHELL" != "/usr/bin/fish" ]; then
+	chsh -s /usr/bin/fish
+	print_result $? "Set shell to fish"
+fi
 
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
 
