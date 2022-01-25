@@ -78,7 +78,7 @@ set -U ZO_METHOD nvim
 set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
 
 # NPM exports
-set -gx NODE_PATH $HOME/.node/lib/node_modules $NODE_PATH
+set -gx NODE_PATH $HOME/.node/lib/node_modules
 
 # PARUZ config
 set -gx PARUZ yay
