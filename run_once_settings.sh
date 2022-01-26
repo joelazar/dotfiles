@@ -46,6 +46,8 @@ execute "sudo systemctl enable tlp.service" "Turn on tlp"
 
 execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
 
+execute "sudo systemctl enable bluetooth.service" "Turn on bluetooth"
+
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/CheckSpace$/s/^#//g' /etc/pacman.conf && \

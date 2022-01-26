@@ -20,7 +20,7 @@ install_nnn_plugins() {
   script_path="$HOME/.config/nnn/plugins/getplugs"
 
   if [ ! -f "$script_path" ]; then
-    wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -o "$script_path"
+    wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -O "$script_path"
   fi
 
   bash "$script_path"
