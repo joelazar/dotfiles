@@ -75,6 +75,12 @@ install_pip_package() {
   execute "pip install --upgrade $PACKAGENAME" "$PACKAGENAME"
 }
 
+install_gh_plugin() {
+  declare -r PACKAGENAME="$1"
+
+  execute "gh extension install $PACKAGENAME" "$PACKAGENAME"
+}
+
 package_is_installed() {
   echo $INSTALLED_PACKAGES | grep -q " $1 "
 }

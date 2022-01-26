@@ -19,7 +19,7 @@ print_in_purple "Update neovim plugins\n"
 execute "nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'" "Update neovim plugins"
 
 print_in_purple "Update GO packages\n"
-install_go_package "github.com/cosmos72/gomacro" "gomacro"
+install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
 
 print_in_purple "Update pip packages\n"
 execute "pip list --user | cut -d'=' -f1 | xargs -n1 pip install -U" "Update pip packages"
