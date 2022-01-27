@@ -48,6 +48,8 @@ execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio se
 
 execute "sudo systemctl enable bluetooth.service" "Turn on bluetooth"
 
+execute "sudo systemctl enable docker.service" "Turn on docker"
+
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/CheckSpace$/s/^#//g' /etc/pacman.conf && \
