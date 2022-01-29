@@ -154,6 +154,7 @@ install_package "visual-studio-code-bin"
 
 print_in_purple "Communication\n"
 
+install_package "caprine"
 install_package "slack-desktop"
 
 print_in_purple "Multimedia\n"
@@ -257,6 +258,7 @@ install_package "lsof"
 install_package "neofetch"
 install_package "net-tools"
 install_package "nm-connection-editor"
+install_package "openresolv"
 install_package "p7zip"
 install_package "paruz"
 install_package "pmount"
