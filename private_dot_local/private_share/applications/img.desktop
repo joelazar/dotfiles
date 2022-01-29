@@ -2,3 +2,4 @@
 Type=Application
 Name=Image viewer
 Exec=/usr/bin/imv %u
+MimeType=image/gif;image/jpeg;image/png;image/webp
