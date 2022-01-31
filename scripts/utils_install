@@ -76,9 +76,14 @@ install_pip_package() {
 }
 
 install_gh_plugin() {
-  declare -r PACKAGENAME="$1"
+  declare -r PLUGIN="$1"
+  declare -r INSTALLED_PLUGINS=$(gh extension list)
 
-  execute "gh extension install $PACKAGENAME" "$PACKAGENAME"
+  if ! echo $INSTALLED_PLUGINS | grep -q $PLUGIN; then
+    execute "gh extension install $PLUGIN" "$PLUGIN"
+  else
+    print_success "$PLUGIN"
+  fi
 }
 
 package_is_installed() {

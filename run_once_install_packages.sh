@@ -347,6 +347,7 @@ install_npm_package "vscode-langservers-extracted"
 install_npm_package "@slidev/cli"
 # gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
 install_npm_package "gitmoji-cli"
+install_npm_package "@prisma/language-server"
 
 # print_in_purple "PIP packages\n"
 
