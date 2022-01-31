@@ -2,4 +2,3 @@
 # noblacklist ${HOME}/.ssh/
 # include allow-ssh.inc
 # whitelist /tmp/ssh-*
-

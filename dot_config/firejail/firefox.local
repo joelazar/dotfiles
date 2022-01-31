@@ -12,6 +12,7 @@ dbus-user.talk org.kde.kuiserver
 # Uncomment or put in your firefox.local to allow screen sharing under wayland.
 ignore noroot
 whitelist ${RUNUSER}/pipewire-0
+whitelist /usr/share/pipewire/client.conf
 dbus-user.talk org.freedesktop.portal.*
 
 ignore private-tmp
