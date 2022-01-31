@@ -90,12 +90,13 @@
 
 [diff]
 
+    colorMoved = default
     tool = nvimdiff
 
 [merge]
 
     tool = nvimdiff
-    #tool = kdiff3
+    conflictstyle = diff3
 
 [color]
 
@@ -141,6 +142,7 @@
     pager = delta
 
 [pager]
+
     diff = delta
     log = delta
     reflog = delta
@@ -151,6 +153,7 @@
     diffFilter = delta --color-only
 
 [delta]
+
     features = line-numbers decorations
     whitespace-error-style = 22 reverse
     syntax-theme = Github
