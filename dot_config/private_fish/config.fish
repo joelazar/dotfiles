@@ -67,7 +67,7 @@ set -gx NNN_TRASH 2 # configure gio trash
 # r: show cp/mv progress
 # U: show file's owner and group in status bar
 set -gx NNN_OPTS dreuU
-set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;p:pdfview;z:fzz;h:fzhist;d:diffs"
+set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;z:autojump;h:fzhist;c:diffs;p:fzplug;"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/git/joelazar/nvim-config/;"
 
 # z settings
