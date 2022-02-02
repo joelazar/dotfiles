@@ -68,7 +68,7 @@
   background: #192330;
   color: #dfdfe0;
   font-family: Roboto Mono;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 /* Each module */
@@ -87,10 +87,10 @@
 #pulseaudio
 #temperature
 #tray {
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-bottom: 4px;
-  padding-top: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -163,9 +163,7 @@
   background: #64727d;
   padding-left: 4px;
   padding-right: 4px;
-  border-top: 2px solid #dfdfe0;
-  /* To compensate for the top border and still have vertical centering */
-  padding-bottom: 2px;
+  border: 1px solid #dfdfe0;
 }
 
 #idle_inhibitor {
@@ -205,7 +203,7 @@
   border-top: 2px solid transparent;
   background-color: transparent;
   color: #dfdfe0;
-  font-size: 26px;
+  font-size: 20px;
 }
 
 #workspaces button.focused {
@@ -220,7 +218,7 @@
 }
 
 #custom-separator {
-  font-size: 26px;
+  font-size: 22px;
   color: #393b44;
   background: transparent;
 }
