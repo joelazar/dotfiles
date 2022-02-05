@@ -1,9 +1,9 @@
 sort=-time
 layer=overlay
-font='Roboto Mono 14'
+font='Roboto Mono 6'
 background-color=#2c2c2e
-width=500
-height=300
+width=350
+height=100
 border-size=2
 border-color=#9f9f9f
 border-radius=15
@@ -22,6 +22,6 @@ border-color=#d08770
 border-color=#bf616a
 default-timeout=0
 
-[category=mpd]
-default-timeout=2000
-group-by=category
+# [category=mpd]
+# default-timeout=2000
+# group-by=category
