@@ -22,6 +22,10 @@ unbind <C-f>
 " closing windows only with q, not d
 unbind d
 
+" use builtin tab switching mechanism instead (ctrl+(shift)+tab)
+unbind J
+unbind K
+
 " But also support Tridactyl search too.
 bind / fillcmdline find
 bind ? fillcmdline find -?
@@ -40,6 +44,7 @@ bind k scrollline -5
 autocmd DocStart mail.google.com mode ignore
 autocmd DocStart meet.google.com mode ignore
 autocmd DocStart app.slack.com mode ignore
+autocmd DocStart linear.app mode ignore
 
 " Sometimes the status bar in the bottom left corner overlaps the Tridactyl
 " command line, so set an option to move the status bar to the right.
