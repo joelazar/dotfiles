@@ -338,7 +338,7 @@ install_package "xorg-xwayland"
 
 print_in_purple "GO packages\n"
 
-install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"                                   # aur - outdated
+install_go_package "github.com/cosmos72/gomacro@latest" "gomacro" # aur - outdated
 install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver" # no aur (yet)
 
 print_in_purple "NPM packages\n"

@@ -25,6 +25,8 @@ install_nnn_plugins() {
 
   bash "$script_path"
 
+  rm -rf "$HOME/.config/nnn/*.tar.gz"
+
   print_result $? "Install/update nnn plugins"
 }
 
@@ -95,7 +97,11 @@ update() {
 }
 
 clean_up_cache() {
-  execute "paccache -rk2 && paccache -ruk1" "Clean up cached packages"
+  execute "paccache -rk4 && paccache -ruk1" "Clean up cached packages"
+}
+
+clean_up_unused_packages() {
+  yay -c
 }
 
 install_blackarch_repo() {
