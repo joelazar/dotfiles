@@ -3,7 +3,7 @@
 	"privateMode": false,
 	"showPrivateModePrompt": true,
 	"vibrancy": "none",
-	"zoomFactor": 1,
+	"zoomFactor": 1.5000000000000004,
 	"menuBarMode": false,
 	"showDockIcon": true,
 	"showTrayIcon": true,
@@ -31,5 +31,12 @@
 	"keepMeSignedIn": true,
 	"autoplayVideos": false,
 	"isSpellCheckerEnabled": true,
-	"spellCheckerLanguages": []
+	"spellCheckerLanguages": [],
+	"lastWindowState": {
+		"x": 0,
+		"y": 38,
+		"width": 3840,
+		"height": 2122,
+		"isMaximized": true
+	}
 }
