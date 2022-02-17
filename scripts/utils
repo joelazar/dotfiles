@@ -101,7 +101,7 @@ execute() {
         print_error_stream < "$TMP_FILE"
     fi
 
-    rm -rf "$TMP_FILE"
+    rm -f "$TMP_FILE"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
