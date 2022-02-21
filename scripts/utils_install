@@ -97,7 +97,7 @@ update() {
 }
 
 update_hosts() {
-  sudo /etc/hosts /etc/backup_hosts
+  sudo cp /etc/hosts /etc/backup_hosts
   sudo curl https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts -o /etc/hosts
 }
 
