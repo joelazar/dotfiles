@@ -21,6 +21,8 @@ set $right l
 # Your preferred terminal emulator
 set $term footclient 
 
+popup_during_fullscreen smart
+
 # Your preferred application launcher
 set $menu exec $term --app-id=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
 

@@ -7,6 +7,7 @@
         "sway/mode"
     ],
     "modules-right": [
+        "custom/firefox",
         "custom/spotify",
         "custom/separator",
         "custom/scratchpad-indicator",
@@ -18,8 +19,7 @@
         "memory",
         "custom/separator",
         "cpu",
-        "custom/separator",
-        "temperature",
+        /* "sway/language", */
         "custom/separator",
         "custom/keyboard-layout",
         "custom/separator",
@@ -48,7 +48,7 @@
             "critical": 5
         },
         // Connected to AC
-        "format": "{icon} {capacity}%",
+        "format": "{icon}  {capacity}%",
         // Not connected to AC
         "format-discharging": "{icon} {capacity}%",
         "format-icons": [
@@ -80,19 +80,21 @@
         "format-icons": ["", ""]
     },
 
+
+    /* "sway/language": { */
+    /*     "format": "{long}", */
+    /* }, */
+
     "custom/keyboard-layout": {
-      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4",
-      // Interval set only as a fallback, as the value is updated by signal
+      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4 | cut -c-2 | tr '[:upper:]' '[:lower:]'",
       "interval": 30,
       "format": " {}", // Icon: keyboard
-      // Signal sent by Sway key binding (~/.config/sway/key-bindings)
-      "signal": 1, // SIGHUP
       "tooltip": false
     },
 
     "memory": {
         "interval": 10,
-        "format": " {}%", // Icon: memory
+        "format": " {}%",
         "states": {
             "warning": 70,
             "critical": 90
@@ -108,7 +110,7 @@
     },
 
     "network": {
-        "interval": 5,
+        "interval": 10,
         "format-wifi": " {essid} ({signalStrength}%)", // Icon: wifi
         "format-ethernet": " {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
         "format-disconnected": "⚠  Disconnected",
@@ -116,27 +118,34 @@
     },
 
     "custom/vpn":{
-        "interval": 5,
+        "interval": 10,
         "tooltip-format": "{icon}",
         "format": " {icon} ",
-        "exec": "$HOME/.local/bin/vpn_echo.sh",
+        "exec": "$HOME/.local/bin/vpn_echo",
         "return-type": "json",
         "format": "{}",
     },
 
     "custom/spotify": {
-        "exec": "$HOME/.local/bin/mediaplayer.py",
+        "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot 2> /dev/null",
         "format": " {}",
-        /* "max-length": 60, */
+	"escape": true,
+        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
         "return-type": "json",
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "exec-if": "pgrep \"spotify|ncspot\""
+        "on-click": "playerctl -p ncspot play-pause"
+    },
+
+    "custom/firefox": {
+        "exec": "$HOME/.local/bin/mediaplayer.py --player firefox 2> /dev/null",
+        "format": " {}",
+	"escape": true,
+        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
+        "return-type": "json",
+        "on-click": "playerctl -p firefox play-pause"
     },
 
     "sway/mode": {
-        "format": "<span style=\"italic\"> {}</span>", // Icon: expand-arrows-alt
+        "format": "<span style=\"italic\"> {}</span>",
         "tooltip": true
     },
 
@@ -186,27 +195,13 @@
         "on-click": "pavucontrol"
     },
 
-    "temperature": {
-      "critical-threshold": 90,
-      "interval": 5,
-      "format": "{icon} {temperatureC}°C",
-      "format-icons": [
-          "", // Icon: temperature-empty
-          "", // Icon: temperature-quarter
-          "", // Icon: temperature-half
-          "", // Icon: temperature-three-quarters
-          ""  // Icon: temperature-full
-      ],
-      "tooltip": true
-    },
-
     "tray": {
         "icon-size": 20,
         "spacing": 5
     },
 
     "custom/scratchpad-indicator": {
-        "interval": 3,
+        "interval": 10,
         "return-type": "json",
         "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '( select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") }'",
         "format": "{} ﳶ",
