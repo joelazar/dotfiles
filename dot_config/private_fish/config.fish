@@ -43,7 +43,7 @@ set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
 set fzf_preview_dir_cmd exa --all --color=always
 
-fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
+fzf_configure_bindings --git_status=\e\cs --history=\e\cr --variables --git_log=\e\cl --directory=\cp
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
@@ -156,6 +156,7 @@ alias weather="http -b v2.wttr.in"
 
 starship init fish | source
 zoxide init fish | source
+atuin init fish | source
 
 # Nightfox Color Palette
 # Style: nightfox
