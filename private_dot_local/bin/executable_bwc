@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Exit on error
+set -e
+
+# Command to copy to clipboard
+COPY="wl-copy"
+
+# Get list of all logins as json
+logins="$(bw list items)"
+# Grab the name of every login and pip them into fzf
+name="$(echo "$logins" | jq -r '.[].name' | fzf)"
+# Find the login with the selected name (as a json)
+selected="$(echo "$logins" | jq -r ".[] | select(.name == \"$name\")")"
+# Print the name of the selected login
+echo "Name: $(echo "$selected" | jq -r '.name')"
+echo "> Copying Username"
+# Copy the username to the clipboard
+printf '%s' "$(echo "$selected" | jq -r '.login.username')" | $COPY
+echo "Press any key to copy password..."
+# Wait for user input before coping the password
+read -r
+echo "> Copying Password"
+# Copy the password to the clipboard
+printf '%s' "$(echo "$selected" | jq -r '.login.password')" | $COPY
