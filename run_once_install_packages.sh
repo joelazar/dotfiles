@@ -30,6 +30,7 @@ install_package "chromium"
 
 print_in_purple "Basics\n"
 
+install_package "atuin"
 install_package "bat"
 install_package "docker"
 install_package "exa"
@@ -172,6 +173,7 @@ install_package "acpi"
 install_package "acpi_call"
 install_package "aspell-en"
 install_package "bitwarden"
+install_package "bitwarden-cli"
 install_package "bleachbit"
 install_package "calibre"
 install_package "graphviz"
@@ -341,7 +343,7 @@ install_package "xorg-xwayland"
 
 print_in_purple "GO packages\n"
 
-install_go_package "github.com/cosmos72/gomacro@latest" "gomacro" # aur - outdated
+install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"                                   # aur - outdated
 install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver" # no aur (yet)
 
 print_in_purple "NPM packages\n"
