@@ -14,7 +14,7 @@ colors dark
 set modeindicatormodes {"normal":"false","insert":"true","input":"true","ignore":"true","ex":"true","hint":"true","visual":"true"}
 
 " Use neovim in tmux for editor.
-set editorcmd footclient --app-id=floating-editor nvim
+" set editorcmd footclient --app-id=floating-editor nvim
 
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>
@@ -56,10 +56,7 @@ bind ;c hint -Jc [class*="expand"],[class="togg"],[class="comment_folder"]
 " I like wikiwand but I don't like the way it changes URLs
 bindurl wikiwand.com yy composite js document.location.href.replace("wikiwand.com/en","wikipedia.org/wiki") | clipboard yank
 
-" Only hint search results on Google and DDG
-" bindurl www.google.com f hint -Jc #search div:not(.action-menu) > a
-" bindurl www.google.com F hint -Jbc #search div:not(.action-menu) > a
-
+" Only hint search results on DDG
 bindurl https://duckduckgo.com f hint -Jc [class="result__a js-result-title-link"]
 bindurl https://duckduckgo.com F hint -Jbc [class="result__a js-result-title-link"]
 
@@ -71,10 +68,8 @@ unbind --mode=ex <C-c>
 
 " Handy multiwindow/multitasking binds
 bind gd tabdetach
+bind gr tabpush
 bind gD composite tabduplicate; tabdetach
-
-" Make yy use canonical / short links on the 5 websites that support them
-bind yy clipboard yankcanon
 
 " Stupid workaround to let hint -; be used with composite which steals semi-colons
 command hint_focus hint -;
@@ -82,7 +77,7 @@ command hint_focus hint -;
 " Open right click menu on links
 bind ;C composite hint_focus; !s xdotool key Menu
 
-bind q tabclose
+bind Q tabclose
 bind <A-p> pin
 bind <A-m> mute toggle
 bind gc tabduplicate
