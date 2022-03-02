@@ -8,6 +8,7 @@
     ],
     "modules-right": [
         "custom/firefox",
+        "custom/ncspot",
         "custom/spotify",
         "custom/separator",
         "custom/scratchpad-indicator",
@@ -127,6 +128,15 @@
     },
 
     "custom/spotify": {
+        "exec": "$HOME/.local/bin/mediaplayer.py --player spotify 2> /dev/null",
+        "format": " {}",
+	"escape": true,
+        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
+        "return-type": "json",
+        "on-click": "playerctl -p spotify play-pause"
+    },
+
+    "custom/ncspot": {
         "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot 2> /dev/null",
         "format": " {}",
 	"escape": true,

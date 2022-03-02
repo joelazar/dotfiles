@@ -42,7 +42,7 @@ color article white default bold
 text-width 80
 
 browser "(firefox %u >/dev/null 2>&1) &"
-macro y set browser "mpv %u &> /dev/null &" ; open-in-browser ; set browser "elinks %u"
+macro o set browser "mpv %u &> /dev/null &" ; open-in-browser ; set browser "elinks %u"
 
 notify-format "newsbeuter: finished reload, %f unread feeds (%n unread articles total)"
 notify-program "notify-send"
