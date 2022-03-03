@@ -156,7 +156,6 @@ alias weather="http -b v2.wttr.in"
 
 starship init fish | source
 zoxide init fish | source
-atuin init fish | source
 
 # Nightfox Color Palette
 # Style: nightfox

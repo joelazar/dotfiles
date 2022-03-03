@@ -19,7 +19,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term footclient 
+set $term footclient
 
 popup_during_fullscreen smart
 
@@ -236,6 +236,10 @@ bindsym $mod+space focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent
+
+# Move focus to the child container
+bindsym $mod+z focus child
+
 #
 # Scratchpad:
 #
