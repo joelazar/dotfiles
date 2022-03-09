@@ -1,0 +1,8 @@
+{
+    "editor.scrollBeyondLastLine": false,
+    "workbench.colorTheme": "Default Dark+",
+    "workbench.startupEditor": "none",
+    "workbench.iconTheme": "vscode-icons",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "terminal.integrated.sendKeybindingsToShell": true
+}

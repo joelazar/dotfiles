@@ -83,10 +83,6 @@ set -gx NODE_PATH $HOME/.node/lib/node_modules
 # PARUZ config
 set -gx PARUZ yay
 
-if type -q direnv
-    eval (direnv hook fish)
-end
-
 if test -e $HOME/.config/fish/functions/local.fish
     source $HOME/.config/fish/functions/local.fish
 end
@@ -155,6 +151,7 @@ alias weather="http -b v2.wttr.in"
 
 starship init fish | source
 zoxide init fish | source
+direnv hook fish | source
 
 # Nightfox Color Palette
 # Style: nightfox
