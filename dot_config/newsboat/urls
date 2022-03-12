@@ -13,8 +13,8 @@ https://terrytao.wordpress.com/feed/ "~Terence Tao's blog"
 http://karpathy.github.io/feed.xml
 https://www.fast.ai/atom.xml
 https://www.deeplearning.ai/feed/
-https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A videos # deepmind
-https://deepmind.com/blog/feed/basic/
+https://deepmind.com/blog/feed/basic/ "~DeepMind"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A videos "~YT - DeepMind" # lastweektonight
 https://www.technologyreview.com/topic/artificial-intelligence/feed
 https://openai.com/blog/rss/
 http://ai.googleblog.com/feeds/posts/default?alt=rss
@@ -64,6 +64,7 @@ https://theverge.com/rss/index.xml
 https://theverge.com/reviews/rss/index.xml
 https://developer.run/feed.rss blog
 https://hacks.mozilla.org/feed/
+https://jvns.ca/atom.xml
 https://www.youtube.com/feeds/videos.xml?channel_id=UC_9cztXyAZCli9Cky6NWWwQ videos "~YT - Remix" # remix
 https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA videos "~YT - TJ" # tj
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw videos "~YT - The Primeagen" # theprimeagen
