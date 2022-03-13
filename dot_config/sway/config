@@ -318,7 +318,7 @@ bindswitch --reload --locked lid:off output $laptop enable
 bindsym $mod+x move workspace to output up
 
 # Network manager
-bindsym $mod+n exec $term --app-id=floating-editor -e nmtui-connect
+bindsym $mod+n exec $term --app-id=launcher-nmtui -e nmtui-connect
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id footclient nnn
@@ -349,20 +349,22 @@ exec_always {
 for_window [app_id=pavucontrol] floating enable
 for_window [app_id=blueman-manager] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
-for_window [app_id=imv] floating enable
-for_window [app_id=imv] resize set 1980 1290
-for_window [app_id=wdisplays] floating enable
-for_window [app_id=wdisplays] resize set 970 736
-for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 82 ppt 64 ppt, border pixel 1
+for_window [app_id=imv] floating enable,resize set 1350 930
+for_window [app_id=wdisplays] floating enable,resize set 970 736
+for_window [app_id=nm-connection-editor] floating enable, resize set 780 580, sticky enable
+for_window [title="Firefox — Sharing Indicator"] kill
+for_window [title="is sharing your screen."] move scratchpad
+for_window [title="Slack"] move scratchpad
+for_window [title="File Upload"] resize set 1168 630
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resize set 60 ppt 60 ppt, border pixel 10
-for_window [title="Firefox — Sharing Indicator"] kill
+for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize set 40 ppt 75 ppt, border pixel 0
 
 # Startup applications
 exec --no-startup-id foot --server
-exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Roboto Mono 14' --height 300 --width 500 --background-color '#192330' --border-color '#63cdcf'
+exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Roboto Mono 12' --height 250 --width 400 --background-color '#192330' --border-color '#63cdcf'
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
-exec --no-startup-id batsignal -b -d 3 -D "systemctl suspend"
+exec --no-startup-id batsignal -b -d 5 -D "systemctl suspend"
 exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
