@@ -1,53 +1,57 @@
-reporting: "off"
+reporting: 'off'
 startuppopupversion: 1
 gui:
   skipUnstageLineWarning: true
   showCommandLog: false
 notARepository: 'skip'
 customCommands:
-  - key: "n"
+  - key: 'n'
     prompts:
-      - type: "menu"
-        title: "Creating new branch. What kind of branch is it?"
+      - type: 'menu'
+        title: 'Creating new branch. What kind of branch is it?'
         options:
-          - name: "feature"
-            value: "feature"
-          - name: "hotfix"
-            value: "hotfix"
-          - name: "bugfix"
-            value: "bugfix"
-      - type: "input"
-        title: "What is the new branch name?"
-        initialValue: ""
-    command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
-    context: "localBranches"
-    loadingText: "creating branch"
-  - key: "<c-r>"
+          - name: 'feature'
+            value: 'feature'
+          - name: 'hotfix'
+            value: 'hotfix'
+          - name: 'bugfix'
+            value: 'bugfix'
+      - type: 'input'
+        title: 'What is the new branch name?'
+        initialValue: ''
+    command: 'git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}'
+    context: 'localBranches'
+    loadingText: 'creating branch'
+  - key: '<c-r>'
     prompts:
-      - type: "menu"
-        title: "Creating pull request for branch. What kind of branch is it?"
+      - type: 'menu'
+        title: 'Creating pull request for branch. What kind of branch is it?'
         options:
-          - name: "app"
-            value: "-r jobn -r mkoliba"
-    command: "gh pr create --fill {{index .PromptResponses 0}}"
-    context: "global"
-    loadingText: "Creating pull request on GitHub"
-  - key: "<c-p>"
-    command: "git remote prune {{.SelectedRemote.Name}}"
-    context: "remotes"
-    loadingText: "Pruning..."
-    description: "prune deleted remote branches"
-  - key: "M"
-    command: "git mergetool {{ .SelectedFile.Name }}"
-    context: "files"
-    loadingText: "opening git mergetool"
+          - name: 'app'
+            value: '-r jobn -r mkoliba'
+          - name: 'data'
+            value: '-r NicWagenaar -r giriblocks'
+          - name: 'draft'
+            value: '--draft'
+    command: 'gh pr create --fill {{index .PromptResponses 0}}'
+    context: 'global'
+    loadingText: 'Creating pull request on GitHub'
+  - key: '<c-p>'
+    command: 'git remote prune {{.SelectedRemote.Name}}'
+    context: 'remotes'
+    loadingText: 'Pruning...'
+    description: 'prune deleted remote branches'
+  - key: 'M'
+    command: 'git mergetool {{ .SelectedFile.Name }}'
+    context: 'files'
+    loadingText: 'opening git mergetool'
     subprocess: true
-  - key: "C"
-    command: "gitmoji -c"
-    context: "files"
-    loadingText: "opening gitmoji cli tool"
+  - key: 'C'
+    command: 'gitmoji -c'
+    context: 'files'
+    loadingText: 'opening gitmoji cli tool'
     subprocess: true
-  - key: "R"
-    command: "git reset --soft HEAD~1"
-    context: "files"
-    loadingText: "undo last commit"
+  - key: 'R'
+    command: 'git reset --soft HEAD~1'
+    context: 'files'
+    loadingText: 'undo last commit'
