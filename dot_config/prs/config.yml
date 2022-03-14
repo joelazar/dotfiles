@@ -1,0 +1,12 @@
+prSections:
+  - title: My Pull Requests
+    filters: is:open author:@me
+  - title: Needs My Attention
+    filters: is:open -author:@me involves:@me
+  - title: Only work
+    filters: is:open -author:@me user:Growblocks
+defaults:
+  preview:
+    open: true
+    width: 50
+  prsLimit: 20
