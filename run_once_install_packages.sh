@@ -302,6 +302,7 @@ install_package "pipewire"
 install_package "pipewire-media-session"
 install_package "sof-firmware"
 install_package "vulkan-intel"
+install_package "vulkan-validation-layers"
 
 print_in_purple "Sway\n"
 

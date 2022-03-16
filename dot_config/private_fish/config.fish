@@ -9,6 +9,7 @@ set -gx MOZ_WEBRENDER 1
 set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+set -gx WLR_RENDERER vulkan
 
 # Make default programs
 set -gx BROWSER firefox

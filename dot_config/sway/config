@@ -305,6 +305,10 @@ client.urgent               $rd        $rd         $tx
 # Status Bar
 bar {
   swaybar_command waybar
+  position top
+  hidden_state hide
+  mode hide
+  modifier Mod4
 }
 
 # Hide/unhide waybar

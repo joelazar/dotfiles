@@ -1,4 +1,6 @@
 {
+    "bar_id": "bar-0",
+    "ipc": true,
     "layer": "top",
     "position": "top",
     "height": 24,
