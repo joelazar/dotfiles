@@ -4,5 +4,9 @@
     "workbench.startupEditor": "none",
     "workbench.iconTheme": "vscode-icons",
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-    "terminal.integrated.sendKeybindingsToShell": true
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "window.menuBarVisibility": "toggle",
+    "window.zoomLevel": 2,
+    "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
+    "editor.minimap.enabled": false
 }
