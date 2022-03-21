@@ -1,0 +1,9 @@
+ignore private-bin
+ignore private-cache
+ignore private-dev
+ignore private-tmp
+ignore private-etc
+
+ignore dbus-user none
+ignore dbus-system none
+ignore protocol inet,inet6
