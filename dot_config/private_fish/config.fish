@@ -9,6 +9,7 @@ set -gx MOZ_WEBRENDER 1
 set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+# TODO - breaks screensharing for now
 # set -gx WLR_RENDERER vulkan
 
 # Make default programs
@@ -88,25 +89,27 @@ if test -e $HOME/.config/fish/functions/local.fish
     source $HOME/.config/fish/functions/local.fish
 end
 
+alias :q="exit"
+alias N='sudo -E nnn -deH'
 alias c="clear"
 alias cat="bat"
 alias ch="clipman pick --print0 --tool=CUSTOM --tool-args=\"fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0\""
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
+alias ci="gh workflow view"
 alias ff='firefox'
 alias g="git"
 alias gt="gotestsum --format standard-verbose -- -cover"
+alias l='exa --icons --group-directories-first'
 alias lg='lazygit'
-alias ll='exa -la --git --icons'
-alias logme="script -f /tmp/(date)+\"%d-%b-%y_%H-%M-%S\"_shell.log"
-alias ls='exa'
+alias ll='exa -la --git --group-directories-first --icons'
+alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
+alias ls='exa --icons --group-directories-first'
 alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
-alias N='sudo -E nnn -deH'
 alias ping='ping -c 5'
 alias q="exit"
-alias :q="exit"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
@@ -135,7 +138,6 @@ alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker 
 # git pull++
 
 alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
-
 alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -P10 -I{} git -C {} pull'
 
 # other
@@ -148,7 +150,7 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
     print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
-alias weather="http -b v2.wttr.in"
+alias wttr="http -b v2.wttr.in"
 
 starship init fish | source
 zoxide init fish | source
