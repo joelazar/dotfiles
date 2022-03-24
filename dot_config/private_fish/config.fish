@@ -160,8 +160,8 @@ direnv hook fish | source
 # Style: nightfox
 # Upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nightfox/nightfox_fish.fish
 set -l foreground cdcecf
-set -l selection 283648
-set -l comment 526175
+set -l selection 223249
+set -l comment 526176
 set -l red c94f6d
 set -l orange f4a261
 set -l yellow dbc074

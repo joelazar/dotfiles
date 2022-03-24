@@ -284,6 +284,7 @@ install_package "visidata"
 install_package "viu"
 install_package "wireguard-dkms"
 install_package "wireguard-tools"
+install_package "zenity"
 
 print_in_purple "Linux kernels\n"
 

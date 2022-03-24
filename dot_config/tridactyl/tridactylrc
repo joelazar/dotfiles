@@ -45,6 +45,7 @@ autocmd DocStart mail.google.com mode ignore
 autocmd DocStart meet.google.com mode ignore
 autocmd DocStart app.slack.com mode ignore
 autocmd DocStart linear.app mode ignore
+autocmd DocStart figma.com mode ignore
 
 " Sometimes the status bar in the bottom left corner overlaps the Tridactyl
 " command line, so set an option to move the status bar to the right.
