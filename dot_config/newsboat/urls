@@ -12,7 +12,6 @@ https://terrytao.wordpress.com/feed/ "~Terence Tao's blog"
 "───  ai ──────────────────────────────────────"
 http://karpathy.github.io/feed.xml
 https://www.fast.ai/atom.xml
-https://www.deeplearning.ai/feed/
 https://deepmind.com/blog/feed/basic/ "~DeepMind"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A videos "~YT - DeepMind" # lastweektonight
 https://www.technologyreview.com/topic/artificial-intelligence/feed
@@ -60,6 +59,7 @@ https://hnrss.org/frontpage
 
 "───  tech ─────────────────────────────────────────────"
 https://drewdevault.com/blog/index.xml
+https://emersion.fr/blog/atom.xml
 https://theverge.com/rss/index.xml
 https://theverge.com/reviews/rss/index.xml
 https://developer.run/feed.rss blog
