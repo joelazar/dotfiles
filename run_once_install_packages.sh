@@ -46,6 +46,7 @@ install_package "ripgrep"
 install_package "sad"
 install_package "sd"
 install_package "tmux"
+install_package "tmux-plugin-manager"
 install_package "zoxide"
 
 print_in_purple "Infrastructure\n"
@@ -366,5 +367,9 @@ install_npm_package "@prisma/language-server"
 print_in_purple "GH plugins\n"
 
 install_gh_plugin "dlvhdr/gh-dash"
+
+print_in_purple "Install tmux plugins\n"
+
+execute "$HOME/.tmux/plugins/tpm/bin/install_plugins" "Install tmux plugins"
 
 clean_up_cache
