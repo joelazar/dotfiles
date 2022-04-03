@@ -365,6 +365,6 @@ install_npm_package "@prisma/language-server"
 
 print_in_purple "GH plugins\n"
 
-install_gh_plugin "dlvhdr/gh-prs"
+install_gh_plugin "dlvhdr/gh-dash"
 
 clean_up_cache
