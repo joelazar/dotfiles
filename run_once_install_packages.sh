@@ -370,6 +370,6 @@ install_gh_plugin "dlvhdr/gh-dash"
 
 print_in_purple "Install tmux plugins\n"
 
-execute "$HOME/.tmux/plugins/tpm/bin/install_plugins" "Install tmux plugins"
+execute "/usr/share/tmux-plugin-manager/bin/install_plugins" "Install tmux plugins"
 
 clean_up_cache
