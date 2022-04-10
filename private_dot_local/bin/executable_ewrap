@@ -1,9 +1,9 @@
-#!/usr/bin/env sh
+#!/bin/fish
 
-if [ -n "$TMUX" ]; then
-	# tmux session running
-	tmux split-window -h nvim "$*"
+if test -n "$TMUX" && test -n "$NNN_TMPFILE"
+    # tmux session running
+    tmux split-window -h nvim "$argv"
 else
-	# new window
-	footclient nvim "$*"
-fi
+    # new window
+    footclient --app-id=floating-editor nvim "$argv"
+end

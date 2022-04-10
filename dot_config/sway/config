@@ -362,6 +362,7 @@ for_window [title="is sharing your screen."] move scratchpad
 for_window [title="File Upload"] resize set 1168 630
 for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
 for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resize set 60 ppt 60 ppt, border pixel 10
+for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 84 ppt 79 ppt, border pixel 4
 for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize set 40 ppt 75 ppt, border pixel 0
 
 # Startup applications
