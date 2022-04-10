@@ -28,7 +28,7 @@ customCommands:
         title: 'Creating pull request for branch. What kind of branch is it?'
         options:
           - name: 'app'
-            value: '-r jobn -r mkoliba'
+            value: '-r jobn -r mkoliba -r MegiBegi -r fernandoabolafio'
           - name: 'data'
             value: '-r NicWagenaar -r giriblocks'
           - name: 'draft'
