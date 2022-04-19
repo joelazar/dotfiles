@@ -4,6 +4,8 @@ ignore private-dev
 ignore private-tmp
 ignore private-etc
 
+whitelist ${HOME}/.config/mpv
+
 ignore dbus-user none
 ignore dbus-system none
 ignore protocol inet,inet6
