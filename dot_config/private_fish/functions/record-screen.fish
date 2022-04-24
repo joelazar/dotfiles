@@ -2,9 +2,13 @@ function record-screen --description "record-screen <window|focused-output|zone,
     if pgrep -f wf-recorder >/dev/null
         killall -s SIGINT wf-recorder
         pkill -RTMIN+9 waybar
-        notify-send "Video saved" "Path copied to buffer"
+        notify-send "Video saved"
         return 0
     else
+        if test -z $argv[1]
+            echo One of the options have to be provided: window, focused-output, zone.
+            return 1
+        end
         for option in $argv
             switch "$option"
                 case window
@@ -31,6 +35,8 @@ function record-screen --description "record-screen <window|focused-output|zone,
                     end
 
                     wf-recorder -g $GEOM & pkill -RTMIN+9 waybar
+                case '*'
+                    echo "Option ("$option") does not exists."
             end
         end
     end

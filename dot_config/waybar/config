@@ -131,7 +131,7 @@
     },
 
     "custom/spotify": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player spotify 2> /dev/null",
+        "exec": "$HOME/.local/bin/mediaplayer.py --player spotify",
         "format": " {}",
 	"escape": true,
         /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
@@ -140,7 +140,7 @@
     },
 
     "custom/ncspot": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot 2> /dev/null",
+        "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot",
         "format": " {}",
 	"escape": true,
         /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
@@ -149,7 +149,7 @@
     },
 
     "custom/firefox": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player firefox 2> /dev/null",
+        "exec": "$HOME/.local/bin/mediaplayer.py --player firefox",
         "format": " {}",
 	"escape": true,
         /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
