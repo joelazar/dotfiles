@@ -374,7 +374,7 @@ exec --no-startup-id batsignal -b -d 5 -D "systemctl suspend"
 exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
-exec --no-startup-id pkill kanshi && kanshi
+exec --no-startup-id kanshi
 
 for_window [class="^.*"] border pixel 2
 
