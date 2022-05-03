@@ -200,7 +200,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 assign [app_id="chromium"] $ws3
 assign [app_id="Slack"] $ws4
 assign [app_id="firefox"] $ws2
-assign [app_id="Signal"] $ws4
+assign [class="discord"] $ws4
 
 # for X11 apps: for_window X move window to workspace $wsY
 for_window [class="Spotify"] move window to workspace $ws9
@@ -355,7 +355,7 @@ for_window [app_id=blueman-manager] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=imv] floating enable,resize set 1350 930
 for_window [app_id=wdisplays] floating enable,resize set 970 736
-for_window [app_id=nm-connection-editor] floating enable, resize set 780 580, sticky enable
+for_window [app_id=nm-connection-editor] floating enable, resize set 781 580, sticky enable
 for_window [title="Firefox — Sharing Indicator"] kill
 for_window [app_id="firefox" title="^Library$"] floating enable, sticky enable
 for_window [title="is sharing your screen."] move scratchpad

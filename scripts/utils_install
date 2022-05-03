@@ -103,7 +103,7 @@ update_hosts() {
 
 
 clean_up_cache() {
-  execute "paccache -rk4 && paccache -ruk1" "Clean up cached packages"
+  execute "paccache -r -k 2" "Clean up cached packages"
 }
 
 clean_up_unused_packages() {
