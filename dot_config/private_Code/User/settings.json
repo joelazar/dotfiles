@@ -6,7 +6,7 @@
     "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
     "terminal.integrated.sendKeybindingsToShell": true,
     "window.menuBarVisibility": "toggle",
-    "window.zoomLevel": 2,
     "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
-    "editor.minimap.enabled": false
+    "editor.minimap.enabled": false,
+    "vsicons.dontShowNewVersionMessage": true
 }
