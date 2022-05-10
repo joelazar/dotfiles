@@ -3,13 +3,13 @@ profile {
 }
 
 profile {
-	output eDP-1 enable position 576,1728 scale 1
-	output "Goldstar Company Ltd LG ULTRAFINE 107NTJJ30796" enable mode 3840x2160 position 0,0 scale 1.25
+	output eDP-1 enable position 0,528 scale 1
+	output "Goldstar Company Ltd LG ULTRAFINE 107NTJJ30796" enable mode 3840x2160 position 1920,0 scale 1.25
 }
 
 profile {
-	output eDP-1 enable position 576,1728 scale 1
-	output "Goldstar Company Ltd LG ULTRAFINE 103NTNHBP319" enable mode 3840x2160 position 0,0 scale 1.25
+	output eDP-1 enable position 0,528 scale 1
+	output "Goldstar Company Ltd LG ULTRAFINE 103NTNHBP319" enable mode 3840x2160 position 1920,0 scale 1.25
 }
 
 profile {

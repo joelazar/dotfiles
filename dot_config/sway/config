@@ -319,7 +319,7 @@ set $laptop eDP-1
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
 
-bindsym $mod+x move workspace to output up
+bindsym $mod+x move workspace to output right
 
 # Network manager
 bindsym $mod+n exec $term --app-id=launcher-nmtui -e nmtui-connect
