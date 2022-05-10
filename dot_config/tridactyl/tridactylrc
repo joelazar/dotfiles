@@ -55,8 +55,8 @@ guiset_quiet hoverlink right
 bind ;c hint -Jc [class*="expand"],[class="togg"],[class="comment_folder"]
 
 " Only hint search results on DDG
-bindurl https://duckduckgo.com f hint -Jc [class="result__a js-result-title-link"]
-bindurl https://duckduckgo.com F hint -Jbc [class="result__a js-result-title-link"]
+bindurl https://duckduckgo.com f hint -Jc [data-testid="result-title-a"]
+bindurl https://duckduckgo.com F hint -Jbc [data-testid="result-title-a"]
 
 " Allow Ctrl-a to select all in the commandline
 unbind --mode=ex <C-a>
