@@ -36,7 +36,7 @@ set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # Customize PATH
 set -gx GOPATH $HOME/go
-set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin /usr/lib/go/bin $GOPATH/bin $PATH
+set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin /usr/lib/go/bin $GOPATH/bin $HOME/.cargo/bin $PATH
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
