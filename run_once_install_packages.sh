@@ -303,10 +303,10 @@ install_package "fwupd"
 install_package "intel-media-driver"
 install_package "mesa"
 install_package "pipewire"
-install_package "pipewire-media-session"
 install_package "sof-firmware"
 install_package "vulkan-intel"
 install_package "vulkan-validation-layers"
+install_package "wireplumber"
 
 print_in_purple "Sway\n"
 
