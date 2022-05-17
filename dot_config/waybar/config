@@ -9,7 +9,6 @@
         "sway/mode"
     ],
     "modules-right": [
-        "custom/firefox",
         "custom/ncspot",
         "custom/spotify",
         "custom/separator",
@@ -146,15 +145,6 @@
         /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
         "return-type": "json",
         "on-click": "playerctl -p ncspot play-pause"
-    },
-
-    "custom/firefox": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player firefox",
-        "format": " {}",
-	"escape": true,
-        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
-        "return-type": "json",
-        "on-click": "playerctl -p firefox play-pause"
     },
 
     "sway/mode": {
