@@ -98,6 +98,7 @@ alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias ci="gh workflow view"
+alias e='nvim'
 alias ff='firefox'
 alias g="git"
 alias gt="gotestsum --format standard-verbose -- -cover"

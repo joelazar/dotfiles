@@ -68,7 +68,7 @@ install_package "clang"
 install_package "gcc"
 install_package "go"
 install_package "jdk-openjdk"
-install_package "nodejs"
+install_package "nodejs-lts-gallium"
 install_package "rust"
 
 print_in_purple "Package managers\n"
