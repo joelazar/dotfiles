@@ -3,8 +3,7 @@ Name=Caprine
 StartupWMClass=Caprine
 Comment=Caprine
 GenericName=Caprine
-# Exec=caprine --enable-features=UseOzonePlatform --ozone-platform=wayland
-Exec=caprine
+Exec=caprine --enable-features=UseOzonePlatform --ozone-platform=wayland
 Icon=caprine
 Type=Application
 StartupNotify=true

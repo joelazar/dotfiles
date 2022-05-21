@@ -155,7 +155,7 @@ print_in_purple "Communication\n"
 
 install_package "caprine"
 install_package "discord"
-install_package "slack-wayland"
+install_package "slack-desktop"
 
 print_in_purple "Multimedia\n"
 
