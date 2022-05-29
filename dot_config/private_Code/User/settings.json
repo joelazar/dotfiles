@@ -8,5 +8,6 @@
     "window.menuBarVisibility": "toggle",
     "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
     "editor.minimap.enabled": false,
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "window.zoomLevel": 1
 }
