@@ -284,9 +284,11 @@ install_package "tlp-rdw"
 install_package "unzip"
 install_package "visidata"
 install_package "viu"
+install_package "wget"
 install_package "wireguard-dkms"
 install_package "wireguard-tools"
 install_package "zenity"
+install_package "zk"
 
 print_in_purple "Linux kernels\n"
 

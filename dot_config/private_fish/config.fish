@@ -9,6 +9,7 @@ set -gx MOZ_WEBRENDER 1
 set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
 # TODO - breaks screensharing for now
 # set -gx WLR_RENDERER vulkan
 
@@ -72,6 +73,9 @@ set -gx NNN_OPTS dreuU
 set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;z:autojump;h:fzhist;c:diffs;p:fzplug;"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/;"
 
+# set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
+set -gx LC_COLLATE "C"
+
 # z settings
 set -U Z_DATA "$HOME/.z"
 set -U ZO_METHOD nvim
@@ -84,6 +88,9 @@ set -gx NODE_PATH $HOME/.node/lib/node_modules
 
 # PARUZ config
 set -gx PARUZ yay
+
+# zk dir
+set -gx ZK_NOTEBOOK_DIR $HOME/notes
 
 if test -e $HOME/.config/fish/functions/local.fish
     source $HOME/.config/fish/functions/local.fish
@@ -138,8 +145,8 @@ alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker 
 
 # git pull++
 
-alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
-alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f2- | rev | xargs -P10 -I{} git -C {} pull'
+alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
+alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} git -C {} pull'
 
 # other
 alias get-local-ip="ifconfig \
