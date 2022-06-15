@@ -53,6 +53,7 @@ print_in_purple "Infrastructure\n"
 
 install_package "docker-compose"
 install_package "google-cloud-sdk"
+install_package "google-cloud-sdk-gke-gcloud-auth-plugin "
 install_package "helm"
 install_package "k9s"
 install_package "kubectl"
