@@ -237,6 +237,7 @@ install_package "theme.sh"
 print_in_purple "Fish plugins\n"
 
 install_fish_plugin "PatrickF1/fzf.fish" "fzf.fish"
+install_fish_plugin "andreiborisov/sponge" "sponge"
 install_fish_plugin "danhper/fish-ssh-agent" "fish-ssh-agent"
 install_fish_plugin "evanlucas/fish-kubectl-completions" "kubectl-completions"
 install_fish_plugin "franciscolourenco/done" "done"
