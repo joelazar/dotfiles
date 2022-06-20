@@ -32,8 +32,8 @@ set -gx SWAY_CURSOR_SIZE 16
 # Desktop settings for screen casting
 set -gx XDG_CURRENT_DESKTOP sway
 
-# Set bat as man pager
-set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+# Set nvim as man pager
+set -gx MANPAGER 'nvim +Man!'
 
 # Customize PATH
 set -gx GOPATH $HOME/go

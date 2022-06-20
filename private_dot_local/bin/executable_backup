@@ -12,8 +12,7 @@ case "$1" in
   ~/documents \
   ~/Downloads \
   ~/pictures \
-  ~/private \
-  ~/work ;;
+  ~/private ;;
 "list") restic --repo "$BACKUPDIR" snapshots ;;
 "prune") restic --repo "$BACKUPDIR" prune ;;
 *) echo "Do nothing" "$@" ;;
