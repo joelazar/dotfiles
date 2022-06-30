@@ -258,18 +258,18 @@ bindsym $mod+minus scratchpad show
 bindsym $mod+r mode "resize"
 
 mode "resize" {
-  bindsym $left resize shrink width 30px
-  bindsym $down resize grow height 30px
-  bindsym $up resize shrink height 30px
-  bindsym $right resize grow width 30px
+  bindsym $right resize shrink width 30px
+  bindsym $left resize grow width 30px
+  bindsym $up resize grow height 30px
+  bindsym $down resize shrink height 30px
 
-# Ditto, with arrow keys
-  bindsym Left resize shrink width 30px
-  bindsym Down resize grow height 30px
-  bindsym Up resize shrink height 30px
-  bindsym Right resize grow width 30px
+  # Ditto, with arrow keys
+  bindsym Right resize shrink width 30px
+  bindsym Left resize grow width 30px
+  bindsym Up resize grow height 30px
+  bindsym Down resize shrink height 30px
 
-# Return to default mode
+  # Return to default mode
   bindsym Return mode "default"
   bindsym Escape mode "default"
 }
