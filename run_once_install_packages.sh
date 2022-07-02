@@ -141,6 +141,7 @@ install_package "texlive-science"
 
 print_in_purple "Development tools\n"
 
+install_package "cht.sh-git"
 install_package "ctags"
 install_package "curl"
 install_package "direnv"
