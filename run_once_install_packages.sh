@@ -10,6 +10,11 @@ cd "$SOURCE_DIR" &&
 
 print_in_purple "Install packages\n"
 
+ask_for_confirmation "Would you like to do it now? It can take a bit of time."
+if ! answer_is_yes; then
+	exit
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ask_for_sudo
@@ -322,12 +327,12 @@ install_package "blueman"
 install_package "bluez-utils"
 install_package "brightnessctl"
 install_package "clipman"
+install_package "dunst"
 install_package "gammastep"
 install_package "grim"
 install_package "kanshi"
 install_package "libappindicator-gtk3"
 install_package "libnotify"
-install_package "mako"
 install_package "materia-gtk-theme"
 install_package "networkmanager"
 install_package "pavucontrol"

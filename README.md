@@ -54,7 +54,7 @@ Let me try to briefly list the installed and configured packages:
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Grep on drugs
 - [`sway`](https://swaywm.org/) - I3 compatible window manager, but with Wayland - [config](dot_config/sway/config)
   - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
-  - [`mako`](https://github.com/emersion/mako) - Notification daemon
+  - [`dunst`](https://github.com/dunst-project/dunst) - Notification daemon
   - [`sway-launcher-desktop`](https://github.com/Biont/sway-launcher-desktop) - Application launcher
 - [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer - [config](dot_tmux.conf)
 - [`neovim`](https://neovim.io/) - Vim on drugs

@@ -334,7 +334,7 @@ bindsym $mod+F4 exec --no-startup-id foot
 bindsym $mod+c exec $term --app-id=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
 
 # Notifications
-bindsym $mod+ctrl+space exec makoctl dismiss
+bindsym $mod+ctrl+space exec dunst close
 
 # GTK themes
 set $gnome-schema org.gnome.desktop.interface
@@ -368,7 +368,7 @@ for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize se
 
 # Startup applications
 exec --no-startup-id foot --server
-exec --no-startup-id mako --default-timeout=10000 --layer=overlay --font 'Roboto Mono 12' --height 250 --width 400 --background-color '#192330' --border-color '#63cdcf'
+exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -d 5 -D "systemctl suspend"
 exec --no-startup-id blueman-applet

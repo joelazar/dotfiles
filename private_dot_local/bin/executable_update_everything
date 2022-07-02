@@ -39,7 +39,7 @@ execute "/usr/share/tmux-plugin-manager/bin/update_plugins all" "Update tmux plu
 execute "/usr/share/tmux-plugin-manager/bin/clean_plugins" "Clean tmux plugins"
 
 print_in_purple "Update firmwares\n"
-ask_for_confirmation "Would you like to do it now? Can take a bit of time."
+ask_for_confirmation "Would you like to do it now? It can take a bit of time."
 if answer_is_yes; then
 	fwupdmgr refresh
 	fwupdmgr update
