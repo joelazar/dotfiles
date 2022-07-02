@@ -334,7 +334,7 @@ bindsym $mod+F4 exec --no-startup-id foot
 bindsym $mod+c exec $term --app-id=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
 
 # Notifications
-bindsym $mod+ctrl+space exec dunst close
+bindsym $mod+ctrl+space exec dunstctl close
 
 # GTK themes
 set $gnome-schema org.gnome.desktop.interface
