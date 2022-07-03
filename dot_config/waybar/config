@@ -1,6 +1,7 @@
 {
-    "bar_id": "bar-0",
-    "ipc": true,
+    /* disable autohide for now */
+    /* "bar_id": "bar-0", */
+    /* "ipc": true, */
     "layer": "top",
     "position": "top",
     "height": 24,

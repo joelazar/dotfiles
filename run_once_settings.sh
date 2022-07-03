@@ -8,6 +8,11 @@ SOURCE_DIR=$(chezmoi source-path)
 
 print_in_purple "System configuration\n"
 
+ask_for_confirmation "Would you like to do it now?"
+if ! answer_is_yes; then
+	exit
+fi
+
 ask_for_sudo
 
 execute "(getent group docker | grep $USER) || sudo usermod -aG docker $USER" \
