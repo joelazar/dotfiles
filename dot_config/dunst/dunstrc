@@ -33,7 +33,7 @@
     origin = top-right
 
     # Offset from the origin
-    offset = 10x50
+    offset = 10x10
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -59,7 +59,6 @@
 
     # Set the maximum width for the progress bar
     progress_bar_max_width = 300
-
 
     # Show how many messages are currently hidden (because of
     # notification_limit).
