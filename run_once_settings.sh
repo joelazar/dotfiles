@@ -52,6 +52,10 @@ execute "sudo systemctl enable bluetooth.service" "Turn on bluetooth"
 
 execute "sudo systemctl enable docker.service" "Turn on docker"
 
+execute "sudo systemctl enable iptables.service" "Turn on iptables"
+
+execute "sudo systemctl enable ip6tables.service" "Turn on ip6tables"
+
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/CheckSpace$/s/^#//g' /etc/pacman.conf && \
