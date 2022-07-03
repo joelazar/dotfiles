@@ -21,9 +21,8 @@
         "memory",
         "custom/separator",
         "cpu",
-        /* "sway/language", */
         "custom/separator",
-        "custom/keyboard-layout",
+        "sway/language",
         "custom/separator",
         "battery",
         "custom/separator",
@@ -37,6 +36,7 @@
         "custom/separator",
         "tray"
     ],
+    "fixed-center": false,
 
 
     // -------------------------------------------------------------------------
@@ -83,15 +83,9 @@
     },
 
 
-    /* "sway/language": { */
-    /*     "format": "{long}", */
-    /* }, */
-
-    "custom/keyboard-layout": {
-      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4 | cut -c-2 | tr '[:upper:]' '[:lower:]'",
-      "interval": 30,
-      "format": " {}", // Icon: keyboard
-      "tooltip": false
+    "sway/language": {
+        "format": " {short}",
+        "tooltip": false
     },
 
     "memory": {
@@ -133,7 +127,7 @@
         "exec": "$HOME/.local/bin/mediaplayer.py --player spotify",
         "format": " {}",
 	"escape": true,
-        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
+        "max-length": 45,
         "return-type": "json",
         "on-click": "playerctl -p spotify play-pause"
     },
@@ -142,7 +136,7 @@
         "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot",
         "format": " {}",
 	"escape": true,
-        /* "max-length": 35, -- https://github.com/Alexays/Waybar/issues/1199 */
+        "max-length": 45,
         "return-type": "json",
         "on-click": "playerctl -p ncspot play-pause"
     },
