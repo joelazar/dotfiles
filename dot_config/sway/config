@@ -70,6 +70,7 @@ input type:touchpad {
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
+  accel_profile "adaptive"
   scroll_factor 0.30
 }
 
@@ -367,7 +368,7 @@ for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize s
 for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize set 40 ppt 75 ppt, border pixel 0
 
 # Startup applications
-exec --no-startup-id foot --server
+exec --no-startup-id foot --server -S
 exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -d 5 -D "systemctl suspend"
