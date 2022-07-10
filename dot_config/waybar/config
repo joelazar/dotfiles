@@ -159,9 +159,9 @@
         "format-icons": {
             "1.terminals": "",
             "2.www": "",
-            "3.chromium": "",
+            "3.neovim": "",
             "4.chat": "",
-            "5.notes": "",
+            "5.chromium": "",
             "6.news": "",
             "7.movie": "",
             "8.steam": "",

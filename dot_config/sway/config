@@ -163,9 +163,9 @@ bindsym $mod+Control+Shift+Up move workspace to output up
 #
 set $ws1 "1.terminals"
 set $ws2 "2.www"
-set $ws3 "3.chromium"
+set $ws3 "3.neovim"
 set $ws4 "4.chat"
-set $ws5 "5.notes"
+set $ws5 "5.chromium"
 set $ws6 "6.news"
 set $ws7 "7.movie"
 set $ws8 "8.steam"
@@ -199,10 +199,10 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Assign applications to workspaces
 # for wayland apps: assign X $wsY
 assign [app_id="firefox"] $ws2
-assign [app_id="chromium"] $ws3
+assign [app_id="neovide"] $ws3
 assign [app_id="Slack"] $ws4
 assign [class="discord"] $ws4
-assign [app_id="neovide"] $ws5
+assign [app_id="chromium"] $ws5
 
 # for X11 apps: for_window X move window to workspace $wsY
 for_window [class="Spotify"] move window to workspace $ws9
@@ -329,7 +329,7 @@ bindsym $mod+n exec $term --app-id=launcher-nmtui -e nmtui-connect
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id footclient nnn
 bindsym $mod+F2 exec --no-startup-id firefox
-bindsym $mod+F3 exec --no-startup-id chromium
+bindsym $mod+F3 exec --no-startup-id neovide
 bindsym $mod+F4 exec --no-startup-id foot
 
 # Clipboard manager
