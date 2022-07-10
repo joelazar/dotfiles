@@ -162,7 +162,6 @@ install_package "visual-studio-code-bin"
 
 print_in_purple "Communication\n"
 
-install_package "caprine"
 install_package "discord"
 install_package "slack-desktop"
 
