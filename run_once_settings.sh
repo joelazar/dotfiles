@@ -18,6 +18,9 @@ ask_for_sudo
 execute "(getent group docker | grep $USER) || sudo usermod -aG docker $USER" \
 	"No sudo required for docker users (logout required!)"
 
+execute "(getent group input | grep $USER) || sudo usermod -aG input $USER" \
+	"Add input group to user (for touchpad gestures)"
+
 execute "getent group pcap || (sudo groupadd pcap && sudo usermod -aG pcap $USER)" \
 	"Create pcap group (logout required!)"
 
@@ -52,6 +55,8 @@ execute "sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket" "Turn
 execute "sudo systemctl enable tlp.service" "Turn on tlp"
 
 execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
+
+execute "systemctl --user enable libinput-gestures.service" "Turn on touchpad gestures service"
 
 execute "sudo systemctl enable bluetooth.service" "Turn on bluetooth"
 
