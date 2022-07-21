@@ -81,7 +81,7 @@ input type:pointer {
 
 input type:keyboard {
   xkb_layout "us,hu,dk"
-  xkb_options caps:escape,grp:rctrl_rshift_toggle
+  xkb_options altwin:ctrl_win,caps:super,grp:rctrl_rshift_toggle
   repeat_delay 250
   repeat_rate 50
 }
