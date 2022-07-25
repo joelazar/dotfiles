@@ -120,7 +120,7 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 
-bindsym $mod+shift+x mode "$mode_system"
+bindsym Control+Shift+x mode "$mode_system"
 
 #
 # Moving around:
