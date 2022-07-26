@@ -3,6 +3,8 @@ startuppopupversion: 1
 gui:
   skipUnstageLineWarning: true
   showCommandLog: false
+  showIcons: true
+  showBottomLine: false
 notARepository: 'skip'
 customCommands:
   - key: 'n'
