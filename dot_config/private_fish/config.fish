@@ -116,7 +116,6 @@ alias lg='lazygit'
 alias ll='exa -la --git --group-directories-first --icons'
 alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
 alias ls='exa --icons --group-directories-first'
-alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias nv='neovide --multigrid'
 alias ping='ping -c 5'
