@@ -30,7 +30,6 @@ update
 print_in_purple "Browsers\n"
 
 install_package "firefox"
-install_package "firefox-tridactyl"
 install_package "chromium"
 
 print_in_purple "Basics\n"

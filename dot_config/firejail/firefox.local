@@ -22,7 +22,6 @@ whitelist ${HOME}/go
 whitelist ${HOME}/git
 whitelist ${HOME}/documents
 whitelist ${HOME}/work
-whitelist ${HOME}/.config/tridactyl
 whitelist /usr/share/pipewire/
 
 include firefox-common-addons.profile

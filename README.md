@@ -16,7 +16,7 @@
 
 ![joedotfiles - lazygit](screenshots/lazygit.png)
 
-## Firefox + Tridactyl
+## Firefox
 
 ![joedotfiles - firefox](screenshots/firefox.png)
 
@@ -67,7 +67,6 @@ Let me try to briefly list the installed and configured packages:
 - [`nnn`](https://github.com/jarun/nnn) - File manager
 - [`noto fonts`](https://github.com/googlefonts/noto-fonts) - Fonts
 - [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
-  - [`tridactyl`](https://github.com/tridactyl/tridactyl) - Vim-like interface for Firefox
 - [`mpv`](https://mpv.io/) - For media
 - [`ncspot`](https://github.com/hrkfdn/ncspot) - Cross-platform ncurses Spotify client
 - [`zathura`](https://github.com/pwmt/zathura) - Document viewer
