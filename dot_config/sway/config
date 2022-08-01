@@ -350,6 +350,7 @@ exec_always {
   gsettings set $gnome-schema icon-theme 'Materia'
   gsettings set $gnome-schema cursor-theme 'Adwaita'
   gsettings set $gnome-schema cursor-size $cursor_size
+  gsettings set $gnome-schema font-name 'Roboto Mono'
 }
 
 for_window [app_id=pavucontrol] floating enable
