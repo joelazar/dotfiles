@@ -365,6 +365,8 @@ print_in_purple "NPM packages\n"
 
 # hey, let's make js useable
 install_npm_package "typescript"
+# and get a proper REPL for it
+install_npm_package "ts-node"
 # lsp for typescript
 install_npm_package "typescript-language-server"
 # lsp for html/css/json
