@@ -235,6 +235,7 @@ install_package "fish"
 install_package "fisher"
 install_package "foot"
 install_package "hyperfine"
+install_package "kitty"
 install_package "starship"
 install_package "theme.sh"
 

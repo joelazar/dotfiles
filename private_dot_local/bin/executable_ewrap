@@ -5,5 +5,5 @@ if test -n "$TMUX" || test -n "$NNN_TMPFILE"
     tmux split-window -h nvim "$argv"
 else
     # new window
-    footclient --app-id=floating-editor nvim "$argv"
+    kitty --class=floating-editor nvim "$argv"
 end

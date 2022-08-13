@@ -19,7 +19,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term footclient
+set $term kitty
 
 popup_during_fullscreen smart
 
@@ -326,10 +326,9 @@ bindsym $mod+x move workspace to output right
 bindsym $mod+n exec $term --app-id=launcher-nmtui -e nmtui-connect
 
 # Start Applications
-bindsym $mod+F1 exec --no-startup-id footclient nnn
+bindsym $mod+F1 exec --no-startup-id kitty nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id neovide
-bindsym $mod+F4 exec --no-startup-id foot
 
 # Clipboard manager
 bindsym $mod+c exec $term --app-id=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
@@ -369,7 +368,6 @@ for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize s
 for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize set 40 ppt 75 ppt, border pixel 0
 
 # Startup applications
-exec --no-startup-id foot --server -S
 exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -d 5 -D "systemctl suspend"

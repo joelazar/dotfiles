@@ -20,7 +20,7 @@ set -gx FILE nnn
 set -gx READER zathura
 set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
-set -gx TERMINAL footclient
+set -gx TERMINAL kitty
 set -gx VISUAL ewrap
 
 # Set cursor theme
