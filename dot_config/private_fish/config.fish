@@ -57,6 +57,9 @@ set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
 # SSH environment file
 set -gx SSH_ENV $HOME/.ssh/environment
 
+# Kitty config
+set -gx KITTY_LISTEN_ON "unix:/tmp/kitty"
+
 # nnn settings
 set -gx NNN_FIFO /tmp/nnn.fifo
 set -gx NNN_OPENER handlr-open
