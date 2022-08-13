@@ -1,9 +1,0 @@
-#!/bin/fish
-
-if test -n "$TMUX" || test -n "$NNN_TMPFILE"
-    # tmux session running
-    tmux split-window -h nvim "$argv"
-else
-    # new window
-    kitty --class=floating-editor sleep 0.1 && nvim "$argv"
-end

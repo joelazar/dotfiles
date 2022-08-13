@@ -21,7 +21,6 @@ set -gx READER zathura
 set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
 set -gx TERMINAL kitty
-set -gx VISUAL ewrap
 
 # Set cursor theme
 set -gx XCURSOR_THEME Adwaita
