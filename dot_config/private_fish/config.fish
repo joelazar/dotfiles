@@ -62,7 +62,6 @@ set -gx KITTY_LISTEN_ON "unix:/tmp/kitty"
 
 # nnn settings
 set -gx NNN_FIFO /tmp/nnn.fifo
-set -gx NNN_OPENER handlr-open
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
@@ -123,13 +122,11 @@ alias ll='exa -la --git --group-directories-first --icons'
 alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
 alias ls='exa --icons --group-directories-first'
 alias mkdir='mkdir -p -v'
-alias nv='neovide --multigrid'
 alias ping='ping -c 5'
 alias q="exit"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
-alias xdg-open="handlr open"
 alias yaegi='rlwrap yaegi'
 
 # kubectl

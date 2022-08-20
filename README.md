@@ -44,6 +44,7 @@ Let me try to briefly list the installed and configured packages:
 - [`blackarch`](https://blackarch.org/) - repo added with some basic penetration tool set
 - [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
 - [`docker`](https://www.docker.com/) - Container framework for OS level virtualization
+- [`kitty`](https://sw.kovidgoyal.net/kitty/) - Fast, feature-rich, GPU based terminal emulator
 - [`fish`](https://fishshell.com/) - Fish shell - [config](dot_config/private_fish)
   - [`fisher`](https://github.com/jorgebucaran/fisher) - A plugin manager for fish
     - [`fzf.fish`](https://github.com/PatrickF1/fzf.fish) - Fish + FZF
@@ -56,14 +57,12 @@ Let me try to briefly list the installed and configured packages:
   - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
   - [`dunst`](https://github.com/dunst-project/dunst) - Notification daemon
   - [`sway-launcher-desktop`](https://github.com/Biont/sway-launcher-desktop) - Application launcher
-- [`tmux`](https://github.com/tmux/tmux) - As a terminal multiplexer - [config](dot_tmux.conf)
 - [`neovim`](https://neovim.io/) - Vim on drugs
   - [`my neovim config`](https://github.com/joelazar/nvim-config) - My own Neovim config written in Lua
 - [`git`](https://git-scm.com/) - No comment
   - [`delta`](https://github.com/dandavison/delta) - Diff tool with syntax highlighting
   - [`lazygit`](https://github.com/jesseduffield/lazygit) - simple terminal UI for git commands
 - [`btop`](https://github.com/aristocratos/btop) - For monitoring
-- [`alacritty`](https://github.com/alacritty/alacritty) - A GPU-Accelerated terminal emulator - [config](dot_config/alacritty/alacritty.yml)
 - [`nnn`](https://github.com/jarun/nnn) - File manager
 - [`noto fonts`](https://github.com/googlefonts/noto-fonts) - Fonts
 - [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox

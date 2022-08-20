@@ -40,18 +40,14 @@ install_package "exa"
 install_package "fd"
 install_package "firejail"
 install_package "git"
-install_package "handlr-bin"
 install_package "htop"
 install_package "httpie"
-install_package "neovide"
 install_package "neovim-git"
 install_package "nnn-nerd"
 install_package "python"
 install_package "ripgrep"
 install_package "sad"
 install_package "sd"
-install_package "tmux"
-install_package "tmux-plugin-manager"
 install_package "zoxide"
 
 print_in_purple "Infrastructure\n"
@@ -82,7 +78,6 @@ print_in_purple "Package managers\n"
 install_package "npm"
 install_package "python-pip"
 install_package "python-poetry"
-install_package "yarn"
 
 print_in_purple "Formatters\n"
 
@@ -97,7 +92,6 @@ install_package "stylua"
 
 print_in_purple "Linters\n"
 
-install_package "checkmake"
 install_package "eslint"
 install_package "flake8"
 install_package "python-pylint"
@@ -131,7 +125,6 @@ install_package "gomodifytags"
 install_package "gotestsum"
 install_package "python-coverage"
 install_package "python-matplotlib"
-install_package "python-notedown"
 install_package "python-numpy"
 install_package "python-pandas"
 install_package "python-pynvim"
@@ -230,7 +223,6 @@ install_package "wireshark-qt"
 
 print_in_purple "Shell\n"
 
-install_package "alacritty"
 install_package "fish"
 install_package "fisher"
 install_package "foot"
@@ -347,7 +339,6 @@ install_package "sway"
 install_package "sway-launcher-desktop"
 install_package "swayidle"
 install_package "swaylock-effects-git"
-install_package "tigervnc"
 install_package "waybar"
 install_package "wayvnc"
 install_package "wdisplays"
@@ -369,9 +360,11 @@ print_in_purple "NPM packages\n"
 install_npm_package "typescript"
 # and get a proper REPL for it
 install_npm_package "ts-node"
+# check for outdated packages
+install_npm_package "npm-check"
 # lsp for typescript
 install_npm_package "typescript-language-server"
-# lsp for html/css/json
+# lsp for html/css/json/eslint
 install_npm_package "vscode-langservers-extracted"
 # lsp for prisma orm
 install_npm_package "@prisma/language-server"
@@ -390,9 +383,5 @@ install_npm_package "gitmoji-cli"
 print_in_purple "GH plugins\n"
 
 install_gh_plugin "dlvhdr/gh-dash"
-
-print_in_purple "Install tmux plugins\n"
-
-execute "/usr/share/tmux-plugin-manager/bin/install_plugins" "Install tmux plugins"
 
 clean_up_cache

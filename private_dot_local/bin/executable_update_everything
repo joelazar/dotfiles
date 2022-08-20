@@ -22,9 +22,6 @@ print_in_purple "Update GO packages\n"
 install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
 install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver"
 
-print_in_purple "Update pip packages\n"
-execute "pip list --user | cut -d'=' -f1 | xargs -n1 pip install -U" "Update pip packages"
-
 print_in_purple "Update npm packages\n"
 execute "npm update -g" "Update NPM packages"
 
@@ -33,10 +30,6 @@ execute "tldr -u" "Update tldr cache"
 
 print_in_purple "Update gh extensions\n"
 execute "gh extension upgrade --all" "Update gh extensions"
-
-print_in_purple "Update tmux plugins\n"
-execute "/usr/share/tmux-plugin-manager/bin/update_plugins all" "Update tmux plugins"
-execute "/usr/share/tmux-plugin-manager/bin/clean_plugins" "Clean tmux plugins"
 
 print_in_purple "Update firmwares\n"
 ask_for_confirmation "Would you like to do it now? It can take a bit of time."
