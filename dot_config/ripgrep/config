@@ -4,3 +4,4 @@
 
 # Make search case insensitive, unless an uppercase letter is used.
 --smart-case
+--color=always
