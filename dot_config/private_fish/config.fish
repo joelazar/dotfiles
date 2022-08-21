@@ -65,6 +65,7 @@ set -gx NNN_FIFO /tmp/nnn.fifo
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
+set -gx NNN_OPENER xdg-open
 set -gx NNN_TRASH 2 # configure gio trash
 # d: detail mode
 # e: open text files in terminal
@@ -124,6 +125,7 @@ alias ls='exa --icons --group-directories-first'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias q="exit"
+alias s="kitty +kitten ssh"
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
