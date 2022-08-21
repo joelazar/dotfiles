@@ -163,8 +163,8 @@ bindsym $mod+Control+Shift+Up move workspace to output up
 #
 set $ws1 "1.terminals"
 set $ws2 "2.www"
-set $ws3 "3.neovim"
-set $ws4 "4.chat"
+set $ws3 "3.chat"
+set $ws4 "4.neovim"
 set $ws5 "5.chromium"
 set $ws6 "6.news"
 set $ws7 "7.movie"
@@ -199,7 +199,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Assign applications to workspaces
 # for wayland apps: assign X $wsY
 assign [app_id="firefox"] $ws2
-assign [app_id="Slack"] $ws4
+assign [app_id="Slack"] $ws3
 assign [app_id="chromium"] $ws5
 
 # for X11 apps: for_window X move window to workspace $wsY
