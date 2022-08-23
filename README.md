@@ -6,31 +6,31 @@
 
 ## Neovim with my [custom config](https://github.com/joelazar/nvim-config)
 
-![joedotfiles - neovim](screenshots/neovim.png)
+![joedotfiles - neovim](screenshots/nvim.png)
 
-## Exa + FZF
+## Exa
 
-![joedotfiles - exa+fzf](screenshots/exa+fzf.png)
+![joedotfiles - exa](screenshots/exa.png)
 
 ## Lazygit
 
 ![joedotfiles - lazygit](screenshots/lazygit.png)
 
-## Firefox
+## Firefox + [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-c/)
 
-![joedotfiles - firefox](screenshots/firefox.png)
+![joedotfiles - firefox + vimium](screenshots/ff+vimium.png)
 
-## nnn + zathura + sway-launcher-desktop
+## nnn + preview-tui
 
-![joedotfiles - nnn+zathura+launcher](screenshots/nnn+zathura+launcher.png)
+![joedotfiles - nnn+preview](screenshots/nnn+preview.png)
 
 ## ncspot
 
 ![joedotfiles - ncspot](screenshots/ncspot.png)
 
-## btop + a mandatory neofetch in the corner
+## neofetch + fzf
 
-![joedotfiles - btop+neofetch](screenshots/btop+neofetch.png)
+![joedotfiles - neofetch+fzf](screenshots/neofetch+fzf.png)
 
 ## Details
 
