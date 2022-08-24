@@ -34,7 +34,7 @@ customCommands:
           - name: 'app'
             value: '-r jobn -r mkoliba -r MegiBegi -r fernandoabolafio'
           - name: 'data'
-            value: '-r NicWagenaar -r giriblocks'
+            value: '-r NicWagenaar -r giriblocks -r tuomashej'
           - name: 'draft'
             value: '--draft'
       - type: 'input'

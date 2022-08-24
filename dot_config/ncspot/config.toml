@@ -1,2 +1,8 @@
 use_nerdfont = true
 bitrate = 320
+notify = true
+
+
+[notification_format]
+title =" %title"
+body = "%artists"
