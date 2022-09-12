@@ -21,7 +21,7 @@ set notification-warning-fg	"#192330"
 set inputbar-fg			"#cdcecf"
 set inputbar-bg 		"#192330"
 
-set recolor			"true"
+# set recolor			"true"
 set recolor-lightcolor		"#192330"
 set recolor-darkcolor		"#cdcecf"
 
@@ -35,27 +35,6 @@ set render-loading-fg		"#cdcecf"
 
 set highlight-color		"#719cd6"
 set highlight-active-color	"#9d79d6"
-
-# set recolor "true"
-# set recolor-darkcolor ""
-# set recolor-lightcolor ""
-# 
-# set default-bg ""
-# set default-fg ""
-# 
-# set completion-bg ""
-# set completion-fg ""
-# set completion-highlight-bg ""
-# set completion-highlight-fg ""
-# 
-# set statusbar-bg ""
-# set statusbar-fg ""
-# 
-# set inputbar-bg ""
-# set inputbar-fg ""
-
-# set window-height "800"
-# set window-width "600"
 
 set adjust-open "width"
 set font "Roboto Mono 12"
