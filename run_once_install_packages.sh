@@ -95,6 +95,7 @@ print_in_purple "Linters\n"
 
 install_package "eslint"
 install_package "flake8"
+install_package "mypy"
 install_package "python-pylint"
 install_package "rust-analyzer"
 install_package "shellcheck"
