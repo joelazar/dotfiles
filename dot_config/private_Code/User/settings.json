@@ -1,13 +1,47 @@
 {
-    "editor.scrollBeyondLastLine": false,
-    "workbench.colorTheme": "Default Dark+",
-    "workbench.startupEditor": "none",
-    "workbench.iconTheme": "vscode-icons",
-    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-    "terminal.integrated.sendKeybindingsToShell": true,
-    "window.menuBarVisibility": "toggle",
-    "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
-    "editor.minimap.enabled": false,
-    "vsicons.dontShowNewVersionMessage": true,
-    "window.zoomLevel": 1
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.scrollBeyondLastLine": false,
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vsicons.dontShowNewVersionMessage": true,
+  "window.menuBarVisibility": "toggle",
+  "window.zoomLevel": 1,
+  "workbench.colorTheme": "Nightfox",
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none",
+  "editor.inlineSuggest.enabled": true,
+  "files.trimTrailingWhitespace": true,
+  "extensions.ignoreRecommendations": true,
+  "vim.enableNeovim": true,
+  "vim.neovimPath": "/usr/bin/nvim",
+  "vim.leader": "<space>",
+  "vim.handleKeys": {
+    "<C-b>": false,
+    "<C-f>": false
+  },
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["<C-n>"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["leader", "w"],
+      "commands": ["workbench.action.files.save"]
+    },
+    {
+      "before": ["leader", "b", "d"],
+      "commands": ["workbench.action.closeActiveEditor"]
+    },
+    {
+      "before": ["leader", "l", "n"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["leader", "l", "p"],
+      "commands": ["editor.action.marker.previous"]
+    }
+  ]
 }

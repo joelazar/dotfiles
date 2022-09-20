@@ -200,6 +200,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # for wayland apps: assign X $wsY
 assign [app_id="firefox"] $ws2
 assign [app_id="Slack"] $ws3
+assign [app_id="code-url-handler"] $ws4
 assign [app_id="chromium"] $ws5
 
 # for X11 apps: for_window X move window to workspace $wsY
