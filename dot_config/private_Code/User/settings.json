@@ -41,7 +41,8 @@
     },
     {
       "before": ["leader", "l", "p"],
-      "commands": ["editor.action.marker.previous"]
+      "commands": ["editor.action.marker.prev"]
     }
-  ]
+  ],
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }
