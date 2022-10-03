@@ -24,7 +24,7 @@ set $term kitty
 popup_during_fullscreen smart
 
 # Your preferred application launcher
-set $menu exec $term --class=launcher -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" sway-launcher-desktop
+set $menu exec bemenu-run
 
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpapers/unsplash/
@@ -322,15 +322,12 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 bindsym $mod+x move workspace to output right
 
-# Network manager
-bindsym $mod+n exec $term --class=launcher-nmtui -e nmtui-connect
-
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id kitty nnn
 bindsym $mod+F2 exec --no-startup-id firefox
-
-# Clipboard manager
-bindsym $mod+c exec $term --class=launcher-clipboard -e env FZF_DEFAULT_OPTS="--layout=reverse --info=inline" clipboard
+bindsym $mod+Shift+n exec networkmanager_dmenu
+bindsym $mod+Shift+b exec bemenu-bluetooth
+bindsym $mod+c exec clipman pick -t bemenu
 
 # Notifications
 bindsym $mod+ctrl+space exec dunstctl close
@@ -361,10 +358,7 @@ for_window [app_id="firefox" title="^Library$"] floating enable, sticky enable
 for_window [title="is sharing your screen."] move scratchpad
 # for_window [title="Slack"] move scratchpad
 for_window [title="File Upload"] resize set 1168 630
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 10
-for_window [app_id="^launcher-clipboard$"] floating enable, sticky enable, resize set 60 ppt 60 ppt, border pixel 10
 for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 84 ppt 79 ppt, border pixel 4
-for_window [app_id="^launcher-nmtui$"] floating enable, sticky enable, resize set 40 ppt 75 ppt, border pixel 0
 
 # Startup applications
 exec --no-startup-id dunst

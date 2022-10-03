@@ -56,7 +56,7 @@ Let me try to briefly list the installed and configured packages:
 - [`sway`](https://swaywm.org/) - I3 compatible window manager, but with Wayland - [config](dot_config/sway/config)
   - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
   - [`dunst`](https://github.com/dunst-project/dunst) - Notification daemon
-  - [`sway-launcher-desktop`](https://github.com/Biont/sway-launcher-desktop) - Application launcher
+  - [`bemenu`](https://github.com/Cloudef/bemenu) - Application launcher
 - [`neovim`](https://neovim.io/) - Vim on drugs
   - [`my neovim config`](https://github.com/joelazar/nvim-config) - My own Neovim config written in Lua
 - [`git`](https://git-scm.com/) - No comment
