@@ -1,7 +1,4 @@
 {
-    /* disable autohide for now */
-    /* "bar_id": "bar-0", */
-    /* "ipc": true, */
     "layer": "top",
     "position": "top",
     "height": 24,
@@ -9,12 +6,11 @@
         "sway/workspaces",
         "sway/mode"
     ],
-    "modules-right": [
+	"modules-center": [
         "custom/ncspot",
         "custom/spotify",
-        "custom/separator",
-        "custom/scratchpad-indicator",
-        "custom/separator",
+	],
+    "modules-right": [
         "network",
         "custom/separator",
         "custom/vpn",
@@ -25,13 +21,13 @@
         "custom/separator",
         "sway/language",
         "custom/separator",
-        "battery",
-        "custom/separator",
-        "pulseaudio",
+        "idle_inhibitor",
         "custom/separator",
         "backlight",
         "custom/separator",
-        "idle_inhibitor",
+        "pulseaudio",
+        "custom/separator",
+        "battery",
         "custom/separator",
         "clock",
         "custom/separator",
@@ -48,30 +44,24 @@
         "interval": 30,
         "states": {
             "warning": 15,
-            "critical": 5
+            "critical": 8
         },
         // Connected to AC
         "format": "{icon}  {capacity}%",
         // Not connected to AC
         "format-discharging": "{icon} {capacity}%",
-        "format-icons": [
-            "", // Icon: battery-empty
-            "", // Icon: battery-quarter
-            "", // Icon: battery-half
-            "", // Icon: battery-three-quarters
-            ""  // Icon: battery-full
-        ]
+        "format-icons": [ "", "", "", "", "" ]
     },
 
     "clock": {
         "interval": 1,
-        "format": " {:%a %Y-%b-%d %H:%M}",
+        "format": " {:%a %Y.%m.%d %H:%M}",
         "tooltip": false
     },
 
     "cpu": {
         "interval": 10,
-        "format": " {usage}%", // Icon: microchip
+        "format": " {usage}%",
         "states": {
           "warning": 70,
           "critical": 90
@@ -80,7 +70,7 @@
 
     "backlight": {
         "format": "{icon} {percent}%",
-        "format-icons": ["", ""]
+        "format-icons": ["", "", "", ""]
     },
 
 
@@ -108,9 +98,9 @@
 
     "network": {
         "interval": 10,
-        "format-wifi": " {essid} ({signalStrength}%)", // Icon: wifi
-        "format-ethernet": " {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
-        "format-disconnected": "⚠  Disconnected",
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": "⚠ Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "nm-connection-editor"
     },
@@ -127,7 +117,7 @@
     "custom/spotify": {
         "exec": "$HOME/.local/bin/mediaplayer.py --player spotify",
         "format": " {}",
-	"escape": true,
+        "escape": true,
         "max-length": 45,
         "return-type": "json",
         "on-click": "playerctl -p spotify play-pause"
@@ -136,7 +126,7 @@
     "custom/ncspot": {
         "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot",
         "format": " {}",
-	"escape": true,
+        "escape": true,
         "max-length": 45,
         "return-type": "json",
         "on-click": "playerctl -p ncspot play-pause"
@@ -174,7 +164,6 @@
     },
 
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
         "format": "{icon} {volume}% {format_source}",
         "format-bluetooth": "{icon}  {volume}% {format_source}",
         "format-bluetooth-muted": " {icon}  {format_source}",
@@ -194,17 +183,8 @@
     },
 
     "tray": {
-        "icon-size": 20,
+        "icon-size": 18,
         "spacing": 5
-    },
-
-    "custom/scratchpad-indicator": {
-        "interval": 10,
-        "return-type": "json",
-        "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '( select(.name == \"root\") | .nodes[] | select(.name == \"__i3\") | .nodes[] | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") }'",
-        "format": "{} ﳶ",
-        "on-click": "exec swaymsg 'scratchpad show'",
-        "on-click-right": "exec swaymsg 'move scratchpad'"
     },
 
     "custom/separator": {

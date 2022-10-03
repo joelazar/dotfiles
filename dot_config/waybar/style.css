@@ -28,28 +28,6 @@
     - { index: 17, color: "#d67ad2" }
 */
 
-@keyframes blink-warning {
-  70% {
-    color: #dfdfe0;
-  }
-
-  to {
-    color: #dfdfe0;
-    background-color: #f4a261;
-  }
-}
-
-@keyframes blink-critical {
-  70% {
-    color: #dfdfe0;
-  }
-
-  to {
-    color: #dfdfe0;
-    background-color: #c94f6d;
-  }
-}
-
 /* -----------------------------------------------------------------------------
  * Base styles
  * -------------------------------------------------------------------------- */
@@ -69,28 +47,6 @@
   color: #dfdfe0;
   font-family: Roboto Mono;
   font-size: 15px;
-}
-
-/* Each module */
-#backlight
-#battery
-#clock
-#cpu
-#custom-keyboard-layout
-#custom-scratchpad-indicator
-#custom-separator
-#custom-spotify
-#custom-vpn
-#idle_inhibitor
-#memory
-#network
-#pulseaudio
-#temperature
-#tray {
-  padding-left: 2px;
-  padding-right: 2px;
-  padding-bottom: 2px;
-  padding-top: 2px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -113,24 +69,8 @@
   font-weight: bold;
 }
 
-#battery.warning.discharging {
-  /* animation-name: blink-warning; */
-  /* animation-duration: 3s; */
-  font-weight: bold;
-}
-
-#battery.critical.discharging {
-  animation-name: blink-critical;
-  animation-duration: 1s;
-  font-weight: bold;
-}
-
 #clock {
   font-weight: bold;
-}
-
-#cpu {
-  /* No styles */
 }
 
 #cpu.warning {
@@ -153,10 +93,8 @@
 }
 
 #memory.critical {
-  color: #c94f6d;
-  animation-name: blink-critical;
-  animation-duration: 2s;
   font-weight: bold;
+  color: #c94f6d;
 }
 
 #mode {
@@ -166,37 +104,24 @@
   border: 1px solid #dfdfe0;
 }
 
-#idle_inhibitor {
-  /* padding-right: 12px; */
-}
-
-#network {
-  /* No styles */
-}
-
 #network.disconnected {
   color: #f4a261;
 }
 
-#pulseaudio {
-  /* No styles */
+#custom-separator {
+  padding-left: 2px;
+  padding-right: 2px;
+  color: #63cdcf;
+  background: transparent;
 }
 
-#pulseaudio.muted {
-  /* No styles */
-}
-
-#temperature {
-  /* No styles */
-}
-
-#temperature.critical {
-  color: #c94f6d;
-  font-weight: bold;
+#tray {
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #workspaces button:hover {
-  border-top: 2px solid #dbc074;
+  border-top: 2px solid #ffe37e;
 }
 
 #workspaces button {
@@ -207,9 +132,8 @@
 }
 
 #workspaces button.focused {
-  border-color: #9d79d6;
-  color: #dfdfe0;
-  background-color: #393b44;
+  color: #131a24;
+  background-color: #dbc074;
 }
 
 #workspaces button.urgent {
@@ -217,8 +141,8 @@
   color: #c9545d;
 }
 
-#custom-separator {
-  font-size: 22px;
-  color: #393b44;
-  background: transparent;
+#custom-spotify {
+}
+
+#custom-ncspot {
 }
