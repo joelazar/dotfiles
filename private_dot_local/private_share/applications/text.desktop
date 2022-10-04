@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Neovim
-Comment=Text Editor
-Exec=/usr/bin/nvim %F
-Terminal=true
-Categories=TextEditor;
-MimeType=text/plain;
