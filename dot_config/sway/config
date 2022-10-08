@@ -202,6 +202,7 @@ assign [app_id="firefox"] $ws2
 assign [app_id="Slack"] $ws3
 assign [app_id="code-url-handler"] $ws4
 assign [app_id="chromium"] $ws5
+assign [app_id="Spotify"] $ws9
 
 # for X11 apps: for_window X move window to workspace $wsY
 for_window [class="Steam"] move window to workspace $ws8

@@ -43,8 +43,8 @@
     "battery": {
         "interval": 30,
         "states": {
-            "warning": 15,
-            "critical": 8
+            "warning": 20,
+            "critical": 10
         },
         // Connected to AC
         "format": "{icon}  {capacity}%",
