@@ -27,7 +27,7 @@ popup_during_fullscreen smart
 set $menu exec bemenu-run
 
 ### Output configuration
-set $wallpapers_path $HOME/pictures/wallpapers/unsplash/
+set $wallpapers_path $HOME/pictures/wallpapers/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
@@ -326,6 +326,11 @@ bindsym $mod+x move workspace to output right
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id kitty nnn
 bindsym $mod+F2 exec --no-startup-id firefox
+bindsym $mod+F3 exec --no-startup-id slack
+bindsym $mod+F4 exec --no-startup-id code
+bindsym $mod+F5 exec --no-startup-id chromium
+bindsym $mod+F9 exec --no-startup-id ncspot
+bindsym $mod+F10 exec --no-startup-id spotify
 bindsym $mod+Shift+n exec networkmanager_dmenu
 bindsym $mod+Shift+b exec bemenu-bluetooth
 bindsym $mod+c exec clipman pick -t bemenu
@@ -337,7 +342,7 @@ bindsym $mod+ctrl+space exec dunstctl close
 set $gnome-schema org.gnome.desktop.interface
 
 seat seat0 xcursor_theme 'Adwaita' $cursor_size
-# seat seat0 hide_cursor when-typing enable
+seat seat0 hide_cursor when-typing enable
 seat seat0 hide_cursor 10000
 
 exec_always {
