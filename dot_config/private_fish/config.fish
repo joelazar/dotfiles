@@ -70,6 +70,7 @@ set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
 set -gx NNN_OPENER xdg-open
 set -gx NNN_TRASH 2 # configure gio trash
+set -gx NNN_FCOLORS 030304020000060801030500 # filetype colors. this mimics dircolors
 # d: detail mode
 # e: open text files in terminal
 # u: use selection, don't prompt to choose between selection and hovered entry
@@ -77,7 +78,7 @@ set -gx NNN_TRASH 2 # configure gio trash
 # U: show file's owner and group in status bar
 set -gx NNN_OPTS dreuU
 set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;z:autojump;h:fzhist;c:diffs;p:fzplug;"
-set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/;"
+set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/"
 
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
 set -gx LC_COLLATE C
