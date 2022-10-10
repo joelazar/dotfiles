@@ -19,3 +19,22 @@ defaults:
   prsLimit: 20
   issuesLimit: 20
   view: prs
+repoPaths:
+  Growblocks/app: ~/git/work/app/
+pager:
+  diff: delta
+keybindings:
+  prs:
+    - key: v
+      command: >
+        cd {{.RepoPath}} &&
+        gh pr checkout {{.PrNumber}} &&
+        nvim
+    - key: D
+      command: >
+        cd {{.RepoPath}} &&
+        gh pr checkout {{.PrNumber}} &&
+        nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
+    - key: M
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --rebase --delete-branch
