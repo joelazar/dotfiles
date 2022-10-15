@@ -49,7 +49,7 @@ set fzf_preview_dir_cmd exa --all --color=always
 fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
 
 # BEMENU options
-set -gx BEMENU_OPTS '-i --fn "Roboto Mono 14" -b --scrollbar always --nb "#192330" --nf "#cdcecf" --tb "#223249" --tf "#cdcecf" --sb "#192330" --sf "#cdcecf" --hb "#63cdcf" --hf "#192330" --fb "#192330" --ff "#cdcecf" --cb "#192330" --cf "#cdcecf" --scb "#223249" --scf "#dbc074" --ab "#192530" --af "#cdcecf"'
+set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b --scrollbar always --nb "#192330" --nf "#cdcecf" --tb "#223249" --tf "#cdcecf" --sb "#192330" --sf "#cdcecf" --hb "#63cdcf" --hf "#192330" --fb "#192330" --ff "#cdcecf" --cb "#192330" --cf "#cdcecf" --scb "#223249" --scf "#dbc074" --ab "#192530" --af "#cdcecf"'
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
@@ -109,7 +109,6 @@ alias :q="exit"
 alias N='sudo -E nnn -deH'
 alias c="clear"
 alias cat="bat"
-alias ch="clipman pick --print0 --tool=CUSTOM --tool-args=\"fzf --prompt 'pick > ' --bind 'tab:up' --cycle --read0\""
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
@@ -119,7 +118,6 @@ alias ddg="BROWSER=w3m ddgr -n 5"
 alias e='nvim'
 alias ff='firefox'
 alias g="git"
-alias gt="gotestsum --format standard-verbose -- -cover"
 alias hg="kitty +kitten hyperlinked_grep"
 alias icat="kitty +kitten icat"
 alias l='exa --icons --group-directories-first'
@@ -213,6 +211,7 @@ set -g fish_pager_color_prefix $cyan
 set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $comment
 
+# Done plugin config
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 

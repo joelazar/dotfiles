@@ -44,5 +44,6 @@
       "commands": ["editor.action.marker.prev"]
     }
   ],
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "telemetry.telemetryLevel": "off"
 }
