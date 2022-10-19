@@ -67,6 +67,7 @@ install_package "minikube"
 print_in_purple "Languages\n"
 
 install_package "clang"
+install_package "deno"
 install_package "gcc"
 install_package "go"
 install_package "jdk-openjdk"

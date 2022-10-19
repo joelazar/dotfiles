@@ -366,6 +366,8 @@ for_window [title="is sharing your screen."] move scratchpad
 for_window [title="File Upload"] resize set 1168 630
 for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 84 ppt 79 ppt, border pixel 4
 
+no_focus [title="^Peek preview$"]
+
 # Startup applications
 exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250

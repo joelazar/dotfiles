@@ -6,13 +6,15 @@
 BACKUPDIR="rclone:onedrive:backup"
 
 case "$1" in
-"do") restic --repo "$BACKUPDIR" backup \
-  ~/.ssh \
-  ~/.config/fish/functions/local.fish \
-  ~/documents \
-  ~/Downloads \
-  ~/pictures \
-  ~/private ;;
+"do") restic --repo "$BACKUPDIR" \
+	--exclude='Calibre/' \
+	backup \
+	~/.ssh \
+	~/.config/fish/functions/local.fish \
+	~/documents \
+	~/Downloads \
+	~/pictures \
+	~/private ;;
 "list") restic --repo "$BACKUPDIR" snapshots ;;
 "prune") restic --repo "$BACKUPDIR" prune ;;
 *) echo "Do nothing" "$@" ;;
