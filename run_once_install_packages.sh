@@ -168,6 +168,8 @@ install_package "mpv"
 install_package "ncspot"
 install_package "spotify"
 install_package "xournalpp"
+install_package "zathura"
+install_package "zathura-pdf-poppler"
 
 print_in_purple "Miscellaneous\n"
 
@@ -197,8 +199,6 @@ install_package "util-linux"
 install_package "virtualbox"
 install_package "words"
 install_package "yt-dlp"
-install_package "zathura"
-install_package "zathura-pdf-poppler"
 install_package "zbar"
 install_package "zstd"
 
