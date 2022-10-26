@@ -35,6 +35,7 @@ install_package "chromium"
 print_in_purple "Basics\n"
 
 install_package "bat"
+install_package "buku"
 install_package "docker"
 install_package "exa"
 install_package "fd"

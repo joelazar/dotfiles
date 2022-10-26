@@ -107,6 +107,7 @@ end
 
 alias :q="exit"
 alias N='sudo -E nnn -deH'
+alias b='buku --suggest'
 alias c="clear"
 alias cat="bat"
 alias chgrp='chgrp --preserve-root'
