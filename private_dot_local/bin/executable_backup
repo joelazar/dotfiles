@@ -10,6 +10,7 @@ case "$1" in
 	--exclude='Calibre/' \
 	backup \
 	~/.ssh \
+	~/.local/share/buku \
 	~/.config/fish/functions/local.fish \
 	~/documents \
 	~/Downloads \
