@@ -6,10 +6,11 @@
   "editor.scrollBeyondLastLine": false,
   "terminal.integrated.sendKeybindingsToShell": true,
   "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+  "vscode-neovim.neovimClean": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
   "window.zoomLevel": 1,
-  "workbench.colorTheme": "Nightfox",
+  "workbench.colorTheme": "Gruvbox Light Soft",
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",
   "editor.inlineSuggest.enabled": true,
@@ -45,5 +46,6 @@
     }
   ],
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "telemetry.telemetryLevel": "off"
+  "telemetry.telemetryLevel": "off",
+  "explorer.confirmDelete": false
 }
