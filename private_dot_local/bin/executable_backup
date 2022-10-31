@@ -13,7 +13,6 @@ case "$1" in
 	~/.local/share/buku \
 	~/.config/fish/functions/local.fish \
 	~/documents \
-	~/Downloads \
 	~/pictures \
 	~/private ;;
 "list") restic --repo "$BACKUPDIR" snapshots ;;

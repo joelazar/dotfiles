@@ -205,6 +205,7 @@ assign [app_id="chromium"] $ws5
 assign [app_id="Spotify"] $ws9
 
 # for X11 apps: for_window X move window to workspace $wsY
+for_window [class="Slack"] move window to workspace $ws3
 for_window [class="Steam"] move window to workspace $ws8
 for_window [class="Spotify"] move window to workspace $ws9
 
