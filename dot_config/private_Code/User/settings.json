@@ -10,7 +10,7 @@
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
   "window.zoomLevel": 1,
-  "workbench.colorTheme": "Gruvbox Light Soft",
+  "workbench.colorTheme": "Nightfox",
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",
   "editor.inlineSuggest.enabled": true,
