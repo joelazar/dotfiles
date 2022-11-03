@@ -5,6 +5,7 @@ gui:
   showCommandLog: false
   showIcons: true
   showBottomLine: false
+  showRandomTip: false
 notARepository: 'skip'
 customCommands:
   - key: 'n'
@@ -50,3 +51,10 @@ customCommands:
     command: 'git reset --soft HEAD~1'
     context: 'files'
     loadingText: 'undo last commit'
+  - key: '<f1>'
+    command: 'git reset --soft {{.CheckedOutBranch.UpstreamRemote}}'
+    context: 'files'
+    prompts:
+      - type: 'confirm'
+        title: 'Confirm:'
+        body: 'Are you sure you want to reset HEAD to {{.CheckedOutBranch.UpstreamRemote}}?'
