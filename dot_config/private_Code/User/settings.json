@@ -9,7 +9,6 @@
   "vscode-neovim.neovimClean": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
-  "window.zoomLevel": 1,
   "workbench.colorTheme": "Nightfox",
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",

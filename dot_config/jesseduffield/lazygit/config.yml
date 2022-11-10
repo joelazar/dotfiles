@@ -8,7 +8,7 @@ gui:
   showRandomTip: false
 notARepository: 'skip'
 customCommands:
-  - key: 'n'
+  - key: '<c-n>'
     prompts:
       - type: 'menu'
         title: 'Creating new branch. What kind of branch is it?'
