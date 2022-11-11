@@ -49,6 +49,19 @@
   font-size: 15px;
 }
 
+button {
+  border: none;
+}
+
+label:disabled,
+button:disabled {
+  color: inherit;
+}
+
+button:hover {
+  background: inherit;
+}
+
 /* -----------------------------------------------------------------------------
  * Module styles
  * -------------------------------------------------------------------------- */
@@ -104,6 +117,10 @@
   border: 1px solid #dfdfe0;
 }
 
+#network {
+  color: #dfdfe0;
+}
+
 #network.disconnected {
   color: #f4a261;
 }
@@ -141,8 +158,18 @@
   color: #c9545d;
 }
 
+#pulseaudio {
+  color: #dfdfe0;
+}
+
+#idle_inhibitor {
+  color: #dfdfe0;
+}
+
 #custom-spotify {
+  color: #dfdfe0;
 }
 
 #custom-ncspot {
+  color: #dfdfe0;
 }
