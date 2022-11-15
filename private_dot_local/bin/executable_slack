@@ -1,0 +1,2 @@
+#!/bin/bash
+exec firejail /usr/bin/slack --enable-features=UseOzonePlatform,WebRTCPipeWireCapturer --ozone-platform=wayland &> /dev/null &

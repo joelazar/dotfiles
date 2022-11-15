@@ -1,0 +1,2 @@
+#!/bin/bash
+exec kitty --class=Spotify /usr/bin/ncspot
