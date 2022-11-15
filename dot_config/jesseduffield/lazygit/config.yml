@@ -1,5 +1,6 @@
 reporting: 'off'
 startuppopupversion: 1
+promptToReturnFromSubprocess: false
 gui:
   skipUnstageLineWarning: true
   showCommandLog: false
