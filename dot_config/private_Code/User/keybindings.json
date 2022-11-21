@@ -44,9 +44,11 @@
   {
     "key": "ctrl+pageup",
     "command": "-workbench.action.previousEditor"
-  },
+  }
+  /*
   {
     "command": "-vscode-neovim.send",
     "key": "ctrl+b"
   }
+  */
 ]

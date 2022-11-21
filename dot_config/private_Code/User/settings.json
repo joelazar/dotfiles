@@ -9,7 +9,7 @@
   "vscode-neovim.neovimClean": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Nightfox",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",
   "editor.inlineSuggest.enabled": true,
