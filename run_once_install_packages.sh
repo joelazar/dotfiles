@@ -49,7 +49,6 @@ install_package "python"
 install_package "ripgrep"
 install_package "sad"
 install_package "sd"
-install_package "thunderbird"
 install_package "zoxide"
 
 print_in_purple "Infrastructure\n"
@@ -159,7 +158,6 @@ install_package "visual-studio-code-bin"
 print_in_purple "Communication\n"
 
 install_package "slack-desktop"
-install_package "discord"
 
 print_in_purple "Multimedia\n"
 
