@@ -15,6 +15,7 @@
   "editor.inlineSuggest.enabled": true,
   "files.trimTrailingWhitespace": true,
   "extensions.ignoreRecommendations": true,
+  "python.linting.pylintEnabled": true,
   "vim.enableNeovim": true,
   "vim.neovimPath": "/usr/bin/nvim",
   "vim.leader": "<space>",
@@ -46,5 +47,12 @@
   ],
   "typescript.updateImportsOnFileMove.enabled": "always",
   "telemetry.telemetryLevel": "off",
-  "explorer.confirmDelete": false
+  "explorer.confirmDelete": false,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "redhat.telemetry.enabled": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  }
 }
