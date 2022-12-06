@@ -1,4 +1,6 @@
+# include chromium-common-hardened.inc.profile
 include whitelist-runuser-common.inc
+
 dbus-user.talk org.freedesktop.Notifications
 dbus-user.talk org.freedesktop.portal.Desktop
 ignore noroot
@@ -6,9 +8,4 @@ whitelist ${RUNUSER}/pipewire-0
 whitelist /usr/share/pipewire/client.conf
 dbus-user.talk org.freedesktop.portal.*
 
-whitelist ${HOME}/pictures
-whitelist ${HOME}/go
-whitelist ${HOME}/git
-whitelist ${HOME}/documents
-whitelist ${HOME}/work
 whitelist /usr/share/pipewire/

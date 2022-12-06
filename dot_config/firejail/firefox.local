@@ -13,15 +13,13 @@ dbus-user.talk org.kde.kuiserver
 ignore noroot
 whitelist ${RUNUSER}/pipewire-0
 whitelist /usr/share/pipewire/client.conf
-dbus-user.talk org.freedesktop.portal.*
+dbus-user.talk org.freedesktop.portal.Desktop
 
 ignore private-tmp
 
 whitelist ${HOME}/pictures
-whitelist ${HOME}/go
-whitelist ${HOME}/git
 whitelist ${HOME}/documents
-whitelist ${HOME}/work
+
 whitelist /usr/share/pipewire/
 
 include firefox-common-addons.profile
