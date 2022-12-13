@@ -54,6 +54,8 @@ execute "sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket" "Turn
 
 execute "sudo systemctl enable tlp.service" "Turn on tlp"
 
+execute "sudo systemctl enable systemd-oomd.service" "Turn on oomd"
+
 execute "systemctl --user enable pipewire-pulse" "Turn on pipewire pulseaudio server"
 
 execute "systemctl --user enable libinput-gestures.service" "Turn on touchpad gestures service"
