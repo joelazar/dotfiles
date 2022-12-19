@@ -286,6 +286,7 @@ install_package "linux-zen-headers"
 print_in_purple "Drivers\n"
 
 install_package "alsa-utils"
+install_package "fprintd"
 install_package "fwupd"
 install_package "intel-media-driver"
 install_package "libinput-gestures"
