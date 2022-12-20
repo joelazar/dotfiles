@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# This script is used to start droidcam on my laptop.
+# requirements: v4l2loopback-dkms, ffmpeg
+
+PROTOCOL=http
+IP_ADDRESS=192.168.0.32
+PORT=4747
+ENDPOINT=video
+ENCODE_OPTIONS="-c:v copy"
+# ENCODE_OPTIONS="-vcodec rawvideo -pix_fmt yuv420p -threads 0"
+
+if ! command -v ffmpeg &>/dev/null; then
+	echo "ffmpeg is not installed!"
+	exit
+fi
+
+# ask user if ip is still valid
+read -p "Is the IP address $IP_ADDRESS still valid? [y/N] " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+	read -r -p "Enter the IP address of the device: " IP_ADDRESS
+fi
+
+echo "Using IP address $IP_ADDRESS"
+
+# check if ip address is valid
+if ! ping -c 1 -W 1 "$IP_ADDRESS" &>/dev/null; then
+	echo "Invalid IP address!"
+	exit
+fi
+
+# choose resolution, default is 1280x720
+echo "Choose resolution:"
+echo "1) 1280x720"
+echo "2) 1920x1080"
+echo "3) 640x480"
+read -r -p "Enter your choice: " -n 1 -r
+echo
+case $REPLY in
+	1)
+		RESOLUTION="1280x720"
+		;;
+	2)
+		RESOLUTION="1920x1080"
+		;;
+	3)
+		RESOLUTION="640x480"
+		;;
+	*)
+		RESOLUTION="1280x720"
+		;;
+esac
+
+echo "Using resolution $RESOLUTION"
+
+sudo modprobe v4l2loopback devices=1 max_buffers=2 exclusive_caps=1 video_nr=7 'card_label=DroidCam'
+
+echo "DroidCam started!"
+
+ffmpeg -i "$PROTOCOL://$DROIDCAM_USER:$DROIDCAM_PASSWORD@$IP_ADDRESS:$PORT/$ENDPOINT?$RESOLUTION" $ENCODE_OPTIONS -f v4l2 /dev/video7 &> /dev/null
+
+sudo modprobe -r v4l2loopback
