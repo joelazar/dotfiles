@@ -1,7 +1,6 @@
 "───  arch ─────────────────────────────────────────────"
 https://www.archlinux.org/feeds/news/ linux
 https://archlinux.org/feeds/releases/
-https://aur.archlinux.org/rss/ linux
 " "
 
 "───  mathematics ──────────────────────────────────────"
@@ -21,12 +20,8 @@ http://news.mit.edu/rss/topic/artificial-intelligence2
 " "
 
 "───  news ──────────────────────────────────────"
-https://www.theguardian.com/world/rss
 https://www.theguardian.com/mostviewed/rss
-https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
 https://feeds.simplecast.com/54nAGcIl "~NYT > The Daily"
-https://telex.hu/rss
-https://444.hu/feed
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3XTzVzaHQEd30rQbuvCtTQ videos "~YT - Last Week Tonight" # lastweektonight
 https://www.youtube.com/feeds/videos.xml?channel_id=UCEFpEvuosfPGlV1VyUF6QOA videos "~YT - Partizán" # partizan
 https://www.youtube.com/feeds/videos.xml?channel_id=UCM-1sd-cXSuCsfWp8QMY_OQ videos "~YT - Telex" # telex
