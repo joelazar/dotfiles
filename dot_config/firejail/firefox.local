@@ -1,3 +1,4 @@
+# firefox requires a shell to launch on Arch - add the next line to your firefox.local to enable private-bin.
 private-bin bash,dbus-launch,dbus-send,env,firefox,sh,which
 include whitelist-runuser-common.inc
 
@@ -12,14 +13,12 @@ dbus-user.talk org.kde.kuiserver
 # Uncomment or put in your firefox.local to allow screen sharing under wayland.
 ignore noroot
 whitelist ${RUNUSER}/pipewire-0
-whitelist /usr/share/pipewire/client.conf
-dbus-user.talk org.freedesktop.portal.Desktop
+whitelist /usr/share/pipewire/
+dbus-user.talk org.freedesktop.portal.*
 
 ignore private-tmp
 
 whitelist ${HOME}/pictures
 whitelist ${HOME}/documents
-
-whitelist /usr/share/pipewire/
 
 include firefox-common-addons.profile

@@ -11,3 +11,5 @@ ignore private-bin
 ignore private-cache
 ignore private-dev
 ignore private-tmp
+
+dbus-user.talk org.freedesktop.portal.*
