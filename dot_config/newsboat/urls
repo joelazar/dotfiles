@@ -1,85 +1,90 @@
-"───  arch ─────────────────────────────────────────────"
-https://www.archlinux.org/feeds/news/ linux
-https://archlinux.org/feeds/releases/
-" "
+"query:💫 science:tags # \"science\""
+https://terrytao.wordpress.com/feed/ science "~Terence Tao's blog"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw science "~YT - 3blue1brown"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8BtBl8PNgd3vWKtm2yJ7aA science "~YT - Bartosz Milewski"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A science "~YT - Numberphile"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCTG_vrRdKYfrpqCv_WV4eyA science "~YT - Ten Minute Physics"
 
-"───  mathematics ──────────────────────────────────────"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw videos # 3blue1brown
-https://terrytao.wordpress.com/feed/ "~Terence Tao's blog"
-" "
+"query:🤖 ai:tags # \"ai\""
+http://karpathy.github.io/feed.xml ai
+https://www.fast.ai/index.xml ai
+https://deepmind.com/blog/feed/basic/ ai "~DeepMind"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A ai "~YT - DeepMind"
+https://www.technologyreview.com/topic/artificial-intelligence/feed ai
+https://openai.com/blog/rss/ ai
+http://ai.googleblog.com/feeds/posts/default?alt=rss ai
+http://news.mit.edu/rss/topic/artificial-intelligence2 ai
+https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ ai "~YT - Machine Learning Street Talk"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0rqucBdTuFTjJiefW5t-IQ ai "~YT - Tensorflow"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCXUPKJO5MZQN11PqgIvyuvQ ai "~YT - Andrej Karpathy"
 
-"───  ai ──────────────────────────────────────"
-http://karpathy.github.io/feed.xml
-https://www.fast.ai/atom.xml
-https://deepmind.com/blog/feed/basic/ "~DeepMind"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A videos "~YT - DeepMind" # lastweektonight
-https://www.technologyreview.com/topic/artificial-intelligence/feed
-https://openai.com/blog/rss/
-http://ai.googleblog.com/feeds/posts/default?alt=rss
-http://news.mit.edu/rss/topic/artificial-intelligence2
-" "
+"query:🗞️ news:tags # \"news\""
+https://www.theguardian.com/mostviewed/rss news
+https://feeds.simplecast.com/54nAGcIl news "~NYT > The Daily"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3XTzVzaHQEd30rQbuvCtTQ news "~YT - Last Week Tonight"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCEFpEvuosfPGlV1VyUF6QOA news "~YT - Partizán"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCM-1sd-cXSuCsfWp8QMY_OQ news "~YT - Telex"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCyic42CaC1FYypd0g72CCjA news "~YT - Telex - After Sajó Dáviddal"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGoLa-QhHmTxLEdjv_8dxrg news "~YT - 444"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q news "~YT - Kurzgesagt"
 
-"───  news ──────────────────────────────────────"
-https://www.theguardian.com/mostviewed/rss
-https://feeds.simplecast.com/54nAGcIl "~NYT > The Daily"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC3XTzVzaHQEd30rQbuvCtTQ videos "~YT - Last Week Tonight" # lastweektonight
-https://www.youtube.com/feeds/videos.xml?channel_id=UCEFpEvuosfPGlV1VyUF6QOA videos "~YT - Partizán" # partizan
-https://www.youtube.com/feeds/videos.xml?channel_id=UCM-1sd-cXSuCsfWp8QMY_OQ videos "~YT - Telex" # telex
-https://www.youtube.com/feeds/videos.xml?channel_id=UCGoLa-QhHmTxLEdjv_8dxrg videos "~YT - 444" # 444
-" "
+"query:🟥 reddit:tags # \"reddit\""
+https://www.reddit.com/r/archlinux/.rss reddit
+https://www.reddit.com/r/commandline/.rss reddit
+https://www.reddit.com/r/copenhagen/.rss reddit
+https://www.reddit.com/r/fishshell/.rss reddit
+https://www.reddit.com/r/golang/.rss reddit
+https://www.reddit.com/r/technology/.rss reddit "~Technology"
+https://www.reddit.com/r/linux/.rss reddit "~Linux"
+https://www.reddit.com/r/neovim/.rss reddit "~Neovim"
+https://www.reddit.com/r/swaywm/.rss reddit
+http://www.reddit.com/r/coolgithubprojects/.rss reddit
+https://www.reddit.com/r/googlecloud/.rss reddit
 
-"───  reddit ──────────────────────────────────────"
-https://www.reddit.com/r/archlinux/.rss
-https://www.reddit.com/r/commandline/.rss
-https://www.reddit.com/r/copenhagen/.rss
-https://www.reddit.com/r/fishshell/.rss
-https://www.reddit.com/r/golang/.rss
-https://www.reddit.com/r/technology/.rss "~Technology"
-https://www.reddit.com/r/linux/.rss "~Linux"
-https://www.reddit.com/r/neovim/.rss "~Neovim"
-https://www.reddit.com/r/swaywm/.rss
-http://www.reddit.com/r/coolgithubprojects/.rss
-https://www.reddit.com/r/googlecloud/.rss
-" "
+"query:🟧 hackernews:tags # \"hackernews\""
+https://hnrss.org/best hackernews
+https://hnrss.org/bestcomments hackernews
+https://hnrss.org/ask hackernews
+https://hnrss.org/show hackernews
+https://hnrss.org/polls hackernews
+https://hnrss.org/newest hackernews
+https://hnrss.org/frontpage hackernews
 
-"───  hackernews ──────────────────────────────────────"
-https://hnrss.org/best
-https://hnrss.org/bestcomments
-https://hnrss.org/ask
-https://hnrss.org/show
-https://hnrss.org/polls
-https://hnrss.org/newest
-https://hnrss.org/frontpage
-" "
+"query:💻 tech:tags # \"tech\""
+https://www.archlinux.org/feeds/news/ tech
+https://archlinux.org/feeds/releases/ tech
+https://drewdevault.com/blog/index.xml tech
+https://emersion.fr/blog/atom.xml tech
+https://www.theverge.com/rss/index.xml tech
+https://www.theverge.com/rss/reviews/index.xml tech
+https://developer.run/feed.rss blog tech
+https://hacks.mozilla.org/feed/ tech
+https://jvns.ca/atom.xml tech
+https://kentcdodds.com/blog/rss.xml tech
+https://sirupsen.com/atom.xml tech
+https://buttondown.email/denonews/rss tech
+https://www.youtube.com/feeds/videos.xml?channel_id=UC_9cztXyAZCli9Cky6NWWwQ tech "~YT - Remix"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA tech "~YT - TJ"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw tech "~YT - The Primeagen"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg tech "~YT - Two minute papers"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A tech "~YT - The Changelog"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCPbwhExawYrn9xxI21TFfyw tech "~YT - The Pragmatic Engineer"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCftwRNsjfRo08xYE31tkiyw tech "~YT - Wired"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A tech "~YT - Changelog"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA tech "~YT - Fireship"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCs_tLP3AiwYKwdUHpltJPuA tech "~YT - GOTO conferences"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCciKHCG06rnq31toLTfAiyw tech "~YT - linux.conf.au"
+https://thevaluable.dev/index.xml tech
 
-"───  tech ─────────────────────────────────────────────"
-https://drewdevault.com/blog/index.xml
-https://emersion.fr/blog/atom.xml
-https://theverge.com/rss/index.xml
-https://theverge.com/reviews/rss/index.xml
-https://developer.run/feed.rss blog
-https://hacks.mozilla.org/feed/
-https://jvns.ca/atom.xml
-https://kentcdodds.com/blog/rss.xml
-https://sirupsen.com/atom.xml
-https://buttondown.email/denonews/rss
-https://www.youtube.com/feeds/videos.xml?channel_id=UC_9cztXyAZCli9Cky6NWWwQ videos "~YT - Remix" # remix
-https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA videos "~YT - TJ" # tj
-https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw videos "~YT - The Primeagen" # theprimeagen
-https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg videos "~YT - Two minute papers" # twominutepapers
-https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A videos "~YT - The Changelog" # changelog
-https://www.youtube.com/feeds/videos.xml?channel_id=UCPbwhExawYrn9xxI21TFfyw videos "~YT - The Pragmatic Engineer" # pragmaticengineer
-https://www.youtube.com/feeds/videos.xml?channel_id=UCftwRNsjfRo08xYE31tkiyw videos "~YT - Wired" # wired
-https://thevaluable.dev/index.xml
-" "
+"query:😃 fun:tags # \"fun\""
+https://xkcd.com/rss.xml fun
+https://www.youtube.com/feeds/videos.xml?channel_id=UClUSqujSdARUgqlgX-FfAZA tech "~YT - Bödőcs Tibor"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGK9n7svoIjuaQfRIBJXkqQ tech "~YT - Watch It Played"
 
-"───  comics ───────────────────────────────────────────"
-https://xkcd.com/rss.xml meme
-" "
+"query:🎵 music:tags # \"music\""
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3I2GFN_F8WudD_2jUZbojA music "~YT - KEXP"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCV7ZgnEcCps_rHKgT9sq_Lg music "~YT - Febueder"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGxLOaA_QnWLhTnf5depKLg music "~YT - From The Basement"
 
-"───  music ────────────────────────────────────────────"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC3I2GFN_F8WudD_2jUZbojA videos # kexp
-" "
-
-"───  misc ─────────────────────────────────────────────"
-" "
+"query:🎮 games:tags # \"games\""
+https://store.steampowered.com/feeds/news.xml games
