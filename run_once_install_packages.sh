@@ -77,40 +77,6 @@ install_package "python-pip"
 install_package "python-poetry"
 install_package "yarn"
 
-print_in_purple "Formatters\n"
-
-install_package "gofumpt"
-install_package "pgformatter"
-install_package "prettier"
-install_package "prettierd"
-install_package "python-black"
-install_package "python-isort"
-install_package "shfmt"
-install_package "stylua"
-
-print_in_purple "Linters\n"
-
-install_package "actionlint"
-install_package "eslint"
-install_package "flake8"
-install_package "mypy"
-install_package "python-pylint"
-install_package "rust-analyzer"
-install_package "shellcheck"
-install_package "sqlfluff"
-install_package "stylelint"
-
-print_in_purple "LSPs\n"
-
-install_package "bash-language-server"
-install_package "dockerfile-language-server-bin"
-install_package "gopls"
-install_package "ltex-ls-bin"
-install_package "lua-language-server"
-install_package "pyright"
-install_package "texlab"
-install_package "yaml-language-server"
-
 print_in_purple "Interpreters\n"
 
 install_package "ipython"
@@ -118,7 +84,6 @@ install_package "yaegi"
 
 print_in_purple "Misc\n"
 
-install_package "gotestsum"
 install_package "python-coverage"
 install_package "python-matplotlib"
 install_package "python-numpy"
@@ -340,7 +305,6 @@ install_package "xorg-xwayland"
 print_in_purple "GO packages\n"
 
 install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"                                   # aur - outdated
-install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver" # no aur (yet)
 
 print_in_purple "NPM packages\n"
 
@@ -350,14 +314,6 @@ install_npm_package "typescript"
 install_npm_package "ts-node"
 # check for outdated packages
 install_npm_package "npm-check"
-# lsp for typescript
-install_npm_package "typescript-language-server"
-# lsp for html/css/json/eslint
-install_npm_package "vscode-langservers-extracted"
-# lsp for prisma orm
-install_npm_package "@prisma/language-server"
-# lsp for tailwindcss
-install_npm_package "@tailwindcss/language-server"
 # slidev - markdown based presentations with a lot of feature, but still in beta
 install_npm_package "@slidev/cli"
 # gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
