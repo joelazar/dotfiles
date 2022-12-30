@@ -90,6 +90,7 @@ install_package "stylua"
 
 print_in_purple "Linters\n"
 
+install_package "actionlint"
 install_package "eslint"
 install_package "flake8"
 install_package "mypy"
@@ -103,7 +104,6 @@ print_in_purple "LSPs\n"
 
 install_package "bash-language-server"
 install_package "dockerfile-language-server-bin"
-install_package "efm-langserver"
 install_package "gopls"
 install_package "ltex-ls-bin"
 install_package "lua-language-server"
