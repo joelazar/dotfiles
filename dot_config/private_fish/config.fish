@@ -64,7 +64,7 @@ set -gx SSH_ENV $HOME/.ssh/environment
 set -gx KITTY_LISTEN_ON "unix:/tmp/kitty-$KITTY_PID"
 
 # nnn settings
-# set -gx NNN_FIFO /tmp/nnn.fifo # breaks NnnExplorer feature
+set -gx NNN_FIFO /tmp/nnn.fifo # breaks NnnExplorer feature
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
