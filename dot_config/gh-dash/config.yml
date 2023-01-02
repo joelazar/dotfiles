@@ -2,7 +2,9 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me
   - title: Needs My Attention
-    filters: is:open -author:@me involves:@me
+    filters: is:open -author:@me involves:@me -label:wip
+  - title: Work in progress
+    filters: is:open -author:@me user:Growblocks label:wip
   - title: Only work
     filters: is:open -author:@me user:Growblocks
 issuesSections:
@@ -15,12 +17,13 @@ issuesSections:
 defaults:
   preview:
     open: true
-    width: 50
-  prsLimit: 20
+    width: 60
+  prsLimit: 50
   issuesLimit: 20
   view: prs
+  refetchIntervalMinutes: 30
 repoPaths:
-  Growblocks/app: ~/git/work/app/
+  Growblocks/*: ~/git/work/*
 pager:
   diff: delta
 keybindings:
