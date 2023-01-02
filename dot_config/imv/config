@@ -1,4 +1,0 @@
-[binds]
-
-# Delete and then close an open image by pressing 'X'
-<Shift+X> = exec rm "$imv_current_file"; close
