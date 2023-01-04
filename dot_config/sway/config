@@ -30,8 +30,6 @@ set $menu exec bemenu-run
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpapers/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
-# scale 2.0 give proper sized output for most of the wayland apps, but x ones gets pretty blurry
-# scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
 output eDP-1 scale 1.0 scale_filter nearest
 
 # set custom swaylock command
@@ -49,17 +47,8 @@ set $lock swaylock \
       --ring-ver-color 738091 \
       --inside-ver-color 738091 \
       --inside-wrong-color f4a261 \
-      --layout-bg-color 192330
-
-      # TODO: these options could be used for swaylock-effects, when it gets rebased on swaylock 1.7
-      # --grace 3
-      # --fade-in 0.5
-      # --clock
-      # --indicator
-      # --screenshots \
-      # --effect-greyscale \
-      # --effect-blur 7x5 \
-      # --effect-vignette 0.5:0.5 \
+      --layout-bg-color 192330 \
+	  --image `find $wallpapers_path -type f | shuf -n 1`
 
 ### Idle configuration
 exec swayidle -w \
@@ -98,7 +87,7 @@ input type:keyboard {
 }
 
 ### Key bindings
-#
+
 # Start a terminal
 bindsym $mod+Return exec $term
 
