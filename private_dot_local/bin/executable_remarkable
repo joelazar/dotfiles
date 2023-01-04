@@ -1,2 +1,2 @@
 #!/bin/bash
-exec wine ~/.wine/drive_c/Program\ Files\ \(x86\)/reMarkable/reMarkable.exe &>/dev/null
+exec /usr/bin/wine ~/.wine/drive_c/Program\ Files\ \(x86\)/reMarkable/reMarkable.exe &>/dev/null
