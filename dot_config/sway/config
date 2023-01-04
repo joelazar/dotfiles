@@ -34,22 +34,32 @@ output * bg `find $wallpapers_path -type f | shuf -n 1` fill
 # scale 1.0 give proper quality x windows, but all clients should be set for a suitable size one by one
 output eDP-1 scale 1.0 scale_filter nearest
 
-# set custom swaylock command (swaylock-effects)
-set $lock swaylock --screenshots \
-      --clock \
-      --indicator \
-      --indicator-radius 100 \
+# set custom swaylock command
+set $lock swaylock \
+      --indicator-radius 80 \
       --indicator-thickness 7 \
-      --effect-blur 7x5 \
-      --effect-vignette 0.5:0.5 \
-      --ring-color 192330 \
-      --key-hl-color 9d79d6 \
+      --color 192330 \
+      --show-failed-attempts \
+      --ring-color 2b3b51 \
+      --key-hl-color dbc074 \
       --line-color 000000 \
-      --inside-color c94f6d \
+      --font Roboto Mono \
+      --inside-color 2b3b51 \
       --separator-color 000000 \
-      --grace 3 \
-      --fade-in 0.5 \
-      --effect-greyscale
+      --ring-ver-color 738091 \
+      --inside-ver-color 738091 \
+      --inside-wrong-color f4a261 \
+      --layout-bg-color 192330
+
+      # TODO: these options could be used for swaylock-effects, when it gets rebased on swaylock 1.7
+      # --grace 3
+      # --fade-in 0.5
+      # --clock
+      # --indicator
+      # --screenshots \
+      # --effect-greyscale \
+      # --effect-blur 7x5 \
+      # --effect-vignette 0.5:0.5 \
 
 ### Idle configuration
 exec swayidle -w \
