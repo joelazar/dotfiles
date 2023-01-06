@@ -77,7 +77,7 @@ set -gx NNN_FCOLORS 030304020000060801030500 # filetype colors. this mimics dirc
 # r: show cp/mv progress
 # U: show file's owner and group in status bar
 set -gx NNN_OPTS dreuU
-set -gx NNN_PLUG "k:pskill;t:preview-tui;o:fzopen;m:nmount;z:autojump;h:fzhist;c:diffs;p:fzplug;"
+set -gx NNN_PLUG "c:fzcd;d:diffs;h:fzhist;k:pskill;m:nmount;o:fzopen;p:fzplug;t:preview-tui;z:autojump;"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/"
 
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
