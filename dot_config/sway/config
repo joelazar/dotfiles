@@ -4,7 +4,7 @@
 set $mod Mod4
 
 # TODO - until set $font_size 0 is allowed again - https://github.com/swaywm/sway/issues/7350
-set $font_size 8
+set $font_size 0.001
 set $cursor_size 16
 
 font pango:Roboto Mono $font_size
