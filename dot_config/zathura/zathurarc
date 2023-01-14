@@ -36,8 +36,10 @@ set render-loading-fg		"#cdcecf"
 set highlight-color		"#719cd6"
 set highlight-active-color	"#9d79d6"
 
-set adjust-open "width"
-set font "Roboto Mono 12"
+# Open document in fit-width mode by default
+set adjust-open "best-fit"
+
+set font "Roboto Mono 10"
 set incremental-search true
 set selection-clipboard clipboard
 set selection-notification "true"
