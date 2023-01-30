@@ -41,14 +41,14 @@ set $lock swaylock \
       --ring-color 2b3b51 \
       --key-hl-color dbc074 \
       --line-color 000000 \
-      --font Roboto Mono \
+      --font 'Roboto Mono' \
       --inside-color 2b3b51 \
       --separator-color 000000 \
       --ring-ver-color 738091 \
       --inside-ver-color 738091 \
       --inside-wrong-color f4a261 \
       --layout-bg-color 192330 \
-	  --image `find $wallpapers_path -type f | shuf -n 1`
+      --image `find $wallpapers_path -type f | shuf -n 1`
 
 ### Idle configuration
 exec swayidle -w \
