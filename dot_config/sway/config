@@ -41,7 +41,7 @@ set $lock swaylock \
       --ring-color 2b3b51 \
       --key-hl-color dbc074 \
       --line-color 000000 \
-      --font 'Roboto Mono' \
+      --font "Roboto Mono" \
       --inside-color 2b3b51 \
       --separator-color 000000 \
       --ring-ver-color 738091 \
