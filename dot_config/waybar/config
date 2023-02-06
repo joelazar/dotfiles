@@ -27,6 +27,8 @@
         "custom/separator",
         "pulseaudio",
         "custom/separator",
+        "custom/profile",
+        "custom/separator",
         "battery",
         "custom/separator",
         "clock",
@@ -39,6 +41,13 @@
     // -------------------------------------------------------------------------
     // Modules
     // -------------------------------------------------------------------------
+
+    "custom/profile":{
+        "interval": 10,
+        "format": "󰓅 {}",
+        "exec": "cat /sys/firmware/acpi/platform_profile",
+        "return-type": "text",
+    },
 
     "battery": {
         "interval": 30,
@@ -107,8 +116,6 @@
 
     "custom/vpn":{
         "interval": 10,
-        "tooltip-format": "{icon}",
-        "format": " {icon} ",
         "exec": "$HOME/.local/bin/vpn_echo",
         "return-type": "json",
         "format": "{}",
