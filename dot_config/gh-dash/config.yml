@@ -2,7 +2,7 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me
   - title: Needs My Attention
-    filters: is:open -author:@me involves:@me -label:wip
+    filters: is:open -author:@me involves:@me -label:wip -is:draft
   - title: Work in progress
     filters: is:open -author:@me user:Growblocks label:wip
   - title: Only work
@@ -33,11 +33,18 @@ keybindings:
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
         nvim
+    - key: V
+      command: >
+        cd {{.RepoPath}} &&
+        nvim -c ":let g:ministarter_disable = v:true | Octo pr edit {{.PrNumber}}"
     - key: D
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
         nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
+    - key: O
+      command: >
+        gh pr review --repo {{.RepoName}} {{.PrNumber}} --approve
     - key: M
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --rebase --delete-branch
