@@ -21,7 +21,7 @@ defaults:
   prsLimit: 50
   issuesLimit: 20
   view: prs
-  refetchIntervalMinutes: 30
+  refetchIntervalMinutes: 10
 repoPaths:
   Growblocks/*: ~/git/work/*
 pager:
@@ -30,13 +30,14 @@ keybindings:
   prs:
     - key: v
       command: >
-        cd {{.RepoPath}} &&
+        kitty @ launch --type=tab --tab-title "👷 {{.RepoName}} - PR {{.PrNumber}}" --keep-focus
+        fish -c 'cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
-        nvim
+        nvim'
     - key: V
       command: >
-        cd {{.RepoPath}} &&
-        nvim -c ":let g:ministarter_disable = v:true | Octo pr edit {{.PrNumber}}"
+        kitty @ launch --type=tab --tab-title "📖 {{.RepoName}} - PR {{.PrNumber}}" --keep-focus
+        fish -c 'cd {{.RepoPath}} && nvim -c ":let g:ministarter_disable = v:true | Octo pr edit {{.PrNumber}}"'
     - key: D
       command: >
         cd {{.RepoPath}} &&
@@ -45,6 +46,9 @@ keybindings:
     - key: O
       command: >
         gh pr review --repo {{.RepoName}} {{.PrNumber}} --approve
+    - key: m
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --rebase --delete-branch
     - key: M
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --rebase --delete-branch
