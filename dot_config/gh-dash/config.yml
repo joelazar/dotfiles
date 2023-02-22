@@ -50,7 +50,7 @@ keybindings:
         gh pr review --repo {{.RepoName}} {{.PrNumber}} --approve
     - key: m
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --rebase --delete-branch
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --merge --delete-branch
     - key: M
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --rebase --delete-branch
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --merge --delete-branch
