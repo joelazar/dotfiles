@@ -258,7 +258,7 @@ show_menu() {
 	fi
 
 	# Open bemenu menu, read chosen option
-	chosen="$(echo -e "$options" | run_bemenu "Bluetooth")"
+	chosen="$(echo -e "$options" | run_bemenu "bluetooth")"
 
 	# Match chosen option to command
 	case $chosen in
@@ -290,7 +290,7 @@ original_args=("$@")
 # bemenu command to pipe into. Extra arguments to bemenu-bluetooth are passed through to bemenu. This
 # allows the user to set fonts, sizes, colours, etc.
 run_bemenu() {
-	bemenu "${original_args[@]}" -i -p "$1"
+	bemenu "${original_args[@]}" -i -l 10 -p "$1"
 }
 
 case "$1" in

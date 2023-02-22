@@ -23,9 +23,6 @@ set $term kitty
 
 popup_during_fullscreen smart
 
-# Your preferred application launcher
-set $menu exec bemenu-run
-
 ### Output configuration
 set $wallpapers_path $HOME/pictures/wallpapers/
 output * bg `find $wallpapers_path -type f | shuf -n 1` fill
@@ -94,7 +91,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 
 # Start your launcher
-bindsym $mod+d exec $menu
+bindsym $mod+d exec bemenu-run -p launch
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -333,8 +330,8 @@ bindsym $mod+F9 exec --no-startup-id ncspot
 bindsym $mod+F10 exec --no-startup-id spotify
 bindsym $mod+Shift+n exec networkmanager_dmenu
 bindsym $mod+Shift+b exec bemenu-bluetooth
-bindsym $mod+o exec bmenu
-bindsym $mod+c exec clipman pick -t bemenu
+bindsym $mod+o exec bemenu-bookmark
+bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
 # Notifications
 bindsym $mod+ctrl+space exec dunstctl close

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# get all bookmarks | swap tabs for ' | ' | reverse the order | run bemenu | cut to ID | run buku if not empty
+buku -p -f 4 | sed 's/\t/ | /g' | sort -nr | bemenu -l 20 -p bookmark -i | cut -d ' ' -f 1 | xargs --no-run-if-empty buku -o

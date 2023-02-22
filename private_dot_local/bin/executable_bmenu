@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# get all bookmarks | swap tabs for spaces | run bemenu | cut to ID | run buku if not empty
-buku -p -f 3 | sed 's/\t/ /g' | bemenu -i | cut -d ' ' -f 1 | xargs --no-run-if-empty buku -o
