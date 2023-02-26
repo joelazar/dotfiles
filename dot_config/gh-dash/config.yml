@@ -54,3 +54,6 @@ keybindings:
     - key: M
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --merge --delete-branch
+    - key: t
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto
