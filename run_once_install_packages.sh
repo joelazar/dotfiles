@@ -304,7 +304,7 @@ install_package "xorg-xwayland"
 
 print_in_purple "GO packages\n"
 
-install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"                                   # aur - outdated
+install_go_package "github.com/cosmos72/gomacro@latest" "gomacro" # aur - outdated
 
 print_in_purple "NPM packages\n"
 
@@ -318,6 +318,8 @@ install_npm_package "npm-check"
 install_npm_package "@slidev/cli"
 # gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
 install_npm_package "gitmoji-cli"
+# github copilot - AI code completion for shell commands
+install_npm_package "@githubnext/github-copilot-cli"
 
 print_in_purple "GH plugins\n"
 
