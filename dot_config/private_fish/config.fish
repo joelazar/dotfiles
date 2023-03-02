@@ -109,6 +109,10 @@ if test -e $HOME/.config/fish/github_copilot_cli.fish
     source $HOME/.config/fish/github_copilot_cli.fish
 end
 
+if test -e /opt/google-cloud-sdk/path.fish.inc
+    source /opt/google-cloud-sdk/path.fish.inc
+end
+
 alias :q="exit"
 alias N='sudo -E nnn -deH'
 alias b='buku --suggest'
