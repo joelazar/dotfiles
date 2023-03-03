@@ -57,3 +57,5 @@ keybindings:
     - key: t
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto
+    - key: C
+      command: cd {{.RepoPath}} && gh pr checkout {{.PrNumber}}
