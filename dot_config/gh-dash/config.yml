@@ -2,9 +2,9 @@ prSections:
   - title: My Pull Requests
     filters: is:open author:@me
   - title: Needs My Attention
-    filters: is:open -author:@me involves:@me -label:wip -is:draft
+    filters: is:open -author:@me involves:@me -label:wip -label:"don't merge" -is:draft
   - title: Work in progress
-    filters: is:open -author:@me user:Growblocks label:wip
+    filters: is:open -author:@me user:Growblocks label:wip,"don't merge"
   - title: Only work
     filters: is:open -author:@me user:Growblocks
   - title: Recently closed
