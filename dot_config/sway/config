@@ -353,6 +353,7 @@ exec_always {
 
 for_window [app_id=pavucontrol] floating enable
 for_window [app_id=blueman-manager] floating enable
+for_window [app_id=org.kde.kdeconnect.*] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=wdisplays] floating enable,resize set 970 736
 for_window [app_id=nm-connection-editor] floating enable, resize set 781 580, sticky enable
@@ -373,6 +374,7 @@ exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi
+exec --no-startup-id kdeconnect-indicator
 
 for_window [class="^.*"] border pixel 2
 
