@@ -54,8 +54,6 @@ install_package "zoxide"
 print_in_purple "Infrastructure\n"
 
 install_package "docker-compose"
-# install_package "google-cloud-sdk" - until the aur package gets updated
-# install_package "google-cloud-sdk-gke-gcloud-auth-plugin" - until the aur package gets updated
 install_package "helm"
 install_package "k9s"
 install_package "kubectl"
