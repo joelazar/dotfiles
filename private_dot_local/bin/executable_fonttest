@@ -4,9 +4,12 @@
 # -----------------
 # Print all avaliable variants of chosen terminal font
 
-echo -en "regular "
-echo -en "\e[3m italic \e[0m"
-echo -en "\e[1m bold \e[0m"
-echo -en "\e[3m\e[1m bold-italic \e[0m"
-echo -en " \e[4munderline\e[0m "
-echo -e " \e[9mstrikethrough\e[0m"
+echo -en "Normal\n"
+echo -en "\033[1mBold\033[22m\n"
+echo -en "\033[3mItalic\033[23m\n"
+echo -en "\033[3;1mBold Italic\033[0m\n"
+echo -en "\033[4mUnderline\033[24m\n"
+echo -e "\e[9mStrikethrough\e[0m"
+
+echo "== === !== >= <= =>"
+echo "契          勒 鈴 "
