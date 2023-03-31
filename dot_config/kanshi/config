@@ -21,3 +21,8 @@ profile {
 	output eDP-1 enable position 0,1080 scale 1
 	output "Sony SONY TV 0x00000101" enable mode 1920x1080 position 0,0 scale 1
 }
+
+profile {
+	output eDP-1 enable position 320,1440 scale 1
+	output "Samsung Electric Company LS24A600U HNAT800143" enable mode 2560x1440 position 0,0 scale 1
+}
