@@ -17,5 +17,6 @@
 *.pyc
 .netrwhist
 Session.vim
+.credentials.json
 
 # .envrc

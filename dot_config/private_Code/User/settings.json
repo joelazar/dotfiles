@@ -55,6 +55,5 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
-  "workbench.editor.untitled.hint": "hidden",
-  "window.zoomLevel": 4
+  "workbench.editor.untitled.hint": "hidden"
 }

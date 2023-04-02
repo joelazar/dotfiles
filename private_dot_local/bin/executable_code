@@ -1,2 +1,0 @@
-#!/bin/bash
-exec /usr/bin/code --enable-features=UseOzonePlatform --enable-gpu --ozone-platform=wayland "$@" &>/dev/null
