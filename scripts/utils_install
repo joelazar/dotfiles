@@ -107,7 +107,7 @@ clean_up_cache() {
 }
 
 clean_up_unused_packages() {
-  yay -c
+  yay -Yc
 }
 
 install_blackarch_repo() {
