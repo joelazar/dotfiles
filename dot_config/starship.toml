@@ -12,3 +12,14 @@ disabled = false
 [kubernetes]
 format = '[⛵$context](green) '
 disabled = true
+
+[git_metrics]
+disabled = false
+
+[sudo]
+style = 'bold yellow'
+symbol = '🧙'
+disabled = false
+
+[cmd_duration]
+disabled = false
