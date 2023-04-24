@@ -175,6 +175,7 @@ install_package "hydra"
 install_package "macchanger"
 install_package "nmap"
 install_package "reaver"
+install_package "sniffnet"
 install_package "whatweb"
 install_package "wireshark-qt"
 
