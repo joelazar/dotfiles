@@ -72,30 +72,29 @@
 
 [mergetool]
 
-    prompt = true
+    prompt = false
     keepBackup = false
 
-[mergetool "nvimdiff"]
+[mergetool "nvim"]
 
-    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
-    #cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -f -c \"DiffviewOpen\"
 
 [difftool]
 
     prompt = false
 
-[difftool "nvimdiff"]
+[difftool "nvim"]
 
-    cmd = nvim -d $LOCAL $REMOTE
+	cmd = nvim -f -c \"DiffviewOpen\"
 
 [diff]
 
     colorMoved = default
-    tool = nvimdiff
+    tool = nvim
 
 [merge]
 
-    tool = nvimdiff
+    tool = nvim
     conflictstyle = diff3
 
 [color]
