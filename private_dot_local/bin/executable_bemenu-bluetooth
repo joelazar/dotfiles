@@ -166,6 +166,33 @@ toggle_trust() {
 	fi
 }
 
+# Checks if a device is used as microphone
+device_mic() {
+	default_source=$(pactl get-default-source)
+	mac=$(echo "$1" | tr : _)
+
+	if echo "$default_source" | grep -F -q "$mac"; then
+		echo "Mic: yes"
+		return 0
+	else
+		echo "Mic: no"
+		return 1
+	fi
+}
+
+# Toggles device microphone
+toggle_mic() {
+	mac=$(echo "$1" | tr : _)
+	if device_mic "$1"; then
+		pactl set-card-profile bluez_card."$mac" a2dp-sink
+		device_menu "$device"
+	else
+		pactl set-card-profile bluez_card."$mac" headset-head-unit
+		pactl set-default-source bluez_input."$mac".0
+		device_menu "$device"
+	fi
+}
+
 # Prints a short string with the current bluetooth status
 # Useful for status bars like polybar, etc.
 print_status() {
@@ -210,7 +237,8 @@ device_menu() {
 	fi
 	paired=$(device_paired "$mac")
 	trusted=$(device_trusted "$mac")
-	options="$connected\n$paired\n$trusted\n$divider\n$goback\nExit"
+	mic=$(device_mic "$mac")
+	options="$connected\n$paired\n$trusted\n$mic\n$divider\n$goback\nExit"
 
 	# Open bemenu menu, read chosen option
 	chosen="$(echo -e "$options" | run_bemenu "$device_name")"
@@ -228,6 +256,9 @@ device_menu() {
 		;;
 	"$trusted")
 		toggle_trust "$mac"
+		;;
+	"$mic")
+		toggle_mic "$mac"
 		;;
 	"$goback")
 		show_menu
