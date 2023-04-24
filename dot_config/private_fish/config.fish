@@ -37,7 +37,13 @@ set -gx MANPAGER 'nvim +Man!'
 
 # Customize PATH
 set -gx GOPATH $HOME/go
-set -gx PATH $HOME/.node/bin $HOME/.yarn/bin $HOME/.local/bin /usr/lib/go/bin $GOPATH/bin $HOME/.cargo/bin $HOME/.local/share/nvim/mason/bin $PATH
+fish_add_path $HOME/.yarn/bin
+fish_add_path $HOME/.node/bin
+fish_add_path $HOME/.local/bin
+fish_add_path /usr/lib/go/bin
+fish_add_path $GOPATH/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path $HOME/.local/share/nvim/mason/bin
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
@@ -224,6 +230,13 @@ set -g fish_pager_color_description $comment
 # Done plugin config
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
+
+# I like to keep the prompt at the bottom rather than the top
+# of the terminal window so that running `clear` doesn't make
+# me move my eyes from the bottom back to the top of the screen;
+# keep the prompt consistently at the bottom
+tput cup $LINES
+alias clear="clear && tput cup \$LINES"
 
 # Start Sway at login
 if status is-login
