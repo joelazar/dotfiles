@@ -231,13 +231,6 @@ set -g fish_pager_color_description $comment
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 
-# I like to keep the prompt at the bottom rather than the top
-# of the terminal window so that running `clear` doesn't make
-# me move my eyes from the bottom back to the top of the screen;
-# keep the prompt consistently at the bottom
-tput cup $LINES
-alias clear="clear && tput cup \$LINES"
-
 # Start Sway at login
 if status is-login
     if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
