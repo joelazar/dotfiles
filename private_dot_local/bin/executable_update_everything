@@ -32,7 +32,7 @@ print_in_purple "Update gh extensions\n"
 execute "gh extension upgrade --all" "Update gh extensions"
 
 print_in_purple "Update gcloud cli\n"
-execute "sudo gcloud components update" "Update gcloud cli"
+execute "sudo gcloud components update --quiet" "Update gcloud cli"
 
 print_in_purple "Update firmwares\n"
 ask_for_confirmation "Would you like to do it now? It can take a bit of time."
