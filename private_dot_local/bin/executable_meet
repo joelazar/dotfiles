@@ -1,0 +1,4 @@
+#!/bin/bash
+
+chromium https://meet.google.com &>/dev/null &
+disown
