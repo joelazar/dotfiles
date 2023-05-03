@@ -4,12 +4,13 @@
 # -----------------
 # Print all avaliable variants of chosen terminal font
 
-echo -en "Normal\n"
-echo -en "\033[1mBold\033[22m\n"
-echo -en "\033[3mItalic\033[23m\n"
-echo -en "\033[3;1mBold Italic\033[0m\n"
-echo -en "\033[4mUnderline\033[24m\n"
-echo -e "\e[9mStrikethrough\e[0m"
+echo -en "Normal - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\n"
+echo -en "\033[1mBold - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\033[0m\n"
+echo -en "\033[2mDim - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\033[0m\n"
+echo -en "\033[3mItalic - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\033[0m\n"
+echo -en "\033[3;1mBold Italic - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\033[0m\n"
+echo -en "\033[4mUnderline - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\033[0m\n"
+echo -e "\e[9mStrikethrough - abcdefghijklmnopqrstuvwxyz - ABCDEFGHIJKLMNOPQRSTUVWXYZ - 0123456789\e[0m\n"
 
 echo
 echo "== === !== >= <= =>"
