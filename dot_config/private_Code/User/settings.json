@@ -1,6 +1,6 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
+  "editor.fontFamily": "'Hack Nerd Font Mono', 'monospace', monospace",
   "editor.formatOnSave": true,
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,

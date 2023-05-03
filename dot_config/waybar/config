@@ -79,7 +79,7 @@
 
     "backlight": {
         "format": "{icon} {percent}%",
-        "format-icons": ["", "", "", ""]
+        "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"]
     },
 
 
@@ -108,7 +108,7 @@
     "network": {
         "interval": 10,
         "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-ethernet": "󰛳 {ifname}: {ipaddr}/{cidr}",
         "format-disconnected": "⚠ Disconnected",
         "tooltip-format": "{ifname}: {ipaddr}",
         "on-click": "nm-connection-editor"
@@ -173,14 +173,14 @@
     "pulseaudio": {
         "format": "{icon} {volume}% {format_source}",
         "format-bluetooth": "{icon}  {volume}% {format_source}",
-        "format-bluetooth-muted": " {icon}  {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": " {volume}%",
-        "format-source-muted": "",
+        "format-bluetooth-muted": "󰝟 {icon}  {format_source}",
+        "format-muted": "󰝟 {format_source}",
+        "format-source": " {volume}%",
+        "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "󰋏",
+            "headset": "󰋎",
             "phone": "",
             "portable": "",
             "car": "",
