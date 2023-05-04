@@ -39,7 +39,7 @@ set highlight-active-color	"#9d79d6"
 # Open document in fit-width mode by default
 set adjust-open "best-fit"
 
-set font "Hack Nerd Font Mono 10"
+set font "Roboto Mono 10"
 set incremental-search true
 set selection-clipboard clipboard
 set selection-notification "true"

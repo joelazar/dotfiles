@@ -164,6 +164,8 @@ print_in_purple "Fonts\n"
 
 install_package "noto-fonts"
 install_package "noto-fonts-emoji"
+install_package "ttf-nerd-fonts-symbols"
+install_package "ttf-nerd-fonts-symbols-common"
 install_package "ttf-roboto-mono"
 
 print_in_purple "Penetration testing\n"

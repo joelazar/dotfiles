@@ -6,7 +6,7 @@ set $mod Mod4
 set $font_size 0
 set $cursor_size 16
 
-font pango:Hack Nerd Font Mono $font_size
+font pango:Roboto Mono $font_size
 
 default_border pixel 1
 default_floating_border pixel 1
@@ -37,7 +37,7 @@ set $lock swaylock \
       --ring-color 2b3b51 \
       --key-hl-color dbc074 \
       --line-color 000000 \
-      --font "Hack Nerd Font Mono" \
+      --font "Roboto Mono" \
       --inside-color 2b3b51 \
       --separator-color 000000 \
       --ring-ver-color 738091 \
@@ -349,7 +349,7 @@ exec_always {
   gsettings set $gnome-schema icon-theme 'Materia'
   gsettings set $gnome-schema cursor-theme 'Adwaita'
   gsettings set $gnome-schema cursor-size $cursor_size
-  # gsettings set $gnome-schema font-name 'Hack Nerd Font Mono'
+  # gsettings set $gnome-schema font-name 'Roboto Mono'
 }
 
 for_window [app_id=pavucontrol] floating enable
