@@ -20,5 +20,6 @@ ignore private-tmp
 
 whitelist ${HOME}/pictures
 whitelist ${HOME}/documents
+whitelist ${HOME}/git/work
 
 include firefox-common-addons.profile
