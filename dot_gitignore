@@ -18,5 +18,4 @@
 .netrwhist
 Session.vim
 .credentials.json
-
-# .envrc
+.envrc
