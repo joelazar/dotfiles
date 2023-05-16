@@ -331,6 +331,7 @@ bindsym $mod+F9 exec --no-startup-id ncspot
 bindsym $mod+F10 exec --no-startup-id spotify
 bindsym $mod+Shift+n exec networkmanager_dmenu
 bindsym $mod+Shift+b exec bemenu-bluetooth
+bindsym $mod+Shift+e exec shmoji bemenu
 bindsym $mod+o exec bemenu-bookmark
 bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
