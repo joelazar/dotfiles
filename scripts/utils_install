@@ -93,7 +93,7 @@ package_is_installed() {
 }
 
 update() {
-  yay -Syyu
+  yay -y
 }
 
 update_hosts() {

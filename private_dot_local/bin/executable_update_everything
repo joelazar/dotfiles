@@ -18,10 +18,6 @@ execute "fish -c 'fish_update_completions'" "Update fish completions"
 print_in_purple "Update neovim plugins\n"
 execute "nvim --headless \"+Lazy! update\" +qa" "Update neovim plugins"
 
-print_in_purple "Update GO packages\n"
-install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
-install_go_package "github.com/nametake/golangci-lint-langserver@latest" "golangci-lint-langserver"
-
 print_in_purple "Update npm packages\n"
 execute "npm update -g" "Update NPM packages"
 

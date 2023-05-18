@@ -94,7 +94,6 @@ install_package "texlive-science"
 
 print_in_purple "Development tools\n"
 
-install_package "cht.sh-git"
 install_package "curl"
 install_package "direnv"
 install_package "exercism-bin"
@@ -106,7 +105,6 @@ install_package "hey"
 install_package "hugo"
 install_package "jupyterlab"
 install_package "lazygit"
-install_package "mermaid-cli"
 install_package "pgcli"
 install_package "visual-studio-code-bin"
 
@@ -136,7 +134,6 @@ install_package "bitwarden"
 install_package "bitwarden-cli"
 install_package "bleachbit"
 install_package "calibre"
-install_package "graphviz"
 install_package "lftp"
 install_package "libqalculate"
 install_package "man-db"
@@ -156,7 +153,6 @@ install_package "virtualbox"
 install_package "words"
 install_package "yt-dlp"
 install_package "zbar"
-install_package "zstd"
 
 install_nnn_plugins
 
@@ -188,7 +184,6 @@ install_package "fisher"
 install_package "hyperfine"
 install_package "kitty"
 install_package "starship"
-install_package "theme.sh"
 
 print_in_purple "Fish plugins\n"
 
@@ -247,6 +242,7 @@ install_package "wireguard-dkms"
 install_package "wireguard-tools"
 install_package "zenity"
 install_package "zk"
+install_package "zstd"
 
 print_in_purple "Linux kernels\n"
 
@@ -308,23 +304,13 @@ install_package "wtype"
 install_package "xdg-desktop-portal-wlr"
 install_package "xorg-xwayland"
 
-print_in_purple "GO packages\n"
-
-install_go_package "github.com/cosmos72/gomacro@latest" "gomacro" # aur - outdated
-
 print_in_purple "NPM packages\n"
 
-# hey, let's make js useable
 install_npm_package "typescript"
-# and get a proper REPL for it
 install_npm_package "ts-node"
-# check for outdated packages
 install_npm_package "npm-check"
-# slidev - markdown based presentations with a lot of feature, but still in beta
 install_npm_package "@slidev/cli"
-# gitmoji-cli - gitmoji interactive client for using gitmojis on commit messages
 install_npm_package "gitmoji-cli"
-# github copilot - AI code completion for shell commands
 install_npm_package "@githubnext/github-copilot-cli"
 
 print_in_purple "GH plugins\n"
