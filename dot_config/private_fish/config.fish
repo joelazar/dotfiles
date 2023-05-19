@@ -107,8 +107,8 @@ set -gx ZK_NOTEBOOK_DIR $HOME/notes
 
 set sponge_delay 25
 
-if test -e $HOME/.config/fish/local.fish
-    source $HOME/.config/fish/local.fish
+if test -e $HOME/.config/fish/.local.fish
+    source $HOME/.config/fish/.local.fish
 end
 
 if test -e $HOME/.config/fish/github_copilot_cli.fish

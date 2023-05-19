@@ -11,7 +11,7 @@ case "$1" in
 	backup \
 	~/.ssh \
 	~/.local/share/buku \
-	~/.config/fish/local.fish \
+	~/.config/fish/.local.fish \
 	~/documents \
 	~/pictures \
 	~/private ;;
