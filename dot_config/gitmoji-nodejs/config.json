@@ -1,0 +1,8 @@
+{
+  "autoAdd": false,
+  "emojiFormat": "code",
+  "scopePrompt": false,
+  "messagePrompt": true,
+  "capitalizeTitle": false,
+  "gitmojisUrl": "https://gitmoji.dev/api/gitmojis"
+}
