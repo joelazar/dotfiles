@@ -284,10 +284,6 @@ bindsym --locked XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DE
 bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
-# Screenshot
-bindsym --release $mod+Print exec grim - | swappy -f -
-bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f -
-
 # color defines for zenburn styled i3
 set $bg     #192330
 set $ac     #719cd6
@@ -310,9 +306,6 @@ bar {
   modifier Mod4
 }
 
-# Hide/unhide waybar
-bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
-
 # Clamshell mode
 set $laptop eDP-1
 bindswitch --reload --locked lid:on output $laptop disable
@@ -320,6 +313,9 @@ bindswitch --reload --locked lid:off output $laptop enable
 
 bindsym $mod+Shift+u move workspace to output up
 bindsym $mod+Shift+r move workspace to output right
+
+# Hide/unhide waybar
+bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
 
 # Start Applications
 bindsym $mod+F1 exec --no-startup-id kitty nnn
@@ -334,6 +330,11 @@ bindsym $mod+Shift+b exec bemenu-bluetooth
 bindsym $mod+Shift+e exec shmoji bemenu
 bindsym $mod+o exec bemenu-bookmark
 bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
+
+# Screenshot
+bindsym --release $mod+Print exec grim - | swappy -f -
+bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f -
+
 
 # Notifications
 bindsym $mod+ctrl+space exec dunstctl close

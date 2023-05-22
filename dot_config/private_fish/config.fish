@@ -10,9 +10,6 @@ set -gx MOZ_ACCELERATED 1
 set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
-# TODO - breaks screensharing for now
-# set -gx WLR_RENDERER vulkan
-
 # Make default programs
 set -gx BROWSER firefox
 set -gx EDITOR nvim
@@ -30,6 +27,7 @@ set -gx XCURSOR_SIZE 16
 set -gx SWAY_CURSOR_SIZE 16
 
 # Desktop settings for screen casting
+set -gx XDG_SESSION_DESKTOP sway
 set -gx XDG_CURRENT_DESKTOP sway
 
 # Set nvim as man pager
