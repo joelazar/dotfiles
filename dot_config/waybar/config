@@ -8,7 +8,7 @@
     ],
 	"modules-center": [
         "custom/ncspot",
-        "custom/spotify",
+        "custom/spotify"
 	],
     "modules-right": [
         "network",
@@ -38,15 +38,11 @@
     "fixed-center": false,
 
 
-    // -------------------------------------------------------------------------
-    // Modules
-    // -------------------------------------------------------------------------
-
     "custom/profile":{
         "interval": 10,
         "format": "󰓅 {}",
         "exec": "cat /sys/firmware/acpi/platform_profile",
-        "return-type": "text",
+        "return-type": "text"
     },
 
     "battery": {
@@ -55,9 +51,7 @@
             "warning": 20,
             "critical": 10
         },
-        // Connected to AC
         "format": "{icon}  {capacity}%",
-        // Not connected to AC
         "format-discharging": "{icon} {capacity}%",
         "format-icons": [ "", "", "", "", "" ]
     },
@@ -118,7 +112,7 @@
         "interval": 10,
         "exec": "$HOME/.local/bin/vpn_echo",
         "return-type": "json",
-        "format": "{}",
+        "format": "{}"
     },
 
     "custom/spotify": {
@@ -199,3 +193,5 @@
         "tooltip": false
     }
 }
+
+// vi: ft=json
