@@ -1,34 +1,22 @@
 # joelazar's config for sway
 
-### Variables
-set $mod Mod4
+## Variables
 
+set $mod Mod4
+set $font "Roboto Mono"
 set $font_size 0
 set $cursor_size 16
 
-font pango:Roboto Mono $font_size
-
-default_border pixel 1
-default_floating_border pixel 1
-hide_edge_borders smart
-
-# Home row direction keys, like vim
+### Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 
-# Your preferred terminal emulator
 set $term kitty
-
-popup_during_fullscreen smart
-
-### Output configuration
 set $wallpapers_path $HOME/pictures/wallpapers/
-output * bg `find $wallpapers_path -type f | shuf -n 1` fill
-output eDP-1 scale 1.0 scale_filter nearest
+set $wallpaper `find $wallpapers_path -type f | shuf -n 1`
 
-# set custom swaylock command
 set $lock swaylock \
       --indicator-radius 80 \
       --indicator-thickness 7 \
@@ -37,14 +25,27 @@ set $lock swaylock \
       --ring-color 2b3b51 \
       --key-hl-color dbc074 \
       --line-color 000000 \
-      --font "Roboto Mono" \
+      --font $font \
       --inside-color 2b3b51 \
       --separator-color 000000 \
       --ring-ver-color 738091 \
       --inside-ver-color 738091 \
       --inside-wrong-color f4a261 \
       --layout-bg-color 192330 \
-      --image `find $wallpapers_path -type f | shuf -n 1`
+      --image $wallpaper
+
+## General configuration
+
+font pango:$font $font_size
+
+default_border pixel 1
+default_floating_border pixel 1
+hide_edge_borders smart
+popup_during_fullscreen smart
+
+### Output configuration
+output * bg `find $wallpapers_path -type f | shuf -n 1` fill
+output eDP-1 scale 1.0 scale_filter nearest
 
 ### Idle configuration
 exec swayidle -w \
@@ -59,14 +60,13 @@ exec swayidle -w \
        before-sleep '$lock'
 
 ### Input configuration
-
 input type:touchpad {
   drag enabled
   dwt enabled
   tap enabled
   natural_scroll enabled
   middle_emulation enabled
-  accel_profile "adaptive"
+  accel_profile adaptive
   scroll_factor 0.30
 }
 
@@ -78,85 +78,104 @@ input type:pointer {
 input type:keyboard {
   xkb_layout "us,hu,dk"
   xkb_options altwin:ctrl_win,caps:super,grp:rctrl_rshift_toggle
-  repeat_delay 250
-  repeat_rate 50
+  repeat_delay 200
+  repeat_rate 60
 }
 
-### Key bindings
+seat seat0 hide_cursor when-typing enable
+seat seat0 hide_cursor 10000
+seat seat0 xcursor_theme 'Adwaita' $cursor_size
 
-# Start a terminal
+### Clamshell mode
+set $laptop eDP-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+## Style
+
+### Color defines for nightfox theme
+set $bg     #192330
+set $ac     #719cd6
+set $tx     #dfdfe0
+set $ia     #cdcecf
+set $rd     #c94f6d
+
+### Set some nice colors    border     background  text
+client.focused              $ac        $ac         $tx
+client.unfocused            $bg        $bg         $ia
+client.focused_inactive     $bg        $bg         $ac
+client.urgent               $rd        $rd         $tx
+
+### Status Bar
+bar {
+  swaybar_command waybar
+  position top
+  hidden_state hide
+  mode hide
+  modifier Mod4
+}
+
+### GTK themes
+set $gnome-schema org.gnome.desktop.interface
+
+exec_always {
+  gsettings set $gnome-schema gtk-theme 'Materia'
+  gsettings set $gnome-schema icon-theme 'Materia'
+  gsettings set $gnome-schema cursor-theme 'Adwaita'
+  gsettings set $gnome-schema cursor-size $cursor_size
+}
+
+## Key bindings
+
+### Start a terminal
 bindsym $mod+Return exec $term
 
-# Kill focused window
+### Kill focused window
 bindsym $mod+Shift+q kill
 
-# Start your launcher
+### Start your launcher
 bindsym $mod+d exec bemenu-run -p launch
 
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
-# Despite the name, also works for non-floating windows.
-# Change normal to inverse to use left mouse button for resizing and right
-# mouse button for dragging.
 floating_modifier $mod normal
 
-# Reload the configuration file
+### Reload the configuration file
 bindsym $mod+Shift+c reload
 
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown
-
-mode "$mode_system" {
-    bindsym l exec --no-startup-id $lock, mode "default"
-    bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
-
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-
-bindsym Control+Shift+x mode "$mode_system"
-
-#
-# Moving around:
-#
-# Move your focus around
+### Move your focus around
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-# Or use $mod+[up|down|left|right]
+### Or use $mod+[up|down|left|right]
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# Move the focused window with the same, but add Shift
+### Move the focused window with the same, but add Shift
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-# Ditto, with arrow keys
+### Ditto, with arrow keys
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# Move the focused workspace with the same, but add Shift
-bindsym $mod+Control+Shift+$right move workspace to output right
-bindsym $mod+Control+Shift+$left move workspace to output left
-bindsym $mod+Control+Shift+$down move workspace to output down
-bindsym $mod+Control+Shift+$up move workspace to output up
-# Ditto, with arrow keys
-bindsym $mod+Control+Shift+Right move workspace to output right
-bindsym $mod+Control+Shift+Left move workspace to output left
-bindsym $mod+Control+Shift+Down move workspace to output down
-bindsym $mod+Control+Shift+Up move workspace to output up
+### Move the focused workspace with the same, but add Alt
+bindsym $mod+Alt+$right move workspace to output right
+bindsym $mod+Alt+$left move workspace to output left
+bindsym $mod+Alt+$down move workspace to output down
+bindsym $mod+Alt+$up move workspace to output up
+### Ditto, with arrow keys
+bindsym $mod+Alt+Right move workspace to output right
+bindsym $mod+Alt+Left move workspace to output left
+bindsym $mod+Alt+Down move workspace to output down
+bindsym $mod+Alt+Up move workspace to output up
 
-#
-# Workspaces:
-#
+## Workspaces
+
 set $ws1 "1.terminals"
 set $ws2 "2.www"
 set $ws3 "3.chat"
@@ -168,7 +187,7 @@ set $ws8 "8.steam"
 set $ws9 "9.spotify"
 set $ws10 "10.arch"
 
-# Switch to workspace
+### Switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
@@ -180,7 +199,7 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 
-# Move focused container to workspace
+### Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $ws2
 bindsym $mod+Shift+3 move container to workspace $ws3
@@ -192,132 +211,50 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-# Assign applications to workspaces
-# for wayland apps: assign X $wsY
-assign [app_id="firefox"] $ws2
-assign [app_id="Slack"] $ws3
-assign [app_id="code-url-handler"] $ws4
-assign [app_id="chromium"] $ws5
-assign [app_id="Spotify"] $ws9
-
-# for X11 apps: for_window X move window to workspace $wsY
-for_window [class="Slack"] move window to workspace $ws3
-for_window [class="Steam"] move window to workspace $ws8
-for_window [class="Spotify"] move window to workspace $ws9
-
-# prevent idle state at fullscreen mode for some apps
-for_window [app_id="chromium"] inhibit_idle fullscreen
-for_window [app_id="Slack"] inhibit_idle fullscreen
-for_window [app_id="firefox"] inhibit_idle fullscreen
-
-#
-# Layout stuff:
-#
-# You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
-# respectively.
+### Layout stuff
 bindsym $mod+b splith
 bindsym $mod+v splitv
 
-# Switch the current container between different layout styles
+### Switch the current container between different layout styles
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Make the current focus fullscreen
+### Make the current focus fullscreen
 bindsym $mod+f fullscreen
 
-# Toggle the current focus between tiling and floating mode
+### Toggle the current focus between tiling and floating mode
 bindsym $mod+Shift+space floating toggle
 
-# Swap focus between the tiling area and the floating area
+### Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
 
-# Move focus to the parent container
+### Move focus to the parent container
 bindsym $mod+a focus parent
 
-# Move focus to the child container
+### Move focus to the child container
 bindsym $mod+z focus child
 
-#
-# Scratchpad:
-#
-# Sway has a "scratchpad", which is a bag of holding for windows.
-# You can send windows there and get them back later.
-
-# Move the currently focused window to the scratchpad
+### Scratchpad
 bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
-#
-# Resizing containers:
-#
-bindsym $mod+r mode "resize"
 
-mode "resize" {
-  bindsym $right resize shrink width 30px
-  bindsym $left resize grow width 30px
-  bindsym $up resize grow height 30px
-  bindsym $down resize shrink height 30px
-
-  # Ditto, with arrow keys
-  bindsym Right resize shrink width 30px
-  bindsym Left resize grow width 30px
-  bindsym Up resize grow height 30px
-  bindsym Down resize shrink height 30px
-
-  # Return to default mode
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
-
-# Multimedia keys
-# Pulse Audio controls
+### Multimedia keys
 bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym --locked XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym --locked XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-# Brightness
-bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
-bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+### Brightness
+bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set 1%+
+bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 1%-
+bindsym --locked Shift+XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
+bindsym --locked Shift+XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
-# color defines for zenburn styled i3
-set $bg     #192330
-set $ac     #719cd6
-set $tx     #dfdfe0
-set $ia     #cdcecf
-set $rd     #c94f6d
-
-# set some nice colors      border     background  text
-client.focused              $ac        $ac         $tx
-client.unfocused            $bg        $bg         $ia
-client.focused_inactive     $bg        $bg         $ac
-client.urgent               $rd        $rd         $tx
-
-# Status Bar
-bar {
-  swaybar_command waybar
-  position top
-  hidden_state hide
-  mode hide
-  modifier Mod4
-}
-
-# Clamshell mode
-set $laptop eDP-1
-bindswitch --reload --locked lid:on output $laptop disable
-bindswitch --reload --locked lid:off output $laptop enable
-
-bindsym $mod+Shift+u move workspace to output up
-bindsym $mod+Shift+r move workspace to output right
-
-# Hide/unhide waybar
+### Hide/unhide waybar
 bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
 
-# Start Applications
+### Start Applications
 bindsym $mod+F1 exec --no-startup-id kitty nnn
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id slack
@@ -331,28 +268,71 @@ bindsym $mod+Shift+e exec shmoji bemenu
 bindsym $mod+o exec bemenu-bookmark
 bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
-# Screenshot
+### Screenshot
 bindsym --release $mod+Print exec grim - | swappy -f -
 bindsym --release $mod+Shift+Print exec grim -g "$(slurp)" - | swappy -f -
 
-
-# Notifications
+### Notifications
 bindsym $mod+ctrl+space exec dunstctl close
 
-# GTK themes
-set $gnome-schema org.gnome.desktop.interface
+### Exitmode
+set $mode_system "👋 (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown"
 
-seat seat0 xcursor_theme 'Adwaita' $cursor_size
-seat seat0 hide_cursor when-typing enable
-seat seat0 hide_cursor 10000
+mode $mode_system {
+    bindsym l exec --no-startup-id $lock, mode "default"
+    bindsym e exec --no-startup-id swaymsg exit, mode "default"
+    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
-exec_always {
-  gsettings set $gnome-schema gtk-theme 'Materia'
-  gsettings set $gnome-schema icon-theme 'Materia'
-  gsettings set $gnome-schema cursor-theme 'Adwaita'
-  gsettings set $gnome-schema cursor-size $cursor_size
-  # gsettings set $gnome-schema font-name 'Roboto Mono'
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
+
+bindsym $mod+Shift+Delete mode $mode_system
+
+### Resizing containers
+set $mode_resize "↔️ resize"
+
+mode $mode_resize {
+  bindsym $right resize shrink width 15px
+  bindsym $left resize grow width 15px
+  bindsym $up resize grow height 15px
+  bindsym $down resize shrink height 15px
+
+  ### Ditto, with arrow keys
+  bindsym Right resize shrink width 15px
+  bindsym Left resize grow width 15px
+  bindsym Up resize grow height 15px
+  bindsym Down resize shrink height 15px
+
+  ### Return to default mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode $mode_resize
+
+
+## Window rules
+
+### For Wayland apps: assign [app_id="app_id"] $wsY
+assign [app_id="firefox"] $ws2
+assign [app_id="Slack"] $ws3
+assign [app_id="code-url-handler"] $ws4
+assign [app_id="chromium"] $ws5
+assign [app_id="Spotify"] $ws9
+
+### For X11 apps: for_window [class="app_class"] move window to workspace $wsY
+for_window [class="Slack"] move window to workspace $ws3
+for_window [class="Steam"] move window to workspace $ws8
+for_window [class="Spotify"] move window to workspace $ws9
+
+### Prevent idle state at fullscreen mode for some apps
+for_window [app_id="chromium"] inhibit_idle fullscreen
+for_window [app_id="Slack"] inhibit_idle fullscreen
+for_window [app_id="firefox"] inhibit_idle fullscreen
+for_window [app_id="mpv"] inhibit_idle fullscreen
 
 for_window [app_id=pavucontrol] floating enable
 for_window [app_id=blueman-manager] floating enable
@@ -363,13 +343,15 @@ for_window [app_id=nm-connection-editor] floating enable, resize set 781 580, st
 for_window [title="Firefox — Sharing Indicator"] kill
 for_window [app_id="firefox" title="^Library$"] floating enable, sticky enable
 for_window [title="is sharing your screen."] move scratchpad
-# for_window [title="Slack"] move scratchpad
 for_window [title="File Upload"] resize set 1168 630
 for_window [app_id="^floating-editor$"] floating enable, sticky enable, resize set 84 ppt 79 ppt, border pixel 4
 
+for_window [class="^.*"] border pixel 2
+
 no_focus [title="^Peek preview$"]
 
-# Startup applications
+## Startup applications
+
 exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -c 10 -d 5 -D "systemctl suspend"
@@ -378,10 +360,5 @@ exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi
 exec --no-startup-id kdeconnect-indicator
-
-for_window [class="^.*"] border pixel 2
-
-# Tag xwayland windows
-for_window [shell="xwayland"] title_format "<span>[X] %title</span>"
 
 include /etc/sway/config.d/*
