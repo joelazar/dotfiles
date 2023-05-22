@@ -3,13 +3,13 @@ profile {
 }
 
 profile {
-	output eDP-1 enable position 0,528 scale 1
-	output "LG Electronics LG ULTRAFINE 103NTNHBP319" enable mode 3840x2160 position 1920,0 scale 1.25
+	output eDP-1 enable position 0,320 scale 1
+	output "LG Electronics LG ULTRAFINE 103NTNHBP319" enable mode 3840x2160 position 1920,0 scale 1.5
 }
 
 profile {
-	output "LG Electronics LG ULTRAFINE 210MASXQEG38" enable mode 3840x2160 position 0,0 scale 1.25
-	output eDP-1 enable position 576,1728 scale 1
+	output "LG Electronics LG ULTRAFINE 210MASXQEG38" enable mode 3840x2160 position 0,0 scale 1.5
+	output eDP-1 enable position 320,1440 scale 1
 }
 
 profile {
