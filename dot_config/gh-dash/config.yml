@@ -16,8 +16,6 @@ issuesSections:
     filters: is:open author:@me
   - title: Assigned
     filters: is:open assignee:@me
-  - title: Subscribed
-    filters: is:open -author:@me repo:cli/cli repo:dlvhdr/gh-dash
 defaults:
   preview:
     open: true
