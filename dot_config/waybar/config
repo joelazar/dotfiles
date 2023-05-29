@@ -110,7 +110,7 @@
 
     "custom/vpn":{
         "interval": 10,
-        "exec": "$HOME/.local/bin/vpn_echo",
+        "exec": "$HOME/.local/bin/vpn-status",
         "return-type": "json",
         "format": "{}"
     },
