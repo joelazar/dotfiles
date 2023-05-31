@@ -1,3 +1,11 @@
 #!/bin/sh
 
+is_paused=$(dunstctl is-paused)
+
+if [ "$is_paused" = "true" ]; then
+	notify-send "🎉 🔈" "Disabling do not disturb"
+else
+	notify-send -w -t 5000 "🤫 🔇" "Enabling do not disturb"
+fi
+
 dunstctl set-paused toggle

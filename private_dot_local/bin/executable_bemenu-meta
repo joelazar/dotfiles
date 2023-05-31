@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# bemenu-meta is a script, which opens a bemenu window with a list of all other available options.
+
+# create an array of options
+options_list=(
+	"airplane-mode"
+	"bluetooth"
+	"bookmark"
+	"clipboard"
+	"do-not-disturb"
+	"emoji"
+	"launcher"
+	"networkmanager"
+	"pkill"
+	"search"
+	"vpn"
+	"youtube subscriptions"
+	"youtube"
+	"exit"
+)
+
+# merge options_list into a single string with newlines
+options="$(printf '%s\n' "${options_list[@]}")"
+
+chosen="$(echo -e "$options" | bemenu -i -l 10 -p meta)"
+
+case $chosen in
+airplane-mode)
+	airplane-mode
+	;;
+bluetooth)
+	bemenu-bluetooth
+	;;
+bookmark)
+	bemenu-bookmark
+	;;
+clipboard)
+	clipman pick --tool bemenu --tool-args="-p clipboard"
+	;;
+do-not-disturb)
+	do-not-disturb
+	;;
+emoji)
+	shmoji bemenu
+	;;
+launcher)
+	bemenu-run -p launcher
+	;;
+networkmanager)
+	networkmanager_dmenu
+	;;
+pkill)
+	bemenu-pkill
+	;;
+search)
+	bemenu-search
+	;;
+vpn)
+	bemenu-vpn
+	;;
+youtube)
+	ytfzf -D
+	;;
+"youtube subscriptions")
+	ytfzf -D -cS
+	;;
+exit) ;;
+esac

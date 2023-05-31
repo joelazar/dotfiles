@@ -134,7 +134,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 
 ### Start your launcher
-bindsym $mod+d exec bemenu-run -p launch
+bindsym $mod+d exec bemenu-meta
 
 floating_modifier $mod normal
 
@@ -262,12 +262,6 @@ bindsym $mod+F4 exec --no-startup-id code
 bindsym $mod+F5 exec --no-startup-id chromium
 bindsym $mod+F9 exec --no-startup-id ncspot
 bindsym $mod+F10 exec --no-startup-id spotify
-bindsym $mod+Shift+n exec networkmanager_dmenu
-bindsym $mod+Shift+b exec bemenu-bluetooth
-bindsym $mod+Shift+e exec shmoji bemenu
-bindsym $mod+y exec ytfzf -D
-bindsym $mod+Shift+y exec ytfzf -D -cS
-bindsym $mod+o exec bemenu-bookmark
 bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
 ### Screenshot

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+searchVar=$(printf "" | bemenu -p "search: ")
+
+$BROWSER "https://duckduckgo.com/?q=$searchVar"
