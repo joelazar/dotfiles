@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-vpn=$(ls /proc/sys/net/ipv4/conf/ | grep mullvad | cut -d '-' -f2)
+vpn=$(/usr/bin/ls -d /proc/sys/net/ipv4/conf/mullvad-* | sed -E 's/\/proc\/sys\/net\/ipv4\/conf\///g' | cut -d '-' -f2)
 
 if [ "$vpn" != "" ]; then
-  echo '{"text":" '"$vpn"'", "class":"connected"}'
+	echo '{"text":" '"$vpn"'", "class":"connected"}'
 else
-  echo '{"text":"","class":"disconnected"}'
+	echo '{"text":"","class":"disconnected"}'
 fi

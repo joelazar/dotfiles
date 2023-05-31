@@ -1,4 +1,14 @@
 #!/bin/bash
 
 # list all wireguard config files, cut off leading 'mullvad-' and trailing '.conf', and pass to bemenu
-sudo -A ls /etc/wireguard/ | grep -E '^mullvad-' | sed -E 's/^mullvad-//g' | sed -E 's/.conf$//g' | bemenu -i -p "vpn" | xargs -I {} sudo -A wg-quick up mullvad-{}
+
+vpn=$(/usr/bin/ls -d /proc/sys/net/ipv4/conf/mullvad-* | sed -E 's/\/proc\/sys\/net\/ipv4\/conf\///g' | cut -d '-' -f2)
+
+if [ "$vpn" != "" ]; then
+	choice=$(printf "%s\nexit\n" "$vpn" | bemenu -i -l 2 -p "vpn disconnect")
+	if [ "$choice" != "exit" ]; then
+		sudo -A wg-quick down mullvad-"$choice"
+	fi
+else
+	sudo -A ls /etc/wireguard/ | grep -E '^mullvad-' | sed -E 's/^mullvad-//g' | sed -E 's/.conf$//g' | bemenu -i -p "vpn connect" | xargs -I {} sudo -A wg-quick up mullvad-{}
+fi
