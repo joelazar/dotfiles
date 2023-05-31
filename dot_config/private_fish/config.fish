@@ -43,6 +43,13 @@ fish_add_path $GOPATH/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 
+# Set custom askpass
+set -gx SUDO_ASKPASS $HOME/.local/bin/bemenu-askpass
+set -gx SSH_ASKPASS $HOME/.local/bin/bemenu-askpass
+set -gx SSH_ASKPASS_REQUIRE prefer
+alias sudo="sudo -A"
+alias yay="yay --sudoflags '-A'"
+
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
 set -gx FZF_DEFAULT_OPTS '--height 50% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'

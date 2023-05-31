@@ -1,0 +1,9 @@
+#!/bin/bash
+
+bemenu \
+	--prompt "$1" \
+	--password \
+	--no-exec \
+	</dev/null
+
+# must close stdin, otherwise bemenu hangs
