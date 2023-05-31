@@ -1,0 +1,3 @@
+#!/bin/sh
+
+BEMENU_OPTS='-i --fn "Roboto Mono 12" -b --nb "#192330" --nf "#cdcecf" --tb "#223249" --tf "#cdcecf" --sb "#192330" --sf "#cdcecf" --hb "#63cdcf" --hf "#192330" --fb "#192330" --ff "#cdcecf" --scb "#223249" --scf "#dbc074"' pinentry-bemenu "$@"
