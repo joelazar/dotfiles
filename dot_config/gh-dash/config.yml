@@ -1,14 +1,14 @@
 prSections:
   - title: My Pull Requests
-    filters: is:open author:@me
+    filters: is:open assignee:@me
   - title: Needs My Attention
-    filters: is:open -author:@me involves:@me -label:wip -label:"don't merge" -is:draft
+    filters: is:open -assignee:@me involves:@me -label:wip -label:"don't merge" -is:draft
   - title: Work in progress
-    filters: is:open -author:@me user:Growblocks label:wip,"don't merge"
+    filters: is:open -assignee:@me user:Growblocks label:wip,"don't merge"
   - title: Draft
-    filters: is:open -author:@me user:Growblocks is:draft
+    filters: is:open -assignee:@me user:Growblocks is:draft
   - title: Only work
-    filters: is:open -author:@me user:Growblocks
+    filters: is:open -assignee:@me user:Growblocks
   - title: Recently closed
     filters: is:closed user:Growblocks
 issuesSections:

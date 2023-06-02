@@ -29,7 +29,7 @@ customCommands:
     context: 'localBranches'
     loadingText: 'creating branch'
   - key: '<c-r>'
-    command: 'gh pr create'
+    command: 'gh pr create --assignee @me'
     context: 'global'
     loadingText: 'Creating pull request on GitHub'
     subprocess: true
