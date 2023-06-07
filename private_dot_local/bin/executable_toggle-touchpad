@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# requirements: swaymsg, jq
+
+touchpad_input_identifier=$(swaymsg -t get_inputs | jq '.[] | select(.type == "touchpad") | .identifier')
+enabled=$(swaymsg -t get_inputs | jq '.[] | select(.type == "touchpad") | .libinput.send_events')
+
+if [ "$enabled" == "\"enabled\"" ]; then
+	swaymsg input "$touchpad_input_identifier" events disabled
+else
+	swaymsg input "$touchpad_input_identifier" events enabled
+fi

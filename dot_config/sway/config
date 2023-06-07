@@ -252,7 +252,8 @@ bindsym --locked Shift+XF86MonBrightnessUp exec --no-startup-id brightnessctl se
 bindsym --locked Shift+XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 
 bindsym --locked XF86Display exec --no-startup-id toggle-display
-bindsym --locked XF86WLAN exec --no-startup-id do-not-disturb
+bindsym XF86WLAN exec --no-startup-id do-not-disturb
+bindsym --locked XF86Favorites exec --no-startup-id toggle-touchpad
 
 ### Hide/unhide waybar
 bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
