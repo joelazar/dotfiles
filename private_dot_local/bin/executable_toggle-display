@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# requirements: swaymsg, jq
+
+enabled=$(swaymsg -t get_outputs | jq '.[] | select(.name=="eDP-1") | .dpms')
+
+if [ "$enabled" = "true" ]; then
+	swaymsg output eDP-1 disable
+else
+	swaymsg output eDP-1 enable
+fi
