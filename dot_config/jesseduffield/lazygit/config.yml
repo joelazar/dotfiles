@@ -39,7 +39,7 @@ customCommands:
     loadingText: 'Pruning...'
     description: 'prune deleted remote branches'
   - key: 'M'
-    command: 'git mergetool {{ .SelectedFile.Name }}'
+    command: 'git mergetool'
     context: 'files'
     loadingText: 'opening git mergetool'
     subprocess: true

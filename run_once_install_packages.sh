@@ -317,6 +317,7 @@ install_npm_package "npm-check"
 install_npm_package "@slidev/cli"
 install_npm_package "gitmoji-cli"
 install_npm_package "@githubnext/github-copilot-cli"
+install_npm_package "httpyac"
 
 print_in_purple "GH plugins\n"
 
