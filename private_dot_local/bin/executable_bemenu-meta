@@ -23,7 +23,7 @@ options_list=(
 # merge options_list into a single string with newlines
 options="$(printf '%s\n' "${options_list[@]}")"
 
-chosen="$(echo -e "$options" | bemenu -i -l 10 -p meta)"
+chosen="$(echo -e "$options" | bemenu -i -p meta)"
 
 case $chosen in
 airplane-mode)
