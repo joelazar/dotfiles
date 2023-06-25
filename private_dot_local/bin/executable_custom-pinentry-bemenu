@@ -1,3 +1,6 @@
 #!/bin/sh
 
-BEMENU_OPTS='-i --fn "Roboto Mono 12" -b --nb "#192330" --nf "#cdcecf" --tb "#223249" --tf "#cdcecf" --sb "#192330" --sf "#cdcecf" --hb "#63cdcf" --hf "#192330" --fb "#192330" --ff "#cdcecf" --scb "#223249" --scf "#dbc074"' pinentry-bemenu "$@"
+# BEMENU options
+export BEMENU_OPTS='-i --fn "Roboto Mono 12" -b --scrollbar always --nb "#c94f6d" --nf "#2b3b51" --tb "#c94f6d" --tf "#2b3b51" --sb "#c94f6d" --sf "#2b3b51" --hb "#63cdcf" --hf "#c94f6d" --fb "#c94f6d" --ff "#2b3b51" --cb "#c94f6d" --cf "#c94f6d" --scb "#c94f6d" --scf "#dbc074" --ab "#c94f6d" --af "#2b3b51"'
+
+pinentry-bemenu "$@"
