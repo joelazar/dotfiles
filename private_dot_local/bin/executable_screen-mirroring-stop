@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+pkill wayvnc
+pkill vncviewer

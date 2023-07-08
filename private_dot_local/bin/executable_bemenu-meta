@@ -14,7 +14,6 @@ options_list=(
 	"networkmanager"
 	"pkill"
 	"search"
-	"vpn"
 	"youtube subscriptions"
 	"youtube"
 	"exit"
@@ -55,9 +54,6 @@ pkill)
 	;;
 search)
 	bemenu-search
-	;;
-vpn)
-	bemenu-vpn
 	;;
 youtube)
 	ytfzf -D

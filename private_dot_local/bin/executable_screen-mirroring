@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/usr/bin/env bash
 
 function screen-mirroring
     wayvnc -p -r 127.0.0.1 -o eDP-1 &>/dev/null &

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# write qr encoded data from a file
+
+file=$1
+cat $file | qrencode -t UTF8

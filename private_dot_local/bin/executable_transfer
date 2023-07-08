@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# quit on error
+set -e
+
+# requirements: curl, fzf
+# optional requirements: age (for encryption)
+
+file=$1
+if [ -z "$file" ]; then
+	file=$(fzf --prompt="Select the file which you want to upload" | awk '{ print $1; }')
+	if [ -z "$file" ]; then
+		echo No file was selected.
+		exit
+	fi
+elif [ $# -gt 1 ]; then
+	echo Too many arguments provided.
+	exit
+fi
+
+read -p "Do you want to encrypt the file? [y/N] " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+	age -p "$file" >"$file".age
+	file=$file.age
+	echo For decryption use the following command:
+	echo age -d "$file".age >"$file"
+fi
+
+days=$(echo -e 1\\n7\\n14 | fzf --prompt="For how many days do you want to store the file?" | awk '{ print $1; }')
+downloads=$(echo -e 1\\n2\\n5\\n10\\n20\\n100 | fzf --prompt="How many downloads are you allowing?" | awk '{ print $1; }')
+
+curl -H "Max-Downloads: $downloads" -H "Max-Days: $days" --upload-file "$file" https://transfer.sh/

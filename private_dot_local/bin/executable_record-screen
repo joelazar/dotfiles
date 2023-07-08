@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if pgrep -f wf-recorder >/dev/null
+    killall -s SIGINT wf-recorder
+    pkill -RTMIN+9 waybar
+    notify-send "Video saved"
+    return 0
+else
+    name=$(date +%Y-%m-%d_%H-%M-%S)
+
+    # choose one of the available options: window, focused-output, zone with fzf
+    argv=$(echo -e "window\nfocused-output\nzone" | fzf --prompt "Record: " --preview "echo -e {1}" --preview-window=up:3:wrap --height 30% --border)
+
+    for option in $argv
+        case "$option" in
+            window)
+                GEOM=$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp -d)
+
+                if ! test -n "$GEOM"
+                    return 1
+                fi
+
+                    if not test -n "$GEOM"
+                        return 1
+                    end
+
+                    wf-recorder -f ~/Downloads/$name.mp4 -o $GEOM & pkill -RTMIN+9 waybar
+                case zone
+                    set -l GEOM (slurp -d)
+
+                    if not test -n "$GEOM"
+                        return 1
+                    end
+
+                    wf-recorder -f ~/Downloads/$name.mp4 -g $GEOM & pkill -RTMIN+9 waybar
+                case '*'
+                    echo "Option ("$option") does not exists."
+            end
+        end
+    end
+end

@@ -134,7 +134,8 @@ bindsym $mod+Return exec $term
 bindsym $mod+Shift+q kill
 
 ### Start your launcher
-bindsym $mod+d exec bemenu-meta
+bindsym $mod+d exec bemenu-run -p launcher
+bindsym $mod+m exec bemenu-meta
 
 floating_modifier $mod normal
 
