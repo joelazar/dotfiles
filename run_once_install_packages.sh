@@ -30,7 +30,7 @@ update
 print_in_purple "Browsers\n"
 
 install_package "firefox"
-install_package "chromium"
+install_package "ungoogled-chromium-bin"
 
 print_in_purple "Basics\n"
 
