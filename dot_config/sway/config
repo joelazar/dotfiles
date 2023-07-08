@@ -356,7 +356,6 @@ no_focus [title="^Peek preview$"]
 exec --no-startup-id dunst
 exec --no-startup-id wl-paste -t text --watch clipman store --max-items=250
 exec --no-startup-id batsignal -b -c 10 -d 5 -D "systemctl suspend"
-exec --no-startup-id blueman-applet
 exec --no-startup-id gammastep-indicator
 exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi

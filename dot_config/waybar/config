@@ -27,6 +27,8 @@
         "custom/separator",
         "pulseaudio",
         "custom/separator",
+        "bluetooth",
+        "custom/separator",
         "custom/profile",
         "custom/separator",
         "battery",
@@ -42,11 +44,12 @@
         "interval": 10,
         "format": "󰓅 {}",
         "exec": "cat /sys/firmware/acpi/platform_profile",
-        "return-type": "text"
+        "return-type": "text",
+        "tooltip": false
     },
 
     "battery": {
-        "interval": 30,
+        "interval": 60,
         "states": {
             "warning": 20,
             "critical": 10
@@ -54,6 +57,18 @@
         "format": "{icon}  {capacity}%",
         "format-discharging": "{icon} {capacity}%",
         "format-icons": [ "", "", "", "", "" ]
+    },
+
+    "bluetooth": {
+        "format": " {status}",
+        "format-on": "",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "blueman-manager"
     },
 
     "clock": {
@@ -73,7 +88,8 @@
 
     "backlight": {
         "format": "{icon} {percent}%",
-        "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"]
+        "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"],
+        "tooltip": false
     },
 
 
@@ -138,11 +154,6 @@
         "tooltip": true
     },
 
-    "sway/window": {
-        "format": "{}",
-        "max-length": 120
-    },
-
     "sway/workspaces": {
         "all-outputs": true,
         "disable-scroll": true,
@@ -158,9 +169,7 @@
             "8.steam": "",
             "9.spotify": "",
             "10.arch": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
+            "urgent": ""
         }
     },
 

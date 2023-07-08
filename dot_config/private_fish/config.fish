@@ -42,6 +42,7 @@ fish_add_path /usr/lib/go/bin
 fish_add_path $GOPATH/bin
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
+fish_add_path $HOME/.local/bin/kitty_nightly/kitty.app/bin
 
 # Set custom askpass
 set -gx SUDO_ASKPASS $HOME/.local/bin/bemenu-askpass
