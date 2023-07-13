@@ -61,7 +61,7 @@ set fzf_preview_dir_cmd exa --all --color=always
 fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
 
 # BEMENU options
-set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b --scrollbar always -l 20 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
+set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b -l 20 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
