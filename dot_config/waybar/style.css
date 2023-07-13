@@ -74,7 +74,8 @@
   background: @lavender;
   padding-left: 4px;
   padding-right: 4px;
-  border: 1px solid @text;
+  color: @mantle;
+  border: 1px solid @peach;
 }
 
 #network.disconnected {
