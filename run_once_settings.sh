@@ -68,6 +68,8 @@ execute "sudo systemctl enable iptables.service" "Turn on iptables"
 
 execute "sudo systemctl enable ip6tables.service" "Turn on ip6tables"
 
+execute "fish_config theme save \"Catppuccin Mocha\"" "Set fish theme"
+
 execute "sudo sed -i '/Color$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/TotalDownload$/s/^#//g' /etc/pacman.conf && \
          sudo sed -i '/CheckSpace$/s/^#//g' /etc/pacman.conf && \

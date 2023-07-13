@@ -9,13 +9,14 @@ set background=dark
 set ignorecase
 set scrolloff=8
 set cmdheight=0
+colorscheme habamax
 
 map <silent> q :qa!<CR>
 
 " Short highlight on yanked text
 augroup highlight_yank
     autocmd!
-    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 500})
+    autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 1000})
 augroup END
 
 augroup start_at_bottom

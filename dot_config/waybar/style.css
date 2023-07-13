@@ -1,36 +1,8 @@
-/*
-* nightfox
-  primary:
-    background: "#192330"
-    foreground: "#cdcecf"
-  # Normal colors
-  normal:
-    black: "#393b44"
-    red: "#c94f6d"
-    green: "#81b29a"
-    yellow: "#dbc074"
-    blue: "#719cd6"
-    magenta: "#9d79d6"
-    cyan: "#63cdcf"
-    white: "#dfdfe0"
-  # Bright colors
-  bright:
-    black: "#475072"
-    red: "#d6616b"
-    green: "#58cd8b"
-    yellow: "#ffe37e"
-    blue: "#84cee4"
-    magenta: "#b8a1e3"
-    cyan: "#59f0ff"
-    white: "#f2f2f2"
-  indexed_colors:
-    - { index: 16, color: "#f4a261" }
-    - { index: 17, color: "#d67ad2" }
-*/
-
 /* -----------------------------------------------------------------------------
  * Base styles
  * -------------------------------------------------------------------------- */
+
+@import 'mocha.css';
 
 /* Reset all styles */
 * {
@@ -43,11 +15,11 @@
 
 /* The whole bar */
 #waybar {
-  background: #192330;
-  color: #dfdfe0;
+  background: @base;
+  color: @text;
   font-family: Roboto Mono;
   font-size: 15px;
-  border-bottom: 1px solid #39506d;
+  border-bottom: 1px solid @surface0;
 }
 
 /* -----------------------------------------------------------------------------
@@ -61,12 +33,12 @@
 }
 
 #battery.warning {
-  color: #f4a261;
+  color: @peach;
   font-weight: bold;
 }
 
 #battery.critical {
-  color: #c94f6d;
+  color: @maroon;
   font-weight: bold;
 }
 
@@ -75,11 +47,11 @@
 }
 
 #cpu.warning {
-  color: #f4a261;
+  color: @peach;
 }
 
 #cpu.critical {
-  color: #c94f6d;
+  color: @maroon;
   font-weight: bold;
 }
 
@@ -90,29 +62,29 @@
 }
 
 #memory.warning {
-  color: #f4a261;
+  color: @peach;
 }
 
 #memory.critical {
+  color: @maroon;
   font-weight: bold;
-  color: #c94f6d;
 }
 
 #mode {
-  background: #64727d;
+  background: @lavender;
   padding-left: 4px;
   padding-right: 4px;
-  border: 1px solid #dfdfe0;
+  border: 1px solid @text;
 }
 
 #network.disconnected {
-  color: #f4a261;
+  color: @peach;
 }
 
 #custom-separator {
   padding-left: 2px;
   padding-right: 2px;
-  color: #63cdcf;
+  color: @sapphire;
   background: transparent;
 }
 
@@ -126,24 +98,24 @@
 }
 
 #workspaces button:hover {
-  border-top: 2px solid #ffe37e;
+  border-top: 2px solid @yellow;
 }
 
 #workspaces button {
   border-top: 2px solid transparent;
   background-color: transparent;
-  color: #dfdfe0;
+  color: @text;
   font-size: 20px;
 }
 
 #workspaces button.focused {
-  color: #131a24;
-  background-color: #dbc074;
+  color: @mantle;
+  background-color: @yellow;
 }
 
 #workspaces button.urgent {
-  border-color: #c9545d;
-  color: #c9545d;
+  border-color: @maroon;
+  color: @maroon;
 }
 
 #custom-spotify {

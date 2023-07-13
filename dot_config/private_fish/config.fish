@@ -61,7 +61,7 @@ set fzf_preview_dir_cmd exa --all --color=always
 fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
 
 # BEMENU options
-set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b --scrollbar always --nb "#192330" --nf "#cdcecf" --tb "#223249" --tf "#cdcecf" --sb "#192330" --sf "#cdcecf" --hb "#63cdcf" --hf "#192330" --fb "#192330" --ff "#cdcecf" --cb "#192330" --cf "#cdcecf" --scb "#223249" --scf "#dbc074" --ab "#192530" --af "#cdcecf"'
+set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b --scrollbar always -l 20 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
@@ -196,42 +196,6 @@ alias wttr="http -b v2.wttr.in"
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
-
-# Nightfox Color Palette
-# Style: nightfox
-# Upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nightfox/nightfox_fish.fish
-set -l foreground cdcecf
-set -l selection 223249
-set -l comment 526176
-set -l red c94f6d
-set -l orange f4a261
-set -l yellow dbc074
-set -l green 81b29a
-set -l purple 9d79d6
-set -l cyan 63cdcf
-set -l pink d67ad2
-
-# Syntax Highlighting Colors
-set -g fish_color_normal $foreground
-set -g fish_color_command $cyan
-set -g fish_color_keyword $pink
-set -g fish_color_quote $yellow
-set -g fish_color_redirection $foreground
-set -g fish_color_end $orange
-set -g fish_color_error $red
-set -g fish_color_param $purple
-set -g fish_color_comment $comment
-set -g fish_color_selection --background=$selection
-set -g fish_color_search_match --background=$selection
-set -g fish_color_operator $green
-set -g fish_color_escape $pink
-set -g fish_color_autosuggestion $comment
-
-# Completion Pager Colors
-set -g fish_pager_color_progress $comment
-set -g fish_pager_color_prefix $cyan
-set -g fish_pager_color_completion $foreground
-set -g fish_pager_color_description $comment
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000
