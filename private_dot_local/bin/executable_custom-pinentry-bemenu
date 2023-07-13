@@ -3,4 +3,4 @@
 # BEMENU options
 export BEMENU_OPTS='-i --fn "Roboto Mono 12" -b --scrollbar always'
 
-pinentry-bemenu "$@" --nb "#c94f6d" --nf "#2b3b51" --tb "#c94f6d" --tf "#2b3b51" --sb "#c94f6d" --sf "#2b3b51" --hb "#63cdcf" --hf "#c94f6d" --fb "#c94f6d" --ff "#2b3b51" --cb "#c94f6d" --cf "#c94f6d" --scb "#c94f6d" --scf "#dbc074" --ab "#c94f6d" --af "#2b3b51"
+pinentry-bemenu "$@" --nb "#f38ba8" --nf "#181825" --tb "#f38ba8" --tf "#181825" --sb "#f38ba8" --sf "#181825" --hb "#74c7ec" --hf "#f38ba8" --fb "#f38ba8" --ff "#181825" --cb "#f38ba8" --cf "#f38ba8" --scb "#f38ba8" --scf "#f9e2af" --ab "#f38ba8" --af "#181825"
