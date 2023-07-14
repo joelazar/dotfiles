@@ -97,9 +97,9 @@ bindswitch --reload --locked lid:off output $laptop enable
 ## Style
 
 # target                 title     bg    text   indicator  border
-client.focused           $pink     $base $text  $rosewater $pink
-client.focused_inactive  $mauve    $base $text  $rosewater $mauve
-client.unfocused         $mauve    $base $text  $rosewater $mauve
+client.focused           $mauve    $base $text  $rosewater $mauve
+client.focused_inactive  $pink     $base $text  $rosewater $base
+client.unfocused         $pink     $base $text  $rosewater $base
 client.urgent            $peach    $base $peach $overlay0  $peach
 client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
