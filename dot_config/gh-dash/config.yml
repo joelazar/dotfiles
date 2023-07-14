@@ -61,21 +61,3 @@ keybindings:
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto
     - key: C
       command: cd {{.RepoPath}} && gh pr checkout {{.PrNumber}}
-theme:
-  ui:
-    table:
-      showSeparator: true
-  colors:
-    text:
-      primary: '#cdcecf'
-      secondary: '#e4e4e5'
-      inverted: '#2b3b51'
-      faint: '#dfdfe0'
-      warning: '#c94f6d'
-      success: '#81b29a'
-    background:
-      selected: '#2b3b51'
-    border:
-      primary: '#63cdcf'
-      secondary: '#f4a261'
-      faint: '#131a24'
