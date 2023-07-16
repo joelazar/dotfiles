@@ -161,10 +161,10 @@
         "format-icons": {
             "1.terminals": "",
             "2.www": "",
-            "3.chat": "",
-            "4.neovim": "",
+            "3.slack": "󰒱",
+            "4.discord": "󰙯",
             "5.chromium": "",
-            "6.news": "",
+            "6.news": "󰎕",
             "7.movie": "",
             "8.steam": "",
             "9.spotify": "",
