@@ -159,16 +159,16 @@
         "disable-scroll": true,
         "format": "{icon}",
         "format-icons": {
-            "1.terminals": "",
-            "2.www": "",
+            "1.terminals": "",
+            "2.www": "",
             "3.slack": "󰒱",
             "4.discord": "󰙯",
             "5.chromium": "",
             "6.news": "󰎕",
-            "7.movie": "",
-            "8.steam": "",
+            "7.movie": "󰿎",
+            "8.steam": "󰓓",
             "9.spotify": "",
-            "10.arch": "",
+            "10.arch": "󰣇",
             "urgent": ""
         }
     },
