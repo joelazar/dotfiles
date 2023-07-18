@@ -58,7 +58,7 @@ set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
 set fzf_preview_dir_cmd exa --all --color=always
 
-fzf_configure_bindings --git_status=\e\cs --history=\cr --variables --git_log=\e\cl --directory=\cp
+fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\cv
 
 # BEMENU options
 set -gx BEMENU_OPTS '-i --fn "Roboto Mono 12" -b -l 20 --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#1e1e2e" --tf "#cba6f7" --hf "#89b4fa" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
@@ -139,7 +139,6 @@ alias ddg="BROWSER=w3m ddgr -n 5"
 alias e='nvim'
 alias ff='firefox'
 alias g="git"
-alias hg="kitty +kitten hyperlinked_grep"
 alias icat="kitty +kitten icat"
 alias l='exa --icons --group-directories-first'
 alias lg='lazygit'
@@ -149,6 +148,7 @@ alias ls='exa --icons --group-directories-first'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias q="exit"
+alias rg="kitty +kitten hyperlinked_grep"
 alias s="kitty +kitten ssh"
 alias v='nvim'
 alias vi='nvim'
@@ -157,17 +157,17 @@ alias yaegi='rlwrap yaegi'
 
 # kubectl
 alias k='kubectl'
-alias kg='kubectl get'
 alias kd='kubectl describe'
-alias kdp='kubectl describe pod'
 alias kdd='kubectl describe deployment'
-alias krm='kubectl delete'
+alias kdp='kubectl describe pod'
+alias kei='kubectl exec -it'
+alias kg='kubectl get'
 alias kgall='kubectl get --all-namespaces all'
-alias kgp='kubectl get pod'
 alias kgd='kubectl get deployments'
+alias kgp='kubectl get pod'
 alias kgsvc='kubectl get service'
 alias kl='kubectl logs --all-containers=true'
-alias kei='kubectl exec -it'
+alias krm='kubectl delete'
 
 # docker
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
@@ -176,10 +176,10 @@ alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker 
 
 # git pull++
 
-alias gstatusall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} show --summary && echo\''
 alias gcodefaultall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && (git -C {} checkout main || git -C {} checkout master) && echo\''
 alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
 alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} git -C {} pull'
+alias gstatusall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} show --summary && echo\''
 
 # other
 alias get-local-ip="ifconfig \
@@ -196,6 +196,7 @@ alias wttr="http -b v2.wttr.in"
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
+atuin init fish | source
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000
