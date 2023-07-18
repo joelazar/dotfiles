@@ -3,8 +3,8 @@ prSections:
     filters: is:open assignee:@me sort:created-asc
   - title: Review requested
     filters: is:open -assignee:@me review-requested:@me -label:wip -label:"don't merge" -is:draft sort:created-asc
-  - title: Needs My Attention
-    filters: is:open -assignee:@me involves:@me -label:wip -label:"don't merge" -is:draft sort:created-asc
+  - title: Ready
+    filters: is:open -assignee:@me user:Growblocks -label:wip -label:"don't merge" -is:draft sort:created-asc
   - title: Work in progress
     filters: is:open -assignee:@me user:Growblocks label:wip,"don't merge" sort:created-asc
   - title: Draft
