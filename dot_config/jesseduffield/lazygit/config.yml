@@ -2,80 +2,80 @@ reporting: 'off'
 startuppopupversion: 1
 promptToReturnFromSubprocess: false
 gui:
-  skipUnstageLineWarning: true
-  showCommandLog: false
-  showIcons: true
-  showBottomLine: false
-  showRandomTip: false
-  # use the mocha catppuccin theme
-  theme:
-    lightTheme: false
-    activeBorderColor:
-      - '#a6e3a1' # Green
-      - bold
-    inactiveBorderColor:
-      - '#cdd6f4' # Text
-    optionsTextColor:
-      - '#89b4fa' # Blue
-    selectedLineBgColor:
-      - '#313244' # Surface0
-    selectedRangeBgColor:
-      - '#313244' # Surface0
-    cherryPickedCommitBgColor:
-      - '#94e2d5' # Teal
-    cherryPickedCommitFgColor:
-      - '#89b4fa' # Blue
-    unstagedChangesColor:
-      - red # Red
+    skipDiscardChangeWarning: true
+    showCommandLog: false
+    showIcons: true
+    showBottomLine: false
+    showRandomTip: false
+    # use the mocha catppuccin theme
+    theme:
+        lightTheme: false
+        activeBorderColor:
+            - '#a6e3a1' # Green
+            - bold
+        inactiveBorderColor:
+            - '#cdd6f4' # Text
+        optionsTextColor:
+            - '#89b4fa' # Blue
+        selectedLineBgColor:
+            - '#313244' # Surface0
+        selectedRangeBgColor:
+            - '#313244' # Surface0
+        cherryPickedCommitBgColor:
+            - '#94e2d5' # Teal
+        cherryPickedCommitFgColor:
+            - '#89b4fa' # Blue
+        unstagedChangesColor:
+            - red # Red
 notARepository: 'skip'
 customCommands:
-  - key: '<c-n>'
-    prompts:
-      - type: 'menu'
-        title: 'Creating new branch. What kind of branch is it?'
-        options:
-          - name: 'feature'
-            value: 'feature'
-          - name: 'hotfix'
-            value: 'hotfix'
-          - name: 'bugfix'
-            value: 'bugfix'
-          - name: 'chore'
-            value: 'chore'
-      - type: 'input'
-        title: 'What is the new branch name?'
-        initialValue: ''
-    command: 'git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}'
-    context: 'localBranches'
-    loadingText: 'creating branch'
-  - key: '<c-r>'
-    command: 'gh pr create --assignee @me'
-    context: 'global'
-    loadingText: 'Creating pull request on GitHub'
-    subprocess: true
-  - key: '<c-p>'
-    command: 'git remote prune {{.SelectedRemote.Name}}'
-    context: 'remotes'
-    loadingText: 'Pruning...'
-    description: 'prune deleted remote branches'
-  - key: 'M'
-    command: 'git mergetool'
-    context: 'files'
-    loadingText: 'opening git mergetool'
-    subprocess: true
-  - key: 'C'
-    command: 'gitmoji -c'
-    context: 'files'
-    loadingText: 'opening gitmoji cli tool'
-    subprocess: true
-  - key: 'R'
-    command: 'git reset --soft HEAD~1'
-    context: 'files'
-    loadingText: 'undo last commit'
-  - key: '<f1>'
-    command: 'git reset --soft {{.CheckedOutBranch.UpstreamRemote}}'
-    context: 'files'
-    prompts:
-      - type: 'confirm'
-        title: 'Confirm:'
-        body: 'Are you sure you want to reset HEAD to {{.CheckedOutBranch.UpstreamRemote}}?'
+    - key: '<c-n>'
+      prompts:
+        - type: 'menu'
+          title: 'Creating new branch. What kind of branch is it?'
+          options:
+            - name: 'feature'
+              value: 'feature'
+            - name: 'hotfix'
+              value: 'hotfix'
+            - name: 'bugfix'
+              value: 'bugfix'
+            - name: 'chore'
+              value: 'chore'
+        - type: 'input'
+          title: 'What is the new branch name?'
+          initialValue: ''
+      command: 'git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}'
+      context: 'localBranches'
+      loadingText: 'creating branch'
+    - key: '<c-r>'
+      command: 'gh pr create --assignee @me'
+      context: 'global'
+      loadingText: 'Creating pull request on GitHub'
+      subprocess: true
+    - key: '<c-p>'
+      command: 'git remote prune {{.SelectedRemote.Name}}'
+      context: 'remotes'
+      loadingText: 'Pruning...'
+      description: 'prune deleted remote branches'
+    - key: 'M'
+      command: 'git mergetool'
+      context: 'files'
+      loadingText: 'opening git mergetool'
+      subprocess: true
+    - key: 'C'
+      command: 'gitmoji -c'
+      context: 'files'
+      loadingText: 'opening gitmoji cli tool'
+      subprocess: true
+    - key: 'R'
+      command: 'git reset --soft HEAD~1'
+      context: 'files'
+      loadingText: 'undo last commit'
+    - key: '<f1>'
+      command: 'git reset --soft {{.CheckedOutBranch.UpstreamRemote}}'
+      context: 'files'
+      prompts:
+        - type: 'confirm'
+          title: 'Confirm:'
+          body: 'Are you sure you want to reset HEAD to {{.CheckedOutBranch.UpstreamRemote}}?'
