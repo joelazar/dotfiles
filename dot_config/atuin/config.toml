@@ -37,7 +37,7 @@ update_check = false
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
 ## leave unspecified to use same mode set in "filter_mode"
-# filter_mode_shell_up_key_binding = "global"
+filter_mode_shell_up_key_binding = "session"
 
 ## which style to use
 ## possible values: auto, full, compact
