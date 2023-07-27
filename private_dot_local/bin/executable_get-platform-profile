@@ -1,0 +1,19 @@
+#!/bin/bash
+
+current_profile=$(cat /sys/firmware/acpi/platform_profile)
+
+# Return a symbol for the current profile
+case $current_profile in
+"performance")
+	echo "🚀"
+	;;
+"balanced")
+	echo "🌱"
+	;;
+"low-power")
+	echo "🔋"
+	;;
+"default")
+	echo "🤷"
+	;;
+esac

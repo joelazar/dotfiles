@@ -42,10 +42,11 @@
 
     "custom/profile":{
         "interval": 10,
-        "format": "󰓅 {}",
-        "exec": "cat /sys/firmware/acpi/platform_profile",
+        "format": "{}",
+        "exec": "get-platform-profile",
         "return-type": "text",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "toggle-platform-profile"
     },
 
     "battery": {
