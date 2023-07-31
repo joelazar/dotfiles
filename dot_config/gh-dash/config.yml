@@ -1,16 +1,16 @@
 prSections:
   - title: My Pull Requests
-    filters: is:open assignee:@me sort:created-asc
+    filters: is:open assignee:@me sort:created-desc
   - title: Review requested
-    filters: is:open -assignee:@me review-requested:@me -label:wip -label:"don't merge" -is:draft sort:created-asc
+    filters: is:open -assignee:@me review-requested:@me -label:wip -label:"don't merge" -is:draft sort:created-desc
   - title: Ready
-    filters: is:open -assignee:@me user:Growblocks -label:wip -label:"don't merge" -is:draft sort:created-asc
+    filters: is:open -assignee:@me user:Growblocks -label:wip -label:"don't merge" -is:draft sort:created-desc
   - title: Work in progress
-    filters: is:open -assignee:@me user:Growblocks label:wip,"don't merge" sort:created-asc
+    filters: is:open -assignee:@me user:Growblocks label:wip,"don't merge" sort:created-desc
   - title: Draft
-    filters: is:open -assignee:@me user:Growblocks is:draft sort:created-asc
+    filters: is:open -assignee:@me user:Growblocks is:draft sort:created-desc
   - title: Only work
-    filters: is:open -assignee:@me user:Growblocks sort:created-asc
+    filters: is:open -assignee:@me user:Growblocks sort:created-desc
   - title: Recently closed
     filters: is:closed user:Growblocks sort:created-desc
 issuesSections:
