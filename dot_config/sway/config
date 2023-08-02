@@ -327,8 +327,9 @@ assign [app_id="Spotify"] $ws9
 
 ### For X11 apps: for_window [class="app_class"] move window to workspace $wsY
 for_window [class="Slack"] move window to workspace $ws3
-for_window [class="Steam"] move window to workspace $ws8
+for_window [class="steam"] move window to workspace $ws8
 for_window [class="Spotify"] move window to workspace $ws9
+for_window [class="remarkable.exe"] move window to workspace $ws10
 
 ### Prevent idle state at fullscreen mode for some apps
 for_window [app_id="chromium"] inhibit_idle fullscreen
