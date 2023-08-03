@@ -88,6 +88,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCs_tLP3AiwYKwdUHpltJPuA tec
 https://www.youtube.com/feeds/videos.xml?channel_id=UCciKHCG06rnq31toLTfAiyw tech "~YT - linux.conf.au"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA tech "~YT - Computerphile"
 https://thevaluable.dev/index.xml tech
+https://dotfyle.com/this-week-in-neovim/rss.xml tech
 
 "query:😃 fun:tags # \"fun\""
 https://xkcd.com/rss.xml fun
