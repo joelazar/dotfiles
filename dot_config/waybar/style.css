@@ -78,6 +78,20 @@
   border: 1px solid @peach;
 }
 
+#backlight,
+#network,
+#idle_inhibitor {
+  font-size: 20px;
+}
+
+#bluetooth {
+  font-size: 14px;
+}
+
+#custom-profile {
+  font-size: 12px;
+}
+
 #network.disconnected {
   color: @peach;
 }
@@ -119,8 +133,6 @@
   color: @maroon;
 }
 
-#custom-spotify {
-}
-
-#custom-ncspot {
+#custom-media {
+  font-style: italic;
 }

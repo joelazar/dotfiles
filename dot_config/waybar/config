@@ -6,10 +6,9 @@
         "sway/workspaces",
         "sway/mode"
     ],
-	"modules-center": [
-        "custom/ncspot",
-        "custom/spotify"
-	],
+    "modules-center": [
+          "custom/media"
+    ],
     "modules-right": [
         "network",
         "custom/separator",
@@ -63,10 +62,9 @@
     "bluetooth": {
         "format": " {status}",
         "format-on": "",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-connected": "{device_alias}\n{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-connected-battery": "{device_alias} - {device_battery_percentage}%\n{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
         "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
         "on-click": "blueman-manager"
@@ -88,9 +86,9 @@
     },
 
     "backlight": {
-        "format": "{icon} {percent}%",
+        "format": "{icon}",
         "format-icons": ["󰃞", "󰃟", "󰃝", "󰃠"],
-        "tooltip": false
+        "tooltip-format": "{percent}%"
     },
 
 
@@ -118,10 +116,10 @@
 
     "network": {
         "interval": 10,
-        "format-wifi": " {essid} ({signalStrength}%)",
-        "format-ethernet": "󰛳 {ifname}: {ipaddr}/{cidr}",
-        "format-disconnected": "⚠ Disconnected",
-        "tooltip-format": "{ifname}: {ipaddr}",
+        "format-wifi": "",
+        "format-ethernet": "󰛳",
+        "format-disconnected": "",
+        "tooltip-format": "{essid} ({signalStrength}%)\n{ifname}: {ipaddr}/{cidr}",
         "on-click": "nm-connection-editor"
     },
 
@@ -129,30 +127,28 @@
         "interval": 10,
         "exec": "$HOME/.local/bin/vpn-status",
         "return-type": "json",
-        "format": "{}"
+        "format": "{}",
+        "tooltip-format": "hello"
     },
 
-    "custom/spotify": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player spotify",
-        "format": " {}",
+    "custom/media": {
+        "exec": "$HOME/.local/bin/mediaplayer.py",
+        "format": "{icon} {}",
         "escape": true,
-        "max-length": 45,
+        "max-length": 60,
         "return-type": "json",
-        "on-click": "playerctl -p spotify play-pause"
-    },
+        "on-click": "playerctl play-pause",
+        "format-icons": {
+            "firefox": "",
+            "ncspot": "",
+            "spotify": ""
+        }
 
-    "custom/ncspot": {
-        "exec": "$HOME/.local/bin/mediaplayer.py --player ncspot",
-        "format": " {}",
-        "escape": true,
-        "max-length": 45,
-        "return-type": "json",
-        "on-click": "playerctl -p ncspot play-pause"
     },
 
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>",
-        "tooltip": true
+        "tooltip": false
     },
 
     "sway/workspaces": {
@@ -193,7 +189,7 @@
     },
 
     "tray": {
-        "icon-size": 18,
+        "icon-size": 16,
         "spacing": 5
     },
 

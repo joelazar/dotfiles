@@ -3,7 +3,7 @@
 vpn=$(mullvad status | grep -E 'Connected to' | awk '{print $3}')
 
 if [ "$vpn" != "" ]; then
-	echo '{"text":" '"$vpn"'", "class":"connected"}'
+	echo '{"text":"", "tooltip": "'"$vpn"'", "class":"connected"}'
 else
-	echo '{"text":"","class":"disconnected"}'
+	echo '{"text":"", "class":"disconnected"}'
 fi
