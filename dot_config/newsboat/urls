@@ -1,104 +1,79 @@
-"query:💫 science:tags # \"science\""
-https://terrytao.wordpress.com/feed/ science "~Terence Tao's blog"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw science "~YT - 3blue1brown"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC8BtBl8PNgd3vWKtm2yJ7aA science "~YT - Bartosz Milewski"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A science "~YT - Numberphile"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCTG_vrRdKYfrpqCv_WV4eyA science "~YT - Ten Minute Physics"
-
 "query:🤖 ai:tags # \"ai\""
 http://karpathy.github.io/feed.xml ai
 https://www.fast.ai/index.xml ai
 https://deepmind.com/blog/feed/basic/ ai "~DeepMind"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A ai "~YT - DeepMind"
 https://www.technologyreview.com/topic/artificial-intelligence/feed ai
 https://openai.com/blog/rss/ ai
 http://ai.googleblog.com/feeds/posts/default?alt=rss ai
 http://news.mit.edu/rss/topic/artificial-intelligence2 ai
 https://simonwillison.net/atom/everything/ ai
 https://simonwillison.net/atom/links/ ai
-https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ ai "~YT - Machine Learning Street Talk"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC0rqucBdTuFTjJiefW5t-IQ ai "~YT - Tensorflow"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCXUPKJO5MZQN11PqgIvyuvQ ai "~YT - Andrej Karpathy"
 
 "query:🗞️ news:tags # \"news\""
-https://rss.beehiiv.com/feeds/4aF2pGVAEN.xml "News Minimalist"
+https://rss.beehiiv.com/feeds/4aF2pGVAEN.xml news "News Minimalist"
 https://www.theguardian.com/mostviewed/rss news
 https://feeds.simplecast.com/54nAGcIl news "~NYT > The Daily"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC3XTzVzaHQEd30rQbuvCtTQ news "~YT - Last Week Tonight"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCEFpEvuosfPGlV1VyUF6QOA news "~YT - Partizán"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCM-1sd-cXSuCsfWp8QMY_OQ news "~YT - Telex"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCyic42CaC1FYypd0g72CCjA news "~YT - Telex - After Sajó Dáviddal"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCGoLa-QhHmTxLEdjv_8dxrg news "~YT - 444"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q news "~YT - Kurzgesagt"
-
-"query:🟥 reddit:tags # \"reddit\""
-https://www.reddit.com/r/archlinux/.rss reddit
-https://www.reddit.com/r/commandline/.rss reddit
-https://www.reddit.com/r/copenhagen/.rss reddit
-https://www.reddit.com/r/fishshell/.rss reddit
-https://www.reddit.com/r/golang/.rss reddit
-https://www.reddit.com/r/technology/.rss reddit "~Technology"
-https://www.reddit.com/r/linux/.rss reddit "~Linux"
-https://www.reddit.com/r/neovim/.rss reddit "~Neovim"
-https://www.reddit.com/r/swaywm/.rss reddit
-http://www.reddit.com/r/coolgithubprojects/.rss reddit
-https://www.reddit.com/r/googlecloud/.rss reddit
+https://www.theverge.com/rss/index.xml news
+https://www.theverge.com/rss/reviews/index.xml news
 
 "query:🟧 hackernews:tags # \"hackernews\""
 https://hnrss.org/best hackernews
 https://hnrss.org/bestcomments hackernews
+https://hnrss.org/frontpage hackernews
 https://hnrss.org/ask hackernews
 https://hnrss.org/show hackernews
 https://hnrss.org/polls hackernews
 https://hnrss.org/newest hackernews
-https://hnrss.org/frontpage hackernews
 
 "query:💻 tech:tags # \"tech\""
 https://www.archlinux.org/feeds/news/ tech
-https://archlinux.org/feeds/releases/ tech
 https://drewdevault.com/blog/index.xml tech
 https://j3s.sh/feed.atom tech
 https://emersion.fr/blog/atom.xml tech
-https://www.theverge.com/rss/index.xml tech
-https://www.theverge.com/rss/reviews/index.xml tech
 https://developer.run/feed.rss blog tech
 https://hacks.mozilla.org/feed/ tech
 https://jvns.ca/atom.xml tech
 https://kentcdodds.com/blog/rss.xml tech
-https://sirupsen.com/atom.xml tech
-https://buttondown.email/denonews/rss tech
-https://feeds.arstechnica.com/arstechnica/index.xml tech
-https://feeds.arstechnica.com/arstechnica/features.xml tech
-https://feeds.arstechnica.com/arstechnica/science.xml tech
-https://feeds.arstechnica.com/arstechnica/gaming.xml tech
-https://feeds.arstechnica.com/arstechnica/gadgets.xml tech
-https://feeds.arstechnica.com/arstechnica/technology-lab.xml tech
-https://lobste.rs/rss tech
-https://lobste.rs/top/rss tech
-https://www.youtube.com/feeds/videos.xml?channel_id=UC_9cztXyAZCli9Cky6NWWwQ tech "~YT - Remix"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA tech "~YT - TJ"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw tech "~YT - The Primeagen"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg tech "~YT - Two minute papers"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A tech "~YT - The Changelog"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCPbwhExawYrn9xxI21TFfyw tech "~YT - The Pragmatic Engineer"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCftwRNsjfRo08xYE31tkiyw tech "~YT - Wired"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A tech "~YT - Changelog"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA tech "~YT - Fireship"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCs_tLP3AiwYKwdUHpltJPuA tech "~YT - GOTO conferences"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCciKHCG06rnq31toLTfAiyw tech "~YT - linux.conf.au"
-https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA tech "~YT - Computerphile"
 https://thevaluable.dev/index.xml tech
 https://dotfyle.com/this-week-in-neovim/rss.xml tech
 
+"query:💫 science:tags # \"science\""
+https://sirupsen.com/atom.xml science
+https://scottaaronson.blog/?feed=rss2 science
+https://terrytao.wordpress.com/feed/ science "~Terence Tao's blog"
+
 "query:😃 fun:tags # \"fun\""
 https://xkcd.com/rss.xml fun
-https://www.youtube.com/feeds/videos.xml?channel_id=UClUSqujSdARUgqlgX-FfAZA tech "~YT - Bödőcs Tibor"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCGK9n7svoIjuaQfRIBJXkqQ tech "~YT - Watch It Played"
 
-"query:🎵 music:tags # \"music\""
-https://www.youtube.com/feeds/videos.xml?channel_id=UC3I2GFN_F8WudD_2jUZbojA music "~YT - KEXP"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCV7ZgnEcCps_rHKgT9sq_Lg music "~YT - Febueder"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCGxLOaA_QnWLhTnf5depKLg music "~YT - From The Basement"
-
-"query:🎮 games:tags # \"games\""
-https://store.steampowered.com/feeds/news.xml games
+"query: youtube:tags # \"youtube\""
+https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw youtube "~YT - 3blue1brown"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGoLa-QhHmTxLEdjv_8dxrg youtube "~YT - 444"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCXUPKJO5MZQN11PqgIvyuvQ youtube "~YT - Andrej Karpathy"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8BtBl8PNgd3vWKtm2yJ7aA youtube "~YT - Bartosz Milewski"
+https://www.youtube.com/feeds/videos.xml?channel_id=UClUSqujSdARUgqlgX-FfAZA youtube "~YT - Bödőcs Tibor"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A youtube "~YT - Changelog"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA youtube "~YT - Computerphile"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCP7jMXSY2xbc3KCAE0MHQ-A youtube "~YT - DeepMind"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCV7ZgnEcCps_rHKgT9sq_Lg youtube "~YT - Febueder"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA youtube "~YT - Fireship"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGxLOaA_QnWLhTnf5depKLg youtube "~YT - From The Basement"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCs_tLP3AiwYKwdUHpltJPuA youtube "~YT - GOTO conferences"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3I2GFN_F8WudD_2jUZbojA youtube "~YT - KEXP"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q youtube "~YT - Kurzgesagt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3XTzVzaHQEd30rQbuvCtTQ youtube "~YT - Last Week Tonight"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCciKHCG06rnq31toLTfAiyw youtube "~YT - linux.conf.au"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCMLtBahI5DMrt0NPvDSoIRQ youtube "~YT - Machine Learning Street Talk"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A youtube "~YT - Numberphile"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCEFpEvuosfPGlV1VyUF6QOA youtube "~YT - Partizán"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC_9cztXyAZCli9Cky6NWWwQ youtube "~YT - Remix"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCd3dNckv1Za2coSaHGHl5aA youtube "~YT - TJ"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCyic42CaC1FYypd0g72CCjA youtube "~YT - Telex - After Sajó Dáviddal"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCM-1sd-cXSuCsfWp8QMY_OQ youtube "~YT - Telex"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCTG_vrRdKYfrpqCv_WV4eyA youtube "~YT - Ten Minute Physics"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0rqucBdTuFTjJiefW5t-IQ youtube "~YT - Tensorflow"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCZbtcRQHGpU_tt2yM4C7k0A youtube "~YT - The Changelog"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCPbwhExawYrn9xxI21TFfyw youtube "~YT - The Pragmatic Engineer"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC8ENHE5xdFSwx71u3fDH5Xw youtube "~YT - The Primeagen"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCbfYPyITQ-7l4upoX8nvctg youtube "~YT - Two minute papers"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGK9n7svoIjuaQfRIBJXkqQ youtube "~YT - Watch It Played"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCftwRNsjfRo08xYE31tkiyw youtube "~YT - Wired"
