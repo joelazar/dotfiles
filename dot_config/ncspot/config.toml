@@ -2,7 +2,24 @@ use_nerdfont = true
 bitrate = 320
 notify = true
 
-
 [notification_format]
 title =" %title"
 body = "%artists"
+
+[theme]
+background = "#24273A"
+primary = "#C6A0F6"
+secondary = "#B7BDF8"
+title = "#C6A0F6"
+playing = "#C6A0F6"
+playing_selected = "#181926"
+playing_bg = "#1E2030"
+highlight = "#C6A0F6"
+highlight_bg = "#6E738D"
+error = "#B8C0E0"
+error_bg = "#181926"
+statusbar = "#181926"
+statusbar_progress = "#C6A0F6"
+statusbar_bg = "#C6A0F6"
+cmdline = "#B8C0E0"
+cmdline_bg = "#181926"
