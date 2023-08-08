@@ -196,7 +196,7 @@ alias wttr="http -b v2.wttr.in"
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
-atuin init fish | source
+atuin init fish --disable-up-arrow | source
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000

@@ -67,7 +67,7 @@ install_package "clang"
 install_package "deno"
 install_package "gcc"
 install_package "go"
-install_package "nodejs-lts-gallium"
+install_package "nodejs-lts-hydrogen"
 install_package "rust"
 
 print_in_purple "Package managers\n"
