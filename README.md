@@ -2,35 +2,31 @@
 
 ## Wallpaper
 
-![joedotfiles - wallpaper](screenshots/wallpaper.png)
+![joedotfiles - wallpaper](https://github.com/joelazar/dotfiles/assets/16268238/d6c2fbd2-ca59-4d67-86b1-3cdb642f5f46)
 
 ## Neovim with my [custom config](https://github.com/joelazar/nvim-config)
 
-![joedotfiles - neovim](screenshots/nvim.png)
+![joedotfiles - neovim](https://github.com/joelazar/dotfiles/assets/16268238/ece9046e-14ac-4dc2-8d39-86e9fbc958bd)
 
-## Exa
+## Exa + FZF
 
-![joedotfiles - exa](screenshots/exa.png)
+![joedotfiles - exa+fzf](https://github.com/joelazar/dotfiles/assets/16268238/261f8201-9389-4dfe-a6fd-b7197df51e71)
 
 ## Lazygit
 
-![joedotfiles - lazygit](screenshots/lazygit.png)
+![joedotfiles - lazygit](https://github.com/joelazar/dotfiles/assets/16268238/116efc38-4684-48e3-b418-f524fcc35ff2)
 
-## Firefox + [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-c/)
+## Firefox + [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/)
 
-![joedotfiles - firefox + vimium](screenshots/ff+vimium.png)
+![joedotfiles - firefox + vimium](https://github.com/joelazar/dotfiles/assets/16268238/81d1a1fc-4ad3-4448-a78b-805e5603f2a9)
 
 ## nnn + preview-tui
 
-![joedotfiles - nnn+preview](screenshots/nnn+preview.png)
+![joedotfiles - nnn+preview](https://github.com/joelazar/dotfiles/assets/16268238/62ac46ed-3b4a-4c3c-bb1d-feed4b220f72)
 
 ## ncspot
 
-![joedotfiles - ncspot](screenshots/ncspot.png)
-
-## neofetch + fzf
-
-![joedotfiles - neofetch+fzf](screenshots/neofetch+fzf.png)
+![joedotfiles - ncspot](https://github.com/joelazar/dotfiles/assets/16268238/71ac32a2-5c0d-446b-ba58-fc00ab6687f3)
 
 ## Details
 
