@@ -129,8 +129,7 @@
         "interval": 10,
         "exec": "$HOME/.local/bin/vpn-status",
         "return-type": "json",
-        "format": "{}",
-        "tooltip-format": "hello"
+        "format": "{}"
     },
 
     "custom/media": {
