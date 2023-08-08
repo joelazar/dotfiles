@@ -3,8 +3,8 @@
     "position": "top",
     "height": 24,
     "modules-left": [
-        "sway/workspaces",
-        "sway/mode"
+        "wlr/workspaces",
+        "hyprland/submap"
     ],
     "modules-center": [
           "custom/media"
@@ -18,7 +18,7 @@
         "custom/separator",
         "cpu",
         "custom/separator",
-        "sway/language",
+        "hyprland/language",
         "custom/separator",
         "idle_inhibitor",
         "custom/separator",
@@ -38,6 +38,11 @@
     ],
     "fixed-center": false,
 
+	"hyprland/submap": {
+        "format": "{}",
+        "max-length": 120,
+        "tooltip": false
+    },
 
     "custom/profile":{
         "interval": 10,
@@ -94,9 +99,11 @@
     },
 
 
-    "sway/language": {
-        "format": " {short}",
-        "tooltip": false
+	"hyprland/language": {
+        "format": " {}",
+        "format-en": "us",
+        "format-hu": "hu",
+        "format-da": "dk"
     },
 
     "memory": {
@@ -129,8 +136,7 @@
         "interval": 10,
         "exec": "$HOME/.local/bin/vpn-status",
         "return-type": "json",
-        "format": "{}",
-        "tooltip-format": "hello"
+        "format": "{}"
     },
 
     "custom/media": {
@@ -148,15 +154,10 @@
 
     },
 
-    "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>",
-        "tooltip": false
-    },
-
-    "sway/workspaces": {
+    "wlr/workspaces": {
         "all-outputs": true,
         "disable-scroll": true,
-        "format": "{icon}",
+        "format": " {icon} ",
         "format-icons": {
             "1.terminals": "",
             "2.www": "",
@@ -168,7 +169,9 @@
             "8.steam": "󰓓",
             "9.spotify": "",
             "10.arch": "󰣇"
-        }
+        },
+		"on-click": "activate",
+		"sort-by-number": true
     },
 
     "pulseaudio": {

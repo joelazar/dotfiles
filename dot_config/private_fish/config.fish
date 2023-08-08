@@ -7,8 +7,13 @@ set -gx MOZ_ENABLE_WAYLAND 1
 set -gx MOZ_DBUS_REMOTE 1
 set -gx MOZ_WEBRENDER 1
 set -gx MOZ_ACCELERATED 1
-set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
+# TODO - breaks screensharing for now
+# set -gx WLR_RENDERER vulkan
+
+set -gx XDG_CURRENT_DESKTOP Hyprland
+set -gx XDG_SESSION_DESKTOP Hyprland
+set -gx XDG_SESSION_TYPE wayland
 
 # Make default programs
 set -gx BROWSER firefox
@@ -19,16 +24,6 @@ set -gx PAGER "bat --plain"
 set -gx STATUSBAR waybar
 set -gx TERMINAL kitty
 set -gx VISUAL nvim
-
-# Set cursor theme
-set -gx XCURSOR_THEME Adwaita
-set -gx SWAY_CURSOR_THEME Adwaita
-set -gx XCURSOR_SIZE 16
-set -gx SWAY_CURSOR_SIZE 16
-
-# Desktop settings for screen casting
-set -gx XDG_SESSION_DESKTOP sway
-set -gx XDG_CURRENT_DESKTOP sway
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'
@@ -202,9 +197,9 @@ atuin init fish --disable-up-arrow | source
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 
-# Start Sway at login
+# Start Hyprland at login
 if status is-login
-    if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
-        sway
+    if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep Hyprland)"
+        Hyprland
     end
 end

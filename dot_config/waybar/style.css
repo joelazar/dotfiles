@@ -123,6 +123,7 @@
   font-size: 20px;
 }
 
+#workspaces button.active,
 #workspaces button.focused {
   color: @mantle;
   background-color: @yellow;
