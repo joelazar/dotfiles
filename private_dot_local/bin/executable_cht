@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# take all arguments and join them with '+' signs
+
+cmd=$(echo "$*" | tr ' ' '+')
+
+curl -s "cht.sh/$cmd"
