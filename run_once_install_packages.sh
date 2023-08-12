@@ -72,6 +72,7 @@ install_package "rust"
 
 print_in_purple "Package managers\n"
 
+install_package "luarocks"
 install_package "npm"
 install_package "python-pip"
 install_package "python-poetry"
