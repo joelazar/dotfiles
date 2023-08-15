@@ -14,8 +14,8 @@ options_list=(
 	"networkmanager"
 	"pkill"
 	"search"
-	"youtube subscriptions"
 	"youtube"
+	"youtube-subscriptions"
 	"exit"
 )
 
@@ -58,7 +58,7 @@ search)
 youtube)
 	ytfzf -D
 	;;
-"youtube subscriptions")
+"youtube-subscriptions")
 	ytfzf -D -cS
 	;;
 exit) ;;
