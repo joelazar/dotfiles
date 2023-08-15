@@ -159,6 +159,7 @@ install_package "util-linux"
 install_package "virtualbox"
 install_package "words"
 install_package "yt-dlp"
+install_package "ytfzf-git"
 install_package "zbar"
 
 install_nnn_plugins
