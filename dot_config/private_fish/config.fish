@@ -192,6 +192,7 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
 alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
 alias wttr="http -b v2.wttr.in"
+alias wttr-cph="http -b v2.wttr.in/Copenhagen"
 
 starship init fish | source
 zoxide init fish | source
