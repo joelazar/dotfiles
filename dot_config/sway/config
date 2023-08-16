@@ -344,7 +344,7 @@ for_window [app_id=org.kde.kdeconnect.*] floating enable
 for_window [app_id=org.kde.polkit-kde-authentication-agent-1] floating enable
 for_window [app_id=wdisplays] floating enable,resize set 970 736
 for_window [app_id=nm-connection-editor] floating enable, resize set 781 580, sticky enable
-for_window [title="Firefox — Sharing Indicator"] kill
+for_window [title="Firefox — Sharing Indicator"] move scratchpad
 for_window [app_id="firefox" title="^Library$"] floating enable, sticky enable
 for_window [title="is sharing your screen."] move scratchpad
 for_window [title="File Upload"] resize set 1168 630
