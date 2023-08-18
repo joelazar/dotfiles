@@ -11,6 +11,7 @@ options_list=(
 	"do-not-disturb"
 	"emoji"
 	"launcher"
+	"kitty-sessions"
 	"networkmanager"
 	"pkill"
 	"search"
@@ -45,6 +46,9 @@ emoji)
 	;;
 launcher)
 	bemenu-run -p launcher
+	;;
+kitty-sessions)
+	bemenu-kitty-sessions
 	;;
 networkmanager)
 	networkmanager_dmenu

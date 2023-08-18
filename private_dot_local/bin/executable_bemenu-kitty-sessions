@@ -1,0 +1,5 @@
+#!/bin/bash
+
+chosen="$(/usr/bin/ls ~/.config/kitty/sessions/ | bemenu -i -p meta)"
+
+kitty --session sessions/"$chosen" --detach
