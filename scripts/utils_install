@@ -25,7 +25,7 @@ install_nnn_plugins() {
 
   bash "$script_path"
 
-  rm -f "$HOME/.config/nnn/*.tar.gz"
+  rm -rf "$HOME/.config/nnn/*.tar.gz"
 
   print_result $? "Install/update nnn plugins"
 }
@@ -45,10 +45,6 @@ install_fish_plugin() {
   declare -r PACKAGENAME="$2"
 
   execute "fish -c \"fisher install $PACKAGEPATH\"" "$PACKAGENAME"
-}
-
-update_fish_plugins() {
-	execute "fish -c \"fisher update\"" "Update fish plugins"
 }
 
 install_go_package() {
@@ -91,16 +87,6 @@ install_gh_plugin() {
 package_is_installed() {
   echo $INSTALLED_PACKAGES | grep -q " $1 "
 }
-
-update() {
-  yay -y
-}
-
-update_hosts() {
-  sudo cp /etc/hosts /etc/backup_hosts
-  sudo curl https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts -o /etc/hosts
-}
-
 
 clean_up_cache() {
   execute "paccache -r -k 2" "Clean up cached packages"

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SOURCE_DIR=$(chezmoi source-path)
+
+. "$SOURCE_DIR/scripts/utils_install" &&
+	. "$SOURCE_DIR/scripts/utils"
+
+print_in_purple "Update nnn plugins\n"
+install_nnn_plugins
+
+print_in_purple "Update fish completions\n"
+execute "fish -c 'fish_update_completions'" "Update fish completions"
+
+print_in_purple "Update gcloud cli\n"
+execute "sudo gcloud components update --quiet" "Update gcloud cli"
+
+print_in_purple "Update mullvad vpn relay list\n"
+execute "mullvad relay update" "Update mullvad vpn relay list"
+
+print_in_purple "Clean up cached packages\n"
+clean_up_cache
+
+print_in_purple "Clean up unused packages\n"
+clean_up_unused_packages
