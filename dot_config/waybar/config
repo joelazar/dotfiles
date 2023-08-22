@@ -95,8 +95,9 @@
 
 
     "sway/language": {
-        "format": " {short}",
-        "tooltip": false
+        "format": "{flag}",
+        "tooltip": false,
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
     },
 
     "memory": {
