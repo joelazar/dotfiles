@@ -22,3 +22,6 @@ clean_up_cache
 
 print_in_purple "Clean up unused packages\n"
 clean_up_unused_packages
+
+print_in_purple "Clean up old journal files\n"
+execute "sudo journalctl --vacuum-time=2weeks"

@@ -151,6 +151,7 @@ alias q="exit"
 alias rg="kitty +kitten hyperlinked_grep"
 alias s="kitty +kitten ssh"
 alias v='nvim'
+alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
 alias yaegi='rlwrap yaegi'
