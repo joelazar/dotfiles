@@ -184,7 +184,7 @@ set $ws6 "6.news"
 set $ws7 "7.movie"
 set $ws8 "8.steam"
 set $ws9 "9.spotify"
-set $ws10 "10.arch"
+set $ws10 "10.mail"
 
 ### Switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -324,6 +324,7 @@ assign [app_id="chromium"] $ws5
 assign [app_id="newsboat"] $ws6
 assign [app_id="mpv"] $ws7
 assign [app_id="Spotify"] $ws9
+assign [app_id="thunderbird"] $ws10
 
 ### For X11 apps: for_window [class="app_class"] move window to workspace $wsY
 for_window [class="Slack"] move window to workspace $ws3
