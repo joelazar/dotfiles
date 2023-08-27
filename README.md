@@ -55,7 +55,6 @@ Let me try to briefly list the installed and configured packages:
 - [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Smarter cd command
 - [`exa`](https://github.com/ogham/exa) - Modern `ls`
 - [`bat`](https://github.com/sharkdp/bat) - cat(1) clone with wings
-- [`buku`](https://github.com/jarun/buku) - Platform independent bookmark manager
 - [`sway`](https://swaywm.org/) - I3 compatible window manager, but with Wayland - [config](dot_config/sway/config)
   - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
   - [`dunst`](https://github.com/dunst-project/dunst) - Notification daemon

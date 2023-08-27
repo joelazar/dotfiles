@@ -36,7 +36,6 @@ print_in_purple "Basics\n"
 
 install_package "atuin"
 install_package "bat"
-install_package "buku"
 install_package "docker"
 install_package "docker-buildx"
 install_package "exa"

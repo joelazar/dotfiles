@@ -6,7 +6,6 @@
 options_list=(
 	"airplane-mode"
 	"bluetooth"
-	"bookmark"
 	"clipboard"
 	"do-not-disturb"
 	"emoji"
@@ -31,9 +30,6 @@ airplane-mode)
 	;;
 bluetooth)
 	bemenu-bluetooth
-	;;
-bookmark)
-	bemenu-bookmark
 	;;
 clipboard)
 	clipman pick --tool bemenu --tool-args="-p clipboard"
