@@ -12,26 +12,23 @@
     br   = branch --list --remote
     c    = commit
     ca   = !git add -A && gitmoji -c             # Commit all changes.
+    cl   = clean -fxd
     co   = checkout
     cp   = cherry-pick
     d    = diff
     dc   = diff --cached
     f    = fetch --prune
-    g    = log --graph --pretty=custom           # Show custom graph.
-    l    = log --pretty=custom                   # Show custom log.
-    lc   = shortlog --email --numbered --summary # List contributors.
+    hash = rev-parse HEAD
+    lc   = shortlog --email --numbered --summary --no-merges # List contributors.
     lg   = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
     lgall= log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
     lh   = log -p -10                            # Show custom log.
     p    = pull
-    rank = shortlog -sn --no-merges
+    res  = reset --hard HEAD
     rlc  = reset --hard HEAD~1                   # Remove last commit.
     s    = status
     sres = reset --soft HEAD~1                   # Undo last commit.
-    res  = reset --hard HEAD
-    cl   = clean -fxd
     sub  = submodule update --init --recursive
-    w    = instaweb --httpd=webrick              # Start web-based visualizer.
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -47,16 +44,6 @@
 
     cm = "!f() { \
         git log --pretty=custom --decorate --date=short --grep=\"$1\"; \
-    }; f"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Credit an author on the latest commit.
-
-    credit = "!f() { \
-        if [ -n \"$1\" ] && [ -n \"$2\" ]; then \
-            git commit --amend --author \"$1 <$2>\" -C HEAD; \
-        fi \
     }; f"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -77,7 +64,7 @@
 
 [mergetool "nvim"]
 
-	cmd = nvim -f -c \"DiffviewOpen\"
+    cmd = nvim -f -c \"DiffviewOpen\"
 
 [difftool]
 
@@ -85,7 +72,7 @@
 
 [difftool "nvim"]
 
-	cmd = nvim -f -c \"DiffviewOpen\"
+    cmd = nvim -f -c \"DiffviewOpen\"
 
 [diff]
 
@@ -94,8 +81,8 @@
 
 [merge]
 
-    tool = nvim
     conflictstyle = diff3
+    tool = nvim
 
 [color]
 
@@ -153,9 +140,12 @@
 
 [delta]
 
-    features = line-numbers decorations
-    whitespace-error-style = 22 reverse
-    syntax-theme = zenburn
+    ; features = line-numbers decorations
+    ; whitespace-error-style = 22 reverse
+    ; syntax-theme = zenburn
+    navigate = true
+    light = false
+    side-by-side = true
 
 [diff "bin"]
 
@@ -189,8 +179,8 @@
 
 [url "git@github.com:"]
 
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
 
 [pull]
 
-	  rebase = false
+    rebase = false
