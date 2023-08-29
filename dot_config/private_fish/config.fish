@@ -108,9 +108,6 @@ set -gx NODE_PATH $HOME/.node/lib/node_modules
 # PARUZ config
 set -gx PARUZ yay
 
-# zk dir
-set -gx ZK_NOTEBOOK_DIR $HOME/notes
-
 set sponge_delay 25
 
 if test -e $HOME/.config/fish/.local.fish
