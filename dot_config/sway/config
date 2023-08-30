@@ -239,16 +239,18 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
 ### Multimedia keys
-bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym --locked XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym --locked Shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --locked Shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym --locked XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym --locked XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 ### Brightness
 bindsym --locked XF86MonBrightnessUp exec --no-startup-id brightnessctl set 1%+
 bindsym --locked XF86MonBrightnessDown exec --no-startup-id brightnessctl set 1%-
-bindsym --locked Shift+XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
-bindsym --locked Shift+XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
+bindsym --locked Shift+XF86MonBrightnessUp exec --no-startup-id brightnessctl set 5%+
+bindsym --locked Shift+XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 bindsym --locked XF86Display exec --no-startup-id toggle-display
 bindsym XF86WLAN exec --no-startup-id do-not-disturb
