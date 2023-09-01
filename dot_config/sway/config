@@ -177,11 +177,11 @@ bindsym $mod+Alt+Up move workspace to output up
 
 set $ws1 "1.terminals"
 set $ws2 "2.www"
-set $ws3 "3.slack"
-set $ws4 "4.discord"
-set $ws5 "5.chromium"
+set $ws3 "3.chat"
+set $ws4 "4.notes"
+set $ws5 "5.chromium/code"
 set $ws6 "6.news"
-set $ws7 "7.movie"
+set $ws7 "7.videos"
 set $ws8 "8.steam"
 set $ws9 "9.spotify"
 set $ws10 "10.mail"
@@ -260,7 +260,7 @@ bindsym --locked XF86Favorites exec --no-startup-id toggle-touchpad
 bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
 
 ### Start Applications
-bindsym $mod+F1 exec --no-startup-id kitty nnn
+bindsym $mod+F1 exec --no-startup-id obsidian
 bindsym $mod+F2 exec --no-startup-id firefox
 bindsym $mod+F3 exec --no-startup-id slack
 bindsym $mod+F4 exec --no-startup-id discord
@@ -320,8 +320,9 @@ bindsym $mod+r mode $mode_resize
 ### For Wayland apps: assign [app_id="app_id"] $wsY
 assign [app_id="firefox"] $ws2
 assign [app_id="Slack"] $ws3
-assign [app_id="discord"] $ws4
-assign [app_id="code-url-handler"] $ws4
+assign [app_id="discord"] $ws3
+assign [app_id="obsidian"] $ws4
+assign [app_id="code-url-handler"] $ws5
 assign [app_id="chromium"] $ws5
 assign [app_id="newsboat"] $ws6
 assign [app_id="mpv"] $ws7
@@ -336,6 +337,7 @@ for_window [class="remarkable.exe"] move window to workspace $ws10
 
 ### Prevent idle state at fullscreen mode for some apps
 for_window [app_id="chromium"] inhibit_idle fullscreen
+for_window [app_id="obsidian"] inhibit_idle fullscreen
 for_window [app_id="Slack"] inhibit_idle fullscreen
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
