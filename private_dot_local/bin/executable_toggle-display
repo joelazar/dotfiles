@@ -2,7 +2,7 @@
 
 # requirements: bemenu, jq, swaymsg
 
-displays=$(swaymsg -t get_outputs | jq '.[] | .name' | tr -d '"')
+displays=$(swaymsg -t get_outputs | jq '.[] | .name' | tr -d '"' | sort -r)
 
 if [ "$(echo "$displays" | wc -l)" -gt 1 ]; then
 	choosen=$(echo "$displays" | bemenu -i -p "Choose a display" | tr -d '\n')
