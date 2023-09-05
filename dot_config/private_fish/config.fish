@@ -150,6 +150,7 @@ alias v='nvim'
 alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
+alias nvim-lazy='NVIM_APPNAME=LazyVim nvim'
 alias yaegi='rlwrap yaegi'
 
 # kubectl
