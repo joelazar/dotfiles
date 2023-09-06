@@ -56,5 +56,6 @@
     "editor.defaultFormatter": "ms-python.python"
   },
   "workbench.editor.untitled.hint": "hidden",
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "vscode-neovim.NVIM_APPNAME": "LazyVim"
 }

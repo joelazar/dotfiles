@@ -1,81 +1,96 @@
-reporting: 'off'
+reporting: "off"
 startuppopupversion: 1
 promptToReturnFromSubprocess: false
 gui:
-    skipDiscardChangeWarning: true
-    showCommandLog: false
-    showIcons: true
-    showBottomLine: false
-    showRandomTip: false
-    # use the mocha catppuccin theme
-    theme:
-        lightTheme: false
-        activeBorderColor:
-            - '#a6e3a1' # Green
-            - bold
-        inactiveBorderColor:
-            - '#cdd6f4' # Text
-        optionsTextColor:
-            - '#89b4fa' # Blue
-        selectedLineBgColor:
-            - '#313244' # Surface0
-        selectedRangeBgColor:
-            - '#313244' # Surface0
-        cherryPickedCommitBgColor:
-            - '#94e2d5' # Teal
-        cherryPickedCommitFgColor:
-            - '#89b4fa' # Blue
-        unstagedChangesColor:
-            - red # Red
-notARepository: 'skip'
+  skipDiscardChangeWarning: true
+  skipNoStagedFilesWarning: true
+  showCommandLog: false
+  showIcons: true
+  showFileTree: true
+  showBottomLine: false
+  showRandomTip: false
+  border: "rounded"
+  # use the mocha catppuccin theme
+  theme:
+    lightTheme: false
+    activeBorderColor:
+      - "#a6e3a1" # Green
+      - bold
+    inactiveBorderColor:
+      - "#cdd6f4" # Text
+    optionsTextColor:
+      - "#89b4fa" # Blue
+    selectedLineBgColor:
+      - "#313244" # Surface0
+    selectedRangeBgColor:
+      - "#313244" # Surface0
+    cherryPickedCommitBgColor:
+      - "#94e2d5" # Teal
+    cherryPickedCommitFgColor:
+      - "#89b4fa" # Blue
+    unstagedChangesColor:
+      - red # Red
+notARepository: "skip"
 customCommands:
-    - key: '<c-n>'
-      prompts:
-        - type: 'menu'
-          title: 'Creating new branch. What kind of branch is it?'
-          options:
-            - name: 'feature'
-              value: 'feature'
-            - name: 'hotfix'
-              value: 'hotfix'
-            - name: 'bugfix'
-              value: 'bugfix'
-            - name: 'chore'
-              value: 'chore'
-        - type: 'input'
-          title: 'What is the new branch name?'
-          initialValue: ''
-      command: 'git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}'
-      context: 'localBranches'
-      loadingText: 'creating branch'
-    - key: '<c-r>'
-      command: 'gh pr create --assignee @me'
-      context: 'global'
-      loadingText: 'Creating pull request on GitHub'
-      subprocess: true
-    - key: '<c-p>'
-      command: 'git remote prune {{.SelectedRemote.Name}}'
-      context: 'remotes'
-      loadingText: 'Pruning...'
-      description: 'prune deleted remote branches'
-    - key: 'M'
-      command: 'git mergetool'
-      context: 'files'
-      loadingText: 'opening git mergetool'
-      subprocess: true
-    - key: 'C'
-      command: 'gitmoji -c'
-      context: 'files'
-      loadingText: 'opening gitmoji cli tool'
-      subprocess: true
-    - key: 'R'
-      command: 'git reset --soft HEAD~1'
-      context: 'files'
-      loadingText: 'undo last commit'
-    - key: '<f1>'
-      command: 'git reset --soft {{.CheckedOutBranch.UpstreamRemote}}'
-      context: 'files'
-      prompts:
-        - type: 'confirm'
-          title: 'Confirm:'
-          body: 'Are you sure you want to reset HEAD to {{.CheckedOutBranch.UpstreamRemote}}?'
+  - key: "<c-n>"
+    description: "New branch with prefix"
+    prompts:
+      - type: "menu"
+        title: "Creating new branch. What kind of branch is it?"
+        options:
+          - name: "feature"
+            value: "feature"
+          - name: "hotfix"
+            value: "hotfix"
+          - name: "bugfix"
+            value: "bugfix"
+          - name: "chore"
+            value: "chore"
+          - name: "umbrella"
+            value: "umbrella"
+      - type: "input"
+        title: "What is the new branch name?"
+        initialValue: ""
+    command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
+    context: "localBranches"
+    loadingText: "Creating branch"
+  - key: "<c-r>"
+    command: "gh pr create --assignee @me"
+    context: "files"
+    description: "Create pull request on GitHub"
+    loadingText: "Creating pull request on GitHub"
+    subprocess: true
+  - key: "<c-r>"
+    command: "gh pr create --assignee @me"
+    context: "localBranches"
+    description: "Create pull request on GitHub"
+    loadingText: "Creating pull request on GitHub"
+    subprocess: true
+  - key: "o"
+    command: "gh pr view --web"
+    context: "localBranches"
+    description: "View PR on GitHub"
+    loadingText: "Opening GitHub..."
+    subprocess: false
+  - key: "<c-p>"
+    command: "git remote prune {{.SelectedRemote.Name}}"
+    context: "remotes"
+    description: "Prune deleted remote branches"
+    loadingText: "Pruning..."
+  - key: "M"
+    command: "git mergetool"
+    context: "files"
+    description: "Open git mergetool"
+    loadingText: "Opening git mergetool"
+    subprocess: true
+  - key: "C"
+    command: "gitmoji -c"
+    context: "files"
+    description: "Open gitmoji"
+    loadingText: "Opening gitmoji cli tool"
+    subprocess: true
+  - key: "R"
+    command: "git reset --soft HEAD~1"
+    context: "files"
+    description: "Undo last commit"
+    loadingText: "Undoing last commit"
