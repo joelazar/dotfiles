@@ -111,6 +111,7 @@ install_package "jupyter-kernel"
 install_package "jupyter-notebook"
 install_package "jupyterlab"
 install_package "lazygit"
+install_package "lazydocker"
 install_package "pgcli"
 install_package "visual-studio-code-bin"
 

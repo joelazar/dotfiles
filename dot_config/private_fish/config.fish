@@ -141,7 +141,9 @@ alias lg='lazygit'
 alias ll='exa -la --git --group-directories-first --icons'
 alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
 alias ls='exa --icons --group-directories-first'
+alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
+alias nvim-lazy='NVIM_APPNAME=LazyVim nvim'
 alias ping='ping -c 5'
 alias q="exit"
 alias rg="kitty +kitten hyperlinked_grep"
@@ -150,7 +152,6 @@ alias v='nvim'
 alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
-alias nvim-lazy='NVIM_APPNAME=LazyVim nvim'
 alias yaegi='rlwrap yaegi'
 
 # kubectl
