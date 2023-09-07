@@ -1,5 +1,5 @@
 prSections:
-  - title: My Pull Requests
+  - title: My pull requests
     filters: is:open assignee:@me sort:created-desc
   - title: Review requested
     filters: is:open -assignee:@me review-requested:@me -label:wip -label:"don't merge" -is:draft sort:created-desc
@@ -9,9 +9,11 @@ prSections:
     filters: is:open -assignee:@me user:Growblocks label:wip,"don't merge" sort:created-desc
   - title: Draft
     filters: is:open -assignee:@me user:Growblocks is:draft sort:created-desc
-  - title: Only work
+  - title: Recently closed my prs
+    filters: is:closed author:@me sort:created-desc
+  - title: Work prs
     filters: is:open -assignee:@me user:Growblocks sort:created-desc
-  - title: Recently closed
+  - title: Recently closed work prs
     filters: is:closed user:Growblocks sort:created-desc
 issuesSections:
   - title: My Issues
