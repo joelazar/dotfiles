@@ -56,7 +56,7 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --excl
 set -gx FZF_DEFAULT_OPTS '--height 50% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
-set fzf_preview_dir_cmd exa --all --color=always
+set fzf_preview_dir_cmd eza --all --color=always
 
 fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\ce
 
@@ -136,11 +136,11 @@ alias e='nvim'
 alias ff='firefox'
 alias g="git"
 alias icat="kitty +kitten icat"
-alias l='exa --icons --group-directories-first'
+alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
-alias ll='exa -la --git --group-directories-first --icons'
+alias ll='eza -la --git --group-directories-first --icons'
 alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
-alias ls='exa --icons --group-directories-first'
+alias ls='eza --icons --group-directories-first'
 alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias nvim-lazy='NVIM_APPNAME=LazyVim nvim'

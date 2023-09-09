@@ -8,9 +8,9 @@
 
 ![joedotfiles - neovim](https://github.com/joelazar/dotfiles/assets/16268238/ece9046e-14ac-4dc2-8d39-86e9fbc958bd)
 
-## Exa + FZF
+## Eza + FZF
 
-![joedotfiles - exa+fzf](https://github.com/joelazar/dotfiles/assets/16268238/261f8201-9389-4dfe-a6fd-b7197df51e71)
+![joedotfiles - eza+fzf](https://github.com/joelazar/dotfiles/assets/16268238/261f8201-9389-4dfe-a6fd-b7197df51e71)
 
 ## Lazygit
 
@@ -53,7 +53,7 @@ Let me try to briefly list the installed and configured packages:
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) - Grep on steroids
 - [`fd`](https://github.com/sharkdp/fd) - Updated find
 - [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Smarter cd command
-- [`exa`](https://github.com/ogham/exa) - Modern `ls`
+- [`eza`](https://github.com/eza-community/eza) - Modern `ls`
 - [`bat`](https://github.com/sharkdp/bat) - cat(1) clone with wings
 - [`sway`](https://swaywm.org/) - I3 compatible window manager, but with Wayland - [config](dot_config/sway/config)
   - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
