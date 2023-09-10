@@ -95,10 +95,6 @@ set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.confi
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
 set -gx LC_COLLATE C
 
-# z settings
-set -U Z_DATA "$HOME/.z"
-set -U ZO_METHOD nvim
-
 # Grim settings
 set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
 
@@ -107,8 +103,6 @@ set -gx NODE_PATH $HOME/.node/lib/node_modules
 
 # PARUZ config
 set -gx PARUZ yay
-
-set sponge_delay 25
 
 if test -e $HOME/.config/fish/.local.fish
     source $HOME/.config/fish/.local.fish
