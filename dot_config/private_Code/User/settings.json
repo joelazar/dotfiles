@@ -57,5 +57,6 @@
   },
   "workbench.editor.untitled.hint": "hidden",
   "go.toolsManagement.autoUpdate": true,
-  "vscode-neovim.NVIM_APPNAME": "LazyVim"
+  "vscode-neovim.NVIM_APPNAME": "LazyVim",
+  "window.titleBarStyle": "custom"
 }
