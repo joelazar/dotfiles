@@ -95,6 +95,8 @@ set -gx NNN_FCOLORS 030304020000060801030500 # filetype colors. this mimics dirc
 set -gx NNN_OPTS dreuU
 set -gx NNN_PLUG "c:fzcd;d:diffs;h:fzhist;k:pskill;m:nmount;o:fzopen;p:fzplug;t:preview-tui;z:autojump;"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/"
+set -gx NNN_BATSTYLE "changes,numbers"
+set -gx NNN_BATTHEME base16
 
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
 set -gx LC_COLLATE C
