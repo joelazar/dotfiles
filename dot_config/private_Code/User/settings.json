@@ -5,8 +5,6 @@
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,
   "terminal.integrated.sendKeybindingsToShell": true,
-  "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
-  "vscode-neovim.neovimClean": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
   "workbench.colorTheme": "Catppuccin Mocha",
@@ -15,7 +13,6 @@
   "editor.inlineSuggest.enabled": true,
   "files.trimTrailingWhitespace": true,
   "extensions.ignoreRecommendations": true,
-  "python.linting.pylintEnabled": true,
   "vim.enableNeovim": true,
   "vim.neovimPath": "/usr/bin/nvim",
   "vim.leader": "<space>",
@@ -55,8 +52,8 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
-  "workbench.editor.untitled.hint": "hidden",
   "go.toolsManagement.autoUpdate": true,
-  "vscode-neovim.NVIM_APPNAME": "LazyVim",
-  "window.titleBarStyle": "custom"
+  "window.titleBarStyle": "custom",
+  "workbench.editor.empty.hint": "hidden",
+  "vscode-neovim.NVIM_APPNAME": "LazyVim"
 }
