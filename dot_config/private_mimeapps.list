@@ -30,16 +30,3 @@ x-scheme-handler/https=firefox.desktop
 x-scheme-handler/https=firefox.desktop
 x-scheme-handler/terminal=kitty.desktop
 x-scheme-handler/etcher=balena-etcher.desktop
-x-scheme-handler/mailto=userapp-Thunderbird-0RXY91.desktop
-message/rfc822=userapp-Thunderbird-0RXY91.desktop
-x-scheme-handler/mid=userapp-Thunderbird-0RXY91.desktop
-x-scheme-handler/webcal=userapp-Thunderbird-MOEY91.desktop
-text/calendar=userapp-Thunderbird-MOEY91.desktop
-application/x-extension-ics=userapp-Thunderbird-MOEY91.desktop
-x-scheme-handler/webcals=userapp-Thunderbird-MOEY91.desktop
-
-[Added Associations]
-x-scheme-handler/mailto=userapp-Thunderbird-0RXY91.desktop;
-x-scheme-handler/mid=userapp-Thunderbird-0RXY91.desktop;
-x-scheme-handler/webcal=userapp-Thunderbird-MOEY91.desktop;
-x-scheme-handler/webcals=userapp-Thunderbird-MOEY91.desktop;

@@ -327,7 +327,6 @@ assign [app_id="chromium"] $ws5
 assign [app_id="newsboat"] $ws6
 assign [app_id="mpv"] $ws7
 assign [app_id="Spotify"] $ws9
-assign [app_id="thunderbird"] $ws10
 
 ### For X11 apps: for_window [class="app_class"] move window to workspace $wsY
 for_window [class="Slack"] move window to workspace $ws3

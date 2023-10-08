@@ -50,7 +50,6 @@ install_package "nnn-nerd"
 install_package "python"
 install_package "ripgrep"
 install_package "sd"
-install_package "thunderbird"
 install_package "zoxide"
 
 print_in_purple "Infrastructure\n"
