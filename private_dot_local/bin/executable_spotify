@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec /usr/bin/spotify --enable-features=UseOzonePlatform,WebRTCPipeWireCapturer --ozone-platform=wayland &>/dev/null &
