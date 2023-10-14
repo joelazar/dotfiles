@@ -63,7 +63,7 @@ install_package "minikube"
 
 print_in_purple "Languages\n"
 
-install_package "bunjs-bin"
+install_package "bun-bin"
 install_package "clang"
 install_package "deno"
 install_package "gcc"

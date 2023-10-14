@@ -1,20 +1,18 @@
 #!/bin/bash
+# shellcheck disable=2086,2090,2089
 #
 # Backup script
 #
 
-BACKUPDIR="rclone:onedrive:backup"
+BACKUPDIR="rclone:gdrive:Backup"
+REPO="--repo $BACKUPDIR"
+INCLUDE="$HOME/.ssh $HOME/.config/fish/.local.fish $HOME/documents $HOME/pictures $HOME/private"
+EXCLUDE="--exclude=Calibre/"
 
 case "$1" in
-"do") restic --repo "$BACKUPDIR" \
-	--exclude='Calibre/' \
-	backup \
-	~/.ssh \
-	~/.config/fish/.local.fish \
-	~/documents \
-	~/pictures \
-	~/private ;;
-"list") restic --repo "$BACKUPDIR" snapshots ;;
-"prune") restic --repo "$BACKUPDIR" prune ;;
+"init") restic init $REPO ;;
+"do") restic $REPO $EXCLUDE backup $INCLUDE ;;
+"list") restic -r $BACKUPDIR snapshots ;;
+"prune") restic -r $BACKUPDIR prune ;;
 *) echo "Do nothing" "$@" ;;
 esac
