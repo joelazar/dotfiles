@@ -130,7 +130,6 @@ alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias ci="gh workflow view"
-alias d="kitty +kitten diff"
 alias ddg="BROWSER=w3m ddgr -n 5"
 alias e='nvim'
 alias ff='firefox'
