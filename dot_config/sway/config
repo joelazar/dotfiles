@@ -260,10 +260,8 @@ bindsym --locked XF86Favorites exec --no-startup-id toggle-touchpad
 bindsym $mod+Shift+s exec killall -SIGUSR1 waybar
 
 ### Start Applications
-bindsym $mod+F1 exec --no-startup-id obsidian
 bindsym $mod+F2 exec --no-startup-id firefox
-bindsym $mod+F3 exec --no-startup-id slack
-bindsym $mod+F4 exec --no-startup-id discord
+bindsym $mod+F4 exec --no-startup-id obsidian
 bindsym $mod+F5 exec --no-startup-id chromium
 bindsym $mod+F9 exec --no-startup-id ncspot
 bindsym $mod+F10 exec --no-startup-id spotify
