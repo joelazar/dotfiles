@@ -1,7 +1,7 @@
 # What protocol to use when performing git operations. Supported values: ssh, https
 git_protocol: ssh
 # What editor gh should run when creating issues, pull requests, etc. If blank, will refer to environment.
-editor: nvim --cmd 'let g:unception_disable=1'
+editor: nvim --cmd 'let g:flatten_wait=1'
 # When to interactively prompt. This is a global config that cannot be overriden by hostname. Supported values: enabled, disabled
 prompt: enabled
 # A pager program to send command output to. Example value: less
