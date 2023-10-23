@@ -11,7 +11,7 @@ sudo apt -y install software-properties-common
 sudo add-apt-repository -y ppa:neovim-ppa/unstable
 sudo apt update
 
-sudo apt install -y ripgrep fd-find neovim git curl golang rust-all npm python
+sudo apt install -y ripgrep fd-find neovim git curl golang rust-all luarocks npm python python-pip unzip wget
 
 mkdir -p ~/.config/kitty
 
