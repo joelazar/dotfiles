@@ -278,17 +278,17 @@ bindsym $mod+ctrl+space exec dunstctl close
 set $mode_system "👋 (l) lock, (e) logout, (s) suspend, (r) reboot, (shift+s) shutdown"
 
 mode $mode_system {
-    bindsym l exec --no-startup-id $lock, mode "default"
-    bindsym e exec --no-startup-id swaymsg exit, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
-    bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+    bindsym --locked l exec --no-startup-id $lock, mode "default"
+    bindsym --locked e exec --no-startup-id swaymsg exit, mode "default"
+    bindsym --locked s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym --locked r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym --locked Shift+s exec --no-startup-id systemctl poweroff, mode "default"
 
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+    bindsym --locked Return mode "default"
+    bindsym --locked Escape mode "default"
 }
 
-bindsym $mod+Shift+Delete mode $mode_system
+bindsym --locked $mod+Shift+Delete mode $mode_system
 
 ### Resizing containers
 set $mode_resize "↔️ resize"
