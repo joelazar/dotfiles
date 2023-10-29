@@ -2,33 +2,34 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'Roboto Mono', 'monospace', monospace",
   "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
   "editor.minimap.enabled": false,
   "editor.scrollBeyondLastLine": false,
-  "terminal.integrated.sendKeybindingsToShell": true,
-  "vsicons.dontShowNewVersionMessage": true,
-  "window.menuBarVisibility": "toggle",
-  "workbench.colorTheme": "Catppuccin Mocha",
-  "workbench.iconTheme": "vscode-icons",
-  "workbench.startupEditor": "none",
-  "editor.inlineSuggest.enabled": true,
-  "files.trimTrailingWhitespace": true,
+  "explorer.confirmDelete": false,
+  "extensions.experimental.affinity": { "vscodevim.vim": 1 },
   "extensions.ignoreRecommendations": true,
+  "files.trimTrailingWhitespace": true,
+  "go.toolsManagement.autoUpdate": true,
+  "redhat.telemetry.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "vim.easymotion": true,
   "vim.enableNeovim": true,
-  "vim.neovimPath": "/usr/bin/nvim",
-  "vim.leader": "<space>",
   "vim.handleKeys": {
     "<C-b>": false,
-    "<C-f>": false
+    "<C-f>": false,
+    "<C-p>": false,
+    "<C-n>": false
   },
+  "vim.hlsearch": true,
+  "vim.incsearch": true,
+  "vim.leader": "<space>",
+  "vim.neovimPath": "/usr/bin/nvim",
   "vim.normalModeKeyBindings": [
-    {
-      "before": ["<C-n>"],
-      "commands": [":nohl"]
-    },
-    {
-      "before": ["leader", "w"],
-      "commands": ["workbench.action.files.save"]
-    },
+    { "before": ["m", "m"], "commands": ["bookmarks.toggle"] },
+    { "before": ["leader", "s", "b"], "commands": ["bookmarks.list"] },
+    { "before": ["leader", "w"], "commands": ["workbench.action.files.save"] },
     {
       "before": ["leader", "b", "d"],
       "commands": ["workbench.action.closeActiveEditor"]
@@ -40,20 +41,38 @@
     {
       "before": ["leader", "l", "p"],
       "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["leader", "l", "d"],
+      "commands": ["workbench.action.problems.focus"]
+    },
+    { "before": ["<C-l>"], "commands": [":nohl"] },
+    { "before": ["]", "d"], "commands": ["editor.action.marker.next"] },
+    { "before": ["[", "d"], "commands": ["editor.action.marker.prev"] },
+    { "before": ["g", "r"], "commands": ["editor.action.goToReferences"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": [">"],
+      "commands": ["editor.action.indentLines"]
+    },
+    {
+      "before": ["<"],
+      "commands": ["editor.action.outdentLines"]
+    },
+    {
+      "before": ["p"],
+      "after": ["p", "g", "v", "y"]
     }
   ],
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "telemetry.telemetryLevel": "off",
-  "explorer.confirmDelete": false,
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
-  "redhat.telemetry.enabled": false,
-  "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
-  },
-  "go.toolsManagement.autoUpdate": true,
+  "vim.sneak": true,
+  "vim.surround": true,
+  "vsicons.dontShowNewVersionMessage": true,
+  "window.menuBarVisibility": "toggle",
   "window.titleBarStyle": "custom",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.editor.empty.hint": "hidden",
-  "vscode-neovim.NVIM_APPNAME": "LazyVim"
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.startupEditor": "none",
+  "[python]": { "editor.defaultFormatter": "ms-python.python" }
 }
