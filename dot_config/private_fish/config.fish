@@ -47,6 +47,7 @@ fish_add_path $HOME/.local/bin/kitty_nightly/kitty.app/bin
 # mojo related changes
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
+set -gx MODULAR_HOME $HOME/.modular
 
 # Set custom askpass
 set -gx SUDO_ASKPASS $HOME/.local/bin/bemenu-askpass
