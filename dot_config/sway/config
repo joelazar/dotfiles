@@ -74,8 +74,10 @@ input type:touchpad {
 }
 
 input type:pointer {
+  natural_scroll enabled
+  dwt enabled
   accel_profile adaptive
-  pointer_accel -0.40
+  pointer_accel -0.45
 }
 
 input type:keyboard {
