@@ -74,5 +74,10 @@
   "workbench.editor.empty.hint": "hidden",
   "workbench.iconTheme": "vscode-icons",
   "workbench.startupEditor": "none",
-  "[python]": { "editor.defaultFormatter": "ms-python.python" }
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "[mojo]": {
+    "editor.defaultFormatter": "modular-mojotools.vscode-mojo"
+  }
 }
