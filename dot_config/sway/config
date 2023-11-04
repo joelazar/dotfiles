@@ -74,7 +74,6 @@ input type:touchpad {
 }
 
 input type:pointer {
-  natural_scroll enabled
   dwt enabled
   accel_profile adaptive
   pointer_accel -0.45
@@ -334,7 +333,7 @@ assign [app_id="Spotify"] $ws9
 for_window [class="Slack"] move window to workspace $ws3
 for_window [class="steam"] move window to workspace $ws8
 for_window [class="Spotify"] move window to workspace $ws9
-for_window [title="Spotify"] move window to workspace $ws9
+for_window [title="^Spotify$"] move window to workspace $ws9
 for_window [class="remarkable.exe"] move window to workspace $ws10
 
 ### Prevent idle state at fullscreen mode for some apps
