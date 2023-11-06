@@ -61,7 +61,8 @@ set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --excl
 set -gx FZF_DEFAULT_OPTS '--height 50% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | wl-copy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
-set fzf_preview_dir_cmd eza --all --color=always
+set fzf_preview_dir_cmd eza -la --git --group-directories-first --icons --color=always
+set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 
 fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\ce
 

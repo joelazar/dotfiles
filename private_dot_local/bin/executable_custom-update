@@ -8,6 +8,9 @@ SOURCE_DIR=$(chezmoi source-path)
 print_in_purple "Update nnn plugins\n"
 install_nnn_plugins
 
+print_in_purple "Update fish plugins\n"
+execute "fisher update" "Update fish plugins"
+
 print_in_purple "Update fish completions\n"
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
