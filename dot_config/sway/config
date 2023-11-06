@@ -139,7 +139,7 @@ bindsym $mod+m exec bemenu-meta
 floating_modifier $mod normal
 
 ### Reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c exec swaymsg reload && kanshictl reload
 
 ### Move your focus around
 bindsym $mod+$left focus left
