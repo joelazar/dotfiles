@@ -269,10 +269,9 @@ bindsym $mod+F10 exec --no-startup-id spotify
 bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
 ### Screenshot
-bindsym --release Print exec flameshot gui
-bindsym --release Ctrl+Print exec flameshot gui --delay 3000
-bindsym --release Shift+Print exec flameshot full
-bindsym --release Ctrl+Shift+Print exec flameshot full --clipboard
+bindsym --release Print exec grim - | swappy -f -
+bindsym --release Ctrl+Print exec sleep 3 && grim -g "$(slurp)" - | swappy -f -
+bindsym --release Shift+Print exec grim -g "$(slurp)" - | swappy -f -
 
 ### Notifications
 bindsym $mod+ctrl+space exec dunstctl close
@@ -343,7 +342,6 @@ for_window [app_id="Slack"] inhibit_idle fullscreen
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
 
-for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 for_window [app_id="qalculate-gtk"] floating enable
 for_window [app_id="pavucontrol"] floating enable
 for_window [app_id="blueman-manager"] floating enable
@@ -371,6 +369,5 @@ exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id kanshi
 exec --no-startup-id kdeconnect-indicator
 exec --no-startup-id libinput-gestures-setup start
-exec --no-startup-id flameshot
 
 include /etc/sway/config.d/*
