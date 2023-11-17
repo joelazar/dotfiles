@@ -116,10 +116,6 @@ if test -e $HOME/.config/fish/.local.fish
     source $HOME/.config/fish/.local.fish
 end
 
-if test -e $HOME/.config/fish/github_copilot_cli.fish
-    source $HOME/.config/fish/github_copilot_cli.fish
-end
-
 if test -e /opt/google-cloud-sdk/path.fish.inc
     source /opt/google-cloud-sdk/path.fish.inc
 end

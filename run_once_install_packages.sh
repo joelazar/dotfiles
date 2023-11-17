@@ -331,7 +331,6 @@ install_package "xorg-xwayland"
 
 print_in_purple "NPM packages\n"
 
-install_npm_package "@githubnext/github-copilot-cli"
 install_npm_package "@slidev/cli"
 install_npm_package "gitmoji-cli"
 install_npm_package "httpyac"
@@ -343,5 +342,6 @@ install_npm_package "yalc"
 print_in_purple "GH plugins\n"
 
 install_gh_plugin "dlvhdr/gh-dash"
+install_gh_plugin "github/gh-copilot"
 
 clean_up_cache
