@@ -2,7 +2,7 @@
  * Base styles
  * -------------------------------------------------------------------------- */
 
-@import 'mocha.css';
+@import "mocha.css";
 
 /* Reset all styles */
 * {
@@ -17,8 +17,8 @@
 #waybar {
   background: @base;
   color: @text;
-  font-family: Roboto Mono;
-  font-size: 15px;
+  font-family: FiraCode Nerd Font;
+  font-size: 14px;
   border-bottom: 1px solid @surface0;
 }
 
@@ -78,19 +78,17 @@
   border: 1px solid @peach;
 }
 
-#backlight,
 #network,
-#idle_inhibitor {
-  font-size: 20px;
-}
-
-#bluetooth {
+#bluetooth,
+#language,
+#custom-profile {
   font-size: 14px;
 }
 
-#language,
-#custom-profile {
-  font-size: 12px;
+#idle_inhibitor,
+#backlight {
+  padding-left: 0px;
+  padding-right: 5px;
 }
 
 #network.disconnected {
@@ -121,7 +119,6 @@
   border-top: 2px solid transparent;
   background-color: transparent;
   color: @text;
-  font-size: 20px;
 }
 
 #workspaces button.focused {

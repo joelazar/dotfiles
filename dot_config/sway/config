@@ -5,7 +5,7 @@ include catppuccin-mocha
 ## Variables
 
 set $mod Mod4
-set $font "Roboto Mono"
+set $font "FiraCode Nerd Font"
 set $font_size 0
 set $cursor_size 16
 

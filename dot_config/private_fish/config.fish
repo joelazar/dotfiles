@@ -67,7 +67,7 @@ set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\ce
 
 # BEMENU options
-set -gx BEMENU_OPTS '-i --fn "Roboto Mono 13" --hp 6 -b --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#cba6f7" --hf "#11111b" --tf "#cba6f7" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
+set -gx BEMENU_OPTS '-i --fn "FiraCode Nerd Font 13" --hp 6 -b --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#cba6f7" --hf "#11111b" --tf "#cba6f7" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf

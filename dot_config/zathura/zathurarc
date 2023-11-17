@@ -4,7 +4,7 @@ include catppuccin-mocha
 set adjust-open "best-fit"
 # set recolor			"true"
 
-set font "Roboto Mono 10"
+set font "FiraCode Nerd Font 10"
 set incremental-search true
 set selection-clipboard clipboard
 set selection-notification "true"

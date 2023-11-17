@@ -55,7 +55,7 @@
             "critical": 10
         },
         "format": "{icon}  {capacity}%",
-        "format-discharging": "{icon} {capacity}%",
+        "format-discharging": "{icon}  {capacity}%",
         "format-icons": [ "", "", "", "", "" ]
     },
 
@@ -119,9 +119,9 @@
 
     "network": {
         "interval": 10,
-        "format-wifi": "",
-        "format-ethernet": "󰛳",
-        "format-disconnected": "",
+        "format-wifi": " ",
+        "format-ethernet": "󰛳 ",
+        "format-disconnected": " ",
         "tooltip-format": "{essid} ({signalStrength}%)\n{ifname}: {ipaddr}/{cidr}",
         "on-click": "nm-connection-editor"
     },

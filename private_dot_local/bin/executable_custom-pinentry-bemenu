@@ -1,6 +1,6 @@
 #!/bin/sh
 
 # BEMENU options
-export BEMENU_OPTS='-i --fn "Roboto Mono 13" -b --scrollbar always'
+export BEMENU_OPTS='-i --fn "FiraCode Nerd Font 13" -b --scrollbar always'
 
 pinentry-bemenu "$@" --nb "#f38ba8" --nf "#181825" --tb "#f38ba8" --tf "#181825" --sb "#f38ba8" --sf "#181825" --hb "#74c7ec" --hf "#f38ba8" --fb "#f38ba8" --ff "#181825" --cb "#f38ba8" --cf "#f38ba8" --scb "#f38ba8" --scf "#f9e2af" --ab "#f38ba8" --af "#181825"
