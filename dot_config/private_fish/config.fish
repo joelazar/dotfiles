@@ -35,11 +35,12 @@ set -gx MANPAGER 'nvim +Man!'
 
 # Customize PATH
 set -gx GOPATH $HOME/go
+set -gx GOBIN $GOPATH/bin
 fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/.node/bin
 fish_add_path $HOME/.local/bin
 fish_add_path /usr/lib/go/bin
-fish_add_path $GOPATH/bin
+fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.local/bin/kitty_nightly/kitty.app/bin
