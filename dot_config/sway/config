@@ -6,7 +6,7 @@ include catppuccin-mocha
 
 set $mod Mod4
 set $font "FiraCode Nerd Font"
-set $font_size 0
+set $font_size 10
 set $cursor_size 16
 
 ### Home row direction keys, like vim
@@ -43,7 +43,7 @@ font pango:$font $font_size
 
 default_border pixel 1
 default_floating_border pixel 1
-hide_edge_borders smart
+hide_edge_borders --i3 smart
 popup_during_fullscreen smart
 
 ### Output configuration
