@@ -270,7 +270,7 @@ bindsym $mod+c exec clipman pick --tool bemenu --tool-args="-p clipboard"
 
 ### Screenshot
 bindsym --release Print exec grim - | swappy -f -
-bindsym --release Ctrl+Print exec sleep 3 && grim -g "$(slurp)" - | swappy -f -
+bindsym --release Ctrl+Print exec sleep 3 && grim - | swappy -f -
 bindsym --release Shift+Print exec grim -g "$(slurp)" - | swappy -f -
 
 ### Notifications
