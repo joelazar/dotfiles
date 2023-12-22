@@ -18,7 +18,6 @@
   "vim.easymotion": true,
   "vim.enableNeovim": true,
   "vim.handleKeys": {
-    "<C-i>": false,
     "<C-b>": false,
     "<C-f>": false,
     "<C-p>": false,
