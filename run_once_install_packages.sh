@@ -87,6 +87,7 @@ install_package "yaegi"
 print_in_purple "Misc\n"
 
 install_package "python-coverage"
+install_package "python-jupytext"
 install_package "python-matplotlib"
 install_package "python-numpy"
 install_package "python-pandas"
