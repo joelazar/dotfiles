@@ -14,8 +14,6 @@ options_list=(
 	"networkmanager"
 	"pkill"
 	"search"
-	"youtube"
-	"youtube-subscriptions"
 	"exit"
 )
 
@@ -54,12 +52,6 @@ pkill)
 	;;
 search)
 	bemenu-search
-	;;
-youtube)
-	ytfzf -D
-	;;
-"youtube-subscriptions")
-	ytfzf -D -cS
 	;;
 exit) ;;
 esac
