@@ -174,10 +174,6 @@ install_package "hyperfine"
 install_package "kitty"
 install_package "starship"
 
-print_in_purple "Fish plugins\n"
-
-update_fish_plugins
-
 print_in_purple "Utilities\n"
 
 install_package "advcpmv"
