@@ -16,6 +16,12 @@ enable_multilib() {
   execute "(cat /etc/pacman.conf | grep -q '^\[multilib\]') || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
 }
 
+enable_blackarch() {
+  if ! yay -Sg | grep -q "^blackarch" &>/dev/null; then
+    execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
+  fi
+}
+
 install_nnn_plugins() {
   script_path="$HOME/.config/nnn/plugins/getplugs"
 
@@ -54,13 +60,6 @@ install_go_package() {
   execute "go install $PACKAGEPATH" "$PACKAGENAME"
 }
 
-install_yarn_package() {
-  declare -r PACKAGEPATH="$1"
-  declare -r PACKAGENAME="$2"
-
-  execute "yarn global add $PACKAGEPATH" "$PACKAGENAME"
-}
-
 install_npm_package() {
   declare -r PACKAGENAME="$1"
 
@@ -94,10 +93,4 @@ clean_up_cache() {
 
 clean_up_unused_packages() {
   yay -Yc
-}
-
-install_blackarch_repo() {
-  if ! yay -Sg | grep -q "^blackarch" &>/dev/null; then
-    execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
-  fi
 }

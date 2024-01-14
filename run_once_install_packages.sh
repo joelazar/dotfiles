@@ -22,8 +22,7 @@ ask_for_sudo
 install_package_manager
 
 enable_multilib
-
-install_blackarch_repo
+enable_blackarch
 
 update
 
@@ -86,14 +85,7 @@ install_package "yaegi"
 
 print_in_purple "Misc\n"
 
-install_package "python-coverage"
-install_package "python-jupytext"
-install_package "python-matplotlib"
-install_package "python-numpy"
-install_package "python-pandas"
 install_package "python-pynvim"
-install_package "python-pynvim"
-install_package "python-scipy"
 install_package "texlive-latexextra"
 install_package "texlive-science"
 
@@ -104,12 +96,8 @@ install_package "direnv"
 install_package "exercism-bin"
 install_package "fnm-bin"
 install_package "git-delta"
-install_package "gitbatch"
 install_package "github-cli"
-install_package "hey"
 install_package "hugo"
-install_package "jupyter-kernel"
-install_package "jupyter-notebook"
 install_package "jupyterlab"
 install_package "lazygit"
 install_package "lazydocker"
@@ -140,7 +128,6 @@ install_package "acpi_call-dkms"
 install_package "aspell-en"
 install_package "bitwarden"
 install_package "bitwarden-cli"
-install_package "bleachbit"
 install_package "calibre"
 install_package "lftp"
 install_package "libqalculate"
@@ -152,9 +139,7 @@ install_package "pass"
 install_package "qalculate-gtk"
 install_package "qrencode"
 install_package "sqlite"
-install_package "step-cli"
 install_package "tealdeer"
-install_package "tk"
 install_package "tokei"
 install_package "translate-shell"
 install_package "transmission-cli"
@@ -162,7 +147,6 @@ install_package "util-linux"
 install_package "virtualbox"
 install_package "words"
 install_package "yt-dlp"
-install_package "ytfzf-git"
 install_package "zbar"
 
 install_nnn_plugins
@@ -178,15 +162,8 @@ install_package "ttf-roboto-mono"
 
 print_in_purple "Penetration testing\n"
 
-install_package "aircrack-ng"
-install_package "bettercap"
-install_package "dirb"
-install_package "hydra"
-install_package "macchanger"
 install_package "nmap"
-install_package "reaver"
 install_package "sniffnet"
-install_package "whatweb"
 install_package "wireshark-qt"
 
 print_in_purple "Shell\n"
@@ -234,7 +211,6 @@ install_package "mullvad-vpn-cli"
 install_package "net-tools"
 install_package "newsboat"
 install_package "nm-connection-editor"
-install_package "noisetorch"
 install_package "obsidian"
 install_package "onefetch"
 install_package "openresolv"
@@ -333,11 +309,8 @@ install_package "xorg-xwayland"
 
 print_in_purple "NPM packages\n"
 
-install_npm_package "@slidev/cli"
 install_npm_package "gitmoji-cli"
-install_npm_package "httpyac"
 install_npm_package "npm-check"
-install_npm_package "ts-node"
 install_npm_package "typescript"
 install_npm_package "yalc"
 

@@ -40,8 +40,6 @@ execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/
 
 execute "sudo firecfg" "Firejail auto config"
 
-execute "sudo rm /usr/local/bin/gcloud /usr/local/bin/code /usr/local/bin/newsboat" "These firejail profiles are not working yet"
-
 execute "sudo timedatectl set-ntp true" "Turn on ntp"
 
 execute "sudo systemctl enable NetworkManager.service" "Turn on nm"
