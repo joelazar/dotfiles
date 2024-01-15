@@ -1,0 +1,14 @@
+theme = "catppuccin_mocha"
+
+[editor]
+true-color = true
+soft-wrap.enable = true
+
+[editor.lsp]
+display-messages = true
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.statusline]
+left = ["mode", "spinner", "version-control", "file-name"]
