@@ -47,6 +47,12 @@ bemenu)
 	emoji=$(cat "$emojifile" | bemenu -l 20)
 	emojiprint "$emoji" | wtype -
 	;;
+bemenu-copy)
+	emojicheck
+	depends bemenu wl-copy
+	emoji=$(cat "$emojifile" | bemenu -l 20)
+	emojiprint "$emoji" | wl-copy
+	;;
 rofi)
 	emojicheck
 	depends rofi xdotool

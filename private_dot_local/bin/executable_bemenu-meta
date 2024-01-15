@@ -9,6 +9,7 @@ options_list=(
 	"clipboard"
 	"do-not-disturb"
 	"emoji"
+	"emoji-copy"
 	"launcher"
 	"kitty-sessions"
 	"networkmanager"
@@ -37,6 +38,9 @@ do-not-disturb)
 	;;
 emoji)
 	shmoji bemenu
+	;;
+emoji-copy)
+	shmoji bemenu-copy
 	;;
 launcher)
 	bemenu-run -p launcher
