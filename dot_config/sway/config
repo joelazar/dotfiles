@@ -19,23 +19,33 @@ set $term kitty
 set $wallpapers_path $HOME/pictures/wallpapers/
 set $wallpaper `find $wallpapers_path -type f | shuf -n 1`
 
+# set custom swaylock command (swaylock-effects)
 set $lock swaylock \
+      --clock \
+      --color 1e1e2e \
+      --datestr "%a %Y.%m.%d" \
+      --effect-blur 7x5 \
+      --effect-greyscale \
+      --effect-vignette 0.5:0.5 \
+      --fade-in 3 \
+      --font $font \
+      --grace 3 \
+      --indicator \
       --indicator-radius 80 \
       --indicator-thickness 7 \
-      --color 1e1e2e \
-      --show-failed-attempts \
-      --ring-color f9e2af \
-      --key-hl-color 74c7ec \
-      --line-color 000000 \
-      --font $font \
+      --inside-clear-color fab387 \
       --inside-color 313244 \
-      --separator-color 000000 \
-      --ring-ver-color b4befe \
       --inside-ver-color 94e2d5 \
       --inside-wrong-color eba0ac \
-      --inside-clear-color fab387 \
+      --key-hl-color 74c7ec \
       --layout-bg-color 1e1e2e \
-      --image $wallpaper
+      --line-color 000000 \
+      --ring-color f9e2af \
+      --ring-ver-color b4befe \
+      --screenshots \
+      --separator-color 000000 \
+      --show-failed-attempts \
+      --show-keyboard-layout
 
 ## General configuration
 
