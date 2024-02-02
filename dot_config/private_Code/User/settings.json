@@ -70,7 +70,6 @@
   "vim.surround": true,
   "vsicons.dontShowNewVersionMessage": true,
   "window.menuBarVisibility": "toggle",
-  "window.titleBarStyle": "custom",
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.editor.empty.hint": "hidden",
   "workbench.iconTheme": "vscode-icons",
