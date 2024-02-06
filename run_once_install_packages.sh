@@ -19,13 +19,6 @@ fi
 
 ask_for_sudo
 
-# install_package_manager
-
-# enable_multilib
-# enable_blackarch
-
-update
-
 print_in_purple "Browsers\n"
 
 # install_package "firefox"
@@ -64,6 +57,7 @@ print_in_purple "Languages\n"
 # install_package "clang"
 # install_package "deno"
 # install_package "gcc"
+install_package "g++"
 install_package "go"
 install_package "nodejs"
 install_package "rust"
@@ -84,7 +78,7 @@ install_package "ipython"
 
 # print_in_purple "Misc\n"
 # 
-# install_package "python-pynvim"
+install_package "python3-neovim"
 # install_package "texlive-latexextra"
 # install_package "texlive-science"
 
@@ -182,7 +176,6 @@ install_package "btop"
 # install_package "cups"
 # install_package "dict-gcide"
 # install_package "dictd"
-# install_package "dog"
 # install_package "downgrade"
 # install_package "duf"
 # install_package "etcher-bin"
@@ -215,7 +208,7 @@ install_package "newsboat"
 # install_package "pinentry-bemenu"
 # install_package "pmount"
 # install_package "progress"
-install_package "openssl-devel" # needed for ncspot
+# install_package "openssl-devel" # needed for ncspot
 install_package "rclone"
 install_package "restic"
 # install_package "solo2-cli"
@@ -304,6 +297,21 @@ install_package "wget"
 # install_package "xdg-desktop-portal-wlr"
 # install_package "xorg-xwayland"
 
+# adding repo for gcloud
+# sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
+# [google-cloud-cli]
+# name=Google Cloud CLI
+# baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el9-x86_64
+# enabled=1
+# gpgcheck=1
+# repo_gpgcheck=0
+# gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+# EOM
+# install_package "google-cloud-cli"
+#
+# installed with:
+# curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-462.0.1-linux-x86_64.tar.gz
+
 print_in_purple "NPM packages\n"
 
 install_npm_package "gitmoji-cli"
@@ -318,9 +326,9 @@ install_go_package "github.com/charmbracelet/gum@latest" "gum"
 print_in_purple "Rust packages\n"
 
 install_rust_package "atuin"
-install_rust_package "dog"
+# install_rust_package "dog"
 install_rust_package "fnm"
-install_rust_package "ncspot"
+# install_rust_package "ncspot"
 install_rust_package "starship"
 install_rust_package "topgrade"
 
@@ -328,5 +336,3 @@ print_in_purple "GH plugins\n"
 
 install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
-
-clean_up_cache

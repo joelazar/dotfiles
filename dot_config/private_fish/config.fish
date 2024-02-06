@@ -69,9 +69,8 @@ set -gx NNN_FCOLORS 030304020000060801030500 # filetype colors. this mimics dirc
 # d: detail mode
 # e: open text files in terminal
 # u: use selection, don't prompt to choose between selection and hovered entry
-# r: show cp/mv progress
 # U: show file's owner and group in status bar
-set -gx NNN_OPTS dreuU
+set -gx NNN_OPTS deuU
 set -gx NNN_PLUG "c:fzcd;d:diffs;h:fzhist;k:pskill;m:nmount;o:fzopen;p:fzplug;t:preview-tui;z:autojump;"
 set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.config/nvim/"
 set -gx NNN_BATSTYLE "changes,numbers"
@@ -158,3 +157,6 @@ atuin init fish --disable-up-arrow | source
 # Done plugin config
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc' ]; . '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc'; end
