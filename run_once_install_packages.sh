@@ -215,6 +215,7 @@ install_package "newsboat"
 # install_package "pinentry-bemenu"
 # install_package "pmount"
 # install_package "progress"
+install_package "openssl-devel" # needed for ncspot
 install_package "rclone"
 install_package "restic"
 # install_package "solo2-cli"
