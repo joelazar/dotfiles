@@ -7,28 +7,15 @@ set -gx MOZ_ENABLE_WAYLAND 1
 set -gx MOZ_DBUS_REMOTE 1
 set -gx MOZ_WEBRENDER 1
 set -gx MOZ_ACCELERATED 1
-set -gx XDG_SESSION_TYPE wayland
 set -gx _JAVA_AWT_WM_NONREPARENTING 1
 
 # Make default programs
 set -gx BROWSER firefox
 set -gx EDITOR nvim
 set -gx FILE nnn
-set -gx READER zathura
 set -gx PAGER "bat --plain"
-set -gx STATUSBAR waybar
 set -gx TERMINAL kitty
 set -gx VISUAL nvim
-
-# Set cursor theme
-set -gx XCURSOR_THEME Adwaita
-set -gx SWAY_CURSOR_THEME Adwaita
-set -gx XCURSOR_SIZE 16
-set -gx SWAY_CURSOR_SIZE 16
-
-# Desktop settings for screen casting
-set -gx XDG_SESSION_DESKTOP sway
-set -gx XDG_CURRENT_DESKTOP sway
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'
@@ -43,19 +30,11 @@ fish_add_path /usr/lib/go/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
-fish_add_path $HOME/.local/bin/kitty_nightly/kitty.app/bin
 
 # mojo related changes
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
 set -gx MODULAR_HOME $HOME/.modular
-
-# Set custom askpass
-set -gx SUDO_ASKPASS $HOME/.local/bin/bemenu-askpass
-set -gx SSH_ASKPASS $HOME/.local/bin/bemenu-askpass
-set -gx SSH_ASKPASS_REQUIRE prefer
-alias sudo="sudo -A"
-alias yay="yay --sudoflags '-A'"
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
@@ -66,9 +45,6 @@ set fzf_preview_dir_cmd eza -la --git --group-directories-first --icons --color=
 set fzf_directory_opts --bind "ctrl-o:execute($EDITOR {} &> /dev/tty)"
 
 fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\ce
-
-# BEMENU options
-set -gx BEMENU_OPTS '-i --fn "FiraCode Nerd Font 13" --hp 6 -b --fb "#1e1e2e" --ff "#94e2d5" --nb "#1e1e2e" --nf "#f5e0dc" --tb "#1e1e2e" --hb "#cba6f7" --hf "#11111b" --tf "#cba6f7" --nf "#f5e0dc" --af "#f5e0dc" --ab "#1e1e2e"'
 
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
@@ -104,21 +80,11 @@ set -gx NNN_BATTHEME base16
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
 set -gx LC_COLLATE C
 
-# Grim settings
-set -gx GRIM_DEFAULT_DIR "$HOME/pictures/screenshots"
-
 # NPM exports
 set -gx NODE_PATH $HOME/.node/lib/node_modules
 
-# PARUZ config
-set -gx PARUZ yay
-
 if test -e $HOME/.config/fish/.local.fish
     source $HOME/.config/fish/.local.fish
-end
-
-if test -e /opt/google-cloud-sdk/path.fish.inc
-    source /opt/google-cloud-sdk/path.fish.inc
 end
 
 alias :q="exit"
@@ -129,19 +95,13 @@ alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias ci="gh workflow view"
-alias ddg="BROWSER=w3m ddgr -n 5"
-alias e='nvim'
-alias ff='firefox'
 alias g="git"
 alias icat="kitty +kitten icat"
 alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
 alias ll='eza -la --git --group-directories-first --icons'
-alias logme="script -f /tmp/(date +\"%Y%m%d_%H%M\")_shell.log"
 alias ls='eza --icons --group-directories-first'
-alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
-alias nvim-lazy='NVIM_APPNAME=LazyVim nvim'
 alias ping='ping -c 5'
 alias q="exit"
 alias rg="kitty +kitten hyperlinked_grep"
@@ -150,7 +110,6 @@ alias v='nvim'
 alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
-alias yaegi='rlwrap yaegi'
 
 # kubectl
 alias k='kubectl'
@@ -199,10 +158,3 @@ atuin init fish --disable-up-arrow | source
 # Done plugin config
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
-
-# Start Sway at login
-if status is-login
-    if test -z "$DISPLAY" -a $XDG_VTNR = 1 -a (tty) = /dev/tty1 -a "(pgrep sway)"
-        sway
-    end
-end

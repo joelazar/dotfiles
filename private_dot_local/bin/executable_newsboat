@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec kitty --class=newsboat /usr/bin/newsboat

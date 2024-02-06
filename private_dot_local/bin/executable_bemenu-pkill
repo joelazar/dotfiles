@@ -1,4 +1,0 @@
-#!/bin/bash
-
-# list all processes with full name and pid, select one and kill it
-ps -ef | tail -n +2 | awk '{printf $2; for (i=8; i<=NF; i++) printf " " $i; print ""}' | bemenu -l 20 -i -p "Kill process" | awk '{print $1}' | xargs kill -9

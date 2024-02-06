@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec /usr/bin/obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland --enable-gpu "$@" &>/dev/null &

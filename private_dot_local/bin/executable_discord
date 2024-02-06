@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec /usr/bin/discord --enable-features=UseOzonePlatform,WebRTCPipeWireCapturer --ozone-platform=wayland &>/dev/null &
