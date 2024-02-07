@@ -29,3 +29,6 @@ execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
 
 # TODO: turn off boot sound
 # sudo asahi-nvram write system:StartupMute=%01
+
+# TODO: set obsidian to use wayland
+# flatpak override --user --socket=wayland md.obsidian.Obsidian

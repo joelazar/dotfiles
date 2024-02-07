@@ -159,4 +159,6 @@ set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc' ]; . '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc'; end
+if [ -f '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc' ]
+    . '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc'
+end
