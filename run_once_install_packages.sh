@@ -181,3 +181,4 @@ install_gh_plugin "github/gh-copilot"
 # TODO: install flatpak apps
 # install_rust_package "ncspot"
 # install_package "obsidian"
+# install gammashift
