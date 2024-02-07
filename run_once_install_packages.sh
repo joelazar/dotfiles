@@ -58,6 +58,7 @@ install_package "nodejs"
 install_package "rust"
 
 # TODO: add mojo
+# TODO: add deno
 
 print_in_purple "Package managers\n"
 
