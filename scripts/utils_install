@@ -8,91 +8,77 @@ SOURCE_DIR=$(chezmoi source-path)
 
 declare -r INSTALLED_PACKAGES=$(dnf list --installed)
 
-# install_package_manager() {
-#   execute "(which yay &> /dev/null && [ $? -eq 0 ] ) || (git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm && cd .. && rm -rf yay)" "YAY"
-# }
-# 
-# enable_multilib() {
-#   execute "(cat /etc/pacman.conf | grep -q '^\[multilib\]') || sudo sed -i \"/\[multilib\]/,/Include/\"'s/^#//' /etc/pacman.conf" "Enabling multilib"
-# }
-# 
-# enable_blackarch() {
-#   if ! yay -Sg | grep -q "^blackarch" &>/dev/null; then
-#     execute "curl -s https://blackarch.org/strap.sh | sudo bash" "install blackarch repo"
-#   fi
-# }
-
 install_nnn_plugins() {
-  script_path="$HOME/.config/nnn/plugins/getplugs"
+	script_path="$HOME/.config/nnn/plugins/getplugs"
 
-  if [ ! -f "$script_path" ]; then
-    wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -O "$script_path"
-  fi
+	if [ ! -f "$script_path" ]; then
+		wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -O "$script_path"
+	fi
 
-  bash "$script_path"
+	bash "$script_path"
 
-  rm -rf "$HOME/.config/nnn/*.tar.gz"
+	rm -rf "$HOME/.config/nnn/*.tar.gz"
 
-  print_result $? "Install/update nnn plugins"
+	print_result $? "Install/update nnn plugins"
 }
 
 install_package() {
-  declare -r PACKAGE="$1"
+	declare -r PACKAGE="$1"
 
-  if ! package_is_installed "$PACKAGE"; then
-    execute "sudo dnf install -y $PACKAGE" "$PACKAGE"
-  else
-    print_success "$PACKAGE"
-  fi
+	if ! package_is_installed "$PACKAGE"; then
+		execute "sudo dnf install -y $PACKAGE" "$PACKAGE"
+	else
+		print_success "$PACKAGE"
+	fi
 }
 
 install_fish_plugin() {
-  declare -r PACKAGEPATH="$1"
-  declare -r PACKAGENAME="$2"
+	declare -r PACKAGEPATH="$1"
+	declare -r PACKAGENAME="$2"
 
-  execute "fish -c \"fisher install $PACKAGEPATH\"" "$PACKAGENAME"
+	execute "fish -c \"fisher install $PACKAGEPATH\"" "$PACKAGENAME"
 }
 
 install_go_package() {
-  declare -r PACKAGEPATH="$1"
-  declare -r PACKAGENAME="$2"
+	declare -r PACKAGEPATH="$1"
+	declare -r PACKAGENAME="$2"
 
-  execute "go install $PACKAGEPATH" "$PACKAGENAME"
+	execute "go install $PACKAGEPATH" "$PACKAGENAME"
 }
 
 install_npm_package() {
-  declare -r PACKAGENAME="$1"
+	declare -r PACKAGENAME="$1"
 
-  execute "sudo npm install -g $PACKAGENAME" "$PACKAGENAME"
+	execute "sudo npm install -g $PACKAGENAME" "$PACKAGENAME"
 }
 
 install_rust_package() {
-  declare -r PACKAGENAME="$1"
+	declare -r PACKAGENAME="$1"
 
-  execute "cargo install $PACKAGENAME" "$PACKAGENAME"
+	execute "cargo install $PACKAGENAME" "$PACKAGENAME"
 }
 
 install_pip_package() {
-  declare -r PACKAGENAME="$1"
+	declare -r PACKAGENAME="$1"
 
-  execute "pip install --upgrade $PACKAGENAME" "$PACKAGENAME"
+	execute "pip install --upgrade $PACKAGENAME" "$PACKAGENAME"
 }
 
 install_gh_plugin() {
-  declare -r PLUGIN="$1"
-  declare -r INSTALLED_PLUGINS=$(gh extension list)
+	declare -r PLUGIN="$1"
+	declare -r INSTALLED_PLUGINS=$(gh extension list)
 
-  if ! echo $INSTALLED_PLUGINS | grep -q $PLUGIN; then
-    execute "gh extension install $PLUGIN" "$PLUGIN"
-  else
-    print_success "$PLUGIN"
-  fi
+	if ! echo $INSTALLED_PLUGINS | grep -q $PLUGIN; then
+		execute "gh extension install $PLUGIN" "$PLUGIN"
+	else
+		print_success "$PLUGIN"
+	fi
 }
 
 package_is_installed() {
-  echo $INSTALLED_PACKAGES | grep -q " $1 "
+	echo $INSTALLED_PACKAGES | grep -q " $1 "
 }
 
 clean_up_unused_packages() {
-  sudo dnf autoremove
+	sudo dnf autoremove
 }

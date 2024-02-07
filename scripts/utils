@@ -109,56 +109,6 @@ execute() {
 
 }
 
-get_answer() {
-	printf "%s" "$REPLY"
-}
-
-is_git_repository() {
-	git rev-parse &>/dev/null
-}
-
-is_supported_version() {
-
-	declare -a v1=(${1//./ })
-	declare -a v2=(${2//./ })
-	local i=""
-
-	# Fill empty positions in v1 with zeros.
-	for ((i = ${#v1[@]}; i < ${#v2[@]}; i++)); do
-		v1[i]=0
-	done
-
-	for ((i = 0; i < ${#v1[@]}; i++)); do
-
-		# Fill empty positions in v2 with zeros.
-		if [[ -z ${v2[i]} ]]; then
-			v2[i]=0
-		fi
-
-		if ((10#${v1[i]} < 10#${v2[i]})); then
-			return 1
-		elif ((10#${v1[i]} > 10#${v2[i]})); then
-			return 0
-		fi
-
-	done
-
-}
-
-mkd() {
-	if [ -n "$1" ]; then
-		if [ -e "$1" ]; then
-			if [ ! -d "$1" ]; then
-				print_error "$1 - a file with the same name already exists!"
-			else
-				print_success "$1"
-			fi
-		else
-			execute "mkdir -p $1" "$1"
-		fi
-	fi
-}
-
 print_error() {
 	print_in_red "   [✖] $1 $2\n"
 }
@@ -220,20 +170,6 @@ set_trap() {
 
 	trap -p "$1" | grep "$2" &>/dev/null ||
 		trap '$2' "$1"
-
-}
-
-skip_questions() {
-
-	while :; do
-		case $1 in
-		-y | --yes) return 0 ;;
-		*) break ;;
-		esac
-		shift 1
-	done
-
-	return 1
 
 }
 
