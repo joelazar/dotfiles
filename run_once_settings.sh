@@ -26,3 +26,6 @@ fi
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
 
 execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
+
+# TODO: turn off boot sound
+# sudo asahi-nvram write system:StartupMute=%01

@@ -140,6 +140,10 @@ install_package "rclone"
 install_package "restic"
 install_package "wget"
 
+print_in_purple "Asahi specific\n"
+
+install_package "asahi-nvram"
+
 # NOTE: not working yet
 # install_package "bottles"
 # install_package "tailscale"
