@@ -4,6 +4,7 @@ promptToReturnFromSubprocess: false
 gui:
   skipDiscardChangeWarning: true
   skipNoStagedFilesWarning: true
+  skipUnstagedFilesWarning: true
   showCommandLog: false
   showIcons: true
   showFileTree: true

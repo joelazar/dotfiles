@@ -162,3 +162,5 @@ set -U __done_exclude n
 if [ -f '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc' ]
     . '/home/joelazar/git/asahi/gcloud/google-cloud-sdk/path.fish.inc'
 end
+
+set -gx CLOUDSDK_PYTHON_SITEPACKAGES 1
