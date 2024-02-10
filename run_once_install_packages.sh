@@ -168,6 +168,7 @@ install_go_package "github.com/derailed/k9s@latest" "k9s"
 print_in_purple "Rust packages\n"
 
 install_rust_package "atuin"
+install_rust_package "cargo-update"
 install_rust_package "fnm"
 install_rust_package "starship"
 install_rust_package "topgrade"
