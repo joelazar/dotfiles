@@ -58,7 +58,6 @@ install_package "nodejs"
 install_package "rust"
 
 # TODO: add mojo
-# TODO: add deno
 
 print_in_purple "Package managers\n"
 
@@ -169,6 +168,8 @@ print_in_purple "Rust packages\n"
 
 install_rust_package "atuin"
 install_rust_package "cargo-update"
+# TODO: deno not working yet
+# install_rust_package "deno"
 install_rust_package "fnm"
 install_rust_package "starship"
 install_rust_package "topgrade"
