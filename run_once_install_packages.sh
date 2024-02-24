@@ -21,6 +21,10 @@ ask_for_sudo
 
 # TODO: enable rpmfusion repos
 # $ sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+# install chezmoi -->
+# sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin
+# enable flathub
+# flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 print_in_purple "Browsers\n"
 
@@ -86,7 +90,6 @@ install_package "git-delta"
 install_package "gh"
 install_package "hugo"
 install_package "jupyterlab"
-install_package "lazygit"
 install_package "pgcli"
 
 print_in_purple "Multimedia\n"
@@ -130,6 +133,8 @@ install_package "ffmpegthumbnailer"
 install_package "fzf"
 install_package "jq"
 install_package "jc"
+# NOTE: needed for cargo-update
+install_package "openssl-devel"
 
 # TODO: add mullvad repo
 # sudo dnf config-manager --add-repo https://repository.mullvad.net/rpm/stable/mullvad.repo
@@ -163,6 +168,7 @@ print_in_purple "Go packages\n"
 install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
 install_go_package "github.com/charmbracelet/gum@latest" "gum"
 install_go_package "github.com/derailed/k9s@latest" "k9s"
+install_go_package "github.com/jesseduffield/lazygit@latest" "lazygit"
 
 print_in_purple "Rust packages\n"
 
@@ -176,6 +182,8 @@ install_rust_package "topgrade"
 install_rust_package "watchexec-cli"
 
 print_in_purple "GH plugins\n"
+
+# TODO: check if gh was authenticated already
 
 install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
