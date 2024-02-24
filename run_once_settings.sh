@@ -32,3 +32,6 @@ execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
 
 # TODO: set obsidian to use wayland
 # flatpak override --user --socket=wayland md.obsidian.Obsidian
+
+# TODO: set armcord to use wayland
+# flatpak override --user --socket=wayland xyz.armcord.ArmCord
