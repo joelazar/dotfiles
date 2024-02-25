@@ -76,9 +76,6 @@ set -gx NNN_BMS "d:$HOME/Downloads/;c:$HOME/.local/share/chezmoi/;v:$HOME/.confi
 set -gx NNN_BATSTYLE "changes,numbers"
 set -gx NNN_BATTHEME base16
 
-# set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
-set -gx LC_COLLATE C
-
 # NPM exports
 set -gx NODE_PATH $HOME/.node/lib/node_modules
 
