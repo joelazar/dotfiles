@@ -35,3 +35,8 @@ execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
 
 # TODO: set armcord to use wayland
 # flatpak override --user --socket=wayland xyz.armcord.ArmCord
+
+# TODO: swap ctrl and function keys
+# echo "options hid_apple swap_fn_leftctrl=1" > /etc/modprobe.d/keyboard.conf
+# regenerate initramfs
+# sudo dracut --regenerate-all --force
