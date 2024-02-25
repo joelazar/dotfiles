@@ -90,6 +90,7 @@ install_package "git-delta"
 install_package "gh"
 install_package "hugo"
 install_package "jupyterlab"
+install_package "postgresql"
 install_package "pgcli"
 
 print_in_purple "Multimedia\n"
