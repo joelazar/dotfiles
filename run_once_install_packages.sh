@@ -156,6 +156,8 @@ install_package "asahi-nvram"
 
 # TODO: google-cloud-cli installed with:
 # curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-462.0.1-linux-x86_64.tar.gz
+# NOTE: python-grpcio is required for some google-cloud-cli commands
+install_package "python3-grpcio"
 
 print_in_purple "NPM packages\n"
 
