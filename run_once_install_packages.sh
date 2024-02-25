@@ -136,6 +136,7 @@ install_package "jq"
 install_package "jc"
 # NOTE: needed for cargo-update
 install_package "openssl-devel"
+install_package "sad"
 
 # TODO: add mullvad repo
 # sudo dnf config-manager --add-repo https://repository.mullvad.net/rpm/stable/mullvad.repo
