@@ -34,6 +34,9 @@ pyenv
 
 install_nnn_plugins
 
+# TODO: install pip packages
+# pip3 install pynvim --break-system-packages
+
 print_in_purple "NPM packages\n"
 
 install_npm_package "npm-check"

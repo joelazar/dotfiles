@@ -158,9 +158,4 @@ atuin init fish --disable-up-arrow | source
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/joelazar/.local/bin/google-cloud-sdk/path.fish.inc' ]
-    . '/home/joelazar/.local/bin/google-cloud-sdk/path.fish.inc'
-end
-
 set -gx CLOUDSDK_PYTHON_SITEPACKAGES 1
