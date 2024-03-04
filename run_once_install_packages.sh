@@ -21,10 +21,6 @@ ask_for_sudo
 
 # TODO: install homebrew
 #
-# set fish as default
-# sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
-# chsh -s /opt/homebrew/bin/fish
-#
 # install chezmoi -->
 # /opt/homebrew/bin/brew install chezmoi
 
@@ -46,8 +42,6 @@ install_npm_package "yalc"
 print_in_purple "Go packages\n"
 
 install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
-
-print_in_purple "Rust packages\n"
 
 print_in_purple "GH plugins\n"
 

@@ -15,11 +15,9 @@ fi
 
 ask_for_sudo
 
-execute "(getent group docker | grep $USER) || sudo usermod -aG docker $USER" \
-	"No sudo required for docker users (logout required!)"
-
-if [ "$SHELL" != "/usr/bin/fish" ]; then
-	chsh -s /usr/bin/fish
+if [ "$SHELL" != "/opt/homebrew/bin/fish" ]; then
+	sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
+	chsh -s /opt/homebrew/bin/fish
 	print_result $? "Set shell to fish"
 fi
 
