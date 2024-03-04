@@ -1,3 +1,0 @@
-#!/bin/bash
-
-bottles-cli run -p reMarkable -b 'Remarkable' &>/dev/null
