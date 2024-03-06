@@ -11,9 +11,6 @@ install_nnn_plugins
 print_in_purple "Update fish completions\n"
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
-print_in_purple "Update gcloud cli\n"
-execute "gcloud components update --quiet" "Update gcloud cli"
-
 # print_in_purple "Update mojo\n"
 # execute "modular update mojo" "Update mojo 🔥"
 
