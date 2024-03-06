@@ -1,0 +1,2 @@
+# extend PATH with brew path
+export PATH="/opt/homebrew/bin/:$PATH"
