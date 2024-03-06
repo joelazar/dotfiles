@@ -9,7 +9,7 @@
 #assume_yes = true
 
 # Disable specific steps - same options as the command line flag
-disable = ["gcloud", "chezmoi"]
+disable = ["chezmoi"]
 
 # Ignore failures for these steps
 ignore_failures = ["containers", "git_repos"]
@@ -109,9 +109,7 @@ pre_sudo = true
 
 [git]
 max_concurrency = 10
-repos = [
-    "~/git/**",
-]
+repos = ["~/Code/**"]
 
 # Don't pull the predefined git repos
 #pull_predefined = false
