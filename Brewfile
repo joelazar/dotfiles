@@ -89,11 +89,13 @@ cask "kitty"
 cask "maccy"
 cask "mullvadvpn"
 cask "obsidian"
+cask "rectangle"
 cask "slack"
 cask "sonos"
 cask "spotify"
 cask "stats"
 cask "visual-studio-code"
+cask "zed"
 mas "Microsoft To Do", id: 1274495053
 mas "reMarkable", id: 1276493162
 vscode "aaron-bond.better-comments"
