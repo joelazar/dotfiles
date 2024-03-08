@@ -30,6 +30,8 @@ fish_add_path /usr/lib/go/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
+fish_add_path /opt/homebrew/sbin
+fish_add_path /opt/homebrew/bin
 
 # mojo related changes
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
