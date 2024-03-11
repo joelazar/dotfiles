@@ -10,6 +10,13 @@ variable = "NNNLVL"
 format = "[n³](yellow)"
 disabled = false
 
+# TODO: not working
+[direnv]
+disabled = true
+
+[docker_context]
+disabled = true
+
 [kubernetes]
 format = '[⛵$context](green) '
 disabled = true
