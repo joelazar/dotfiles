@@ -6,8 +6,6 @@ SOURCE_DIR=$(chezmoi source-path)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-declare -r INSTALLED_PACKAGES=$(dnf list --installed)
-
 install_nnn_plugins() {
 	script_path="$HOME/.config/nnn/plugins/getplugs"
 
