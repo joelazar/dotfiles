@@ -65,7 +65,6 @@ set -gx NNN_FIFO /tmp/nnn.fifo # breaks NnnExplorer feature
 set -gx NNN_SSHFS_OPTS sshfs -o follow_symlinks
 set -gx NNN_USE_EDITOR 1
 set -gx NNN_COLORS 2136
-set -gx NNN_OPENER xdg-open
 set -gx NNN_TRASH 2 # configure gio trash
 set -gx NNN_FCOLORS 030304020000060801030500 # filetype colors. this mimics dircolors
 # d: detail mode
