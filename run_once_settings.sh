@@ -55,3 +55,11 @@ execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove 
 # sudo scutil --set ComputerName <new name>
 # dscacheutil -flushcache
 # reboot
+
+# disable wakeup on bluetooth
+# https://apple.stackexchange.com/questions/431812/how-can-i-stop-a-bluetooth-keyboard-from-waking-my-macbook-pro/437396#437396
+# brew install sleepwatcher blueutil
+# echo "$(which blueutil) -p 0" > ~/.sleep
+# echo "$(which blueutil) -p 1" > ~/.wakeup
+# chmod 755 ~/.sleep ~/.wakeup
+# brew services restart sleepwatcher
