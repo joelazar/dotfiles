@@ -26,11 +26,12 @@ execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/
 # TODO: do not set theme if it was already set
 execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
 
-execute "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false" "Disable tooltip when holding key"
+# settings based on https://mac-key-repeat.zaymon.dev/
+execute "defaults write NSGlobalDomain KeyRepeat -int 1" "Keyboard: Set 15 ms key repeat"
 
-execute "defaults write NSGlobalDomain KeyRepeat -float 1.0" "Set a blazingly fast keyboard repeat rate"
+execute "defaults write NSGlobalDomain InitialKeyRepeat -int 13" "Keyboard: Set 195 ms initial delay"
 
-execute "defaults write NSGlobalDomain InitialKeyRepeat -int 12" "Set a shorter Delay until key repeat"
+execute "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false" "Keyboard: Disable tooltip when holding key"
 
 execute "sudo nvram SystemAudioVolume=\" \"" "Disable the sound effects on boot"
 
