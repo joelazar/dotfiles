@@ -48,3 +48,10 @@ execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove 
 
 # map caps lock to escape
 # execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x700000039,\"HIDKeyboardModifierMappingDst\":0x700000029}]}'" "Map caps lock to escape"
+
+# set hostname
+# sudo scutil --set HostName <new host name>
+# sudo scutil --set LocalHostName <new host name>
+# sudo scutil --set ComputerName <new name>
+# dscacheutil -flushcache
+# reboot
