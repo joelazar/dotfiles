@@ -12,7 +12,8 @@
     "default_open_ai_model": "gpt-4-1106-preview"
   },
   "vim": {
-    "use_multiline_find": true
+    "use_multiline_find": true,
+    "use_smartcase_find": true
   },
   "terminal": {
     "blinking": "terminal_controlled",
