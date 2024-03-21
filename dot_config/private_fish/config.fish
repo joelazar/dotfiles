@@ -43,7 +43,26 @@ set -gx MODULAR_HOME $HOME/.modular
 
 # FZF options
 set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
-set -gx FZF_DEFAULT_OPTS '--height 50% --layout=reverse --border --info=inline --marker="*" --bind "ctrl-y:execute(echo {+} | pbcopy)" --bind "ctrl-a:select-all" --bind "?:toggle-preview"'
+set -gx FZF_DEFAULT_OPTS '
+  --height 50%
+  --layout=reverse
+  --border
+  --info=inline
+  --marker="*"
+  --bind "ctrl-y:execute(echo {+} | pbcopy)"
+  --bind "ctrl-a:select-all"
+  --bind "?:toggle-preview"
+  --bind "ctrl-y:preview-up"
+  --bind "ctrl-e:preview-down"
+  --bind "ctrl-b:preview-page-up"
+  --bind "ctrl-f:preview-page-down"
+  --bind "ctrl-u:preview-half-page-up"
+  --bind "ctrl-d:preview-half-page-down"
+  --bind "shift-up:preview-top"
+  --bind "shift-down:preview-bottom"
+  --bind "alt-up:half-page-up"
+  --bind "alt-down:half-page-down"
+'
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
 set fzf_preview_dir_cmd eza -la --git --group-directories-first --icons --color=always
@@ -99,6 +118,7 @@ alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias ci="gh workflow view"
 alias g="git"
+alias hg="kitty +kitten hyperlinked_grep"
 alias icat="kitty +kitten icat"
 alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
@@ -107,7 +127,6 @@ alias ls='eza --icons --group-directories-first'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias q="exit"
-alias rg="kitty +kitten hyperlinked_grep"
 alias s="kitty +kitten ssh"
 alias v='nvim'
 alias vc='nvim --clean'
