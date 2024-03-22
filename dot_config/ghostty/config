@@ -127,3 +127,6 @@ keybind = super+physical:one=goto_tab:1
 keybind = super+shift+w=close_window
 keybind = super+c=copy_to_clipboard
 keybind = super+alt+i=inspector:toggle
+
+# remap cmd+s to ctrl+s
+keybind = super+s=text:\x13
