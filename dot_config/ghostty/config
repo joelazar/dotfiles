@@ -4,7 +4,10 @@ macos-non-native-fullscreen = true
 
 font-family = FiraCode Nerd Font Mono
 font-size = 13
-font-feature = +ss02 +ss03 +ss05 +ss07
+font-feature = +ss02
+font-feature = +ss03
+font-feature = +ss05
+font-feature = +ss07
 font-thicken = true
 
 macos-option-as-alt = left
@@ -128,5 +131,7 @@ keybind = super+shift+w=close_window
 keybind = super+c=copy_to_clipboard
 keybind = super+alt+i=inspector:toggle
 
+# remap cmd+p to ctrl+p
+keybind = super+p=text:\x10
 # remap cmd+s to ctrl+s
 keybind = super+s=text:\x13
