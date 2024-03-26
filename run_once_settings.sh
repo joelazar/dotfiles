@@ -43,6 +43,10 @@ execute "defaults write com.apple.dock autohide-delay -float 0" "Remove the auto
 
 execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove the animation when hiding/showing the Dock"
 
+execute "sudo spctl --master-disable" "Allow apps downloaded from anywhere"
+
+execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable the 'Are you sure you want to open this application?' dialog"
+
 # swap ctrl and function keys
 # execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x7000000E0,\"HIDKeyboardModifierMappingDst\":0x7000000E1},{\"HIDKeyboardModifierMappingSrc\":0x7000000E1,\"HIDKeyboardModifierMappingDst\":0x7000000E0}]}'" "Swap ctrl and function keys"
 
