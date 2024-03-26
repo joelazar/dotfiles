@@ -1,0 +1,11 @@
+{
+  "preferredLocale": "system",
+  "autoConnect": true,
+  "enableSystemNotifications": true,
+  "monochromaticIcon": true,
+  "startMinimized": false,
+  "unpinnedWindow": false,
+  "browsedForSplitTunnelingApplications": [],
+  "changelogDisplayedForVersion": "2024.1",
+  "animateMap": true
+}
