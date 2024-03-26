@@ -1,29 +1,27 @@
-reporting: "off"
-startuppopupversion: 1
+disableStartupPopups: true
+notARepository: "skip"
 promptToReturnFromSubprocess: false
 gui:
   skipDiscardChangeWarning: true
-  skipNoStagedFilesWarning: true
-  skipUnstagedFilesWarning: true
   showCommandLog: false
-  showIcons: true
+  nerdFontsVersion: "3"
   showFileTree: true
   showBottomLine: false
   showRandomTip: false
   border: "rounded"
   # use the mocha catppuccin theme
   theme:
-    lightTheme: false
     activeBorderColor:
       - "#a6e3a1" # Green
       - bold
     inactiveBorderColor:
       - "#cdd6f4" # Text
+    searchingActiveBorderColor:
+      - "#94e2d5" # Teal
+      - bold
     optionsTextColor:
       - "#89b4fa" # Blue
     selectedLineBgColor:
-      - "#313244" # Surface0
-    selectedRangeBgColor:
       - "#313244" # Surface0
     cherryPickedCommitBgColor:
       - "#94e2d5" # Teal
@@ -31,7 +29,10 @@ gui:
       - "#89b4fa" # Blue
     unstagedChangesColor:
       - red # Red
-notARepository: "skip"
+    defaultFgColor:
+      - default
+update:
+  method: never
 customCommands:
   - key: "<c-n>"
     description: "New branch with prefix"
