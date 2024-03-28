@@ -126,6 +126,7 @@ alias ll='eza -la --git --group-directories-first --icons'
 alias ls='eza --icons --group-directories-first'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
+alias rmf='/bin/rm'
 alias q="exit"
 alias s="kitty +kitten ssh"
 alias v='nvim'
