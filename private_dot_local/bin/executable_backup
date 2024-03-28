@@ -6,7 +6,7 @@
 
 BACKUPDIR="rclone:gdrive:Backup"
 REPO="--repo $BACKUPDIR"
-INCLUDE="$HOME/.ssh $HOME/.config/fish/.local.fish $HOME/documents $HOME/pictures $HOME/private"
+INCLUDE="$HOME/.ssh $HOME/.config/fish/.local.fish $HOME/Documents $HOME/Pictures"
 EXCLUDE="--exclude=Calibre/"
 
 case "$1" in
