@@ -15,7 +15,7 @@ install_nnn_plugins() {
 
 	bash "$script_path"
 
-	rm -rf "$HOME/.config/nnn/*.tar.gz"
+	/bin/rm -rf $HOME/.config/nnn/*.tar.gz
 
 	print_result $? "Install/update nnn plugins"
 }
