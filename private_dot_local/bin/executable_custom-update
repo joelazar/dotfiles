@@ -5,11 +5,12 @@ SOURCE_DIR=$(chezmoi source-path)
 . "$SOURCE_DIR/scripts/utils_install" &&
 	. "$SOURCE_DIR/scripts/utils"
 
-print_in_purple "Update nnn plugins\n"
 install_nnn_plugins
 
-print_in_purple "Update fish completions\n"
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
-print_in_purple "Update mojo\n"
 execute "modular update mojo" "Update mojo 🔥"
+
+execute "rclone selfupdate" "Update rclone"
+
+execute "brew cleanup" "Cleanup brew"
