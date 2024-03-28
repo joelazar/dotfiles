@@ -37,6 +37,10 @@ install_nnn_plugins
 # TODO: install pip packages
 # pip3 install pynvim --break-system-packages
 
+# TODO: rclone install
+# sudo -v ; curl https://rclone.org/install.sh | sudo bash
+# setup macfuse --> security & privacy, set kernel extension to allow etc.
+
 print_in_purple "NPM packages\n"
 
 install_npm_package "npm-check"
