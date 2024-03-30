@@ -129,10 +129,14 @@ alias ping='ping -c 5'
 alias rmf='/bin/rm'
 alias q="exit"
 alias s="kitty +kitten ssh"
+alias lv='NVIM_APPNAME=LazyVim nvim'
+alias lvi='NVIM_APPNAME=LazyVim nvim'
+alias lvim='NVIM_APPNAME=LazyVim nvim'
+alias lnvim='NVIM_APPNAME=LazyVim nvim'
 alias v='nvim'
-alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
+alias vc='nvim --clean'
 
 # kubectl
 alias k='kubectl'
