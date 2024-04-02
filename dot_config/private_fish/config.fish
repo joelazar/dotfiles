@@ -180,6 +180,7 @@ alias wttr-cph="http -b v2.wttr.in/Copenhagen"
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
+fnm env --use-on-cd | source
 atuin init fish --disable-up-arrow | source
 
 # Done plugin config
