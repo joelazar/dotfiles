@@ -17,6 +17,18 @@ disabled = true
 [docker_context]
 disabled = true
 
+# TODO: slow in some cases
+[python]
+disabled = true
+
+# TODO: slow in some cases
+[nodejs]
+disabled = true
+
+# TODO: slow in some cases
+[package]
+disabled = true
+
 [kubernetes]
 format = '[⛵$context](green) '
 disabled = true
