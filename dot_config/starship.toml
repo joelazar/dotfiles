@@ -17,15 +17,15 @@ disabled = true
 [docker_context]
 disabled = true
 
-# TODO: slow in some cases
+# TODO: slow somewhy
 [python]
 disabled = true
 
-# TODO: slow in some cases
+# TODO: slow somewhy
 [nodejs]
 disabled = true
 
-# TODO: slow in some cases
+# TODO: slow somewhy
 [package]
 disabled = true
 
