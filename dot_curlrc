@@ -5,7 +5,7 @@
 
 # Limit the time (in seconds) the connection is allowed to take.
 
-connect-timeout = 60
+connect-timeout = 10
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
