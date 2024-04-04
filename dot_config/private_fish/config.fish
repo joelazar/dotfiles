@@ -30,11 +30,14 @@ fish_add_path /usr/lib/go/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
+# add nightly zig to the path
+fish_add_path $HOME/.local/bin/zig-0.12/
+# brew specific paths
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/opt/ruby/bin
 # keg-only packages
 fish_add_path /opt/homebrew/opt/postgresql@15/bin
-fish_add_path $HOME/.local/bin/zig-0.12/
 
 # mojo related changes
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin

@@ -83,7 +83,7 @@ customCommands:
     description: "Open git mergetool"
     loadingText: "Opening git mergetool"
     subprocess: true
-  - key: "C"
+  - key: "<c-c>"
     command: "gitmoji -c"
     context: "files"
     description: "Open gitmoji"
