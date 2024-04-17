@@ -1,12 +1,13 @@
 # Default model (gpt-3.5-turbo, gpt-4, ggml-gpt4all-j...).
-default-model: gpt-4
+default-model: gpt-4-turbo
 # Text to append when using the -f flag.
 format-text:
-  markdown: 'Format the response as markdown without enclosing backticks.'
-  json: 'Format the response as json without enclosing backticks.'
+  markdown: "Format the response as markdown without enclosing backticks."
+  json: "Format the response as json without enclosing backticks."
 # List of predefined system messages that can be used as roles.
 roles:
   "default": []
+  "concise": ["be as consise as possible"]
 # Ask for the response to be formatted as markdown unless otherwise set.
 format: false
 # System role to use.
@@ -14,7 +15,7 @@ role: "default"
 # Render output as raw text when connected to a TTY.
 raw: false
 # Quiet mode (hide the spinner while loading and stderr messages for success).
-quiet: false
+quiet: true
 # Temperature (randomness) of results, from 0.0 to 2.0.
 temp: 1.0
 # TopP, an alternative to temperature that narrows response, from 0.0 to 1.0.
@@ -44,6 +45,10 @@ apis:
     api-key:
     api-key-env: OPENAI_API_KEY
     models:
+      gpt-4-turbo:
+        aliases: ["4-turbo"]
+        max-input-chars: 392000
+        fallback: gpt-4
       gpt-4:
         aliases: ["4"]
         max-input-chars: 24500
