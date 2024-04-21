@@ -114,3 +114,9 @@ apis:
         aliases: ["az35"]
         max-input-chars: 12250
         fallback:
+  ollama:
+    base-url: http://localhost:11434/v1
+    api-key-env: NA
+    models:
+      llama3:
+        max-input-chars: 4000
