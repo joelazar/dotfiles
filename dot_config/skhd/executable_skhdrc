@@ -50,22 +50,14 @@ ctrl + lalt - e : yabai -m space --balance
 
 ## Stacks (shift + ctrl - ...)
 # Add the active window to the window or stack to the {direction}: shift + ctrl - {h, j, k, l}
-shift + ctrl - h : yabai -m window  west --stack (yabai -m query --windows --window | jq -r '.id')
-shift + ctrl - j : yabai -m window south --stack (yabai -m query --windows --window | jq -r '.id')
-shift + ctrl - k : yabai -m window north --stack (yabai -m query --windows --window | jq -r '.id')
-shift + ctrl - l : yabai -m window  east --stack (yabai -m query --windows --window | jq -r '.id')
+shift + ctrl + lalt - h : yabai -m window  west --stack (yabai -m query --windows --window | jq -r '.id')
+shift + ctrl + lalt - j : yabai -m window south --stack (yabai -m query --windows --window | jq -r '.id')
+shift + ctrl + lalt - k : yabai -m window north --stack (yabai -m query --windows --window | jq -r '.id')
+shift + ctrl + lalt - l : yabai -m window  east --stack (yabai -m query --windows --window | jq -r '.id')
 
 # Stack Navigation: shift + ctrl - {n, p}
-shift + ctrl - n : yabai -m window --focus stack.next
-shift + ctrl - p : yabai -m window --focus stack.prev
-
-# Move window to display up and down
-shift + ctrl - u : yabai -m window --display north; yabai -m display --focus north;
-shift + ctrl - d : yabai -m window --display south; yabai -m display --focus south;
-
-# Move window to prev and next space
-shift + lalt - p : yabai -m window --space prev;
-shift + lalt - n : yabai -m window --space next;
+shift + ctrl + lalt - n : yabai -m window --focus stack.next
+shift + ctrl + lalt - p : yabai -m window --focus stack.prev
 
 # Restart service
 shift + lalt - r : yabai --restart-service; skhd --restart-service
