@@ -141,6 +141,7 @@ cask "visual-studio-code"
 cask "zed"
 cask "zoom"
 mas "Bitwarden", id: 1352778147
+mas "Microsoft Remote Desktop", id: 1295203466
 mas "Microsoft To Do", id: 1274495053
 mas "reMarkable", id: 1276493162
 mas "Xcode", id: 497799835
@@ -173,6 +174,8 @@ vscode "ms-toolsai.jupyter-keymap"
 vscode "ms-toolsai.jupyter-renderers"
 vscode "ms-toolsai.vscode-jupyter-cell-tags"
 vscode "ms-toolsai.vscode-jupyter-slideshow"
+vscode "ms-vscode.remote-explorer"
+vscode "ms-vscode.remote-server"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "prisma.prisma"
 vscode "redhat.vscode-yaml"
