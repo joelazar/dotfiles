@@ -1,10 +1,18 @@
 ## Navigation (lalt - ...)
 # Space Navigation (four spaces per display): lalt - {1, 2, 3, 4, 5}
-lalt - 1 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[1]; yabai -m space --focus $SPACES[1]; end
-lalt - 2 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[2]; yabai -m space --focus $SPACES[2]; end
-lalt - 3 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[3]; yabai -m space --focus $SPACES[3]; end
-lalt - 4 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[4]; yabai -m space --focus $SPACES[4]; end
-lalt - 5 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[5]; yabai -m space --focus $SPACES[5]; end
+
+# fish version
+# lalt - 1 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[1]; yabai -m space --focus $SPACES[1]; end
+# lalt - 2 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[2]; yabai -m space --focus $SPACES[2]; end
+# lalt - 3 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[3]; yabai -m space --focus $SPACES[3]; end
+# lalt - 4 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[4]; yabai -m space --focus $SPACES[4]; end
+# lalt - 5 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[5]; yabai -m space --focus $SPACES[5]; end
+
+lalt - 1 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] && yabai -m space --focus $SPACES[1]
+lalt - 2 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] && yabai -m space --focus $SPACES[2]
+lalt - 3 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] && yabai -m space --focus $SPACES[3]
+lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] && yabai -m space --focus $SPACES[4]
+lalt - 5 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[5] ]] && yabai -m space --focus $SPACES[5]
 
 # Window Navigation (through display borders): lalt - {h, j, k, l}
 lalt - h : yabai -m window --focus west  || yabai -m display --focus west
@@ -23,20 +31,44 @@ shift + lalt - f : yabai -m window --toggle zoom-parent
 
 ## Window Movement (shift + lalt - ...)
 # Moving windows in spaces: shift + lalt - {h, j, k, l}
-shift + lalt - h : yabai -m window --warp west; or yabai -m window --display west; and yabai -m display --focus west; or yabai -m window --move rel:0:10
-shift + lalt - j : yabai -m window --warp south; or yabai -m window --display south; and yabai -m display --focus south; or yabai -m window --move rel:0:10
-shift + lalt - k : yabai -m window --warp north; or yabai -m window --display north; and yabai -m display --focus north; or yabai -m window --move rel:0:10
-shift + lalt - l : yabai -m window --warp east; or yabai -m window --display east; and yabai -m display --focus east; or yabai -m window --move rel:0:10
+
+# fish version
+# shift + lalt - h : yabai -m window --warp west; or yabai -m window --display west; and yabai -m display --focus west; or yabai -m window --move rel:0:10
+# shift + lalt - j : yabai -m window --warp south; or yabai -m window --display south; and yabai -m display --focus south; or yabai -m window --move rel:0:10
+# shift + lalt - k : yabai -m window --warp north; or yabai -m window --display north; and yabai -m display --focus north; or yabai -m window --move rel:0:10
+# shift + lalt - l : yabai -m window --warp east; or yabai -m window --display east; and yabai -m display --focus east; or yabai -m window --move rel:0:10
+
+shift + lalt - h : yabai -m window --warp west || $(yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp last) || yabai -m window --move rel:-10:0
+shift + lalt - j : yabai -m window --warp south || $(yabai -m window --display south && yabai -m display --focus south) || yabai -m window --move rel:0:10
+shift + lalt - k : yabai -m window --warp north || $(yabai -m window --display north && yabai -m display --focus north) || yabai -m window --move rel:0:-10
+shift + lalt - l : yabai -m window --warp east || $(yabai -m window --display east && yabai -m display --focus east && yabai -m window --warp first) || yabai -m window --move rel:10:0
+
 
 # Toggle split orientation of the selected windows node: shift + lalt - s
 shift + lalt - s : yabai -m window --toggle split
 
 # Moving windows between spaces: shift + lalt - {1, 2, 3, 4, 5 } (Assumes 4 Spaces Max per Display)
-shift + lalt - 1 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[1]; yabai -m window --space $SPACES[1]; end
-shift + lalt - 2 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[2]; yabai -m window --space $SPACES[2]; end
-shift + lalt - 3 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[3]; yabai -m window --space $SPACES[3]; end
-shift + lalt - 4 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[4]; yabai -m window --space $SPACES[4]; end
-shift + lalt - 5 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[5]; yabai -m window --space $SPACES[5]; end
+shift + lalt - 1 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] \
+                  && yabai -m window --space $SPACES[1]
+
+shift + lalt - 2 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] \
+                  && yabai -m window --space $SPACES[2]
+
+shift + lalt - 3 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] \
+                  && yabai -m window --space $SPACES[3]
+
+shift + lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] \
+                  && yabai -m window --space $SPACES[4]
+
+shift + lalt - 5 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[5] ]] \
+                  && yabai -m window --space $SPACES[5]
+
+# fish version
+# shift + lalt - 1 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[1]; yabai -m window --space $SPACES[1]; end
+# shift + lalt - 2 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[2]; yabai -m window --space $SPACES[2]; end
+# shift + lalt - 3 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[3]; yabai -m window --space $SPACES[3]; end
+# shift + lalt - 4 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[4]; yabai -m window --space $SPACES[4]; end
+# shift + lalt - 5 : set SPACES (yabai -m query --displays --display | jq '.spaces[]'); if test -n $SPACES[5]; yabai -m window --space $SPACES[5]; end
 
 ## Resize (ctrl + lalt - ...)
 # Resize windows: ctrl + lalt - {h, j, k, l}
