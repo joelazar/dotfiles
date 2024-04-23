@@ -1,5 +1,5 @@
 # Default model (gpt-3.5-turbo, gpt-4, ggml-gpt4all-j...).
-default-model: gpt-4-turbo
+default-model: llama3
 # Text to append when using the -f flag.
 format-text:
   markdown: "Format the response as markdown without enclosing backticks."
@@ -84,8 +84,8 @@ apis:
       mixtral-8x7b-32768:
         aliases: ["mixtral"]
         max-input-chars: 98000
-      llama2-70b-4096:
-        aliases: ["llama2"]
+      llama3-70b-8192:
+        aliases: ["llama3"]
         max-input-chars: 12250
   localai:
     # LocalAI setup instructions: https://github.com/go-skynet/LocalAI#example-use-gpt4all-j-model
@@ -118,5 +118,5 @@ apis:
     base-url: http://localhost:11434/v1
     api-key-env: NA
     models:
-      llama3:
+      llama3-8b:
         max-input-chars: 4000
