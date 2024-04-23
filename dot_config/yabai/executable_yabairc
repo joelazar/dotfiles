@@ -28,7 +28,7 @@ yabai -m config                                 \
     left_padding                 00             \
     right_padding                00             \
     window_gap                   00             \
-    layout                       bsp            \
+    layout                       stack          \
     mouse_modifier               fn             \
     mouse_action1                move           \
     mouse_action2                resize         \
@@ -38,5 +38,35 @@ yabai -m config                                 \
 yabai -m rule --add app="^(Calculator|Software Update|Dictionary|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Steam)$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+
+# Workspace management
+yabai -m space 1 --label terminal
+yabai -m space 2 --label browser
+yabai -m space 3 --label chat
+yabai -m space 4 --label todo
+yabai -m space 5 --label utils
+
+ # Assign apps to spaces
+yabai -m rule --add app="kitty" space=terminal
+yabai -m rule --add app="Ghostty" space=terminal
+
+yabai -m rule --add app="Firefox" space=browser
+yabai -m rule --add app="Google Chrome" space=browser
+
+yabai -m rule --add app="Microsoft Teams" space=chat
+yabai -m rule --add app="Discord" space=chat
+yabai -m rule --add app="Slack" space=chat
+yabai -m rule --add app="Signal" space=chat
+yabai -m rule --add app="Messages" space=chat
+
+yabai -m rule --add app="To Do" space=todo
+yabai -m rule --add app="Mail" space=todo
+yabai -m rule --add app="Calendar" space=todo
+
+yabai -m rule --add app="Spotify" space=utils
+yabai -m rule --add app="Sonos" space=utils
+yabai -m rule --add app="Remarkable" space=utils
+yabai -m rule --add app="Bitwarden" space=utils
+yabai -m rule --add app="1Password" space=utils
 
 echo "yabai configuration loaded.."
