@@ -191,7 +191,7 @@
       "int" : 0
     },
     "SUEnableAutomaticChecks" : {
-      "bool" : false
+      "bool" : true
     },
     "systemWideMouseDown" : {
       "int" : 0
@@ -229,13 +229,25 @@
       "keyCode" : 125,
       "modifierFlags" : 786432
     },
+    "bottomLeft" : {
+      "keyCode" : 123,
+      "modifierFlags" : 917504
+    },
+    "bottomRight" : {
+      "keyCode" : 124,
+      "modifierFlags" : 917504
+    },
+    "centerHalf" : {
+      "keyCode" : 126,
+      "modifierFlags" : 917504
+    },
     "leftHalf" : {
       "keyCode" : 123,
       "modifierFlags" : 786432
     },
     "maximize" : {
       "keyCode" : 36,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1310720
     },
     "nextDisplay" : {
       "keyCode" : 124,
@@ -251,7 +263,7 @@
     },
     "restore" : {
       "keyCode" : 51,
-      "modifierFlags" : 786432
+      "modifierFlags" : 1310720
     },
     "rightHalf" : {
       "keyCode" : 124,
