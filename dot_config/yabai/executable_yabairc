@@ -35,7 +35,7 @@ yabai -m config \
   mouse_drop_action swap
 
 # Exclude problematic apps from being managed:
-yabai -m rule --add app="^(Calculator|Software Update|Dictionary|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Steam)$" manage=off
+yabai -m rule --add app="^(Calculator|Clock|Software Update|Dictionary|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Steam)$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 
