@@ -71,8 +71,11 @@ ctrl + lalt - n : yabai -m space --create
 ctrl + lalt - d : yabai -m space --destroy
 
 # Change focus between external displays (left and right)
-alt - e : yabai -m display --focus south || yabai -m display --focus north
-alt - y : yabai -m display --focus north || yabai -m display --focus south
+lalt - u : yabai -m display --focus south || yabai -m display --focus north
+lalt - d : yabai -m display --focus north || yabai -m display --focus south
+
+# Toggle padding
+shift + lalt - x : current_config=$(yabai -m config external_bar) && if [[ $current_config == "main:38:0" ]]; then yabai -m config external_bar off:0:0; else yabai -m config external_bar main:38:0; fi
 
 # Restart service
 shift + lalt - r : yabai --restart-service && skhd --restart-service
