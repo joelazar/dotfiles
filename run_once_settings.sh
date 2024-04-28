@@ -10,15 +10,15 @@ print_in_purple "System configuration\n"
 
 ask_for_confirmation "Would you like to do it now?"
 if ! answer_is_yes; then
-	exit
+  exit
 fi
 
 ask_for_sudo
 
 if [ "$SHELL" != "/opt/homebrew/bin/fish" ]; then
-	sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
-	chsh -s /opt/homebrew/bin/fish
-	print_result $? "Set shell to fish"
+  sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
+  chsh -s /opt/homebrew/bin/fish
+  print_result $? "Set shell to fish"
 fi
 
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
@@ -33,7 +33,7 @@ execute "defaults write NSGlobalDomain InitialKeyRepeat -int 13" "Keyboard: Set 
 
 execute "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false" "Keyboard: Disable tooltip when holding key"
 
-execute "sudo nvram SystemAudioVolume=\" \"" "Disable the sound effects on boot"
+execute 'sudo nvram SystemAudioVolume=" "' "Disable the sound effects on boot"
 
 execute "defaults write NSGlobalDomain AppleShowAllExtensions -bool true" "Show all filename extensions"
 
@@ -67,6 +67,11 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # echo "$(which blueutil) -p 1" > ~/.wakeup
 # chmod 755 ~/.sleep ~/.wakeup
 # brew services restart sleepwatcher
+
+# TODO
+# yabai --install-service
+# skhd --install-service
+# brew services start sketchybar
 
 # yabai
 # csrutil enable --without fs --without debug --without nvram
