@@ -45,26 +45,52 @@ set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
 set -gx MODULAR_HOME $HOME/.modular
 
 # FZF options
-set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules'
+set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --follow --exclude .git --exclude node_modules --exclude .venv'
+
+
+# TODO: fix this
+# --prompt "Files >"
+# --header "CTRL-T: Switch between Files/Directories"
+# --preview "[[ $FZF_PROMPT =~ Files ]] && bat --color=always {} || tree -C {}"
+# --bind \'ctrl-t:execute([[ ! (string match -q "Files" $FZF_PROMPT) ]] && echo "change-prompt(Files> )+reload(fd --type f)" || echo "change-prompt(Directories> )+reload(fd --type d)")\'
+
+# TODO: make hidden toggle toggleable
+
+# TODO: ripgrep mode
+# rm -f /tmp/rg-fzf-{r,f}
+# RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+# INITIAL_QUERY="${*:-}"
+# : | fzf --ansi --disabled --query "$INITIAL_QUERY" \
+#     --bind "start:reload($RG_PREFIX {q})+unbind(ctrl-r)" \
+#     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+#     --bind "ctrl-f:unbind(change,ctrl-f)+change-prompt(2. fzf> )+enable-search+rebind(ctrl-r)+transform-query(echo {q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f)" \
+#     --bind "ctrl-r:unbind(ctrl-r)+change-prompt(1. ripgrep> )+disable-search+reload($RG_PREFIX {q} || true)+rebind(change,ctrl-f)+transform-query(echo {q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r)" \
+#     --color "hl:-1:underline,hl+:-1:underline:reverse" \
+#     --prompt '1. ripgrep> ' \
+#     --delimiter : \
+#     --header '╱ CTRL-R (ripgrep mode) ╱ CTRL-F (fzf mode) ╱' \
+#     --preview 'bat --color=always {1} --highlight-line {2}' \
+#     --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+#     --bind 'enter:become(vim {1} +{2})'
+
 set -gx FZF_DEFAULT_OPTS '
   --height 50%
   --layout=reverse
   --border
   --info=inline
   --marker="*"
-  --bind "ctrl-y:execute(echo {+} | pbcopy)"
-  --bind "ctrl-a:select-all"
   --bind "?:toggle-preview"
-  --bind "ctrl-y:preview-up"
-  --bind "ctrl-e:preview-down"
-  --bind "ctrl-b:preview-page-up"
-  --bind "ctrl-f:preview-page-down"
-  --bind "ctrl-u:preview-half-page-up"
-  --bind "ctrl-d:preview-half-page-down"
-  --bind "shift-up:preview-top"
-  --bind "shift-down:preview-bottom"
-  --bind "alt-up:half-page-up"
   --bind "alt-down:half-page-down"
+  --bind "alt-up:half-page-up"
+  --bind "ctrl-a:toggle-all"
+  --bind "ctrl-d:preview-half-page-down"
+  --bind "ctrl-e:preview-down"
+  --bind "ctrl-y:preview-up"
+  --bind "ctrl-f:change-prompt(Files> )+reload(fd * -type f)"
+  --bind "ctrl-r:reload:eval fd --type f --hidden --follow --no-ignore"
+  --bind "ctrl-u:preview-half-page-up"
+  --bind "ctrl-y:execute(echo {+} | pbcopy)"
+  --bind "ctrl-o:execute(open {+})"
 '
 set fzf_history_opts --sort --exact --history-size=30000
 set fzf_fd_opts --hidden --follow --exclude=.git
