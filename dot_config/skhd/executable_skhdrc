@@ -21,10 +21,10 @@ lalt - k : if [ "$(yabai -m query --spaces --space | jq -r '.type')" = "stack" ]
 # lalt - l : yabai -m window --focus east  || yabai -m display --focus east
 
 # Toggle layout
-shift + lalt - d : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
+shift + lalt - s : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
 
 # Toggle split orientation of the selected windows node
-shift + lalt - s : yabai -m window --toggle split
+shift + lalt - d : yabai -m window --toggle split
 
 # Balance out tree of windows (resize to occupy same area)
 shift + lalt - e : yabai -m space --balance
