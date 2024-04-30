@@ -59,6 +59,15 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # use f1, f2, etc. as standard function keys by default
 
 # TODO:
+# hide menu bar automatically
+
+# TODO:
+# double clicking on title bar should zoom
+
+# TODO:
+# setup night shift
+
+# TODO:
 # set hostname
 # sudo scutil --set HostName <new host name>
 # sudo scutil --set LocalHostName <new host name>
@@ -76,12 +85,12 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # brew services restart sleepwatcher
 
 # TODO:
-# yabai --install-service
-# skhd --install-service
-# brew services start sketchybar
-
-# TODO:
-# yabai extra setup
+# yabai prerequisite setup
 # csrutil enable --without fs --without debug --without nvram
 # sudo nvram boot-args=-arm64e_preview_abi
 # echo "$(whoami) ALL=(root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | cut -d " " -f 1) $(which yabai) --load-sa" | sudo tee /private/etc/sudoers.d/yabai
+
+# TODO:
+# yabai --install-service
+# skhd --install-service
+# brew services start sketchybar
