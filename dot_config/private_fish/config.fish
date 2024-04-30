@@ -2,13 +2,6 @@ set -U fish_greeting
 
 fish_vi_key_bindings
 
-# Wayland specific envvars
-set -gx MOZ_ENABLE_WAYLAND 1
-set -gx MOZ_DBUS_REMOTE 1
-set -gx MOZ_WEBRENDER 1
-set -gx MOZ_ACCELERATED 1
-set -gx _JAVA_AWT_WM_NONREPARENTING 1
-
 # Make default programs
 set -gx BROWSER firefox
 set -gx EDITOR nvim
@@ -26,20 +19,16 @@ set -gx GOBIN $GOPATH/bin
 fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/.node/bin
 fish_add_path $HOME/.local/bin
-fish_add_path /usr/lib/go/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
-# add nightly zig to the path
-fish_add_path $HOME/.local/bin/zig-0.12/
+
 # brew specific paths
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
-# keg-only packages
-fish_add_path /opt/homebrew/opt/postgresql@15/bin
 
-# mojo related changes
+# mojo specific paths
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
 set -gx MODULAR_HOME $HOME/.modular
@@ -47,7 +36,6 @@ set -gx MODULAR_HOME $HOME/.modular
 # FZF options
 set -gx FD_DEFAULT_COMMAND 'fd --hidden --follow'
 set -gx FZF_DEFAULT_COMMAND "$FD_DEFAULT_COMMAND --exclude .git --exclude node_modules --exclude .venv"
-
 set -gx FZF_DEFAULT_OPTS '
   --bind \'ctrl-t:transform:if not string match -q "Files*" $FZF_PROMPT; echo "change-prompt(Files> )+reload:fd --type f --color always"; else; echo "change-prompt(Directories> )+reload:fd --type d --color always"; end\'
   --height 50%
@@ -161,7 +149,6 @@ alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker st
 alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
 
 # git pull++
-
 alias gcodefaultall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && (git -C {} checkout main || git -C {} checkout master) && echo\''
 alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} status -b -s && git -C {} pull && echo\''
 alias gpullallfast='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} git -C {} pull'
@@ -194,5 +181,3 @@ set -U __done_exclude n
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc' ]
     . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc'
 end
-
-set -gx CLOUDSDK_PYTHON_SITEPACKAGES 1
