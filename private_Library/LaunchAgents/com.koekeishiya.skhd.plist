@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.koekeishiya.skhd</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/skhd</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:/Users/joelazar/Library/Caches/fnm_multishells/68604_1714300705345/bin:/opt/homebrew/opt/ruby/bin:/Users/joelazar/.modular/pkg/packages.modular.com_mojo/bin:/Users/joelazar/.local/bin/zig-0.12:/opt/homebrew/opt/postgresql@15/bin:/Users/joelazar/.yarn/bin:/opt/homebrew/sbin:/Users/joelazar/.local/share/nvim/mason/bin:/Users/joelazar/go/bin:/Users/joelazar/.local/bin:/opt/homebrew/bin:/Users/joelazar/.rye/shims:/Users/joelazar/Library/Caches/fnm_multishells/68544_1714300705252/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Applications/kitty.app/Contents/MacOS</string>
+        <key>SHELL</key>
+        <string>/bin/zsh</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <dict>
+        <key>SuccessfulExit</key>
+         <false/>
+         <key>Crashed</key>
+         <true/>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/skhd_joelazar.out.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/skhd_joelazar.err.log</string>
+    <key>ProcessType</key>
+    <string>Interactive</string>
+    <key>Nice</key>
+    <integer>-20</integer>
+</dict>
+</plist>
