@@ -3,13 +3,13 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils_install" &&
-	. "$SOURCE_DIR/scripts/utils"
+  . "$SOURCE_DIR/scripts/utils"
 
 install_nnn_plugins
 
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
-execute "modular update mojo" "Update mojo 🔥"
+execute "(which mojo &> /dev/null || modular install mojo) && modular update mojo" "Install/Update mojo 🔥"
 
 execute "rclone selfupdate" "Update rclone"
 

@@ -26,7 +26,7 @@ execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/
 # TODO: do not set theme if it was already set
 execute "fish -c 'fish_config theme save \"Catppuccin Mocha\"'" "Set fish theme"
 
-# settings based on https://mac-key-repeat.zaymon.dev/
+# NOTE: settings based on https://mac-key-repeat.zaymon.dev/
 execute "defaults write NSGlobalDomain KeyRepeat -int 1" "Keyboard: Set 15 ms key repeat"
 
 execute "defaults write NSGlobalDomain InitialKeyRepeat -int 13" "Keyboard: Set 195 ms initial delay"
@@ -47,12 +47,18 @@ execute "sudo spctl --master-disable" "Allow apps downloaded from anywhere"
 
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable the 'Are you sure you want to open this application?' dialog"
 
+# TODO:
 # swap ctrl and function keys
 # execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x7000000E0,\"HIDKeyboardModifierMappingDst\":0x7000000E1},{\"HIDKeyboardModifierMappingSrc\":0x7000000E1,\"HIDKeyboardModifierMappingDst\":0x7000000E0}]}'" "Swap ctrl and function keys"
 
+# TODO:
 # map caps lock to escape
 # execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x700000039,\"HIDKeyboardModifierMappingDst\":0x700000029}]}'" "Map caps lock to escape"
 
+# TODO:
+# use f1, f2, etc. as standard function keys by default
+
+# TODO:
 # set hostname
 # sudo scutil --set HostName <new host name>
 # sudo scutil --set LocalHostName <new host name>
@@ -60,6 +66,7 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # dscacheutil -flushcache
 # reboot
 
+# TODO:
 # disable wakeup on bluetooth
 # https://apple.stackexchange.com/questions/431812/how-can-i-stop-a-bluetooth-keyboard-from-waking-my-macbook-pro/437396#437396
 # brew install sleepwatcher blueutil
@@ -68,12 +75,13 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # chmod 755 ~/.sleep ~/.wakeup
 # brew services restart sleepwatcher
 
-# TODO
+# TODO:
 # yabai --install-service
 # skhd --install-service
 # brew services start sketchybar
 
-# yabai
+# TODO:
+# yabai extra setup
 # csrutil enable --without fs --without debug --without nvram
 # sudo nvram boot-args=-arm64e_preview_abi
 # echo "$(whoami) ALL=(root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | cut -d " " -f 1) $(which yabai) --load-sa" | sudo tee /private/etc/sudoers.d/yabai

@@ -3,8 +3,8 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 cd "$SOURCE_DIR" &&
-	. "./scripts/utils_install" &&
-	. "./scripts/utils"
+  . "./scripts/utils_install" &&
+  . "./scripts/utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -12,7 +12,7 @@ print_in_purple "Install packages\n"
 
 ask_for_confirmation "Would you like to do it now? It can take a bit of time."
 if ! answer_is_yes; then
-	exit
+  exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -20,13 +20,13 @@ fi
 ask_for_sudo
 
 # TODO: install homebrew
-#
-# install chezmoi -->
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # /opt/homebrew/bin/brew install chezmoi
-
-# brew bundle install
-
-# TODO: add mojo
+# brew install chezmoi
+# git clone git@github.com:joelazar/dotfiles.git ~/.local/share/chezmoi
+# /opt/homebrew/bin/chezmoi init
+# /opt/homebrew/bin/chezmoi apply
+# brew bundle
 
 print_in_purple "Package managers\n"
 
@@ -39,7 +39,6 @@ install_nnn_plugins
 
 # TODO: rclone install
 # sudo -v ; curl https://rclone.org/install.sh | sudo bash
-# setup macfuse --> security & privacy, set kernel extension to allow etc.
 
 print_in_purple "NPM packages\n"
 
