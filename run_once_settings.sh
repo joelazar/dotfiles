@@ -59,6 +59,9 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # use f1, f2, etc. as standard function keys by default
 
 # TODO:
+# do not change input source for ctrl+space
+
+# TODO:
 # hide menu bar automatically
 
 # TODO:
