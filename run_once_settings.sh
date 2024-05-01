@@ -62,6 +62,9 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # do not change input source for ctrl+space
 
 # TODO:
+# turn off spotlight keyboard shortcuts, raycast will use that instead
+
+# TODO:
 # hide menu bar automatically
 
 # TODO:
