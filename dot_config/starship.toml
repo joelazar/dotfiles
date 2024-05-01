@@ -10,9 +10,12 @@ variable = "NNNLVL"
 format = "[n³](yellow)"
 disabled = false
 
-# TODO: not working
 [direnv]
-disabled = true
+disabled = false
+format = '[$symbol$loaded]($style)'
+detect_files = [".envrc", ".env"]
+loaded_msg = "👍"
+unloaded_msg = "🚫"
 
 [docker_context]
 disabled = true

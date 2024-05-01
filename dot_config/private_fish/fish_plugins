@@ -1,10 +1,9 @@
 PatrickF1/fzf.fish
 danhper/fish-ssh-agent
-evanlucas/fish-kubectl-completions
 franciscolourenco/done
 jorgebucaran/autopair.fish
 jorgebucaran/replay.fish
 nickeb96/puffer-fish
-lgathy/google-cloud-sdk-fish-completion
 catppuccin/fish
 jorgebucaran/fisher
+lgathy/google-cloud-sdk-fish-completion

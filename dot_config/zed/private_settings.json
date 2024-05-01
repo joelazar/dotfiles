@@ -9,6 +9,7 @@
     "enabled": true
   },
   "assistant": {
+    "version": "1",
     "default_open_ai_model": "gpt-4-1106-preview"
   },
   "vim": {
