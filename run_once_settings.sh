@@ -100,6 +100,11 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # echo "$(whoami) ALL=(root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | cut -d " " -f 1) $(which yabai) --load-sa" | sudo tee /private/etc/sudoers.d/yabai
 
 # TODO:
+# setup docker buildx correctly
+# mkdir -p ~/.docker/cli-plugins
+# ln -sf /opt/homebrew/opt/docker-buildx/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
+
+# TODO:
 # yabai --install-service
 # skhd --install-service
 # brew services start sketchybar
