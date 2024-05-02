@@ -74,6 +74,9 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # setup night shift
 
 # TODO:
+# set default location for screenshots
+
+# TODO:
 # set hostname
 # sudo scutil --set HostName <new host name>
 # sudo scutil --set LocalHostName <new host name>
