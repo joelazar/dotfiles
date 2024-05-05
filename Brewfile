@@ -121,8 +121,6 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 brew "modularml/packages/modular"
 brew "oven-sh/bun/bun"
-cask "1password"
-cask "1password-cli"
 cask "calibre"
 cask "discord"
 cask "firefox"
@@ -133,8 +131,6 @@ cask "fuse-t"
 cask "google-chrome"
 cask "google-cloud-sdk"
 cask "kitty"
-cask "microsoft-auto-update"
-cask "microsoft-teams"
 cask "monitorcontrol"
 cask "mullvadvpn"
 cask "obsidian"
@@ -147,7 +143,6 @@ cask "visual-studio-code"
 cask "zed"
 cask "zoom"
 mas "Bitwarden", id: 1352778147
-mas "Microsoft Remote Desktop", id: 1295203466
 mas "Microsoft To Do", id: 1274495053
 mas "reMarkable", id: 1276493162
 mas "Xcode", id: 497799835
