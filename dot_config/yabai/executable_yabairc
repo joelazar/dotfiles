@@ -35,7 +35,7 @@ yabai -m config \
   mouse_drop_action swap
 
 # Exclude problematic apps from being managed:
-yabai -m rule --add app="^(Calculator|Clock|Software Update|Dictionary|Finder|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Steam|1Password|Bitwarden)$" manage=off
+yabai -m rule --add app="^(Calculator|Clock|Software Update|Dictionary|Finder|System Preferences|System Settings|zoom.us|Raycast|Photo Booth|Microsoft To Do|Archive Utility|App Store|Steam|1Password|Bitwarden)$" manage=off
 # yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 
@@ -43,8 +43,9 @@ yabai -m rule --add label="About This Mac" app="System Information" title="About
 yabai -m space 1 --label terminal
 yabai -m space 2 --label browser
 yabai -m space 3 --label chat
-yabai -m space 4 --label todo
-yabai -m space 5 --label utils
+yabai -m space 4 --label notes
+yabai -m space 5 --label mail
+yabai -m space 6 --label music
 
 # Assign apps to spaces
 yabai -m rule --add app="kitty" space=terminal
@@ -56,17 +57,16 @@ yabai -m rule --add app="Google Chrome" space=browser
 yabai -m rule --add app="Microsoft Teams" space=chat
 yabai -m rule --add app="Discord" space=chat
 yabai -m rule --add app="Slack" space=chat
-yabai -m rule --add app="Signal" space=chat
 yabai -m rule --add app="Messages" space=chat
 
-yabai -m rule --add app="Obsidian" space=todo
-yabai -m rule --add app="To Do" space=todo
-yabai -m rule --add app="Mail" space=todo
-yabai -m rule --add app="Calendar" space=todo
+yabai -m rule --add app="Obsidian" space=notes
+yabai -m rule --add app="Remarkable" space=notes
 
-yabai -m rule --add app="Spotify" space=utils
-yabai -m rule --add app="Sonos" space=utils
-yabai -m rule --add app="Remarkable" space=utils
+yabai -m rule --add app="Mail" space=mail
+yabai -m rule --add app="Calendar" space=mail
+
+yabai -m rule --add app="Spotify" space=music
+yabai -m rule --add app="Sonos" space=music
 
 # Closing focused window should give focus to remaining window
 # from: https://github.com/koekeishiya/yabai/issues/692

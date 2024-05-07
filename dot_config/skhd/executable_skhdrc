@@ -5,6 +5,7 @@ lalt - 2 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [
 lalt - 3 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] && yabai -m space --focus $SPACES[3]
 lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] && yabai -m space --focus $SPACES[4]
 lalt - 5 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[5] ]] && yabai -m space --focus $SPACES[5]
+lalt - 6 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[6] ]] && yabai -m space --focus $SPACES[6]
 
 # Focus window
 lalt - h : yabai -m window --focus west
@@ -59,6 +60,9 @@ shift + lalt - 4 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]
 
 shift + lalt - 5 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[5] ]] \
                   && yabai -m window --space $SPACES[5]
+
+shift + lalt - 6 : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[6] ]] \
+                  && yabai -m window --space $SPACES[6]
 
 # Resize windows
 ctrl + lalt - h : yabai -m window --resize right:-50:0 || yabai -m window --resize left:-50:0
