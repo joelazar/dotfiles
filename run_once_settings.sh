@@ -52,10 +52,6 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x7000000E0,\"HIDKeyboardModifierMappingDst\":0x7000000E1},{\"HIDKeyboardModifierMappingSrc\":0x7000000E1,\"HIDKeyboardModifierMappingDst\":0x7000000E0}]}'" "Swap ctrl and function keys"
 
 # TODO:
-# map caps lock to escape
-# execute "hidutil property --set '{\"UserKeyMapping\":[{\"HIDKeyboardModifierMappingSrc\":0x700000039,\"HIDKeyboardModifierMappingDst\":0x700000029}]}'" "Map caps lock to escape"
-
-# TODO:
 # use f1, f2, etc. as standard function keys by default
 
 # TODO:
