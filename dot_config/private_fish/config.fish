@@ -44,14 +44,12 @@ set -gx FZF_DEFAULT_OPTS '
   --info=inline
   --marker="*"
   --bind "?:toggle-preview"
-  --bind "y:execute(echo {+} | pbcopy)"
   --bind "alt-down:half-page-down"
   --bind "alt-up:half-page-up"
   --bind "ctrl-a:toggle-all"
   --bind "ctrl-d:preview-half-page-down"
   --bind "ctrl-u:preview-half-page-up"
-  --bind "ctrl-e:preview-down"
-  --bind "ctrl-y:preview-up"
+  --bind "ctrl-y:execute(echo {+} | pbcopy)"
   --bind \'ctrl-r:transform:if not string match -q "Hidden*" $FZF_PROMPT; echo "change-prompt(Hidden files> )+reload:fd --type f --hidden --follow --no-ignore --color always"; else; echo "change-prompt(Files&Directories> )+reload:fd --hidden --follow --color always --exclude .git --exclude node_modules --exclude .venv"; end\'
 '
 set fzf_history_opts --sort --exact --history-size=30000
