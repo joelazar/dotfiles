@@ -1,5 +1,5 @@
 # Default model (gpt-3.5-turbo, gpt-4, ggml-gpt4all-j...).
-default-model: llama3
+default-model: gpt-4o
 # Text to append when using the -f flag.
 format-text:
   markdown: "Format the response as markdown without enclosing backticks."
@@ -45,6 +45,10 @@ apis:
     api-key:
     api-key-env: OPENAI_API_KEY
     models:
+      gpt-4o:
+        aliases: ["4o"]
+        max-input-chars: 392000
+        fallback: gpt-4-turbo
       gpt-4-turbo:
         aliases: ["4-turbo"]
         max-input-chars: 392000
