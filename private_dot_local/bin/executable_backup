@@ -2,41 +2,44 @@
 #
 # Backup script for my home directory
 #
+# shellcheck disable=SC2086
 
 BACKUPDIR="rclone:gdrive:Backup"
 REPO="--repo $BACKUPDIR"
-INCLUDE="$HOME/.ssh \
-$HOME/.config/fish \
-$HOME/.local/share/fish/fish_history"
+INCLUDE="$HOME/.ssh $HOME/.config/fish/.local.fish $HOME/.local/share/fish/fish_history"
 
 function print_help() {
-    echo "Usage: backup {init|do|list|prune|help}"
-    echo "Commands:"
-    echo "  init  - Initialize the backup repository"
-    echo "  do    - Perform the backup"
-    echo "  list  - List all snapshots in the backup repository"
-    echo "  prune - Remove old snapshots from the backup repository"
-    echo "  help  - Print this help message"
+  echo "Usage: backup {init|do|list|prune|help}"
+  echo "Commands:"
+  echo "  init   - Initialize the backup repository"
+  echo "  do     - Perform the backup"
+  echo "  list   - List all snapshots in the backup repository"
+  echo "  prune  - Remove old snapshots from the backup repository"
+  echo "  forget - Only keep the last snapshot"
+  echo "  help   - Print this help message"
 }
 
 case "$1" in
-    "init")
-        restic init "$REPO"
-        ;;
-    "do")
-        restic "$REPO" backup "$INCLUDE"
-        ;;
-    "list")
-        restic -r $BACKUPDIR snapshots
-        ;;
-    "prune")
-        restic -r $BACKUPDIR prune
-        ;;
-    "help")
-        print_help
-        ;;
-    *)
-        echo "Invalid command: $1"
-        print_help
-        ;;
+  "init")
+    restic init $REPO
+    ;;
+  "do")
+    restic $REPO backup $INCLUDE
+    ;;
+  "list")
+    restic -r $BACKUPDIR snapshots
+    ;;
+  "prune")
+    restic -r $BACKUPDIR prune
+    ;;
+  "forget")
+    restic -r $BACKUPDIR forget --keep-last 1
+    ;;
+  "help")
+    print_help
+    ;;
+  *)
+    echo "Invalid command: $1"
+    print_help
+    ;;
 esac
