@@ -30,16 +30,15 @@
 
 ## Details
 
-This is the dotfiles setup which I use for my [`Arch Linux`](https://archlinux.org/).
-Theoretically, it could (and should) work on any non-unorthodox Arch based
-distributions too, but I didn't test it.
+This is the dotfiles setup which I use for my MacOS.
 
 Let me try to briefly list the installed and configured packages:
 
-- [`yay`](https://github.com/Jguer/yay) - As an aur helper
-- [`blackarch`](https://blackarch.org/) - repo added with some basic penetration tool set
-- [`firejail`](https://firejail.wordpress.com/) - Running everything in sandbox
-- [`docker`](https://www.docker.com/) - Container framework for OS level virtualization
+- [`homebrew`](https://brew.sh/) - Package manager for MacOS
+- [`colima`](https://github.com/abiosoft/colima) - For running Linux containers on MacOS
+- [`hyperkey`](https://hyperkey.app/) - For remapping Caps Lock key
+- [`monitorcontrol`](https://github.com/MonitorControl/MonitorControl) - For controlling external monitor brightness
+- [`raycast`](https://raycast.com/) - For productivity
 - [`kitty`](https://sw.kovidgoyal.net/kitty/) - Fast, feature-rich, GPU based terminal emulator
 - [`fish`](https://fishshell.com/) - Fish shell - [config](dot_config/private_fish)
   - [`fisher`](https://github.com/jorgebucaran/fisher) - A plugin manager for fish
@@ -55,11 +54,10 @@ Let me try to briefly list the installed and configured packages:
 - [`zoxide`](https://github.com/ajeetdsouza/zoxide) - Smarter cd command
 - [`eza`](https://github.com/eza-community/eza) - Modern `ls`
 - [`bat`](https://github.com/sharkdp/bat) - cat(1) clone with wings
-- [`sway`](https://swaywm.org/) - I3 compatible window manager, but with Wayland - [config](dot_config/sway/config)
-  - [`waybar`](https://github.com/Alexays/Waybar) - Highly customizable Wayland bar - [config](dot_config/waybar/config)
-  - [`dunst`](https://github.com/dunst-project/dunst) - Notification daemon
-  - [`bemenu`](https://github.com/Cloudef/bemenu) - Application launcher
-    - [`bemenu-meta`](./private_dot_local/bin/executable_bemenu-meta) - My own bemenu wrapper for launching meta commands
+- [`mods`](https://github.com/charmbracelet/mods/) - For AI chats from the terminal
+- [`yabai`](https://github.com/koekeishiya/yabai) - Tiling window manager for MacOS
+  - [`Sketchybar`](https://github.com/FelixKratz/SketchyBar) - Status bar for yabai
+  - [`skhd`](https://github.com/koekeishiya/skhd) - Hotkey daemon for MacOS
 - [`neovim`](https://neovim.io/) - Vim on steroids
   - [`my neovim config`](https://github.com/joelazar/nvim-config) - My own Neovim config written in Lua
 - [`git`](https://git-scm.com/) - No comment
@@ -70,7 +68,6 @@ Let me try to briefly list the installed and configured packages:
 - [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
 - [`mpv`](https://mpv.io/) - For media
 - [`ncspot`](https://github.com/hrkfdn/ncspot) - Cross-platform ncurses Spotify client
-- [`zathura`](https://github.com/pwmt/zathura) - Document viewer
 - [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
 - and many more other useful stuff. See the following [file](run_once_install_packages.sh).
 
