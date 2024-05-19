@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-img=$1
-cat $img | zbarimg -

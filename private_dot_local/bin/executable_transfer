@@ -8,23 +8,23 @@ set -e
 
 file=$1
 if [ -z "$file" ]; then
-	file=$(fzf --prompt="Select the file which you want to upload" | awk '{ print $1; }')
-	if [ -z "$file" ]; then
-		echo No file was selected.
-		exit
-	fi
+  file=$(fzf --prompt="Select the file which you want to upload" | awk '{ print $1; }')
+  if [ -z "$file" ]; then
+    echo No file was selected.
+    exit
+  fi
 elif [ $# -gt 1 ]; then
-	echo Too many arguments provided.
-	exit
+  echo Too many arguments provided.
+  exit
 fi
 
 read -p "Do you want to encrypt the file? [y/N] " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	age -p "$file" >"$file".age
-	file=$file.age
-	echo For decryption use the following command:
-	echo age -d "$file".age >"$file"
+  age -p "$file" >"$file".age
+  file=$file.age
+  echo For decryption use the following command:
+  echo age -d "$file".age >"$file"
 fi
 
 days=$(echo -e 1\\n7\\n14 | fzf --prompt="For how many days do you want to store the file?" | awk '{ print $1; }')
