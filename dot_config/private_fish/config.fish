@@ -1,3 +1,7 @@
+if not status is-interactive
+    return
+end
+
 set -U fish_greeting
 
 fish_vi_key_bindings
