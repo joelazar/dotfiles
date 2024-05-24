@@ -2,17 +2,17 @@ prSections:
   - title: My pull requests
     filters: is:open assignee:@me sort:created-desc
   - title: Review requested
-    filters: is:open -assignee:@me -user:Growblocks review-requested:@me -is:draft sort:created-desc
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc
   - title: Ready
-    filters: is:open -assignee:@me -user:Growblocks user:quintessential-ai -is:draft sort:created-desc
+    filters: is:open -assignee:@me user:quintessential-ai -is:draft sort:created-desc
   - title: Draft
-    filters: is:open -assignee:@me -user:Growblocks user:quintessential-ai is:draft sort:created-desc
+    filters: is:open -assignee:@me user:quintessential-ai is:draft sort:created-desc
   - title: Recently closed my prs
     filters: is:closed author:@me sort:created-desc
   - title: Work prs
-    filters: is:open -assignee:@me -user:Growblocks user:quintessential-ai sort:created-desc
+    filters: is:open -assignee:@me user:quintessential-ai sort:created-desc
   - title: Recently closed work prs
-    filters: is:closed -user:Growblocks user:quintessential-ai sort:created-desc
+    filters: is:closed user:quintessential-ai sort:created-desc
 issuesSections:
   - title: My Issues
     filters: is:open author:@me
