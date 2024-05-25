@@ -14,3 +14,5 @@ execute "(which mojo &> /dev/null || modular install mojo) && modular update moj
 execute "rclone selfupdate" "Update rclone"
 
 execute "brew cleanup" "Cleanup brew"
+
+execute "nvim --headless +MasonUpdateAll +qa" "Update mason in neovim"
