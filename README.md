@@ -2,31 +2,27 @@
 
 ## Wallpaper
 
-![joedotfiles - wallpaper]()
+![joedotfiles - wallpaper](https://github.com/joelazar/dotfiles/assets/16268238/bfa565ef-ebcd-467c-927d-7293a74324b8)
 
 ## Neovim with my [custom config](https://github.com/joelazar/nvim-config)
 
-![joedotfiles - neovim]()
+![joedotfiles - neovim](https://github.com/joelazar/dotfiles/assets/16268238/9a81f29a-1929-43d7-a87a-ae2da28469d3)
 
 ## Eza + FZF
 
-![joedotfiles - eza+fzf]()
+![joedotfiles - eza+fzf](https://github.com/joelazar/dotfiles/assets/16268238/c40498f8-e082-4c21-9b96-c31ed56df758)
 
 ## Lazygit
 
-![joedotfiles - lazygit]()
+![joedotfiles - lazygit](https://github.com/joelazar/dotfiles/assets/16268238/d5728557-8192-44ce-a88d-d076827e9f38)
 
 ## Firefox + [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/)
 
-![joedotfiles - firefox + vimium]()
+![joedotfiles - firefox + vimium](https://github.com/joelazar/dotfiles/assets/16268238/b95dfd66-9ee7-42a7-b2c2-76c190ea0a3a)
 
 ## nnn + preview-tui
 
-![joedotfiles - nnn+preview]()
-
-## ncspot
-
-![joedotfiles - ncspot]()
+![joedotfiles - nnn+preview](https://github.com/joelazar/dotfiles/assets/16268238/bec3b981-766a-4013-b00a-4a8d09154e6d)
 
 ## Details
 
@@ -68,7 +64,7 @@ Let me try to briefly list the installed and configured packages:
 - [`rust`](https://www.rust-lang.org/), [`go`](https://golang.org/), [`python`](https://www.python.org/), [`clang`](https://clang.llvm.org/) - For programming
 - and many more other useful stuff. See the following [file](run_once_install_packages.sh).
 
-Most of the apps are configured with colors of [`catppuccin mocha`](https://github.com/catppuccin).
+Most of my apps are configured to use colors of [`catppuccin mocha`](https://github.com/catppuccin).
 
 ## Setup
 
@@ -86,7 +82,7 @@ chezmoi apply
 
 Some [utils functions](scripts/) which I'm using for the initial [setup](run_once_install_packages.sh) and later for my update [script](private_dot_local/bin/executable_update_everything) was taken from [alrra](https://github.com/alrra)'s [dotfiles](https://github.com/alrra/dotfiles) repo, and I'm truly grateful for it.
 
-I usually take my wallpapers from [Unsplash](https://unsplash.com/) and the one which is present in my screenshot is from [Arnaud Steckle](https://unsplash.com/@arnaudsteckle).
+My wallpapers are from [catpuccin-wallpapers](https://github.com/zhichaoh/catppuccin-wallpapers) repo.
 
 ## License
 
