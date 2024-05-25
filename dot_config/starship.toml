@@ -12,7 +12,7 @@ disabled = false
 
 [direnv]
 disabled = false
-format = '[$symbol$loaded]($style)'
+format = '[$symbol$loaded]($style) '
 detect_files = [".envrc", ".env"]
 loaded_msg = "👍"
 unloaded_msg = "🚫"

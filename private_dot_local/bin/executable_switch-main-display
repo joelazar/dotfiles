@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Switch main display
+# @raycast.mode compact
+
+# Optional parameters:
+# @raycast.icon 🖥️
+
+# Documentation:
+# @raycast.author joelazar
+# @raycast.authorURL https://raycast.com/joelazar
+
+current_display_config=$(displayplacer list | tail -n 1)
+
+invert_origin() {
+  local origin=$1
+  local x=$(echo "$origin" | sed -E 's/origin:\(([^,]+),.*/\1/')
+  local y=$(echo "$origin" | sed -E 's/origin:\([^,]+,([^)]*)\)/\1/')
+  local inverted_x=$((-1 * x))
+  local inverted_y=$((-1 * y))
+  echo "origin:($inverted_x,$inverted_y)"
+}
+
+# Extract the displays
+display1=$(echo "$current_display_config" | awk -F'"' '{print $2}')
+display2=$(echo "$current_display_config" | awk -F'"' '{print $4}')
+
+# Extract and invert origins
+origin1=$(echo "$display1" | grep -o 'origin:[^ ]*')
+origin2=$(echo "$display2" | grep -o 'origin:[^ ]*')
+
+inverted_origin1=$(invert_origin "$origin2")
+inverted_origin2=$(invert_origin "$origin1")
+
+display1_swapped=$(echo "$display1" | sed "s/$origin1/$inverted_origin1/")
+display2_swapped=$(echo "$display2" | sed "s/$origin2/$inverted_origin2/")
+
+new_command="displayplacer \"$display2_swapped\" \"$display1_swapped\""
+
+bash -c "$new_command"
