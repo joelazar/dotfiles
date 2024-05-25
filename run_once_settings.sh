@@ -61,9 +61,6 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # turn off spotlight keyboard shortcuts, raycast will use that instead
 
 # TODO:
-# hide menu bar automatically
-
-# TODO:
 # double clicking on title bar should zoom
 
 # TODO:
@@ -90,17 +87,6 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 # brew services restart sleepwatcher
 
 # TODO:
-# yabai prerequisite setup
-# csrutil enable --without fs --without debug --without nvram
-# sudo nvram boot-args=-arm64e_preview_abi
-# echo "$(whoami) ALL=(root) NOPASSWD: sha256:$(shasum -a 256 $(which yabai) | cut -d " " -f 1) $(which yabai) --load-sa" | sudo tee /private/etc/sudoers.d/yabai
-
-# TODO:
 # setup docker buildx correctly
 # mkdir -p ~/.docker/cli-plugins
 # ln -sf /opt/homebrew/opt/docker-buildx/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
-
-# TODO:
-# yabai --install-service
-# skhd --install-service
-# brew services start sketchybar
