@@ -55,9 +55,6 @@ Let me try to briefly list the installed and configured packages:
 - [`eza`](https://github.com/eza-community/eza) - Modern `ls`
 - [`bat`](https://github.com/sharkdp/bat) - cat(1) clone with wings
 - [`mods`](https://github.com/charmbracelet/mods/) - For AI chats from the terminal
-- [`yabai`](https://github.com/koekeishiya/yabai) - Tiling window manager for MacOS
-  - [`Sketchybar`](https://github.com/FelixKratz/SketchyBar) - Status bar for yabai
-  - [`skhd`](https://github.com/koekeishiya/skhd) - Hotkey daemon for MacOS
 - [`neovim`](https://neovim.io/) - Vim on steroids
   - [`my neovim config`](https://github.com/joelazar/nvim-config) - My own Neovim config written in Lua
 - [`git`](https://git-scm.com/) - No comment
