@@ -27,7 +27,7 @@ defaults:
   view: prs
   refetchIntervalMinutes: 10
 repoPaths:
-  quintessential-ai/*: ~/Code/qai/*
+  :owner/:repo: ~/Code/complexio/:repo
 pager:
   diff: delta
 keybindings:
