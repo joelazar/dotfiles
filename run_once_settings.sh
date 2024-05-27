@@ -48,9 +48,9 @@ execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disa
 
 execute "defaults write -g com.apple.keyboard.fnState -bool true" "Function keys as standard function keys"
 
-execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{enabled = 0;}"' "Disable Spotlight keyboard shortcut for Show Spotlight search"
+execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Show Spotlight search"
 
-execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{enabled = 0;}"' "Disable Spotlight keyboard shortcut for Finder search window"
+execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Finder search window"
 
 execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"' "Double-click a window's title bar to minimize"
 
