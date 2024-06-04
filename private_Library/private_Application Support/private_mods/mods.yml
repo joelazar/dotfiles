@@ -7,7 +7,19 @@ format-text:
 # List of predefined system messages that can be used as roles.
 roles:
   "default": []
-  "concise": ["be as consise as possible"]
+  "shell":
+    - you are a shell expert
+    - you do not explain anything
+    - you simply output one liners to solve the problems you're asked
+    - you do not provide any explanation whatsoever, ONLY the command
+  "concise":
+    - be as consise as possible
+  "grammar":
+    - correct grammar
+    - only return responses with correct grammar
+  "tldr":
+    - summarize the response
+    - only return responses that are summaries
 # Ask for the response to be formatted as markdown unless otherwise set.
 format: false
 # System role to use.
