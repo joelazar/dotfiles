@@ -86,6 +86,12 @@ else
   print_result $? "Docker buildx configured"
 fi
 
+# enable touchid for sudo
+if [ -f /etc/pam.d/sudo_local ]; then
+  echo "auth       sufficient     pam_tid.so" | sudo tee -a /etc/pam.d/sudo_local
+  print_result $? "Enable touchid for sudo"
+fi
+
 # NOTE: the following configuration currently only possible to configure manually
 # swap ctrl and function keys
 # do not change input source for ctrl+space
