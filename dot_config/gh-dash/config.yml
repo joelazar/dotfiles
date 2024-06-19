@@ -9,8 +9,6 @@ prSections:
     filters: is:open -assignee:@me user:quintessential-ai is:draft sort:created-desc
   - title: Recently closed my prs
     filters: is:closed author:@me sort:created-desc
-  - title: Work prs
-    filters: is:open -assignee:@me user:quintessential-ai sort:created-desc
   - title: Recently closed work prs
     filters: is:closed user:quintessential-ai sort:created-desc
 issuesSections:
