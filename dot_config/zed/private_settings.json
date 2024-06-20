@@ -6,7 +6,6 @@
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
   "inlay_hints": { "enabled": true },
-  "assistant": { "version": "1" },
   "vim": {
     "use_multiline_find": true,
     "use_smartcase_find": true
