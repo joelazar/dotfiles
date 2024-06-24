@@ -2,8 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Switch main display
-# @raycast.mode compact
+# @raycast.title Switch main display @raycast.mode compact
 
 # Optional parameters:
 # @raycast.icon 🖥️
@@ -40,3 +39,6 @@ display2_swapped=$(echo "$display2" | sed "s/$origin2/$inverted_origin2/")
 new_command="displayplacer \"$display2_swapped\" \"$display1_swapped\""
 
 bash -c "$new_command"
+
+# reset raycast window position to avoid the window being offscreen
+open raycast://extensions/raycast/raycast/reset-raycast-window-position

@@ -1,6 +1,6 @@
 {
   "preferredLocale": "system",
-  "autoConnect": true,
+  "autoConnect": false,
   "enableSystemNotifications": true,
   "monochromaticIcon": true,
   "startMinimized": false,
@@ -9,3 +9,4 @@
   "changelogDisplayedForVersion": "2024.2",
   "animateMap": true
 }
+
