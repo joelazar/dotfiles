@@ -2,7 +2,8 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Switch main display @raycast.mode compact
+# @raycast.title Switch main display
+# @raycast.mode compact
 
 # Optional parameters:
 # @raycast.icon 🖥️
