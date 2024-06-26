@@ -106,5 +106,16 @@
       "shift-y": "project_panel::CopyRelativePath",
       "g y": "project_panel::CopyPath"
     }
+  },
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "j": "menu::SelectNext",
+      "k": "menu::SelectPrev",
+      "h": "outline_panel::CollapseSelectedEntry",
+      "l": "outline_panel::ExpandSelectedEntry",
+      "o": "outline_panel::Open",
+      "enter": "outline_panel::Open"
+    }
   }
 ]
