@@ -9,11 +9,79 @@
     }
   },
   {
+    // put key-bindings here if you want them to work in normal & visual mode
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "space l a": "editor::ToggleCodeActions",
+      "space s s": "outline::Toggle",
+      "space T b": "editor::ToggleGitBlame",
+      "j": [
+        "vim::Down",
+        {
+          "displayLines": true
+        }
+      ],
+      "k": [
+        "vim::Up",
+        {
+          "displayLines": true
+        }
+      ],
+      "enter": "editor::SelectLargerSyntaxNode",
+      "backspace": "editor::SelectSmallerSyntaxNode"
+    }
+  },
+  {
     // put key-bindings here if you want them to work only in normal mode
     "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
-      "] d": "editor::GoToDiagnostic",
-      "[ d": "editor::GoToPrevDiagnostic"
+      "g r": "editor::FindAllReferences"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && (vim_operator == none || vim_operator == n) && !VimWaiting",
+    "bindings": {
+      "space w": "workspace::Save",
+      "Q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "enter": "editor::ConfirmCompletion",
+      "ctrl-j": "editor::ConfirmCompletion",
+      "shift-tab": "editor::ContextMenuPrev",
+      "tab": "editor::ContextMenuNext"
+    }
+  },
+  {
+    "context": "Editor && mode == full && inline_completion",
+    "bindings": {
+      "tab": "editor::NextInlineCompletion",
+      "shift-tab": "editor::PreviousInlineCompletion",
+      "enter": "editor::AcceptPartialInlineCompletion",
+      "ctrl-j": "editor::AcceptInlineCompletion"
+    }
+  },
+  {
+    // put key-bindings here if you want them to work in insert mode
+    "context": "Editor && vim_mode == insert && !menu",
+    "bindings": {
+      "tab": "menu::SelectNext",
+      "shift-tab": "menu::SelectPrev"
+    }
+  },
+  {
+    "context": "Dock",
+    "bindings": {
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
     }
   },
   {
