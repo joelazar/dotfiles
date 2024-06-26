@@ -5,13 +5,17 @@
   "theme": "Catppuccin Mocha",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
-  "inlay_hints": { "enabled": true },
+  // allow cursor to reach edges of screen
+  "vertical_scroll_margin": 0,
+  "inlay_hints": {
+    "enabled": true
+  },
   "vim": {
     "use_multiline_find": true,
     "use_smartcase_find": true
   },
   "terminal": {
-    "blinking": "terminal_controlled",
+    "blinking": "off",
     "font_family": "FiraCode Nerd Font",
     "font_features": {
       "liga": true,
@@ -19,6 +23,12 @@
       "ss03": true,
       "ss05": true,
       "ss07": true
+    },
+    "detect_venv": {
+      "on": {
+        "directories": [".env", "env", ".venv", "venv"],
+        "activate_script": "fish"
+      }
     }
   },
   "language_overrides": {
