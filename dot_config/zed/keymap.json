@@ -117,5 +117,23 @@
       "o": "outline_panel::Open",
       "enter": "outline_panel::Open"
     }
+  },
+  {
+    "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert",
+    "bindings": {
+      "space s p": "projects::OpenRecent",
+      "space t l": "task::Rerun"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
+    }
   }
 ]
