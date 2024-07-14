@@ -32,6 +32,7 @@ brew "dive"
 brew "docker"
 brew "docker-buildx"
 brew "docker-compose"
+brew "doggo"
 brew "duf"
 brew "exercism"
 brew "eza"
@@ -65,6 +66,7 @@ brew "kubernetes-cli"
 brew "lazygit"
 brew "lftp"
 brew "llvm"
+brew "luajit"
 brew "luarocks"
 brew "mas"
 brew "mkcert"
@@ -134,8 +136,6 @@ cask "monitorcontrol"
 cask "mullvadvpn"
 cask "neo4j"
 cask "obsidian"
-cask "protonmail-bridge"
-cask "protonvpn"
 cask "raycast"
 cask "signal"
 cask "slack"
@@ -150,6 +150,7 @@ mas "Bitwarden", id: 1352778147
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Microsoft To Do", id: 1274495053
 mas "reMarkable", id: 1276493162
+mas "TickTick", id: 966085870
 mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "adamcowley.neo4j-vscode"
