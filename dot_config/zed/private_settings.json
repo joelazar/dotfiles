@@ -18,6 +18,7 @@
     "use_smartcase_find": true
   },
   "terminal": {
+    "max_scroll_history_lines": 30000,
     "blinking": "off",
     "font_family": "FiraCode Nerd Font",
     "font_features": {
