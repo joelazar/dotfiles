@@ -96,7 +96,7 @@
       "r": "project_panel::Rename",
       "z c": "project_panel::CollapseSelectedEntry",
       "z o": "project_panel::ExpandSelectedEntry",
-      "shift-o": "project_panel::RevealInFinder",
+      "shift-o": "project_panel::RevealInFileManager",
       "x": "project_panel::Cut",
       "c": "project_panel::Copy",
       "p": "project_panel::Paste",
