@@ -95,7 +95,7 @@ brew "rust"
 brew "rye"
 brew "sad"
 brew "sd"
-brew "sleepwatcher", restart_service: true
+brew "sleepwatcher"
 brew "solo2-cli"
 brew "sshpass"
 brew "starship"
@@ -109,6 +109,7 @@ brew "watch"
 brew "watchexec"
 brew "wget"
 brew "yarn"
+brew "yazi"
 brew "zbar"
 brew "zig"
 brew "zoxide"
@@ -148,7 +149,6 @@ cask "zed"
 cask "zoom"
 mas "Bitwarden", id: 1352778147
 mas "Microsoft Remote Desktop", id: 1295203466
-mas "Microsoft To Do", id: 1274495053
 mas "reMarkable", id: 1276493162
 mas "TickTick", id: 966085870
 mas "Xcode", id: 497799835
