@@ -18,6 +18,13 @@
 #     font-family = ""
 #     font-family = "My Favorite Font"
 #
+# Setting any of these as CLI arguments will automatically clear the
+# values set in configuration files so you don't need to specify
+# `--font-family=""` before setting a new value. You only need to specify
+# this within config files if you want to clear previously set values in
+# configuration files or on the CLI if you want to clear values set on the
+# CLI.
+#
 # Changing this configuration at runtime will only affect new terminals, i.e.
 # new windows, tabs, etc.
 font-family = Fira Code
@@ -198,10 +205,10 @@ grapheme-width-method = unicode
 theme = catppuccin-mocha
 
 # Background color for the window.
-background = #282c34
+# background = #282c34
 
 # Foreground color for the window.
-foreground = #ffffff
+# foreground = #ffffff
 
 # The foreground and background color for selection. If this is not set, then
 # the selection color is just the inverted window background and foreground
@@ -647,7 +654,9 @@ unfocused-split-fill =
 #
 # If you're using the `ghostty` CLI there is also a shortcut to run a command
 # with arguments directly: you can use the `-e` flag. For example: `ghostty -e
-# fish --with --custom --args`.
+# fish --with --custom --args`. The `-e` flag also automatically sets
+# `gtk-single-instance = false` (no matter what) to ensure that a new
+# instance is launched and the CLI args are respected.
 command =
 
 # If true, keep the terminal open after the command exits. Normally, the
@@ -834,107 +843,65 @@ working-directory =
 # specify the "unconsumed:" prefix before the entire keybind. For example:
 # "unconsumed:ctrl+a=reload_config"
 keybind = super+page_up=scroll_page_up
-keybind = super+shift+up=jump_to_prompt:-1
 keybind = super+physical:four=goto_tab:4
-keybind = super+comma=open_config
-keybind = super+shift+comma=reload_config
-keybind = super+minus=decrease_font_size:1
-keybind = super+a=select_all
 keybind = super+shift+down=jump_to_prompt:1
-keybind = super+w=close_surface
 keybind = super+shift+w=close_window
 keybind = super+shift+left_bracket=previous_tab
-keybind = super+shift+enter=toggle_split_zoom
-keybind = super+alt+down=goto_split:bottom
-keybind = alt+shift+equal=equalize_splits
+keybind = super+alt+i=inspector:toggle
+keybind = super+w=close_surface
 keybind = super+physical:eight=goto_tab:8
 keybind = super+alt+right=goto_split:right
-keybind = super+ctrl+right=resize_split:right,10
-keybind = super+n=new_window
+keybind = shift+up=adjust_selection:up
 keybind = super+enter=toggle_fullscreen
-keybind = super+alt+i=inspector:toggle
-keybind = super+ctrl+f=toggle_fullscreen
-keybind = super+alt+left=goto_split:left
-keybind = super+page_down=scroll_page_down
-keybind = super+alt+shift+w=close_all_windows
-keybind = super+alt+up=goto_split:top
 keybind = super+t=new_tab
 keybind = super+c=copy_to_clipboard
 keybind = super+shift+right_bracket=next_tab
 keybind = super+physical:one=goto_tab:1
-keybind = super+physical:nine=goto_tab:9
-keybind = super+left_bracket=goto_split:previous
+keybind = shift+left=adjust_selection:left
 keybind = super+equal=increase_font_size:1
+keybind = shift+page_up=adjust_selection:page_up
 keybind = super+physical:three=goto_tab:3
-keybind = super+end=scroll_to_bottom
-keybind = super+right_bracket=goto_split:next
 keybind = super+d=new_split:right
-keybind = super+shift+j=write_scrollback_file
-keybind = super+q=quit
-keybind = super+plus=increase_font_size:1
-keybind = super+zero=reset_font_size
-keybind = super+physical:five=goto_tab:5
-keybind = super+home=scroll_to_top
-keybind = super+physical:seven=goto_tab:7
-keybind = super+shift+d=new_split:down
 keybind = super+ctrl+down=resize_split:down,10
-keybind = super+ctrl+left=resize_split:left,10
-keybind = super+k=clear_screen
-keybind = super+ctrl+up=resize_split:up,10
-keybind = super+physical:two=goto_tab:2
-keybind = super+physical:six=goto_tab:6
-keybind = super+v=paste_from_clipboard
-keybind = super+alt+right=goto_split:right
+keybind = shift+end=adjust_selection:end
 keybind = super+plus=increase_font_size:1
-keybind = super+d=new_split:right
-keybind = super+physical:six=goto_tab:6
-keybind = super+comma=open_config
-keybind = super+physical:four=goto_tab:4
-keybind = super+shift+j=write_scrollback_file
-keybind = super+physical:nine=goto_tab:9
-keybind = super+enter=toggle_fullscreen
-keybind = super+shift+enter=toggle_split_zoom
 keybind = super+q=quit
-keybind = super+page_down=scroll_page_down
-keybind = super+end=scroll_to_bottom
-keybind = super+k=clear_screen
-keybind = super+left_bracket=goto_split:previous
-keybind = super+shift+right_bracket=next_tab
-keybind = super+shift+comma=reload_config
-keybind = super+shift+left_bracket=previous_tab
-keybind = super+right_bracket=goto_split:next
-keybind = super+v=paste_from_clipboard
-keybind = super+alt+down=goto_split:bottom
-keybind = super+equal=increase_font_size:1
+keybind = super+home=scroll_to_top
+keybind = super+ctrl+left=resize_split:left,10
+keybind = super+ctrl+up=resize_split:up,10
 keybind = super+shift+up=jump_to_prompt:-1
-keybind = super+n=new_window
-keybind = super+ctrl+up=resize_split:up,10
-keybind = super+ctrl+left=resize_split:left,10
-keybind = super+ctrl+right=resize_split:right,10
+keybind = shift+right=adjust_selection:right
+keybind = super+comma=open_config
+keybind = super+shift+comma=reload_config
+keybind = super+minus=decrease_font_size:1
+keybind = shift+page_down=adjust_selection:page_down
+keybind = super+a=select_all
+keybind = alt+shift+equal=equalize_splits
+keybind = super+shift+enter=toggle_split_zoom
+keybind = super+alt+down=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
+keybind = super+ctrl+right=resize_split:right,10
+keybind = super+alt+shift+j=write_scrollback_file:open
+keybind = shift+down=adjust_selection:down
+keybind = super+n=new_window
+keybind = super+alt+left=goto_split:left
+keybind = super+page_down=scroll_page_down
 keybind = super+alt+shift+w=close_all_windows
-keybind = super+physical:three=goto_tab:3
-keybind = super+t=new_tab
-keybind = super+page_up=scroll_page_up
+keybind = super+alt+up=goto_split:top
+keybind = super+left_bracket=goto_split:previous
+keybind = super+physical:nine=goto_tab:9
+keybind = super+right_bracket=goto_split:next
+keybind = super+end=scroll_to_bottom
+keybind = super+shift+j=write_scrollback_file:paste
 keybind = super+shift+d=new_split:down
 keybind = super+zero=reset_font_size
 keybind = super+physical:five=goto_tab:5
-keybind = super+a=select_all
+keybind = shift+home=adjust_selection:home
 keybind = super+physical:seven=goto_tab:7
-keybind = super+ctrl+down=resize_split:down,10
-keybind = super+alt+up=goto_split:top
+keybind = super+k=clear_screen
 keybind = super+physical:two=goto_tab:2
-keybind = super+w=close_surface
-keybind = super+minus=decrease_font_size:1
-keybind = super+shift+down=jump_to_prompt:1
-keybind = super+physical:eight=goto_tab:8
-keybind = super+alt+left=goto_split:left
-keybind = super+home=scroll_to_top
-keybind = alt+shift+equal=equalize_splits
-keybind = super+physical:one=goto_tab:1
-keybind = super+shift+w=close_window
-keybind = super+c=copy_to_clipboard
-keybind = super+alt+i=inspector:toggle
+keybind = super+physical:six=goto_tab:6
+keybind = super+v=paste_from_clipboard
 
 # remap cmd+p to ctrl+p
 keybind = super+p=text:\x10
