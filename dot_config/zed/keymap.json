@@ -1,5 +1,11 @@
 [
   {
+    "bindings": {
+      "shift-tab": "menu::SelectPrev",
+      "tab": "menu::SelectNext"
+    }
+  },
+  {
     "context": "Dock",
     "bindings": {
       "ctrl-w h": ["workspace::ActivatePaneInDirection", "Left"],
@@ -32,12 +38,15 @@
         }
       ],
       "enter": "editor::SelectLargerSyntaxNode",
-      "backspace": "editor::SelectSmallerSyntaxNode"
+      "backspace": "editor::SelectSmallerSyntaxNode",
+      "g y": "editor::Copy",
+      "g p": "editor::Paste"
     }
   },
   {
     // put key-bindings here if you want them to work only in normal mode
-    "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    // "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
       "g r": "editor::FindAllReferences"
     }
@@ -133,7 +142,9 @@
         {
           "AddSurrounds": {}
         }
-      ]
+      ],
+      "p": ["vim::Paste", { "preserveClipboard": true }],
+      "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
   }
 ]

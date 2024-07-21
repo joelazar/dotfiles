@@ -8,11 +8,11 @@ fish_vi_key_bindings
 
 # Make default programs
 set -gx BROWSER firefox
-set -gx EDITOR nvim
+set -gx EDITOR zed
 set -gx FILE nnn
 set -gx PAGER "bat --plain"
 set -gx TERMINAL kitty
-set -gx VISUAL nvim
+set -gx VISUAL zed
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'

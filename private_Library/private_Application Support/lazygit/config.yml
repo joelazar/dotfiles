@@ -1,6 +1,12 @@
 disableStartupPopups: true
 notARepository: "skip"
 promptToReturnFromSubprocess: false
+os:
+  edit: 'zed {{filename}}'
+  editAtLine: 'zed {{filename}}:{{line}}'
+  editAtLineAndWait: 'zed --wait {{filename}}:{{line}}'
+  editInTerminal: false
+  openDirInEditor: 'zed {{dir}}'
 gui:
   skipDiscardChangeWarning: true
   showCommandLog: false

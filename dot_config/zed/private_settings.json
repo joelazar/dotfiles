@@ -1,4 +1,12 @@
 {
+  "assistant": {
+    "version": "1",
+    "provider": {
+      "name": "openai",
+      "default_model": "gpt-4o",
+      "available_models": []
+    }
+  },
   "tab_bar": {
     "show": false
   },
@@ -14,6 +22,7 @@
     "enabled": true
   },
   "vim": {
+    "use_system_clipboard": "never",
     "use_multiline_find": true,
     "use_smartcase_find": true
   },
@@ -35,8 +44,12 @@
       }
     }
   },
+  "file_types": {
+    "Dockerfile": ["Dockerfile*"]
+  },
   "languages": {
     "Python": {
+      "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
       "formatter": {
         "external": {
