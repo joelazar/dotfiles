@@ -1,11 +1,16 @@
 {
-  "assistant": {
-    "version": "1",
-    "provider": {
-      "name": "openai",
-      "default_model": "gpt-4o",
+  "language_models": {
+    "openai": {
       "available_models": []
     }
+  },
+  "assistant": {
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-4o"
+    },
+    "version": "2",
+    "provider": null
   },
   "tab_bar": {
     "show": false

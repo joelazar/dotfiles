@@ -130,19 +130,19 @@
   {
     "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert",
     "bindings": {
+      "space l d": "diagnostics::Deploy",
       "space s p": "projects::OpenRecent",
-      "space t l": "task::Rerun"
+      "space t l": "task::Rerun",
+      "space t L": ["task::Rerun", { "reevaluate_context": true }],
+      "space t r": "task::Spawn"
     }
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
-      "shift-s": [
-        "vim::PushOperator",
-        {
-          "AddSurrounds": {}
-        }
-      ],
+      "shift-s": ["vim::PushOperator", { "AddSurrounds": {} }],
+      // just for muscle memory
+      "g s a": ["vim::PushOperator", { "AddSurrounds": {} }],
       "p": ["vim::Paste", { "preserveClipboard": true }],
       "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
