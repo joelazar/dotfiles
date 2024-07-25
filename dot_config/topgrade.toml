@@ -104,7 +104,7 @@ ignore_failures = ["containers", "git_repos"]
 # For the BrewCask step
 # If `Repo Cask Upgrade` exists, then use the `-a` option.
 # Otherwise, use the `--greedy` option.
-greedy_cask = true
+# greedy_cask = true
 
 # For the BrewCask step
 # If `Repo Cask Upgrade` does not exist, then use the `--greedy_latest` optoin.
