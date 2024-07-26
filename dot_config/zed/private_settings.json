@@ -1,13 +1,19 @@
 {
   "language_models": {
     "openai": {
-      "available_models": []
+      "available_models": ["gpt-4o", "gpt-4o-mini"]
+    },
+    "anthropic": {
+      "available_models": ["claude-3-5-sonnet-20240620"]
+    },
+    "ollama": {
+      "available_models": ["llama3.1"]
     }
   },
   "assistant": {
     "default_model": {
-      "provider": "openai",
-      "model": "gpt-4o"
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20240620"
     },
     "version": "2",
     "provider": null
@@ -47,6 +53,9 @@
         "directories": [".env", "env", ".venv", "venv"],
         "activate_script": "fish"
       }
+    },
+    "env": {
+      "GIT_EDITOR": "zed --wait"
     }
   },
   "file_types": {
@@ -54,17 +63,20 @@
   },
   "languages": {
     "Python": {
-      "language_servers": ["pyright", "ruff"],
       "format_on_save": "on",
-      "formatter": {
-        "external": {
-          "command": "bash",
-          "arguments": [
-            "-c",
-            "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
-          ]
+      "formatter": [
+        // { "language_server": { "name": "ruff" } },
+        {
+          "external": {
+            "command": "bash",
+            "arguments": [
+              "-c",
+              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
+            ]
+          }
         }
-      }
+      ],
+      "language_servers": ["pyright", "ruff"]
     }
   }
 }

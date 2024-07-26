@@ -22,9 +22,14 @@
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
       "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
       "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "space g h d": "editor::ToggleHunkDiff",
+      "space g h r": "editor::RevertSelectedHunks",
       "space l a": "editor::ToggleCodeActions",
       "space s s": "outline::Toggle",
+      "space b f": "editor::Format",
       "space T b": "editor::ToggleGitBlame",
+      "space T w": "editor::ToggleSoftWrap",
+      "space T i": "editor::ToggleInlayHints",
       "j": [
         "vim::Down",
         {
@@ -40,7 +45,10 @@
       "enter": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
-      "g p": "editor::Paste"
+      "g p": "editor::Paste",
+      "space s w": "pane::DeploySearch",
+      "space s t": "pane::DeploySearch",
+      "g f": "editor::OpenExcerpts"
     }
   },
   {
@@ -134,7 +142,8 @@
       "space s p": "projects::OpenRecent",
       "space t l": "task::Rerun",
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
-      "space t r": "task::Spawn"
+      "space t r": "task::Spawn",
+      "space F": "pane::RevealInProjectPanel"
     }
   },
   {
