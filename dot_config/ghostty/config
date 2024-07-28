@@ -76,6 +76,12 @@ font-feature = +ss07
 # then you can get an odd numbered pixel size by specifying a half point.
 #
 # For example, 13.5pt @ 2px/pt = 27px
+#
+# Changing this configuration at runtime will only affect new terminals,
+# i.e. new windows, tabs, etc. Note that you may still not see the change
+# depending on your `window-inherit-font-size` setting. If that setting is
+# true, only the first window will be affected by this change since all
+# subsequent windows will inherit the font size of the previous window.
 font-size = 14
 
 # A repeatable configuration to set one or more font variations values for
