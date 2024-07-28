@@ -8,7 +8,7 @@ fish_vi_key_bindings
 
 # Make default programs
 set -gx BROWSER firefox
-set -gx EDITOR zed
+set -gx EDITOR "zed --wait"
 set -gx FILE nnn
 set -gx PAGER "bat --plain"
 set -gx TERMINAL kitty
