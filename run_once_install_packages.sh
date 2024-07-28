@@ -43,6 +43,7 @@ install_nnn_plugins
 print_in_purple "NPM packages\n"
 
 install_npm_package "npm-check"
+install_npm_package "rag-crawler"
 install_npm_package "yalc"
 
 print_in_purple "Go packages\n"
