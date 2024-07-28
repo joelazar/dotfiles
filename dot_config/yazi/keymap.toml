@@ -1,0 +1,24 @@
+[[manager.prepend_keymap]]
+on = ["<C-d>"]
+run = "plugin diff"
+desc = "Diff the selected with the hovered file"
+
+[[manager.prepend_keymap]]
+on = ["t", "p"]
+run = "plugin --sync hide-preview"
+desc = "Hide or show preview"
+
+[[manager.prepend_keymap]]
+on = ["t", "m"]
+run = "plugin --sync max-preview"
+desc = "Maximize or restore preview"
+
+[[manager.prepend_keymap]]
+on = ["F"]
+run = "plugin smart-filter"
+desc = "Smart filter"
+
+[[manager.prepend_keymap]]
+on = ["!"]
+run = 'shell "$SHELL" --block --confirm'
+desc = "Open shell here"
