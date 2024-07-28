@@ -147,7 +147,6 @@ cask "spotify"
 cask "steam"
 cask "visual-studio-code"
 cask "zed@preview"
-cask "zoom"
 mas "Bitwarden", id: 1352778147
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "TickTick", id: 966085870
