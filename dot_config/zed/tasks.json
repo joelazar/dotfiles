@@ -4,9 +4,7 @@
     "command": "for i in {1..5}; do echo \"Hello $i/5\"; sleep 1; done",
     //"args": [],
     // Env overrides for the command, will be appended to the terminal's environment from the settings.
-    "env": {
-      "foo": "bar"
-    },
+    "env": { "foo": "bar" },
     // Current working directory to spawn the command into, defaults to current project root.
     //"cwd": "/path/to/working/directory",
     // Whether to use a new terminal tab or reuse the existing one to spawn the process, defaults to `false`.
@@ -16,13 +14,35 @@
     // What to do with the terminal pane and tab, after the command was started:
     // * `always` — always show the terminal pane, add and focus the corresponding task's tab in it (default)
     // * `never` — avoid changing current terminal pane focus, but still add/reuse the task's tab there
-    "reveal": "always"
+    "reveal": "always",
+    // What to do with the terminal pane and tab, after the command had finished:
+    // * `never` — Do nothing when the command finishes (default)
+    // * `always` — always hide the terminal tab, hide the pane also if it was the last tab in it
+    // * `on_success` — hide the terminal tab on task success only, otherwise behaves similar to `always`
+    "hide": "never",
+    // Which shell to use when running a task inside the terminal.
+    // May take 3 values:
+    // 1. (default) Use the system's default terminal configuration in /etc/passwd
+    //      "shell": "system"
+    // 2. A program:
+    //      "shell": {
+    //        "program": "sh"
+    //      }
+    // 3. A program with arguments:
+    //     "shell": {
+    //         "with_arguments": {
+    //           "program": "/bin/bash",
+    //           "arguments": ["--login"]
+    //         }
+    //     }
+    "shell": "system"
   },
   {
     "label": "Python: rye test - all",
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test",
     // TODO: Loading env through direnv and bultin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
+    "hide": "on_success",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "never"
@@ -32,6 +52,7 @@
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test -- $ZED_RELATIVE_FILE -vv",
     // TODO: Loading env through direnv and bultin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
+    "hide": "on_success",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "never"
@@ -44,10 +65,11 @@
     "reveal": "always"
   },
   {
-    "label": "Lazygit",
+    "label": "lazygit",
     "command": "lazygit",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
+    "hide": "always",
     "reveal": "always"
   }
 ]
