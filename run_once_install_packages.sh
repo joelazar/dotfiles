@@ -54,5 +54,11 @@ print_in_purple "GH plugins\n"
 
 # TODO: check if gh was authenticated already
 
+# install yazi plugins
+# ya pack -a yazi-rs/plugins#max-preview
+# ya pack -a yazi-rs/plugins#smart-filter
+# ya pack -a yazi-rs/plugins#hide-preview
+# ya pack -a yazi-rs/plugins#diff
+
 install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
