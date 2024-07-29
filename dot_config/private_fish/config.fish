@@ -26,6 +26,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
+fish_add_path $HOME/.rye/py/cpython@3.12.3/bin
 
 # brew specific paths
 fish_add_path /opt/homebrew/sbin
