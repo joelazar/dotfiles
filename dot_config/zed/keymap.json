@@ -36,6 +36,7 @@
       "space G": ["task::Spawn", { "lazygit": "Open lazygit" }],
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
+      "space g y": "editor::CopyPermalinkToLine",
       "space l a": "editor::ToggleCodeActions",
       "space s s": "outline::Toggle",
       "space b f": "editor::Format",

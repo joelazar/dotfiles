@@ -5,10 +5,13 @@ palette = "catppuccin_mocha"
 [gcloud]
 disabled = true
 
-[env_var]
+[env_var.NNNLVL]
 variable = "NNNLVL"
 format = "[n³](yellow) "
-disabled = false
+
+[env_var.YAZI_LEVEL]
+variable = "YAZI_LEVEL"
+format = "[🦆](yellow) "
 
 [direnv]
 disabled = false
@@ -17,6 +20,12 @@ detect_files = [".envrc", ".env"]
 loaded_msg = "👍"
 unloaded_msg = "🚫"
 
+[git_metrics]
+disabled = false
+
+[cmd_duration]
+disabled = false
+
 [docker_context]
 disabled = true
 
@@ -24,15 +33,9 @@ disabled = true
 format = '[⛵$context](green) '
 disabled = true
 
-[git_metrics]
-disabled = false
-
 [sudo]
 style = 'bold yellow'
 symbol = '🧙'
-disabled = false
-
-[cmd_duration]
 disabled = false
 
 [palettes.catppuccin_mocha]
