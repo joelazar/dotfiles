@@ -147,8 +147,9 @@ cask "slack"
 cask "sonos"
 cask "spotify"
 cask "steam"
+cask "swiftdefaultappsprefpane"
 cask "visual-studio-code"
-cask "zed@preview"
+cask "zed"
 mas "Bitwarden", id: 1352778147
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "TickTick", id: 966085870
