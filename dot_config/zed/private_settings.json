@@ -65,7 +65,6 @@
     "Python": {
       "format_on_save": "on",
       "formatter": [
-        // { "language_server": { "name": "ruff" } },
         {
           "external": {
             "command": "bash",
@@ -76,7 +75,7 @@
           }
         }
       ],
-      "language_servers": ["pyright", "ruff"]
+      "language_servers": ["pyright", "!basedpyright", "ruff"]
     }
   }
 }
