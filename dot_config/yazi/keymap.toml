@@ -4,12 +4,12 @@ run = "plugin diff"
 desc = "Diff the selected with the hovered file"
 
 [[manager.prepend_keymap]]
-on = ["t", "p"]
+on = ["T", "p"]
 run = "plugin --sync hide-preview"
 desc = "Hide or show preview"
 
 [[manager.prepend_keymap]]
-on = ["t", "m"]
+on = ["T", "m"]
 run = "plugin --sync max-preview"
 desc = "Maximize or restore preview"
 
@@ -22,3 +22,8 @@ desc = "Smart filter"
 on = ["!"]
 run = 'shell "$SHELL" --block --confirm'
 desc = "Open shell here"
+
+[[manager.prepend_keymap]]
+on = ["D"]
+run = "remove --force"
+desc = "Move the files to the trash"
