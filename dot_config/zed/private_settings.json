@@ -10,6 +10,12 @@
     },
     "ollama": {
       "available_models": ["llama3.1"]
+    },
+    "copilot_chat": {
+      "available_models": []
+    },
+    "google": {
+      "available_models": []
     }
   },
   "assistant": {
