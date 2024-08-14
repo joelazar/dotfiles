@@ -118,13 +118,15 @@
       "z o": "project_panel::ExpandSelectedEntry",
       "shift-o": "project_panel::RevealInFileManager",
       "x": "project_panel::Cut",
-      "c": "project_panel::Copy",
+      "y": "project_panel::Copy",
       "p": "project_panel::Paste",
-      "d": "project_panel::Delete",
+      "d": "project_panel::Trash",
+      "D": ["project_panel::Trash", { "skip_prompt": true }],
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "project_panel::CopyRelativePath",
-      "g y": "project_panel::CopyPath"
+      "g y": "project_panel::CopyPath",
+      "space G": ["task::Spawn", { "task_name": "lazygit" }]
     }
   },
   {
