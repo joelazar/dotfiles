@@ -37,6 +37,7 @@ fish_add_path /opt/homebrew/opt/ruby/bin
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
 set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
 set -gx MODULAR_HOME $HOME/.modular
+set -gx MAX_PATH $HOME/.modular/pkg/packages.modular.com_max
 
 # FZF options
 set -gx FD_DEFAULT_COMMAND 'fd --hidden --follow'
