@@ -160,5 +160,12 @@
       "p": ["vim::Paste", { "preserveClipboard": true }],
       "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
+  },
+  {
+    "context": "Editor && jupyter && !ContextEditor",
+    "bindings": {
+      "ctrl-shift-enter": "repl::Run",
+      "ctrl-cmd-enter": "repl::RunInPlace"
+    }
   }
 ]

@@ -32,6 +32,7 @@ fish_add_path $HOME/.rye/py/cpython@3.12.3/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
+fish_add_path /opt/homebrew/opt/openjdk/bin/
 
 # mojo specific paths
 fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin

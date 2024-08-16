@@ -18,6 +18,9 @@
       "available_models": []
     }
   },
+  "features": {
+    "inline_completion_provider": "copilot"
+  },
   "assistant": {
     "default_model": {
       "provider": "anthropic",
