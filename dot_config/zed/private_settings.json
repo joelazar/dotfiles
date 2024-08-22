@@ -22,12 +22,15 @@
     "inline_completion_provider": "copilot"
   },
   "assistant": {
-    "default_model": {
-      "provider": "anthropic",
-      "model": "claude-3-5-sonnet-20240620"
-    },
     "version": "2",
-    "provider": null
+    "dock": "right",
+    "default_width": 640,
+    "default_height": 320,
+    "default_model": {
+      // "provider": "anthropic",
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-20240620"
+    }
   },
   "tab_bar": {
     "show": true,
@@ -38,6 +41,8 @@
     "close_position": "right",
     "file_icons": true
   },
+  "soft_wrap": "preferred_line_length",
+  "preferred_line_length": 140,
   "auto_signature_help": false,
   "ui_font_size": 16,
   "buffer_font_size": 14,
@@ -130,6 +135,7 @@
     "log": true,
     "lua": true,
     "make": true,
+    "markdown-oxide": true,
     "ruff": true,
     "sql": true,
     "toml": true,

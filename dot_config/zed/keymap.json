@@ -42,18 +42,19 @@
       "space T b": "editor::ToggleGitBlame",
       "space T w": "editor::ToggleSoftWrap",
       "space T i": "editor::ToggleInlayHints",
-      "j": [
-        "vim::Down",
-        {
-          "displayLines": true
-        }
-      ],
-      "k": [
-        "vim::Up",
-        {
-          "displayLines": true
-        }
-      ],
+      "space T z": "workspace::ToggleCenteredLayout",
+      // "j": [
+      //   "vim::Down",
+      //   {
+      //     "displayLines": true
+      //   }
+      // ],
+      // "k": [
+      //   "vim::Up",
+      //   {
+      //     "displayLines": true
+      //   }
+      // ],
       "enter": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
