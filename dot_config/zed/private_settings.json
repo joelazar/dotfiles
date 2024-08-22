@@ -21,6 +21,7 @@
   "features": {
     "inline_completion_provider": "copilot"
   },
+  "seed_search_query_from_cursor": "selection",
   "assistant": {
     "version": "2",
     "dock": "right",
@@ -91,10 +92,7 @@
         {
           "external": {
             "command": "bash",
-            "arguments": [
-              "-c",
-              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
-            ]
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
           }
         }
       ],
@@ -136,6 +134,7 @@
     "lua": true,
     "make": true,
     "markdown-oxide": true,
+    "nix": true,
     "ruff": true,
     "sql": true,
     "toml": true,
