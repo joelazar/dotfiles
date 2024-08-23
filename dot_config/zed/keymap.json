@@ -7,7 +7,9 @@
         {
           "create_new_window": false
         }
-      ]
+      ],
+      "ctrl-z": "workspace::ToggleZoom",
+      "ctrl-x": "tab_switcher::CloseSelectedItem"
     }
   },
   {
@@ -39,7 +41,6 @@
     // put key-bindings here if you want them to work in normal & visual mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
-      "space G": ["task::Spawn", { "task_name": "lazygit" }],
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
       "space g y": "editor::CopyPermalinkToLine",
@@ -52,18 +53,9 @@
       "space T z": "workspace::ToggleCenteredLayout",
       "space ,": "tab_switcher::Toggle",
       "space t": "workspace::NewCenterTerminal",
-      // "j": [
-      //   "vim::Down",
-      //   {
-      //     "displayLines": true
-      //   }
-      // ],
-      // "k": [
-      //   "vim::Up",
-      //   {
-      //     "displayLines": true
-      //   }
-      // ],
+      "space G": ["task::Spawn", { "task_name": "lazygit" }],
+      // "j": ["vim::Down", { "displayLines": true }],
+      // "k": ["vim::Up", { "displayLines": true }],
       "enter": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
@@ -160,7 +152,7 @@
       "space t l": "task::Rerun",
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
       "space t r": "task::Spawn",
-      "space F": "pane::RevealInProjectPanel"
+      "space f": "pane::RevealInProjectPanel"
     }
   },
   {
@@ -178,6 +170,13 @@
     "bindings": {
       "ctrl-shift-enter": "repl::Run",
       "ctrl-cmd-enter": "repl::RunInPlace"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "cmd-t": "workspace::NewTerminal",
+      "cmd-n": "workspace::NewCenterTerminal"
     }
   }
 ]
