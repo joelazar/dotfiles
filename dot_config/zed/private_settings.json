@@ -61,6 +61,10 @@
     "use_multiline_find": true,
     "use_smartcase_find": true
   },
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": false
+  },
   "terminal": {
     "max_scroll_history_lines": 30000,
     "blinking": "off",

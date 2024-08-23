@@ -1,12 +1,23 @@
 [
   {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-k": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false
+        }
+      ]
+    }
+  },
+  {
     "bindings": {
       "shift-tab": "menu::SelectPrev",
       "tab": "menu::SelectNext"
     }
   },
   {
-    "context": "Dock",
+    "context": "Dock || Terminal || Editor",
     "bindings": {
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
@@ -28,10 +39,6 @@
     // put key-bindings here if you want them to work in normal & visual mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
       "space G": ["task::Spawn", { "task_name": "lazygit" }],
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
@@ -43,6 +50,8 @@
       "space T w": "editor::ToggleSoftWrap",
       "space T i": "editor::ToggleInlayHints",
       "space T z": "workspace::ToggleCenteredLayout",
+      "space ,": "tab_switcher::Toggle",
+      "space t": "workspace::NewCenterTerminal",
       // "j": [
       //   "vim::Down",
       //   {
@@ -62,6 +71,8 @@
       "space s w": "pane::DeploySearch",
       "space s t": "pane::DeploySearch",
       "g f": "editor::OpenExcerpts"
+      // cannot override default keybindings
+      // "J": ["workspace::SendKeystrokes", "m z J ` z"]
     }
   },
   {
