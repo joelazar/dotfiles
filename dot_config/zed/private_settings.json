@@ -1,4 +1,7 @@
 {
+  "inline_completions": {
+    "disabled_globs": ["", "**/.*"]
+  },
   "language_models": {
     "openai": {
       "version": "1",
