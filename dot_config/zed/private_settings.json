@@ -143,6 +143,7 @@
     "markdown-oxide": true,
     "nix": true,
     "ruff": true,
+    "scm": true,
     "sql": true,
     "toml": true,
     "zig": true
