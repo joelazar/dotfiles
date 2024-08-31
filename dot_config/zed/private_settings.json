@@ -24,6 +24,10 @@
   "features": {
     "inline_completion_provider": "copilot"
   },
+  "centered_layout": {
+    "left_padding": 0.15,
+    "right_padding": 0.15
+  },
   "seed_search_query_from_cursor": "selection",
   "assistant": {
     "version": "2",
