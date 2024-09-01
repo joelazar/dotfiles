@@ -133,6 +133,7 @@
   },
   "auto_install_extensions": {
     "basedpyright": true,
+    "basher": true,
     "catppuccin": true,
     "csv": true,
     "docker-compose": true,
