@@ -96,6 +96,7 @@ brew "restic"
 brew "ripgrep"
 brew "ruby"
 brew "rust"
+brew "rustup"
 brew "rye"
 brew "sad"
 brew "sd"
@@ -141,6 +142,7 @@ cask "google-cloud-sdk"
 cask "google-drive"
 cask "hyperkey"
 cask "kitty"
+cask "libreoffice"
 cask "microsoft-auto-update"
 cask "microsoft-teams"
 cask "monitorcontrol"
@@ -159,6 +161,7 @@ cask "visual-studio-code"
 cask "zed"
 mas "Bitwarden", id: 1352778147
 mas "Microsoft Remote Desktop", id: 1295203466
+mas "Microsoft Word", id: 462054704
 mas "TickTick", id: 966085870
 mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
