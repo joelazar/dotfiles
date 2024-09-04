@@ -114,6 +114,7 @@
     "basedpyright": {
       "settings": {
         "python": {
+          "pythonPath": ".venv/bin/python",
           "analysis": {
             "diagnosticSeverityOverrides": {
               "reportAny": "none",
