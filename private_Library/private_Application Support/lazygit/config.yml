@@ -82,6 +82,12 @@ customCommands:
     description: "View PR on GitHub"
     loadingText: "Opening GitHub..."
     subprocess: false
+  - key: "o"
+    command: "gh pr view --web {{ .SelectedLocalBranch.Name }}"
+    description: "View PR on github"
+    context: "localBranches"
+    loadingText: "opening github..."
+    subprocess: false
   - key: "<c-p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"

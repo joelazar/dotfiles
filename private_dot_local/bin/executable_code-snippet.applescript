@@ -11,8 +11,8 @@
 
 # Documentation:
 # @raycast.description Wrap the currently selected text in a code block.
-# @raycast.author joelazar
-# @raycast.authorURL https://raycast.com/joelazar
+# @raycast.author dlvhdr
+# @raycast.authorURL https://github.com/dlvhdr
 
 tell application "System Events"
     delay 0.1
