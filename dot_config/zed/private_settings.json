@@ -4,7 +4,6 @@
   },
   "language_models": {
     "openai": {
-      "version": "1",
       "available_models": []
     },
     "anthropic": {
@@ -12,7 +11,15 @@
       "available_models": []
     },
     "ollama": {
-      "available_models": ["llama3.1"]
+      "low_speed_timeout_in_seconds": 120,
+      "available_models": [
+        {
+          "provider": "ollama",
+          "name": "llama3.1:latest",
+          "display_name": "llama3.1",
+          "max_tokens": 128000
+        }
+      ]
     },
     "copilot_chat": {
       "available_models": []
@@ -153,6 +160,7 @@
     "scm": true,
     "sql": true,
     "toml": true,
+    "wakatime": true,
     "zig": true
   }
 }
