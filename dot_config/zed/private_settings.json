@@ -28,6 +28,10 @@
       "available_models": []
     }
   },
+  "calls": {
+    "mute_on_join": true,
+    "share_on_join": false
+  },
   "features": {
     "inline_completion_provider": "copilot"
   },

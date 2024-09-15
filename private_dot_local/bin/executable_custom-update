@@ -13,6 +13,6 @@ execute "ya pack --upgrade" "Update yazi plugins"
 
 execute "(which mojo &> /dev/null || modular install mojo) && modular update mojo" "Install/Update mojo 🔥"
 
-execute "rclone selfupdate" "Update rclone"
+execute "sudo rclone selfupdate" "Update rclone"
 
 execute "brew cleanup" "Cleanup brew"
