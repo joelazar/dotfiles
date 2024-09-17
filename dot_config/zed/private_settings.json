@@ -4,6 +4,7 @@
   },
   "language_models": {
     "openai": {
+      "version": "1",
       "available_models": []
     },
     "anthropic": {
@@ -75,7 +76,7 @@
     "enabled": true
   },
   "vim": {
-    "toggle_relative_line_numbers": true,
+    "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
     "use_multiline_find": true,
     "use_smartcase_find": true
