@@ -70,11 +70,17 @@
   "theme": "Catppuccin Mocha",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
+  // prevent the buffer from scrolling beyond the last line
+  "scroll_beyond_last_line": "off",
   // allow cursor to reach edges of screen
   "vertical_scroll_margin": 0,
   "inlay_hints": {
     "enabled": true
   },
+  // "gutter": {
+  //   // disable line numbers completely:
+  //   "line_numbers": false
+  // },
   "vim": {
     "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
