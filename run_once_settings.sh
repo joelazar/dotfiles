@@ -44,8 +44,6 @@ execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove 
 
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable the 'Are you sure you want to open this application?' dialog"
 
-execute "defaults write -g com.apple.keyboard.fnState -bool true" "Function keys as standard function keys"
-
 execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Show Spotlight search"
 
 execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Finder search window"
