@@ -30,8 +30,6 @@ ask_for_sudo
 
 print_in_purple "Package managers\n"
 
-pyenv
-
 install_nnn_plugins
 
 # TODO: install pip packages
