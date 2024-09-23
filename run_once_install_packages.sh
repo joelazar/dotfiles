@@ -57,6 +57,7 @@ print_in_purple "GH plugins\n"
 # ya pack -a yazi-rs/plugins#smart-filter
 # ya pack -a yazi-rs/plugins#hide-preview
 # ya pack -a yazi-rs/plugins#diff
+# ya pack -a KKV9/compress
 
 install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
