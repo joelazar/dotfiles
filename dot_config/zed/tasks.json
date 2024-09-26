@@ -45,7 +45,7 @@
     "hide": "on_success",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
-    "reveal": "never"
+    "reveal": "always"
   },
   {
     "label": "Python: rye test - current file",
@@ -55,7 +55,7 @@
     "hide": "on_success",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
-    "reveal": "never"
+    "reveal": "always"
   },
   {
     "label": "Python: run current file in venv",

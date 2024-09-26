@@ -75,7 +75,7 @@
   "soft_wrap": "preferred_line_length",
   "preferred_line_length": 140,
   "auto_signature_help": false,
-  "ui_font_size": 16,
+  "ui_font_size": 15,
   "buffer_font_size": 14,
   "vim_mode": true,
   "theme": "Catppuccin Mocha",
