@@ -54,19 +54,34 @@
   },
   "seed_search_query_from_cursor": "selection",
   "assistant": {
+    "button": false,
     "version": "2",
     "dock": "right",
     "default_width": 640,
     "default_height": 320,
     "default_model": {
-      // "provider": "anthropic",
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet"
+      "model": "claude-3-5-sonnet-20240620"
     }
   },
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false
+  },
+  "project_panel": {
+    "button": false
+  },
+  "outline_panel": {
+    "button": false
+  },
+  "collaboration_panel": {
+    "button": false
+  },
+  "chat_panel": {
+    "button": false
+  },
+  "notification_panel": {
+    "button": false
   },
   "tabs": {
     "git_status": true,
@@ -100,11 +115,14 @@
     "use_multiline_find": true,
     "use_smartcase_find": true
   },
+  "use_smartcase_search": true,
   "toolbar": {
     "breadcrumbs": true,
-    "quick_actions": false
+    "quick_actions": false,
+    "selections_menu": true
   },
   "terminal": {
+    "button": false,
     "max_scroll_history_lines": 30000,
     "blinking": "off",
     "font_family": "FiraCode Nerd Font",

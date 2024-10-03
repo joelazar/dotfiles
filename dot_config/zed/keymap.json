@@ -112,20 +112,15 @@
     // Vim: File Tree ("ProjectPanel") actions
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      "h": "project_panel::CollapseSelectedEntry",
-      "l": "project_panel::ExpandSelectedEntry",
-      "j": "menu::SelectNext",
-      "k": "menu::SelectPrev",
-      "o": "menu::Confirm",
-      "r": "project_panel::Rename",
       "z c": "project_panel::CollapseSelectedEntry",
       "z o": "project_panel::ExpandSelectedEntry",
       "shift-o": "project_panel::RevealInFileManager",
+      "r": "project_panel::Rename",
       "x": "project_panel::Cut",
       "y": "project_panel::Copy",
       "p": "project_panel::Paste",
       "d": "project_panel::Trash",
-      "D": ["project_panel::Trash", { "skip_prompt": true }],
+      "shift-d": ["project_panel::Trash", { "skip_prompt": true }],
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "project_panel::CopyRelativePath",
@@ -136,8 +131,6 @@
   {
     "context": "OutlinePanel",
     "bindings": {
-      "j": "menu::SelectNext",
-      "k": "menu::SelectPrev",
       "h": "outline_panel::CollapseSelectedEntry",
       "l": "outline_panel::ExpandSelectedEntry",
       "o": "outline_panel::Open",
@@ -159,8 +152,6 @@
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
       "shift-s": ["vim::PushOperator", { "AddSurrounds": {} }],
-      // just for muscle memory
-      "g s a": ["vim::PushOperator", { "AddSurrounds": {} }],
       "p": ["vim::Paste", { "preserveClipboard": true }],
       "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
