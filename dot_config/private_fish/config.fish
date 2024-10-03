@@ -124,7 +124,7 @@ alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias rmf='/bin/rm'
 alias q="exit"
-alias ssh="kitty +kitten ssh"
+alias s="kitty +kitten ssh"
 alias lv='NVIM_APPNAME=LazyVim nvim'
 alias lvi='NVIM_APPNAME=LazyVim nvim'
 alias lvim='NVIM_APPNAME=LazyVim nvim'
