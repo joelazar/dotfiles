@@ -8,7 +8,8 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.settings",
-    "**/.obsidian"
+    "**/.obsidian",
+    "**/node_modules"
   ],
   "inline_completions": {
     "disabled_globs": ["", "**/.*"]
