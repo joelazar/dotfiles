@@ -3,7 +3,7 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils_install" &&
-  . "$SOURCE_DIR/scripts/utils"
+    . "$SOURCE_DIR/scripts/utils"
 
 install_nnn_plugins
 
@@ -12,7 +12,5 @@ execute "fish -c 'fish_update_completions'" "Update fish completions"
 execute "ya pack --upgrade" "Update yazi plugins"
 
 execute "(which mojo &> /dev/null || modular install mojo) && modular update mojo" "Install/Update mojo 🔥"
-
-execute "sudo rclone selfupdate" "Update rclone"
 
 execute "brew cleanup" "Cleanup brew"

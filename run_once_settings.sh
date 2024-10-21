@@ -72,8 +72,10 @@ else
     print_result $? "Docker buildx configured"
 fi
 
-# enable touchid for sudo
+# TODO: this might not work when there is a file available with the name sudo_local.template name
 if [ -f /etc/pam.d/sudo_local ]; then
+    print_success "Enable touchid for sudo"
+else
     echo "auth       sufficient     pam_tid.so" | sudo tee -a /etc/pam.d/sudo_local
     print_result $? "Enable touchid for sudo"
 fi
