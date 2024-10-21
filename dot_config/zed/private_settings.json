@@ -69,6 +69,8 @@
     "show_nav_history_buttons": false
   },
   "project_panel": {
+    "indent_size": 7,
+    "auto_fold_dirs": false,
     "button": false
   },
   "outline_panel": {
