@@ -152,6 +152,7 @@ cask "steam"
 cask "swiftdefaultappsprefpane"
 cask "tailscale"
 cask "zed"
+cask "zen-browser"
 mas "Bitwarden", id: 1352778147
 mas "TickTick", id: 966085870
 mas "Xcode", id: 497799835
