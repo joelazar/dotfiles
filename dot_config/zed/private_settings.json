@@ -61,7 +61,7 @@
     "default_height": 320,
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-20240620"
+      "model": "claude-3-5-sonnet"
     }
   },
   "tab_bar": {
