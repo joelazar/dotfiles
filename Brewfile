@@ -152,6 +152,7 @@ cask "steam"
 cask "swiftdefaultappsprefpane"
 cask "tableplus"
 cask "tailscale"
+cask "wireshark"
 cask "zed"
 cask "zen-browser"
 mas "Bitwarden", id: 1352778147
