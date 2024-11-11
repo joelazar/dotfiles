@@ -40,7 +40,7 @@
   {
     "label": "Python: rye test - all",
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test",
-    // TODO: Loading env through direnv and bultin env vars not working
+    // TODO: Loading env through direnv and builtin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
     "hide": "on_success",
     "use_new_terminal": false,
@@ -50,7 +50,7 @@
   {
     "label": "Python: rye test - current file",
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test -- $ZED_RELATIVE_FILE -vv",
-    // TODO: Loading env through direnv and bultin env vars not working
+    // TODO: Loading env through direnv and builtin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
     "hide": "on_success",
     "use_new_terminal": false,
@@ -70,6 +70,7 @@
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "hide": "always",
-    "reveal": "always"
+    "reveal": "always",
+    "cwd": "$ZED_DIRNAME"
   }
 ]
