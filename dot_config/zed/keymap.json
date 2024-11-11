@@ -2,12 +2,6 @@
   {
     "context": "Workspace",
     "bindings": {
-      "cmd-k": [
-        "projects::OpenRecent",
-        {
-          "create_new_window": false
-        }
-      ],
       "ctrl-z": "workspace::ToggleZoom",
       "ctrl-x": "tab_switcher::CloseSelectedItem"
     }
@@ -70,7 +64,6 @@
   {
     // put key-bindings here if you want them to work only in normal mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
-    // "context": "Editor && vim_mode == normal && !VimWaiting && !menu",
     "bindings": {
       "g r": "editor::FindAllReferences"
     }
@@ -141,7 +134,8 @@
     "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert",
     "bindings": {
       "space l d": "diagnostics::Deploy",
-      "space s p": "projects::OpenRecent",
+      "space s p": ["projects::OpenRecent", { "create_new_window": false }],
+      "space s P": "projects::OpenRecent",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t l": "task::Rerun",
       "space t L": ["task::Rerun", { "reevaluate_context": true }],

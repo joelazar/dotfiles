@@ -177,6 +177,11 @@
         }
       ],
       "language_servers": ["!pyright", "basedpyright", "ruff"]
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     }
   },
   "lsp": {
@@ -234,6 +239,23 @@
             "enabled": true,
             "path": "ansible-lint"
           }
+        }
+      }
+    },
+    "gopls": {
+      "initialization_options": {
+        "usePlaceholders": true,
+        // "buildFlags": ["-tags=debug"],
+        "completeUnimported": false,
+        "experimentalPostfixCompletions": true,
+        "hints": {
+          "assignVariableTypes": false,
+          "compositeLiteralFields": false,
+          "compositeLiteralTypes": false,
+          "constantValues": true,
+          "functionTypeParameters": true,
+          "parameterNames": true,
+          "rangeVariableTypes": true
         }
       }
     }
