@@ -90,9 +90,9 @@
     "close_position": "right",
     "file_icons": true
   },
-  "soft_wrap": "preferred_line_length",
-  "show_wrap_guides": false,
+  // "soft_wrap": "preferred_line_length",
   "preferred_line_length": 140,
+  "show_wrap_guides": false,
   "auto_signature_help": false,
   "ui_font_size": 13,
   "buffer_font_size": 13,
@@ -146,7 +146,23 @@
     }
   },
   "file_types": {
-    "Dockerfile": ["Dockerfile*"]
+    "Dockerfile": ["Dockerfile*"],
+    "Ansible": [
+      "**.ansible.yml",
+      "**/defaults/**.yml",
+      "**/defaults/**.yaml",
+      "**/meta/**.yml",
+      "**/meta/**.yaml",
+      "**/tasks/**.yml",
+      "**/tasks/*.yml",
+      "**/tasks/*.yaml",
+      "**/handlers/*.yml",
+      "**/handlers/*.yaml",
+      "**/group_vars/**.yml",
+      "**/group_vars/**.yaml",
+      "**playbook*.yaml",
+      "**playbook*.yml"
+    ]
   },
   "languages": {
     "Python": {
@@ -199,9 +215,30 @@
         // "messages", "off", "verbose"
         "trace.server": "off"
       }
+    },
+    "ansible-language-server": {
+      "settings": {
+        "ansible": {
+          "path": "ansible"
+        },
+        "executionEnvironment": {
+          "enabled": false
+        },
+        "python": {
+          "interpreterPath": "python3"
+        },
+        "validation": {
+          "enabled": true,
+          "lint": {
+            "enabled": true,
+            "path": "ansible-lint"
+          }
+        }
+      }
     }
   },
   "auto_install_extensions": {
+    "ansible": true,
     "basedpyright": true,
     "basher": true,
     "catppuccin": true,
@@ -224,7 +261,7 @@
     "sql": true,
     "typos": true,
     "toml": true,
-    "zed-wakatime": true,
+    "wakatime": true,
     "zig": true
   }
 }
