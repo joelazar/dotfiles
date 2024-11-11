@@ -1,15 +1,16 @@
 {
   "file_scan_exclusions": [
-    "**/.git",
-    "**/.svn",
-    "**/.hg",
-    "**/CVS",
     "**/.DS_Store",
-    "**/Thumbs.db",
     "**/.classpath",
-    "**/.settings",
+    "**/.git",
+    "**/.hg",
     "**/.obsidian",
-    "**/node_modules"
+    "**/.settings",
+    "**/.svn",
+    "**/CVS",
+    "**/Thumbs.db",
+    "**/node_modules",
+    "**/report"
   ],
   "inline_completions": {
     "disabled_globs": ["", "**/.*"]

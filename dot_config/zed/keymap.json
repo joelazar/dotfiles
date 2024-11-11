@@ -142,6 +142,7 @@
     "bindings": {
       "space l d": "diagnostics::Deploy",
       "space s p": "projects::OpenRecent",
+      "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t l": "task::Rerun",
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
       "space t r": "task::Spawn",
