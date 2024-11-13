@@ -1,7 +1,7 @@
 {
   "preferredLocale": "system",
-  "autoConnect": true,
-  "enableSystemNotifications": true,
+  "autoConnect": false,
+  "enableSystemNotifications": false,
   "monochromaticIcon": true,
   "startMinimized": false,
   "unpinnedWindow": false,
