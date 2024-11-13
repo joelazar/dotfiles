@@ -144,7 +144,8 @@
     },
     "env": {
       "GIT_EDITOR": "zed --wait"
-    }
+    },
+    "working_directory": "current_project_directory"
   },
   "file_types": {
     "Dockerfile": ["Dockerfile*"],
@@ -268,6 +269,7 @@
     "csv": true,
     "docker-compose": true,
     "dockerfile": true,
+    "golangci-lint": true,
     "env": true,
     "fish": true,
     "git-firefly": true,

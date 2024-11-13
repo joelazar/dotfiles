@@ -2,8 +2,7 @@
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-z": "workspace::ToggleZoom",
-      "ctrl-x": "tab_switcher::CloseSelectedItem"
+      "ctrl-z": "workspace::ToggleZoom"
     }
   },
   {
@@ -163,6 +162,14 @@
     "bindings": {
       "cmd-t": "workspace::NewTerminal",
       "cmd-n": "workspace::NewCenterTerminal"
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "k": "menu::SelectPrev",
+      "j": "menu::SelectNext",
+      "x": "tab_switcher::CloseSelectedItem"
     }
   }
 ]
