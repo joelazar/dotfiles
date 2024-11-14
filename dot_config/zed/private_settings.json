@@ -91,6 +91,10 @@
     "close_position": "right",
     "file_icons": true
   },
+  "active_pane_modifiers": {
+    "inactive_opacity": 0.6,
+    "border_size": 0.5
+  },
   // "soft_wrap": "preferred_line_length",
   "preferred_line_length": 140,
   "show_wrap_guides": false,
