@@ -34,6 +34,8 @@
     // put key-bindings here if you want them to work in normal & visual mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
+      "space b w": "pane::CloseInactiveItems",
+      "space b W": "pane::CloseCleanItems",
       "space g h d": "editor::ToggleHunkDiff",
       "space g h r": "editor::RevertSelectedHunks",
       "space g y": "editor::CopyPermalinkToLine",
@@ -55,9 +57,14 @@
       "g p": "editor::Paste",
       "space s w": "pane::DeploySearch",
       "space s t": "pane::DeploySearch",
-      "g f": "editor::OpenExcerpts"
+      "g f": "editor::OpenExcerpts",
       // cannot override default keybindings
       // "J": ["workspace::SendKeystrokes", "m z J ` z"]
+      "alt-right": "pane::ActivateNextItem",
+      "alt-left": "pane::ActivatePrevItem",
+      "alt-,": "pane::SwapItemLeft",
+      "alt-.": "pane::SwapItemRight",
+      "alt-p": "pane::TogglePinTab"
     }
   },
   {

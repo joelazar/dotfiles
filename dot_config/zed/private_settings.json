@@ -42,6 +42,10 @@
       "available_models": []
     }
   },
+  "slash_commands": {
+    "docs": { "enabled": true },
+    "project": { "enabled": true }
+  },
   "calls": {
     "mute_on_join": true,
     "share_on_join": false
@@ -70,8 +74,8 @@
     "show_nav_history_buttons": false
   },
   "project_panel": {
-    "indent_size": 7,
-    "auto_fold_dirs": false,
+    "indent_size": 10,
+    "auto_fold_dirs": true,
     "button": false
   },
   "outline_panel": {
@@ -89,7 +93,8 @@
   "tabs": {
     "git_status": true,
     "close_position": "right",
-    "file_icons": true
+    "file_icons": true,
+    "activate_on_close": "neighbour"
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.6,
