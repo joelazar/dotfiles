@@ -12,7 +12,7 @@
     }
   },
   {
-    "context": "Dock || Terminal || Editor",
+    "context": "Dock || Terminal || Editor || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
     "bindings": {
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
