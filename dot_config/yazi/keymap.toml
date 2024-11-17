@@ -32,3 +32,13 @@ desc = "Move the files to the trash"
 on   = ["c", "a"]
 run  = "plugin compress"
 desc = "Archive selected files"
+
+[[manager.prepend_keymap]]
+on = [ ">" ]
+run = ['shell "for file in "$@"; do magick "$file" -rotate 90 "${file%}"; done" --confirm', "refresh"]
+desc = "Rotate selected images clockwise"
+
+[[manager.prepend_keymap]]
+on = [ "<" ]
+run = ['shell "for file in "$@"; do magick "$file" -rotate -90 "${file%}"; done" --confirm', "refresh"]
+desc = "Rotate selected images clockwise"
