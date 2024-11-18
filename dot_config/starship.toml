@@ -2,6 +2,9 @@
 add_newline = false
 palette = "catppuccin_mocha"
 
+[aws]
+disabled = true
+
 [gcloud]
 disabled = true
 

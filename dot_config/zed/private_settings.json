@@ -175,25 +175,6 @@
       "**playbook*.yml"
     ]
   },
-  "languages": {
-    "Python": {
-      "format_on_save": "on",
-      "formatter": [
-        {
-          "external": {
-            "command": "bash",
-            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
-          }
-        }
-      ],
-      "language_servers": ["!pyright", "basedpyright", "ruff"]
-    },
-    "JavaScript": {
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      }
-    }
-  },
   "lsp": {
     "basedpyright": {
       "settings": {
@@ -254,20 +235,71 @@
     },
     "gopls": {
       "initialization_options": {
+        "gofumpt": true,
         "usePlaceholders": true,
-        // "buildFlags": ["-tags=debug"],
-        "completeUnimported": false,
+        "completeUnimported": true,
+        "staticcheck": true,
+        "semanticTokens": true,
         "experimentalPostfixCompletions": true,
+        "codelenses": {
+          "gc_details": false,
+          "generate": true,
+          "regenerate_cgo": true,
+          "run_govulncheck": true,
+          "test": true,
+          "tidy": true,
+          "upgrade_dependency": true,
+          "vendor": true
+        },
         "hints": {
-          "assignVariableTypes": false,
-          "compositeLiteralFields": false,
-          "compositeLiteralTypes": false,
+          "assignVariableTypes": true,
+          "compositeLiteralFields": true,
+          "compositeLiteralTypes": true,
           "constantValues": true,
           "functionTypeParameters": true,
           "parameterNames": true,
           "rangeVariableTypes": true
+        },
+        "analyses": {
+          "fieldalignment": true,
+          "nilness": true,
+          "unusedparams": true,
+          "unusedwrite": true,
+          "useany": true
         }
       }
+    },
+    // NOTE: https://github.com/j4ng5y/zed_golangci_lint/issues/2#issuecomment-2338077672
+    // this is needed until maintainers merge the outstanding PRs
+    "golangci-lint": {
+      "initialization_options": {
+        "command": ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
+      }
+    }
+  },
+  "languages": {
+    "Python": {
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "external": {
+            "command": "bash",
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
+          }
+        }
+      ],
+      "language_servers": ["!pyright", "basedpyright", "ruff"]
+    },
+    "JavaScript": {
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
+    },
+    "Go": {
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      },
+      "language_servers": ["gopls", "golangci-lint"]
     }
   },
   "auto_install_extensions": {
