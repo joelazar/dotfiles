@@ -168,7 +168,12 @@
     "context": "Terminal",
     "bindings": {
       "cmd-t": "workspace::NewTerminal",
-      "cmd-n": "workspace::NewCenterTerminal"
+      "cmd-n": "workspace::NewCenterTerminal",
+      "alt-right": "pane::ActivateNextItem",
+      "alt-left": "pane::ActivatePrevItem",
+      "alt-,": "pane::SwapItemLeft",
+      "alt-.": "pane::SwapItemRight",
+      "alt-p": "pane::TogglePinTab"
     }
   },
   {
