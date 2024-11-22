@@ -55,7 +55,7 @@
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
       "g p": "editor::Paste",
-      "space s w": "pane::DeploySearch",
+      "space s w": ["task::Spawn", { "task_name": "search: project" }],
       "space s t": "pane::DeploySearch",
       "g f": "editor::OpenExcerpts",
       // cannot override default keybindings

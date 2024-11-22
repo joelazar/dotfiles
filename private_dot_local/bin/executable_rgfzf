@@ -1,0 +1,19 @@
+#!/bin/bash
+
+QUERY=${ZED_SELECTED_TEXT:-}
+RELOAD='reload:rg --column --color=always --smart-case {q} || :'
+FILE=$(
+    fzf --disabled --ansi \
+        --height 100% \
+        --bind "start:$RELOAD" --bind "change:$RELOAD" \
+        --delimiter : \
+        --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
+        --preview-window '+{2}/2' \
+        --query "$QUERY"
+)
+if [ -n "$FILE" ]; then
+    LINE=$(echo $FILE | cut -d':' -f2)
+    COL=$(echo $FILE | cut -d':' -f3)
+    FILE=$(echo $FILE | cut -d':' -f1)
+    zed $FILE:$LINE:$COL
+fi

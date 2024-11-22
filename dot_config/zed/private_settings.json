@@ -9,7 +9,7 @@
     "**/.svn",
     "**/CVS",
     "**/Thumbs.db",
-    "**/node_modules",
+    // "**/node_modules",
     "**/report"
   ],
   "inline_completions": {
@@ -296,6 +296,7 @@
       }
     },
     "Go": {
+      "format_on_save": "on",
       "code_actions_on_format": {
         "source.organizeImports": true
       },

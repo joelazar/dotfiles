@@ -38,7 +38,7 @@
     "shell": "system"
   },
   {
-    "label": "Python: rye test - all",
+    "label": "python: rye test - all",
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test",
     // TODO: Loading env through direnv and builtin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
@@ -48,7 +48,7 @@
     "reveal": "always"
   },
   {
-    "label": "Python: rye test - current file",
+    "label": "python: rye test - current file",
     "command": "DOCKER_HOST=unix://$HOME/.colima/default/docker.sock rye test -- $ZED_RELATIVE_FILE -vv",
     // TODO: Loading env through direnv and builtin env vars not working
     // "env": { "DOCKER_HOST": "unix://$HOME/.colima/default/docker.sock" },
@@ -58,7 +58,7 @@
     "reveal": "always"
   },
   {
-    "label": "Python: run current file in venv",
+    "label": "python: run current file in venv",
     "command": "source .venv/bin/activate.fish && direnv export fish | source && python $ZED_RELATIVE_FILE",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
@@ -72,5 +72,14 @@
     "hide": "always",
     "reveal": "always",
     "cwd": "$ZED_DIRNAME"
+  },
+  {
+    "label": "search: project",
+    "command": "rgfzf",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "allow_concurrent_runs": false,
+    "use_new_terminal": false,
+    "reveal": "always",
+    "hide": "on_success"
   }
 ]
