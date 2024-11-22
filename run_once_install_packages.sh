@@ -28,6 +28,9 @@ ask_for_sudo
 # /opt/homebrew/bin/chezmoi apply
 # brew bundle
 
+# TODO: install rust with rustup
+# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 print_in_purple "Package managers\n"
 
 install_nnn_plugins

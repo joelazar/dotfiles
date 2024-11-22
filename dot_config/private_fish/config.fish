@@ -177,6 +177,7 @@ zoxide init fish | source
 direnv hook fish | source
 fnm env --use-on-cd | source
 atuin init fish --disable-up-arrow | source
+source "$HOME/.cargo/env.fish"
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000

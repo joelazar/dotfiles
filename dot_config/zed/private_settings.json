@@ -273,7 +273,7 @@
     // this is needed until maintainers merge the outstanding PRs
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
+        "command": ["golangci-lint", "run", "./...", "--out-format", "json", "--issues-exit-code=1"]
       }
     }
   },
@@ -300,7 +300,8 @@
       "code_actions_on_format": {
         "source.organizeImports": true
       },
-      "language_servers": ["gopls", "golangci-lint"]
+      // "language_servers": ["gopls", "golangci-lint"]
+      "language_servers": ["gopls"]
     }
   },
   "auto_install_extensions": {
@@ -311,7 +312,6 @@
     "csv": true,
     "docker-compose": true,
     "dockerfile": true,
-    "golangci-lint": true,
     "env": true,
     "fish": true,
     "git-firefly": true,
