@@ -7,7 +7,7 @@ set -U fish_greeting
 fish_vi_key_bindings
 
 # Make default programs
-set -gx BROWSER firefox
+set -gx BROWSER "/Applications/Zen\ Browser.app/Contents/MacOS/zen"
 set -gx EDITOR "zed --wait"
 set -gx FILE nnn
 set -gx PAGER "bat --plain"

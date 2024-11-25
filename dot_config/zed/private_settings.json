@@ -326,6 +326,7 @@
     "ruff": true,
     "scheme": true,
     "sql": true,
+    "terraform": true,
     "typos": true,
     "toml": true,
     "wakatime": true,
