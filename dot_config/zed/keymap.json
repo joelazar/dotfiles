@@ -137,11 +137,11 @@
     }
   },
   {
-    "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert",
+    "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert || ProjectPanel && not_editing",
     "bindings": {
       "space l d": "diagnostics::Deploy",
       "space s p": ["projects::OpenRecent", { "create_new_window": false }],
-      "space s P": "projects::OpenRecent",
+      "space s P": ["projects::OpenRecent", { "create_new_window": true }],
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t l": "task::Rerun",
       "space t L": ["task::Rerun", { "reevaluate_context": true }],

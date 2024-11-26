@@ -1,6 +1,6 @@
 {
   "preferredLocale": "system",
-  "autoConnect": false,
+  "autoConnect": true,
   "enableSystemNotifications": false,
   "monochromaticIcon": true,
   "startMinimized": false,
