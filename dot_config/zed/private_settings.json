@@ -64,9 +64,10 @@
     "dock": "right",
     "default_width": 640,
     "default_height": 320,
+    "enable_experimental_live_diffs": true,
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-3-5-sonnet"
+      "provider": "zed.dev",
+      "model": "claude-3-5-sonnet-latest"
     }
   },
   "tab_bar": {
@@ -95,6 +96,9 @@
     "close_position": "right",
     "file_icons": true,
     "activate_on_close": "neighbour"
+  },
+  "file_finder": {
+    "modal_max_width": "medium"
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.6,
@@ -156,6 +160,7 @@
     },
     "working_directory": "current_project_directory"
   },
+  "load_direnv": "shell_hook",
   "file_types": {
     "Dockerfile": ["Dockerfile*"],
     "Ansible": [
@@ -300,8 +305,8 @@
       "code_actions_on_format": {
         "source.organizeImports": true
       },
-      // "language_servers": ["gopls", "golangci-lint"]
-      "language_servers": ["gopls"]
+      "language_servers": ["gopls", "golangci-lint"]
+      // "language_servers": ["gopls"]
     }
   },
   "auto_install_extensions": {
@@ -321,14 +326,15 @@
     "lua": true,
     "make": true,
     "markdown-oxide": true,
+    "nginx": true,
     "nix": true,
     "prisma": true,
     "ruff": true,
     "scheme": true,
     "sql": true,
     "terraform": true,
-    "typos": true,
     "toml": true,
+    "typos": true,
     "wakatime": true,
     "zig": true
   }
