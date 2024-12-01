@@ -208,7 +208,8 @@ grapheme-width-method = unicode
 #
 # A future update will allow custom themes to be installed in certain
 # directories.
-theme = catppuccin-mocha
+# theme = catppuccin-mocha
+theme = "/Users/joelazar/Code/theme/tokyonight.nvim/extras/ghostty/tokyonight_night"
 
 # Background color for the window.
 # background = #282c34

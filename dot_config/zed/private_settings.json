@@ -67,7 +67,7 @@
     "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-5-sonnet-latest"
+      "model": "claude-3-5-sonnet-20241022-fast-edit"
     }
   },
   "tab_bar": {
@@ -111,7 +111,7 @@
   "ui_font_size": 13,
   "buffer_font_size": 13,
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
+  "theme": "Tokyo Night",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
   // prevent the buffer from scrolling beyond the last line
