@@ -57,6 +57,7 @@
       "g p": "editor::Paste",
       "space s w": ["task::Spawn", { "task_name": "search: project" }],
       "space s t": "pane::DeploySearch",
+      "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
       "g f": "editor::OpenExcerpts",
       // cannot override default keybindings
       // "J": ["workspace::SendKeystrokes", "m z J ` z"]
