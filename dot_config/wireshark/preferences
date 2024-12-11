@@ -1,4 +1,4 @@
-# Configuration file for Wireshark 4.4.1.
+# Configuration file for Wireshark 4.4.2.
 #
 # This file is regenerated each time preferences are saved within
 # Wireshark. Making manual changes should be safe, however.
@@ -278,7 +278,7 @@
 
 # Packet list hidden column formats (deprecated)
 # List all column formats to hide in the packet list. Deprecated in favor of the index-based preference.
-#gui.column.hidden: 
+gui.column.hidden: 
 
 # Packet list column format
 # Each pair of strings consists of a column title and its format
@@ -567,7 +567,7 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Remote capture filter
 # A string
-#extcap.ciscodump.remotefilter: deny tcp host fd7a:115c:a1e0::ce01:1c18 any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::ce01:1c18, deny tcp host 100.126.28.24 any eq 22, deny tcp any eq 22 host 100.126.28.24, deny tcp host fe80::f4a3:b9ca:302b:71c0 any eq 22, deny tcp any eq 22 host fe80::f4a3:b9ca:302b:71c0, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::3204:26e7:a0b8:e3e5 any eq 22, deny tcp any eq 22 host fe80::3204:26e7:a0b8:e3e5, deny tcp host fe80::89f1:9851:f503:3090 any eq 22, deny tcp any eq 22 host fe80::89f1:9851:f503:3090, deny tcp host fe80::7e59:b415:bd32:a5db any eq 22, deny tcp any eq 22 host fe80::7e59:b415:bd32:a5db, deny tcp host fe80::2064:eff:fe58:ed29 any eq 22, deny tcp any eq 22 host fe80::2064:eff:fe58:ed29, deny tcp host fe80::2064:eff:fe58:ed29 any eq 22, deny tcp any eq 22 host fe80::2064:eff:fe58:ed29, deny tcp host 192.168.31.211 any eq 22, deny tcp any eq 22 host 192.168.31.211, deny tcp host fe80::cc8:6713:4158:9c9e any eq 22, deny tcp any eq 22 host fe80::cc8:6713:4158:9c9e, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
+#extcap.ciscodump.remotefilter: deny tcp host fe80::8a63:80d0:40f8:d637 any eq 22, deny tcp any eq 22 host fe80::8a63:80d0:40f8:d637, deny tcp host fe80::2d8e:c431:4bc:90fc any eq 22, deny tcp any eq 22 host fe80::2d8e:c431:4bc:90fc, deny tcp host fe80::3b49:7ba0:9a4:d54b any eq 22, deny tcp any eq 22 host fe80::3b49:7ba0:9a4:d54b, deny tcp host fe80::4cee:d88b:cb9c:6f92 any eq 22, deny tcp any eq 22 host fe80::4cee:d88b:cb9c:6f92, deny tcp host fd7a:115c:a1e0::ce01:1c18 any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::ce01:1c18, deny tcp host 100.126.28.24 any eq 22, deny tcp any eq 22 host 100.126.28.24, deny tcp host fe80::2e0:4cff:fe68:3c0 any eq 22, deny tcp any eq 22 host fe80::2e0:4cff:fe68:3c0, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::c943:d9f8:d69a:80f3 any eq 22, deny tcp any eq 22 host fe80::c943:d9f8:d69a:80f3, deny tcp host fe80::1c29:1507:ce2e:ee0c any eq 22, deny tcp any eq 22 host fe80::1c29:1507:ce2e:ee0c, deny tcp host fe80::cf92:646e:5807:42f8 any eq 22, deny tcp any eq 22 host fe80::cf92:646e:5807:42f8, deny tcp host fe80::c839:d0ff:fe9e:99f6 any eq 22, deny tcp any eq 22 host fe80::c839:d0ff:fe9e:99f6, deny tcp host fe80::c839:d0ff:fe9e:99f6 any eq 22, deny tcp any eq 22 host fe80::c839:d0ff:fe9e:99f6, deny tcp host 192.168.0.132 any eq 22, deny tcp any eq 22 host 192.168.0.132, deny tcp host fe80::474:1af7:9ade:5b96 any eq 22, deny tcp any eq 22 host fe80::474:1af7:9ade:5b96, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
 
 # Packets to capture
 # A string
@@ -655,7 +655,7 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Remote capture filter
 # A string
-#extcap.sshdump.remotefilter: not ((host fd7a:115c:a1e0::ce01:1c18 or host 100.126.28.24 or host fe80::f4a3:b9ca:302b:71c0 or host fe80::ce81:b1c:bd2c:69e or host fe80::3204:26e7:a0b8:e3e5 or host fe80::89f1:9851:f503:3090 or host fe80::7e59:b415:bd32:a5db or host fe80::2064:eff:fe58:ed29 or host fe80::2064:eff:fe58:ed29 or host 192.168.31.211 or host fe80::cc8:6713:4158:9c9e or host fe80::1) and port 22)
+#extcap.sshdump.remotefilter: not ((host fe80::8a63:80d0:40f8:d637 or host fe80::2d8e:c431:4bc:90fc or host fe80::3b49:7ba0:9a4:d54b or host fe80::4cee:d88b:cb9c:6f92 or host fd7a:115c:a1e0::ce01:1c18 or host 100.126.28.24 or host fe80::2e0:4cff:fe68:3c0 or host fe80::ce81:b1c:bd2c:69e or host fe80::c943:d9f8:d69a:80f3 or host fe80::1c29:1507:ce2e:ee0c or host fe80::cf92:646e:5807:42f8 or host fe80::c839:d0ff:fe9e:99f6 or host fe80::c839:d0ff:fe9e:99f6 or host 192.168.0.132 or host fe80::474:1af7:9ade:5b96 or host fe80::1) and port 22)
 
 # Packets to capture
 # A string
@@ -4544,6 +4544,10 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 # true or false (case-insensitive)
 #ptp.analyze_ptp_messages: TRUE
 
+# Maximum allowed time between messages of same type when finding consecutive messages for analysis calculations.
+# A decimal number
+#ptp.analyze_ptp_delta: 10
+
 # Properly translates vendor specific opcodes
 # One of: Unknown vendor, Eastman Kodak, Canon, Nikon, Casio EX-F1, Microsoft / MTP, Olympus E series
 # (case-insensitive).
@@ -5574,6 +5578,10 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 # Read the sequence number as it was a syn cookie
 # true or false (case-insensitive)
 #tcp.read_seq_as_syn_cookie: FALSE
+
+# Ports for which the dissector will to be chosen based on the client port instead of the server port
+# A string denoting an positive integer range (e.g., "1-20,30-40")
+#tcp.clientport_dissectors: 20
 
 # Whether the TCPCL dissector should use heuristic dissection of messages in the absence of a Contact Header (if the capture misses the start of session).
 # One of: Disabled, Try TCPCLv4 first, Only TCPCLv4, Try TCPCLv3 first, Only TCPCLv3
