@@ -1,18 +1,18 @@
 [
   {
-    "context": "Workspace",
-    "bindings": {
-      "ctrl-z": "workspace::ToggleZoom"
-    }
-  },
-  {
     "bindings": {
       "shift-tab": "menu::SelectPrev",
       "tab": "menu::SelectNext"
     }
   },
   {
-    "context": "Dock || Terminal || Editor || ProjectPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-z": "workspace::ToggleZoom"
+    }
+  },
+  {
+    "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
     "bindings": {
       "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
       "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
@@ -25,13 +25,15 @@
     }
   },
   {
-    "context": "AssistantPanel",
+    // put key-bindings here if you want them to work in normal & visual mode & project panel
+    "context": "ProjectPanel || EmptyPane || (Editor && VimControl && !VimWaiting && !menu)",
     "bindings": {
-      "ctrl-h": "assistant::ToggleFocus",
-      // "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"]
+      "space ,": "tab_switcher::Toggle",
+      "space t": "workspace::NewCenterTerminal",
+      "space G": ["task::Spawn", { "task_name": "lazygit" }],
+      "space l d": "diagnostics::Deploy",
+      "space s p": ["projects::OpenRecent", { "create_new_window": false }],
+      "space s P": ["projects::OpenRecent", { "create_new_window": true }]
     }
   },
   {
@@ -50,11 +52,13 @@
       "space T w": "editor::ToggleSoftWrap",
       "space T i": "editor::ToggleInlayHints",
       "space T z": "workspace::ToggleCenteredLayout",
-      "space ,": "tab_switcher::Toggle",
-      "space t": "workspace::NewCenterTerminal",
-      "space G": ["task::Spawn", { "task_name": "lazygit" }],
-      // "j": ["vim::Down", { "displayLines": true }],
-      // "k": ["vim::Up", { "displayLines": true }],
+      "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
+      "space t l": "task::Rerun",
+      "space t L": ["task::Rerun", { "reevaluate_context": true }],
+      "space t r": "task::Spawn",
+      "space f": "pane::RevealInProjectPanel",
+      "j": ["vim::Down", { "displayLines": true }],
+      "k": ["vim::Up", { "displayLines": true }],
       "enter": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
@@ -62,6 +66,7 @@
       "space s w": ["task::Spawn", { "task_name": "search: project" }],
       "space s t": "pane::DeploySearch",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
+      "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
       // cannot override default keybindings
       // "J": ["workspace::SendKeystrokes", "m z J ` z"]
@@ -73,17 +78,18 @@
     }
   },
   {
-    // put key-bindings here if you want them to work only in normal mode
-    "context": "Editor && VimControl && !VimWaiting && !menu",
-    "bindings": {
-      "g r": "editor::FindAllReferences"
-    }
-  },
-  {
     "context": "Editor && vim_mode == normal && (vim_operator == none || vim_operator == n) && !VimWaiting",
     "bindings": {
       "space w": "workspace::Save",
       "Q": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-s": ["vim::PushOperator", { "AddSurrounds": {} }],
+      "p": ["vim::Paste", { "preserveClipboard": true }],
+      "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
   },
   {
@@ -105,14 +111,6 @@
     }
   },
   {
-    // put key-bindings here if you want them to work in insert mode
-    "context": "Editor && vim_mode == insert && !menu",
-    "bindings": {
-      "tab": "menu::SelectNext",
-      "shift-tab": "menu::SelectPrev"
-    }
-  },
-  {
     // Vim: File Tree ("ProjectPanel") actions
     "context": "ProjectPanel && not_editing",
     "bindings": {
@@ -130,36 +128,6 @@
       "shift-y": "project_panel::CopyRelativePath",
       "g y": "project_panel::CopyPath",
       "space G": ["task::Spawn", { "task_name": "lazygit" }]
-    }
-  },
-  {
-    "context": "OutlinePanel",
-    "bindings": {
-      "h": "outline_panel::CollapseSelectedEntry",
-      "l": "outline_panel::ExpandSelectedEntry",
-      "o": "outline_panel::Open",
-      "enter": "outline_panel::Open"
-    }
-  },
-  {
-    "context": "EmptyPane || SharedScreen || vim_operator == none && !VimWaiting && vim_mode != insert || ProjectPanel && not_editing",
-    "bindings": {
-      "space l d": "diagnostics::Deploy",
-      "space s p": ["projects::OpenRecent", { "create_new_window": false }],
-      "space s P": ["projects::OpenRecent", { "create_new_window": true }],
-      "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
-      "space t l": "task::Rerun",
-      "space t L": ["task::Rerun", { "reevaluate_context": true }],
-      "space t r": "task::Spawn",
-      "space f": "pane::RevealInProjectPanel"
-    }
-  },
-  {
-    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
-    "bindings": {
-      "shift-s": ["vim::PushOperator", { "AddSurrounds": {} }],
-      "p": ["vim::Paste", { "preserveClipboard": true }],
-      "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
   },
   {
@@ -187,6 +155,15 @@
       "k": "menu::SelectPrev",
       "j": "menu::SelectNext",
       "x": "tab_switcher::CloseSelectedItem"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      // "cmd-k up": "pane::SplitUp",
+      "ctrl-w s": "pane::SplitDown",
+      // "cmd-k left": "pane::SplitLeft",
+      "ctrl-w v": "pane::SplitRight"
     }
   }
 ]

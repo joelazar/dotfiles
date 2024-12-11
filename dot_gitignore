@@ -8,5 +8,6 @@
 .vscode
 .yalc
 .DS_Store
+.zed
 
 .temp_joe

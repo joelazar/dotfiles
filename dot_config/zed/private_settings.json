@@ -129,7 +129,8 @@
     "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
     "use_multiline_find": true,
-    "use_smartcase_find": true
+    "use_smartcase_find": true,
+    "highlight_on_yank_duration": 500
   },
   "use_smartcase_search": true,
   "toolbar": {
