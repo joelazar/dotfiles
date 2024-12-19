@@ -77,10 +77,12 @@
   "project_panel": {
     "indent_size": 10,
     "auto_fold_dirs": true,
-    "button": false
+    "button": false,
+    "auto_reveal_entries": false
   },
   "outline_panel": {
-    "button": false
+    "button": false,
+    "dock": "right"
   },
   "collaboration_panel": {
     "button": false
@@ -106,7 +108,8 @@
   },
   // "soft_wrap": "preferred_line_length",
   "preferred_line_length": 140,
-  "show_wrap_guides": false,
+  "wrap_guides": [120],
+  "show_wrap_guides": true,
   "auto_signature_help": false,
   "ui_font_size": 13,
   "buffer_font_size": 13,
@@ -244,10 +247,11 @@
     "gopls": {
       "initialization_options": {
         "gofumpt": true,
-        "usePlaceholders": true,
+        "usePlaceholders": false,
         "completeUnimported": true,
         "staticcheck": true,
         "semanticTokens": true,
+        "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
         "experimentalPostfixCompletions": true,
         "codelenses": {
           "gc_details": false,
@@ -269,7 +273,6 @@
           "rangeVariableTypes": true
         },
         "analyses": {
-          "fieldalignment": true,
           "nilness": true,
           "unusedparams": true,
           "unusedwrite": true,
