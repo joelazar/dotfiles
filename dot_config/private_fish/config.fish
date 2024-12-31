@@ -118,6 +118,7 @@ alias hg="kitty +kitten hyperlinked_grep"
 alias icat="kitty +kitten icat"
 alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
+alias lzd='lazydocker'
 alias ll='eza -la --git --group-directories-first --icons'
 alias ls='eza --icons --group-directories-first'
 alias mkdir='mkdir -p -v'

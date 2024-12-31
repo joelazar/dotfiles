@@ -127,7 +127,7 @@
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "project_panel::CopyRelativePath",
       "g y": "project_panel::CopyPath",
-      "space G": ["task::Spawn", { "task_name": "lazygit" }]
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }]
     }
   },
   {
