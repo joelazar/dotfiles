@@ -92,6 +92,9 @@ keybind = super+p=text:\x10
 # remap cmd+s to ctrl+s
 keybind = super+s=text:\x13
 
+# TODO: not working somewhy
+keybind = ctrl+shift+h=write_scrollback_file:open
+
 keybind = super+ctrl+h=goto_split:left
 keybind = super+ctrl+j=goto_split:bottom
 keybind = super+ctrl+k=goto_split:top
