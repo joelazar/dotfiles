@@ -14,8 +14,9 @@ mouse-hide-while-typing = true
 quit-after-last-window-closed = true
 window-save-state = always
 macos-option-as-alt = left
-
-# fullscreen = true
+# macos-non-native-fullscreen = true
+macos-non-native-fullscreen = visible-menu
+quick-terminal-position = top
 
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits
@@ -87,13 +88,17 @@ keybind = super+physical:two=goto_tab:2
 keybind = super+physical:six=goto_tab:6
 keybind = super+v=paste_from_clipboard
 
+# keybind = global:unconsumed:cmd+ctrl+shift+alt+t=toggle_quick_terminal
+keybind = global:unconsumed:cmd+ctrl+shift+opt+`=toggle_quick_terminal
+# keybind = global:unconsumed:ctrl+a=reload_config
+
 # remap cmd+p to ctrl+p
 keybind = super+p=text:\x10
 # remap cmd+s to ctrl+s
 keybind = super+s=text:\x13
 
 # TODO: not working somewhy
-keybind = ctrl+shift+h=write_scrollback_file:open
+keybind = all:super+f=write_scrollback_file:paste
 
 keybind = super+ctrl+h=goto_split:left
 keybind = super+ctrl+j=goto_split:bottom

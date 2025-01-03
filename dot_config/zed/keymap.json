@@ -30,7 +30,7 @@
     "bindings": {
       "space ,": "tab_switcher::Toggle",
       "space t": "workspace::NewCenterTerminal",
-      "space G": ["task::Spawn", { "task_name": "lazygit" }],
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space l d": "diagnostics::Deploy",
       "space s p": ["projects::OpenRecent", { "create_new_window": false }],
       "space s P": ["projects::OpenRecent", { "create_new_window": true }]
@@ -126,8 +126,8 @@
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "project_panel::CopyRelativePath",
-      "g y": "project_panel::CopyPath",
-      "space g g": ["task::Spawn", { "task_name": "lazygit" }]
+      "g y": "project_panel::CopyPath"
+      // "space g g": ["task::Spawn", { "task_name": "lazygit" }]
     }
   },
   {
