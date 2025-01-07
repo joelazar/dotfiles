@@ -27,18 +27,13 @@ fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.rye/py/cpython@3.12.3/bin
+fish_add_path $HOME/.modular/bin
 
 # brew specific paths
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
 fish_add_path /opt/homebrew/opt/openjdk/bin/
-
-# mojo specific paths
-fish_add_path $HOME/.modular/pkg/packages.modular.com_mojo/bin
-set -gx LD_LIBRARY_PATH "$LD_LIBRARY_PATH:$HOME/.local/lib/mojo"
-set -gx MODULAR_HOME $HOME/.modular
-set -gx MAX_PATH $HOME/.modular/pkg/packages.modular.com_max
 
 # FZF options
 set -gx FD_DEFAULT_COMMAND 'fd --hidden --follow'
@@ -188,3 +183,4 @@ set -U __done_exclude n
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc' ]
     . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc'
 end
+fish_add_path /Users/joelazar/.modular/bin

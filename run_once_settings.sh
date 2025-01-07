@@ -52,18 +52,6 @@ execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximiz
 
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
-# disable wakeup on bluetooth
-# https://apple.stackexchange.com/questions/431812/how-can-i-stop-a-bluetooth-keyboard-from-waking-my-macbook-pro/437396#437396
-if [ ! -f ~/.sleep ] || [ ! -f ~/.wakeup ]; then
-    echo "$(which blueutil) -p 0" >~/.sleep
-    echo "$(which blueutil) -p 1" >~/.wakeup
-    chmod 755 ~/.sleep ~/.wakeup
-    brew services restart sleepwatcher
-    print_result $? "Setup sleepwatcher"
-else
-    print_success "Setup sleepwatcher"
-fi
-
 if [ -f ~/.docker/cli-plugins/docker-buildx ]; then
     print_success "Docker buildx configured"
 else

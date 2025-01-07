@@ -3,8 +3,8 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 cd "$SOURCE_DIR" &&
-  . "./scripts/utils_install" &&
-  . "./scripts/utils"
+    . "./scripts/utils_install" &&
+    . "./scripts/utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -12,7 +12,7 @@ print_in_purple "Install packages\n"
 
 ask_for_confirmation "Would you like to do it now? It can take a bit of time."
 if ! answer_is_yes; then
-  exit
+    exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -51,14 +51,13 @@ install_go_package "github.com/cosmos72/gomacro@latest" "gomacro"
 print_in_purple "GH plugins\n"
 
 # TODO: check if gh was authenticated already
-
-# install yazi plugins
-# ya pack -a yazi-rs/plugins#max-preview
-# ya pack -a yazi-rs/plugins#smart-filter
-# ya pack -a yazi-rs/plugins#hide-preview
-# ya pack -a yazi-rs/plugins#diff
-# ya pack -a KKV9/compress
-# git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi
-
 install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
+
+# TODO: install yazi plugins
+# ya pack -a yazi-rs/plugins:max-preview
+# ya pack -a yazi-rs/plugins:smart-filter
+# ya pack -a yazi-rs/plugins:hide-preview
+# ya pack -a yazi-rs/plugins:diff
+# ya pack -a KKV9/compress
+# git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi

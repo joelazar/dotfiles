@@ -340,6 +340,7 @@
     "scheme": true,
     "sql": true,
     "terraform": true,
+    "tokyo-night": true,
     "toml": true,
     "typos": true,
     "wakatime": true,
