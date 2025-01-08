@@ -48,7 +48,6 @@ keybind = super+plus=increase_font_size:1
 keybind = super+q=quit
 keybind = super+home=scroll_to_top
 keybind = super+ctrl+left=resize_split:left,10
-keybind = alt+left=esc:b
 keybind = super+ctrl+up=resize_split:up,10
 keybind = super+left=text:\x01
 keybind = super+shift+up=jump_to_prompt:-1
@@ -59,7 +58,6 @@ keybind = super+minus=decrease_font_size:1
 keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
 keybind = super+a=select_all
-keybind = alt+right=esc:f
 keybind = super+shift+enter=toggle_split_zoom
 keybind = super+alt+down=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
@@ -99,6 +97,9 @@ keybind = super+s=text:\x13
 
 # TODO: not working somewhy
 keybind = all:super+f=write_scrollback_file:paste
+
+keybind = alt+left=unbind
+keybind = alt+right=unbind
 
 keybind = super+ctrl+h=goto_split:left
 keybind = super+ctrl+j=goto_split:bottom
