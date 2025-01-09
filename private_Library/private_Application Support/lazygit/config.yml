@@ -2,15 +2,12 @@ disableStartupPopups: true
 notARepository: "skip"
 promptToReturnFromSubprocess: false
 os:
-  edit: "zed {{filename}}"
-  editAtLine: "zed {{filename}}:{{line}}"
-  editAtLineAndWait: "zed --wait {{filename}}:{{line}}"
-  editInTerminal: false
-  openDirInEditor: "zed {{dir}}"
+  editPreset: zed
 git:
   paging:
     colorArg: always
     pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+  parseEmoji: true
 gui:
   skipDiscardChangeWarning: true
   showCommandLog: false
@@ -85,12 +82,6 @@ customCommands:
     description: "View PR on GitHub"
     loadingText: "Opening GitHub..."
     subprocess: false
-  - key: "o"
-    command: "gh pr view --web {{ .SelectedLocalBranch.Name }}"
-    description: "View PR on github"
-    context: "localBranches"
-    loadingText: "opening github..."
-    subprocess: false
   - key: "<c-p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"
@@ -112,4 +103,3 @@ customCommands:
     command: "git reset --soft HEAD~1"
     context: "files"
     description: "Undo last commit"
-    loadingText: "Undoing last commit"
