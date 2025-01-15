@@ -61,3 +61,7 @@ install_gh_plugin "github/gh-copilot"
 # ya pack -a yazi-rs/plugins:diff
 # ya pack -a KKV9/compress
 # git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi
+
+# TODO: install magic
+# curl -ssL https://magic.modular.com/deb13a78-95b6-40bf-8bd0-52802eb302a8 | bash
+# echo 'magic completion --shell fish | source' >> ~/.config/fish/completions/magic.fish

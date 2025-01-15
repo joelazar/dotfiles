@@ -11,9 +11,4 @@ execute "fish -c 'fish_update_completions'" "Update fish completions"
 
 execute "ya pack --upgrade" "Update yazi plugins"
 
-# TODO: install magic
-# curl -ssL https://magic.modular.com/deb13a78-95b6-40bf-8bd0-52802eb302a8 | bash
-# echo 'magic completion --shell fish | source' >> ~/.config/fish/completions/magic.fish
-execute "(which mojo &> /dev/null || magic install mojo) && magic update mojo" "Install/Update mojo 🔥"
-
 execute "brew cleanup" "Cleanup brew"
