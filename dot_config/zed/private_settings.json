@@ -29,7 +29,7 @@
       "available_models": [
         {
           "provider": "ollama",
-          "name": "qwen2.5-coder:latest",
+          "name": "qwen2.5-coder:14b",
           "display_name": "qwen2.5-coder",
           "max_tokens": 128000
         }
