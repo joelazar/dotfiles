@@ -17,6 +17,7 @@ macos-option-as-alt = left
 # macos-non-native-fullscreen = true
 macos-non-native-fullscreen = visible-menu
 quick-terminal-position = top
+scrollback-limit = 1000000000
 
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits

@@ -33,7 +33,8 @@
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space l d": "diagnostics::Deploy",
       "space s p": ["projects::OpenRecent", { "create_new_window": false }],
-      "space s P": ["projects::OpenRecent", { "create_new_window": true }]
+      "space s P": ["projects::OpenRecent", { "create_new_window": true }],
+      "space u n": "workspace::ClearAllNotifications"
     }
   },
   {
