@@ -32,6 +32,12 @@
           "name": "qwen2.5-coder:14b",
           "display_name": "qwen2.5-coder",
           "max_tokens": 128000
+        },
+        {
+          "provider": "ollama",
+          "name": "phi4",
+          "display_name": "phi4",
+          "max_tokens": 16000
         }
       ]
     },
@@ -87,7 +93,7 @@
     "button": false
   },
   "chat_panel": {
-    "button": false
+    "button": "never"
   },
   "notification_panel": {
     "button": false
