@@ -44,9 +44,7 @@
     "copilot_chat": {
       "available_models": []
     },
-    "google": {
-      "available_models": []
-    }
+    "google": { "available_models": [] }
   },
   "slash_commands": {
     "docs": { "enabled": true },
@@ -83,7 +81,8 @@
   "project_panel": {
     "auto_fold_dirs": false,
     "button": false,
-    "auto_reveal_entries": false
+    "auto_reveal_entries": false,
+    "entry_spacing": "standard"
   },
   "outline_panel": {
     "button": false,
