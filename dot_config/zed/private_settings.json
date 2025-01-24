@@ -147,7 +147,7 @@
   },
   "terminal": {
     "toolbar": { "breadcrumbs": false },
-    "line_height": "comfortable",
+    "line_height": "standard",
     "button": false,
     "max_scroll_history_lines": 30000,
     "blinking": "off",
@@ -318,6 +318,13 @@
       // TODO: golangci-lint quite buggy
       // "language_servers": ["gopls", "golangci-lint"]
       "language_servers": ["gopls"]
+    }
+  },
+  "jupyter": {
+    "kernel_selections": {
+      "typescript": "deno",
+      "javascript": "deno",
+      "python": "python3"
     }
   },
   "auto_install_extensions": {

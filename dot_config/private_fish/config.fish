@@ -130,7 +130,7 @@ alias vi='nvim'
 alias vim='nvim'
 alias vc='nvim --clean'
 
-# kubectl
+# infra
 alias k='kubectl'
 alias kd='kubectl describe'
 alias kdd='kubectl describe deployment'
@@ -143,6 +143,7 @@ alias kgp='kubectl get pod'
 alias kgsvc='kubectl get service'
 alias kl='kubectl logs --all-containers=true'
 alias krm='kubectl delete'
+alias tf='terraform'
 
 # docker
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
