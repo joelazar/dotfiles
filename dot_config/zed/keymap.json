@@ -81,6 +81,10 @@
     "context": "VimControl && !menu",
     "bindings": {
       // "J": ["workspace::SendKeystrokes", "m z J ` z"],
+      // "g s": null,
+      "g s a": ["vim::PushOperator", { "AddSurrounds": {} }],
+      "g s r": ["vim::PushOperator", { "ChangeSurrounds": {} }],
+      "g s d": ["vim::PushOperator", "DeleteSurrounds"],
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
       "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"]
     }
