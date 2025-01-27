@@ -16,14 +16,27 @@
     "disabled_globs": ["", "**/.*"]
   },
   "language_models": {
-    "openai": {
-      "version": "1",
-      "available_models": []
+    "openai": { "version": "1", "available_models": [] },
+    "anthropic": { "version": "1", "available_models": [] },
+    "copilot_chat": { "available_models": [] },
+    "google": { "available_models": [] },
+    "deepseek": {
+      "api_url": "https://api.deepseek.com",
+      "available_models": [
+        {
+          "name": "deepseek-chat",
+          "display_name": "DeepSeek Chat",
+          "max_tokens": 64000
+        },
+        {
+          "name": "deepseek-reasoner",
+          "display_name": "DeepSeek Reasoner",
+          "max_tokens": 64000,
+          "max_output_tokens": 4096
+        }
+      ]
     },
-    "anthropic": {
-      "version": "1",
-      "available_models": []
-    },
+    "zed.dev": { "available_models": [] },
     "ollama": {
       "low_speed_timeout_in_seconds": 120,
       "available_models": [
@@ -40,11 +53,7 @@
           "max_tokens": 16000
         }
       ]
-    },
-    "copilot_chat": {
-      "available_models": []
-    },
-    "google": { "available_models": [] }
+    }
   },
   "slash_commands": {
     "docs": { "enabled": true },
@@ -287,8 +296,11 @@
     // NOTE: https://github.com/j4ng5y/zed_golangci_lint/issues/2#issuecomment-2338077672
     // this is needed until maintainers merge the outstanding PRs
     "golangci-lint": {
+      "settings": {
+        "filetypes": ["go"]
+      },
       "initialization_options": {
-        "command": ["golangci-lint", "run", "./...", "--out-format", "json", "--issues-exit-code=1"]
+        "command": ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
       }
     }
   },
@@ -316,8 +328,8 @@
         "source.organizeImports": true
       },
       // TODO: golangci-lint quite buggy
-      // "language_servers": ["gopls", "golangci-lint"]
-      "language_servers": ["gopls"]
+      "language_servers": ["gopls", "golangci-lint"]
+      // "language_servers": ["gopls"]
     }
   },
   "jupyter": {
