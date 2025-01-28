@@ -74,6 +74,15 @@
     "cwd": "$ZED_DIRNAME"
   },
   {
+    "label": "yazi",
+    "command": "yazi",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "hide": "always",
+    "reveal": "always",
+    "cwd": "$ZED_DIRNAME"
+  },
+  {
     "label": "search: project",
     "command": "rgfzf",
     "cwd": "$ZED_WORKTREE_ROOT",

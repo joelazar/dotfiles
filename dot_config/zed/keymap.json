@@ -30,6 +30,7 @@
     "bindings": {
       "space ,": "tab_switcher::Toggle",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
       "space f p": ["projects::OpenRecent", { "create_new_window": false }],
       "space f P": ["projects::OpenRecent", { "create_new_window": true }],
@@ -63,7 +64,7 @@
       "space u z": "workspace::ToggleCenteredLayout",
       "j": ["vim::Down", { "displayLines": true }],
       "k": ["vim::Up", { "displayLines": true }],
-      "enter": "editor::SelectLargerSyntaxNode",
+      "ctrl-space": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
       "g p": "editor::Paste",
