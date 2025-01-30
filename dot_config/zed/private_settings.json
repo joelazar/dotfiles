@@ -88,6 +88,7 @@
     "show_nav_history_buttons": false
   },
   "project_panel": {
+    "dock": "left",
     "auto_fold_dirs": false,
     "button": false,
     "auto_reveal_entries": false,
