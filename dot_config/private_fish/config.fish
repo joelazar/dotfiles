@@ -8,11 +8,14 @@ fish_vi_key_bindings
 
 # Make default programs
 set -gx BROWSER "/Applications/Zen\ Browser.app/Contents/MacOS/zen"
-set -gx EDITOR "zed --wait"
 set -gx FILE nnn
 set -gx PAGER "bat --plain"
 set -gx TERMINAL kitty
-set -gx VISUAL zed
+# set -gx EDITOR "zed --wait"
+# set -gx VISUAL zed
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'

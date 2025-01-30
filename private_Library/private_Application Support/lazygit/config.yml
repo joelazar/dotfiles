@@ -1,8 +1,6 @@
 disableStartupPopups: true
 notARepository: "skip"
 promptToReturnFromSubprocess: false
-os:
-  editPreset: zed
 git:
   paging:
     colorArg: always

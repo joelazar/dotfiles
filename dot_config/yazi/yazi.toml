@@ -7,7 +7,7 @@ max_height = 1900
 
 [opener]
 edit = [
-  { run = '${EDITOR:-vi} "$@"', desc = "Edit", orphan = true, for = "macos" },
+  { run = '${EDITOR:-vi} "$@"', desc = "Edit", block = true, orphan = false, for = "macos" },
 ]
 browser = [
   { run = '${BROWSER:-firefox} "$@"', desc = "Browser", for = "macos" },
