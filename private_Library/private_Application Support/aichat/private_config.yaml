@@ -1,5 +1,5 @@
 # ---- llm ----
-model: openai:gpt-4o # Specify the LLM to use
+model: deepseek:deepseek-chat # Specify the LLM to use
 temperature: null # Set default temperature parameter
 top_p: null # Set default top-p parameter, range (0, 1)
 
@@ -133,11 +133,20 @@ clients:
     name: groq
     api_base: https://api.groq.com/openai/v1
 
-  - type: ollama
-    api_base: http://localhost:11434 # ENV: {client}_API_BASE
-    # api_auth: Basic xxx # ENV: {client}_API_AUTH
+  - type: openai-compatible
+    name: deepseek
+    api_base: https://api.deepseek.com/v1
     models: # Required
-      - name: llama3.1
+      - name: deepseek-reasoner
+        max_input_tokens: 131072
+      - name: deepseek-chat
+        max_input_tokens: 65536
+
+  - type: ollama
+    api_base: http://localhost:11434
+    # api_auth: Basic xxx # ENV: {client}_API_AUTH
+    models:
+      - name: phi4
         max_input_tokens: 131072
       - name: nomic-embed-text
         type: embedding

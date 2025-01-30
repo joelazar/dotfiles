@@ -17,6 +17,7 @@ macos-option-as-alt = left
 # macos-non-native-fullscreen = true
 macos-non-native-fullscreen = visible-menu
 quick-terminal-position = top
+quick-terminal-animation-duration = 0
 scrollback-limit = 1000000000
 
 keybind = super+page_up=scroll_page_up
@@ -54,7 +55,6 @@ keybind = super+left=text:\x01
 keybind = super+shift+up=jump_to_prompt:-1
 keybind = shift+right=adjust_selection:right
 keybind = super+comma=open_config
-# keybind = super+shift+comma=reload_config
 keybind = super+minus=decrease_font_size:1
 keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
@@ -87,9 +87,8 @@ keybind = super+physical:two=goto_tab:2
 keybind = super+physical:six=goto_tab:6
 keybind = super+v=paste_from_clipboard
 
-# keybind = global:unconsumed:cmd+ctrl+shift+alt+t=toggle_quick_terminal
-keybind = global:unconsumed:cmd+ctrl+shift+opt+`=toggle_quick_terminal
-# keybind = global:unconsumed:ctrl+a=reload_config
+# keybind = global:cmd+ctrl+shift+opt+`=toggle_quick_terminal
+keybind = global:ctrl+`=toggle_quick_terminal
 
 # remap cmd+p to ctrl+p
 keybind = super+p=text:\x10

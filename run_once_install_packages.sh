@@ -59,6 +59,7 @@ install_gh_plugin "github/gh-copilot"
 # ya pack -a yazi-rs/plugins:smart-filter
 # ya pack -a yazi-rs/plugins:hide-preview
 # ya pack -a yazi-rs/plugins:diff
+# ya pack -a yazi-rs/plugins:git
 # ya pack -a KKV9/compress
 # git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi
 
