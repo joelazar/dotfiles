@@ -19,6 +19,7 @@ macos-non-native-fullscreen = visible-menu
 quick-terminal-position = top
 quick-terminal-animation-duration = 0
 scrollback-limit = 1000000000
+resize-overlay = never
 
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits
