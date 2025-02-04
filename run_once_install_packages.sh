@@ -3,8 +3,8 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 cd "$SOURCE_DIR" &&
-    . "./scripts/utils_install" &&
-    . "./scripts/utils"
+  . "./scripts/utils_install" &&
+  . "./scripts/utils"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -12,7 +12,7 @@ print_in_purple "Install packages\n"
 
 ask_for_confirmation "Would you like to do it now? It can take a bit of time."
 if ! answer_is_yes; then
-    exit
+  exit
 fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -32,8 +32,6 @@ ask_for_sudo
 # curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 print_in_purple "Package managers\n"
-
-install_nnn_plugins
 
 # TODO: install pip packages
 # pip3 install pynvim --break-system-packages

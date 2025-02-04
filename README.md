@@ -20,10 +20,6 @@
 
 ![joedotfiles - firefox + vimium](https://github.com/joelazar/dotfiles/assets/16268238/b95dfd66-9ee7-42a7-b2c2-76c190ea0a3a)
 
-## nnn + preview-tui
-
-![joedotfiles - nnn+preview](https://github.com/joelazar/dotfiles/assets/16268238/bec3b981-766a-4013-b00a-4a8d09154e6d)
-
 ## Details
 
 This is the dotfiles setup which I use for my MacOS.
@@ -57,7 +53,6 @@ Let me try to briefly list the installed and configured packages:
   - [`delta`](https://github.com/dandavison/delta) - Diff tool with syntax highlighting
   - [`lazygit`](https://github.com/jesseduffield/lazygit) - simple terminal UI for git commands
 - [`btop`](https://github.com/aristocratos/btop) - For monitoring
-- [`nnn`](https://github.com/jarun/nnn) - File manager
 - [`firefox`](https://www.mozilla.org/en-GB/firefox/) - Good ol' Firefox
 - [`mpv`](https://mpv.io/) - For media
 - [`ncspot`](https://github.com/hrkfdn/ncspot) - Cross-platform ncurses Spotify client

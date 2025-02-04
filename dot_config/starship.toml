@@ -8,10 +8,6 @@ disabled = true
 [gcloud]
 disabled = true
 
-[env_var.NNNLVL]
-variable = "NNNLVL"
-format = "[n³](yellow) "
-
 [env_var.YAZI_LEVEL]
 variable = "YAZI_LEVEL"
 format = "[🦆](yellow) "

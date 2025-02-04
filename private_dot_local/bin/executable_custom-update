@@ -3,9 +3,7 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils_install" &&
-    . "$SOURCE_DIR/scripts/utils"
-
-install_nnn_plugins
+  . "$SOURCE_DIR/scripts/utils"
 
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 

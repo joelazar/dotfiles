@@ -6,20 +6,6 @@ SOURCE_DIR=$(chezmoi source-path)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_nnn_plugins() {
-  script_path="$HOME/.config/nnn/plugins/getplugs"
-
-  if [ ! -f "$script_path" ]; then
-    wget https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs -O "$script_path"
-  fi
-
-  bash "$script_path"
-
-  /bin/rm -rf $HOME/.config/nnn/*.tar.gz
-
-  print_result $? "Install/update nnn plugins"
-}
-
 install_fish_plugin() {
   declare -r PACKAGEPATH="$1"
   declare -r PACKAGENAME="$2"
