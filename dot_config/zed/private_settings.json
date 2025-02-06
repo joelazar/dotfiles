@@ -362,6 +362,7 @@
     "markdown-oxide": true,
     "nginx": true,
     "nix": true,
+    "perplexity": true,
     "prisma": true,
     "ruff": true,
     "scheme": true,
