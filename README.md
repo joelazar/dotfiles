@@ -28,7 +28,6 @@ Let me try to briefly list the installed and configured packages:
 
 - [`homebrew`](https://brew.sh/) - Package manager for MacOS
 - [`colima`](https://github.com/abiosoft/colima) - For running Linux containers on MacOS
-- [`hyperkey`](https://hyperkey.app/) - For remapping Caps Lock key
 - [`monitorcontrol`](https://github.com/MonitorControl/MonitorControl) - For controlling external monitor brightness
 - [`raycast`](https://raycast.com/) - For productivity
 - [`kitty`](https://sw.kovidgoyal.net/kitty/) - Fast, feature-rich, GPU based terminal emulator
