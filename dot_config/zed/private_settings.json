@@ -64,7 +64,7 @@
     "share_on_join": false
   },
   "features": {
-    "inline_completion_provider": "copilot"
+    "inline_completion_provider": "zed"
   },
   "centered_layout": {
     "left_padding": 0.15,
@@ -128,9 +128,9 @@
   "show_wrap_guides": true,
   "auto_signature_help": false,
   "ui_font_size": 13,
-  "buffer_font_size": 12.0,
+  "buffer_font_size": 14.0,
   "vim_mode": true,
-  "theme": "Tokyo Night",
+  "theme": "Catppuccin Mocha",
   "icon_theme": "VSCode Icons (Dark)",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
