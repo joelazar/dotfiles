@@ -1,10 +1,10 @@
 [
-  {
-    "bindings": {
-      "shift-tab": "menu::SelectPrev",
-      "tab": "menu::SelectNext"
-    }
-  },
+  // {
+  //   "bindings": {
+  //     "shift-tab": "menu::SelectPrev",
+  //     "tab": "menu::SelectNext"
+  //   }
+  // },
   {
     "context": "Workspace",
     "bindings": {
@@ -48,7 +48,7 @@
       "space e": "pane::RevealInProjectPanel",
       "space g B": "editor::OpenPermalinkToLine",
       "space g Y": "editor::CopyPermalinkToLine",
-      "space g h d": "editor::ToggleHunkDiff",
+      "space g h d": "editor::ToggleSelectedDiffHunks",
       "space g h r": "editor::RevertSelectedHunks",
       "space s g": "pane::DeploySearch",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
@@ -81,8 +81,8 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
+      // TODO: this is not working yet
       // "J": ["workspace::SendKeystrokes", "m z J ` z"],
-      // "g s": null,
       "g s a": ["vim::PushOperator", { "AddSurrounds": {} }],
       "g s r": ["vim::PushOperator", { "ChangeSurrounds": {} }],
       "g s d": ["vim::PushOperator", "DeleteSurrounds"],
@@ -111,24 +111,24 @@
       "shift-p": ["vim::Paste", { "preserveClipboard": true }]
     }
   },
-  {
-    "context": "Editor && showing_completions",
-    "bindings": {
-      "enter": "editor::ConfirmCompletion",
-      "ctrl-j": "editor::ConfirmCompletion",
-      "shift-tab": "editor::ContextMenuPrev",
-      "tab": "editor::ContextMenuNext"
-    }
-  },
-  {
-    "context": "Editor && mode == full && inline_completion",
-    "bindings": {
-      "tab": "editor::NextInlineCompletion",
-      "shift-tab": "editor::PreviousInlineCompletion",
-      "enter": "editor::AcceptPartialInlineCompletion",
-      "ctrl-j": "editor::AcceptInlineCompletion"
-    }
-  },
+  // {
+  //   "context": "Editor && showing_completions",
+  //   "bindings": {
+  //     "enter": "editor::ConfirmCompletion",
+  //     "ctrl-j": "editor::ConfirmCompletion",
+  //     "shift-tab": "editor::ContextMenuPrev",
+  //     "tab": "editor::ContextMenuNext"
+  //   }
+  // },
+  // {
+  //   "context": "Editor && mode == full && inline_completion",
+  //   "bindings": {
+  //     "tab": "editor::NextInlineCompletion",
+  //     "shift-tab": "editor::PreviousInlineCompletion",
+  //     "enter": "editor::AcceptPartialInlineCompletion",
+  //     "ctrl-j": "editor::AcceptInlineCompletion"
+  //   }
+  // },
   {
     // Vim: File Tree ("ProjectPanel") actions
     "context": "ProjectPanel && not_editing",
@@ -146,7 +146,6 @@
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "project_panel::CopyRelativePath",
       "g y": "project_panel::CopyPath"
-      // "space g g": ["task::Spawn", { "task_name": "lazygit" }]
     }
   },
   {

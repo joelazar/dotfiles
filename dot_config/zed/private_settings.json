@@ -83,7 +83,6 @@
       "model": "claude-3-5-sonnet-latest"
     }
   },
-  // "scrollbar": { "show": "never" },
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false,
@@ -97,8 +96,8 @@
     "entry_spacing": "standard"
   },
   "outline_panel": {
-    "button": false,
-    "dock": "right"
+    "dock": "right",
+    "button": false
   },
   "collaboration_panel": {
     "button": false
@@ -122,15 +121,15 @@
     "inactive_opacity": 0.6,
     "border_size": 0.5
   },
-  // "soft_wrap": "preferred_line_length",
   "preferred_line_length": 140,
+  // "soft_wrap": "preferred_line_length",
   // "wrap_guides": [120],
   "show_wrap_guides": true,
   "auto_signature_help": false,
   "ui_font_size": 13,
-  "buffer_font_size": 14.0,
+  "buffer_font_size": 13.0,
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
+  "theme": "Tokyo Night",
   "icon_theme": "VSCode Icons (Dark)",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
@@ -141,10 +140,6 @@
   "inlay_hints": {
     "enabled": true
   },
-  // "gutter": {
-  //   // disable line numbers completely:
-  //   "line_numbers": false
-  // },
   "vim": {
     "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
