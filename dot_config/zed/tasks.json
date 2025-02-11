@@ -83,7 +83,7 @@
     "cwd": "$ZED_DIRNAME"
   },
   {
-    "label": "search: project",
+    "label": "project_search",
     "command": "rgfzf",
     "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": false,

@@ -14,14 +14,14 @@
   {
     "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
     "bindings": {
-      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
-      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
-      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
-      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
-      "alt-l": ["vim::ResizePane", "Widen"],
-      "alt-h": ["vim::ResizePane", "Narrow"],
-      "alt-k": ["vim::ResizePane", "Shorten"],
-      "alt-j": ["vim::ResizePane", "Lengthen"]
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "alt-l": "vim::ResizePaneRight",
+      "alt-h": "vim::ResizePaneLeft",
+      "alt-k": "vim::ResizePaneDown",
+      "alt-j": "vim::ResizePaneUp"
     }
   },
   {
@@ -53,7 +53,7 @@
       "space s g": "pane::DeploySearch",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
       "space s s": "outline::Toggle",
-      "space s w": ["task::Spawn", { "task_name": "search: project" }],
+      "space s w": ["task::Spawn", { "task_name": "project_search" }],
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
       "space t l": "task::Rerun",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
@@ -62,8 +62,8 @@
       "space u i": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
       "space u z": "workspace::ToggleCenteredLayout",
-      "j": ["vim::Down", { "displayLines": true }],
-      "k": ["vim::Up", { "displayLines": true }],
+      "j": ["vim::Down", { "display_lines": true }],
+      "k": ["vim::Up", { "display_lines": true }],
       "ctrl-space": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
       "g y": "editor::Copy",
@@ -83,9 +83,9 @@
     "bindings": {
       // TODO: this is not working yet
       // "J": ["workspace::SendKeystrokes", "m z J ` z"],
-      "g s a": ["vim::PushOperator", { "AddSurrounds": {} }],
-      "g s r": ["vim::PushOperator", { "ChangeSurrounds": {} }],
-      "g s d": ["vim::PushOperator", "DeleteSurrounds"],
+      "g s a": ["vim::PushAddSurrounds", {}],
+      "g s r": ["vim::PushChangeSurrounds", {}],
+      "g s d": "vim::PushDeleteSurrounds",
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
       "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"]
     }
@@ -99,16 +99,16 @@
   {
     "context": "vim_mode == normal || vim_mode == visual",
     "bindings": {
-      "s": ["vim::PushOperator", { "Sneak": {} }],
-      "S": ["vim::PushOperator", { "SneakBackward": {} }]
+      "s": ["vim::PushSneak", {}],
+      "S": ["vim::PushSneakBackward", {}]
     }
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
-      "p": ["vim::Paste", { "preserveClipboard": true }],
-      "shift-s": ["vim::PushOperator", { "AddSurrounds": {} }],
-      "shift-p": ["vim::Paste", { "preserveClipboard": true }]
+      "p": ["vim::Paste", { "preserve_clipboard": true }],
+      "shift-s": ["vim::PushAddSurrounds", {}],
+      "shift-p": ["vim::Paste", { "preserve_clipboard": true }]
     }
   },
   // {
