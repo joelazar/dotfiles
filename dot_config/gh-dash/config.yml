@@ -40,6 +40,10 @@ keybindings:
         nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
     - key: O
       command: >
+        cd {{.RepoPath}} &&
+        nvim -c ":silent Octo pr edit {{.PrNumber}}"
+    - key: v
+      command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
     - key: m
       command: >
