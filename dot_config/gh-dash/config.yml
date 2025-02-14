@@ -4,13 +4,13 @@ prSections:
   - title: Review requested
     filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc
   - title: Ready
-    filters: is:open -assignee:@me user:quintessential-ai -is:draft sort:created-desc
+    filters: is:open -assignee:@me user:onomondo -is:draft sort:created-desc
   - title: Draft
-    filters: is:open -assignee:@me user:quintessential-ai is:draft sort:created-desc
+    filters: is:open -assignee:@me user:onomondo is:draft sort:created-desc
   - title: Recently closed my prs
     filters: is:closed author:@me sort:created-desc
   - title: Recently closed work prs
-    filters: is:closed user:quintessential-ai sort:created-desc
+    filters: is:closed user:onomondo sort:created-desc
 issuesSections:
   - title: My Issues
     filters: is:open author:@me
@@ -19,27 +19,20 @@ issuesSections:
 defaults:
   preview:
     open: true
-    width: 60
-  prsLimit: 30
+    width: 80
+  prsLimit: 20
   issuesLimit: 20
   view: prs
   refetchIntervalMinutes: 10
 repoPaths:
-  :owner/:repo: ~/Code/complexio/:repo
+  onomondo/*: ~/Code/onomondo/*
 pager:
   diff: delta
 keybindings:
   prs:
-    - key: v
+    - key: g
       command: >
-        kitty @ launch --type=tab --tab-title "👷 {{.RepoName}} - PR {{.PrNumber}}" --keep-focus
-        fish -c 'cd {{.RepoPath}} &&
-        gh pr checkout {{.PrNumber}} &&
-        nvim'
-    - key: V
-      command: >
-        kitty @ launch --type=tab --tab-title "📖 {{.RepoName}} - PR {{.PrNumber}}" --keep-focus
-        fish -c 'cd {{.RepoPath}} && nvim -c ":let g:ministarter_disable = v:true | Octo pr edit {{.PrNumber}}"'
+        cd {{.RepoPath}} && lazygit
     - key: D
       command: >
         cd {{.RepoPath}} &&
@@ -47,15 +40,18 @@ keybindings:
         nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
     - key: O
       command: >
-        gh pr review --repo {{.RepoName}} {{.PrNumber}} --approve
+        gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
     - key: m
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --merge --delete-branch
     - key: M
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --merge --delete-branch
-    - key: t
-      command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto
     - key: C
-      command: cd {{.RepoPath}} && gh pr checkout {{.PrNumber}}
+      builtin: checkout
+
+theme:
+  ui:
+    sectionsShowCount: true
+    table:
+      compact: false
