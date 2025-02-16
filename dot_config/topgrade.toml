@@ -15,7 +15,7 @@ pre_sudo = true
 # sudo_command = "sudo"
 
 # Disable specific steps - same options as the command line flag
-disable = ["chezmoi", "pnpm", "rye", "containers"]
+disable = ["chezmoi", "pnpm", "rye", "containers", "uv"]
 
 # Ignore failures for these steps
 ignore_failures = ["containers", "git_repos"]
