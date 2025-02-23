@@ -121,12 +121,12 @@
   //   }
   // },
   // {
-  //   "context": "Editor && mode == full && inline_completion",
+  //   "context": "Editor && mode == full && edit_prediction",
   //   "bindings": {
-  //     "tab": "editor::NextInlineCompletion",
-  //     "shift-tab": "editor::PreviousInlineCompletion",
-  //     "enter": "editor::AcceptPartialInlineCompletion",
-  //     "ctrl-j": "editor::AcceptInlineCompletion"
+  //     "tab": "editor::NextEditPrediction",
+  //     "shift-tab": "editor::PreviousEditPrediction",
+  //     "enter": "editor::AcceptPartialEditPrediction",
+  //     "ctrl-j": "editor::AcceptEditPrediction"
   //   }
   // },
   {
