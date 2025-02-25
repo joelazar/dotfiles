@@ -60,7 +60,10 @@ keybindings:
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
     - key: C
-      builtin: checkout
+      command: >
+        cd {{.RepoPath}} &&
+        gh pr checkout {{.PrNumber}} &&
+        fish
 
 theme:
   ui:
