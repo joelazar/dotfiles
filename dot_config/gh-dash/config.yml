@@ -3,6 +3,8 @@ prSections:
     filters: is:open assignee:@me sort:created-desc
   - title: Review requested
     filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc
+  - title: Involves me
+    filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc
   - title: Ready
     filters: is:open -assignee:@me -is:draft sort:created-desc org:onomondo
   - title: Draft
@@ -47,10 +49,16 @@ keybindings:
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
     - key: m
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --merge --delete-branch
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --delete-branch
     - key: M
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --merge --delete-branch
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --delete-branch
+    - key: n
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto --delete-branch
+    - key: N
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
     - key: C
       builtin: checkout
 
