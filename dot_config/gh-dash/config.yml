@@ -63,7 +63,7 @@ keybindings:
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
-        fish
+        zed .
 
 theme:
   ui:

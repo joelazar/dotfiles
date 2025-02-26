@@ -1,10 +1,10 @@
 [
-  // {
-  //   "bindings": {
-  //     "shift-tab": "menu::SelectPrev",
-  //     "tab": "menu::SelectNext"
-  //   }
-  // },
+  {
+    "bindings": {
+      "shift-tab": "menu::SelectPrev",
+      "tab": "menu::SelectNext"
+    }
+  },
   {
     "context": "Workspace",
     "bindings": {
@@ -111,24 +111,24 @@
       "shift-p": ["vim::Paste", { "preserve_clipboard": true }]
     }
   },
-  // {
-  //   "context": "Editor && showing_completions",
-  //   "bindings": {
-  //     "enter": "editor::ConfirmCompletion",
-  //     "ctrl-j": "editor::ConfirmCompletion",
-  //     "shift-tab": "editor::ContextMenuPrev",
-  //     "tab": "editor::ContextMenuNext"
-  //   }
-  // },
-  // {
-  //   "context": "Editor && mode == full && edit_prediction",
-  //   "bindings": {
-  //     "tab": "editor::NextEditPrediction",
-  //     "shift-tab": "editor::PreviousEditPrediction",
-  //     "enter": "editor::AcceptPartialEditPrediction",
-  //     "ctrl-j": "editor::AcceptEditPrediction"
-  //   }
-  // },
+  {
+    "context": "Editor && showing_completions",
+    "bindings": {
+      "enter": "editor::ConfirmCompletion",
+      "ctrl-j": "editor::ConfirmCompletion",
+      "shift-tab": "editor::ContextMenuPrev",
+      "tab": "editor::ContextMenuNext"
+    }
+  },
+  {
+    "context": "Editor && mode == full && edit_prediction",
+    "bindings": {
+      "tab": "editor::NextEditPrediction",
+      "shift-tab": "editor::PreviousEditPrediction",
+      "enter": "editor::AcceptPartialEditPrediction",
+      "ctrl-j": "editor::AcceptEditPrediction"
+    }
+  },
   {
     // Vim: File Tree ("ProjectPanel") actions
     "context": "ProjectPanel && not_editing",
@@ -144,8 +144,8 @@
       "shift-d": ["project_panel::Trash", { "skip_prompt": true }],
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
-      "shift-y": "project_panel::CopyRelativePath",
-      "g y": "project_panel::CopyPath"
+      "shift-y": "workspace::CopyRelativePath",
+      "g y": "workspace::CopyPath"
     }
   },
   {
