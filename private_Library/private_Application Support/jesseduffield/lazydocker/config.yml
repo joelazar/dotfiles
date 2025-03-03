@@ -1,0 +1,16 @@
+gui:
+  returnImmediately: true
+logs:
+  timestamps: false
+  since: "60m" # set to '' to show all logs
+  tail: "" # set to 200 to show last 200 lines of logs
+customCommands:
+  containers:
+    - name: "Run sh in container as root"
+      attach: true
+      command: "docker exec -it --user root {{ .Container.ID }} sh"
+      serviceNames: []
+    - name: "Run bash in container as root"
+      attach: true
+      command: "docker exec -it --user root {{ .Container.ID }} bash"
+      serviceNames: []
