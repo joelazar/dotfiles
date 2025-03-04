@@ -1,7 +1,7 @@
 [
   {
     "bindings": {
-      "shift-tab": "menu::SelectPrev",
+      "shift-tab": "menu::SelectPrevious",
       "tab": "menu::SelectNext"
     }
   },
@@ -28,6 +28,7 @@
     // put key-bindings here if you want them to work in normal & visual mode & project panel
     "context": "ProjectPanel || EmptyPane || (Editor && VimControl && !VimWaiting && !menu)",
     "bindings": {
+      "cmd-shift-s": "workspace::SaveWithoutFormat",
       "space ,": "tab_switcher::Toggle",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
@@ -73,7 +74,7 @@
       "g f": "editor::OpenExcerpts",
       // cannot override default keybindings
       "alt-right": "pane::ActivateNextItem",
-      "alt-left": "pane::ActivatePrevItem",
+      "alt-left": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
       "alt-p": "pane::TogglePinTab"
@@ -117,7 +118,7 @@
     "bindings": {
       "enter": "editor::ConfirmCompletion",
       "ctrl-j": "editor::ConfirmCompletion",
-      "shift-tab": "editor::ContextMenuPrev",
+      "shift-tab": "editor::ContextMenuPrevious",
       "tab": "editor::ContextMenuNext"
     }
   },
@@ -162,7 +163,7 @@
       "cmd-t": "workspace::NewTerminal",
       "cmd-n": "workspace::NewCenterTerminal",
       "alt-right": "pane::ActivateNextItem",
-      "alt-left": "pane::ActivatePrevItem",
+      "alt-left": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
       "alt-p": "pane::TogglePinTab"
@@ -171,7 +172,7 @@
   {
     "context": "TabSwitcher",
     "bindings": {
-      "k": "menu::SelectPrev",
+      "k": "menu::SelectPrevious",
       "j": "menu::SelectNext",
       "x": "tab_switcher::CloseSelectedItem"
     }
