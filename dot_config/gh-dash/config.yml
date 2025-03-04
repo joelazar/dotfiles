@@ -35,35 +35,44 @@ keybindings:
     - key: g
       command: >
         cd {{.RepoPath}} && lazygit
+      name: lazygit
     - key: D
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
         nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
+      name: diff main
     - key: O
       command: >
         cd {{.RepoPath}} &&
         nvim -c ":silent Octo pr edit {{.PrNumber}}"
+      name: open in octo
     - key: v
       command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
+      name: approve
     - key: m
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --delete-branch
+      name: merge
     - key: M
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --delete-branch
+      name: merge (admin)
     - key: n
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto --delete-branch
+      name: merge (auto)
     - key: N
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
+      name: disable auto merge
     - key: C
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
         zed .
+      name: open in zed
 
 theme:
   ui:
