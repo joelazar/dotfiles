@@ -9,6 +9,7 @@ font-size = 14
 
 theme = tokyonight
 
+window-inherit-working-directory = false
 cursor-style-blink = false
 mouse-hide-while-typing = true
 quit-after-last-window-closed = true
