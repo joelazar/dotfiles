@@ -5,7 +5,7 @@ font-feature = +ss03
 font-feature = +ss05
 font-feature = +ss07
 
-font-size = 14
+font-size = 15.0
 
 theme = tokyonight
 
@@ -48,7 +48,7 @@ keybind = super+right=text:\x05
 keybind = super+d=new_split:right
 keybind = super+ctrl+down=resize_split:down,10
 keybind = shift+end=adjust_selection:end
-keybind = super+plus=increase_font_size:1
+keybind = super+plus=increase_font_size:0.5
 keybind = super+q=quit
 keybind = super+home=scroll_to_top
 keybind = super+ctrl+left=resize_split:left,10
@@ -57,7 +57,7 @@ keybind = super+left=text:\x01
 keybind = super+shift+up=jump_to_prompt:-1
 keybind = shift+right=adjust_selection:right
 keybind = super+comma=open_config
-keybind = super+minus=decrease_font_size:1
+keybind = super+minus=decrease_font_size:0.5
 keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
 keybind = super+a=select_all
