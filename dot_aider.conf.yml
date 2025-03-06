@@ -245,7 +245,7 @@ dark-mode: true
 #attribute-author: true
 
 ## Attribute aider commits in the git committer name (default: True)
-#attribute-committer: true
+attribute-committer: false
 
 ## Prefix commit messages with 'aider: ' if aider authored the changes (default: False)
 #attribute-commit-message-author: false

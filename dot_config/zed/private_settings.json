@@ -310,12 +310,7 @@
         }
       }
     },
-    // NOTE: https://github.com/j4ng5y/zed_golangci_lint/issues/2#issuecomment-2338077672
-    // this is needed until maintainers merge the outstanding PRs
     "golangci-lint": {
-      "settings": {
-        "filetypes": ["go"]
-      },
       "initialization_options": {
         "command": ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
       }
@@ -344,9 +339,7 @@
       "code_actions_on_format": {
         "source.organizeImports": true
       },
-      // TODO: golangci-lint quite buggy
       "language_servers": ["gopls", "golangci-lint"]
-      // "language_servers": ["gopls"]
     },
     "Markdown": {
       "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
