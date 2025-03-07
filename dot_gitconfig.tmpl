@@ -1,5 +1,4 @@
 [user]
-
     # Specify the email address of the author/committer.
     email = "{{ .email }}"
 
@@ -72,7 +71,6 @@
 
 [difftool "nvim"]
 
-    # TODO: not working
     cmd = nvim -f -c DiffviewOpen
 
 [diff]
@@ -192,11 +190,9 @@
 
 [credential "https://github.com"]
 
-    helper = 
     helper = !/usr/bin/gh auth git-credential
 
 [credential "https://gist.github.com"]
 
-    helper = 
     helper = !/usr/bin/gh auth git-credential
 
