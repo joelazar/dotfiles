@@ -21,6 +21,9 @@ quick-terminal-position = top
 quick-terminal-animation-duration = 0
 scrollback-limit = 1000000000
 resize-overlay = never
+# set height/width to a ridiculous size so it would always start in max window
+window-height = 200
+window-width = 500
 
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits
