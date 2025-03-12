@@ -9,12 +9,9 @@ fish_vi_key_bindings
 # Make default programs
 set -gx BROWSER "/Applications/Zen\ Browser.app/Contents/MacOS/zen"
 set -gx PAGER "bat --plain"
-set -gx TERMINAL kitty
-# set -gx EDITOR "zed --wait"
-# set -gx VISUAL zed
+set -gx TERMINAL ghostty
 set -gx EDITOR nvim
 set -gx VISUAL nvim
-
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'
@@ -28,7 +25,6 @@ fish_add_path $HOME/.local/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
-fish_add_path $HOME/.rye/py/cpython@3.12.3/bin
 fish_add_path $HOME/.modular/bin
 
 # brew specific paths
@@ -72,18 +68,12 @@ set -gx RIPGREP_CONFIG_PATH $HOME/.config/ripgrep/config
 # SSH environment file
 set -gx SSH_ENV $HOME/.ssh/environment
 
-# Kitty config
-set -gx KITTY_LISTEN_ON "unix:/tmp/kitty-$KITTY_PID"
-
 # set custom collation rule - sort dotfiles first, followed by uppercase and lowercase filenames
 set -gx LC_COLLATE C
 
-# NPM exports
-set -gx NODE_PATH $HOME/.node/lib/node_modules
-
-if test -e $HOME/.config/fish/.local.fish
-    source $HOME/.config/fish/.local.fish
-end
+# zoxide configuration
+set -gx _ZO_ECHO 1
+set -gx _ZO_EXCLUDE_DIRS $HOME/Code/onomondo/core-base/*:$HOME/.cache
 
 alias :q="exit"
 alias c="clear"
@@ -91,10 +81,7 @@ alias cat="bat"
 alias chgrp='chgrp --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
-alias ci="gh workflow view"
 alias g="git"
-alias hg="kitty +kitten hyperlinked_grep"
-alias icat="kitty +kitten icat"
 alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
 alias lzd='lazydocker'
@@ -104,11 +91,6 @@ alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
 alias rmf='/bin/rm'
 alias q="exit"
-alias s="kitty +kitten ssh"
-alias lv='NVIM_APPNAME=nvim.legacy nvim'
-alias lvi='NVIM_APPNAME=nvim.legacy nvim'
-alias lvim='NVIM_APPNAME=nvim.legacy nvim'
-alias lnvim='NVIM_APPNAME=nvim.legacy nvim'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
@@ -127,7 +109,7 @@ alias kgp='kubectl get pod'
 alias kgsvc='kubectl get service'
 alias kl='kubectl logs --all-containers=true'
 alias krm='kubectl delete'
-alias tf='terraform'
+alias tf='tofu'
 
 # docker
 alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
@@ -150,22 +132,17 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
     print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
-alias wttr="http -b v2.wttr.in"
-alias wttr-cph="http -b v2.wttr.in/Copenhagen"
 
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
 fnm env --use-on-cd | source
 atuin init fish --disable-up-arrow | source
-source "$HOME/.cargo/env.fish"
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000
 set -U __done_exclude n
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc' ]
-    . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc'
+if test -e $HOME/.config/fish/.local.fish
+    source $HOME/.config/fish/.local.fish
 end
-fish_add_path /Users/joelazar/.modular/bin
