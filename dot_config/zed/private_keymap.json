@@ -30,6 +30,7 @@
     "bindings": {
       "cmd-shift-s": "workspace::SaveWithoutFormat",
       "space ,": "tab_switcher::Toggle",
+      "space G": "git_panel::ToggleFocus",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
