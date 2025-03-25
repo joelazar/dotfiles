@@ -71,8 +71,8 @@ keybindings:
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
-        zed .
-      name: open in zed
+        nvim
+      name: open in nvim
 
 theme:
   ui:
