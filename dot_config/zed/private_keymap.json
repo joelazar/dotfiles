@@ -60,7 +60,7 @@
       "space t l": "task::Rerun",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t r": "task::Spawn",
-      "space u b": "editor::ToggleGitBlame",
+      "space u b": "git::Blame",
       "space u i": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
       "space u z": "workspace::ToggleCenteredLayout",

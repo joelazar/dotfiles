@@ -48,8 +48,14 @@
         {
           "provider": "ollama",
           "name": "phi4",
-          "display_name": "phi4",
+          "display_name": "phi4-14b",
           "max_tokens": 16000
+        },
+        {
+          "provider": "ollama",
+          "name": "qwq",
+          "display_name": "qwq-32b",
+          "max_tokens": 128000
         }
       ]
     }
@@ -79,8 +85,8 @@
     "default_height": 320,
     "enable_experimental_live_diffs": true,
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
+      "provider": "google",
+      "model": "gemini-2.5-pro-exp-03-25"
     }
   },
   "tab_bar": {
