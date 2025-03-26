@@ -6,7 +6,7 @@ top_p: null # Set default top-p parameter, with a range of (0, 1) or (0, 2) depe
 # ---- behavior ----
 stream: true # Controls whether to use the stream-style API.
 save: true # Indicates whether to persist the message
-keybindings: emacs # Choose keybinding style (emacs, vi)
+keybindings: vi # Choose keybinding style (emacs, vi)
 editor: null # Specifies the command used to edit input buffer or session. (e.g. vim, emacs, nano).
 wrap: no # Controls text wrapping (no, auto, <max-width>)
 wrap_code: false # Enables or disables wrapping of code blocks
@@ -72,7 +72,7 @@ document_loaders:
 # ---- appearance ----
 highlight: true # Controls syntax highlighting
 light_theme: false # Activates a light color theme when true. env: AICHAT_LIGHT_THEME
-# Custom REPL prompt, see https://github.com/sigoden/aichat/wiki/Custom-REPL-Prompt for more details
+# Custom REPL left/right prompts, see https://github.com/sigoden/aichat/wiki/Custom-REPL-Prompt for more details
 left_prompt: "{color.green}{?session {?agent {agent}>}{session}{?role /}}{!session {?agent {agent}>}}{role}{?rag @{rag}}{color.cyan}{?session )}{!session >}{color.reset} "
 right_prompt: "{color.purple}{?session {?consume_tokens {consume_tokens}({consume_percent}%)}{!consume_tokens {consume_tokens}}}{color.reset}"
 
@@ -85,34 +85,6 @@ sync_models_url: https://raw.githubusercontent.com/sigoden/aichat/refs/heads/mai
 
 # ---- clients ----
 clients:
-  # All clients have the following configuration:
-  # - type: xxxx
-  #   name: xxxx                                      # Only use it to distinguish clients with the same client type. Optional
-  #   models:
-  #     - name: xxxx                                  # Chat model
-  #       max_input_tokens: 100000
-  #       supports_vision: true
-  #       supports_function_calling: true
-  #     - name: xxxx                                  # Embedding model
-  #       type: embedding
-  #       max_input_tokens: 2048
-  #       default_chunk_size: 1500
-  #       max_batch_size: 100
-  #     - name: xxxx                                  # Reranker model
-  #       type: reranker
-  #       max_input_tokens: 2048
-  #   patch:                                          # Patch api request
-  #     chat_completions:                             # Api types, one of chat_completions, embeddings, and rerank
-  #       <regex>:                                    # The regex to match model names, e.g. '.*' 'gpt-4o' 'gpt-4o|gpt-4-.*'
-  #         url:  ''                                  # Patch request url
-  #         body:                                     # Patch request body
-  #           <json>
-  #         headers:                                  # Patch request headers
-  #           <key>: <value>
-  #   extra:
-  #     proxy: socks5://127.0.0.1:1080                # Set https/socks5 proxy. ENV: HTTPS_PROXY/ALL_PROXY
-  #     connect_timeout: 10                           # Set timeout in seconds for connect to api
-
   - type: openai
 
   - type: gemini
@@ -129,8 +101,20 @@ clients:
                 threshold: BLOCK_NONE
               - category: HARM_CATEGORY_DANGEROUS_CONTENT
                 threshold: BLOCK_NONE
+    models:
+      - name: gemini-2.0-flash-lite
+        max_input_tokens: 1048576
+      - name: gemini-2.0-flash
+        max_input_tokens: 1048576
+      - name: gemini-2.5-pro-exp-03-25
+        max_input_tokens: 1048576
 
   - type: claude
+    models:
+      - name: claude-3-7-sonnet-latest
+        max_input_tokens: 200000
+      - name: claude-3-5-haiku-latest
+        max_input_tokens: 200000
 
   - type: openai-compatible
     name: perplexity
@@ -143,18 +127,22 @@ clients:
   - type: openai-compatible
     name: deepseek
     api_base: https://api.deepseek.com/v1
-    models: # Required
+    models:
       - name: deepseek-reasoner
         max_input_tokens: 131072
       - name: deepseek-chat
         max_input_tokens: 65536
 
-  - type: ollama
-    api_base: http://localhost:11434
-    # api_auth: Basic xxx # ENV: {client}_API_AUTH
+  - type: openai-compatible
+    name: ollama
+    api_base: http://localhost:11434/v1
+    # api_key: xxx # Optional
     models:
       - name: phi4
         max_input_tokens: 131072
+      - name: qwq
+        max_input_tokens: 131072
       - name: nomic-embed-text
         type: embedding
-        max_chunk_size: 1000
+        default_chunk_size: 1000
+        max_batch_size: 50
