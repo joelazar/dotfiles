@@ -129,7 +129,7 @@ clients:
     api_base: https://api.deepseek.com/v1
     models:
       - name: deepseek-reasoner
-        max_input_tokens: 131072
+        max_input_tokens: 65536
       - name: deepseek-chat
         max_input_tokens: 65536
 
