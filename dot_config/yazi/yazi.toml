@@ -6,7 +6,9 @@ max_width = 1600
 max_height = 1900
 
 [opener]
-edit = [{ run = 'zed "$@"', desc = "Edit", orphan = true, for = "macos" }]
+edit = [
+  { run = '${EDITOR:-vi} "$@"', desc = "Edit", block = true, orphan = false, for = "macos" },
+]
 browser = [
   { run = '${BROWSER:-firefox} "$@"', desc = "Browser", for = "macos" },
 ]
