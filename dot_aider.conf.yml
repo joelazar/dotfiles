@@ -1,3 +1,4 @@
+##########################################################
 # Note: You can only put OpenAI and Anthropic API keys in the yaml
 # config file. Keys for all APIs can be stored in a .env file
 # https://aider.chat/docs/config/dotenv.html
@@ -164,19 +165,19 @@ dark-mode: true
 #stream: true
 
 ## Set the color for user input (default: #00cc00)
-#user-input-color: #00cc00
+#user-input-color: "#00cc00"
 
 ## Set the color for tool output (default: None)
 #tool-output-color: "xxx"
 
 ## Set the color for tool error messages (default: #FF2222)
-#tool-error-color: #FF2222
+#tool-error-color: "#FF2222"
 
 ## Set the color for tool warning messages (default: #FFA500)
-#tool-warning-color: #FFA500
+#tool-warning-color: "#FFA500"
 
 ## Set the color for assistant output (default: #0088ff)
-#assistant-output-color: #0088ff
+#assistant-output-color: "#0088ff"
 
 ## Set the color for the completion menu (default: terminal's default text color)
 #completion-menu-color: "xxx"
@@ -218,10 +219,10 @@ dark-mode: true
 #dirty-commits: true
 
 ## Attribute aider code changes in the git author name (default: True)
-#attribute-author: true
+attribute-author: false
 
 ## Attribute aider commits in the git committer name (default: True)
-#attribute-committer: true
+attribute-committer: false
 
 ## Prefix commit messages with 'aider: ' if aider authored the changes (default: False)
 #attribute-commit-message-author: false
@@ -368,8 +369,7 @@ dark-mode: true
 #  - zzz
 
 ## Use VI editing mode in the terminal (default: False)
-#vim: false
-
+vim: true
 ## Specify the language to use in the chat (default: None, uses system settings)
 #chat-language: xxx
 
@@ -450,4 +450,3 @@ dark-mode: true
 
 ## Use o1-preview model for the main chat (deprecated, use --model)
 #o1-preview: false
-
