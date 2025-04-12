@@ -153,6 +153,13 @@
   "theme": "Tokyo Night",
   "icon_theme": "Catppuccin Mocha",
   "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_features": {
+    "liga": true,
+    "ss02": true,
+    "ss03": true,
+    "ss05": true,
+    "ss07": true
+  },
   "cursor_blink": false,
   // prevent the buffer from scrolling beyond the last line
   "scroll_beyond_last_line": "off",
