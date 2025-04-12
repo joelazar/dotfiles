@@ -25,15 +25,22 @@
     }
   },
   {
+    "context": "GitPanel",
+    "bindings": {
+      "q": "git_panel::Close"
+    }
+  },
+  {
     // put key-bindings here if you want them to work in normal & visual mode & project panel
     "context": "ProjectPanel || EmptyPane || (Editor && VimControl && !VimWaiting && !menu)",
     "bindings": {
       "cmd-shift-s": "workspace::SaveWithoutFormat",
       "space ,": "tab_switcher::Toggle",
       "space G": "git_panel::ToggleFocus",
-      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      "space g g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
+      "space s g": "pane::DeploySearch",
       "space f p": ["projects::OpenRecent", { "create_new_window": false }],
       "space f P": ["projects::OpenRecent", { "create_new_window": true }],
       "space u n": "workspace::ClearAllNotifications"
@@ -47,12 +54,17 @@
       "space b w": "pane::CloseInactiveItems",
       "space c a": "editor::ToggleCodeActions",
       "space c f": "editor::Format",
+      "space c r ": "editor::Rename",
       "space e": "pane::RevealInProjectPanel",
+      "space g b": "git::Blame",
       "space g B": "editor::OpenPermalinkToLine",
       "space g Y": "editor::CopyPermalinkToLine",
-      "space g h d": "editor::ToggleSelectedDiffHunks",
+      "space g h d": "editor::ExpandAllDiffHunks",
+      "space g h D": "git::Diff",
       "space g h r": "git::Restore",
-      "space s g": "pane::DeploySearch",
+      "space g h R": "git::RestoreFile",
+      "space m p": "markdown::OpenPreview",
+      "space m P": "markdown::OpenPreviewToTheSide",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
       "space s s": "outline::Toggle",
       "space s w": ["task::Spawn", { "task_name": "project_search" }],
@@ -60,7 +72,6 @@
       "space t l": "task::Rerun",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t r": "task::Spawn",
-      "space u b": "git::Blame",
       "space u i": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
       "space u z": "workspace::ToggleCenteredLayout",
@@ -76,9 +87,13 @@
       // cannot override default keybindings
       "alt-right": "pane::ActivateNextItem",
       "alt-left": "pane::ActivatePreviousItem",
+      "] b": "pane::ActivateNextItem",
+      "[ b": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
-      "alt-p": "pane::TogglePinTab"
+      "alt-p": "pane::TogglePinTab",
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown"
     }
   },
   {
@@ -90,7 +105,10 @@
       "g s r": ["vim::PushChangeSurrounds", {}],
       "g s d": "vim::PushDeleteSurrounds",
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
-      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"]
+      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
+      "n": ["workspace::SendKeystrokes", "n z z z v"],
+      "shift-n": ["workspace::SendKeystrokes", "shift-n z z z v"],
+      "shift-g": ["workspace::SendKeystrokes", "shift-g z z"]
     }
   },
   {
@@ -102,8 +120,8 @@
   {
     "context": "vim_mode == normal || vim_mode == visual",
     "bindings": {
-      "s": ["vim::PushSneak", {}],
-      "S": ["vim::PushSneakBackward", {}]
+      "s": "vim::PushSneak",
+      "S": "vim::PushSneakBackward"
     }
   },
   {
@@ -148,7 +166,8 @@
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "workspace::CopyRelativePath",
-      "g y": "workspace::CopyPath"
+      "g y": "workspace::CopyPath",
+      "q": "workspace::ToggleLeftDock"
     }
   },
   {
@@ -187,6 +206,12 @@
       // "cmd-k left": "pane::SplitLeft",
       "ctrl-w v": "pane::SplitRight",
       "cmd-d": "pane::SplitRight",
+      "space w s": "pane::SplitDown",
+      "space w v": "pane::SplitRight",
+      "space -": "pane::SplitDown",
+      "space |": "pane::SplitRight",
+      "space w c": "pane::CloseAllItems",
+      "space w d": "pane::CloseAllItems",
       "cmd-1": ["pane::ActivateItem", 0],
       "cmd-2": ["pane::ActivateItem", 1],
       "cmd-3": ["pane::ActivateItem", 2],
@@ -197,6 +222,13 @@
       "cmd-8": ["pane::ActivateItem", 7],
       "cmd-9": ["pane::ActivateItem", 8],
       "cmd-0": "pane::ActivateLastItem"
+    }
+  },
+  {
+    "context": "vim_operator == d",
+    "bindings": {
+      "o": "editor::ExpandAllDiffHunks",
+      "r": "git::Restore"
     }
   }
 ]

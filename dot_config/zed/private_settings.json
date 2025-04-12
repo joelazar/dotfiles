@@ -1,15 +1,25 @@
 {
   "file_scan_exclusions": [
-    "**/.DS_Store",
-    "**/.classpath",
     "**/.git",
-    "**/.hg",
-    "**/.obsidian",
-    "**/.settings",
     "**/.svn",
+    "**/.hg",
     "**/CVS",
+    "**/.DS_Store",
     "**/Thumbs.db",
-    "**/report"
+    "**/.classpath",
+    "**/.settings",
+    "**/.vscode",
+    "**/.idea",
+    // "**/node_modules",
+    "**/.serverless",
+    "**/build",
+    "**/dist",
+    "**/coverage",
+    "**/.venv",
+    "**/__pycache__",
+    "**/.ropeproject",
+    "**/.pytest_cache",
+    "**/.ruff_cache"
   ],
   "edit_predictions": {
     "disabled_globs": ["", "**/.*"]
@@ -69,15 +79,17 @@
     "share_on_join": false
   },
   "features": {
-    // "edit_prediction_provider": "zed"
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "zed"
+    // "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
     "right_padding": 0.15
   },
   "seed_search_query_from_cursor": "selection",
+  "show_edit_predictions": true,
   "assistant": {
+    "default_profile": "ask",
     "button": false,
     "version": "2",
     "dock": "right",
@@ -85,8 +97,8 @@
     "default_height": 320,
     "enable_experimental_live_diffs": true,
     "default_model": {
-      "provider": "google",
-      "model": "gemini-2.5-pro-exp-03-25"
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet"
     }
   },
   "tab_bar": {
@@ -95,6 +107,9 @@
     "show_tab_bar_buttons": false
   },
   "project_panel": {
+    "file_icons": true,
+    "folder_icons": true,
+    "default_width": 300,
     "dock": "left",
     "auto_fold_dirs": false,
     "button": false,
@@ -116,8 +131,8 @@
   },
   "tabs": {
     "git_status": true,
-    "close_position": "right",
     "file_icons": true,
+    "close_position": "right",
     "activate_on_close": "neighbour"
   },
   "file_finder": {
@@ -135,7 +150,7 @@
   "ui_font_size": 13,
   "buffer_font_size": 13.0,
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
+  "theme": "Tokyo Night",
   "icon_theme": "Catppuccin Mocha",
   "buffer_font_family": "FiraCode Nerd Font",
   "cursor_blink": false,
@@ -159,6 +174,10 @@
     "quick_actions": false,
     "selections_menu": true
   },
+  "indent_guides": {
+    "enabled": true,
+    "coloring": "indent_aware"
+  },
   "terminal": {
     "toolbar": { "breadcrumbs": false },
     "line_height": "standard",
@@ -180,7 +199,8 @@
       }
     },
     "env": {
-      "GIT_EDITOR": "zed --wait"
+      "GIT_EDITOR": "zed --wait",
+      "EDITOR": "zed --wait"
     },
     "working_directory": "current_project_directory"
   },
@@ -318,7 +338,7 @@
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--out-format", "json", "--issues-exit-code=1"]
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--issues-exit-code", "1"]
       }
     }
   },
