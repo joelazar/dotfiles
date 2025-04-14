@@ -119,7 +119,7 @@ alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker 
 # git pull++
 alias gcodefaultall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && (git -C {} checkout main || git -C {} checkout master) && echo\''
 alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} bash -c \'echo {} && git -C {} pull\''
-alias gresetall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} bash -c \'echo {} && git -C {} reset --hard && git -C {} clean -fd && git -C {} checkout .\''
+alias gresetall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} bash -c \'echo {} && git -C {} reset --hard origin && git -C {} clean -fd && git -C {} checkout .\''
 alias gstatusall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} show --summary && echo\''
 
 # other

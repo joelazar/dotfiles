@@ -89,7 +89,7 @@
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "assistant": {
-    "default_profile": "ask",
+    "default_profile": "write",
     "button": false,
     "version": "2",
     "dock": "right",
@@ -98,7 +98,7 @@
     "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-3-7-sonnet"
+      "model": "claude-3-7-sonnet-latest"
     }
   },
   "tab_bar": {
