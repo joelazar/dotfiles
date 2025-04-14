@@ -1,10 +1,29 @@
 [
-  {
-    "bindings": {
-      "shift-tab": "menu::SelectPrevious",
-      "tab": "menu::SelectNext"
-    }
-  },
+  // NOTE: tab keybindings, put them on hold for now
+  // {
+  //   "bindings": {
+  //     "shift-tab": "menu::SelectPrevious",
+  //     "tab": "menu::SelectNext"
+  //   }
+  // },
+  // {
+  //   "context": "Editor && showing_completions",
+  //   "bindings": {
+  //     "enter": "editor::ConfirmCompletion",
+  //     "ctrl-j": "editor::ConfirmCompletion",
+  //     "shift-tab": "editor::ContextMenuPrevious",
+  //     "tab": "editor::ContextMenuNext"
+  //   }
+  // },
+  // {
+  //   "context": "Editor && mode == full && edit_prediction",
+  //   "bindings": {
+  //     "tab": "editor::NextEditPrediction",
+  //     "shift-tab": "editor::PreviousEditPrediction",
+  //     "enter": "editor::AcceptPartialEditPrediction",
+  //     "ctrl-j": "editor::AcceptEditPrediction"
+  //   }
+  // },
   {
     "context": "Workspace",
     "bindings": {
@@ -14,6 +33,7 @@
   {
     "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
     "bindings": {
+      "cmd-d": null,
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -115,8 +135,7 @@
   {
     "context": "VimControl && !menu",
     "bindings": {
-      // TODO: this is not working yet
-      // "J": ["workspace::SendKeystrokes", "m z J ` z"],
+      "J": ["workspace::SendKeystrokes", "m z J ` z"],
       "g s a": ["vim::PushAddSurrounds", {}],
       "g s r": ["vim::PushChangeSurrounds", {}],
       "g s d": "vim::PushDeleteSurrounds",
@@ -146,24 +165,6 @@
       "p": ["vim::Paste", { "preserve_clipboard": true }],
       "shift-s": ["vim::PushAddSurrounds", {}],
       "shift-p": ["vim::Paste", { "preserve_clipboard": true }]
-    }
-  },
-  {
-    "context": "Editor && showing_completions",
-    "bindings": {
-      "enter": "editor::ConfirmCompletion",
-      "ctrl-j": "editor::ConfirmCompletion",
-      "shift-tab": "editor::ContextMenuPrevious",
-      "tab": "editor::ContextMenuNext"
-    }
-  },
-  {
-    "context": "Editor && mode == full && edit_prediction",
-    "bindings": {
-      "tab": "editor::NextEditPrediction",
-      "shift-tab": "editor::PreviousEditPrediction",
-      "enter": "editor::AcceptPartialEditPrediction",
-      "ctrl-j": "editor::AcceptEditPrediction"
     }
   },
   {
@@ -216,18 +217,10 @@
   {
     "context": "Pane",
     "bindings": {
-      // "cmd-k up": "pane::SplitUp",
       "ctrl-w s": "pane::SplitDown",
       "cmd-shift-d": "pane::SplitDown",
-      // "cmd-k left": "pane::SplitLeft",
       "ctrl-w v": "pane::SplitRight",
       "cmd-d": "pane::SplitRight",
-      "space w s": "pane::SplitDown",
-      "space w v": "pane::SplitRight",
-      "space -": "pane::SplitDown",
-      "space |": "pane::SplitRight",
-      "space w c": "pane::CloseAllItems",
-      "space w d": "pane::CloseAllItems",
       "cmd-1": ["pane::ActivateItem", 0],
       "cmd-2": ["pane::ActivateItem", 1],
       "cmd-3": ["pane::ActivateItem", 2],
