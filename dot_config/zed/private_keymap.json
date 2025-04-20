@@ -25,6 +25,14 @@
   //   }
   // },
   {
+    "use_key_equivalents": true,
+    "bindings": {
+      "cmd-+": ["zed::IncreaseUiFontSize", { "persist": false }],
+      "cmd-_": ["zed::DecreaseUiFontSize", { "persist": false }],
+      "cmd-)": ["zed::ResetUiFontSize", { "persist": false }]
+    }
+  },
+  {
     "context": "Workspace",
     "bindings": {
       "ctrl-z": "workspace::ToggleZoom"
