@@ -49,20 +49,20 @@
       "available_models": [
         {
           "provider": "ollama",
-          "name": "qwen2.5-coder:14b",
-          "display_name": "qwen2.5-coder",
+          "name": "gemma3:27b-it-qat",
+          "display_name": "Gemma 3 - 27B",
           "max_tokens": 128000
         },
         {
           "provider": "ollama",
           "name": "phi4",
-          "display_name": "phi4-14b",
+          "display_name": "Phi 4 - 14B",
           "max_tokens": 16000
         },
         {
           "provider": "ollama",
           "name": "qwq",
-          "display_name": "qwq-32b",
+          "display_name": "QWQ - 32B",
           "max_tokens": 128000
         }
       ]
