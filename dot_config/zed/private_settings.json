@@ -417,7 +417,6 @@
     "ansible": true,
     "basedpyright": true,
     "basher": true,
-    "catppuccin": true,
     "csv": true,
     "docker-compose": true,
     "dockerfile": true,
