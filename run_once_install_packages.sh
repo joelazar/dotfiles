@@ -54,9 +54,8 @@ install_gh_plugin "dlvhdr/gh-dash"
 install_gh_plugin "github/gh-copilot"
 
 # TODO: install yazi plugins
-# ya pack -a yazi-rs/plugins:max-preview
+# ya pack -a yazi-rs/plugins:toggle-pane
 # ya pack -a yazi-rs/plugins:smart-filter
-# ya pack -a yazi-rs/plugins:hide-preview
 # ya pack -a yazi-rs/plugins:diff
 # ya pack -a yazi-rs/plugins:git
 # ya pack -a KKV9/compress
