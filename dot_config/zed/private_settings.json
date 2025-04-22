@@ -423,7 +423,7 @@
     "env": true,
     "fish": true,
     "git-firefly": true,
-    // "harper": true,
+    "golangci-lint": true,
     "html": true,
     "latex": true,
     "log": true,
