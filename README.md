@@ -30,7 +30,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### Key Features ✨
 
-- **Automated setup** with `chezmoi` and `run_once_install_packages.sh`
+- **Automated setup** with `chezmoi` and [`run_once_install_packages.sh`](run_once_install_packages.sh)
 - **Consistent theming** (Tokyo Night)
 - **Modern CLI utilities** for navigation, search, and productivity
 - **Editor and terminal integration** (Neovim, Zed, Ghostty)
@@ -43,7 +43,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Zed](https://zed.dev/) 🦋
 
-- **Config:** See `dot_config/zed/private_settings.json`, `private_keymap.json`, and `tasks.json`
+- **Config:** See [`dot_config/zed/private_settings.json`](dot_config/zed/private_settings.json), [`private_keymap.json`](dot_config/zed/private_keymap.json), and [`tasks.json`](dot_config/zed/tasks.json)
 - **Features:**
   - Modern, collaborative code editor with Vim mode enabled
   - Custom keybindings for navigation, pane management, and Git integration
@@ -57,7 +57,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Yazi](https://yazi-rs.github.io/) 🦆
 
-- **Config:** See `dot_config/yazi/`
+- **Config:** See [`dot_config/yazi/`](dot_config/yazi/)
 - **Features:**
   - Fast, TUI file manager with preview and plugin support
   - Custom keymaps for diffing, toggling preview panes, smart filtering, archiving, and image rotation
@@ -68,7 +68,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Fish Shell](https://fishshell.com/) 🐟
 
-- **Config:** See `dot_config/private_fish/`
+- **Config:** See [`dot_config/private_fish/`](dot_config/private_fish/)
 - **Features:**
   - Vi key bindings, custom greeting, and prompt (Starship)
   - Extensive aliases for Git, Docker, Kubernetes, and more
@@ -89,7 +89,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Lazygit](https://github.com/jesseduffield/lazygit) & [Lazydocker](https://github.com/jesseduffield/lazydocker) 🦥🐳
 
-- **Config:** See `private_Library/private_Application Support/lazygit/config.yml` and `lazydocker/config.yml`
+- **Config:** See [`private_Library/private_Application Support/lazygit/config.yml`](private_Library/private_Application%20Support/lazygit/config.yml) and [`lazydocker/config.yml`](lazydocker/config.yml)
 - **Features:**
   - Custom color themes matching the rest of the setup
   - Keybindings for branch management, PR creation, GitHub integration, and more
@@ -98,7 +98,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Eza](https://github.com/eza-community/eza) 📁
 
-- **Config:** See `dot_config/eza/theme.yml`
+- **Config:** See [`dot_config/eza/theme.yml`](dot_config/eza/theme.yml)
 - **Features:**
   - Modern replacement for `ls` with icons, Git status, and colorized output
   - Custom color theme matching Tokyo Night
@@ -106,7 +106,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Atuin](https://github.com/atuinsh/atuin) 🕰️
 
-- **Config:** See `dot_config/atuin/config.toml`
+- **Config:** See [`dot_config/atuin/config.toml`](dot_config/atuin/config.toml)
 - **Features:**
   - Shell history sync and search
   - Session-based filtering for up-arrow history
@@ -114,26 +114,26 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Starship Prompt](https://starship.rs/) 🌟
 
-- **Config:** See `dot_config/starship.toml`
+- **Config:** See [`dot_config/starship.toml`](dot_config/starship.toml)
 - **Features:**
   - Custom prompt symbols and module settings
   - Integration with Direnv, Sudo, and more
 
 ### [Direnv](https://direnv.net/) 🌱
 
-- **Config:** See `dot_config/direnv/direnv.toml`
+- **Config:** See [`dot_config/direnv/direnv.toml`](dot_config/direnv/direnv.toml)
 - **Features:**
   - Automatic loading of `.envrc` and `.env` files for project-specific environments
 
 ### [Delta](https://github.com/dandavison/delta) 🌈
 
-- **Config:** See `dot_config/bat/bat.conf` and Git config
+- **Config:** See [`dot_config/bat/bat.conf`](dot_config/bat/bat.conf) and Git config
 - **Features:**
   - Syntax-highlighted diffs for Git, Fish, and other tools
 
 ### [Ghostty](https://ghostty.app/) 👻
 
-- **Config:** See `dot_config/ghostty/config`
+- **Config:** See [`dot_config/ghostty/config`](dot_config/ghostty/config)
 - **Features:**
   - GPU-accelerated terminal emulator
   - Custom font, keybindings, and Tokyo Night theme
@@ -141,7 +141,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Btop](https://github.com/aristocratos/btop) 📊
 
-- **Config:** See `dot_config/btop/btop.conf`
+- **Config:** See [`dot_config/btop/btop.conf`](dot_config/btop/btop.conf)
 - **Features:**
   - Resource monitor
   - Vim keybindings and detailed graphs
@@ -156,26 +156,26 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ### [Ripgrep](https://github.com/BurntSushi/ripgrep) 🦸
 
-- **Config:** See `dot_config/ripgrep/config`
+- **Config:** See [`dot_config/ripgrep/config`](dot_config/ripgrep/config)
 - **Features:**
   - Fast recursive search with custom ignore rules and color output
 
 ### [pgcli](https://www.pgcli.com/) 🐘
 
-- **Config:** See `dot_config/pgcli/config`
+- **Config:** See [`dot_config/pgcli/config`](dot_config/pgcli/config)
 - **Features:**
   - Enhanced Postgres CLI with auto-completion, syntax highlighting, and Vi mode
 
 ### [K9s](https://k9scli.io/) 🐶
 
-- **Config:** See `dot_config/k9s/config.yml` and `plugin.yml`
+- **Config:** See [`dot_config/k9s/config.yml`](dot_config/k9s/config.yml) and [`plugin.yml`](dot_config/k9s/plugin.yml)
 - **Features:**
   - Terminal UI for Kubernetes clusters
   - Custom plugins for viewing logs with `bat`
 
 ### [Wireshark](https://www.wireshark.org/) 🦈
 
-- **Config:** See `dot_config/wireshark/preferences`
+- **Config:** See [`dot_config/wireshark/preferences`](dot_config/wireshark/preferences)
 - **Features:**
   - Custom font and column setup for packet analysis
 
@@ -183,8 +183,8 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ## Package Management 📦
 
-- **Homebrew**: All packages and casks are managed via `Brewfile.private` and `Brewfile.work`
-- **NPM/Node**: Global packages installed via `run_once_install_packages.sh`
+- **Homebrew**: All packages and casks are managed via [`Brewfile.private`](Brewfile.private) and [`Brewfile.work`](Brewfile.work)
+- **NPM/Node**: Global packages installed via [`run_once_install_packages.sh`](run_once_install_packages.sh)
 - **Go, Rust, Python**: Install scripts for language-specific tools and formatters
 
 ---
@@ -220,8 +220,8 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ## Custom Scripts 🧑‍💻
 
-- See `private_dot_local/bin/` for utility scripts:
-  - `backup`, `cht`, `custom-update`, `fonttest`, `rgfzf`, `switch-main-display`, `transfer`, `untilfail`, etc.
+- See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
+  - [`backup`](private_dot_local/bin/backup), [`cht`](private_dot_local/bin/cht), [`custom-update`](private_dot_local/bin/custom-update), [`fonttest`](private_dot_local/bin/fonttest), [`rgfzf`](private_dot_local/bin/rgfzf), [`switch-main-display`](private_dot_local/bin/switch-main-display), [`transfer`](private_dot_local/bin/transfer), [`untilfail`](private_dot_local/bin/untilfail), etc.
 - Many scripts use FZF, Bat, Age, and other CLI tools for enhanced workflows.
 
 ---
