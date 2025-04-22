@@ -1,29 +1,4 @@
 [
-  // NOTE: tab keybindings, put them on hold for now
-  // {
-  //   "bindings": {
-  //     "shift-tab": "menu::SelectPrevious",
-  //     "tab": "menu::SelectNext"
-  //   }
-  // },
-  // {
-  //   "context": "Editor && showing_completions",
-  //   "bindings": {
-  //     "enter": "editor::ConfirmCompletion",
-  //     "ctrl-j": "editor::ConfirmCompletion",
-  //     "shift-tab": "editor::ContextMenuPrevious",
-  //     "tab": "editor::ContextMenuNext"
-  //   }
-  // },
-  // {
-  //   "context": "Editor && mode == full && edit_prediction",
-  //   "bindings": {
-  //     "tab": "editor::NextEditPrediction",
-  //     "shift-tab": "editor::PreviousEditPrediction",
-  //     "enter": "editor::AcceptPartialEditPrediction",
-  //     "ctrl-j": "editor::AcceptEditPrediction"
-  //   }
-  // },
   {
     "use_key_equivalents": true,
     "bindings": {
@@ -81,7 +56,7 @@
       "space ,": "tab_switcher::Toggle",
       "space G": "git_panel::ToggleFocus",
       "cmd-shift-g": "git_panel::ToggleFocus",
-      "space g g": ["task::Spawn", { "task_name": "lazygit", "reveal_target": "center" }],
+      "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
       "space s g": "pane::DeploySearch",

@@ -10,8 +10,10 @@ fish_vi_key_bindings
 set -gx BROWSER "/Applications/Zen\ Browser.app/Contents/MacOS/zen"
 set -gx PAGER "bat --plain"
 set -gx TERMINAL ghostty
-set -gx EDITOR nvim
-set -gx VISUAL nvim
+if not set -q ZED_TERM
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
+end
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'

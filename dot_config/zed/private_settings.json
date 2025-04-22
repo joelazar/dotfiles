@@ -10,7 +10,6 @@
     "**/.settings",
     "**/.vscode",
     "**/.idea",
-    // "**/node_modules",
     "**/.serverless",
     "**/build",
     "**/dist",
@@ -102,14 +101,14 @@
           "create_file": true,
           "delete_path": true,
           "diagnostics": true,
-          "find_replace_file": true,
+          "edit_file": true,
           "fetch": true,
           "list_directory": true,
           "move_path": true,
           "now": true,
           "path_search": true,
           "read_file": true,
-          "regex_search": true,
+          "grep": true,
           "rename": true,
           "symbol_info": true,
           "thinking": true
@@ -127,7 +126,7 @@
     "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-3-7-sonnet"
+      "model": "o4-mini"
     }
   },
   "tab_bar": {
@@ -236,7 +235,7 @@
     },
     "env": {
       "GIT_EDITOR": "zed --wait",
-      "EDITOR": "zed --wait"
+      "EDITOR": "zed"
     },
     "working_directory": "current_project_directory"
   },
