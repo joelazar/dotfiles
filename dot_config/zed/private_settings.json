@@ -48,21 +48,9 @@
       "available_models": [
         {
           "provider": "ollama",
-          "name": "gemma3:27b-it-qat",
-          "display_name": "Gemma 3 - 27B",
-          "max_tokens": 128000
-        },
-        {
-          "provider": "ollama",
           "name": "phi4",
           "display_name": "Phi 4 - 14B",
           "max_tokens": 16000
-        },
-        {
-          "provider": "ollama",
-          "name": "qwq",
-          "display_name": "QWQ - 32B",
-          "max_tokens": 128000
         }
       ]
     }
@@ -106,7 +94,7 @@
           "list_directory": true,
           "move_path": true,
           "now": true,
-          "path_search": true,
+          "find_path": true,
           "read_file": true,
           "grep": true,
           "rename": true,
@@ -126,7 +114,7 @@
     "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "o4-mini"
+      "model": "claude-3-7-sonnet"
     }
   },
   "tab_bar": {
@@ -197,6 +185,12 @@
     "enabled": true
   },
   "vim": {
+    "cursor_shape": {
+      "normal": "hollow",
+      "insert": "bar",
+      "replace": "block",
+      "visual": "underline"
+    },
     "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
     "use_multiline_find": true,
