@@ -2,25 +2,29 @@
 
 ## Screenshots 🖼️
 
-### Wallpaper 🖌️
+### [Wallpaper](https://unsplash.com/photos/hot-air-balloons-during-daytime-JiLTJODH5j4) + [Raycast](https://www.raycast.com/) 🖌️
 
-![joedotfiles - wallpaper](https://github.com/joelazar/dotfiles/assets/16268238/bfa565ef-ebcd-467c-927d-7293a74324b8)
+![joedotfiles - wallpaper+raycast](https://github.com/user-attachments/assets/d6a13e1c-9266-407d-9342-976b9ec99e40)
 
-### Neovim with [custom config](https://github.com/joelazar/nvim-config) 📝
+### Neovim with [my custom config](https://github.com/joelazar/nvim-config) 📝
 
-![joedotfiles - neovim](https://github.com/joelazar/dotfiles/assets/16268238/9a81f29a-1929-43d7-a87a-ae2da28469d3)
+![joedotfiles - neovim](https://github.com/user-attachments/assets/b1f074d8-afb9-46eb-a75d-6d7e9837b565)
 
-### Eza + FZF 📂🔍
+### [Eza](https://github.com/eza-community/eza) + [FZF](https://github.com/junegunn/fzf) 📂🔍
 
-![joedotfiles - eza+fzf](https://github.com/joelazar/dotfiles/assets/16268238/c40498f8-e082-4c21-9b96-c31ed56df758)
+![joedotfiles - eza+fzf](https://github.com/user-attachments/assets/9f991e04-a29d-411d-a88e-b039e4b69179)
 
-### Lazygit 🦥🌱
+### [Lazygit](https://github.com/jesseduffield/lazygit) 🦥🌱
 
-![joedotfiles - lazygit](https://github.com/joelazar/dotfiles/assets/16268238/d5728557-8192-44ce-a88d-d076827e9f38)
+![joedotfiles - lazygit](https://github.com/user-attachments/assets/45fbe8ec-f124-4c64-9a17-64123076993f)
 
-### Firefox + [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/) 🦊⌨️
+### [Zen browser](https://zen-browser.app/) 🧘‍♀️
 
-![joedotfiles - firefox + vimium](https://github.com/joelazar/dotfiles/assets/16268238/b95dfd66-9ee7-42a7-b2c2-76c190ea0a3a)
+![joedotfiles - zen](https://github.com/user-attachments/assets/bdd31b4c-c3e2-4267-8675-871ec7266585)
+
+### [Zed](https://zed.dev/) 📝
+
+![joedotfiles - zed](https://github.com/user-attachments/assets/7b08edeb-661a-4548-bfab-18ffc43b273e)
 
 ---
 
