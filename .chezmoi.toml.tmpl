@@ -9,10 +9,12 @@
 
 {{- $email := promptString "Git email address for the author/committer" }}
 {{- $name := promptString "Git username for the author/committer" }}
+{{- $type := promptStringOnce . "type" "Type (work or private)" | replaceAllRegex "^(work|private)$" "$1" | default "work" }}
 
 [data]
     email = "{{ $email }}"
     name = "{{ $name }}"
+    type = "{{ $type }}"
 
 [diff]
     format = "git"

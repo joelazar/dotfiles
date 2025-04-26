@@ -60,12 +60,24 @@ else
     print_result $? "Docker buildx configured"
 fi
 
-# TODO: this might not work when there is a file available with the name sudo_local.template name
+# Enable Touch ID for sudo
 if [ -f /etc/pam.d/sudo_local ]; then
-    print_success "Enable touchid for sudo"
-else
+    # Check if Touch ID is already enabled
+    if grep -q "pam_tid.so" /etc/pam.d/sudo_local; then
+        print_success "Touch ID for sudo already enabled"
+    else
+        echo "auth       sufficient     pam_tid.so" | sudo tee -a /etc/pam.d/sudo_local
+        print_result $? "Enable Touch ID for sudo"
+    fi
+elif [ -f /etc/pam.d/sudo_local.template ]; then
+    # If template exists, copy it and add the Touch ID configuration
+    sudo cp /etc/pam.d/sudo_local.template /etc/pam.d/sudo_local
     echo "auth       sufficient     pam_tid.so" | sudo tee -a /etc/pam.d/sudo_local
-    print_result $? "Enable touchid for sudo"
+    print_result $? "Enable Touch ID for sudo (from template)"
+else
+    # Create new file
+    echo "auth       sufficient     pam_tid.so" | sudo tee /etc/pam.d/sudo_local
+    print_result $? "Enable Touch ID for sudo (new file)"
 fi
 
 # NOTE: the following configuration currently only possible to configure manually
