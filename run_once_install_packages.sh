@@ -39,6 +39,7 @@ print_in_purple "Package managers\n"
 print_in_purple "NPM packages\n"
 
 install_npm_package "@anthropic-ai/claude-code"
+install_npm_package "@openai/codex"
 install_npm_package "npm-check"
 install_npm_package "rag-crawler"
 install_npm_package "yalc"
