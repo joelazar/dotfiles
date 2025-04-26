@@ -79,6 +79,8 @@
       "write": {
         "name": "Write",
         "tools": {
+          "web_search": true,
+          "contents": true,
           "open": true,
           "create_directory": true,
           "terminal": true,
@@ -145,6 +147,10 @@
   "notification_panel": {
     "button": false
   },
+  "git_panel": {
+    "button": false
+  },
+
   "tabs": {
     "git_status": true,
     "file_icons": true,
