@@ -148,7 +148,3 @@ set -U __done_exclude n
 if test -e $HOME/.config/fish/.local.fish
     source $HOME/.config/fish/.local.fish
 end
-
-# Added by OrbStack: command-line tools and integration
-# This won't be added again if you remove it.
-source ~/.orbstack/shell/init2.fish 2>/dev/null || :
