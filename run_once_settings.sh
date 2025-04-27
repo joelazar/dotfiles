@@ -80,9 +80,24 @@ else
     print_result $? "Enable Touch ID for sudo (new file)"
 fi
 
-# NOTE: the following configuration currently only possible to configure manually
-# swap ctrl and function keys
-# do not change input source for ctrl+space
-# setup night shift
-# update host
-# allow apps downloaded from anywhere
+# Update hostname
+ask_for_confirmation "Would you like to set a new hostname?"
+if answer_is_yes; then
+    ask "Enter new hostname:"
+    hostname=$REPLY
+    execute "sudo scutil --set ComputerName $hostname" "Set computer name to $hostname"
+    execute "sudo scutil --set HostName $hostname" "Set host name to $hostname"
+    execute "sudo scutil --set LocalHostName $hostname" "Set local host name to $hostname"
+    execute "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $hostname" "Set NetBIOS name to $hostname"
+fi
+
+# Allow apps downloaded from anywhere
+execute "sudo spctl --master-disable" "Allow apps downloaded from anywhere"
+execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable quarantine for downloaded apps"
+
+print_warning "Some changes may require a restart or logout to take effect."
+
+ask_for_confirmation "Would you like to restart your computer now?"
+if answer_is_yes; then
+    sudo shutdown -r now
+fi
