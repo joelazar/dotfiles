@@ -72,7 +72,7 @@ execute() {
     # Execute commands in background
 
     eval "$CMDS" \
-        &>/dev/null \
+        >/dev/null \
         2>"$TMP_FILE" &
 
     cmdsPID=$!
