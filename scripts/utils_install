@@ -6,6 +6,162 @@ SOURCE_DIR=$(chezmoi source-path)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+install_homebrew() {
+  if ! cmd_exists "brew"; then
+    print_in_purple "Installing Homebrew\n"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    # Setup Homebrew in PATH
+    if [ -f /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      print_success "Homebrew installed and configured"
+    else
+      print_error "Failed to install Homebrew"
+    fi
+  else
+    print_success "Homebrew already installed"
+  fi
+}
+
+install_chezmoi() {
+  if ! cmd_exists "chezmoi"; then
+    print_in_purple "Installing and configuring Chezmoi\n"
+    brew install chezmoi
+
+    # Check if dotfiles are already cloned
+    if [ ! -d "$HOME/.local/share/chezmoi" ]; then
+      git clone git@github.com:joelazar/dotfiles.git ~/.local/share/chezmoi
+      print_result $? "Cloned dotfiles repository"
+    else
+      print_success "Dotfiles repository already exists"
+    fi
+
+    # Initialize and apply Chezmoi
+    chezmoi init
+    print_result $? "Initialized Chezmoi"
+
+    chezmoi apply
+    print_result $? "Applied Chezmoi configuration"
+  else
+    print_success "Chezmoi already installed"
+  fi
+}
+
+install_brew_packages() {
+  print_in_purple "Installing packages from Brewfile\n"
+  local brewfile=""
+  
+  if [ "$(chezmoi data | jq -r '.type // ""')" = "work" ]; then
+    print_info "Using work Brewfile"
+    brewfile="$SOURCE_DIR/Brewfile.work"
+  else
+    print_info "Using private Brewfile"
+    brewfile="$SOURCE_DIR/Brewfile.private"
+  fi
+  
+  if [ -f "$brewfile" ]; then
+    brew bundle --file="$brewfile"
+    print_result $? "Installed packages from $(basename "$brewfile")"
+  else
+    print_error "$(basename "$brewfile") not found"
+  fi
+}
+
+install_rust() {
+  if ! cmd_exists "rustc"; then
+    print_in_purple "Installing Rust using rustup\n"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+    # Source cargo environment
+    if [ -f "$HOME/.cargo/env" ]; then
+      . "$HOME/.cargo/env"
+      print_success "Rust installed and configured"
+    else
+      print_error "Failed to install Rust"
+    fi
+  else
+    print_success "Rust already installed"
+  fi
+}
+
+install_magic() {
+  if ! cmd_exists "magic"; then
+    print_in_purple "Installing Magic from Modular\n"
+
+    # Install Magic
+    curl -ssL https://magic.modular.com/deb13a78-95b6-40bf-8bd0-52802eb302a8 | bash
+    print_result $? "Install Magic"
+
+    # Add fish completion if fish is the shell
+    if [ "$SHELL" = "/opt/homebrew/bin/fish" ] && [ -d "$HOME/.config/fish/completions" ]; then
+      # Check if completion already added
+      if ! grep -q "magic completion" "$HOME/.config/fish/completions/magic.fish" 2>/dev/null; then
+        echo 'magic completion --shell fish | source' >>"$HOME/.config/fish/completions/magic.fish"
+        print_result $? "Add Magic completion to fish"
+      else
+        print_success "Magic fish completion already configured"
+      fi
+    fi
+  else
+    print_success "Magic already installed"
+  fi
+}
+
+setup_github_cli() {
+  # Check if gh is installed and authenticated
+  if cmd_exists "gh"; then
+    # Check if authenticated
+    if ! gh auth status &>/dev/null; then
+      print_warning "GitHub CLI not authenticated. Please authenticate first by running:\n   gh auth login"
+      print_warning "Plugin installation may fail without authentication."
+
+      ask_for_confirmation "Would you like to authenticate now?"
+      if answer_is_yes; then
+        execute "gh auth login" "Authenticate GitHub CLI"
+      fi
+    else
+      print_success "GitHub CLI authenticated"
+    fi
+    return 0
+  else
+    print_error "GitHub CLI (gh) not installed. Install it with 'brew install gh' first."
+    return 1
+  fi
+}
+
+install_yazi_plugins() {
+  local -a plugin_list=("${@}")
+  
+  if cmd_exists "yazi"; then
+    print_in_purple "Installing Yazi plugins\n"
+
+    # Make sure yazi config directory exists
+    mkdir -p ~/.config/yazi/flavors
+
+    # Get list of installed plugins
+    installed_plugins=$(ya pack -l 2>/dev/null | awk '{print $1}')
+    
+    for plugin in "${plugin_list[@]}"; do
+      local plugin_name=$(echo "$plugin" | cut -d: -f2 2>/dev/null || echo "$plugin" | cut -d/ -f2)
+      if ! echo "$installed_plugins" | grep -q "$plugin_name"; then
+        execute "ya pack -a $plugin" "Yazi $plugin_name plugin"
+      else
+        print_success "Yazi $plugin_name plugin already installed"
+      fi
+    done
+
+    # Install theme if not already present
+    if [ ! -d "$HOME/.config/yazi/flavors/tokyo-night.yazi" ]; then
+      execute "git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi" "Yazi Tokyo Night theme"
+    else
+      print_success "Yazi Tokyo Night theme already installed"
+    fi
+  else
+    print_warning "Yazi not installed. Skipping Yazi plugins installation."
+    print_warning "Install Yazi first with 'brew install yazi' and re-run this script."
+  fi
+}
+
 install_fish_plugin() {
   declare -r PACKAGEPATH="$1"
   declare -r PACKAGENAME="$2"
@@ -47,4 +203,16 @@ install_gh_plugin() {
   else
     print_success "$PLUGIN"
   fi
+}
+
+install_packages_from_list() {
+  local -r type="$1"
+  local -r installer="$2"
+  local -a packages=("${@:3}")
+  
+  print_in_purple "$type packages\n"
+  
+  for package in "${packages[@]}"; do
+    $installer "$package"
+  done
 }
