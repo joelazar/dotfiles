@@ -23,8 +23,8 @@
       "ctrl-j": "workspace::ActivatePaneDown",
       "alt-l": "vim::ResizePaneRight",
       "alt-h": "vim::ResizePaneLeft",
-      "alt-k": "vim::ResizePaneDown",
-      "alt-j": "vim::ResizePaneUp"
+      "alt-j": "vim::ResizePaneDown",
+      "alt-k": "vim::ResizePaneUp"
     }
   },
   {
@@ -53,7 +53,7 @@
     "context": "ProjectPanel || EmptyPane || (Editor && VimControl && !VimWaiting && !menu)",
     "bindings": {
       "cmd-shift-s": "workspace::SaveWithoutFormat",
-      "space ,": "tab_switcher::Toggle",
+      "space ,": "tab_switcher::ToggleAll",
       "space G": "git_panel::ToggleFocus",
       "cmd-shift-g": "git_panel::ToggleFocus",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],

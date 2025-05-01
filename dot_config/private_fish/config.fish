@@ -86,17 +86,18 @@ alias chown='chown --preserve-root'
 alias g="git"
 alias l='eza --icons --group-directories-first'
 alias lg='lazygit'
-alias lzd='lazydocker'
 alias ll='eza -la --git --group-directories-first --icons'
 alias ls='eza --icons --group-directories-first'
+alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
-alias rmf='/bin/rm'
+alias psql="psql-17"
 alias q="exit"
+alias rmf='/bin/rm'
 alias v='nvim'
+alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
-alias vc='nvim --clean'
 
 # infra
 alias k='kubectl'
