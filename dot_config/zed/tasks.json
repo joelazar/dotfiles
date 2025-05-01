@@ -42,12 +42,28 @@
     "env": { "EDITOR": "zed" }
   },
   {
-    "label": "project_search",
-    "command": "rgfzf",
-    "cwd": "$ZED_WORKTREE_ROOT",
-    "allow_concurrent_runs": false,
-    "use_new_terminal": false,
+    "label": "file finder",
+    "command": "zed \"$(tv files)\"",
     "reveal": "always",
-    "hide": "on_success"
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  },
+  {
+    "label": "find in files",
+    "command": "zed \"$(tv text)\"",
+    "reveal": "always",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true
+  },
+  {
+    "label": "find in files - selected text",
+    "command": "zed \"$(tv text -i $ZED_SELECTED_TEXT)\"",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "reveal": "always",
+    "hide": "always"
   }
 ]
