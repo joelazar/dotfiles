@@ -50,19 +50,22 @@
           "provider": "ollama",
           "name": "phi4",
           "display_name": "Phi 4 - 14B",
-          "max_tokens": 16384
+          "max_tokens": 16384,
+          "supports_tools": false
         },
         {
           "provider": "ollama",
           "name": "qwen3:30b-a3b",
           "display_name": "Qwen 3 - 30B",
-          "max_tokens": 131072
+          "max_tokens": 131072,
+          "supports_tools": false
         },
         {
           "provider": "ollama",
           "name": "qwen3:4b",
           "display_name": "Qwen 3 - 4B",
-          "max_tokens": 32768
+          "max_tokens": 32768,
+          "supports_tools": false
         }
       ]
     }
@@ -76,8 +79,8 @@
     "share_on_join": false
   },
   "features": {
-    "edit_prediction_provider": "zed"
-    // "edit_prediction_provider": "copilot"
+    // "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
@@ -85,7 +88,7 @@
   },
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
-  "assistant": {
+  "agent": {
     "inline_assistant_model": {
       "provider": "copilot_chat",
       "model": "claude-3-7-sonnet"
