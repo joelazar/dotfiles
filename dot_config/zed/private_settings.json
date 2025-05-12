@@ -134,8 +134,8 @@
     "default_height": 320,
     "enable_experimental_live_diffs": true,
     "default_model": {
-      "provider": "copilot_chat",
-      "model": "claude-3-7-sonnet"
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet-latest"
     }
   },
   "tab_bar": {

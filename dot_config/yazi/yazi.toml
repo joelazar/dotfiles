@@ -10,9 +10,9 @@ edit = [
   { run = '${EDITOR:-vi} "$@"', desc = "Edit", block = true, orphan = false, for = "macos" },
 ]
 browser = [
-  { run = '${BROWSER:-firefox} "$@"', desc = "Browser", for = "macos" },
+  { run = '${BROWSER:-firefox} "$@"', desc = "Browser", orphan = true, for = "macos" },
 ]
-open = [{ run = 'open "$@"', desc = "Open", for = "macos" }]
+open = [{ run = 'open "$@"', desc = "Open", orphan = true, for = "macos" }]
 reveal = [{ run = 'open -R "$1"', desc = "Reveal", for = "macos" }]
 extract = [
   { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "macos" },
