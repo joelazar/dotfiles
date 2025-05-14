@@ -79,13 +79,17 @@
     "share_on_join": false
   },
   "features": {
-    // "edit_prediction_provider": "zed"
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "zed"
+    // "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
     "right_padding": 0.15
   },
+  "minimap": { "show": "auto" },
+  "search": { "button": false },
+  "diagnostics": { "button": false },
+  "title_bar": { "show_project_items": false, "show_branch_name": false },
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
@@ -414,10 +418,10 @@
         "source.organizeImports": true
       },
       "language_servers": ["gopls", "golangci-lint"]
-    },
-    "Markdown": {
-      "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
     }
+    // "Markdown": {
+    //   "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
+    // }
   },
   "jupyter": {
     "kernel_selections": {
@@ -437,6 +441,7 @@
     "fish": true,
     "git-firefly": true,
     "golangci-lint": true,
+    "harper": true,
     "html": true,
     "latex": true,
     "log": true,
@@ -445,7 +450,6 @@
     "markdown-oxide": true,
     "nginx": true,
     "nix": true,
-    "perplexity": true,
     "prisma": true,
     "ruff": true,
     "scheme": true,
