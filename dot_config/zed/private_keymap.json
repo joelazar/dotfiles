@@ -14,7 +14,7 @@
     }
   },
   {
-    "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView",
+    "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || Diagnostics",
     "bindings": {
       "cmd-d": null,
       "ctrl-h": "workspace::ActivatePaneLeft",
@@ -24,7 +24,14 @@
       "alt-l": "vim::ResizePaneRight",
       "alt-h": "vim::ResizePaneLeft",
       "alt-j": "vim::ResizePaneDown",
-      "alt-k": "vim::ResizePaneUp"
+      "alt-k": "vim::ResizePaneUp",
+      "alt-right": "pane::ActivateNextItem",
+      "alt-left": "pane::ActivatePreviousItem",
+      "] b": "pane::ActivateNextItem",
+      "[ b": "pane::ActivatePreviousItem",
+      "alt-,": "pane::SwapItemLeft",
+      "alt-.": "pane::SwapItemRight",
+      "alt-p": "pane::TogglePinTab"
     }
   },
   {
@@ -104,14 +111,6 @@
       "g p": "editor::Paste",
       "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
-      // cannot override default keybindings
-      "alt-right": "pane::ActivateNextItem",
-      "alt-left": "pane::ActivatePreviousItem",
-      "] b": "pane::ActivateNextItem",
-      "[ b": "pane::ActivatePreviousItem",
-      "alt-,": "pane::SwapItemLeft",
-      "alt-.": "pane::SwapItemRight",
-      "alt-p": "pane::TogglePinTab",
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown"
     }
