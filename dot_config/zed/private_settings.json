@@ -23,6 +23,22 @@
   "bottom_dock_layout": "right_aligned",
   "language_models": {
     "openai": { "version": "1", "available_models": [] },
+    // "openai": {
+    //   "api_url": "https://openrouter.ai/api/v1",
+    //   "available_models": [
+    //     {
+    //       "name": "deepseek/deepseek-r1",
+    //       "display_name": "DeepSeek R1",
+    //       "max_tokens": 64000
+    //     },
+    //     {
+    //       "name": "deepseek/deepseek-chat",
+    //       "display_name": "DeepSeek V3",
+    //       "max_tokens": 64000
+    //     }
+    //   ],
+    //   "version": "1"
+    // },
     "anthropic": { "version": "1", "available_models": [] },
     "copilot_chat": { "available_models": [] },
     "google": { "available_models": [] },
