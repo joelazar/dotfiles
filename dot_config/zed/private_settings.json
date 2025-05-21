@@ -102,7 +102,7 @@
     "left_padding": 0.15,
     "right_padding": 0.15
   },
-  "minimap": { "show": "auto" },
+  // "minimap": { "show": "auto" },
   "search": { "button": false },
   "diagnostics": { "button": false },
   "title_bar": { "show_project_items": false, "show_branch_name": false },
@@ -110,8 +110,10 @@
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "claude-3-7-sonnet"
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet-latest"
+      // "provider": "copilot_chat",
+      // "model": "claude-3.7-sonnet"
     },
     "always_allow_tool_actions": true,
     "profiles": {
@@ -150,9 +152,9 @@
     "button": false,
     "version": "2",
     "dock": "right",
+    "stream_edits": true,
     "default_width": 640,
     "default_height": 320,
-    "enable_experimental_live_diffs": true,
     "default_model": {
       "provider": "zed.dev",
       "model": "claude-3-7-sonnet-latest"
@@ -189,7 +191,6 @@
   "git_panel": {
     "button": false
   },
-
   "tabs": {
     "git_status": true,
     "file_icons": true,
@@ -200,7 +201,7 @@
     "modal_max_width": "medium"
   },
   "active_pane_modifiers": {
-    "inactive_opacity": 0.6,
+    "inactive_opacity": 0.9,
     "border_size": 0.5
   },
   "preferred_line_length": 140,

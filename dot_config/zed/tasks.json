@@ -46,6 +46,7 @@
     "command": "zed \"$(tv files)\"",
     "reveal": "always",
     "hide": "always",
+    "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
     "use_new_terminal": true
   },
@@ -54,6 +55,7 @@
     "command": "zed \"$(tv text)\"",
     "reveal": "always",
     "hide": "always",
+    "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
     "use_new_terminal": true
   },

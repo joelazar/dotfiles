@@ -123,10 +123,7 @@
       "g s r": ["vim::PushChangeSurrounds", {}],
       "g s d": "vim::PushDeleteSurrounds",
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
-      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
-      "n": ["workspace::SendKeystrokes", "n z z z v"],
-      "shift-n": ["workspace::SendKeystrokes", "shift-n z z z v"],
-      "shift-g": ["workspace::SendKeystrokes", "shift-g z z"]
+      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"]
     }
   },
   {
@@ -221,6 +218,20 @@
     "bindings": {
       "o": "editor::ExpandAllDiffHunks",
       "r": "git::Restore"
+    }
+  },
+  {
+    "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
+    "bindings": {
+      // mini.ai plugin behavior
+      "Q": "vim::MiniQuotes",
+      "B": "vim::MiniBrackets"
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-x": "vim::Exchange"
     }
   }
 ]
