@@ -1,4 +1,4 @@
-# [joelazar](https://github.com/joelazar)’s dotfiles 🚀
+# [joelazar](https://github.com/joelazar)'s dotfiles 🚀
 
 ## Screenshots 🖼️
 
@@ -163,6 +163,38 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 - **Config:** See [`dot_config/ripgrep/config`](dot_config/ripgrep/config)
 - **Features:**
   - Fast recursive search with custom ignore rules and color output
+
+### [Bruno](https://www.usebruno.com/) 🐶
+
+- **Features:**
+  - API client for developers
+  - Open-source alternative to Postman
+  - Also available as CLI tool (`bruno-cli`)
+
+### [Ice](https://github.com/jordanbaird/Ice) ❄️
+
+- **Features:**
+  - Menu bar customization tool for macOS
+  - Hide, reorder, or add custom menu bar items
+  - Customize appearance and behavior of the menu bar
+
+### [Stats](https://github.com/exelban/stats) 📊
+
+- **Features:**
+  - macOS system monitor in the menu bar
+  - Track CPU, GPU, memory, network, and more
+
+### [Television](https://github.com/jamesdh/television) 📺
+
+- **Features:**
+  - CLI tool for streaming video feeds to the terminal
+  - Support for multiple video formats and inputs
+
+### [Todoist](https://todoist.com/) ✅
+
+- **Features:**
+  - Task management and productivity app
+  - Integrated as a macOS application
 
 ### [pgcli](https://www.pgcli.com/) 🐘
 
