@@ -64,24 +64,24 @@
       "available_models": [
         {
           "provider": "ollama",
-          "name": "phi4",
-          "display_name": "Phi 4 - 14B",
-          "max_tokens": 16384,
-          "supports_tools": false
+          "name": "devstral:24b",
+          "display_name": "Mistral Devstral - 24B",
+          "max_tokens": 131072,
+          "supports_tools": true
         },
         {
           "provider": "ollama",
           "name": "qwen3:30b-a3b",
           "display_name": "Qwen 3 - 30B",
           "max_tokens": 131072,
-          "supports_tools": false
+          "supports_tools": true
         },
         {
           "provider": "ollama",
           "name": "qwen3:4b",
           "display_name": "Qwen 3 - 4B",
           "max_tokens": 32768,
-          "supports_tools": false
+          "supports_tools": true
         }
       ]
     }
