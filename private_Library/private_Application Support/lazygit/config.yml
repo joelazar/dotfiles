@@ -116,6 +116,12 @@ customCommands:
     loadingText: "Opening GitHub - Pull request ..."
 
   - key: "<c-p>"
+    command: "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
+    context: "localBranches"
+    loadingText: "Pruning..."
+    description: "Prune local branches whose upstream is gone"
+
+  - key: "<c-p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"
     description: "Prune deleted remote branches"
@@ -192,46 +198,16 @@ customCommands:
     loadingText: "Creating conventional commit..."
 
   - key: "<c-c>"
-    command: git commit -m '{{ .Form.emoji }} {{ .Form.message }}'
-    context: files
-    description: Commit changes using gitmojis
-    prompts:
-      - command: gitmoji -l
-        filter: ^(.*?) - (:.*?:) - (.*)$
-        key: emoji
-        labelFormat: "{{ .group_1 }} - {{ .group_3 }}"
-        title: "Select a gitmoji:"
-        type: menuFromCommand
-        valueFormat: "{{ .group_2 }}"
-      - key: message
-        title: "Enter a commit message:"
-        type: input
-
-  # - key: "<c-c>"
-  #   command: "gitmoji -c"
-  #   context: "files"
-  #   description: "Open gitmoji"
-  #   loadingText: "Opening gitmoji cli tool"
+    command: "gitmoji -c"
+    context: "files"
+    description: "Open gitmoji"
+    loadingText: "Opening gitmoji cli tool"
+    subprocess: true
 
   - key: "R"
     command: "git reset --soft HEAD~1"
     context: "files"
     description: "Undo last commit"
-
-  - key: "v"
-    context: "localBranches"
-    loadingText: "Checking out GitHub Pull Request..."
-    command: "gh pr checkout {{.Form.PullRequestNumber}}"
-    prompts:
-      - type: "menuFromCommand"
-        title: "Which PR do you want to check out?"
-        key: "PullRequestNumber"
-        command: >-
-          gh pr list --json number,title,headRefName,updatedAt
-          --template '{{`{{range .}}{{printf "#%v: %s - %s (%s)" .number .title .headRefName (timeago .updatedAt)}}{{end}}`}}'
-        filter: "#(?P<number>[0-9]+): (?P<title>.+) - (?P<ref_name>[^ ]+).*"
-        valueFormat: "{{.number}}"
-        labelFormat: '{{"#" | black | bold}}{{.number | white | bold}} {{.title | yellow | bold}}{{" [" | black | bold}}{{.ref_name | green}}{{"]" | black | bold}}'
 
   - key: "f"
     command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
