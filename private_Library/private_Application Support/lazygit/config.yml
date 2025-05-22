@@ -62,48 +62,176 @@ customCommands:
     command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
     context: "localBranches"
     loadingText: "Creating branch"
+
   - key: "<c-r>"
-    command: "gh pr create --assignee @me"
-    context: "files"
     description: "Create pull request on GitHub"
+    context: files, localBranches
+    prompts:
+      - type: "input"
+        title: "Pull Request Title"
+        key: "title"
+        initialValue: ""
+      - type: "input"
+        title: "Base Branch (leave empty for default branch)"
+        key: "base"
+        initialValue: ""
+      - type: "menu"
+        title: "Create as draft PR?"
+        key: "draft"
+        options:
+          - name: "No"
+            value: ""
+          - name: "Yes"
+            value: "--draft"
+      - type: "menu"
+        title: "Add Reviewers"
+        key: "reviewers"
+        options:
+          - name: "CNS"
+            value: "--reviewer peterbornerup,farhadh,benjaminbruun"
+          - name: "None"
+            value: ""
+    command: >
+      gh pr create
+      --assignee @me
+      --title "{{.Form.title}}"
+      --fill
+      {{ if ne .Form.base "" }}--base "{{.Form.base}}"{{ end }}
+      {{.Form.draft}}
+      {{ if eq .Form.reviewers "other" }}--reviewer "{{.Form.customReviewers}}"{{ else }}{{.Form.reviewers}}{{ end }}
     loadingText: "Creating pull request on GitHub"
-    subprocess: true
-  - key: "<c-r>"
-    command: "gh pr create --assignee @me"
-    context: "localBranches"
-    description: "Create pull request on GitHub"
-    loadingText: "Creating pull request on GitHub"
-    subprocess: true
+
   - key: "o"
     command: "gh repo view --web"
     context: "localBranches"
     description: "View Repo on GitHub"
     loadingText: "Opening GitHub - Repository ..."
-    subprocess: false
+
   - key: "O"
     command: "gh pr view --web"
     context: "localBranches"
     description: "View PR on GitHub"
     loadingText: "Opening GitHub - Pull request ..."
-    subprocess: false
+
   - key: "<c-p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"
     description: "Prune deleted remote branches"
     loadingText: "Pruning..."
+
   - key: "M"
     command: "git mergetool"
     context: "files"
     description: "Open git mergetool"
     loadingText: "Opening git mergetool"
-    subprocess: true
+
+  - key: "<c-v>"
+    context: "global"
+    description: "Create new conventional commit"
+    prompts:
+      - type: "menu"
+        key: "Type"
+        title: "Type of change"
+        options:
+          - name: "build"
+            description: "Changes that affect the build system or external dependencies"
+            value: "build"
+          - name: "feat"
+            description: "A new feature"
+            value: "feat"
+          - name: "fix"
+            description: "A bug fix"
+            value: "fix"
+          - name: "chore"
+            description: "Other changes that don't modify src or test files"
+            value: "chore"
+          - name: "ci"
+            description: "Changes to CI configuration files and scripts"
+            value: "ci"
+          - name: "docs"
+            description: "Documentation only changes"
+            value: "docs"
+          - name: "perf"
+            description: "A code change that improves performance"
+            value: "perf"
+          - name: "refactor"
+            description: "A code change that neither fixes a bug nor adds a feature"
+            value: "refactor"
+          - name: "revert"
+            description: "Reverts a previous commit"
+            value: "revert"
+          - name: "style"
+            description: "Changes that do not affect the meaning of the code"
+            value: "style"
+          - name: "test"
+            description: "Adding missing tests or correcting existing tests"
+            value: "test"
+      - type: "input"
+        title: "Scope"
+        key: "Scope"
+        initialValue: ""
+      - type: "menu"
+        key: "Breaking"
+        title: "Breaking change"
+        options:
+          - name: "no"
+            value: ""
+          - name: "yes"
+            value: "!"
+      - type: "input"
+        title: "message"
+        key: "Message"
+        initialValue: ""
+      - type: "confirm"
+        key: "Confirm"
+        title: "Commit"
+        body: "Are you sure you want to commit?"
+    command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
+    loadingText: "Creating conventional commit..."
+
   - key: "<c-c>"
-    command: "gitmoji -c"
-    context: "files"
-    description: "Open gitmoji"
-    loadingText: "Opening gitmoji cli tool"
-    subprocess: true
+    command: git commit -m '{{ .Form.emoji }} {{ .Form.message }}'
+    context: files
+    description: Commit changes using gitmojis
+    prompts:
+      - command: gitmoji -l
+        filter: ^(.*?) - (:.*?:) - (.*)$
+        key: emoji
+        labelFormat: "{{ .group_1 }} - {{ .group_3 }}"
+        title: "Select a gitmoji:"
+        type: menuFromCommand
+        valueFormat: "{{ .group_2 }}"
+      - key: message
+        title: "Enter a commit message:"
+        type: input
+
+  # - key: "<c-c>"
+  #   command: "gitmoji -c"
+  #   context: "files"
+  #   description: "Open gitmoji"
+  #   loadingText: "Opening gitmoji cli tool"
+
   - key: "R"
     command: "git reset --soft HEAD~1"
     context: "files"
     description: "Undo last commit"
+
+  - key: "v"
+    context: "localBranches"
+    loadingText: "Checking out GitHub Pull Request..."
+    command: "gh pr checkout {{.Form.PullRequestNumber}}"
+    prompts:
+      - type: "menuFromCommand"
+        title: "Which PR do you want to check out?"
+        key: "PullRequestNumber"
+        command: >-
+          gh pr list --json number,title,headRefName,updatedAt
+          --template '{{`{{range .}}{{printf "#%v: %s - %s (%s)" .number .title .headRefName (timeago .updatedAt)}}{{end}}`}}'
+        filter: "#(?P<number>[0-9]+): (?P<title>.+) - (?P<ref_name>[^ ]+).*"
+        valueFormat: "{{.number}}"
+        labelFormat: '{{"#" | black | bold}}{{.number | white | bold}} {{.title | yellow | bold}}{{" [" | black | bold}}{{.ref_name | green}}{{"]" | black | bold}}'
+
+  - key: "f"
+    command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
+    context: "commitFiles"
+    description: "Compare (difftool) with local copy"
