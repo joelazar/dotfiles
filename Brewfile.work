@@ -168,7 +168,6 @@ cask "wireshark"
 cask "zed@preview"
 cask "zen"
 mas "Bitwarden", id: 1352778147
-mas "TickTick", id: 966085870
 mas "Todoist", id: 585829637
 mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"

@@ -1,4 +1,12 @@
 {
+  "edit_predictions": {
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null
+    },
+    "enabled_in_text_threads": true
+  },
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -110,8 +118,8 @@
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
       // "provider": "copilot_chat",
       // "model": "claude-3.7-sonnet"
     },
@@ -156,8 +164,8 @@
     "default_width": 640,
     "default_height": 320,
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4-latest"
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
     }
   },
   "tab_bar": {
@@ -246,6 +254,9 @@
   "indent_guides": {
     "enabled": true,
     "coloring": "indent_aware"
+  },
+  "debugger": {
+    "button": false
   },
   "terminal": {
     "toolbar": { "breadcrumbs": false },
@@ -439,13 +450,6 @@
     // "Markdown": {
     //   "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
     // }
-  },
-  "jupyter": {
-    "kernel_selections": {
-      "typescript": "deno",
-      "javascript": "deno",
-      "python": "python3"
-    }
   },
   "auto_install_extensions": {
     "ansible": true,

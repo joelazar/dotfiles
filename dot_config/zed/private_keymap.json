@@ -16,7 +16,7 @@
   {
     "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || Diagnostics",
     "bindings": {
-      "cmd-d": null,
+      "cmd-d": "pane::SplitRight",
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
@@ -27,8 +27,6 @@
       "alt-k": "vim::ResizePaneUp",
       "alt-right": "pane::ActivateNextItem",
       "alt-left": "pane::ActivatePreviousItem",
-      "] b": "pane::ActivateNextItem",
-      "[ b": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
       "alt-p": "pane::TogglePinTab"
@@ -63,6 +61,7 @@
       "space ,": "tab_switcher::ToggleAll",
       "space G": "git_panel::ToggleFocus",
       "cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-t": "terminal_panel::ToggleFocus",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
