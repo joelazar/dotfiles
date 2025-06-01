@@ -136,14 +136,14 @@ install_yazi_plugins() {
         mkdir -p ~/.config/yazi/flavors
 
         # Get list of installed plugins
-        installed_plugins=$(ya pack -l 2>/dev/null | awk '{print $1}')
+        installed_plugins=$(ya pkg list 2>/dev/null | awk '{print $1}')
 
         for plugin in "${plugin_list[@]}"; do
             # Declare and assign separately to avoid masking return values
             local plugin_name
             plugin_name=$(echo "$plugin" | cut -d: -f2 2>/dev/null || echo "$plugin" | cut -d/ -f2)
             if ! echo "$installed_plugins" | grep -q "$plugin_name"; then
-                execute "ya pack -a $plugin" "Yazi $plugin_name plugin"
+                execute "ya pkg install $plugin" "Yazi $plugin_name plugin"
             else
                 print_success "Yazi $plugin_name plugin already installed"
             fi

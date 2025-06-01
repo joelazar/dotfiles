@@ -7,6 +7,6 @@ SOURCE_DIR=$(chezmoi source-path)
 
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
-execute "ya pack --upgrade" "Update yazi plugins"
+execute "ya pkg upgrade" "Update yazi plugins"
 
 execute "brew cleanup" "Cleanup brew"
