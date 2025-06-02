@@ -2,7 +2,7 @@ prSections:
   - title: My pull requests
     filters: is:open assignee:@me sort:created-desc
   - title: Review requested
-    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot]
   - title: Involves me
     filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc
   - title: Ready
