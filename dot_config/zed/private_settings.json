@@ -451,6 +451,13 @@
     //   "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
     // }
   },
+  // "jupyter": {
+  //   "kernel_selections": {
+  //     "typescript": "deno",
+  //     "javascript": "deno",
+  //     "python": "python3"
+  //   }
+  // },
   "auto_install_extensions": {
     "ansible": true,
     "basedpyright": true,

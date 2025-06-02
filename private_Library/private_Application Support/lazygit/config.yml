@@ -64,7 +64,6 @@ customCommands:
     command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
     context: "localBranches"
     loadingText: "Creating branch"
-
   - key: "<c-r>"
     description: "Create pull request on GitHub"
     context: files, localBranches
@@ -94,45 +93,34 @@ customCommands:
           - name: "None"
             value: ""
     command: >
-      gh pr create
-      --assignee @me
-      --title "{{.Form.title}}"
-      --fill
-      {{ if ne .Form.base "" }}--base "{{.Form.base}}"{{ end }}
-      {{.Form.draft}}
-      {{ if eq .Form.reviewers "other" }}--reviewer "{{.Form.customReviewers}}"{{ else }}{{.Form.reviewers}}{{ end }}
-    loadingText: "Creating pull request on GitHub"
+      gh pr create --assignee @me --title "{{.Form.title}}" --fill {{ if ne .Form.base "" }}--base "{{.Form.base}}"{{ end }} {{.Form.draft}} {{ if eq .Form.reviewers "other" }}--reviewer "{{.Form.customReviewers}}"{{ else }}{{.Form.reviewers}}{{ end }}
 
+    loadingText: "Creating pull request on GitHub"
   - key: "o"
     command: "gh repo view --web"
     context: "localBranches"
     description: "View Repo on GitHub"
     loadingText: "Opening GitHub - Repository ..."
-
   - key: "O"
     command: "gh pr view --web"
     context: "localBranches"
     description: "View PR on GitHub"
     loadingText: "Opening GitHub - Pull request ..."
-
   - key: "<c-p>"
     command: "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
     context: "localBranches"
     loadingText: "Pruning..."
     description: "Prune local branches whose upstream is gone"
-
   - key: "<c-p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"
     description: "Prune deleted remote branches"
     loadingText: "Pruning..."
-
   - key: "M"
     command: "git mergetool"
     context: "files"
     description: "Open git mergetool"
     loadingText: "Opening git mergetool"
-
   - key: "<c-v>"
     context: "global"
     description: "Create new conventional commit"
@@ -196,19 +184,16 @@ customCommands:
         body: "Are you sure you want to commit?"
     command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
     loadingText: "Creating conventional commit..."
-
   - key: "<c-c>"
     command: "gitmoji -c"
     context: "files"
     description: "Open gitmoji"
     loadingText: "Opening gitmoji cli tool"
-    subprocess: true
-
+    output: terminal
   - key: "R"
     command: "git reset --soft HEAD~1"
     context: "files"
     description: "Undo last commit"
-
   - key: "f"
     command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
     context: "commitFiles"
