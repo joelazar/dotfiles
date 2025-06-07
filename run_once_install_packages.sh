@@ -36,7 +36,6 @@ install_rust
 # NPM packages
 NPM_PACKAGES=(
     "@anthropic-ai/claude-code"
-    "@openai/codex"
     "npm-check"
     "rag-crawler"
     "yalc"
@@ -51,7 +50,7 @@ GO_PACKAGES=(
 
 print_in_purple "Go packages\n"
 for package in "${GO_PACKAGES[@]}"; do
-    IFS=':' read -r pkg_path pkg_name <<< "$package"
+    IFS=':' read -r pkg_path pkg_name <<<"$package"
     install_go_package "$pkg_path" "${pkg_name:-$(basename "$pkg_path")}"
 done
 
@@ -65,7 +64,7 @@ if setup_github_cli; then
         "dlvhdr/gh-dash"
         "github/gh-copilot"
     )
-    
+
     print_in_purple "GH plugins\n"
     for plugin in "${GH_PLUGINS[@]}"; do
         install_gh_plugin "$plugin"
