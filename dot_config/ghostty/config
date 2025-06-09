@@ -116,5 +116,6 @@ keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
 
 keybind = super+shift+r=reload_config
+keybind = shift+enter=text:\n
 
 shell-integration-features = no-cursor,sudo,title
