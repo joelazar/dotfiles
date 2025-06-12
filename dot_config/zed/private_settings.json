@@ -254,6 +254,63 @@
   "indent_guides": {
     "enabled": true,
     "coloring": "indent_aware"
+    // "coloring": "fixed"
+  },
+  "experimental.theme_overrides": {
+    "editor.indent_guide_active": "#e95c67",
+    "editor.indent_guide": "#515864",
+    // Indent guide color palettes (uncomment one to use):
+    // 1. Ocean tones, mixed colours
+    // "accents": ["#1e3a5f", "#2a5f7f", "#3a7fa0", "#4a9fc0", "#5abfe0", "#7ad0f0"],
+    // 2a. Ocean blue progression (increasing opacity)
+    // "accents": ["#1a2b36", "#1a3b56", "#1a4b76", "#1a5b96", "#1a6bb6", "#1a7bd6"],
+    // 2b. Ocean teal progression (increasing opacity)
+    // "accents": ["#1a2e2e", "#1a3e3e", "#1a4e4e", "#1a5e5e", "#1a6e6e", "#1a7e7e"],
+    // 2c. Ocean aqua progression (increasing opacity)
+    // "accents": ["#1a2d33", "#1a3d43", "#1a4d53", "#1a5d63", "#1a6d73", "#1a7d83"],
+    // 3. Dim purple-blue palette
+    // "accents": ["#2a2a4a", "#3a3a5a", "#4a4a6a", "#5a5a7a", "#6a6a8a", "#7a7a9a"],
+    // 4. Sunset gradient (purple to orange)
+    // "accents": ["#2a1a3a", "#3a1a4a", "#4a2a4a", "#5a3a4a", "#6a4a4a", "#7a5a4a"],
+    // 5. Forest depths (dark green to emerald)
+    // "accents": ["#1a2a1a", "#1a3a2a", "#1a4a3a", "#1a5a4a", "#1a6a5a", "#1a7a6a"],
+    // 6. Monochrome subtle (barely visible grays)
+    // "accents": ["#1e1e1e", "#242424", "#2a2a2a", "#303030", "#363636", "#3c3c3c"],
+    // 7. Neon cyberpunk (pink to cyan)
+    // "accents": ["#2a1a2a", "#3a1a3a", "#4a2a4a", "#4a3a5a", "#4a4a6a", "#4a5a7a"],
+    // 8. Deep space (ultra dark blues)
+    // "accents": ["#1a1a2e", "#1a1a3e", "#1a1a4e", "#1a1a5e", "#1a1a6e", "#1a1a7e"],
+
+    // MEDIUM VARIANTS (starting ~10% brightness)
+    // 1. Ocean tones MEDIUM
+    // "accents": ["#2a4a6f", "#3a6a8f", "#4a8aaf", "#5aaacf", "#6abaef", "#7acaff"],
+    // 2. Ocean blue MEDIUM
+    // "accents": ["#2a3b46", "#3a4b66", "#4a5b86", "#5a6ba6", "#6a7bc6", "#7a8be6"],
+    // 3. Ocean teal MEDIUM
+    // "accents": ["#2a3e3e", "#3a4e4e", "#4a5e5e", "#5a6e6e", "#6a7e7e", "#7a8e8e"],
+    // 4. Purple-blue MEDIUM
+    // "accents": ["#3a3a5a", "#4a4a6a", "#5a5a7a", "#6a6a8a", "#7a7a9a", "#8a8aaa"],
+    // 5. Sunset MEDIUM
+    "accents": ["#3a2a4a", "#4a2a5a", "#5a3a5a", "#6a4a5a", "#7a5a5a", "#8a6a5a"]
+
+    // 1. Ocean tones BRIGHT
+    // "accents": ["#4a668f", "#5a86af", "#6aa6cf", "#7ac6ef", "#8ad6ff", "#9ae6ff"],
+    // 2. Ocean blue BRIGHT
+    // "accents": ["#3a4b56", "#4a5b76", "#5a6b96", "#6a7bb6", "#7a8bd6", "#8a9bf6"],
+    // 3. Ocean teal BRIGHT
+    // "accents": ["#3a4e4e", "#4a5e5e", "#5a6e6e", "#6a7e7e", "#7a8e8e", "#8a9e9e"],
+    // 4. Purple-blue BRIGHT
+    // "accents": ["#4a4a6a", "#5a5a7a", "#6a6a8a", "#7a7a9a", "#8a8aaa", "#9a9aba"],
+    // 5. Sunset BRIGHT
+    // "accents": ["#4a3a5a", "#5a3a6a", "#6a4a6a", "#7a5a6a", "#8a6a6a", "#9a7a6a"]
+    // 6. Forest BRIGHT
+    // "accents": ["#3a4a3a", "#4a5a4a", "#5a6a5a", "#6a7a6a", "#7a8a7a", "#8a9a8a"],
+    // 7. Monochrome BRIGHT
+    // "accents": ["#3a3a3a", "#4a4a4a", "#5a5a5a", "#6a6a6a", "#7a7a7a", "#8a8a8a"],
+    // 8. Cyberpunk BRIGHT
+    // "accents": ["#4a3a4a", "#5a3a5a", "#6a4a6a", "#6a5a7a", "#6a6a8a", "#6a7a9a"],
+    // 9. Deep space BRIGHT
+    // "accents": ["#3a3a4e", "#4a4a5e", "#5a5a6e", "#6a6a7e", "#7a7a8e", "#8a8a9e"],
   },
   "debugger": {
     "button": false
@@ -446,10 +503,11 @@
         "source.organizeImports": true
       },
       "language_servers": ["gopls", "golangci-lint"]
+    },
+    "Markdown": {
+      "format_on_save": "on"
+      // "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
     }
-    // "Markdown": {
-    //   "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
-    // }
   },
   // "jupyter": {
   //   "kernel_selections": {
