@@ -104,13 +104,11 @@
   },
   "features": {
     "edit_prediction_provider": "zed"
-    // "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
     "right_padding": 0.15
   },
-  // "minimap": { "show": "auto" },
   "search": { "button": false },
   "diagnostics": { "button": false },
   "title_bar": { "show_project_items": false, "show_branch_name": false },
@@ -119,9 +117,7 @@
   "agent": {
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
-      // "provider": "copilot_chat",
-      // "model": "claude-3.7-sonnet"
+      "model": "gpt-4.1"
     },
     "always_allow_tool_actions": true,
     "profiles": {
@@ -164,7 +160,7 @@
     "default_width": 640,
     "default_height": 320,
     "default_model": {
-      "provider": "copilot_chat",
+      "provider": "zed.dev",
       "model": "claude-sonnet-4"
     }
   },
@@ -213,8 +209,6 @@
     "border_size": 0.5
   },
   "preferred_line_length": 140,
-  // "soft_wrap": "preferred_line_length",
-  // "wrap_guides": [120],
   "show_wrap_guides": true,
   "auto_signature_help": false,
   "ui_font_size": 14.0,
@@ -509,13 +503,6 @@
       // "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
     }
   },
-  // "jupyter": {
-  //   "kernel_selections": {
-  //     "typescript": "deno",
-  //     "javascript": "deno",
-  //     "python": "python3"
-  //   }
-  // },
   "auto_install_extensions": {
     "ansible": true,
     "basedpyright": true,
