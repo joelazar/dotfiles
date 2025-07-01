@@ -89,7 +89,7 @@ customCommands:
         key: "reviewers"
         options:
           - name: "CNS"
-            value: "--reviewer peterbornerup,farhadh,benjaminbruun"
+            value: "--reviewer peterbornerup,farhadh,benjaminbruun,jdejnek"
           - name: "None"
             value: ""
     command: >
