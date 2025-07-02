@@ -52,6 +52,8 @@ execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximiz
 
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
+execute "duti -s dev.zed.Zed-Preview public.plain-text all" "Set Zed as the default app for plain text files"
+
 if [ -f ~/.docker/cli-plugins/docker-buildx ]; then
     print_success "Docker buildx configured"
 else
