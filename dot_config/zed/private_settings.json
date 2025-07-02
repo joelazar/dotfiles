@@ -30,7 +30,7 @@
   ],
   "bottom_dock_layout": "right_aligned",
   "language_models": {
-    "openai": { "version": "1", "available_models": [] },
+    "openai": { "available_models": [] },
     // "openai": {
     //   "api_url": "https://openrouter.ai/api/v1",
     //   "available_models": [
@@ -47,8 +47,7 @@
     //   ],
     //   "version": "1"
     // },
-    "anthropic": { "version": "1", "available_models": [] },
-    "copilot_chat": { "available_models": [] },
+    "anthropic": { "available_models": [] },
     "google": { "available_models": [] },
     "deepseek": {
       "api_url": "https://api.deepseek.com",
@@ -68,24 +67,20 @@
     },
     "zed.dev": { "available_models": [] },
     "ollama": {
-      "low_speed_timeout_in_seconds": 120,
       "available_models": [
         {
-          "provider": "ollama",
           "name": "devstral:24b",
           "display_name": "Mistral Devstral - 24B",
           "max_tokens": 131072,
           "supports_tools": true
         },
         {
-          "provider": "ollama",
           "name": "qwen3:30b-a3b",
           "display_name": "Qwen 3 - 30B",
           "max_tokens": 131072,
           "supports_tools": true
         },
         {
-          "provider": "ollama",
           "name": "qwen3:4b",
           "display_name": "Qwen 3 - 4B",
           "max_tokens": 32768,
@@ -94,17 +89,13 @@
       ]
     }
   },
-  "slash_commands": {
-    "docs": { "enabled": true },
-    "project": { "enabled": true }
-  },
   "calls": {
     "mute_on_join": true,
     "share_on_join": false
   },
   "features": {
-    // "edit_prediction_provider": "zed"
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "zed"
+    // "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
@@ -112,7 +103,14 @@
   },
   "search": { "button": false },
   "diagnostics": { "button": false },
-  "title_bar": { "show_project_items": false, "show_branch_name": false },
+  "title_bar": {
+    "show_branch_icon": true,
+    "show_project_items": false,
+    "show_branch_name": true,
+    "show_user_picture": false,
+    "show_onboarding_banner": true,
+    "show_sign_in": false
+  },
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
@@ -125,6 +123,7 @@
       "model": "gpt-4.1"
     },
     "always_allow_tool_actions": true,
+    "enable_feedback": false,
     "profiles": {
       "write": {
         "name": "Write",
@@ -157,10 +156,8 @@
         "context_servers": {}
       }
     },
-    "preferred_completion_mode": "burn",
     "default_profile": "write",
     "button": false,
-    "version": "2",
     "dock": "right",
     "stream_edits": true,
     "default_width": 640,
@@ -358,7 +355,8 @@
       "**/group_vars/**.yaml",
       "**playbook*.yaml",
       "**playbook*.yml"
-    ]
+    ],
+    "Shell Script": ["*.envrc*"]
   },
   "lsp": {
     "rust-analyzer": {
