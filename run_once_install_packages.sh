@@ -33,15 +33,13 @@ install_rust
 # Language-specific packages
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-# NPM packages
-NPM_PACKAGES=(
+# BUN packages
+BUN_PACKAGES=(
     "@anthropic-ai/claude-code"
     "npm-check"
-    "rag-crawler"
-    "yalc"
 )
 
-install_packages_from_list "NPM" "install_npm_package" "${NPM_PACKAGES[@]}"
+install_packages_from_list "BUN" "install_bun_package" "${BUN_PACKAGES[@]}"
 
 # Go packages
 GO_PACKAGES=(

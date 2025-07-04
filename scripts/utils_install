@@ -175,10 +175,10 @@ install_go_package() {
     execute "go install $PACKAGEPATH" "$PACKAGENAME"
 }
 
-install_npm_package() {
+install_bun_package() {
     declare -r PACKAGENAME="$1"
 
-    execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
+    execute "bun install -g $PACKAGENAME" "$PACKAGENAME"
 }
 
 install_rust_package() {
