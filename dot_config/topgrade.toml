@@ -15,10 +15,10 @@ pre_sudo = true
 # sudo_command = "sudo"
 
 # Disable specific steps - same options as the command line flag
-disable = ["chezmoi", "pnpm", "rye", "containers", "uv"]
+disable = ["chezmoi", "containers", "uv"]
 
 # Ignore failures for these steps
-ignore_failures = ["containers", "git_repos"]
+ignore_failures = ["git_repos"]
 
 # List of remote machines with Topgrade installed on them
 # remote_topgrades = ["toothless", "pi", "parnas"]
@@ -231,8 +231,9 @@ repos = ["~/Code/**"]
 
 [distrobox]
 # use_root = false
-
 # containers = ["archlinux-latest"]
+
+
 [containers]
 # Specify the containers to ignore while updating (Wildcard supported)
 # ignored_containers = ["ghcr.io/rancher-sandbox/rancher-desktop/rdx-proxy:latest", "docker.io*"]

@@ -7,6 +7,7 @@ git:
     pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   parseEmoji: true
 gui:
+  useHunkModeInStagingView: true
   skipDiscardChangeWarning: true
   showCommandLog: false
   nerdFontsVersion: "3"

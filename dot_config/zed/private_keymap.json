@@ -106,7 +106,7 @@
       "shift-y": ["workspace::SendKeystrokes", "y $"],
       "ctrl-space": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
-      "g y": "editor::Copy",
+      "g y": ["workspace::SendKeystrokes", "\" + y"],
       "g p": "editor::Paste",
       "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
