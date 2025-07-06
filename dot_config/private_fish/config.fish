@@ -137,6 +137,8 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
 alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
 
+alias claude="/Users/joelazar/.claude/local/claude"
+
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source

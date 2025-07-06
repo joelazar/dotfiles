@@ -9,4 +9,6 @@ execute "fish -c 'fish_update_completions'" "Update fish completions"
 
 execute "ya pkg upgrade" "Update yazi plugins"
 
+execute "claude update" "Update claude-code"
+
 execute "brew cleanup" "Cleanup brew"

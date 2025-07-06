@@ -1,0 +1,7 @@
+{
+  "permissions": {},
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+    // "ANTHROPIC_BASE_URL": "http://localhost:8082"
+  }
+}
