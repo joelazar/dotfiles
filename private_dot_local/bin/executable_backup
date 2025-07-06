@@ -10,6 +10,9 @@ INCLUDE=(
     "$HOME/.config/fish/.local.fish"
     "$HOME/.local/share/fish/fish_history"
 )
+EXCLUDE=(
+    "$HOME/.ssh/work"
+)
 
 function print_help() {
     echo "Usage: backup {init|do|list|prune|forget|help}"
@@ -27,7 +30,7 @@ case "$1" in
     restic "${REPO[@]}" init
     ;;
 "do")
-    restic "${REPO[@]}" backup "${INCLUDE[@]}"
+    restic "${REPO[@]}" backup "${INCLUDE[@]}" "${EXCLUDE[@]/#/--exclude=}"
     ;;
 "list")
     restic "${REPO[@]}" snapshots
