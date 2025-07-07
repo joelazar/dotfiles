@@ -1,4 +1,4 @@
-# Configuration file for Wireshark 4.4.2.
+# Configuration file for Wireshark 4.4.7.
 #
 # This file is regenerated each time preferences are saved within
 # Wireshark. Making manual changes should be safe, however.
@@ -202,73 +202,73 @@
 
 # Foreground color for an active selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.active_frame.fg: 000000
+gui.active_frame.fg: c0caf5
 
 # Background color for an active selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.active_frame.bg: cbe8ff
+gui.active_frame.bg: 7aa2f7
 
 # Color style for an active selected item
 # One of: DEFAULT, FLAT, GRADIENT
 # (case-insensitive).
-#gui.active_frame.style: DEFAULT
+gui.active_frame.style: FLAT
 
 # Foreground color for an inactive selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.inactive_frame.fg: 000000
+gui.inactive_frame.fg: 9aa5ce
 
 # Background color for an inactive selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.inactive_frame.bg: efefef
+gui.inactive_frame.bg: 292e42
 
 # Color style for an inactive selected item
 # One of: DEFAULT, FLAT, GRADIENT
 # (case-insensitive).
-#gui.inactive_frame.style: DEFAULT
+gui.inactive_frame.style: FLAT
 
 # Color preferences for a marked frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.marked_frame.fg: ffffff
+gui.marked_frame.fg: 24283b
 
 # Color preferences for a marked frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.marked_frame.bg: 00202a
+gui.marked_frame.bg: e0af68
 
 # Color preferences for a ignored frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.ignored_frame.fg: 7f7f7f
+gui.ignored_frame.fg: 565f89
 
 # Color preferences for a ignored frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.ignored_frame.bg: ffffff
+gui.ignored_frame.bg: 24283b
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.stream.client.fg: 7f0000
+gui.stream.client.fg: f7768e
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.stream.client.bg: fbeded
+gui.stream.client.bg: 2a1f23
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.stream.server.fg: 00007f
+gui.stream.server.fg: 7dcfff
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.stream.server.bg: ededfb
+gui.stream.server.bg: 1f2335
 
 # Valid color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.color_filter_bg.valid: 006600
+gui.color_filter_bg.valid: 9ece6a
 
 # Invalid color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.color_filter_bg.invalid: 660000
+gui.color_filter_bg.invalid: f7768e
 
 # Deprecated color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-#gui.color_filter_bg.deprecated: 666600
+gui.color_filter_bg.deprecated: e0af68
 
 ####### User Interface: Columns ########
 
@@ -567,7 +567,7 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Remote capture filter
 # A string
-#extcap.ciscodump.remotefilter: deny tcp host fe80::8a63:80d0:40f8:d637 any eq 22, deny tcp any eq 22 host fe80::8a63:80d0:40f8:d637, deny tcp host fe80::2d8e:c431:4bc:90fc any eq 22, deny tcp any eq 22 host fe80::2d8e:c431:4bc:90fc, deny tcp host fe80::3b49:7ba0:9a4:d54b any eq 22, deny tcp any eq 22 host fe80::3b49:7ba0:9a4:d54b, deny tcp host fe80::4cee:d88b:cb9c:6f92 any eq 22, deny tcp any eq 22 host fe80::4cee:d88b:cb9c:6f92, deny tcp host fd7a:115c:a1e0::ce01:1c18 any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::ce01:1c18, deny tcp host 100.126.28.24 any eq 22, deny tcp any eq 22 host 100.126.28.24, deny tcp host fe80::2e0:4cff:fe68:3c0 any eq 22, deny tcp any eq 22 host fe80::2e0:4cff:fe68:3c0, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::c943:d9f8:d69a:80f3 any eq 22, deny tcp any eq 22 host fe80::c943:d9f8:d69a:80f3, deny tcp host fe80::1c29:1507:ce2e:ee0c any eq 22, deny tcp any eq 22 host fe80::1c29:1507:ce2e:ee0c, deny tcp host fe80::cf92:646e:5807:42f8 any eq 22, deny tcp any eq 22 host fe80::cf92:646e:5807:42f8, deny tcp host fe80::c839:d0ff:fe9e:99f6 any eq 22, deny tcp any eq 22 host fe80::c839:d0ff:fe9e:99f6, deny tcp host fe80::c839:d0ff:fe9e:99f6 any eq 22, deny tcp any eq 22 host fe80::c839:d0ff:fe9e:99f6, deny tcp host 192.168.0.132 any eq 22, deny tcp any eq 22 host 192.168.0.132, deny tcp host fe80::474:1af7:9ade:5b96 any eq 22, deny tcp any eq 22 host fe80::474:1af7:9ade:5b96, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
+#extcap.ciscodump.remotefilter: deny tcp host 10.2.0.2 any eq 22, deny tcp any eq 22 host 10.2.0.2, deny tcp host fd7a:115c:a1e0::c01:8c04 any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::c01:8c04, deny tcp host 100.115.140.4 any eq 22, deny tcp any eq 22 host 100.115.140.4, deny tcp host fe80::5c29:73ca:ca5:57bb any eq 22, deny tcp any eq 22 host fe80::5c29:73ca:ca5:57bb, deny tcp host fe80::e69a:4b7:aa41:b1f1 any eq 22, deny tcp any eq 22 host fe80::e69a:4b7:aa41:b1f1, deny tcp host fe80::9313:b835:655c:da69 any eq 22, deny tcp any eq 22 host fe80::9313:b835:655c:da69, deny tcp host fe80::2ac8:9e68:d007:c23b any eq 22, deny tcp any eq 22 host fe80::2ac8:9e68:d007:c23b, deny tcp host fe80::2c86:7bc5:b184:a3 any eq 22, deny tcp any eq 22 host fe80::2c86:7bc5:b184:a3, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::bf5:d0d5:7665:e287 any eq 22, deny tcp any eq 22 host fe80::bf5:d0d5:7665:e287, deny tcp host fe80::b925:8fbf:5a70:eb9b any eq 22, deny tcp any eq 22 host fe80::b925:8fbf:5a70:eb9b, deny tcp host fe80::a09c:ccff:fe82:2de4 any eq 22, deny tcp any eq 22 host fe80::a09c:ccff:fe82:2de4, deny tcp host fe80::a09c:ccff:fe82:2de4 any eq 22, deny tcp any eq 22 host fe80::a09c:ccff:fe82:2de4, deny tcp host 192.168.0.138 any eq 22, deny tcp any eq 22 host 192.168.0.138, deny tcp host fde4:a696:5b8f:cd99:f1:9a62:d63a:97b4 any eq 22, deny tcp any eq 22 host fde4:a696:5b8f:cd99:f1:9a62:d63a:97b4, deny tcp host fe80::c80:8b24:f085:4d30 any eq 22, deny tcp any eq 22 host fe80::c80:8b24:f085:4d30, deny tcp host fe80::87c7:a073:e910:adeb any eq 22, deny tcp any eq 22 host fe80::87c7:a073:e910:adeb, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
 
 # Packets to capture
 # A string
@@ -655,7 +655,7 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Remote capture filter
 # A string
-#extcap.sshdump.remotefilter: not ((host fe80::8a63:80d0:40f8:d637 or host fe80::2d8e:c431:4bc:90fc or host fe80::3b49:7ba0:9a4:d54b or host fe80::4cee:d88b:cb9c:6f92 or host fd7a:115c:a1e0::ce01:1c18 or host 100.126.28.24 or host fe80::2e0:4cff:fe68:3c0 or host fe80::ce81:b1c:bd2c:69e or host fe80::c943:d9f8:d69a:80f3 or host fe80::1c29:1507:ce2e:ee0c or host fe80::cf92:646e:5807:42f8 or host fe80::c839:d0ff:fe9e:99f6 or host fe80::c839:d0ff:fe9e:99f6 or host 192.168.0.132 or host fe80::474:1af7:9ade:5b96 or host fe80::1) and port 22)
+#extcap.sshdump.remotefilter: not ((host 10.2.0.2 or host fd7a:115c:a1e0::c01:8c04 or host 100.115.140.4 or host fe80::5c29:73ca:ca5:57bb or host fe80::e69a:4b7:aa41:b1f1 or host fe80::9313:b835:655c:da69 or host fe80::2ac8:9e68:d007:c23b or host fe80::2c86:7bc5:b184:a3 or host fe80::ce81:b1c:bd2c:69e or host fe80::bf5:d0d5:7665:e287 or host fe80::b925:8fbf:5a70:eb9b or host fe80::a09c:ccff:fe82:2de4 or host fe80::a09c:ccff:fe82:2de4 or host 192.168.0.138 or host fde4:a696:5b8f:cd99:f1:9a62:d63a:97b4 or host fe80::c80:8b24:f085:4d30 or host fe80::87c7:a073:e910:adeb or host fe80::1) and port 22)
 
 # Packets to capture
 # A string
@@ -2838,6 +2838,10 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 # A hexadecimal number
 #ieee8021ah.8021ah_ethertype: 0x88e7
 
+# WSMP PSIDs to be decoded as IEEE 1609.2 data (default: 32,39,128,129,130,131,132,133,135,142,143,144,145,2113685,2113686,2113687,2113689)
+# A string denoting an positive integer range (e.g., "1-20,30-40")
+#ieee1609dot2.wsmp.psid: 32,39,128,129,130,131,132,133,135,142,143,144,145,2113685,2113686,2113687,2113689
+
 # Whether the iFCP dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
 # true or false (case-insensitive)
 #ifcp.desegment: TRUE
@@ -3174,6 +3178,10 @@ gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 # Flow Number used by I-TDM Control Protocol traffic.
 # A decimal number
 #itdm.ctl_flowno: 0
+
+# Some asn1 compilers generates code as if WrappedCpmContainers was extensible(Wrong)
+# true or false (case-insensitive)
+#its.wrappedcontainers_as_extended: FALSE
 
 # Support Implementers Guide (version 01)
 # true or false (case-insensitive)
