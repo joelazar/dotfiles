@@ -115,8 +115,8 @@
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
     },
     "commit_message_model": {
       "provider": "copilot_chat",

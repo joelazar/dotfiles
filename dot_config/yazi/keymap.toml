@@ -42,6 +42,22 @@ run = [
 desc = "Rotate selected images clockwise"
 
 [[mgr.prepend_keymap]]
+on = ["P", "p"]
+run = [
+  'shell "for file in "$@"; do magick "$file" "${file%.*}.png"; done" --confirm',
+  "refresh",
+]
+desc = "Convert selected images to PNG"
+
+[[mgr.prepend_keymap]]
+on = ["P", "j"]
+run = [
+  'shell "for file in "$@"; do magick "$file" -quality 75 "${file%.*}.jpg"; done" --confirm',
+  "refresh",
+]
+desc = "Convert selected images to JPEG with 75% quality"
+
+[[mgr.prepend_keymap]]
 on = ["<"]
 run = [
   'shell "for file in "$@"; do magick "$file" -rotate -90 "${file%}"; done" --confirm',
