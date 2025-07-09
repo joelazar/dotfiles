@@ -222,3 +222,5 @@ fallback_channel = "files"
 "git-log" = ["git log", "git show"]
 "docker-images" = ["docker run"]
 "git-repos" = ["nvim", "code", "hx", "zed", "git clone"]
+"text" = ["rg", "grep"]
+"ssh-hosts" = ["ssh", "scp", "rsync"]

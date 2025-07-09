@@ -1,0 +1,74 @@
+[metadata]
+name = "ssh-hosts"
+description = "A channel to select from SSH hosts"
+requirements = ["ssh"]
+
+[ui.features]
+preview_panel = { enabled = true, visible = false }
+remote_control = { enabled = true, visible = false }
+help_panel = { enabled = true, visible = false }
+status_bar = { enabled = true, visible = false }
+
+[source]
+command = '''
+bash -c '
+# Function to recursively read included SSH config files
+get_ssh_config_files() {
+  local config_file="$1"
+  local base_dir="$(dirname "$config_file")"
+
+  # Print the current config file
+  echo "$config_file"
+
+  # Find Include directives and recursively process them
+  if [ -f "$config_file" ]; then
+    grep -i "^\s*Include\s" "$config_file" 2>/dev/null | while read -r line; do
+      # Extract the include path (remove "Include" keyword)
+      include_path=$(echo "$line" | sed "s/^\s*[Ii]nclude\s*//")
+
+      # Handle relative paths
+      if [[ "$include_path" != /* ]]; then
+        include_path="$base_dir/$include_path"
+      fi
+
+      # Expand glob patterns and process each file
+      for file in $include_path; do
+        if [ -f "$file" ]; then
+          get_ssh_config_files "$file"
+        fi
+      done
+    done
+  fi
+}
+
+# Extract SSH hosts from various sources
+(
+  # From SSH config files (including all included files)
+  {
+    get_ssh_config_files ~/.ssh/config
+    [ -f /etc/ssh/ssh_config ] && get_ssh_config_files /etc/ssh/ssh_config
+  } | while read -r config_file; do
+    [ -f "$config_file" ] && cat "$config_file"
+  # for returning both Host and Hostnames
+  # done | grep -i "^\s*host\(name\)\? " |
+  # for returning only Host
+  done | grep -i "^\s*host " |
+      awk "{for (i = 2; i <= NF; i++) print \$1 \" \" \$i}" |
+      grep -v "[*?%]" |
+      awk "{for (i = 2; i <= NF; i++) print \$i}"
+
+  # # From known_hosts
+  # grep -oE "^[a-z0-9.,:-]+" ~/.ssh/known_hosts 2>/dev/null | \
+  #   tr "," "\n" | \
+  #   tr -d "[" | \
+  #   awk "{print \$1}"
+
+  # From /etc/hosts
+  # grep -v "^\s*\(#\|$\)" /etc/hosts 2>/dev/null | \
+  #   grep -Fv "0.0.0.0" | \
+  #   sed "s/#.*//" | \
+  #   awk "{for (i = 2; i <= NF; i++) print \$i}"
+
+) | sort -u | grep -v "^$"
+'
+'''
