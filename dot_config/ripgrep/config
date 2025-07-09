@@ -4,7 +4,6 @@
 
 # Make search case insensitive, unless an uppercase letter is used.
 --smart-case
---color=always
 --glob=!.git/
 --glob=!package-lock.json
 --glob=!yarn.lock

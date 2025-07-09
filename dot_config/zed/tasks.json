@@ -29,7 +29,13 @@
     "allow_concurrent_runs": false,
     "hide": "always",
     "reveal": "always",
-    "cwd": "$ZED_DIRNAME"
+    "cwd": "$ZED_DIRNAME",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "yazi",
@@ -42,13 +48,34 @@
     "env": { "EDITOR": "zed" }
   },
   {
+    "label": "nvim",
+    "command": "nvim",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "hide": "always",
+    "reveal": "always",
+    "cwd": "$ZED_DIRNAME",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
+  },
+  {
     "label": "file finder",
     "command": "zed \"$(tv files)\"",
     "reveal": "always",
     "hide": "always",
     "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
-    "use_new_terminal": true
+    "use_new_terminal": true,
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "find in files",
@@ -57,7 +84,13 @@
     "hide": "always",
     "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
-    "use_new_terminal": true
+    "use_new_terminal": true,
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "find in files - selected text",
@@ -66,6 +99,23 @@
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
     "reveal": "always",
-    "hide": "always"
+    "hide": "always",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
+  },
+  {
+    "label": "github browse",
+    "command": "gh",
+    "args": ["browse", "$ZED_RELATIVE_FILE", "--commit=$(git rev-parse HEAD)"],
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "never",
+    "reveal_target": "dock",
+    "hide": "always",
+    "shell": "system"
   }
 ]

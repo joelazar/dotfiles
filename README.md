@@ -40,6 +40,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 - **Editor and terminal integration** (Neovim, Zed, Ghostty)
 - **Rich shell experience** (Fish, Starship, Atuin, Direnv)
 - **Developer tooling** for Python, Go, Rust, Node.js, Docker, Kubernetes, and more
+- **AI/LLM integration** (Claude Code, OpenAI, Anthropic, and local models)
 
 ---
 
@@ -220,7 +221,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 ## Package Management 📦
 
 - **Homebrew**: All packages and casks are managed via [`Brewfile.private`](Brewfile.private) and [`Brewfile.work`](Brewfile.work)
-- **NPM/Node**: Global packages installed via [`run_once_install_packages.sh`](run_once_install_packages.sh)
+- **Bun**: Global JavaScript/TypeScript packages (e.g., `@anthropic-ai/claude-code`, `npm-check`) installed via [`run_once_install_packages.sh`](run_once_install_packages.sh)
 - **Go, Rust, Python**: Install scripts for language-specific tools and formatters
 
 ---
@@ -265,7 +266,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 ## Theming 🎨
 
 - **Tokyo Night** are used across terminal, editors, and CLI tools for a consistent look.
-- Fonts: Fira Code, FiraCode Nerd Font
+- Fonts: Fira Code, Fira Code Retina, FiraCode Nerd Font
 
 ---
 

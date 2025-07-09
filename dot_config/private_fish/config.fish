@@ -55,13 +55,6 @@ set -gx FZF_DEFAULT_OPTS '
   --bind "ctrl-y:execute(echo {+} | pbcopy)"
   --bind \'ctrl-r:transform:if not string match -q "Hidden*" $FZF_PROMPT; echo "change-prompt(Hidden files> )+reload:fd --type f --hidden --follow --no-ignore --color always"; else; echo "change-prompt(Files&Directories> )+reload:fd --hidden --follow --color always --exclude .git --exclude node_modules --exclude .venv"; end\'
 '
-set fzf_history_opts --sort --exact --history-size=30000
-set fzf_fd_opts --hidden --follow --exclude=.git
-set fzf_preview_dir_cmd eza -T -la --git --group-directories-first --icons --color=always
-set fzf_directory_opts --prompt "Files&Directories> " --bind "ctrl-o:execute($EDITOR {+} &> /dev/tty)"
-
-fzf_configure_bindings --git_status=\e\cs --git_log=\e\cl --directory=\cp --history=\e\cr --processes=\e\cp --variables=\e\ce
-
 # BAT options
 set -gx BAT_CONFIG_PATH $HOME/.config/bat/bat.conf
 
@@ -144,6 +137,7 @@ zoxide init fish | source
 direnv hook fish | source
 fnm env --use-on-cd | source
 atuin init fish --disable-up-arrow | source
+source $HOME/.config/television/shell/integration.fish
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000

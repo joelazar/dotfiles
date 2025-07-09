@@ -1,0 +1,17 @@
+[metadata]
+name = "text"
+description = "A channel to find and select text from files"
+requirements = ["rg", "bat"]
+
+[source]
+command = "rg . --no-heading --line-number"
+display = "[{split:\\::..2}]\t{split:\\::2}"
+output = "{split:\\::..2}"
+
+[preview]
+command = 'bat -n --color=always {split:\::0}'
+env = { BAT_THEME = "ansi" }
+offset = '{split:\::1}'
+
+[ui]
+preview_panel = { header = '{split:\::..2}' }
