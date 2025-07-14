@@ -69,7 +69,7 @@
     "ollama": {
       "available_models": [
         {
-          "name": "devstral:24b",
+          "name": "devstral",
           "display_name": "Mistral Devstral - 24B",
           "max_tokens": 131072,
           "supports_tools": true
@@ -114,6 +114,7 @@
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
+    "play_sound_when_agent_done": true,
     "inline_assistant_model": {
       "provider": "zed.dev",
       "model": "claude-sonnet-4"
@@ -128,6 +129,7 @@
       "write": {
         "name": "Write",
         "tools": {
+          "project_notifications": true,
           "web_search": true,
           "contents": true,
           "open": true,

@@ -186,7 +186,8 @@
       "alt-left": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
-      "alt-p": "pane::TogglePinTab"
+      "alt-p": "pane::TogglePinTab",
+      "cmd-shift-g": "git_panel::ToggleFocus"
     }
   },
   {
