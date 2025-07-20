@@ -207,7 +207,8 @@
     "activate_on_close": "neighbour"
   },
   "file_finder": {
-    "modal_max_width": "medium"
+    "modal_max_width": "medium",
+    "include_ignored": true
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.9,

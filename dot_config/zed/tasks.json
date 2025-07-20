@@ -94,7 +94,7 @@
   },
   {
     "label": "find in files - selected text",
-    "command": "zed \"$(tv text -i $ZED_SELECTED_TEXT)\"",
+    "command": "zed \"$(tv text -i \"$ZED_SELECTED_TEXT\")\"",
     "cwd": "$ZED_WORKTREE_ROOT",
     "allow_concurrent_runs": true,
     "use_new_terminal": true,

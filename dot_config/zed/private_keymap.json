@@ -89,6 +89,7 @@
       "space g h D": "git::Diff",
       "space g h r": "git::Restore",
       "space g h R": "git::RestoreFile",
+      "space h": "vim::ToggleMarksView",
       "space m p": "markdown::OpenPreview",
       "space m P": "markdown::OpenPreviewToTheSide",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
@@ -110,6 +111,8 @@
       "g p": "editor::Paste",
       "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
+      "] e": ["editor::GoToDiagnostic", { "severity": "error" }],
+      "[ e": ["editor::GoToPreviousDiagnostic", { "severity": "error" }],
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown"
     }
