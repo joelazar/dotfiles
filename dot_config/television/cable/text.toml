@@ -5,11 +5,11 @@ requirements = ["rg", "bat"]
 
 [source]
 command = "rg . --no-heading --line-number"
-display = "[{split:\\::..2}]\t{split:\\::2}"
+display = "[{split:\\::..2}]\t{split:\\::2..}"
 output = "{split:\\::..2}"
 
 [preview]
-command = 'bat -n --color=always {split:\::0}'
+command = "bat -n --color=always '{split:\\::0}'"
 env = { BAT_THEME = "ansi" }
 offset = '{split:\::1}'
 
