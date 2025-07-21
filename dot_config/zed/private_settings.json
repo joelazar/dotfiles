@@ -342,7 +342,6 @@
   },
   "load_direnv": "shell_hook",
   "file_types": {
-    "Dockerfile": ["Dockerfile*"],
     "Ansible": [
       "**.ansible.yml",
       "**/defaults/**.yml",
@@ -358,6 +357,15 @@
       "**/group_vars/**.yaml",
       "**playbook*.yaml",
       "**playbook*.yml"
+    ],
+    "Dockerfile": ["Dockerfile*"],
+    "Helm": [
+      "**/templates/**/*.tpl",
+      "**/templates/**/*.yaml",
+      "**/templates/**/*.yml",
+      "**/helmfile.d/**/*.yaml",
+      "**/helmfile.d/**/*.yml",
+      "**/values*.yaml"
     ],
     "Shell Script": ["*.envrc*"]
   },
@@ -521,6 +529,7 @@
     "git-firefly": true,
     "golangci-lint": true,
     "harper": true,
+    "helm": true,
     "html": true,
     "latex": true,
     "log": true,
