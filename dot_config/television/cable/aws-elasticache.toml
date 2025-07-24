@@ -1,0 +1,14 @@
+[metadata]
+name = "aws-elasticache"
+description = "A channel to select from AWS ElastiCache clusters"
+requirements = ["aws"]
+
+[source]
+command = "aws elasticache describe-cache-clusters --query 'CacheClusters[].[CacheClusterId,Engine,CacheClusterStatus]' --output text"
+
+[preview]
+command = "aws elasticache describe-cache-clusters --cache-cluster-id '{split:\t:0}' --output json | jq -C"
+
+[ui.preview_panel]
+size = 60
+

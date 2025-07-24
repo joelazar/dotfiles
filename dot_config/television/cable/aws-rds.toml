@@ -1,0 +1,14 @@
+[metadata]
+name = "aws-rds"
+description = "A channel to select from AWS RDS instances"
+requirements = ["aws"]
+
+[source]
+command = "aws rds describe-db-instances --query 'DBInstances[].[DBInstanceIdentifier,Engine,DBInstanceStatus]' --output text"
+
+[preview]
+command = "aws rds describe-db-instances --db-instance-identifier '{split:\t:0}' --output json | jq -C"
+
+[ui.preview_panel]
+size = 60
+
