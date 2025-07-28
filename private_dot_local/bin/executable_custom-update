@@ -11,4 +11,6 @@ execute "ya pkg upgrade" "Update yazi plugins"
 
 execute "claude update" "Update claude-code"
 
+execute "tv update-channels" "Update Television channels"
+
 execute "brew cleanup" "Cleanup brew"

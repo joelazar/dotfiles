@@ -24,6 +24,7 @@ defaults:
     width: 80
   prsLimit: 20
   issuesLimit: 20
+  notificationsLimit: 40
   view: prs
   refetchIntervalMinutes: 10
 repoPaths:

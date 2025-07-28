@@ -103,6 +103,7 @@
   },
   "search": { "button": false },
   "diagnostics": { "button": false },
+  // "global_lsp_settings": { "button": false },
   "title_bar": {
     "show_branch_icon": true,
     "show_project_items": false,
@@ -498,7 +499,7 @@
           }
         }
       ],
-      "language_servers": ["!pyright", "basedpyright", "ruff"]
+      "language_servers": ["!pyright", "..."]
     },
     "JavaScript": {
       "code_actions_on_format": {
@@ -509,12 +510,11 @@
       "format_on_save": "on",
       "code_actions_on_format": {
         "source.organizeImports": true
-      },
-      "language_servers": ["gopls", "golangci-lint"]
+      }
     },
     "Markdown": {
       "format_on_save": "on"
-      // "language_servers": ["!harper-ls", "markdown-oxide", "wakatime-ls"]
+      // "language_servers": ["!harper-ls", "..."]
     }
   },
   "auto_install_extensions": {
