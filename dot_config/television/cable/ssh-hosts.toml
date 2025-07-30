@@ -1,10 +1,10 @@
 [metadata]
 name = "ssh-hosts"
 description = "A channel to select from SSH hosts"
-requirements = ["ssh"]
+requirements = ["ssh", "bat"]
 
 [ui.features]
-preview_panel = { enabled = true, visible = false }
+preview_panel = { enabled = true, visible = true }
 remote_control = { enabled = true, visible = false }
 help_panel = { enabled = true, visible = false }
 status_bar = { enabled = true, visible = false }
@@ -22,9 +22,9 @@ get_ssh_config_files() {
 
   # Find Include directives and recursively process them
   if [ -f "$config_file" ]; then
-    grep -i "^\s*Include\s" "$config_file" 2>/dev/null | while read -r line; do
+    grep -i "^[[:space:]]*Include[[:space:]]" "$config_file" 2>/dev/null | while read -r line; do
       # Extract the include path (remove "Include" keyword)
-      include_path=$(echo "$line" | sed "s/^\s*[Ii]nclude\s*//")
+      include_path=$(echo "$line" | sed "s/^[[:space:]]*[Ii]nclude[[:space:]]*//")
 
       # Handle relative paths
       if [[ "$include_path" != /* ]]; then
@@ -47,28 +47,18 @@ get_ssh_config_files() {
   {
     get_ssh_config_files ~/.ssh/config
     [ -f /etc/ssh/ssh_config ] && get_ssh_config_files /etc/ssh/ssh_config
-  } | while read -r config_file; do
-    [ -f "$config_file" ] && cat "$config_file"
-  # for returning both Host and Hostnames
-  # done | grep -i "^\s*host\(name\)\? " |
-  # for returning only Host
-  done | grep -i "^\s*host " |
-      awk "{for (i = 2; i <= NF; i++) print \$1 \" \" \$i}" |
-      grep -v "[*?%]" |
-      awk "{for (i = 2; i <= NF; i++) print \$i}"
-
-  # # From known_hosts
-  # grep -oE "^[a-z0-9.,:-]+" ~/.ssh/known_hosts 2>/dev/null | \
-  #   tr "," "\n" | \
-  #   tr -d "[" | \
-  #   awk "{print \$1}"
-
-  # From /etc/hosts
-  # grep -v "^\s*\(#\|$\)" /etc/hosts 2>/dev/null | \
-  #   grep -Fv "0.0.0.0" | \
-  #   sed "s/#.*//" | \
-  #   awk "{for (i = 2; i <= NF; i++) print \$i}"
+  } | sort -u | while read -r config_file; do
+    if [ -f "$config_file" ]; then
+      grep -i "^[[:space:]]*host " "$config_file" |
+        awk -v file="$config_file" "{for (i = 2; i <= NF; i++) printf \"%s|%s\\n\", \$i, file}"
+    fi
+  done | grep -v "[*?%]"
 
 ) | sort -u | grep -v "^$"
 '
 '''
+display = "{split:|:0}"
+output = "{split:|:0}"
+
+[preview]
+command = '''bash -c 'LINE=$(grep -n -i "^[[:space:]]*host " "{split:|:1}" | grep -w "{split:|:0}" | head -n 1 | cut -d: -f1); bat --color=always -p "{split:|:1}" --highlight-line $LINE -r $((LINE)):$((LINE+2))' '''
