@@ -14,6 +14,7 @@
 
 .aider*
 .claude/
+.crush/
 CLAUDE.md
 AGENTS.md
 .rules
