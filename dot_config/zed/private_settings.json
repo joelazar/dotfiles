@@ -75,9 +75,9 @@
           "supports_tools": true
         },
         {
-          "name": "qwen3:30b-a3b",
-          "display_name": "Qwen 3 - 30B",
-          "max_tokens": 131072,
+          "name": "qwen3-coder:30b",
+          "display_name": "Qwen 3 Coder - 30B-A3B",
+          "max_tokens": 262144,
           "supports_tools": true
         },
         {

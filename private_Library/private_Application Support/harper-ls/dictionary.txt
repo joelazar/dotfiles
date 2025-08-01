@@ -6,6 +6,7 @@ BTSes
 CD
 DeGoogle
 Ericsson
+IMSIs
 JS
 OTA
 Onomondo
@@ -19,6 +20,7 @@ claude
 dropdown
 env
 eslint
+goroutines
 harper
 lng
 pnpm
