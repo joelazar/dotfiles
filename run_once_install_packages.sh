@@ -35,7 +35,9 @@ install_rust
 
 # BUN packages
 BUN_PACKAGES=(
-    "@anthropic-ai/claude-code"
+    "@sourcegraph/amp"
+    # "@anthropic-ai/claude-code" only once, then local install
+    ccusage
     "npm-check"
 )
 
