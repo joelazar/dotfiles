@@ -29,6 +29,7 @@ fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.modular/bin
+fish_add_path $HOME/.claude/local
 
 # brew specific paths
 fish_add_path /opt/homebrew/sbin
