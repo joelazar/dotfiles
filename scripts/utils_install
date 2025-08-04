@@ -204,6 +204,12 @@ install_gh_plugin() {
     fi
 }
 
+install_uv_tool() {
+    declare -r PACKAGENAME="$1"
+
+    execute "uv tool install $PACKAGENAME" "$PACKAGENAME"
+}
+
 install_packages_from_list() {
     local -r type="$1"
     local -r installer="$2"

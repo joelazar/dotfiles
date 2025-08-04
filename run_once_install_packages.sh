@@ -54,6 +54,13 @@ for package in "${GO_PACKAGES[@]}"; do
     install_go_package "$pkg_path" "${pkg_name:-$(basename "$pkg_path")}"
 done
 
+# UV tools
+UV_TOOLS=(
+    "gitingest"
+)
+
+install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tools and plugins
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
