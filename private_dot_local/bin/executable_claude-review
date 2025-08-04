@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# .git/hooks/pre-commit (chmod +x)
+
+# Abort if nothing staged
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+# Aggregate staged file contents
+payload=$(echo "$staged" | xargs cat)
+
+analysis=$(echo "$payload" |
+    claude -p "Review these changes for issues before commit" \
+        --allowedTools "View" \
+        --output-format json)
+
+# Block commit on critical issues
+if echo "$analysis" | jq -e '.critical_issues[]' >/dev/null 2>&1; then
+    echo "❌ Critical issues found – commit blocked"
+    echo "$analysis" | jq -r '.critical_issues[]'
+    exit 1
+fi
+
+echo "✅ Claude analysis passed"

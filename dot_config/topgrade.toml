@@ -192,6 +192,8 @@ repos = ["~/Code/**"]
 # manager such as Scoop or Cargo
 # self_rename = true
 
+[pipx]
+disabled = true
 
 [npm]
 # Use sudo if the NPM directory isn't owned by the current user

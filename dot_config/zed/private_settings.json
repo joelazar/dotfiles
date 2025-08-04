@@ -115,6 +115,7 @@
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
+    "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "inline_assistant_model": {
       "provider": "zed.dev",
