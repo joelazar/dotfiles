@@ -85,6 +85,14 @@
           "display_name": "Qwen 3 - 4B",
           "max_tokens": 32768,
           "supports_tools": true
+        },
+        {
+          "name": "gpt-oss:20b",
+          "display_name": "GPT OSS - 20B",
+          "max_tokens": 131072,
+          "supports_tools": true,
+          "supports_thinking": true,
+          "supports_images": true
         }
       ]
     }
@@ -115,12 +123,12 @@
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
-    "use_modifier_to_send": true,
-    "play_sound_when_agent_done": true,
     "inline_assistant_model": {
       "provider": "zed.dev",
       "model": "claude-sonnet-4"
     },
+    "use_modifier_to_send": true,
+    "play_sound_when_agent_done": true,
     "commit_message_model": {
       "provider": "copilot_chat",
       "model": "gpt-4.1"
@@ -168,7 +176,7 @@
     "default_height": 320,
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-sonnet-4"
+      "model": "claude-opus-4-1"
     }
   },
   "tab_bar": {

@@ -8,5 +8,20 @@
       "command": "typescript-language-server",
       "args": ["--stdio"]
     }
+  },
+  "providers": {
+    "ollama": {
+      "name": "Ollama",
+      "base_url": "http://localhost:11434/v1/",
+      "type": "openai",
+      "models": [
+        {
+          "name": "GPT OSS 20B",
+          "id": "gpt-oss:20b",
+          "context_window": 128000,
+          "default_max_tokens": 20000
+        }
+      ]
+    }
   }
 }
