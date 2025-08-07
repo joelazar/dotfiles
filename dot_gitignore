@@ -4,7 +4,8 @@
 *.un~
 *.pyc
 .credentials.json
-.envrc
+.envrc*
+!.envrc.template
 .vscode
 .yalc
 .DS_Store
