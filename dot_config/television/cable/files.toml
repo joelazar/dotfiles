@@ -14,3 +14,9 @@ env = { BAT_THEME = "ansi" }
 
 [keybindings]
 shortcut = "f1"
+# ctrl-f12 = "actions:edit"
+
+# [actions.edit]
+# description = "Opens the selected entries with Neovim"
+# command = "nvim {}"
+# mode = "execute"

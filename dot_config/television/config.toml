@@ -16,31 +16,17 @@ history_size = 200
 global_history = false
 
 [ui]
-# Whether to use nerd font icons in the UI
-# This option requires a font patched with Nerd Font in order to properly
-# display glyphs (see https://www.nerdfonts.com/ for more information)
-use_nerd_font_icons = true
 # How much space to allocate for the UI (in percentage of the screen)
-# ┌───────────────────────────────────────┐
-# │                                       │
-# │            Terminal screen            │
-# │    ┌─────────────────────────────┐    │
-# │    │                             │    │
-# │    │                             │    │
-# │    │                             │    │
-# │    │       Television UI         │    │
-# │    │                             │    │
-# │    │                             │    │
-# │    │                             │    │
-# │    │                             │    │
-# │    └─────────────────────────────┘    │
-# │                                       │
-# │                                       │
-# └───────────────────────────────────────┘
+# ┌─────────────────────────┐
+# │     Terminal screen     │
+# │  ┌───────────────────┐  │
+# │  │                   │  │
+# │  │  Television UI    │  │
+# │  │                   │  │
+# │  └───────────────────┘  │
+# │                         │
+# └─────────────────────────┘
 ui_scale = 100
-
-# Where to place the input bar in the UI (top or bottom)
-input_bar_position = "top"
 # What orientation should tv be (landscape or portrait)
 orientation = "landscape"
 # The theme to use for the UI
@@ -48,27 +34,18 @@ orientation = "landscape"
 # repository. You may also create your own theme by creating a new file in a `themes`
 # directory in your configuration directory (see the `config.toml` location above).
 theme = "tokyonight"
-# The default size of the preview panel (in percentage of the screen)
-preview_size = 50
-
-# UI Features
-# -------------
-# Each feature can have two states: enabled/disabled and visible/not visible
-# - enabled: controls whether the feature is functional
-# - visible: controls whether the feature is displayed (only works if enabled)
-#
-# You can use the old array format for backward compatibility:
-# features = ["preview_panel", "status_bar", "remote_control"]
-#
-# Or use the new detailed format:
-[ui.features]
-preview_panel = { enabled = true, visible = true }
-help_panel = { enabled = true, visible = false }
-status_bar = { enabled = true, visible = true }
-remote_control = { enabled = true, visible = false }
 
 # Feature-specific configurations
 # Each feature can have its own configuration section
+[ui.input_bar]
+# Where to place the input bar in the UI (top or bottom)
+position = "top"
+# The input prompt string (defaults to ">" if not specified)
+prompt = ">"
+# header = "{}"
+# padding = {"left": 0, "right": 0, "top": 0, "bottom": 0}
+border_type = "rounded" # https://docs.rs/ratatui/latest/ratatui/widgets/block/enum.BorderType.html#variants
+
 [ui.status_bar]
 # Status bar separators (bubble):
 #separator_open = ""
@@ -76,86 +53,108 @@ remote_control = { enabled = true, visible = false }
 # Status bar separators (box):
 separator_open = ""
 separator_close = ""
+hidden = false
+
+[ui.results_panel]
+border_type = "rounded"
+# padding = {"left": 0, "right": 0, "top": 0, "bottom": 0}
 
 [ui.preview_panel]
 # Preview panel size (percentage of screen width/height)
 size = 50
-#header = "{}"
+#header = ""
 #footer = ""
 scrollbar = true
+border_type = "rounded"
+# padding = {"left": 0, "right": 0, "top": 0, "bottom": 0}
+hidden = false
+
+[ui.help_panel]
+# Whether to split the help panel by categories
+show_categories = true
+hidden = true
 
 [ui.remote_control]
 # Whether to show channel descriptions in remote control mode
 show_channel_descriptions = true
 # Whether to sort channels alphabetically
 sort_alphabetically = true
+# disabled = false
 
-
-# Keybindings
+# Keybindings and Events
 # ----------------------------------------------------------------------------
 #
-# HARDCODED KEYBINDINGS (cannot be changed via config):
-# Input field actions (always active):
-#   Backspace          - Delete previous character
-#   Ctrl+w             - Delete previous word
-#   Ctrl+u             - Delete entire line
-#   Delete             - Delete next character
-#   Left/Right         - Move cursor left/right
-#   Home / Ctrl+a      - Go to input start
-#   End / Ctrl+e       - Go to input end
+# NEW CONFIGURATION FORMAT:
+# -------------------------
+# The keybindings are now structured as Key -> Action mappings
+# This provides better discoverability and eliminates configuration complexity
 #
-# CONFIGURABLE KEYBINDINGS (can be customized below):
-# --------------------------------------------------
 [keybindings]
 # Application control
 # ------------------
-# Quit the application
-quit = ["esc", "ctrl-c"]
+esc = "quit"
+ctrl-c = "quit"
 
 # Navigation and selection
 # -----------------------
-# Scrolling through entries
-select_next_entry = ["down", "ctrl-n", "ctrl-j"]
-select_prev_entry = ["up", "ctrl-p", "ctrl-k"]
-#select_next_page = "pagedown"
-#select_prev_page = "pageup"
+down = "select_next_entry"
+ctrl-n = "select_next_entry"
+ctrl-j = "select_next_entry"
+up = "select_prev_entry"
+ctrl-p = "select_prev_entry"
+ctrl-k = "select_prev_entry"
 
 # History navigation
 # -----------------
-# Navigate through search query history
-select_prev_history = "ctrl-up"
-select_next_history = "ctrl-down"
+ctrl-up = "select_prev_history"
+ctrl-down = "select_next_history"
 
 # Multi-selection
 # --------------
-# Add entry to selection and move to the next entry
-toggle_selection_down = "tab"
-# Add entry to selection and move to the previous entry
-toggle_selection_up = "backtab"
-# Confirm selection
-confirm_selection = "enter"
+tab = "toggle_selection_down"
+backtab = "toggle_selection_up"
+enter = "confirm_selection"
 
 # Preview panel control
 # --------------------
-# Scrolling the preview pane
-scroll_preview_half_page_down = ["pagedown", "mousescrolldown"]
-scroll_preview_half_page_up = ["pageup", "mousescrollup"]
+pagedown = "scroll_preview_half_page_down"
+pageup = "scroll_preview_half_page_up"
 
 # Data operations
 # --------------
-# Copy the selected entry to the clipboard
-copy_entry_to_clipboard = "ctrl-y"
-# Reload the current source
-reload_source = "ctrl-r"
-# Cycle through the available sources for the current channel
-cycle_sources = "ctrl-s"
+ctrl-y = "copy_entry_to_clipboard"
+ctrl-r = "reload_source"
+ctrl-s = "cycle_sources"
 
 # UI Features
 # ----------
-toggle_remote_control = "ctrl-t"
-toggle_preview = "ctrl-o"
-toggle_help = "ctrl-h"
-toggle_status_bar = "f12"
+ctrl-t = "toggle_remote_control"
+ctrl-o = "toggle_preview"
+ctrl-h = "toggle_help"
+f12 = "toggle_status_bar"
+
+# Input field actions
+# ----------------------------------------
+backspace = "delete_prev_char"
+ctrl-w = "delete_prev_word"
+ctrl-u = "delete_line"
+delete = "delete_next_char"
+left = "go_to_prev_char"
+right = "go_to_next_char"
+home = "go_to_input_start"
+ctrl-a = "go_to_input_start"
+end = "go_to_input_end"
+ctrl-e = "go_to_input_end"
+
+# Event bindings
+# ----------------------------------------------------------------------------
+# Event bindings map non-keyboard events to actions
+# This includes mouse events, resize events, and custom events
+[events]
+# Mouse events
+# -----------
+mouse-scroll-up = "scroll_preview_up"
+mouse-scroll-down = "scroll_preview_down"
 
 # Shell integration
 # ----------------------------------------------------------------------------
@@ -193,6 +192,7 @@ fallback_channel = "files"
   "less",
   "head",
   "tail",
+  "vim",
   "nano",
   "bat",
   "cp",
@@ -224,3 +224,12 @@ fallback_channel = "files"
 "git-repos" = ["nvim", "code", "hx", "zed", "git clone"]
 "text" = ["rg", "grep"]
 "ssh-hosts" = ["ssh", "scp", "rsync"]
+
+
+# [shell_integration.keybindings]
+# # controls which key binding should trigger tv
+# # for shell autocomplete
+# "smart_autocomplete" = "ctrl-t"
+# # controls which keybinding should trigger tv
+# # for command history
+# "command_history" = "ctrl-r"
