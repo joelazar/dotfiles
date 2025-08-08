@@ -524,6 +524,16 @@
     "Markdown": {
       "format_on_save": "on"
       // "language_servers": ["!harper-ls", "..."]
+    },
+    "Terraform": {
+      "format_on_save": "on",
+      // NOTE: official terraform extension formatter doesn't work
+      "formatter": {
+        "external": {
+          "command": "tofu",
+          "arguments": ["fmt", "-"]
+        }
+      }
     }
   },
   "auto_install_extensions": {
