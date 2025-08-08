@@ -31,22 +31,6 @@
   "bottom_dock_layout": "right_aligned",
   "language_models": {
     "openai": { "available_models": [] },
-    // "openai": {
-    //   "api_url": "https://openrouter.ai/api/v1",
-    //   "available_models": [
-    //     {
-    //       "name": "deepseek/deepseek-r1",
-    //       "display_name": "DeepSeek R1",
-    //       "max_tokens": 64000
-    //     },
-    //     {
-    //       "name": "deepseek/deepseek-chat",
-    //       "display_name": "DeepSeek V3",
-    //       "max_tokens": 64000
-    //     }
-    //   ],
-    //   "version": "1"
-    // },
     "anthropic": { "available_models": [] },
     "google": { "available_models": [] },
     "deepseek": {
@@ -109,8 +93,8 @@
     "left_padding": 0.15,
     "right_padding": 0.15
   },
-  "search": { "button": false },
-  "diagnostics": { "button": false },
+  "search": { "button": true },
+  "diagnostics": { "button": true },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
     "show_branch_icon": true,
@@ -169,7 +153,7 @@
       }
     },
     "default_profile": "write",
-    "button": false,
+    "button": true,
     "dock": "right",
     "stream_edits": true,
     "default_width": 640,
@@ -190,25 +174,25 @@
     "default_width": 300,
     "dock": "left",
     "auto_fold_dirs": false,
-    "button": false,
+    "button": true,
     "auto_reveal_entries": false,
     "entry_spacing": "standard"
   },
   "outline_panel": {
     "dock": "right",
-    "button": false
+    "button": true
   },
   "collaboration_panel": {
-    "button": false
+    "button": true
   },
   "chat_panel": {
     "button": "never"
   },
   "notification_panel": {
-    "button": false
+    "button": true
   },
   "git_panel": {
-    "button": false
+    "button": true
   },
   "tabs": {
     "git_status": true,
@@ -221,7 +205,7 @@
     "include_ignored": true
   },
   "active_pane_modifiers": {
-    "inactive_opacity": 0.9,
+    "inactive_opacity": 0.7,
     "border_size": 0.5
   },
   "preferred_line_length": 140,
@@ -266,8 +250,8 @@
     // "coloring": "fixed"
   },
   "experimental.theme_overrides": {
-    "editor.indent_guide_active": "#e95c67",
-    "editor.indent_guide": "#515864",
+    // "editor.indent_guide_active": "#e95c67",
+    // "editor.indent_guide": "#515864",
     // Indent guide color palettes (uncomment one to use):
     // 1. Ocean tones, mixed colours
     // "accents": ["#1e3a5f", "#2a5f7f", "#3a7fa0", "#4a9fc0", "#5abfe0", "#7ad0f0"],
@@ -300,7 +284,7 @@
     // 4. Purple-blue MEDIUM
     // "accents": ["#3a3a5a", "#4a4a6a", "#5a5a7a", "#6a6a8a", "#7a7a9a", "#8a8aaa"],
     // 5. Sunset MEDIUM
-    "accents": ["#3a2a4a", "#4a2a5a", "#5a3a5a", "#6a4a5a", "#7a5a5a", "#8a6a5a"]
+    // "accents": ["#3a2a4a", "#4a2a5a", "#5a3a5a", "#6a4a5a", "#7a5a5a", "#8a6a5a"],
 
     // 1. Ocean tones BRIGHT
     // "accents": ["#4a668f", "#5a86af", "#6aa6cf", "#7ac6ef", "#8ad6ff", "#9ae6ff"],
@@ -320,14 +304,24 @@
     // "accents": ["#4a3a4a", "#5a3a5a", "#6a4a6a", "#6a5a7a", "#6a6a8a", "#6a7a9a"],
     // 9. Deep space BRIGHT
     // "accents": ["#3a3a4e", "#4a4a5e", "#5a5a6e", "#6a6a7e", "#7a7a8e", "#8a8a9e"],
+
+    // "element.active": "#363b54",
+    // "element.hover": "#363b54", // or 1a1b26
+    // "element.selected": "#363b54", // or 1a1b26
+    // // "ghost_element.active": "#363b54",
+    // "ghost_element.hover": "#363b54", // or 1a1b26
+    // "ghost_element.selected": "#363b54", // or 1a1b26
+    // "pane.focused_border": "#27a1b9"
+    "border.selected": "#565f89",
+    "border.focused": "#565f89"
   },
   "debugger": {
-    "button": false
+    "button": true
   },
   "terminal": {
     "toolbar": { "breadcrumbs": false },
     "line_height": "standard",
-    "button": false,
+    "button": true,
     "max_scroll_history_lines": 30000,
     "blinking": "off",
     "font_family": "FiraCode Nerd Font Ret",
