@@ -5,7 +5,7 @@
       "command": "gopls"
     },
     "typescript": {
-      "command": "typescript-language-server",
+      "command": "vtsls",
       "args": ["--stdio"]
     },
     "Bash": {

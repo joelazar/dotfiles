@@ -11,13 +11,14 @@ function fido2
             mkdir -p $config_dir
 
             echo "🔑 Generating new FIDO2 recipient key..."
-            age-plugin-fido2-hmac -g > $config_dir/setup.txt
+            # install github.com/olastor/age-plugin-fido2-hmac beforehand
+            age-plugin-fido2-hmac -g >$config_dir/setup.txt
 
             # Extract the public key
-            grep "# public key:" $config_dir/setup.txt | sed 's/# public key: //' > $config_dir/recipient.txt
+            grep "# public key:" $config_dir/setup.txt | sed 's/# public key: //' >$config_dir/recipient.txt
 
             # Extract identity if separate identity was chosen
-            grep "AGE-PLUGIN-FIDO2-HMAC-" $config_dir/setup.txt > $config_dir/identity.txt 2>/dev/null
+            grep AGE-PLUGIN-FIDO2-HMAC- $config_dir/setup.txt >$config_dir/identity.txt 2>/dev/null
 
             echo "✅ Setup complete! Recipient key saved to $config_dir/recipient.txt"
             if test -s $config_dir/identity.txt
@@ -74,9 +75,9 @@ function fido2
                 echo "👆 Touch your FIDO2 key to decrypt..."
 
                 if test -f "$config_dir/identity.txt"
-                    age -d -i $config_dir/identity.txt $file > $output_file
+                    age -d -i $config_dir/identity.txt $file >$output_file
                 else
-                    age -d -j fido2-hmac $file > $output_file
+                    age -d -j fido2-hmac $file >$output_file
                 end
 
                 if test $status -eq 0
@@ -154,9 +155,9 @@ function fido2
 
             # Decrypt to temp file
             if test -f "$config_dir/identity.txt"
-                age -d -i $config_dir/identity.txt $file > $temp_file
+                age -d -i $config_dir/identity.txt $file >$temp_file
             else
-                age -d -j fido2-hmac $file > $temp_file
+                age -d -j fido2-hmac $file >$temp_file
             end
 
             if test $status -ne 0
@@ -240,9 +241,9 @@ function fido2
 
             # Decrypt with old key
             if test -f "$config_dir/identity.txt"
-                age -d -i $config_dir/identity.txt $file > $temp_file
+                age -d -i $config_dir/identity.txt $file >$temp_file
             else
-                age -d -j fido2-hmac $file > $temp_file
+                age -d -j fido2-hmac $file >$temp_file
             end
 
             if test $status -ne 0
@@ -282,7 +283,7 @@ function fido2
                 echo "⚠️  Warning: No encrypted version found ($file.age)"
                 echo "   Are you sure you want to delete $file?"
                 read -l -P "   Type 'yes' to confirm: " confirm
-                if test "$confirm" != "yes"
+                if test "$confirm" != yes
                     echo "❌ Cancelled"
                     return 1
                 end
@@ -359,16 +360,16 @@ end
 
 # Completions for the fido2 command
 complete -c fido2 -f
-complete -c fido2 -n "__fish_use_subcommand" -a "setup" -d "Generate new FIDO2 recipient key"
-complete -c fido2 -n "__fish_use_subcommand" -a "encrypt e" -d "Encrypt a file"
-complete -c fido2 -n "__fish_use_subcommand" -a "decrypt d" -d "Decrypt file"
-complete -c fido2 -n "__fish_use_subcommand" -a "view v cat" -d "View encrypted file"
-complete -c fido2 -n "__fish_use_subcommand" -a "edit ed" -d "Edit encrypted file"
-complete -c fido2 -n "__fish_use_subcommand" -a "list ls" -d "List encrypted files"
-complete -c fido2 -n "__fish_use_subcommand" -a "reencrypt re" -d "Re-encrypt with new key"
-complete -c fido2 -n "__fish_use_subcommand" -a "shred rm" -d "Securely delete file"
-complete -c fido2 -n "__fish_use_subcommand" -a "info status" -d "Show configuration status"
-complete -c fido2 -n "__fish_use_subcommand" -a "help h" -d "Show help"
+complete -c fido2 -n __fish_use_subcommand -a setup -d "Generate new FIDO2 recipient key"
+complete -c fido2 -n __fish_use_subcommand -a "encrypt e" -d "Encrypt a file"
+complete -c fido2 -n __fish_use_subcommand -a "decrypt d" -d "Decrypt file"
+complete -c fido2 -n __fish_use_subcommand -a "view v cat" -d "View encrypted file"
+complete -c fido2 -n __fish_use_subcommand -a "edit ed" -d "Edit encrypted file"
+complete -c fido2 -n __fish_use_subcommand -a "list ls" -d "List encrypted files"
+complete -c fido2 -n __fish_use_subcommand -a "reencrypt re" -d "Re-encrypt with new key"
+complete -c fido2 -n __fish_use_subcommand -a "shred rm" -d "Securely delete file"
+complete -c fido2 -n __fish_use_subcommand -a "info status" -d "Show configuration status"
+complete -c fido2 -n __fish_use_subcommand -a "help h" -d "Show help"
 
 # File completions for subcommands
 complete -c fido2 -n "__fish_seen_subcommand_from encrypt e" -F
