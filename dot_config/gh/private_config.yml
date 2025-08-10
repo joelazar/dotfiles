@@ -1,3 +1,5 @@
+version: "1"
+
 # What protocol to use when performing git operations. Supported values: ssh, https
 git_protocol: ssh
 # What editor gh should run when creating issues, pull requests, etc. If blank, will refer to environment.
@@ -9,4 +11,7 @@ pager: bat -p
 # Aliases allow you to create nicknames for gh commands
 aliases:
   co: pr checkout
-version: "1"
+  clone: repo clone
+  pr: pr create --web
+  pv: pr view --web
+  v: repo view --web
