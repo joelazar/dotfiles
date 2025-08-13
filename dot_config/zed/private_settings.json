@@ -160,7 +160,7 @@
     "default_height": 320,
     "default_model": {
       "provider": "zed.dev",
-      "model": "claude-opus-4-1"
+      "model": "claude-sonnet-4"
     }
   },
   "tab_bar": {
@@ -207,6 +207,9 @@
   "active_pane_modifiers": {
     "inactive_opacity": 0.7,
     "border_size": 0.5
+  },
+  "scrollbar": {
+    "show": "system"
   },
   "preferred_line_length": 140,
   "show_wrap_guides": true,
@@ -513,7 +516,8 @@
       "format_on_save": "on",
       "code_actions_on_format": {
         "source.organizeImports": true
-      }
+      },
+      "language_servers": ["!harper-ls", "..."]
     },
     "Markdown": {
       "format_on_save": "on"
