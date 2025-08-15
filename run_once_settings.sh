@@ -4,16 +4,23 @@ SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils"
 
+# Show a nice header
+show_header "⚙️  System Configuration Setup" "This script will configure macOS settings and preferences."
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "System configuration\n"
+echo ""
+print_in_purple "🎯 Ready to configure system settings"
 
-ask_for_confirmation "Would you like to do it now?"
+ask_for_confirmation "Would you like to continue?"
 if ! answer_is_yes; then
+    show_message "👋 Configuration cancelled. Run this script again when ready!" "$ORANGE"
     exit
 fi
 
 ask_for_sudo
+
+show_section "🐚 Shell and Editor Configuration" "$YELLOW"
 
 if [ "$SHELL" != "/opt/homebrew/bin/fish" ]; then
     sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
@@ -24,6 +31,8 @@ fi
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
 
 execute "fish -c 'echo y | fish_config theme save TokyoNight Night'" "Set fish theme"
+
+show_section "⌨️  Keyboard and System Settings" "$CYAN"
 
 # settings based on https://mac-key-repeat.zaymon.dev/
 execute "defaults write NSGlobalDomain KeyRepeat -int 1" "Keyboard: Set 15 ms key repeat"
@@ -58,6 +67,8 @@ execute "duti -s dev.zed.Zed-Preview public.comma-separated-values-text all" "Se
 
 execute "duti -s dev.zed.Zed-Preview public.data all" "Set Zed as the default app for data files"
 
+show_section "🐳 Docker Configuration" "$PINK"
+
 if [ -f ~/.docker/cli-plugins/docker-buildx ]; then
     print_success "Docker buildx configured"
 else
@@ -65,6 +76,8 @@ else
     ln -sf /opt/homebrew/opt/docker-buildx/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx
     print_result $? "Docker buildx configured"
 fi
+
+show_section "🔐 Security Configuration" "$GREEN"
 
 # Enable Touch ID for sudo
 if [ -f /etc/pam.d/sudo_local ]; then
@@ -86,6 +99,8 @@ else
     print_result $? "Enable Touch ID for sudo (new file)"
 fi
 
+show_section "💻 Hostname Configuration" "$YELLOW"
+
 # Update hostname
 ask_for_confirmation "Would you like to set a new hostname?"
 if answer_is_yes; then
@@ -101,9 +116,14 @@ fi
 execute "sudo spctl --master-disable" "Allow apps downloaded from anywhere"
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable quarantine for downloaded apps"
 
+show_completion "✅ System Configuration Complete!" "Your macOS settings have been configured." "Some changes may require a restart to take effect."
+
 print_warning "Some changes may require a restart or logout to take effect."
 
 ask_for_confirmation "Would you like to restart your computer now?"
 if answer_is_yes; then
+    show_message "🔄 Restarting computer..." "$RED"
     sudo shutdown -r now
+else
+    show_message "👍 Remember to restart later to apply all changes!" "$CYAN"
 fi

@@ -1,5 +1,146 @@
 #!/bin/bash
 
+# Tokyo Night theme colors (only define if not already set)
+if [[ -z "${PURPLE:-}" ]]; then
+    readonly PURPLE="#bd93f9"
+    readonly GREEN="#50fa7b"
+    readonly RED="#ff5555"
+    readonly YELLOW="#f1fa8c"
+    readonly CYAN="#8be9fd"
+    readonly ORANGE="#ffb86c"
+    readonly PINK="#ff79c6"
+fi
+
+# Gum wrapper functions for common UI patterns
+
+# Execute command with gum spinner
+gum_execute() {
+    local -r CMDS="$1"
+    local -r MSG="${2:-$1}"
+    local -r SPINNER="${3:-dot}"
+
+    if cmd_exists "gum"; then
+        gum spin --spinner="$SPINNER" --title="$MSG" -- bash -c "$CMDS"
+    else
+        echo "⚙️  $MSG"
+        eval "$CMDS"
+    fi
+}
+
+# Convenient aliases for different spinner types
+gum_execute_pulse() {
+    gum_execute "$1" "$2" "pulse"
+}
+
+gum_execute_points() {
+    gum_execute "$1" "$2" "points"
+}
+
+gum_execute_moon() {
+    gum_execute "$1" "$2" "moon"
+}
+
+show_header() {
+    local title="$1"
+    local description="$2"
+
+    if cmd_exists "gum"; then
+        if [ -n "$description" ]; then
+            gum style \
+                --foreground="$PURPLE" \
+                --border="rounded" \
+                --padding="1 2" \
+                --margin="1 0" \
+                "$title" \
+                "" \
+                "$description"
+        else
+            gum style \
+                --foreground="$PURPLE" \
+                --border="rounded" \
+                --padding="1 2" \
+                --margin="1 0" \
+                "$title"
+        fi
+    else
+        echo "$title"
+        [ -n "$description" ] && echo "$description"
+    fi
+}
+
+show_section() {
+    local title="$1"
+    local color="${2:-$YELLOW}"
+
+    echo ""
+    if cmd_exists "gum"; then
+        gum style \
+            --foreground="$color" \
+            --bold \
+            --border="rounded" \
+            --padding="0 1" \
+            "$title"
+    else
+        echo "$title"
+    fi
+}
+
+show_completion() {
+    local title="$1"
+    local message="$2"
+    local additional="${3:-}"
+
+    echo ""
+    if cmd_exists "gum"; then
+        if [ -n "$additional" ]; then
+            gum style \
+                --foreground="$GREEN" \
+                --border="double" \
+                --padding="1 2" \
+                --margin="1 0" \
+                "$title" \
+                "" \
+                "$message" \
+                "$additional"
+        else
+            gum style \
+                --foreground="$GREEN" \
+                --border="double" \
+                --padding="1 2" \
+                --margin="1 0" \
+                "$title" \
+                "" \
+                "$message"
+        fi
+    else
+        echo "$title"
+        echo "$message"
+        [ -n "$additional" ] && echo "$additional"
+    fi
+}
+
+show_message() {
+    local message="$1"
+    local color="${2:-$CYAN}"
+
+    if cmd_exists "gum"; then
+        gum style --foreground="$color" "$message"
+    else
+        echo "$message"
+    fi
+}
+
+show_bold_message() {
+    local message="$1"
+    local color="${2:-$GREEN}"
+
+    if cmd_exists "gum"; then
+        gum style --foreground="$color" --bold "$message"
+    else
+        echo "$message"
+    fi
+}
+
 answer_is_yes() {
     [[ $REPLY =~ ^[Yy]$ ]] &&
         return 0 ||
@@ -7,14 +148,22 @@ answer_is_yes() {
 }
 
 ask() {
-    print_question "$1"
-    read -r
+    if cmd_exists "gum"; then
+        REPLY=$(gum input --placeholder "$1")
+    else
+        print_question "$1"
+        read -r
+    fi
 }
 
 ask_for_confirmation() {
-    print_question "$1 (y/n) "
-    read -r -n 1
-    printf "\n"
+    if cmd_exists "gum"; then
+        gum confirm "$1" && REPLY="y" || REPLY="n"
+    else
+        print_question "$1 (y/n) "
+        read -r -n 1
+        printf "\n"
+    fi
 }
 
 ask_for_sudo() {
@@ -52,13 +201,11 @@ kill_all_subprocesses() {
 }
 
 execute() {
-
     local -r CMDS="$1"
     local -r MSG="${2:-$1}"
     local -r TMP_FILE="$(mktemp /tmp/XXXXX)"
 
     local exitCode=0
-    local cmdsPID=""
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -69,28 +216,24 @@ execute() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    # Execute commands in background
+    if cmd_exists "gum"; then
+        # Use gum's built-in spinner with error capture
+        gum spin \
+            --spinner="dot" \
+            --title="$MSG" \
+            -- bash -c "$CMDS >/dev/null 2>'$TMP_FILE'"
+        exitCode=$?
+    else
+        # Fallback to original implementation
+        eval "$CMDS" \
+            >/dev/null \
+            2>"$TMP_FILE" &
 
-    eval "$CMDS" \
-        >/dev/null \
-        2>"$TMP_FILE" &
-
-    cmdsPID=$!
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Show a spinner if the commands
-    # require more time to complete.
-
-    show_spinner "$cmdsPID" "$CMDS" "$MSG"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Wait for the commands to no longer be executing
-    # in the background, and then get their exit code.
-
-    wait "$cmdsPID" &>/dev/null
-    exitCode=$?
+        local cmdsPID=$!
+        show_spinner "$cmdsPID" "$CMDS" "$MSG"
+        wait "$cmdsPID" &>/dev/null
+        exitCode=$?
+    fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -106,11 +249,14 @@ execute() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     return $exitCode
-
 }
 
 print_error() {
-    print_in_red "   [✖] $1 $2\n"
+    if cmd_exists "gum"; then
+        gum style --foreground="$RED" --bold "❌ $1 $2"
+    else
+        print_in_red "   [✖] $1 $2\n"
+    fi
 }
 
 print_error_stream() {
@@ -127,7 +273,11 @@ print_in_color() {
 }
 
 print_info() {
-    print_in_color "$1" 6
+    if cmd_exists "gum"; then
+        gum style --foreground="$CYAN" "ℹ️  $1"
+    else
+        print_in_color "$1" 6
+    fi
 }
 
 print_in_green() {
@@ -135,7 +285,11 @@ print_in_green() {
 }
 
 print_in_purple() {
-    print_in_color "$1" 5
+    if cmd_exists "gum"; then
+        gum style --foreground="$PURPLE" --bold "$1"
+    else
+        print_in_color "$1" 5
+    fi
 }
 
 print_in_red() {
@@ -147,11 +301,14 @@ print_in_yellow() {
 }
 
 print_question() {
-    print_in_yellow "   [?] $1"
+    if cmd_exists "gum"; then
+        gum style --foreground="$YELLOW" "❓ $1"
+    else
+        print_in_yellow "   [?] $1"
+    fi
 }
 
 print_result() {
-
     if [ "$1" -eq 0 ]; then
         print_success "$2"
     else
@@ -159,15 +316,22 @@ print_result() {
     fi
 
     return "$1"
-
 }
 
 print_success() {
-    print_in_green "   [✔] $1\n"
+    if cmd_exists "gum"; then
+        gum style --foreground="$GREEN" --bold "✅ $1"
+    else
+        print_in_green "   [✔] $1\n"
+    fi
 }
 
 print_warning() {
-    print_in_yellow "   [!] $1\n"
+    if cmd_exists "gum"; then
+        gum style --foreground="$ORANGE" "⚠️  $1"
+    else
+        print_in_yellow "   [!] $1\n"
+    fi
 }
 
 set_trap() {
@@ -178,41 +342,26 @@ set_trap() {
 }
 
 show_spinner() {
-
-    local -r FRAMES='/-\|'
-
-    # shellcheck disable=SC2034
-    local -r NUMBER_OR_FRAMES=${#FRAMES}
-
     local -r CMDS="$2"
     local -r MSG="$3"
     local -r PID="$1"
 
-    local i=0
-    local frameText=""
+    if cmd_exists "gum"; then
+        # Wait for the background process to complete while showing nothing
+        # (gum spin will be used in execute function instead)
+        wait "$PID" &>/dev/null
+    else
+        # Fallback to original spinner
+        local -r FRAMES='/-\|'
+        local -r NUMBER_OR_FRAMES=${#FRAMES}
+        local i=0
+        local frameText=""
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Display spinner while the commands are being executed.
-
-    while kill -0 "$PID" &>/dev/null; do
-
-        frameText="   [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        # Print frame text.
-
-        printf "%s" "$frameText"
-
-        sleep 0.2
-
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        # Clear frame text.
-
-        printf "\r"
-
-    done
-
+        while kill -0 "$PID" &>/dev/null; do
+            frameText="   [${FRAMES:i++%NUMBER_OR_FRAMES:1}] $MSG"
+            printf "%s" "$frameText"
+            sleep 0.2
+            printf "\r"
+        done
+    fi
 }

@@ -6,12 +6,24 @@ cd "$SOURCE_DIR" &&
     . "./scripts/utils_install" &&
     . "./scripts/utils"
 
+# Show a nice header
+show_header "🚀 Package Installation Setup" "This script will install and configure your development environment."
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-print_in_purple "Install packages\n"
+# Install core dependencies first
+show_bold_message "📦 Installing core dependencies..." "$GREEN"
 
-ask_for_confirmation "Would you like to do it now? It can take a bit of time."
+install_homebrew
+install_gum
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_in_purple "🎯 Ready to install packages"
+
+ask_for_confirmation "Would you like to continue? This may take some time."
 if ! answer_is_yes; then
+    show_message "👋 Installation cancelled. Run this script again when ready!" "$ORANGE"
     exit
 fi
 
@@ -24,7 +36,6 @@ ask_for_sudo
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 # Install core package managers and dotfiles manager
-install_homebrew
 install_chezmoi
 install_brew_packages
 install_rust
@@ -32,6 +43,8 @@ install_rust
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Language-specific packages
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+show_section "📚 Installing Language-Specific Packages" "$YELLOW"
 
 # BUN packages
 BUN_PACKAGES=(
@@ -65,6 +78,8 @@ install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
 # Tools and plugins
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+show_section "🔧 Installing Tools and Plugins" "$CYAN"
+
 # GitHub CLI plugins
 if setup_github_cli; then
     GH_PLUGINS=(
@@ -91,3 +106,9 @@ install_yazi_plugins "${YAZI_PLUGINS[@]}"
 
 # Install Magic from Modular
 install_magic
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Completion
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+show_completion "🎉 Package Installation Complete!" "All packages have been successfully installed." "Your development environment is now ready to use."

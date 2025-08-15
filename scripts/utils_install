@@ -8,24 +8,40 @@ SOURCE_DIR=$(chezmoi source-path)
 
 install_homebrew() {
     if ! cmd_exists "brew"; then
-        print_in_purple "Installing Homebrew\n"
+        echo "🍺 Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
         # Setup Homebrew in PATH
         if [ -f /opt/homebrew/bin/brew ]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
-            print_success "Homebrew installed and configured"
+            echo "✅ Homebrew installed and configured"
         else
-            print_error "Failed to install Homebrew"
+            echo "❌ Failed to install Homebrew"
+            return 1
         fi
     else
-        print_success "Homebrew already installed"
+        echo "✅ Homebrew already installed"
+    fi
+}
+
+install_gum() {
+    if ! cmd_exists "gum"; then
+        echo "🎨 Installing gum for enhanced UI..."
+        if cmd_exists "brew"; then
+            brew install gum
+            echo "✅ Gum installed successfully"
+        else
+            echo "❌ Homebrew not available, cannot install gum"
+            return 1
+        fi
+    else
+        echo "✅ Gum already installed"
     fi
 }
 
 install_chezmoi() {
     if ! cmd_exists "chezmoi"; then
-        print_in_purple "Installing and configuring Chezmoi\n"
+        print_in_purple "🏠 Installing and configuring Chezmoi"
         brew install chezmoi
 
         # Check if dotfiles are already cloned
@@ -48,7 +64,7 @@ install_chezmoi() {
 }
 
 install_brew_packages() {
-    print_in_purple "Installing packages from Brewfile\n"
+    print_in_purple "🍺 Installing packages from Brewfile"
     local brewfile=""
 
     if [ "$(chezmoi data | jq -r '.type // ""')" = "work" ]; then
@@ -69,7 +85,7 @@ install_brew_packages() {
 
 install_rust() {
     if ! cmd_exists "rustc"; then
-        print_in_purple "Installing Rust using rustup\n"
+        print_in_purple "🦀 Installing Rust using rustup"
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
         print_success "Rust installed and configured"
     else
@@ -79,7 +95,7 @@ install_rust() {
 
 install_magic() {
     if ! cmd_exists "magic"; then
-        print_in_purple "Installing Magic from Modular\n"
+        print_in_purple "🪄 Installing Magic from Modular"
 
         # Install Magic
         curl -ssL https://magic.modular.com/deb13a78-95b6-40bf-8bd0-52802eb302a8 | bash
@@ -130,7 +146,7 @@ install_yazi_plugins() {
     local -a plugin_list=("${@}")
 
     if cmd_exists "yazi"; then
-        print_in_purple "Installing Yazi plugins\n"
+        print_in_purple "📁 Installing Yazi plugins"
 
         # Make sure yazi config directory exists
         mkdir -p ~/.config/yazi/flavors
