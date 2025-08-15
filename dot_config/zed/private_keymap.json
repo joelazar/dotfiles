@@ -77,7 +77,7 @@
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
       "space b W": "pane::CloseCleanItems",
-      "space b w": "pane::CloseInactiveItems",
+      "space b w": "pane::CloseOtherItems",
       "space c a": "editor::ToggleCodeActions",
       "space c f": "editor::Format",
       "space c r ": "editor::Rename",

@@ -54,6 +54,10 @@ execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/
 
 execute "duti -s dev.zed.Zed-Preview public.plain-text all" "Set Zed as the default app for plain text files"
 
+execute "duti -s dev.zed.Zed-Preview public.comma-separated-values-text all" "Set Zed as the default app for CSV files"
+
+execute "duti -s dev.zed.Zed-Preview public.data all" "Set Zed as the default app for data files"
+
 if [ -f ~/.docker/cli-plugins/docker-buildx ]; then
     print_success "Docker buildx configured"
 else
