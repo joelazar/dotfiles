@@ -1,8 +1,6 @@
 #!/bin/bash
 
-SOURCE_DIR=$(chezmoi source-path)
-
-. "$SOURCE_DIR/scripts/utils"
+. "{{ joinPath .chezmoi.sourceDir "scripts/utils" }}"
 
 # Show a nice header
 show_header "⚙️  System Configuration Setup" "This script will configure macOS settings and preferences."
