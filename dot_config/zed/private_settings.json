@@ -152,7 +152,7 @@
         "context_servers": {}
       }
     },
-    "default_profile": "write",
+    "default_profile": "ask",
     "button": true,
     "dock": "right",
     "stream_edits": true,
@@ -374,7 +374,8 @@
       "**/helmfile.d/**/*.yml",
       "**/values*.yaml"
     ],
-    "Shell Script": ["*.envrc*"]
+    "Shell Script": ["*.envrc*"],
+    "Nginx": ["**/nginx/**/*.conf", "nginx.conf"]
   },
   "lsp": {
     "rust-analyzer": {

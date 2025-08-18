@@ -3,14 +3,24 @@
 SOURCE_DIR=$(chezmoi source-path)
 
 . "$SOURCE_DIR/scripts/utils_install" &&
-  . "$SOURCE_DIR/scripts/utils"
+    . "$SOURCE_DIR/scripts/utils"
 
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
 execute "ya pkg upgrade" "Update yazi plugins"
 
-execute "claude update" "Update claude-code"
+execute "ai-update" "Update AI tools"
 
 execute "tv update-channels" "Update Television channels"
 
 execute "brew cleanup" "Cleanup brew"
+
+ask_for_confirmation "Remove macOS Trash and .local/share/Trash directories?"
+if answer_is_yes; then
+    if [[ -d "$HOME/.Trash" ]]; then
+        execute "rm -rf $HOME/.Trash/{*,.*}" "Empty macOS Trash"
+    fi
+    if [[ -d "$HOME/.local/share/Trash" ]]; then
+        execute "rm -rf $HOME/.local/share/Trash/{*,.*}" "Empty .local/share/Trash"
+    fi
+fi
