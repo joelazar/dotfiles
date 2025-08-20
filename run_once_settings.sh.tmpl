@@ -49,6 +49,10 @@ execute "defaults write com.apple.dock autohide-delay -float 0" "Remove the auto
 
 execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove the animation when hiding/showing the Dock"
 
+execute "defaults write com.apple.dock expose-group-apps -bool true" "Group windows by application in Exposé"
+
+execute "defaults write com.apple.spaces spans-displays -bool true" "Allow Spaces to span across displays"
+
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable the 'Are you sure you want to open this application?' dialog"
 
 execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 64 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Show Spotlight search"

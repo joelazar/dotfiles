@@ -109,10 +109,10 @@ keybind = super+shift+f=write_selection_file:open
 keybind = alt+left=unbind
 keybind = alt+right=unbind
 
-keybind = super+ctrl+h=goto_split:left
-keybind = super+ctrl+j=goto_split:bottom
-keybind = super+ctrl+k=goto_split:top
-keybind = super+ctrl+l=goto_split:right
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
 keybind = super+shift+enter=new_split:auto
 
 keybind = super+shift+comma=move_tab:-1

@@ -82,13 +82,25 @@ outer.right = 0
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with cmd-ctrl-alt + enter shortcut
 # (like in i3)
-#
+
 cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
-cmd-ctrl-alt-e = 'exec-and-forget open /Applications/Zed.app'
+# cmd-ctrl-alt-e = 'exec-and-forget open /Applications/Zed.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 cmd-ctrl-alt-slash = 'layout tiles horizontal vertical'
 cmd-ctrl-alt-comma = 'layout accordion horizontal vertical'
+
+# Consider using 'join-with' command as a 'split' replacement if you want to enable normalizations
+# cmd-ctrl-alt-b = 'join-with right'
+# cmd-ctrl-alt-v = 'join-with up'
+cmd-ctrl-alt-f = 'fullscreen'
+# cmd-ctrl-alt-s = 'layout v_accordion'               # 'layout stacking' in i3
+# cmd-ctrl-alt-w = 'layout h_accordion'               # 'layout tabbed' in i3
+cmd-ctrl-alt-w = 'layout accordion horizontal vertical'
+cmd-ctrl-alt-e = 'layout tiles horizontal vertical'     # 'layout toggle split' in i3
+cmd-ctrl-alt-shift-space = 'layout floating tiling'     # 'floating toggle' in i3
+
+cmd-ctrl-alt-shift-c = 'reload-config'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 cmd-ctrl-alt-h = 'focus left'
@@ -138,6 +150,8 @@ cmd-ctrl-alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 cmd-ctrl-alt-shift-semicolon = 'mode service'
 
+cmd-ctrl-alt-r = 'mode resize'
+
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
@@ -160,6 +174,14 @@ cmd-ctrl-alt-shift-l = ['join-with right', 'mode main']
 down = 'volume down'
 up = 'volume up'
 shift-down = ['volume set 0', 'mode main']
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode main'
 
 # Auto-assign apps to specific workspaces
 [[on-window-detected]]

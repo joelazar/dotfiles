@@ -152,7 +152,7 @@
         "context_servers": {}
       }
     },
-    "default_profile": "ask",
+    "default_profile": "write",
     "button": true,
     "dock": "right",
     "stream_edits": true,
