@@ -25,6 +25,11 @@ resize-overlay = never
 window-height = 200
 window-width = 500
 
+keybind = super+alt+ctrl+l=unbind
+keybind = super+alt+ctrl+h=unbind
+keybind = cmd+alt+ctrl+l=unbind
+keybind = cmd+alt+ctrl+h=unbind
+
 keybind = super+page_up=scroll_page_up
 keybind = super+ctrl+equal=equalize_splits
 keybind = super+physical:four=goto_tab:4

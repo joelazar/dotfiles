@@ -83,7 +83,7 @@ outer.right = 0
 # You can uncomment the following lines to open up terminal with cmd-ctrl-alt + enter shortcut
 # (like in i3)
 
-cmd-ctrl-alt-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
+cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
 # cmd-ctrl-alt-e = 'exec-and-forget open /Applications/Zed.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
