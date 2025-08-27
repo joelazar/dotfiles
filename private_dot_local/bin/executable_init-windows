@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Init windows
+# @raycast.mode compact
+
+# Optional parameters:
+# @raycast.icon 🖥️
+# @raycast.description Launches a predefined set of apps by bundle identifier.
+
+# Documentation:
+# @raycast.author joelazar
+# @raycast.authorURL https://raycast.com/joelazar
+
+# Open all listed apps by bundle identifier
+open -b "com.mitchellh.ghostty"          # Ghostty
+open -b "dev.zed.Zed-Preview"            # Zed Preview
+open -b "app.zen-browser.zen"            # Zen
+open -b "md.obsidian"                    # Obsidian
+open -b "com.todoist.mac.Todoist"        # Todoist
+open -b "com.tinyspeck.slackmacgap"      # Slack
+open -b "com.hnc.Discord"                # Discord
+open -b "com.spotify.client"             # Spotify
+open -b "com.openai.chat"                # ChatGPT
+open -b "com.anthropic.claudefordesktop" # Claude

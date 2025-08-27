@@ -15,7 +15,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 accordion-padding = 0
 
 # Possible values: tiles|accordion
-default-root-container-layout = 'tiles'
+default-root-container-layout = 'accordion'
 
 # Possible values: horizontal|vertical|auto
 # 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
@@ -82,8 +82,10 @@ outer.right = 0
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 # You can uncomment the following lines to open up terminal with cmd-ctrl-alt + enter shortcut
 # (like in i3)
+#
 
 cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
+cmd-space = 'exec-and-forget open /Applications/Claude.app'
 # cmd-ctrl-alt-e = 'exec-and-forget open /Applications/Zed.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
@@ -185,36 +187,60 @@ esc = 'mode main'
 
 # Auto-assign apps to specific workspaces
 [[on-window-detected]]
-if.app-id = 'dev.zed.Zed-Preview'
-run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
-run = ["layout tiling", 'move-node-to-workspace 1']
+run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
-if.app-id = 'app.zen-browser.zen'
+if.app-id = 'dev.zed.Zed-Preview'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
-if.app-id = 'md.obsidian'
+if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = ['layout floating', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = ['layout floating', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = 'move-node-to-workspace 4'
+run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = 'move-node-to-workspace 4'
+run = ['layout tiling', 'move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+run = ['layout tiling', 'move-node-to-workspace 6']
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
-run = 'move-node-to-workspace 9'
+run = 'move-node-to-workspace 10'
 
 [[on-window-detected]]
 check-further-callbacks = true
