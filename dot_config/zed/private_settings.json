@@ -1,4 +1,9 @@
 {
+  "agent_servers": {
+    "gemini": {
+      "ignore_system_version": false
+    }
+  },
   "edit_predictions": {
     "mode": "eager",
     "copilot": {
