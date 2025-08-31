@@ -161,6 +161,8 @@ brew "libfido2"
 brew "qemu"
 # Additional guest agents for Lima
 brew "lima-additional-guestagents"
+# CLI for SQLite Databases with auto-completion and syntax highlighting
+brew "litecli"
 # LLM inference in C/C++
 brew "llama.cpp"
 # Access large language models from the command-line
