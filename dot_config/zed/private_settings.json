@@ -4,6 +4,7 @@
       "ignore_system_version": false
     }
   },
+  "use_system_window_tabs": true,
   "edit_predictions": {
     "mode": "eager",
     "copilot": {
@@ -222,7 +223,7 @@
   "ui_font_size": 14.0,
   "buffer_font_size": 13.0,
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
+  "theme": "Tokyo Night",
   "icon_theme": "VSCode Icons (Dark)",
   "buffer_font_family": "FiraCode Nerd Font Ret",
   "buffer_font_features": {
@@ -281,7 +282,6 @@
     // "accents": ["#2a1a2a", "#3a1a3a", "#4a2a4a", "#4a3a5a", "#4a4a6a", "#4a5a7a"],
     // 8. Deep space (ultra dark blues)
     // "accents": ["#1a1a2e", "#1a1a3e", "#1a1a4e", "#1a1a5e", "#1a1a6e", "#1a1a7e"],
-
     // MEDIUM VARIANTS (starting ~10% brightness)
     // 1. Ocean tones MEDIUM
     // "accents": ["#2a4a6f", "#3a6a8f", "#4a8aaf", "#5aaacf", "#6abaef", "#7acaff"],
@@ -293,7 +293,6 @@
     // "accents": ["#3a3a5a", "#4a4a6a", "#5a5a7a", "#6a6a8a", "#7a7a9a", "#8a8aaa"],
     // 5. Sunset MEDIUM
     // "accents": ["#3a2a4a", "#4a2a5a", "#5a3a5a", "#6a4a5a", "#7a5a5a", "#8a6a5a"],
-
     // 1. Ocean tones BRIGHT
     // "accents": ["#4a668f", "#5a86af", "#6aa6cf", "#7ac6ef", "#8ad6ff", "#9ae6ff"],
     // 2. Ocean blue BRIGHT
@@ -312,7 +311,6 @@
     // "accents": ["#4a3a4a", "#5a3a5a", "#6a4a6a", "#6a5a7a", "#6a6a8a", "#6a7a9a"],
     // 9. Deep space BRIGHT
     // "accents": ["#3a3a4e", "#4a4a5e", "#5a5a6e", "#6a6a7e", "#7a7a8e", "#8a8a9e"],
-
     // "element.active": "#363b54",
     // "element.hover": "#363b54", // or 1a1b26
     // "element.selected": "#363b54", // or 1a1b26
@@ -496,7 +494,7 @@
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--issues-exit-code", "1", "--show-stats=false"]
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
       }
     }
   },
@@ -566,7 +564,7 @@
     "env": true,
     "fish": true,
     "git-firefly": true,
-    "golangci-lint": true,
+    // "golangci-lint": true,
     "harper": true,
     "helm": true,
     "html": true,
@@ -582,7 +580,7 @@
     "scheme": true,
     "sql": true,
     "terraform": true,
-    "tokyo-night": true,
+    // "tokyo-night": true,
     "toml": true,
     "vscode-icons": true,
     "wakatime": true,
