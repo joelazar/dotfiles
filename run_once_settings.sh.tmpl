@@ -28,7 +28,7 @@ fi
 
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
 
-execute "fish -c 'echo y | fish_config theme save TokyoNight Night'" "Set fish theme"
+execute "fish -c 'echo y | fish_config theme save \"TokyoNight Night\"'" "Set fish theme"
 
 show_section "⌨️  Keyboard and System Settings" "$CYAN"
 
@@ -52,6 +52,8 @@ execute "defaults write com.apple.dock autohide-time-modifier -float 0" "Remove 
 execute "defaults write com.apple.dock expose-group-apps -bool true" "Group windows by application in Exposé"
 
 execute "defaults write com.apple.spaces spans-displays -bool true" "Allow Spaces to span across displays"
+
+execute "killall Dock" "Restart Dock to apply changes"
 
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable the 'Are you sure you want to open this application?' dialog"
 
