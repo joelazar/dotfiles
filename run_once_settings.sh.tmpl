@@ -61,6 +61,8 @@ execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add
 
 execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"' "Double-click a window's title bar to minimize"
 
+execute "defaults write -g NSAutomaticWindowAnimationsEnabled -bool false" "Disable window animations"
+
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
 execute "duti -s dev.zed.Zed-Preview public.plain-text all" "Set Zed as the default app for plain text files"

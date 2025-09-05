@@ -106,6 +106,13 @@ install_yazi_plugins "${YAZI_PLUGINS[@]}"
 # Install Magic from Modular
 install_magic
 
+# Install aerospace-swipe
+if [ ! -d "$HOME/.local/share/aerospace-swipe" ]; then
+    execute "curl -sSL https://raw.githubusercontent.com/acsandmann/aerospace-swipe/main/install.sh | bash" "Install aerospace-swipe"
+else
+    print_success "aerospace-swipe already installed"
+fi
+
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Completion
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
