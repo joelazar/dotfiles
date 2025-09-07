@@ -1,6 +1,7 @@
 tap "aws/tap"
 tap "buo/cask-upgrade"
 tap "charmbracelet/tap"
+tap "dlvhdr/formulae"
 tap "hashicorp/tap"
 tap "homebrew/bundle"
 tap "homebrew/services"
@@ -271,6 +272,8 @@ brew "zoxide"
 brew "aws/tap/eks-node-viewer"
 # A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
 brew "charmbracelet/tap/crush"
+# Git diff pager based on delta but with a file tree, à la GitHub
+brew "dlvhdr/formulae/diffnav"
 # Terraform
 brew "hashicorp/tap/terraform"
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.

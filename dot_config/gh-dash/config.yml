@@ -30,7 +30,7 @@ defaults:
 repoPaths:
   onomondo/*: ~/Code/onomondo/*
 pager:
-  diff: delta
+  diff: diffnav
 keybindings:
   prs:
     - key: g
