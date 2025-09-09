@@ -1,5 +1,5 @@
 {
-  "selectedAuthType": "oauth-personal",
   "theme": "GitHub",
-  "contextFileName": "AGENTS.md"
+  "contextFileName": "AGENTS.md",
+  "selectedAuthType": "oauth-personal"
 }
