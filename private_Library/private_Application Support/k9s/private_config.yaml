@@ -1,0 +1,67 @@
+k9s:
+  # Enable periodic refresh of resource browser windows. Default false
+  liveViewAutoRefresh: true
+  # Represents ui poll intervals in seconds. Default 2secs
+  refreshRate: 2
+  # Overrides the default k8s api server requests timeout. Defaults 120s
+  apiServerTimeout: 15s
+  # Number of retries once the connection to the api-server is lost. Default 15.
+  maxConnRetry: 5
+  # Specifies if modification commands like delete/kill/edit are disabled. Default is false
+  readOnly: false
+  # This setting allows users to specify the default view, but it is not set by default.
+  defaultView: ""
+  # Toggles whether k9s should exit when CTRL-C is pressed. When set to true, you will need to exist k9s via the :quit command. Default is false.
+  noExitOnCtrlC: true
+  # Default port forward host
+  portForwardAddress: localhost
+  ui: # NOTE! [K9s v0.30.0]
+    # Enable mouse support. Default false
+    enableMouse: false
+    # Set to true to hide K9s header. Default false
+    headless: false
+    # Set to true to hide K9s logo. Default false
+    logoless: false
+    # Set to true to hide K9s crumbs. Default false
+    crumbsless: false
+    # Toggles reactive UI. This option provide for watching on disk artifacts changes and update the UI live  Defaults to false.
+    reactive: true
+    # Toggles icons display as not all terminal support these chars. Default: true
+    noIcons: false
+  # Toggles whether k9s should check for the latest revision from the Github repository releases. Default is false.
+  skipLatestRevCheck: false
+  # Disable count pods while in node view. Default is false.
+  disablePodCounting: false
+  # ShellPod configuration applies to all your clusters
+  shellPod:
+    # The shell pod image to use.
+    image: busybox:1.37.0
+    # The namespace to launch to shell pod into.
+    namespace: default
+    # The resource limit to set on the shell pod.
+    limits:
+      cpu: 100m
+      memory: 100Mi
+    # Enable TTY
+    tty: true
+  logger:
+    # Defines the number of lines to return. Default 100
+    tail: 200
+    # Defines the total number of log lines to allow in the view. Default 1000
+    buffer: 5000
+    # Represents how far to go back in the log timeline in seconds. Setting to -1 will tail logs. Default is -1.
+    sinceSeconds: 300
+    # Go full screen while displaying logs. Default false
+    fullScreen: false
+    # Toggles log line wrap. Default false
+    textWrap: false
+    # Toggles log line timestamp info. Default false
+    showTime: false
+  # Global memory/cpu thresholds. When set will alert when thresholds are met.
+  thresholds:
+    cpu:
+      critical: 90
+      warn: 70
+    memory:
+      critical: 90
+      warn: 85

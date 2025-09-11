@@ -1,0 +1,44 @@
+plugins:
+  full_container_logs:
+    shortCut: Ctrl-L
+    description: Full logs
+    scopes:
+      - containers
+    command: sh
+    background: false
+    args:
+      - -c
+      - "kubectl -n $NAMESPACE logs $POD -c $NAME --context $CONTEXT | bat"
+
+  full_pod_logs:
+    shortCut: Ctrl-L
+    description: Full logs
+    scopes:
+      - pods
+    command: sh
+    background: false
+    args:
+      - -c
+      - "kubectl -n $NAMESPACE logs $NAME --all-containers --context $CONTEXT | bat"
+
+  debug:
+    shortCut: Shift-D
+    description: kubectl debug
+    scopes:
+      - pods
+    command: bash
+    background: false
+    args:
+      - -c
+      - "kubectl debug $NAME --context $CONTEXT --namespace $NAMESPACE --tty --stdin --copy-to debug-joe-$NAME --as-root --container $( kubectl get pod $NAME --context $CONTEXT --namespace $NAMESPACE --output jsonpath --template {.spec.containers[0].name} ) -- sh"
+
+  debug-pod:
+    shortCut: Shift-P
+    description: kubectl run
+    scopes:
+      - pods
+    command: bash
+    background: false
+    args:
+      - -c
+      - "kubectl run debug-joe --context $CONTEXT --namespace $NAMESPACE --tty --stdin --rm --image=debian:12-slim -- bash"
