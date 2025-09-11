@@ -1,5 +1,13 @@
 {
-  "theme": "GitHub",
   "contextFileName": "AGENTS.md",
-  "selectedAuthType": "oauth-personal"
+  "hideTips": true,
+  "hideBanner": true,
+  "showLineNumbers": true,
+  "selectedAuthType": "oauth-personal",
+  "theme": "GitHub",
+  "useRipgrep": true,
+  "vimMode": true,
+  "useSmartEdit": true,
+  "general": { "enablePromptCompletion": true }
 }
+
