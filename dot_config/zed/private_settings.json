@@ -189,16 +189,19 @@
     "button": true
   },
   "collaboration_panel": {
+    "default_width": 300,
     "button": true
-  },
-  "chat_panel": {
-    "button": "never"
   },
   "notification_panel": {
     "button": true
   },
   "git_panel": {
+    "sort_by_path": true,
+    "default_width": 300,
     "button": true
+  },
+  "message_editor": {
+    "auto_replace_emoji_shortcode": false
   },
   "tabs": {
     "git_status": true,

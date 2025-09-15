@@ -98,7 +98,7 @@ keybind = super+physical:six=goto_tab:6
 keybind = super+v=paste_from_clipboard
 
 # keybind = global:cmd+ctrl+shift+opt+`=toggle_quick_terminal
-keybind = global:ctrl+`=toggle_quick_terminal
+# keybind = global:ctrl+`=toggle_quick_terminal
 
 # remap cmd+p to ctrl+p
 keybind = super+p=text:\x10
