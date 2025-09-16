@@ -10,6 +10,7 @@ font-size = 15.0
 theme = tokyonight
 
 window-inherit-working-directory = false
+window-inherit-font-size = false
 cursor-style-blink = false
 mouse-hide-while-typing = true
 quit-after-last-window-closed = true
@@ -24,6 +25,7 @@ resize-overlay = never
 # set height/width to a ridiculous size so it would always start in max window
 window-height = 200
 window-width = 500
+macos-window-buttons = hidden
 
 keybind = super+alt+ctrl+l=unbind
 keybind = super+alt+ctrl+h=unbind
@@ -106,10 +108,11 @@ keybind = super+p=text:\x10
 keybind = super+s=text:\x13
 
 # search entire scrollback history in default text editor
-keybind = super+f=write_screen_file:open
+# keybind = super+f=write_screen_file:open
+keybind = super+f=write_screen_file:copy
 
 # search selection
-keybind = super+shift+f=write_selection_file:open
+keybind = super+shift+f=write_screen_file:open
 
 keybind = alt+left=unbind
 keybind = alt+right=unbind
@@ -126,4 +129,6 @@ keybind = super+shift+period=move_tab:1
 keybind = super+shift+r=reload_config
 keybind = shift+enter=text:\n
 
-shell-integration-features = no-cursor,sudo,title
+# shell-integration-features = no-cursor,sudo,title
+shell-integration-features = no-cursor,sudo,title,ssh-env,ssh-terminfo
+
