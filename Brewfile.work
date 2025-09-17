@@ -66,6 +66,8 @@ brew "deno"
 brew "direnv"
 # Tool for exploring each layer in a docker image
 brew "dive"
+# Measure DNS performance by simulating network conditions
+brew "dnsperf"
 # Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
 # Command-line DNS Client for Humans
@@ -116,6 +118,8 @@ brew "go"
 brew "gofumpt"
 # Language server for `golangci-lint`
 brew "golangci-lint-langserver"
+# Go Language's command-line interface for database migrations
+brew "goose"
 # Tool for glamorous shell scripts
 brew "gum"
 # Open-source video transcoder available for Linux, Mac, and Windows
@@ -180,6 +184,8 @@ brew "mas"
 brew "mongosh"
 # Media player based on MPlayer and mplayer2
 brew "mpv"
+# Incremental parsing library
+brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 # Libraries for security-enabled client and server applications
@@ -224,12 +230,16 @@ brew "ripgrep-all"
 brew "ruby"
 # CLI search and replace | Space Age seD
 brew "sad"
+# Display and control your Android device
+brew "scrcpy"
 # Intuitive find & replace CLI
 brew "sd"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
 # CLI to update and use Solo 2 security keys
 brew "solo2-cli"
+# Generate type safe Go from SQL
+brew "sqlc"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Very fast implementation of tldr in Rust
@@ -246,6 +256,8 @@ brew "topgrade"
 brew "transmission-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Parser generator tool
+brew "tree-sitter-cli"
 # Command-line unarchiving tools supporting multiple formats
 brew "unar"
 # Extremely fast Python package installer and resolver, written in Rust
@@ -294,6 +306,8 @@ cask "1password-cli"
 cask "aerospace"
 # Enable Windows-like alt-tab
 cask "alt-tab"
+# Android SDK component
+cask "android-platform-tools"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
 # Open source IDE for exploring and testing APIs
