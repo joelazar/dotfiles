@@ -103,6 +103,7 @@
   "diagnostics": { "button": true },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
+    "show": "hide_in_full_screen",
     "show_branch_icon": true,
     "show_project_items": false,
     "show_branch_name": true,
@@ -512,7 +513,8 @@
           }
         }
       ],
-      "language_servers": ["!pyright", "..."]
+      // TODO: ty is not working yet
+      "language_servers": ["!ty", "..."]
     },
     "JavaScript": {
       "code_actions_on_format": {
@@ -559,7 +561,6 @@
   },
   "auto_install_extensions": {
     "ansible": true,
-    "basedpyright": true,
     "basher": true,
     "csv": true,
     "docker-compose": true,
@@ -580,7 +581,6 @@
     "nginx": true,
     "nix": true,
     "prisma": true,
-    "ruff": true,
     "scheme": true,
     "sql": true,
     "terraform": true,
