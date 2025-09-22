@@ -18,6 +18,8 @@ brew "python-setuptools"
 brew "harfbuzz"
 # Simple, modern, secure file encryption
 brew "age"
+# Record and share terminal sessions
+brew "asciinema"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -180,6 +182,8 @@ brew "luajit"
 brew "luarocks"
 # Mac App Store command-line interface
 brew "mas"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # Media player based on MPlayer and mplayer2

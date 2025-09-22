@@ -513,8 +513,7 @@
           }
         }
       ],
-      // TODO: ty is not working yet
-      "language_servers": ["!ty", "..."]
+      "language_servers": ["ty", "..."]
     },
     "JavaScript": {
       "code_actions_on_format": {
