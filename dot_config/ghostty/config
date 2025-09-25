@@ -130,5 +130,5 @@ keybind = super+shift+r=reload_config
 keybind = shift+enter=text:\n
 
 # shell-integration-features = no-cursor,sudo,title
-shell-integration-features = no-cursor,sudo,title,ssh-env,ssh-terminfo
+shell-integration-features = no-cursor,sudo,title,ssh-env,no-ssh-terminfo
 
