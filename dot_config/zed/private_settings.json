@@ -92,8 +92,8 @@
     "share_on_join": false
   },
   "features": {
-    "edit_prediction_provider": "zed"
-    // "edit_prediction_provider": "copilot"
+    // "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
