@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "🧑‍💻 Updating Claude Code"
-claude update
+brew upgrade claude-code
 echo
 
 echo "💎 Update Gemini CLI"

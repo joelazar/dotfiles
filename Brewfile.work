@@ -191,7 +191,7 @@ brew "mpv"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
+brew "neovim", args: ["HEAD"]
 # Libraries for security-enabled client and server applications
 brew "nss"
 # Create, run, and share large language models (LLMs)
@@ -322,6 +322,8 @@ cask "calibre"
 cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # Screen capturing tool
 cask "cleanshot"
 # Voice and text chat software
