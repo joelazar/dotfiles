@@ -118,8 +118,6 @@ if answer_is_yes; then
     execute "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string $hostname" "Set NetBIOS name to $hostname"
 fi
 
-# Allow apps downloaded from anywhere
-execute "sudo spctl --master-disable" "Allow apps downloaded from anywhere"
 execute "defaults write com.apple.LaunchServices LSQuarantine -bool false" "Disable quarantine for downloaded apps"
 
 show_completion "✅ System Configuration Complete!" "Your macOS settings have been configured." "Some changes may require a restart to take effect."

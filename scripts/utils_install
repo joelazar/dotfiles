@@ -70,12 +70,16 @@ install_brew_packages() {
     if [ "$(chezmoi data | jq -r '.type // ""')" = "work" ]; then
         print_info "Using work Brewfile"
         brewfile="$SOURCE_DIR/Brewfile.work"
+    elif [ "$(chezmoi data | jq -r '.type // ""')" = "workstation" ]; then
+        print_info "Using workstation Brewfile"
+        brewfile="$SOURCE_DIR/Brewfile.workstation"
     else
         print_info "Using private Brewfile"
         brewfile="$SOURCE_DIR/Brewfile.private"
     fi
 
     if [ -f "$brewfile" ]; then
+        echo brew bundle --file="$brewfile"
         brew bundle --file="$brewfile"
         print_result $? "Installed packages from $(basename "$brewfile")"
     else
@@ -159,7 +163,7 @@ install_yazi_plugins() {
             local plugin_name
             plugin_name=$(echo "$plugin" | cut -d: -f2 2>/dev/null || echo "$plugin" | cut -d/ -f2)
             if ! echo "$installed_plugins" | grep -q "$plugin_name"; then
-                execute "ya pkg install $plugin" "Yazi $plugin_name plugin"
+                execute "ya pkg add $plugin" "Yazi $plugin_name plugin"
             else
                 print_success "Yazi $plugin_name plugin already installed"
             fi

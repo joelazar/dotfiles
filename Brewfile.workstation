@@ -1,33 +1,37 @@
-tap "homebrew/bundle"
-tap "homebrew/services"
+tap "dlvhdr/formulae"
+tap "oven-sh/bun"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Platform built on V8 to build network applications
-brew "node"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Core application library for C
+brew "glib"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Load/unload environment variables based on $PWD
 brew "direnv"
+# Select default apps for documents and URL schemes on macOS
+brew "duti"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream audio and video
+brew "ffmpeg"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
 # Plugin manager for the Fish shell
 brew "fisher"
+# Fast and simple Node.js version manager
+brew "fnm"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GNU compiler collection
@@ -36,12 +40,18 @@ brew "gcc"
 brew "gh"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Platform built on V8 to build network applications
+brew "node"
 # Interactive command-line tool for using emoji in commit messages
 brew "gitmoji"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # Tool for glamorous shell scripts
 brew "gum"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Tools and libraries to manipulate images in many formats
+brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Simple terminal UI for git commands
@@ -49,7 +59,15 @@ brew "lazygit"
 # Mac App Store command-line interface
 brew "mas"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
+brew "neovim", args: ["HEAD"]
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# SVG rendering tool and library
+brew "resvg"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
 # Cross-shell prompt for astronauts
 brew "starship"
 # General purpose fuzzy finder TUI
@@ -60,6 +78,8 @@ brew "tmux"
 brew "topgrade"
 # Lightweight BitTorrent client
 brew "transmission-cli"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
 # Internet file retriever
 brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -68,6 +88,8 @@ brew "yazi"
 brew "zoxide"
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav"
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun"
 # E-books management software
 cask "calibre"
 # Web browser
@@ -82,6 +104,7 @@ cask "protonvpn"
 cask "raycast"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Multiplayer code editor
+cask "zed@preview"
 mas "Bitwarden", id: 1352778147
 mas "Xcode", id: 497799835
-
