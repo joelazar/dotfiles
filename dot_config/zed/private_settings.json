@@ -1,4 +1,18 @@
 {
+  "ssh_connections": [
+    {
+      "host": "joes-macbook-workstation",
+      "username": "joelazar",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/Users/joelazar/Code/jets"
+          ]
+        }
+      ]
+    }
+  ],
   "agent_servers": {
     "gemini": {
       "ignore_system_version": false
