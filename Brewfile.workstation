@@ -18,6 +18,10 @@ brew "coreutils"
 brew "curl"
 # Load/unload environment variables based on $PWD
 brew "direnv"
+# View disk space usage and delete unwanted data, fast
+brew "dua-cli"
+# Disk Usage/Free Utility - a better 'df' alternative
+brew "duf"
 # Select default apps for documents and URL schemes on macOS
 brew "duti"
 # Modern, maintained replacement for ls
