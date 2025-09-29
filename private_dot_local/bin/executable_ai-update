@@ -23,3 +23,7 @@ echo
 echo "🛋️ Update Amp"
 amp update
 echo
+
+echo "🐙 Update GitHub CLI"
+bun update -g "@github/copilot"
+echo
