@@ -7,3 +7,8 @@ AGENTS.md
 AGENT.md
 TODO.md
 bootstrap.sh
+
+# Ignore aerospace config for non-work machines
+{{ if ne .type "work" }}
+.aerospace.toml
+{{ end }}
