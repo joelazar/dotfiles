@@ -36,6 +36,8 @@ brew "node"
 brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Multi-shell multi-command argument completer
+brew "carapace"
 # Mozilla CA bundle for Python
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely

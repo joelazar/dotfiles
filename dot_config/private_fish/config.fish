@@ -138,6 +138,7 @@ zoxide init fish | source
 direnv hook fish | source
 fnm env --use-on-cd | source
 atuin init fish --disable-up-arrow | source
+carapace _carapace | source
 source $HOME/.config/television/shell/integration.fish
 
 # Done plugin config
