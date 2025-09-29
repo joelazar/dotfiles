@@ -228,6 +228,31 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 ## Setup Instructions ⚡
 
+### First-time setup (fresh system)
+
+If you're setting up on a completely fresh macOS system without Homebrew or chezmoi:
+
+1. **Run the bootstrap script:**
+
+   ```sh
+   curl -sSL https://raw.githubusercontent.com/joelazar/dotfiles/main/bootstrap.sh | bash
+   ```
+
+   Or clone and run locally:
+
+   ```sh
+   git clone https://github.com/joelazar/dotfiles.git
+   cd dotfiles
+   ./bootstrap.sh
+   ```
+
+   This script will:
+   - Install Homebrew (if not present)
+   - Install chezmoi via Homebrew
+   - Initialize and apply the dotfiles configuration
+
+### Manual setup (if you already have brew and chezmoi)
+
 1. **Install chezmoi** (if not already installed):
 
    ```sh
@@ -240,6 +265,8 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
    chezmoi init https://github.com/joelazar/dotfiles.git
    chezmoi apply
    ```
+
+### Post-installation steps
 
 3. **Install packages:**
 
