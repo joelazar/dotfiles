@@ -25,5 +25,5 @@ amp update
 echo
 
 echo "🐙 Update GitHub CLI"
-bun update -g "@github/copilot"
+bun install -g "@github/copilot"
 echo
