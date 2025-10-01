@@ -29,7 +29,6 @@ fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.modular/bin
-fish_add_path $HOME/.claude/local
 
 # brew specific paths
 fish_add_path /opt/homebrew/sbin
@@ -130,8 +129,6 @@ alias urldecode='python3 -c "import sys, urllib.parse as ul; \
     print(ul.unquote_plus(sys.argv[1]))"'
 alias urlencode='python3 -c "import sys, urllib.parse as ul; \
     print (ul.quote_plus(sys.argv[1]))"'
-
-alias claude="/Users/joelazar/.claude/local/claude"
 
 starship init fish | source
 zoxide init fish | source

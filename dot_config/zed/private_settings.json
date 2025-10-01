@@ -6,9 +6,7 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/Users/joelazar/Code/jets"
-          ]
+          "paths": ["/Users/joelazar/Code/jets"]
         }
       ]
     }
@@ -129,18 +127,40 @@
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
-      "provider": "zed.dev",
-      "model": "claude-sonnet-4"
+      "provider": "copilot_chat",
+      "model": "gpt-5-mini"
     },
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "commit_message_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-5-mini"
     },
     "always_allow_tool_actions": true,
     "enable_feedback": false,
     "profiles": {
+      "ansible": {
+        "name": "Ansible",
+        "tools": {
+          "thinking": true,
+          "read_file": true,
+          "project_notifications": true,
+          "open": true,
+          "now": true,
+          "move_path": true,
+          "list_directory": true,
+          "grep": true,
+          "find_path": true,
+          "fetch": true,
+          "edit_file": true,
+          "diagnostics": true,
+          "delete_path": true,
+          "create_directory": true,
+          "copy_path": true
+        },
+        "enable_all_context_servers": false,
+        "context_servers": {}
+      },
       "write": {
         "name": "Write",
         "tools": {
