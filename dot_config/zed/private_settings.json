@@ -115,7 +115,6 @@
   "diagnostics": { "button": true },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
-    "show": "hide_in_full_screen",
     "show_branch_icon": true,
     "show_project_items": false,
     "show_branch_name": true,
@@ -127,14 +126,14 @@
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
-      "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
     },
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "commit_message_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini"
+      "model": "gpt-4.1"
     },
     "always_allow_tool_actions": true,
     "enable_feedback": false,

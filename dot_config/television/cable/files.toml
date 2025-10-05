@@ -18,8 +18,5 @@ f12 = "actions:edit"
 
 [actions.edit]
 description = "Opens the selected entries with the default editor (falls back to vim)"
-# TODO: this is not working with nvim somehwy :(
-# command = "nvim {}"
-command = "zed {}"
-# use `mode = "fork"` if you want to return to tv afterwards
+command = "$EDITOR {} >/dev/tty"
 mode = "execute"

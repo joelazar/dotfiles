@@ -1,13 +1,38 @@
 {
-  "contextFileName": "AGENTS.md",
-  "hideTips": true,
-  "hideBanner": true,
-  "showLineNumbers": true,
-  "selectedAuthType": "oauth-personal",
-  "theme": "GitHub",
-  "useRipgrep": true,
-  "vimMode": true,
+  "context": {
+    "fileName": "AGENTS.md"
+  },
+  "ui": {
+    "hideTips": true,
+    "hideBanner": true,
+    "showLineNumbers": true,
+    "theme": "GitHub"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "tools": {
+    "useRipgrep": true,
+    "shell": {
+      "showColor": true
+    }
+  },
+  "general": {
+    "enablePromptCompletion": true,
+    "vimMode": true,
+    "disableAutoUpdate": true
+  },
   "useSmartEdit": true,
-  "general": { "enablePromptCompletion": true }
+  "output": {
+    "format": "text"
+  },
+  "privacy": {
+    "usageStatisticsEnabled": false
+  },
+  "telemetry": {
+    "enabled": false
+  }
 }
 

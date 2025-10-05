@@ -36,8 +36,6 @@ brew "node"
 brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Multi-shell multi-command argument completer
-brew "carapace"
 # Mozilla CA bundle for Python
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -70,8 +68,14 @@ brew "direnv"
 brew "dive"
 # Measure DNS performance by simulating network conditions
 brew "dnsperf"
+# Pack, ship and run any application as a lightweight container
+brew "docker"
 # Docker CLI plugin for extended build capabilities with BuildKit
 brew "docker-buildx"
+# Isolated development environments using Docker
+brew "docker-compose"
+# Platform keystore credential helper for Docker
+brew "docker-credential-helper"
 # Command-line DNS Client for Humans
 brew "doggo"
 # View disk space usage and delete unwanted data, fast
@@ -108,6 +112,8 @@ brew "gcc"
 brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
+# Interpreter for PostScript and PDF
+brew "ghostscript"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Git extension for versioning large files
@@ -182,6 +188,8 @@ brew "luajit"
 brew "luarocks"
 # Mac App Store command-line interface
 brew "mas"
+# CLI for Mermaid library
+brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
@@ -328,8 +336,6 @@ cask "claude-code"
 cask "cleanshot"
 # Voice and text chat software
 cask "discord"
-# App to build and share containerised applications and microservices
-cask "docker-desktop"
 # Web browser
 cask "firefox"
 cask "font-fira-code"
@@ -337,7 +343,7 @@ cask "font-fira-code-nerd-font"
 # Kext-less implementation of FUSE
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty"
+cask "ghostty@tip"
 # Web browser
 cask "google-chrome"
 # Client for the Google Drive storage service
