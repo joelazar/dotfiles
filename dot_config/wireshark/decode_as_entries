@@ -1,6 +1,7 @@
-# "Decode As" entries file for Wireshark 4.4.7.
+# "Decode As" entries file for Wireshark 4.4.9.
 #
 # This file is regenerated each time "Decode As" preferences
 # are saved within Wireshark. Making manual changes should be safe,
 # however.
 decode_as_entry: sctp.port,9034,(none),Diameter
+decode_as_entry: sctp.port,9035,(none),Diameter
