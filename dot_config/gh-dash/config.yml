@@ -74,6 +74,21 @@ keybindings:
         gh pr checkout {{.PrNumber}} &&
         nvim
       name: open in nvim
+    - key: T
+      name: retrigger workflows
+      command: >
+        fish -c '
+        echo "Getting PR branch name...";
+        echo gh pr view {{.PrNumber}} --repo {{.RepoName}} --json headRefName --jq ".headRefName";
+        set BRANCH (gh pr view {{.PrNumber}} --repo {{.RepoName}} --json headRefName --jq ".headRefName");
+        echo "Branch: $BRANCH";
+        echo "Getting latest workflow run ID...";
+        set RUN_ID (gh run list --branch $BRANCH --repo {{.RepoName}} --limit 1 --json databaseId --jq ".[0].databaseId");
+        echo "Run ID: $RUN_ID";
+        echo "Retriggering workflow...";
+        gh run rerun --repo {{.RepoName}} $RUN_ID;
+        echo "Done!"
+        '
 
 theme:
   ui:
