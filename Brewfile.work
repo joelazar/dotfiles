@@ -343,7 +343,7 @@ cask "font-fira-code-nerd-font"
 # Kext-less implementation of FUSE
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty@tip"
+cask "ghostty"
 # Web browser
 cask "google-chrome"
 # Client for the Google Drive storage service
