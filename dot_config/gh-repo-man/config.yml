@@ -1,0 +1,110 @@
+repos:
+  projects_dir: ~/Code
+
+  # Organize repositories by username in subdirectories
+  # When enabled: ~/Projects/username/repo-name
+  # When disabled: ~/Projects/repo-name
+  # Default: true
+  per_user_dir: true
+
+  # Default sorting preference (can be overridden by --sort flag)
+  # Options: name, stars, forks, updated, created, issues, language, pushed, size
+  # Default: "updated"
+  sort_by: updated
+
+  # Default repository type filter (can be overridden by --type flag)
+  # Options: archived, forked, private, template
+  # Default: "" (show all types)
+  repo_type: ""
+
+  # Default language filter (can be overridden by --language flag)
+  # Default: "" (show all languages)
+  language: ""
+
+# User interface settings
+ui:
+  # Show README content in the fzf preview pane
+  # Default: false
+  show_readme_in_preview: true
+
+  # Customizable icons - override any icon used in the application
+  icons:
+    # General UI icons - override any of the default icons
+    general:
+      archived: " "
+      calendar: " "
+      clock": " "
+      cloning: " "
+      disk: " "
+      done: " "
+      error: " "
+      fork: " "
+      forked: " "
+      home: " "
+      info: " "
+      issue: " "
+      link: " "
+      owner: " "
+      private: " "
+      star: " "
+      success: " "
+      tag: " "
+      template: " "
+      watch: " "
+
+    # Language icon overrides, add yours in lower case, e.g.: python: ' '
+    # Override the default icon for any programming language
+    languages:
+      javascript: " "
+      java: " "
+
+# Performance and reliability settings
+performance:
+  # Maximum number of repositories to fetch from GitHub
+  # Default: "1000"
+  repo_limit: "1000"
+
+  # Number of parallel clone operations
+  # Default: 8
+  max_concurrent_clones: 12
+
+  # Cache settings
+  # Supported units: s (seconds), m (minutes), h (hours), d (days)
+  cache:
+    # How long to cache repository lists
+    # Default: 24h
+    repos: 14d
+
+    # How long to cache README files
+    # Default: 24h
+    readme: 72h
+
+    # How long to cache current username
+    # Default: 90d
+    username: 90d
+
+# External tool integrations
+integrations:
+  # post clone command to execute on repo path - can be used to open repo in tmux or editor
+  post_clone:
+    # Enable post clone command execution
+    # Default: true
+    enabled: false
+
+    # Which command to run after cloning a repository, I use it with tmux-tea: https://github.com/2kabhishek/tmux-tea
+    # Default: $EDITOR
+    command: $EDITOR
+
+    # Additional arguments to pass to the command
+    # Default: []
+    args: []
+
+  # Git configuration
+  git:
+    # Clone depth (0 = full clone, >0 = shallow clone)
+    # Default: 0
+    clone_depth: 0
+
+    # Additional arguments to pass to git clone
+    # Default: []
+    clone_args: []
