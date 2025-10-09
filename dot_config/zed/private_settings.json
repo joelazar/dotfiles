@@ -112,7 +112,12 @@
     "right_padding": 0.15
   },
   "search": { "button": true },
-  "diagnostics": { "button": true },
+  "diagnostics": {
+    "inline": {
+      "enabled": true
+    },
+    "button": true
+  },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
     "show_branch_icon": true,
@@ -256,7 +261,7 @@
   },
   "preferred_line_length": 140,
   "show_wrap_guides": true,
-  "auto_signature_help": false,
+  "auto_signature_help": true,
   "ui_font_size": 14.0,
   "buffer_font_size": 13.0,
   "vim_mode": true,
@@ -500,7 +505,13 @@
         "completeUnimported": true,
         "staticcheck": false,
         "semanticTokens": true,
-        "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
+        "directoryFilters": [
+          "-.git",
+          "-.vscode",
+          "-.idea",
+          "-.vscode-test",
+          "-node_modules"
+        ],
         "experimentalPostfixCompletions": true,
         "codelenses": {
           "gc_details": false,
@@ -531,7 +542,14 @@
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
+        "command": [
+          "golangci-lint",
+          "run",
+          "--output.json.path",
+          "stdout",
+          "--show-stats=false",
+          "--output.text.path="
+        ]
       }
     }
   },
@@ -542,7 +560,10 @@
         {
           "external": {
             "command": "bash",
-            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
+            "arguments": [
+              "-c",
+              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
+            ]
           }
         }
       ],
