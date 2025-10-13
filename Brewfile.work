@@ -4,12 +4,15 @@ tap "charmbracelet/tap"
 tap "dlvhdr/formulae"
 tap "hashicorp/tap"
 tap "jakehilborn/jakehilborn"
+tap "ksdme/tap"
 tap "macos-fuse-t/cask"
 tap "mongodb/brew"
 tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "sst/tap"
+# Run your GitHub Actions locally
+brew "act"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # OpenType text shaping engine
@@ -302,6 +305,8 @@ brew "dlvhdr/formulae/diffnav"
 brew "hashicorp/tap/terraform"
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.
 brew "jakehilborn/jakehilborn/displayplacer"
+# A utility toolkit of most commonly used tools by software developers and IT professionals
+brew "ksdme/tap/ut"
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
 # NATS utility
@@ -353,7 +358,7 @@ cask "homerow"
 # Free and open-source media player
 cask "iina"
 # Menu bar manager
-cask "jordanbaird-ice"
+cask "jordanbaird-ice@beta"
 # Free cross-platform office suite, fresh version
 cask "libreoffice"
 # Tool to control external monitor brightness & volume
@@ -386,6 +391,8 @@ cask "tableplus"
 cask "tailscale-app"
 # Open-source code editor
 cask "visual-studio-code"
+# Voice to text app
+cask "voiceink"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
@@ -433,3 +440,28 @@ vscode "wholroyd.jinja"
 vscode "xabikos.javascriptsnippets"
 vscode "yoavbls.pretty-ts-errors"
 vscode "yzhang.markdown-all-in-one"
+go "golang.org/x/tools/cmd/callgraph"
+go "github.com/go-delve/delve/cmd/dlv"
+go "github.com/davidrjenni/reftools/cmd/fillswitch"
+go "github.com/onsi/ginkgo/v2/ginkgo"
+go "github.com/abice/go-enum"
+go "mvdan.cc/gofumpt"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/segmentio/golines"
+go "github.com/cosmos72/gomacro"
+go "github.com/fatih/gomodifytags"
+go "github.com/abenz1267/gomvp"
+go "golang.org/x/tools/cmd/gonew"
+go "golang.org/x/tools/gopls"
+go "golang.org/x/tools/cmd/gorename"
+go "github.com/cweill/gotests/gotests"
+go "gotest.tools/gotestsum"
+go "golang.org/x/vuln/cmd/govulncheck"
+go "github.com/koron/iferr"
+go "github.com/josharian/impl"
+go "github.com/tmc/json-to-struct"
+go "go.uber.org/mock/mockgen"
+go "github.com/kyoh86/richgo"
+go "honnef.co/go/tools/cmd/staticcheck"
