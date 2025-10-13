@@ -8,6 +8,7 @@ DeGoogle
 Ericsson
 IMSIs
 JS
+LazyVim
 OTA
 Onomondo
 Readlist
