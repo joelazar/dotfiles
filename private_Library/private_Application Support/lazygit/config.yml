@@ -108,7 +108,7 @@ customCommands:
     context: "localBranches"
     description: "View PR on GitHub"
     loadingText: "Opening GitHub - Pull request ..."
-  - key: "<c-y>"
+  - key: "Y"
     command: "gh pr view --json url --jq '.url' | pbcopy"
     context: "localBranches"
     description: "Copy PR URL to clipboard"
