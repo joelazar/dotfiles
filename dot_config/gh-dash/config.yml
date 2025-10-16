@@ -4,15 +4,15 @@ prSections:
   - title: Review requested
     filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
   - title: Involves me
-    filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc
+    filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
   - title: Ready
-    filters: is:open -assignee:@me -is:draft sort:created-desc org:onomondo
+    filters: is:open -assignee:@me -is:draft sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
   - title: Draft
     filters: is:open -assignee:@me is:draft sort:created-desc org:onomondo
   - title: Recently closed my prs
     filters: is:closed author:@me sort:created-desc
   - title: Recently closed work prs
-    filters: is:closed sort:created-desc org:onomondo
+    filters: is:closed sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
 issuesSections:
   - title: My Issues
     filters: is:open author:@me
