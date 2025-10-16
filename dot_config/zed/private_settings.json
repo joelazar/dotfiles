@@ -12,6 +12,9 @@
     }
   ],
   "agent_servers": {
+    "codex": {
+      "default_mode": "full-access"
+    },
     "gemini": {
       "ignore_system_version": false
     }
@@ -505,13 +508,7 @@
         "completeUnimported": true,
         "staticcheck": false,
         "semanticTokens": true,
-        "directoryFilters": [
-          "-.git",
-          "-.vscode",
-          "-.idea",
-          "-.vscode-test",
-          "-node_modules"
-        ],
+        "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
         "experimentalPostfixCompletions": true,
         "codelenses": {
           "gc_details": false,
@@ -542,14 +539,7 @@
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": [
-          "golangci-lint",
-          "run",
-          "--output.json.path",
-          "stdout",
-          "--show-stats=false",
-          "--output.text.path="
-        ]
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
       }
     }
   },
@@ -560,25 +550,26 @@
         {
           "external": {
             "command": "bash",
-            "arguments": [
-              "-c",
-              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
-            ]
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
           }
         }
       ],
       "language_servers": ["ty", "..."]
     },
     "JavaScript": {
-      "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      }
+      "formatter": [
+        {
+          "code_action": "source.fixAll.eslint"
+        }
+      ]
     },
     "Go": {
+      "formatter": [
+        {
+          "code_action": "source.organizeImports"
+        }
+      ],
       "format_on_save": "on",
-      "code_actions_on_format": {
-        "source.organizeImports": true
-      },
       // // NOTE: add wsl_v5 as an extra formatter
       // "formatter": {
       //   "external": {
@@ -637,7 +628,7 @@
     "scheme": true,
     "sql": true,
     "terraform": true,
-    // "tokyo-night": true,
+    "tokyo-night": true,
     "toml": true,
     "vscode-icons": true,
     "wakatime": true,

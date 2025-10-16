@@ -391,8 +391,6 @@ cask "tableplus"
 cask "tailscale-app"
 # Open-source code editor
 cask "visual-studio-code"
-# Voice to text app
-cask "voiceink"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
