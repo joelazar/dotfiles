@@ -96,6 +96,7 @@ cmd-ctrl-alt-comma = 'layout accordion horizontal vertical'
 # cmd-ctrl-alt-b = 'join-with right'
 # cmd-ctrl-alt-v = 'join-with up'
 cmd-ctrl-alt-f = 'fullscreen'
+cmd-ctrl-alt-shift-f = 'macos-native-fullscreen'
 # cmd-ctrl-alt-s = 'layout v_accordion'               # 'layout stacking' in i3
 # cmd-ctrl-alt-w = 'layout h_accordion'               # 'layout tabbed' in i3
 cmd-ctrl-alt-w = 'layout accordion horizontal vertical'

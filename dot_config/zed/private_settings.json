@@ -1,4 +1,5 @@
 {
+  "rounded_selection": false,
   "ssh_connections": [
     {
       "host": "joes-macbook-workstation",
@@ -264,7 +265,7 @@
   },
   "preferred_line_length": 140,
   "show_wrap_guides": true,
-  "auto_signature_help": true,
+  "auto_signature_help": false,
   "ui_font_size": 14.0,
   "buffer_font_size": 13.0,
   "vim_mode": true,

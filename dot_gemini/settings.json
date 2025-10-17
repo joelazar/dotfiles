@@ -21,7 +21,7 @@
   },
   "general": {
     "enablePromptCompletion": true,
-    "vimMode": true,
+    "vimMode": false,
     "disableAutoUpdate": true
   },
   "useSmartEdit": true,
@@ -35,4 +35,3 @@
     "enabled": false
   }
 }
-
