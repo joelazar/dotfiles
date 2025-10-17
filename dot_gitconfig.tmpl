@@ -7,27 +7,30 @@
 
 [alias]
 
-    a    = commit --amend
-    br   = branch --list --remote
-    c    = commit
-    ca   = !git add -A && gitmoji -c             # Commit all changes.
-    cl   = clean -fxd
-    co   = checkout
-    cp   = cherry-pick
-    d    = diff
-    dc   = diff --cached
-    f    = fetch --prune
-    hash = rev-parse HEAD
-    lc   = shortlog --email --numbered --summary --no-merges # List contributors.
-    lg   = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    lgall= log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    lh   = log -p -10                            # Show custom log.
-    p    = pull
-    res  = reset --hard HEAD
-    rlc  = reset --hard HEAD~1                   # Remove last commit.
-    s    = status
-    sres = reset --soft HEAD~1                   # Undo last commit.
-    sub  = submodule update --init --recursive
+    a        = commit --amend --no-edit
+    br       = branch --list --remote
+    c        = commit
+    ca       = !git add -A && gitmoji -c             # Commit all changes.
+    cl       = clean -fxd
+    co       = checkout
+    cp       = cherry-pick
+    d        = diff
+    dc       = diff --cached
+    f        = fetch --prune
+    hash     = rev-parse HEAD
+    lc       = shortlog --email --numbered --summary --no-merges # List contributors.
+    lg       = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
+    lgall    = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
+    lh       = log -p -10                            # Show custom log.
+    p        = pull
+    pushf    = push --force-with-lease
+    res      = reset --hard HEAD
+    rlc      = reset --hard HEAD~1                   # Remove last commit.
+    s        = status
+    sres     = reset --soft HEAD~1                   # Undo last commit.
+    sub      = submodule update --init --recursive
+	  uncommit = reset --soft HEAD^
+	  unstage  = reset HEAD --
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -165,6 +168,11 @@
 
     default = simple
     followTags = true
+
+[fetch]
+
+	  prune = true
+	  pruneTag = true
 
 [user]
 
