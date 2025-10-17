@@ -557,18 +557,14 @@
       "language_servers": ["ty", "..."]
     },
     "JavaScript": {
-      "formatter": [
-        {
-          "code_action": "source.fixAll.eslint"
-        }
-      ]
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "Go": {
-      "formatter": [
-        {
-          "code_action": "source.organizeImports"
-        }
-      ],
+      "code_actions_on_format": {
+        "source.organizeImports": true
+      },
       "format_on_save": "on",
       // // NOTE: add wsl_v5 as an extra formatter
       // "formatter": {
