@@ -204,7 +204,6 @@
     "default_profile": "write",
     "button": true,
     "dock": "right",
-    "stream_edits": true,
     "default_width": 640,
     "default_height": 320,
     "default_model": {

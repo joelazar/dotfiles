@@ -26,6 +26,7 @@ resize-overlay = never
 window-height = 200
 window-width = 500
 macos-window-buttons = hidden
+clipboard-paste-protection = false
 
 keybind = super+alt+ctrl+l=unbind
 keybind = super+alt+ctrl+h=unbind
