@@ -69,7 +69,7 @@ set -gx LC_COLLATE C
 
 # zoxide configuration
 set -gx _ZO_ECHO 1
-set -gx _ZO_EXCLUDE_DIRS $HOME/Code/onomondo/core-base/*:$HOME/.cache
+set -gx _ZO_EXCLUDE_DIRS "$HOME/Code/onomondo/core-base/*:$HOME/.cache:$HOME/.local/share/nvim/lazy"
 
 alias :q="exit"
 alias c="clear"

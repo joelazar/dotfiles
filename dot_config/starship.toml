@@ -1,4 +1,3 @@
-# Inserts a blank line between shell prompts
 add_newline = false
 
 [aws]
@@ -31,7 +30,11 @@ disabled = true
 format = '[⛵$context](green) '
 disabled = true
 
+[mise]
+disabled = false
+
 [sudo]
 style = 'bold yellow'
 symbol = '🧙'
 disabled = false
+
