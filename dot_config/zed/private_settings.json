@@ -14,7 +14,7 @@
   "expand_excerpt_lines": 10,
   "agent_ui_font_size": 14.0,
   "ui_font_family": ".ZedSans",
-  "buffer_line_height": "standard",
+  "buffer_line_height": "comfortable",
   "rounded_selection": false,
   "ssh_connections": [
     {
