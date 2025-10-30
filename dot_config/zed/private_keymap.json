@@ -65,8 +65,9 @@
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
       "space y": ["task::Spawn", { "task_name": "yazi" }],
       "space s d": "diagnostics::Deploy",
-      "space space": ["task::Spawn", { "task_name": "file finder" }],
-      "space s g": ["task::Spawn", { "task_name": "find in files" }],
+      // "space space": ["task::Spawn", { "task_name": "file finder" }],
+      // "space s g": ["task::Spawn", { "task_name": "find in files" }],
+      "space s g": "pane::DeploySearch",
       "space f p": ["projects::OpenRecent", { "create_new_window": false }],
       "space f P": ["projects::OpenRecent", { "create_new_window": true }],
       "space u n": "workspace::ClearAllNotifications"
@@ -76,6 +77,7 @@
     // put key-bindings here if you want them to work in normal & visual mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
+      "space a t": "agent::AddSelectionToThread",
       "space b W": "pane::CloseCleanItems",
       "space b w": "pane::CloseOtherItems",
       "space c a": "editor::ToggleCodeActions",
@@ -94,7 +96,8 @@
       "space m P": "markdown::OpenPreviewToTheSide",
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
       "space s s": "outline::Toggle",
-      "space s w": ["task::Spawn", { "task_name": "find in files - selected text" }],
+      "space s w": "pane::DeploySearch",
+      // "space s w": ["task::Spawn", { "task_name": "find in files - selected text" }],
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
       "space t l": "task::Rerun",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
