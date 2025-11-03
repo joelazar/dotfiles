@@ -43,11 +43,6 @@ keybindings:
         gh pr checkout {{.PrNumber}} &&
         nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
       name: diff main
-    - key: O
-      command: >
-        cd {{.RepoPath}} &&
-        nvim -c ":silent Octo pr edit {{.PrNumber}}"
-      name: open in octo
     - key: v
       command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
