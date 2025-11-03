@@ -27,3 +27,7 @@ echo
 echo "🐙 Update GitHub CLI"
 bun install -g "@github/copilot"
 echo
+
+echo "🪿 Update Goose"
+brew upgrade block-goose-cli
+echo
