@@ -6,17 +6,41 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "read": {
-      "deny": [
-        "**/.env*",
-        "**/*.pem",
-        "**/*.key",
-        "**/secrets/**",
-        "**/credentials/**",
-        "**/.aws/**",
-        "**/.ssh/**"
-      ]
-    }
+     "allow": [
+      "Bash(cat:*)",
+      "Bash(docker compose exec:*)",
+      "Bash(docker run:*)",
+      "Bash(find:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh run view:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git fetch:*)",
+      "Bash(git rebase:*)",
+      "Bash(git stash:*)",
+      "Bash(git switch:*)",
+      "Bash(grep:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(node:*)",
+      "Bash(npm run build:*)",
+      "Bash(rg:*)",
+      "WebFetch(https://docs.anthropic.com/*)",
+      "WebFetch(https://github.com/*)",
+      "Read(~/Code/**)",
+      "Edit(~/Code/**)",
+      "Write(~/Code/**)",
+      "NotebookEdit(~/Code/**)"
+    ],
+    "deny": [
+      "Read(**/.env*)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/secrets/**)",
+      "Read(**/credentials/**)",
+      "Read(**/.aws/**)",
+      "Read(**/.ssh/**)"
+    ]
   },
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": true
 }
