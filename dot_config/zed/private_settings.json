@@ -38,6 +38,11 @@
     "OpenCode": {
       "command": "opencode",
       "args": ["acp"]
+    },
+    "Goose 🪿": {
+      "command": "goose",
+      "args": ["acp"],
+      "env": {}
     }
   },
   "use_system_window_tabs": true,
@@ -529,13 +534,7 @@
         "completeUnimported": true,
         "staticcheck": false,
         "semanticTokens": true,
-        "directoryFilters": [
-          "-.git",
-          "-.vscode",
-          "-.idea",
-          "-.vscode-test",
-          "-node_modules"
-        ],
+        "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
         "experimentalPostfixCompletions": true,
         "codelenses": {
           "gc_details": false,
@@ -566,14 +565,7 @@
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": [
-          "golangci-lint",
-          "run",
-          "--output.json.path",
-          "stdout",
-          "--show-stats=false",
-          "--output.text.path="
-        ]
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
       }
     }
   },
@@ -584,10 +576,7 @@
         {
           "external": {
             "command": "bash",
-            "arguments": [
-              "-c",
-              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
-            ]
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
           }
         }
       ],
