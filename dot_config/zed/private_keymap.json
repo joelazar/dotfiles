@@ -68,6 +68,7 @@
       // "space space": ["task::Spawn", { "task_name": "file finder" }],
       // "space s g": ["task::Spawn", { "task_name": "find in files" }],
       "space s g": "pane::DeploySearch",
+      "space e": "workspace::ToggleLeftDock", // File explorer toggle
       "space f p": ["projects::OpenRecent", { "create_new_window": false }],
       "space f P": ["projects::OpenRecent", { "create_new_window": true }],
       "space u n": "workspace::ClearAllNotifications"
@@ -83,7 +84,9 @@
       "space c a": "editor::ToggleCodeActions",
       "space c f": "editor::Format",
       "space c r ": "editor::Rename",
-      "space e": "pane::RevealInProjectPanel",
+      // "space e": "pane::RevealInProjectPanel",
+      // "space e": "workspace::ToggleLeftDock",
+
       "space g b": "git::Blame",
       "space g B": "editor::OpenPermalinkToLine",
       "space g Y": "editor::CopyPermalinkToLine",

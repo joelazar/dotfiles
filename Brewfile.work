@@ -147,6 +147,8 @@ brew "hugo"
 brew "hyperfine"
 # Tools and libraries to manipulate images in many formats
 brew "imagemagick"
+# CLI wrapper for basic network utilities on macOS - ip command
+brew "iproute2mac"
 # Interactive computing in Python
 brew "ipython"
 # Serializes the output of command-line tools to structured JSON output

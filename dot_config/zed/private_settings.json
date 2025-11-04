@@ -330,6 +330,8 @@
     // "coloring": "fixed"
   },
   "experimental.theme_overrides": {
+    // "vim.normal.background": "#F0F040"
+    // "vim.mode.text": "#00FFFF"
     // "editor.indent_guide_active": "#e95c67",
     // "editor.indent_guide": "#515864"
     // Indent guide color palettes (uncomment one to use):
