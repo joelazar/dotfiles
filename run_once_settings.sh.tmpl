@@ -61,6 +61,8 @@ execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add
 
 execute 'defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 65 "{enabled = 0; value = {};}"' "Disable Spotlight keyboard shortcut for Finder search window"
 
+execute "sudo mdutil -a -i off" "Disable Spotlight indexing on all drives"
+
 execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"' "Double-click a window's title bar to minimize"
 
 execute "defaults write -g NSAutomaticWindowAnimationsEnabled -bool false" "Disable window animations"
