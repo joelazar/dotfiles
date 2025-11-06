@@ -400,16 +400,19 @@
   "terminal": {
     "toolbar": { "breadcrumbs": false },
     "line_height": "standard",
+    "scrollbar": {
+      "show": "never"
+    },
     "button": true,
-    "max_scroll_history_lines": 30000,
+    "max_scroll_history_lines": 50000,
     "blinking": "off",
     "font_family": "FiraCode Nerd Font",
     "font_features": {
-      "liga": true,
-      "ss02": true,
-      "ss03": true,
-      "ss05": true,
-      "ss07": true
+      // "liga": true
+      // "ss02": true,
+      // "ss03": true,
+      // "ss05": true,
+      // "ss07": true
     },
     "detect_venv": {
       "on": {
@@ -421,6 +424,8 @@
       "GIT_EDITOR": "zed --wait",
       "EDITOR": "zed"
     },
+    "minimum_contrast": 0,
+    "keep_selection_on_copy": false,
     "working_directory": "current_project_directory"
   },
   "load_direnv": "shell_hook",
