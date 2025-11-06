@@ -17,6 +17,8 @@ execute "obsidian-update" "Update Obsidian plugins and themes"
 
 execute "brew cleanup" "Cleanup brew"
 
+execute "nvim --headless -c \"MasonUpdateAll\" -c \"qa!\"" "Update Neovim Mason packages"
+
 ask_for_confirmation "Remove macOS Trash and .local/share/Trash directories?"
 if answer_is_yes; then
     if [[ -d "$HOME/.Trash" ]]; then
