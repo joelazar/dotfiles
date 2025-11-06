@@ -13,6 +13,8 @@ execute "ai-update" "Update AI tools"
 
 execute "tv update-channels" "Update Television channels"
 
+execute "obsidian-update" "Update Obsidian plugins and themes"
+
 execute "brew cleanup" "Cleanup brew"
 
 ask_for_confirmation "Remove macOS Trash and .local/share/Trash directories?"

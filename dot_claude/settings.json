@@ -6,7 +6,7 @@
   },
   "includeCoAuthoredBy": false,
   "permissions": {
-     "allow": [
+    "allow": [
       "Bash(cat:*)",
       "Bash(docker compose exec:*)",
       "Bash(docker run:*)",

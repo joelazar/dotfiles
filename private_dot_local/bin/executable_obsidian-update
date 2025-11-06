@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Script to update Obsidian plugins and themes via the Obsidian Update plugin
+
+# Check if Obsidian directory exists
+if [[ ! -d "$HOME/Obsidian" ]]; then
+    echo "No Obsidian directory found"
+    exit 0
+fi
+
+# Make sure Obsidian is running
+if ! pgrep -x "Obsidian" > /dev/null 2>&1; then
+    echo "Launching Obsidian..."
+    open -a "Obsidian"
+    sleep 5
+fi
+
+# Update all vaults
+for vault_dir in "$HOME/Obsidian"/*; do
+    if [[ -d "$vault_dir" && -d "$vault_dir/.obsidian" ]]; then
+        vault_name=$(basename "$vault_dir")
+        echo "Updating vault: $vault_name..."
+
+        # Use Advanced URI to trigger the update command
+        open "obsidian://advanced-uri?vault=$vault_name&commandid=obsidian-update:update-all"
+
+        # Wait for the update to complete
+        sleep 8
+    fi
+done
+
+echo "Obsidian plugin and theme updates complete!"
