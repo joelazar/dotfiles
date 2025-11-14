@@ -21,6 +21,8 @@ brew "harfbuzz"
 brew "age"
 # Record and share terminal sessions
 brew "asciinema"
+# Code searching, linting, rewriting
+brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -129,6 +131,8 @@ brew "gofumpt"
 brew "golangci-lint-langserver"
 # Go Language's command-line interface for database migrations
 brew "goose", link: false
+# Human friendly `go test` runner
+brew "gotestsum"
 # Tool for glamorous shell scripts
 brew "gum"
 # Open-source video transcoder available for Linux, Mac, and Windows
@@ -403,9 +407,6 @@ cask "wireshark-app"
 cask "zed@preview"
 # Gecko based web browser
 cask "zen"
-mas "Bitwarden", id: 1352778147
-mas "Todoist", id: 585829637
-mas "Xcode", id: 497799835
 vscode "aaron-bond.better-comments"
 vscode "alefragnani.bookmarks"
 vscode "asvetliakov.vscode-neovim"
@@ -449,6 +450,7 @@ go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/davidrjenni/reftools/cmd/fillswitch"
 go "github.com/onsi/ginkgo/v2/ginkgo"
 go "github.com/abice/go-enum"
+go "github.com/atombender/go-jsonschema"
 go "mvdan.cc/gofumpt"
 go "golang.org/x/tools/cmd/goimports"
 go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
