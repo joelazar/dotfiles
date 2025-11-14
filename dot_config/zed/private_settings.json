@@ -35,10 +35,6 @@
     "gemini": {
       "ignore_system_version": false
     },
-    "OpenCode": {
-      "command": "opencode",
-      "args": ["acp"]
-    },
     "Goose 🪿": {
       "command": "goose",
       "args": ["acp"],
@@ -293,8 +289,8 @@
   "ui_font_size": 14.0,
   "buffer_font_size": 13.0,
   "vim_mode": true,
-  "theme": "Tokyo Night",
-  "icon_theme": "VSCode Icons for Zed (Dark)",
+  "theme": "Catppuccin Mocha",
+  "icon_theme": "Catppuccin Mocha",
   "buffer_font_family": "FiraCode Nerd Font",
   "buffer_font_features": {
     "liga": true,
@@ -654,6 +650,7 @@
     "nginx": true,
     "nix": true,
     "prisma": true,
+    "opencode": true,
     "scheme": true,
     "sql": true,
     "terraform": true,
