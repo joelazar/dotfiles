@@ -377,6 +377,8 @@ cask "libreoffice"
 cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# Verify system files structure, run miscellaneous maintenance and more
+cask "onyx"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
 # WebKit based web browser
