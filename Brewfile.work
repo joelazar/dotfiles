@@ -199,6 +199,8 @@ brew "mas"
 brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Tool for smooth Git handover in mob programming sessions
+brew "mob"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # Media player based on MPlayer and mplayer2
