@@ -16,7 +16,7 @@
 # Open all listed apps by bundle identifier
 open -b "com.mitchellh.ghostty"          # Ghostty
 open -b "dev.zed.Zed-Preview"            # Zed Preview
-open -b "app.zen-browser.zen"            # Zen
+open -b "com.kagi.kagimacOS"             # Orion
 open -b "md.obsidian"                    # Obsidian
 open -b "com.todoist.mac.Todoist"        # Todoist
 open -b "com.tinyspeck.slackmacgap"      # Slack

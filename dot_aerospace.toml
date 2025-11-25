@@ -196,6 +196,10 @@ if.app-id = 'dev.zed.Zed-Preview'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
+if.app-id = 'com.kagi.kagimacOS'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace 3'
 
