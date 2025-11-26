@@ -7,7 +7,7 @@ set -U fish_greeting
 fish_vi_key_bindings
 
 # Make default programs
-set -gx BROWSER "/Applications/Orion.app/Contents/MacOS/Orion"
+set -gx BROWSER "/Applications/Zen.app/Contents/MacOS/zen"
 set -gx PAGER "bat --plain"
 set -gx TERMINAL ghostty
 if not set -q ZED_TERM
