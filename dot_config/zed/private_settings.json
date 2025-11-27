@@ -124,6 +124,24 @@
           "supports_images": true
         }
       ]
+    },
+    "openai_compatible": {
+      "Cerebras": {
+        "api_url": "https://api.cerebras.ai/v1",
+        "available_models": [
+          {
+            "name": "zai-glm-4.6",
+            "display_name": "GLM-4.6",
+            "max_tokens": 131072,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": true,
+              "prompt_cache_key": false
+            }
+          }
+        ]
+      }
     }
   },
   "calls": {
