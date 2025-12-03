@@ -291,6 +291,8 @@ brew "uv"
 brew "vhs"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
+# Execute commands when watched files change
+brew "watchexec"
 # Internet file retriever
 brew "wget"
 # Lexical database for the English language
