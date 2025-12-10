@@ -109,10 +109,10 @@ keybind = super+p=text:\x10
 keybind = super+s=text:\x13
 
 # search entire scrollback history in default text editor
-keybind = super+f=write_screen_file:open
+keybind = super+shift+f=write_screen_file:open
 
 # copy scrollback history to the clipboard
-keybind = super+shift+f=write_screen_file:copy
+# keybind = super+shift+f=write_screen_file:copy
 
 keybind = alt+left=unbind
 keybind = alt+right=unbind

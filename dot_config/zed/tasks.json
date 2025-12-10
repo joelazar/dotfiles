@@ -117,5 +117,30 @@
     "reveal_target": "dock",
     "hide": "always",
     "shell": "system"
+  },
+  {
+    "label": "go: add struct tags",
+    "command": "gomodifytags",
+    "args": [
+      "-file",
+      "$ZED_FILE",
+      "-struct",
+      "$ZED_SYMBOL",
+      "-add-tags",
+      "json",
+      "-transform",
+      "camelcase",
+      "-skip-unexported",
+      "-quiet",
+      "-w"
+    ],
+    "reveal": "never",
+    "hide": "always",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   }
 ]

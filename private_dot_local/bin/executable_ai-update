@@ -31,3 +31,7 @@ echo
 echo "🪿 Update Goose"
 brew upgrade block-goose-cli
 echo
+
+echo "✴️ Update Mistral Vibe"
+uv tool upgrade mistral-vibe
+echo
