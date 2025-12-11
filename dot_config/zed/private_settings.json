@@ -3,12 +3,12 @@
   "git": {
     "inline_blame": {
       "delay_ms": 200,
-      "show_commit_summary": true
-    }
+      "show_commit_summary": true,
+    },
   },
   "preview_tabs": {
-    "enable_preview_from_code_navigation": true,
-    "enable_preview_from_file_finder": true
+    "enable_keep_preview_on_code_navigation": true,
+    "enable_preview_from_file_finder": true,
   },
   "close_on_file_delete": true,
   "excerpt_context_lines": 3,
@@ -24,33 +24,33 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/Users/joelazar/Code/jets"]
-        }
-      ]
-    }
+          "paths": ["/Users/joelazar/Code/jets"],
+        },
+      ],
+    },
   ],
   "agent_servers": {
     "codex": {
-      "default_mode": "full-access"
+      "default_mode": "full-access",
     },
     "gemini": {
-      "ignore_system_version": false
+      "ignore_system_version": false,
     },
     "Goose 🪿": {
       "type": "custom",
       "command": "goose",
       "args": ["acp"],
-      "env": {}
-    }
+      "env": {},
+    },
   },
   "use_system_window_tabs": true,
   "edit_predictions": {
     "mode": "eager",
     "copilot": {
       "proxy": null,
-      "proxy_no_verify": null
+      "proxy_no_verify": null,
     },
-    "enabled_in_text_threads": true
+    "enabled_in_text_threads": true,
   },
   "file_scan_exclusions": [
     "**/.git",
@@ -71,7 +71,7 @@
     "**/__pycache__",
     "**/.ropeproject",
     "**/.pytest_cache",
-    "**/.ruff_cache"
+    "**/.ruff_cache",
   ],
   "bottom_dock_layout": "right_aligned",
   "language_models": {
@@ -84,15 +84,15 @@
         {
           "name": "deepseek-chat",
           "display_name": "DeepSeek Chat",
-          "max_tokens": 64000
+          "max_tokens": 64000,
         },
         {
           "name": "deepseek-reasoner",
           "display_name": "DeepSeek Reasoner",
           "max_tokens": 64000,
-          "max_output_tokens": 4096
-        }
-      ]
+          "max_output_tokens": 4096,
+        },
+      ],
     },
     "zed.dev": { "available_models": [] },
     "ollama": {
@@ -101,19 +101,19 @@
           "name": "devstral",
           "display_name": "Mistral Devstral - 24B",
           "max_tokens": 131072,
-          "supports_tools": true
+          "supports_tools": true,
         },
         {
           "name": "qwen3-coder:30b",
           "display_name": "Qwen 3 Coder - 30B-A3B",
           "max_tokens": 262144,
-          "supports_tools": true
+          "supports_tools": true,
         },
         {
           "name": "qwen3:4b",
           "display_name": "Qwen 3 - 4B",
           "max_tokens": 32768,
-          "supports_tools": true
+          "supports_tools": true,
         },
         {
           "name": "gpt-oss:20b",
@@ -121,9 +121,9 @@
           "max_tokens": 131072,
           "supports_tools": true,
           "supports_thinking": true,
-          "supports_images": true
-        }
-      ]
+          "supports_images": true,
+        },
+      ],
     },
     "openai_compatible": {
       "Cerebras": {
@@ -137,31 +137,31 @@
               "tools": true,
               "images": false,
               "parallel_tool_calls": true,
-              "prompt_cache_key": false
-            }
-          }
-        ]
-      }
-    }
+              "prompt_cache_key": false,
+            },
+          },
+        ],
+      },
+    },
   },
   "calls": {
     "mute_on_join": true,
-    "share_on_join": false
+    "share_on_join": false,
   },
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "zed",
     // "edit_prediction_provider": "copilot"
   },
   "centered_layout": {
     "left_padding": 0.15,
-    "right_padding": 0.15
+    "right_padding": 0.15,
   },
   "search": { "button": true },
   "diagnostics": {
     "inline": {
-      "enabled": true
+      "enabled": true,
     },
-    "button": true
+    "button": true,
   },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
@@ -170,20 +170,20 @@
     "show_branch_name": true,
     "show_user_picture": false,
     "show_onboarding_banner": true,
-    "show_sign_in": false
+    "show_sign_in": false,
   },
   "seed_search_query_from_cursor": "selection",
   "show_edit_predictions": true,
   "agent": {
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "claude-haiku-4.5"
+      "model": "claude-haiku-4.5",
     },
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "commit_message_model": {
       "provider": "copilot_chat",
-      "model": "gpt-4.1"
+      "model": "gpt-4.1",
     },
     "always_allow_tool_actions": true,
     "enable_feedback": false,
@@ -205,10 +205,10 @@
           "diagnostics": true,
           "delete_path": true,
           "create_directory": true,
-          "copy_path": true
+          "copy_path": true,
         },
         "enable_all_context_servers": false,
-        "context_servers": {}
+        "context_servers": {},
       },
       "write": {
         "name": "Write",
@@ -236,11 +236,11 @@
           "grep": true,
           "rename": true,
           "symbol_info": true,
-          "thinking": true
+          "thinking": true,
         },
         "enable_all_context_servers": true,
-        "context_servers": {}
-      }
+        "context_servers": {},
+      },
     },
     "default_profile": "write",
     "button": true,
@@ -249,13 +249,13 @@
     "default_height": 320,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5"
-    }
+      "model": "claude-opus-4.5",
+    },
   },
   "tab_bar": {
     "show": true,
     "show_nav_history_buttons": false,
-    "show_tab_bar_buttons": false
+    "show_tab_bar_buttons": false,
   },
   "project_panel": {
     "file_icons": true,
@@ -265,43 +265,43 @@
     "auto_fold_dirs": false,
     "button": true,
     "auto_reveal_entries": false,
-    "entry_spacing": "standard"
+    "entry_spacing": "standard",
   },
   "outline_panel": {
     "dock": "right",
-    "button": true
+    "button": true,
   },
   "collaboration_panel": {
     "default_width": 300,
-    "button": true
+    "button": true,
   },
   "notification_panel": {
-    "button": true
+    "button": true,
   },
   "git_panel": {
     "sort_by_path": true,
     "default_width": 300,
-    "button": true
+    "button": true,
   },
   "message_editor": {
-    "auto_replace_emoji_shortcode": false
+    "auto_replace_emoji_shortcode": false,
   },
   "tabs": {
     "git_status": true,
     "file_icons": true,
     "close_position": "right",
-    "activate_on_close": "neighbour"
+    "activate_on_close": "neighbour",
   },
   "file_finder": {
     "modal_max_width": "medium",
-    "include_ignored": "all"
+    "include_ignored": "all",
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.7,
-    "border_size": 0.5
+    "border_size": 0.5,
   },
   "scrollbar": {
-    "show": "system"
+    "show": "system",
   },
   "preferred_line_length": 140,
   "show_wrap_guides": true,
@@ -317,7 +317,7 @@
     "ss02": true,
     "ss03": true,
     "ss05": true,
-    "ss07": true
+    "ss07": true,
   },
   "cursor_blink": false,
   // prevent the buffer from scrolling beyond the last line
@@ -325,34 +325,35 @@
   // allow cursor to reach edges of screen
   "vertical_scroll_margin": 0,
   "inlay_hints": {
-    "enabled": true
+    "show_value_hints": true,
+    "enabled": true,
   },
   "vim": {
     "toggle_relative_line_numbers": false,
     "use_system_clipboard": "never",
     "use_smartcase_find": true,
-    "highlight_on_yank_duration": 500
+    "highlight_on_yank_duration": 500,
   },
   "use_smartcase_search": true,
   "toolbar": {
     "code_actions": false,
     "breadcrumbs": true,
     "quick_actions": true,
-    "selections_menu": true
+    "selections_menu": true,
   },
   "indent_guides": {
     "enabled": true,
-    "coloring": "indent_aware"
+    "coloring": "indent_aware",
   },
   "theme_overrides": {},
   "debugger": {
-    "button": true
+    "button": true,
   },
   "terminal": {
     "toolbar": { "breadcrumbs": false },
     "line_height": "standard",
     "scrollbar": {
-      "show": "never"
+      "show": "never",
     },
     "button": true,
     "max_scroll_history_lines": 50000,
@@ -363,21 +364,21 @@
       "ss02": true,
       "ss03": true,
       "ss05": true,
-      "ss07": true
+      "ss07": true,
     },
     "detect_venv": {
       "on": {
         "directories": [".env", "env", ".venv", "venv"],
-        "activate_script": "fish"
-      }
+        "activate_script": "fish",
+      },
     },
     "env": {
       "GIT_EDITOR": "zed --wait",
-      "EDITOR": "zed"
+      "EDITOR": "zed",
     },
     "minimum_contrast": 0,
     "keep_selection_on_copy": false,
-    "working_directory": "current_project_directory"
+    "working_directory": "current_project_directory",
   },
   "load_direnv": "shell_hook",
   "file_types": {
@@ -395,7 +396,7 @@
       "**/group_vars/**.yml",
       "**/group_vars/**.yaml",
       "**playbook*.yaml",
-      "**playbook*.yml"
+      "**playbook*.yml",
     ],
     "Dockerfile": ["Dockerfile*"],
     "Helm": [
@@ -404,46 +405,46 @@
       "**/templates/**/*.yml",
       "**/helmfile.d/**/*.yaml",
       "**/helmfile.d/**/*.yml",
-      "**/values*.yaml"
+      "**/values*.yaml",
     ],
     "Shell Script": ["*.envrc*"],
-    "Nginx": ["**/nginx/**/*.conf", "nginx.conf"]
+    "Nginx": ["**/nginx/**/*.conf", "nginx.conf"],
   },
   "lsp": {
     "rust-analyzer": {
       "initialization_options": {
         "check": {
-          "command": "clippy"
+          "command": "clippy",
         },
         "cargo": {
           "allFeatures": true,
           "loadOutDirsFromCheck": true,
           "buildScripts": {
-            "enable": true
-          }
+            "enable": true,
+          },
         },
         "procMacro": {
           "enable": true,
           "ignored": {
             "async-trait": ["async_trait"],
             "napi-derive": ["napi"],
-            "async-recursion": ["async_recursion"]
-          }
+            "async-recursion": ["async_recursion"],
+          },
         },
         "rust": {
-          "analyzerTargetDir": true
+          "analyzerTargetDir": true,
         },
         "inlayHints": {
           "maxLength": null,
           "lifetimeElisionHints": {
             "enable": "skip_trivial",
-            "useParameterNames": true
+            "useParameterNames": true,
           },
           "closureReturnTypeHints": {
-            "enable": "always"
-          }
-        }
-      }
+            "enable": "always",
+          },
+        },
+      },
     },
     "basedpyright": {
       "settings": {
@@ -459,31 +460,31 @@
               "reportUnknownLambdaType": "none",
               "reportUnknownMemberType": "none",
               "reportUnknownParameterType": "none",
-              "reportUnknownVariableType": "none"
-            }
-          }
-        }
-      }
+              "reportUnknownVariableType": "none",
+            },
+          },
+        },
+      },
     },
     "ansible-language-server": {
       "settings": {
         "ansible": {
-          "path": "ansible"
+          "path": "ansible",
         },
         "executionEnvironment": {
-          "enabled": false
+          "enabled": false,
         },
         "python": {
-          "interpreterPath": "python3"
+          "interpreterPath": "python3",
         },
         "validation": {
           "enabled": true,
           "lint": {
             "enabled": true,
-            "path": "ansible-lint"
-          }
-        }
-      }
+            "path": "ansible-lint",
+          },
+        },
+      },
     },
     "gopls": {
       "initialization_options": {
@@ -502,7 +503,7 @@
           "test": true,
           "tidy": true,
           "upgrade_dependency": true,
-          "vendor": true
+          "vendor": true,
         },
         "hints": {
           "assignVariableTypes": true,
@@ -511,21 +512,21 @@
           "constantValues": true,
           "functionTypeParameters": true,
           "parameterNames": true,
-          "rangeVariableTypes": true
+          "rangeVariableTypes": true,
         },
         "analyses": {
           "nilness": true,
           "unusedparams": true,
           "unusedwrite": true,
-          "useany": true
-        }
-      }
+          "useany": true,
+        },
+      },
     },
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
-      }
-    }
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="],
+      },
+    },
   },
   "languages": {
     "Python": {
@@ -534,20 +535,20 @@
         {
           "external": {
             "command": "bash",
-            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
-          }
-        }
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"],
+          },
+        },
       ],
-      "language_servers": ["ty", "..."]
+      "language_servers": ["ty", "..."],
     },
     "JavaScript": {
       "code_actions_on_format": {
-        "source.fixAll.eslint": true
-      }
+        "source.fixAll.eslint": true,
+      },
     },
     "Go": {
       "code_actions_on_format": {
-        "source.organizeImports": true
+        "source.organizeImports": true,
       },
       "format_on_save": "on",
       // // NOTE: add wsl_v5 as an extra formatter
@@ -557,10 +558,10 @@
       //     "arguments": ["run", "--no-config", "--enable-only", "wsl_v5", "--fix"]
       //   }
       // },
-      "language_servers": ["!harper-ls", "..."]
+      "language_servers": ["!harper-ls", "..."],
     },
     "Markdown": {
-      "format_on_save": "on"
+      "format_on_save": "on",
       // "language_servers": ["!harper-ls", "..."]
     },
     "Terraform": {
@@ -569,19 +570,19 @@
       "formatter": {
         "external": {
           "command": "tofu",
-          "arguments": ["fmt", "-"]
-        }
-      }
+          "arguments": ["fmt", "-"],
+        },
+      },
     },
     "Fish": {
       "format_on_save": "on",
       "formatter": {
         "external": {
           "command": "fish_indent",
-          "arguments": []
-        }
-      }
-    }
+          "arguments": [],
+        },
+      },
+    },
   },
   "auto_install_extensions": {
     "ansible": true,
@@ -613,6 +614,6 @@
     "toml": true,
     "vscode-icons": true,
     "wakatime": true,
-    "zig": true
-  }
+    "zig": true,
+  },
 }
