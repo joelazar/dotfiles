@@ -11,6 +11,7 @@ tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "sst/tap"
+tap "tw93/tap"
 # Run your GitHub Actions locally
 brew "act"
 # Easily download, build, install, upgrade, and uninstall Python packages
@@ -327,6 +328,8 @@ brew "nats-io/nats-tools/nats"
 brew "oven-sh/bun/bun"
 # The AI coding agent built for the terminal.
 brew "sst/tap/opencode"
+# Comprehensive macOS cleanup and application uninstall tool
+brew "tw93/tap/mole"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
