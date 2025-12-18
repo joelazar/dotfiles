@@ -1,4 +1,7 @@
 {
+  "show_signature_help_after_edits": false,
+  "double_click_in_multibuffer": "open",
+  "restore_on_startup": "launchpad",
   "colorize_brackets": true,
   "git": {
     "inline_blame": {
@@ -165,10 +168,11 @@
   },
   // "global_lsp_settings": { "button": false },
   "title_bar": {
+    "show_menus": true,
     "show_branch_icon": true,
-    "show_project_items": false,
+    "show_project_items": true,
     "show_branch_name": true,
-    "show_user_picture": false,
+    "show_user_picture": true,
     "show_onboarding_banner": true,
     "show_sign_in": false,
   },
@@ -287,6 +291,7 @@
     "auto_replace_emoji_shortcode": false,
   },
   "tabs": {
+    "show_diagnostics": "errors",
     "git_status": true,
     "file_icons": true,
     "close_position": "right",
