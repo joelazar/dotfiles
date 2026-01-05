@@ -42,5 +42,9 @@
       "Read(**/.ssh/**)"
     ]
   },
-  "alwaysThinkingEnabled": true
+  "model": "opus",
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "claude-code-wakatime@wakatime": true
+  }
 }
