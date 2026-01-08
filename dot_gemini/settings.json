@@ -25,7 +25,6 @@
     "disableAutoUpdate": true,
     "previewFeatures": true
   },
-  "useSmartEdit": true,
   "output": {
     "format": "text"
   },
@@ -36,3 +35,4 @@
     "enabled": false
   }
 }
+

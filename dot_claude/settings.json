@@ -4,11 +4,18 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "USE_BUILTIN_RIPGREP": "0"
   },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Bash(cat:*)",
       "Bash(docker compose exec:*)",
+      "Bash(docker compose up:*)",
+      "Bash(docker compose down:*)",
+      "Bash(docker compose logs:*)",
       "Bash(docker run:*)",
       "Bash(find:*)",
       "Bash(gh pr view:*)",
@@ -19,20 +26,56 @@
       "Bash(git rebase:*)",
       "Bash(git stash:*)",
       "Bash(git switch:*)",
+      "Bash(go:*)",
       "Bash(grep:*)",
       "Bash(ls:*)",
+      "Bash(make:*)",
       "Bash(mkdir:*)",
       "Bash(node:*)",
       "Bash(npm run build:*)",
       "Bash(rg:*)",
+      "Bash(sqlc:*)",
       "WebFetch(domain:docs.anthropic.com/*)",
       "WebFetch(domain:github.com/*)",
+      "WebSearch",
       "Read(~/Code/**)",
       "Edit(~/Code/**)",
       "Write(~/Code/**)",
       "NotebookEdit(~/Code/**)"
     ],
     "deny": [
+      "Bash( /dev/sda)",
+      "Bash(> /dev/sda)",
+      "Bash(dd if=/dev/zero of=/dev/sda)",
+      "Bash(diskutil apfs changePassphrase)",
+      "Bash(diskutil apfs decryptVolume)",
+      "Bash(diskutil apfs deleteContainer)",
+      "Bash(diskutil apfs deleteSnapshot)",
+      "Bash(diskutil apfs deleteVolume)",
+      "Bash(diskutil apfs deleteVolumeGroup)",
+      "Bash(diskutil apfs eraseVolume)",
+      "Bash(diskutil appleRAID)",
+      "Bash(diskutil coreStorage)",
+      "Bash(diskutil cs)",
+      "Bash(diskutil disableJournal)",
+      "Bash(diskutil disableOwnership)",
+      "Bash(diskutil eraseDisk)",
+      "Bash(diskutil eraseVolume)",
+      "Bash(diskutil partitionDisk)",
+      "Bash(diskutil randomDisk)",
+      "Bash(diskutil reformat)",
+      "Bash(diskutil resetFusion)",
+      "Bash(diskutil zeroDisk)",
+      "Bash(fork bomb)",
+      "Bash(mkfs.ext4 /dev/sda)",
+      "Bash(rm -rf $HOME)",
+      "Bash(rm -rf $PAI_DIR)",
+      "Bash(rm -rf $PAI_HOME)",
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(sudo rm -rf /)",
+      "Bash(sudo rm -rf /*)",
       "Read(**/.env*)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
@@ -43,8 +86,22 @@
     ]
   },
   "model": "opus",
-  "alwaysThinkingEnabled": true,
   "enabledPlugins": {
-    "claude-code-wakatime@wakatime": true
-  }
+    "claude-code-wakatime@wakatime": true,
+    "frontend-design@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true
+  },
+  "alwaysThinkingEnabled": true,
+  "PostToolUse": [
+    {
+      "matcher": "Write|Edit",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "make lint || true"
+        }
+      ]
+    }
+  ]
 }
