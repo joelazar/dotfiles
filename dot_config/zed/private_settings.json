@@ -1,4 +1,8 @@
 {
+  "which_key": {
+    "delay_ms": 400,
+    "enabled": true,
+  },
   "show_signature_help_after_edits": false,
   "double_click_in_multibuffer": "open",
   "restore_on_startup": "launchpad",
@@ -33,6 +37,11 @@
     },
   ],
   "agent_servers": {
+    "claude": {
+      "favorite_models": ["opus", "default"],
+      "default_config_options": {},
+      "favorite_config_option_values": {},
+    },
     "codex": {
       "default_mode": "full-access",
     },
@@ -152,8 +161,8 @@
     "share_on_join": false,
   },
   "features": {
-    "edit_prediction_provider": "zed",
-    // "edit_prediction_provider": "copilot"
+    // "edit_prediction_provider": "zed",
+    "edit_prediction_provider": "copilot",
   },
   "centered_layout": {
     "left_padding": 0.15,
@@ -253,7 +262,7 @@
     "default_height": 320,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5",
+      "model": "claude-sonnet-4.5",
     },
   },
   "tab_bar": {
@@ -314,8 +323,8 @@
   "ui_font_size": 13.0,
   "buffer_font_size": 13.0,
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
-  "icon_theme": "Catppuccin Mocha",
+  "theme": "Tokyo Night",
+  "icon_theme": "Material Icon Theme",
   "buffer_font_family": "FiraCode Nerd Font",
   "buffer_font_features": {
     "liga": true,
@@ -608,10 +617,11 @@
     "lua": true,
     "make": true,
     "markdown-oxide": true,
+    "material-icon-theme": true,
     "nginx": true,
     "nix": true,
-    "prisma": true,
     "opencode": true,
+    "prisma": true,
     "scheme": true,
     "sql": true,
     "terraform": true,

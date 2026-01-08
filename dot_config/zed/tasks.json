@@ -1,26 +1,10 @@
 [
   {
-    "label": "python: rye test - all",
-    "command": "rye test",
-    "hide": "on_success",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always"
-  },
-  {
-    "label": "python: rye test - current file",
-    "command": "rye test -- $ZED_RELATIVE_FILE -vv",
-    "hide": "on_success",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always"
-  },
-  {
     "label": "python: run current file in venv",
     "command": "source .venv/bin/activate.fish && direnv export fish | source && python $ZED_RELATIVE_FILE",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
-    "reveal": "always"
+    "reveal": "always",
   },
   {
     "label": "lazygit",
@@ -33,9 +17,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
   },
   {
     "label": "yazi",
@@ -45,22 +29,7 @@
     "hide": "always",
     "reveal": "always",
     "cwd": "$ZED_DIRNAME",
-    "env": { "EDITOR": "zed" }
-  },
-  {
-    "label": "nvim",
-    "command": "nvim",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "hide": "always",
-    "reveal": "always",
-    "cwd": "$ZED_DIRNAME",
-    "shell": {
-      "with_arguments": {
-        "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
+    "env": { "EDITOR": "zed" },
   },
   {
     "label": "file finder",
@@ -73,9 +42,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
   },
   {
     "label": "find in files",
@@ -88,9 +57,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
   },
   {
     "label": "find in files - selected text",
@@ -103,9 +72,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
   },
   {
     "label": "github browse",
@@ -116,7 +85,7 @@
     "reveal": "never",
     "reveal_target": "dock",
     "hide": "always",
-    "shell": "system"
+    "shell": "system",
   },
   {
     "label": "go: add struct tags",
@@ -132,15 +101,15 @@
       "camelcase",
       "-skip-unexported",
       "-quiet",
-      "-w"
+      "-w",
     ],
     "reveal": "never",
     "hide": "always",
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"]
-      }
-    }
-  }
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
+  },
 ]
