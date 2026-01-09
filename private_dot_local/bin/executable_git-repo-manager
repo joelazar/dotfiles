@@ -68,51 +68,54 @@ get_repo_info() {
 
     repo_name=$(basename "$repo_path")
     
-    cd "$repo_path" || return 1
+    # Save current directory and work in subshell to avoid affecting parent
+    (
+        cd "$repo_path" || return 1
 
-    # Get current branch
-    branch=$(git branch --show-current 2>/dev/null || echo "detached")
+        # Get current branch
+        branch=$(git branch --show-current 2>/dev/null || echo "detached")
 
-    # Get last commit info
-    last_commit_date=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
-    last_commit_msg=$(git log -1 --format="%s" 2>/dev/null | cut -c1-50)
+        # Get last commit info
+        last_commit_date=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
+        last_commit_msg=$(git log -1 --format="%s" 2>/dev/null | cut -c1-50)
 
-    # Get remote URL
-    remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "no remote")
+        # Get remote URL
+        remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "no remote")
 
-    # Check for changes
-    if ! git diff-index --quiet HEAD -- 2>/dev/null || [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
-        has_changes=true
-        status="🔴 dirty"
-    else
-        status="🟢 clean"
-    fi
+        # Check for changes
+        if ! git diff-index --quiet HEAD -- 2>/dev/null || [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
+            has_changes=true
+            status="🔴 dirty"
+        else
+            status="🟢 clean"
+        fi
 
-    # Check if default branch is outdated
-    if [[ "$remote_url" != "no remote" ]]; then
-        # Fetch quietly to get latest remote info
-        git fetch --quiet 2>/dev/null || true
-        
-        # Get default branch from remote
-        default_branch=$(git symbolic-ref "refs/remotes/origin/HEAD" 2>/dev/null | sed 's@^refs/remotes/origin/@@')
-        
-        if [[ -n "$default_branch" ]] && [[ "$branch" != "$default_branch" ]]; then
-            # Check if default branch exists locally
-            if git show-ref --verify --quiet "refs/heads/$default_branch" 2>/dev/null; then
-                # Compare local default branch with remote
-                local local_hash
-                local remote_hash
-                local_hash=$(git rev-parse "$default_branch" 2>/dev/null)
-                remote_hash=$(git rev-parse "origin/$default_branch" 2>/dev/null)
-                
-                if [[ "$local_hash" != "$remote_hash" ]]; then
-                    is_default_outdated=true
+        # Check if default branch is outdated
+        if [[ "$remote_url" != "no remote" ]]; then
+            # Fetch quietly to get latest remote info
+            git fetch --quiet 2>/dev/null || true
+            
+            # Get default branch from remote
+            default_branch=$(git symbolic-ref "refs/remotes/origin/HEAD" 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+            
+            if [[ -n "$default_branch" ]] && [[ "$branch" != "$default_branch" ]]; then
+                # Check if default branch exists locally
+                if git show-ref --verify --quiet "refs/heads/$default_branch" 2>/dev/null; then
+                    # Compare local default branch with remote
+                    local local_hash
+                    local remote_hash
+                    local_hash=$(git rev-parse "$default_branch" 2>/dev/null)
+                    remote_hash=$(git rev-parse "origin/$default_branch" 2>/dev/null)
+                    
+                    if [[ "$local_hash" != "$remote_hash" ]]; then
+                        is_default_outdated=true
+                    fi
                 fi
             fi
         fi
-    fi
 
-    echo "$repo_path|$repo_name|$branch|$last_commit_date|$last_commit_msg|$remote_url|$status|$has_changes|$default_branch|$is_default_outdated"
+        echo "$repo_path|$repo_name|$branch|$last_commit_date|$last_commit_msg|$remote_url|$status|$has_changes|$default_branch|$is_default_outdated"
+    )
 }
 
 open_repo_in_browser() {
