@@ -1,0 +1,260 @@
+#!/bin/bash
+#
+# git-worktree-new - Create a git worktree next to the current repo and cd into it
+#
+
+set -e
+
+# Source utilities
+SOURCE_DIR=$(chezmoi source-path 2>/dev/null || echo "$HOME/.local/share/chezmoi")
+if [[ -f "$SOURCE_DIR/scripts/utils" ]]; then
+    # shellcheck source=/dev/null
+    . "$SOURCE_DIR/scripts/utils"
+else
+    # Minimal fallback if utils not available
+    print_error() { echo "❌ $1"; }
+    print_success() { echo "✅ $1"; }
+    print_warning() { echo "⚠️  $1"; }
+    print_info() { echo "ℹ️  $1"; }
+    ask_for_confirmation() {
+        read -r -p "$1 (y/n) " -n 1
+        printf "\n"
+        [[ $REPLY =~ ^[Yy]$ ]] && REPLY="y" || REPLY="n"
+    }
+    answer_is_yes() { [[ $REPLY =~ ^[Yy]$ ]]; }
+    cmd_exists() { command -v "$1" &>/dev/null; }
+    show_header() { echo "$1"; }
+    show_section() { echo "── $1 ──"; }
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_help() {
+    cat <<HELPEOF
+Usage: git-worktree-new [OPTIONS] <worktree-name> [branch]
+
+Create a git worktree next to the current repository and cd into it.
+Copies environment files (.env*, .envrc, etc.) to the new worktree.
+
+Arguments:
+    <worktree-name>     Name for the new worktree directory
+    [branch]            Branch to checkout (default: creates new branch with worktree-name)
+
+Options:
+    --help, -h          Show this help message
+    --no-copy, -n       Don't copy environment files
+    --base, -b BRANCH   Base branch to create new branch from (default: current branch)
+    --list, -l          List existing worktrees
+
+Examples:
+    git-worktree-new feature-login
+    git-worktree-new bugfix-123 existing-branch
+    git-worktree-new feature-api -b main
+HELPEOF
+}
+
+get_git_root() {
+    git rev-parse --show-toplevel 2>/dev/null
+}
+
+get_repo_name() {
+    local git_root="$1"
+    basename "$git_root"
+}
+
+list_worktrees() {
+    if cmd_exists "gum"; then
+        gum style --foreground="$CYAN" --bold "📂 Git Worktrees:"
+        echo ""
+        git worktree list | while read -r line; do
+            gum style --foreground="$GREEN" "  $line"
+        done
+    else
+        echo "Git Worktrees:"
+        git worktree list
+    fi
+}
+
+copy_env_files() {
+    local source_dir="$1"
+    local target_dir="$2"
+    local copied=0
+
+    local -a env_patterns=(
+        ".env" ".env.*" ".envrc" ".tool-versions" ".nvmrc"
+        ".python-version" ".ruby-version" ".node-version" ".java-version"
+        ".terraform.tfvars" "*.local" ".vscode/settings.json" ".idea/*.xml"
+    )
+
+    for pattern in "${env_patterns[@]}"; do
+        while IFS= read -r -d '' file; do
+            local rel_path="${file#"$source_dir"/}"
+            local target_file="$target_dir/$rel_path"
+            local target_subdir
+            target_subdir=$(dirname "$target_file")
+
+            [[ ! -d "$target_subdir" ]] && mkdir -p "$target_subdir"
+
+            if [[ -f "$file" ]] && [[ ! -f "$target_file" ]]; then
+                cp "$file" "$target_file"
+                ((copied++))
+            fi
+        done < <(find "$source_dir" -maxdepth 2 -name "$pattern" -type f -print0 2>/dev/null)
+    done
+
+    [[ $copied -gt 0 ]] && print_info "📋 Copied $copied env file(s)"
+}
+
+create_worktree() {
+    local worktree_name="$1"
+    local branch="$2"
+    local base_branch="$3"
+    local copy_env="$4"
+
+    local git_root
+    git_root=$(get_git_root)
+
+    if [[ -z "$git_root" ]]; then
+        print_error "Not in a git repository"
+        exit 1
+    fi
+
+    local repo_name
+    repo_name=$(get_repo_name "$git_root")
+
+    local parent_dir
+    parent_dir=$(dirname "$git_root")
+
+    local worktree_path="$parent_dir/${repo_name}-${worktree_name}"
+
+    # Check if worktree already exists
+    if [[ -d "$worktree_path" ]]; then
+        print_error "Directory already exists: $worktree_path"
+        exit 1
+    fi
+
+    # Determine branch handling
+    local create_new_branch=false
+
+    if [[ -z "$branch" ]]; then
+        branch="$worktree_name"
+        # Check if branch exists - if not, we'll create it
+        if ! git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null; then
+            create_new_branch=true
+        fi
+    else
+        # Branch was specified - verify it exists
+        if ! git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null && \
+           ! git show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
+            print_error "Branch does not exist: $branch"
+            exit 1
+        fi
+    fi
+
+    # Create the worktree
+    local worktree_cmd
+    if [[ "$create_new_branch" == "true" ]]; then
+        if [[ -n "$base_branch" ]]; then
+            worktree_cmd="git worktree add -b '$branch' '$worktree_path' '$base_branch'"
+        else
+            worktree_cmd="git worktree add -b '$branch' '$worktree_path'"
+        fi
+    else
+        worktree_cmd="git worktree add '$worktree_path' '$branch'"
+    fi
+
+    if cmd_exists "gum"; then
+        if ! gum spin --spinner="dot" --title="🌲 Creating worktree..." -- bash -c "$worktree_cmd"; then
+            print_error "❌ Failed to create worktree"
+            exit 1
+        fi
+    else
+        if ! eval "$worktree_cmd" >/dev/null 2>&1; then
+            print_error "❌ Failed to create worktree"
+            exit 1
+        fi
+    fi
+
+    print_success "🌲 $worktree_path ($branch)"
+
+    # Copy environment files
+    [[ "$copy_env" == "true" ]] && copy_env_files "$git_root" "$worktree_path"
+
+    # Copy cd command to clipboard
+    echo "cd '$worktree_path'" | pbcopy
+    print_info "📋 cd command copied to clipboard"
+}
+
+main() {
+    local worktree_name=""
+    local branch=""
+    local base_branch=""
+    local copy_env=true
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --help|-h)
+                print_help
+                exit 0
+                ;;
+            --no-copy|-n)
+                copy_env=false
+                shift
+                ;;
+            --base|-b)
+                base_branch="$2"
+                shift 2
+                ;;
+            --list|-l)
+                list_worktrees
+                exit 0
+                ;;
+            -*)
+                print_error "Unknown option: $1"
+                print_help
+                exit 1
+                ;;
+            *)
+                if [[ -z "$worktree_name" ]]; then
+                    worktree_name="$1"
+                elif [[ -z "$branch" ]]; then
+                    branch="$1"
+                else
+                    print_error "Too many arguments"
+                    print_help
+                    exit 1
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    if [[ -z "$worktree_name" ]]; then
+        # Interactive mode with gum
+        if cmd_exists "gum"; then
+            show_header "🌲 Git Worktree Creator"
+            worktree_name=$(gum input --placeholder "Enter worktree name...")
+            if [[ -z "$worktree_name" ]]; then
+                print_error "Worktree name is required"
+                exit 1
+            fi
+
+            if gum confirm "Create new branch '$worktree_name'?"; then
+                branch=""
+                if gum confirm --default=false "Use a specific base branch?"; then
+                    base_branch=$(git branch -a --format='%(refname:short)' | gum filter --placeholder "Select base branch...")
+                fi
+            else
+                branch=$(git branch -a --format='%(refname:short)' | gum filter --placeholder "Select existing branch...")
+            fi
+        else
+            print_error "Worktree name is required"
+            print_help
+            exit 1
+        fi
+    fi
+
+    create_worktree "$worktree_name" "$branch" "$base_branch" "$copy_env"
+}
+
+main "$@"
