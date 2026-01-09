@@ -240,6 +240,62 @@ checkout_default_branch() {
     fi
 }
 
+clean_repo() {
+    local repo_path="$1"
+    local repo_name="$2"
+
+    cd "$repo_path" || return 1
+
+    # Show what would be cleaned
+    local untracked
+    untracked=$(git ls-files --others --exclude-standard 2>/dev/null)
+    local modified
+    modified=$(git diff --name-only 2>/dev/null)
+    local staged
+    staged=$(git diff --cached --name-only 2>/dev/null)
+
+    if [[ -z "$untracked" ]] && [[ -z "$modified" ]] && [[ -z "$staged" ]]; then
+        print_info "Repository is already clean"
+        return 1
+    fi
+
+    if cmd_exists "gum"; then
+        local msg="Changes to be removed:"
+        [[ -n "$modified" ]] && msg="$msg\n\nModified:\n$modified"
+        [[ -n "$staged" ]] && msg="$msg\n\nStaged:\n$staged"
+        [[ -n "$untracked" ]] && msg="$msg\n\nUntracked:\n$untracked"
+        
+        echo -e "$msg" | gum style --foreground="$ORANGE"
+        echo ""
+        
+        if gum confirm "🧹 Clean repository? (discard all changes)"; then
+            git reset --hard HEAD 2>/dev/null
+            git clean -fd 2>/dev/null
+            print_success "Repository cleaned"
+            return 0
+        else
+            print_info "Skipped cleaning"
+            return 1
+        fi
+    else
+        echo "Changes to be removed:"
+        [[ -n "$modified" ]] && echo -e "\nModified:\n$modified"
+        [[ -n "$staged" ]] && echo -e "\nStaged:\n$staged"
+        [[ -n "$untracked" ]] && echo -e "\nUntracked:\n$untracked"
+        
+        read -r -p "Clean repository? (discard all changes) [Y/n] " confirm
+        if [[ -z "$confirm" ]] || [[ "$confirm" =~ ^[Yy]$ ]]; then
+            git reset --hard HEAD 2>/dev/null
+            git clean -fd 2>/dev/null
+            print_success "Repository cleaned"
+            return 0
+        else
+            print_info "Skipped cleaning"
+            return 1
+        fi
+    fi
+}
+
 interactive_manage() {
     local repo_info="$1"
     
@@ -256,6 +312,15 @@ interactive_manage() {
             if [[ "$is_default_outdated" == "true" ]]; then
                 actions=("⏭️  Next" "🔄  Checkout $default_branch" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
             fi
+            
+            # Add clean option if dirty
+            if [[ "$has_changes" == "true" ]]; then
+                if [[ "$is_default_outdated" == "true" ]]; then
+                    actions=("⏭️  Next" "🔄  Checkout $default_branch" "🧹  Clean repo" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
+                else
+                    actions=("⏭️  Next" "🧹  Clean repo" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
+                fi
+            fi
 
             local action
             action=$(gum choose "${actions[@]}")
@@ -266,6 +331,11 @@ interactive_manage() {
                     ;;
                 "🔄  Checkout $default_branch")
                     if checkout_default_branch "$repo_path" "$default_branch"; then
+                        should_continue=false
+                    fi
+                    ;;
+                "🧹  Clean repo")
+                    if clean_repo "$repo_path" "$repo_name"; then
                         should_continue=false
                     fi
                     ;;
@@ -295,6 +365,13 @@ interactive_manage() {
                 ((choice_num++))
             fi
             
+            local clean_choice=""
+            if [[ "$has_changes" == "true" ]]; then
+                echo "  $choice_num) Clean repo"
+                clean_choice=$choice_num
+                ((choice_num++))
+            fi
+            
             local open_choice=$choice_num
             echo "  $choice_num) Open in browser"
             ((choice_num++))
@@ -312,6 +389,10 @@ interactive_manage() {
                 should_continue=false
             elif [[ -n "$checkout_choice" ]] && [[ "$choice" == "$checkout_choice" ]]; then
                 if checkout_default_branch "$repo_path" "$default_branch"; then
+                    should_continue=false
+                fi
+            elif [[ -n "$clean_choice" ]] && [[ "$choice" == "$clean_choice" ]]; then
+                if clean_repo "$repo_path" "$repo_name"; then
                     should_continue=false
                 fi
             elif [[ "$choice" == "$open_choice" ]]; then
