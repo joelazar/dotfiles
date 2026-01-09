@@ -9,7 +9,10 @@ font-size = 13.0
 
 theme = tokyonight
 
+working-directory = home
 window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = false
 window-inherit-font-size = false
 cursor-style-blink = false
 mouse-hide-while-typing = true

@@ -1,0 +1,404 @@
+#!/bin/bash
+#
+# agent-md - Manage AGENTS.md and CLAUDE.md files for AI coding agents
+#
+
+set -e
+
+# Source utilities
+SOURCE_DIR=$(chezmoi source-path 2>/dev/null || echo "$HOME/.local/share/chezmoi")
+if [[ -f "$SOURCE_DIR/scripts/utils" ]]; then
+    # shellcheck source=/dev/null
+    . "$SOURCE_DIR/scripts/utils"
+else
+    # Minimal fallback if utils not available
+    print_error() { echo "❌ $1"; }
+    print_success() { echo "✅ $1"; }
+    print_warning() { echo "⚠️  $1"; }
+    print_info() { echo "ℹ️  $1"; }
+    ask_for_confirmation() {
+        read -r -p "$1 (y/n) " -n 1
+        printf "\n"
+        [[ $REPLY =~ ^[Yy]$ ]] && REPLY="y" || REPLY="n"
+    }
+    answer_is_yes() { [[ $REPLY =~ ^[Yy]$ ]]; }
+    cmd_exists() { command -v "$1" &>/dev/null; }
+    show_header() { echo "$1"; }
+    show_section() { echo "── $1 ──"; }
+fi
+
+# Constants
+readonly AGENTS_FILE="AGENTS.md"
+readonly CLAUDE_DIR=".claude"
+readonly CLAUDE_FILE="$CLAUDE_DIR/CLAUDE.md"
+readonly SYMLINK_TARGET="../$AGENTS_FILE"
+
+# Default template
+read -r -d '' DEFAULT_TEMPLATE << 'EOF' || true
+# AGENTS.md
+
+## Project Overview
+<!-- Brief description of the project -->
+
+## Dev Environment
+<!-- How to set up and run the project -->
+
+## Testing
+<!-- How to run tests -->
+
+## Code Style
+<!-- Coding conventions and style guidelines -->
+
+## PR Guidelines
+<!-- How to submit changes -->
+EOF
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_help() {
+    cat <<HELPEOF
+Usage: agent-md [OPTIONS]
+
+Manage AGENTS.md and CLAUDE.md files for AI coding agents.
+
+Options:
+    --help, -h          Show this help message
+    --check, -c         Only check status, don't modify files
+    --force, -f         Skip confirmations
+    --recursive, -r     Also process all git submodules
+
+Description:
+    Ensures AGENTS.md exists in project root as source of truth,
+    with .claude/CLAUDE.md as a symlink for Claude Code compatibility.
+HELPEOF
+}
+
+get_project_root() {
+    if git rev-parse --show-toplevel 2>/dev/null; then
+        return 0
+    else
+        pwd
+        return 1
+    fi
+}
+
+check_files() {
+    local project_root="$1"
+
+    AGENTS_EXISTS=false
+    CLAUDE_EXISTS=false
+    CLAUDE_ROOT_EXISTS=false
+    CLAUDE_IS_SYMLINK=false
+    CLAUDE_SYMLINK_CORRECT=false
+
+    [[ -f "$project_root/$AGENTS_FILE" ]] && AGENTS_EXISTS=true
+
+    if [[ -e "$project_root/$CLAUDE_FILE" ]] || [[ -L "$project_root/$CLAUDE_FILE" ]]; then
+        CLAUDE_EXISTS=true
+        if [[ -L "$project_root/$CLAUDE_FILE" ]]; then
+            CLAUDE_IS_SYMLINK=true
+            local target
+            target=$(readlink "$project_root/$CLAUDE_FILE")
+            [[ "$target" == "$SYMLINK_TARGET" ]] && CLAUDE_SYMLINK_CORRECT=true
+        fi
+    fi
+
+    [[ -f "$project_root/CLAUDE.md" ]] && CLAUDE_ROOT_EXISTS=true
+
+    return 0
+}
+
+create_with_pi() {
+    local project_root="$1"
+
+    if cmd_exists "pi"; then
+        print_info "Launching pi agent..."
+        local prompt="Create an AGENTS.md file for this project. Analyze the codebase structure, build tools, and existing documentation to generate appropriate sections for: Project Overview, Dev Environment setup, Testing instructions, Code Style guidelines, and PR Guidelines. Make it concise and practical for AI coding agents."
+        (cd "$project_root" && pi "$prompt")
+
+        if [[ -f "$project_root/$AGENTS_FILE" ]]; then
+            print_success "Created $AGENTS_FILE"
+            return 0
+        else
+            print_warning "pi did not create $AGENTS_FILE"
+            return 1
+        fi
+    else
+        return 1
+    fi
+}
+
+create_with_claude_code() {
+    local project_root="$1"
+
+    if cmd_exists "claude"; then
+        print_info "Launching claude-code with /init..."
+        (cd "$project_root" && claude "/init")
+        return 0
+    else
+        return 1
+    fi
+}
+
+create_default_template() {
+    local project_root="$1"
+    echo "$DEFAULT_TEMPLATE" > "$project_root/$AGENTS_FILE"
+    print_success "Created $AGENTS_FILE (default template)"
+}
+
+create_claude_symlink() {
+    local project_root="$1"
+
+    [[ ! -d "$project_root/$CLAUDE_DIR" ]] && mkdir -p "$project_root/$CLAUDE_DIR"
+
+    if [[ -e "$project_root/$CLAUDE_FILE" ]] || [[ -L "$project_root/$CLAUDE_FILE" ]]; then
+        rm "$project_root/$CLAUDE_FILE"
+    fi
+
+    (cd "$project_root/$CLAUDE_DIR" && ln -s "$SYMLINK_TARGET" "CLAUDE.md")
+    print_success "Created $CLAUDE_FILE symlink"
+}
+
+handle_no_files() {
+    local project_root="$1"
+    local force="$2"
+
+    print_warning "No AGENTS.md found"
+
+    if [[ "$force" != "true" ]]; then
+        ask_for_confirmation "Create AGENTS.md?"
+        answer_is_yes || return 0
+    fi
+
+    local has_pi=false
+    local has_claude=false
+    cmd_exists "pi" && has_pi=true
+    cmd_exists "claude" && has_claude=true
+
+    if [[ "$has_pi" == "true" ]] || [[ "$has_claude" == "true" ]]; then
+        local options=()
+        [[ "$has_pi" == "true" ]] && options+=("pi agent")
+        [[ "$has_claude" == "true" ]] && options+=("claude-code")
+        options+=("Default template")
+
+        local choice
+        if cmd_exists "gum"; then
+            choice=$(gum choose "${options[@]}")
+        else
+            echo "Choose creation method:"
+            local i=1
+            for opt in "${options[@]}"; do
+                echo "$i) $opt"
+                ((i++))
+            done
+            read -r -p "Choose [1-${#options[@]}]: " choice_num
+            choice="${options[$((choice_num - 1))]}"
+        fi
+
+        case "$choice" in
+            "pi agent")
+                create_with_pi "$project_root" || create_default_template "$project_root"
+                create_claude_symlink "$project_root"
+                ;;
+            "claude-code")
+                create_with_claude_code "$project_root"
+                # Exit after claude-code finishes - let user run agent-md again if needed
+                exit 0
+                ;;
+            "Default template")
+                create_default_template "$project_root"
+                create_claude_symlink "$project_root"
+                ;;
+            *)
+                create_default_template "$project_root"
+                create_claude_symlink "$project_root"
+                ;;
+        esac
+    else
+        create_default_template "$project_root"
+        create_claude_symlink "$project_root"
+    fi
+}
+
+handle_only_agents() {
+    local project_root="$1"
+
+    if [[ "$CLAUDE_EXISTS" == "true" ]] && [[ "$CLAUDE_SYMLINK_CORRECT" == "true" ]]; then
+        print_success "Already configured"
+        return 0
+    fi
+
+    create_claude_symlink "$project_root"
+}
+
+handle_only_claude() {
+    local project_root="$1"
+    local force="$2"
+    local source_file=""
+
+    if [[ "$CLAUDE_ROOT_EXISTS" == "true" ]]; then
+        source_file="$project_root/CLAUDE.md"
+    elif [[ "$CLAUDE_EXISTS" == "true" ]] && [[ "$CLAUDE_IS_SYMLINK" == "false" ]]; then
+        source_file="$project_root/$CLAUDE_FILE"
+    fi
+
+    print_info "Found CLAUDE.md, converting to AGENTS.md"
+
+    if [[ "$force" != "true" ]]; then
+        ask_for_confirmation "Move to AGENTS.md and create symlink?"
+        answer_is_yes || return 0
+    fi
+
+    if [[ -n "$source_file" ]] && [[ -f "$source_file" ]]; then
+        mv "$source_file" "$project_root/$AGENTS_FILE"
+        print_success "Moved to $AGENTS_FILE"
+    fi
+
+    [[ "$CLAUDE_ROOT_EXISTS" == "true" ]] && [[ -f "$project_root/CLAUDE.md" ]] && rm "$project_root/CLAUDE.md"
+
+    create_claude_symlink "$project_root"
+}
+
+handle_both_exist() {
+    local project_root="$1"
+    local force="$2"
+
+    if [[ "$CLAUDE_SYMLINK_CORRECT" == "true" ]]; then
+        print_success "Already configured"
+        return 0
+    fi
+
+    print_warning "Both AGENTS.md and CLAUDE.md exist"
+
+    local choice
+    if cmd_exists "gum"; then
+        choice=$(gum choose \
+            "Keep AGENTS.md, replace CLAUDE.md with symlink" \
+            "Show diff" \
+            "Abort")
+    else
+        echo "1) Keep AGENTS.md, replace CLAUDE.md with symlink"
+        echo "2) Show diff"
+        echo "3) Abort"
+        read -r -p "Choose [1-3]: " choice
+        case "$choice" in
+            1) choice="Keep AGENTS.md, replace CLAUDE.md with symlink" ;;
+            2) choice="Show diff" ;;
+            *) choice="Abort" ;;
+        esac
+    fi
+
+    case "$choice" in
+        "Keep AGENTS.md, replace CLAUDE.md with symlink")
+            create_claude_symlink "$project_root"
+            [[ "$CLAUDE_ROOT_EXISTS" == "true" ]] && rm "$project_root/CLAUDE.md"
+            ;;
+        "Show diff")
+            local claude_path="$project_root/$CLAUDE_FILE"
+            [[ "$CLAUDE_ROOT_EXISTS" == "true" ]] && claude_path="$project_root/CLAUDE.md"
+
+            if cmd_exists "delta"; then
+                delta "$project_root/$AGENTS_FILE" "$claude_path"
+            else
+                diff --color=auto -u "$project_root/$AGENTS_FILE" "$claude_path" || true
+            fi
+            handle_both_exist "$project_root" "$force"
+            ;;
+        *) ;;
+    esac
+}
+
+show_status() {
+    local project_root="$1"
+
+    if [[ "$AGENTS_EXISTS" == "true" ]]; then
+        print_success "$AGENTS_FILE exists"
+    else
+        print_warning "$AGENTS_FILE not found"
+    fi
+
+    if [[ "$CLAUDE_EXISTS" == "true" ]]; then
+        if [[ "$CLAUDE_SYMLINK_CORRECT" == "true" ]]; then
+            print_success "$CLAUDE_FILE symlink OK"
+        elif [[ "$CLAUDE_IS_SYMLINK" == "true" ]]; then
+            print_warning "$CLAUDE_FILE symlink incorrect"
+        else
+            print_warning "$CLAUDE_FILE is not a symlink"
+        fi
+    fi
+
+    [[ "$CLAUDE_ROOT_EXISTS" == "true" ]] && print_warning "CLAUDE.md in root (wrong location)"
+}
+
+get_submodules() {
+    local project_root="$1"
+    # shellcheck disable=SC2016
+    [[ -f "$project_root/.gitmodules" ]] && git -C "$project_root" submodule foreach --quiet 'echo $toplevel/$sm_path' 2>/dev/null
+}
+
+process_directory() {
+    local project_root="$1"
+    local check_only="$2"
+    local force="$3"
+    local label="${4:-}"
+
+    [[ -n "$label" ]] && echo "[$label]"
+
+    check_files "$project_root"
+
+    if [[ "$check_only" == "true" ]]; then
+        show_status "$project_root"
+        return 0
+    fi
+
+    # Handle broken state: symlink exists but points to non-existent AGENTS.md
+    if [[ "$AGENTS_EXISTS" == "false" ]] && [[ "$CLAUDE_IS_SYMLINK" == "true" ]]; then
+        handle_no_files "$project_root" "$force"
+    elif [[ "$AGENTS_EXISTS" == "false" ]] && [[ "$CLAUDE_EXISTS" == "false" ]] && [[ "$CLAUDE_ROOT_EXISTS" == "false" ]]; then
+        handle_no_files "$project_root" "$force"
+    elif [[ "$AGENTS_EXISTS" == "true" ]] && [[ "$CLAUDE_EXISTS" == "false" ]] && [[ "$CLAUDE_ROOT_EXISTS" == "false" ]]; then
+        handle_only_agents "$project_root"
+    elif [[ "$AGENTS_EXISTS" == "false" ]]; then
+        handle_only_claude "$project_root" "$force"
+    else
+        handle_both_exist "$project_root" "$force"
+    fi
+}
+
+main() {
+    local check_only=false
+    local force=false
+    local recursive=false
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --help|-h) print_help; exit 0 ;;
+            --check|-c) check_only=true; shift ;;
+            --force|-f) force=true; shift ;;
+            --recursive|-r) recursive=true; shift ;;
+            *) print_error "Unknown option: $1"; exit 1 ;;
+        esac
+    done
+
+    local project_root
+    local in_git=true
+    project_root=$(get_project_root) || in_git=false
+
+    [[ "$in_git" == "false" ]] && print_warning "Not in a git repository"
+
+    process_directory "$project_root" "$check_only" "$force" "$project_root"
+
+    if [[ "$recursive" == "true" ]] && [[ "$in_git" == "true" ]]; then
+        local submodules
+        submodules=$(get_submodules "$project_root")
+
+        if [[ -n "$submodules" ]]; then
+            while IFS= read -r submodule_path; do
+                [[ -n "$submodule_path" ]] && [[ -d "$submodule_path" ]] && \
+                    process_directory "$submodule_path" "$check_only" "$force" "$submodule_path"
+            done <<< "$submodules"
+        fi
+    fi
+}
+
+main "$@"

@@ -35,3 +35,7 @@ echo
 echo "✴️ Update Mistral Vibe"
 uv tool upgrade mistral-vibe
 echo
+
+echo "🥧 Update Pi Coding Agent"
+bun install -g "@mariozechner/pi-coding-agent"
+echo
