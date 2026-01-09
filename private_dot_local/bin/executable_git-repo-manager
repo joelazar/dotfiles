@@ -1,0 +1,330 @@
+#!/bin/bash
+#
+# git-repo-manager - Find and manage git repositories recursively
+#
+
+set -e
+
+# Source utilities
+SOURCE_DIR=$(chezmoi source-path 2>/dev/null || echo "$HOME/.local/share/chezmoi")
+if [[ -f "$SOURCE_DIR/scripts/utils" ]]; then
+    # shellcheck source=/dev/null
+    . "$SOURCE_DIR/scripts/utils"
+else
+    # Minimal fallback if utils not available
+    print_error() { echo "❌ $1"; }
+    print_success() { echo "✅ $1"; }
+    print_warning() { echo "⚠️  $1"; }
+    print_info() { echo "ℹ️  $1"; }
+    cmd_exists() { command -v "$1" &>/dev/null; }
+    show_header() { echo "$1"; }
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+print_help() {
+    cat <<HELPEOF
+Usage: git-repo-manager [OPTIONS] [DIRECTORY]
+
+Find and manage git repositories recursively.
+
+Arguments:
+    [DIRECTORY]         Directory to search (default: current directory)
+
+Options:
+    --help, -h          Show this help message
+    --depth, -d DEPTH   Maximum search depth (default: 3)
+    --interactive, -i   Interactive mode with gum (default)
+    --list, -l          List only, no interaction
+
+Examples:
+    git-repo-manager
+    git-repo-manager ~/projects
+    git-repo-manager --depth 5 ~/code
+    git-repo-manager --list
+HELPEOF
+}
+
+find_git_repos() {
+    local search_dir="$1"
+    local max_depth="${2:-3}"
+
+    find "$search_dir" -maxdepth "$max_depth" -type d -name ".git" 2>/dev/null | while read -r git_dir; do
+        dirname "$git_dir"
+    done
+}
+
+get_repo_info() {
+    local repo_path="$1"
+    local repo_name
+    local last_commit_date
+    local last_commit_msg
+    local branch
+    local remote_url
+    local status
+    local has_changes=false
+
+    repo_name=$(basename "$repo_path")
+    
+    cd "$repo_path" || return 1
+
+    # Get current branch
+    branch=$(git branch --show-current 2>/dev/null || echo "detached")
+
+    # Get last commit info
+    last_commit_date=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
+    last_commit_msg=$(git log -1 --format="%s" 2>/dev/null | cut -c1-50)
+
+    # Get remote URL
+    remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "no remote")
+
+    # Check for changes
+    if ! git diff-index --quiet HEAD -- 2>/dev/null || [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
+        has_changes=true
+        status="🔴 dirty"
+    else
+        status="🟢 clean"
+    fi
+
+    echo "$repo_path|$repo_name|$branch|$last_commit_date|$last_commit_msg|$remote_url|$status|$has_changes"
+}
+
+open_repo_in_browser() {
+    local remote_url="$1"
+
+    # Convert git URL to https
+    local https_url="$remote_url"
+    
+    if [[ "$remote_url" =~ ^git@github\.com:(.+)\.git$ ]]; then
+        https_url="https://github.com/${BASH_REMATCH[1]}"
+    elif [[ "$remote_url" =~ ^git@gitlab\.com:(.+)\.git$ ]]; then
+        https_url="https://gitlab.com/${BASH_REMATCH[1]}"
+    elif [[ "$remote_url" =~ ^git@bitbucket\.org:(.+)\.git$ ]]; then
+        https_url="https://bitbucket.org/${BASH_REMATCH[1]}"
+    elif [[ "$remote_url" =~ ^https://.*\.git$ ]]; then
+        https_url="${remote_url%.git}"
+    fi
+
+    if [[ "$https_url" == "no remote" ]]; then
+        print_error "No remote URL found"
+        return 1
+    fi
+
+    open "$https_url"
+    print_success "Opened in browser"
+}
+
+delete_repo() {
+    local repo_path="$1"
+    local repo_name="$2"
+
+    if cmd_exists "gum"; then
+        if gum confirm "⚠️  Really delete '$repo_name'? This cannot be undone!"; then
+            rm -rf "$repo_path"
+            print_success "Deleted $repo_name"
+            return 0
+        else
+            print_info "Skipped deletion"
+            return 1
+        fi
+    else
+        read -r -p "Really delete '$repo_name'? [Y/n] " confirm
+        if [[ -z "$confirm" ]] || [[ "$confirm" =~ ^[Yy]$ ]]; then
+            rm -rf "$repo_path"
+            print_success "Deleted $repo_name"
+            return 0
+        else
+            print_info "Skipped deletion"
+            return 1
+        fi
+    fi
+}
+
+show_repo_details() {
+    local repo_path="$1"
+    local repo_name="$2"
+    local branch="$3"
+    local last_commit="$4"
+    local commit_msg="$5"
+    local remote_url="$6"
+    local status="$7"
+
+    if cmd_exists "gum"; then
+        gum style \
+            --foreground="$PURPLE" \
+            --border="rounded" \
+            --padding="1 2" \
+            --margin="1 0" \
+            "📁 $repo_name" \
+            "" \
+            "🌿 Branch: $branch" \
+            "⏰ Updated: $last_commit" \
+            "💬 $commit_msg" \
+            "🔗 $remote_url" \
+            "$status"
+    else
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "📁 $repo_name"
+        echo "🌿 Branch: $branch"
+        echo "⏰ Updated: $last_commit"
+        echo "💬 $commit_msg"
+        echo "🔗 $remote_url"
+        echo "$status"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    fi
+}
+
+interactive_manage() {
+    local repo_info="$1"
+    
+    IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes <<< "$repo_info"
+
+    local should_continue=true
+    while [[ "$should_continue" == "true" ]]; do
+        show_repo_details "$repo_path" "$repo_name" "$branch" "$last_commit" "$commit_msg" "$remote_url" "$status"
+
+        if cmd_exists "gum"; then
+            local action
+            action=$(gum choose "⏭️  Next" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
+
+            case "$action" in
+                "⏭️  Next")
+                    should_continue=false
+                    ;;
+                "🔗  Open in browser")
+                    open_repo_in_browser "$remote_url"
+                    ;;
+                "🗑️  Delete")
+                    if delete_repo "$repo_path" "$repo_name"; then
+                        should_continue=false
+                    fi
+                    ;;
+                "❌  Quit")
+                    exit 0
+                    ;;
+            esac
+        else
+            echo ""
+            echo "Actions:"
+            echo "  1) Next"
+            echo "  2) Open in browser"
+            echo "  3) Delete"
+            echo "  4) Quit"
+            read -r -p "Choose [1-4]: " choice
+
+            case "$choice" in
+                1) should_continue=false ;;
+                2) open_repo_in_browser "$remote_url" ;;
+                3) 
+                    if delete_repo "$repo_path" "$repo_name"; then
+                        should_continue=false
+                    fi
+                    ;;
+                4) exit 0 ;;
+            esac
+        fi
+    done
+}
+
+list_repos() {
+    local repos=("$@")
+    
+    if cmd_exists "gum"; then
+        gum style --foreground="$CYAN" --bold "📦 Found ${#repos[@]} repositories:"
+        echo ""
+    else
+        echo "Found ${#repos[@]} repositories:"
+    fi
+
+    for repo_info in "${repos[@]}"; do
+        IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes <<< "$repo_info"
+        
+        if cmd_exists "gum"; then
+            gum style \
+                --foreground="$GREEN" \
+                "  $status $repo_name" \
+                "    🌿 $branch | ⏰ $last_commit"
+        else
+            echo "  $status $repo_name ($branch, $last_commit)"
+        fi
+    done
+}
+
+main() {
+    local search_dir="."
+    local max_depth=3
+    local mode="interactive"
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --help|-h)
+                print_help
+                exit 0
+                ;;
+            --depth|-d)
+                max_depth="$2"
+                shift 2
+                ;;
+            --interactive|-i)
+                mode="interactive"
+                shift
+                ;;
+            --list|-l)
+                mode="list"
+                shift
+                ;;
+            -*)
+                print_error "Unknown option: $1"
+                print_help
+                exit 1
+                ;;
+            *)
+                search_dir="$1"
+                shift
+                ;;
+        esac
+    done
+
+    if [[ ! -d "$search_dir" ]]; then
+        print_error "Directory not found: $search_dir"
+        exit 1
+    fi
+
+    # Find all git repos
+    if cmd_exists "gum"; then
+        print_info "🔍 Searching for git repositories..."
+    else
+        echo "Searching for git repositories..."
+    fi
+
+    local -a repo_infos=()
+    while IFS= read -r repo_path; do
+        local repo_info
+        repo_info=$(get_repo_info "$repo_path")
+        [[ -n "$repo_info" ]] && repo_infos+=("$repo_info")
+    done < <(find_git_repos "$search_dir" "$max_depth")
+
+    if [[ ${#repo_infos[@]} -eq 0 ]]; then
+        print_warning "No git repositories found"
+        exit 0
+    fi
+
+    # Sort repos alphabetically by name
+    local -a sorted_repos=()
+    while IFS= read -r line; do
+        sorted_repos+=("$line")
+    done < <(printf '%s\n' "${repo_infos[@]}" | sort -t'|' -k2)
+    repo_infos=("${sorted_repos[@]}")
+
+    if [[ "$mode" == "list" ]]; then
+        list_repos "${repo_infos[@]}"
+    else
+        # Interactive mode
+        for repo_info in "${repo_infos[@]}"; do
+            interactive_manage "$repo_info"
+        done
+        print_success "✨ All repositories processed"
+    fi
+}
+
+main "$@"
