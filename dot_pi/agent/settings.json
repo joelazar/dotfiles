@@ -1,0 +1,10 @@
+{
+  "lastChangelogVersion": "0.42.0",
+  "hideThinkingBlock": true,
+  "collapseChangelog": false,
+  "defaultThinkingLevel": "off",
+  "theme": "dark",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-5",
+  "doubleEscapeAction": "tree"
+}
