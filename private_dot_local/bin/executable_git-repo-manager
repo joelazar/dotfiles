@@ -67,55 +67,52 @@ get_repo_info() {
     local is_default_outdated=false
 
     repo_name=$(basename "$repo_path")
-    
-    # Save current directory and work in subshell to avoid affecting parent
-    (
-        cd "$repo_path" || return 1
 
-        # Get current branch
-        branch=$(git branch --show-current 2>/dev/null || echo "detached")
+    cd "$repo_path" || return 1
 
-        # Get last commit info
-        last_commit_date=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
-        last_commit_msg=$(git log -1 --format="%s" 2>/dev/null | cut -c1-50)
+    # Get current branch
+    branch=$(git branch --show-current 2>/dev/null || echo "detached")
 
-        # Get remote URL
-        remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "no remote")
+    # Get last commit info
+    last_commit_date=$(git log -1 --format="%ar" 2>/dev/null || echo "unknown")
+    last_commit_msg=$(git log -1 --format="%s" 2>/dev/null | cut -c1-50)
 
-        # Check for changes
-        if ! git diff-index --quiet HEAD -- 2>/dev/null || [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
-            has_changes=true
-            status="🔴 dirty"
-        else
-            status="🟢 clean"
-        fi
+    # Get remote URL
+    remote_url=$(git config --get remote.origin.url 2>/dev/null || echo "no remote")
 
-        # Check if default branch is outdated
-        if [[ "$remote_url" != "no remote" ]]; then
-            # Fetch quietly to get latest remote info
-            git fetch --quiet 2>/dev/null || true
-            
-            # Get default branch from remote
-            default_branch=$(git symbolic-ref "refs/remotes/origin/HEAD" 2>/dev/null | sed 's@^refs/remotes/origin/@@')
-            
-            if [[ -n "$default_branch" ]] && [[ "$branch" != "$default_branch" ]]; then
-                # Check if default branch exists locally
-                if git show-ref --verify --quiet "refs/heads/$default_branch" 2>/dev/null; then
-                    # Compare local default branch with remote
-                    local local_hash
-                    local remote_hash
-                    local_hash=$(git rev-parse "$default_branch" 2>/dev/null)
-                    remote_hash=$(git rev-parse "origin/$default_branch" 2>/dev/null)
-                    
-                    if [[ "$local_hash" != "$remote_hash" ]]; then
-                        is_default_outdated=true
-                    fi
+    # Check for changes
+    if ! git diff-index --quiet HEAD -- 2>/dev/null || [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
+        has_changes=true
+        status="🔴 dirty"
+    else
+        status="🟢 clean"
+    fi
+
+    # Check if default branch is outdated
+    if [[ "$remote_url" != "no remote" ]]; then
+        # Fetch quietly to get latest remote info
+        git fetch --quiet 2>/dev/null || true
+
+        # Get default branch from remote
+        default_branch=$(git symbolic-ref "refs/remotes/origin/HEAD" 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+
+        if [[ -n "$default_branch" ]] && [[ "$branch" != "$default_branch" ]]; then
+            # Check if default branch exists locally
+            if git show-ref --verify --quiet "refs/heads/$default_branch" 2>/dev/null; then
+                # Compare local default branch with remote
+                local local_hash
+                local remote_hash
+                local_hash=$(git rev-parse "$default_branch" 2>/dev/null)
+                remote_hash=$(git rev-parse "origin/$default_branch" 2>/dev/null)
+
+                if [[ "$local_hash" != "$remote_hash" ]]; then
+                    is_default_outdated=true
                 fi
             fi
         fi
+    fi
 
-        echo "$repo_path|$repo_name|$branch|$last_commit_date|$last_commit_msg|$remote_url|$status|$has_changes|$default_branch|$is_default_outdated"
-    )
+    echo "$repo_path|$repo_name|$branch|$last_commit_date|$last_commit_msg|$remote_url|$status|$has_changes|$default_branch|$is_default_outdated"
 }
 
 open_repo_in_browser() {
@@ -123,7 +120,7 @@ open_repo_in_browser() {
 
     # Convert git URL to https
     local https_url="$remote_url"
-    
+
     if [[ "$remote_url" =~ ^git@github\.com:(.+)\.git$ ]]; then
         https_url="https://github.com/${BASH_REMATCH[1]}"
     elif [[ "$remote_url" =~ ^git@gitlab\.com:(.+)\.git$ ]]; then
@@ -233,7 +230,7 @@ checkout_default_branch() {
     local default_branch="$2"
 
     cd "$repo_path" || return 1
-    
+
     if git checkout "$default_branch" 2>/dev/null && git pull 2>/dev/null; then
         print_success "Checked out and updated $default_branch"
         return 0
@@ -267,10 +264,10 @@ clean_repo() {
         [[ -n "$modified" ]] && msg="$msg\n\nModified:\n$modified"
         [[ -n "$staged" ]] && msg="$msg\n\nStaged:\n$staged"
         [[ -n "$untracked" ]] && msg="$msg\n\nUntracked:\n$untracked"
-        
+
         echo -e "$msg" | gum style --foreground="$ORANGE"
         echo ""
-        
+
         if gum confirm "🧹 Clean repository? (discard all changes)"; then
             git reset --hard HEAD 2>/dev/null
             git clean -fd 2>/dev/null
@@ -285,7 +282,7 @@ clean_repo() {
         [[ -n "$modified" ]] && echo -e "\nModified:\n$modified"
         [[ -n "$staged" ]] && echo -e "\nStaged:\n$staged"
         [[ -n "$untracked" ]] && echo -e "\nUntracked:\n$untracked"
-        
+
         read -r -p "Clean repository? (discard all changes) [Y/n] " confirm
         if [[ -z "$confirm" ]] || [[ "$confirm" =~ ^[Yy]$ ]]; then
             git reset --hard HEAD 2>/dev/null
@@ -301,8 +298,8 @@ clean_repo() {
 
 interactive_manage() {
     local repo_info="$1"
-    
-    IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes default_branch is_default_outdated <<< "$repo_info"
+
+    IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes default_branch is_default_outdated <<<"$repo_info"
 
     local should_continue=true
     while [[ "$should_continue" == "true" ]]; do
@@ -310,12 +307,12 @@ interactive_manage() {
 
         if cmd_exists "gum"; then
             local -a actions=("⏭️  Next" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
-            
+
             # Add checkout default option if outdated
             if [[ "$is_default_outdated" == "true" ]]; then
                 actions=("⏭️  Next" "🔄  Checkout $default_branch" "🔗  Open in browser" "🗑️  Delete" "❌  Quit")
             fi
-            
+
             # Add clean option if dirty
             if [[ "$has_changes" == "true" ]]; then
                 if [[ "$is_default_outdated" == "true" ]]; then
@@ -329,30 +326,30 @@ interactive_manage() {
             action=$(gum choose "${actions[@]}")
 
             case "$action" in
-                "⏭️  Next")
+            "⏭️  Next")
+                should_continue=false
+                ;;
+            "🔄  Checkout $default_branch")
+                if checkout_default_branch "$repo_path" "$default_branch"; then
                     should_continue=false
-                    ;;
-                "🔄  Checkout $default_branch")
-                    if checkout_default_branch "$repo_path" "$default_branch"; then
-                        should_continue=false
-                    fi
-                    ;;
-                "🧹  Clean repo")
-                    if clean_repo "$repo_path" "$repo_name"; then
-                        should_continue=false
-                    fi
-                    ;;
-                "🔗  Open in browser")
-                    open_repo_in_browser "$remote_url"
-                    ;;
-                "🗑️  Delete")
-                    if delete_repo "$repo_path" "$repo_name"; then
-                        should_continue=false
-                    fi
-                    ;;
-                "❌  Quit")
-                    exit 0
-                    ;;
+                fi
+                ;;
+            "🧹  Clean repo")
+                if clean_repo "$repo_path" "$repo_name"; then
+                    should_continue=false
+                fi
+                ;;
+            "🔗  Open in browser")
+                open_repo_in_browser "$remote_url"
+                ;;
+            "🗑️  Delete")
+                if delete_repo "$repo_path" "$repo_name"; then
+                    should_continue=false
+                fi
+                ;;
+            "❌  Quit")
+                exit 0
+                ;;
             esac
         else
             echo ""
@@ -360,32 +357,32 @@ interactive_manage() {
             local choice_num=1
             echo "  $choice_num) Next"
             ((choice_num++))
-            
+
             local checkout_choice=""
             if [[ "$is_default_outdated" == "true" ]]; then
                 echo "  $choice_num) Checkout $default_branch"
                 checkout_choice=$choice_num
                 ((choice_num++))
             fi
-            
+
             local clean_choice=""
             if [[ "$has_changes" == "true" ]]; then
                 echo "  $choice_num) Clean repo"
                 clean_choice=$choice_num
                 ((choice_num++))
             fi
-            
+
             local open_choice=$choice_num
             echo "  $choice_num) Open in browser"
             ((choice_num++))
-            
+
             local delete_choice=$choice_num
             echo "  $choice_num) Delete"
             ((choice_num++))
-            
+
             local quit_choice=$choice_num
             echo "  $choice_num) Quit"
-            
+
             read -r -p "Choose [1-$choice_num]: " choice
 
             if [[ "$choice" == "1" ]]; then
@@ -413,7 +410,7 @@ interactive_manage() {
 
 list_repos() {
     local repos=("$@")
-    
+
     if cmd_exists "gum"; then
         gum style --foreground="$CYAN" --bold "📦 Found ${#repos[@]} repositories:"
         echo ""
@@ -422,11 +419,11 @@ list_repos() {
     fi
 
     for repo_info in "${repos[@]}"; do
-        IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes default_branch is_default_outdated <<< "$repo_info"
-        
+        IFS='|' read -r repo_path repo_name branch last_commit commit_msg remote_url status has_changes default_branch is_default_outdated <<<"$repo_info"
+
         local outdated_indicator=""
         [[ "$is_default_outdated" == "true" ]] && outdated_indicator=" ⚠️"
-        
+
         if cmd_exists "gum"; then
             gum style \
                 --foreground="$GREEN" \
@@ -445,31 +442,31 @@ main() {
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --help|-h)
-                print_help
-                exit 0
-                ;;
-            --depth|-d)
-                max_depth="$2"
-                shift 2
-                ;;
-            --interactive|-i)
-                mode="interactive"
-                shift
-                ;;
-            --list|-l)
-                mode="list"
-                shift
-                ;;
-            -*)
-                print_error "Unknown option: $1"
-                print_help
-                exit 1
-                ;;
-            *)
-                search_dir="$1"
-                shift
-                ;;
+        --help | -h)
+            print_help
+            exit 0
+            ;;
+        --depth | -d)
+            max_depth="$2"
+            shift 2
+            ;;
+        --interactive | -i)
+            mode="interactive"
+            shift
+            ;;
+        --list | -l)
+            mode="list"
+            shift
+            ;;
+        -*)
+            print_error "Unknown option: $1"
+            print_help
+            exit 1
+            ;;
+        *)
+            search_dir="$1"
+            shift
+            ;;
         esac
     done
 
