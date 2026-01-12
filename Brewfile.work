@@ -11,6 +11,7 @@ tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "sst/tap"
+tap "steipete/tap"
 tap "tw93/tap"
 # Run your GitHub Actions locally
 brew "act"
@@ -356,6 +357,8 @@ cask "claude-code"
 cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Menu bar usage monitor for Codex and Claude
+cask "codexbar"
 # Voice and text chat software
 cask "discord"
 # Web browser
@@ -480,3 +483,4 @@ go "github.com/tmc/json-to-struct"
 go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
+cargo "bpf-linker"
