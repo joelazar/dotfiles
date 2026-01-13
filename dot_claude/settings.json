@@ -4,10 +4,6 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "USE_BUILTIN_RIPGREP": "0"
   },
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -93,6 +89,10 @@
     "commit-commands@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "PostToolUse": [
     {
       "matcher": "Write|Edit",
