@@ -89,10 +89,10 @@ customCommands:
         title: "Add Reviewers"
         key: "reviewers"
         options:
-          - name: "CNS"
-            value: "--reviewer peterbornerup,farhadh,benjaminbruun,jdejnek"
-          - name: "None"
+          - name: "Default"
             value: ""
+          - name: "CNS"
+            value: "--reviewer peterbornerup,farhadh,jdejnek"
     command: >
       gh pr create --assignee @me --title "{{.Form.title}}" --fill {{ if ne .Form.base "" }}--base "{{.Form.base}}"{{ end }} {{.Form.draft}} {{ if eq .Form.reviewers "other" }}--reviewer "{{.Form.customReviewers}}"{{ else }}{{.Form.reviewers}}{{ end }}
 

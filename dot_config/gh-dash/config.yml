@@ -1,22 +1,26 @@
 prSections:
-  - title: My pull requests
-    filters: is:open assignee:@me sort:created-desc
-  - title: Review requested
-    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
-  - title: Involves me
+  - title: 🚀 My PRs
+    filters: is:open assignee:@me -is:draft sort:created-desc
+  - title: 📝 My draft PRs
+    filters: is:open assignee:@me is:draft sort:created-desc
+  - title: 🆕 Review requested
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc created:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
+  - title: 🕸️ Review requested
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc created:<{{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
+  - title: 👀 Involves me
     filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
-  - title: Ready
+  - title: ✅ Ready
     filters: is:open -assignee:@me -is:draft sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
-  - title: Draft
+  - title: 🚧 Draft
     filters: is:open -assignee:@me is:draft sort:created-desc org:onomondo
-  - title: Recently closed my prs
+  - title: 🔒 Recently closed my PRs
     filters: is:closed author:@me sort:created-desc
-  - title: Recently closed work prs
+  - title: 📦 Recently closed work PRs
     filters: is:closed sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
 issuesSections:
-  - title: My Issues
+  - title: 📋 My Issues
     filters: is:open author:@me
-  - title: Assigned
+  - title: 🎯 Assigned
     filters: is:open assignee:@me
 defaults:
   preview:
