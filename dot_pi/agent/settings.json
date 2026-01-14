@@ -4,8 +4,8 @@
   "collapseChangelog": false,
   "defaultThinkingLevel": "off",
   "theme": "dark",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-5",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.2-codex",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "anthropic/claude-opus-4-5",

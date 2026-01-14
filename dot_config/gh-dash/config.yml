@@ -4,9 +4,9 @@ prSections:
   - title: 📝 My draft PRs
     filters: is:open assignee:@me is:draft sort:created-desc
   - title: 🆕 Review requested
-    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc created:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc updated:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
   - title: 🕸️ Review requested
-    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc created:<{{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
+    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc updated:<{{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org
   - title: 👀 Involves me
     filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
   - title: ✅ Ready
