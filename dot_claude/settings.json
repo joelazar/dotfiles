@@ -4,6 +4,7 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "USE_BUILTIN_RIPGREP": "0"
   },
+  "installMethod": "native",
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
