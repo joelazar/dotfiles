@@ -7,24 +7,24 @@ max_height = 1900
 
 [opener]
 edit = [
-  { run = '${EDITOR:-vi} "$@"', desc = "Edit", block = true, orphan = false, for = "macos" },
+  { run = '${EDITOR:-vi} %s', desc = "Edit", block = true, orphan = false, for = "macos" },
 ]
 browser = [
-  { run = '${BROWSER:-firefox} "$@"', desc = "Browser", orphan = true, for = "macos" },
+  { run = '${BROWSER:-firefox} %s', desc = "Browser", orphan = true, for = "macos" },
 ]
-open = [{ run = 'open "$@"', desc = "Open", orphan = true, for = "macos" }]
-reveal = [{ run = 'open -R "$1"', desc = "Reveal", for = "macos" }]
+open = [{ run = "open %s", desc = "Open", orphan = true, for = "macos" }]
+reveal = [{ run = "open -R %s1", desc = "Reveal", for = "macos" }]
 extract = [
-  { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "macos" },
+  { run = "ya pub extract --list %s", desc = "Extract here", for = "macos" },
 ]
 play = [
-  { run = 'mpv --force-window "$@"', desc = "Play", orphan = true, for = "macos" },
+  { run = "mpv --force-window %s", desc = "Play", orphan = true, for = "macos" },
 ]
 
 [open]
 rules = [
   # Folder
-  { name = "*/", use = [
+  { url = "*/", use = [
     "edit",
     "open",
     "reveal",
@@ -75,7 +75,7 @@ rules = [
     "reveal",
   ] },
   # Fallback
-  { name = "*", use = [
+  { url = "*", use = [
     "open",
     "reveal",
     "edit",

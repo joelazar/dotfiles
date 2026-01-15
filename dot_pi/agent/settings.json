@@ -11,6 +11,8 @@
     "anthropic/claude-opus-4-5",
     "anthropic/claude-sonnet-4-5",
     "github-copilot/claude-opus-4.5",
-    "github-copilot/claude-sonnet-4.5"
+    "github-copilot/claude-sonnet-4.5",
+    "openai-codex/gpt-5.2-codex",
+    "openai-codex/gpt-5.2"
   ]
 }

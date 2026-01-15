@@ -4,14 +4,14 @@
     "bindings": {
       "cmd-+": ["zed::IncreaseUiFontSize", { "persist": false }],
       "cmd-_": ["zed::DecreaseUiFontSize", { "persist": false }],
-      "cmd-)": ["zed::ResetUiFontSize", { "persist": false }]
-    }
+      "cmd-)": ["zed::ResetUiFontSize", { "persist": false }],
+    },
   },
   {
     "context": "Workspace",
     "bindings": {
-      "ctrl-z": "workspace::ToggleZoom"
-    }
+      "ctrl-z": "workspace::ToggleZoom",
+    },
   },
   {
     "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || Diagnostics",
@@ -29,29 +29,29 @@
       "alt-left": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
-      "alt-p": "pane::TogglePinTab"
-    }
+      "alt-p": "pane::TogglePinTab",
+    },
   },
   {
     "context": "GitPanel",
     "bindings": {
       "q": "git_panel::Close",
-      "cmd-shift-g": "git_panel::ToggleFocus"
-    }
+      "cmd-shift-g": "git_panel::ToggleFocus",
+    },
   },
   {
     "context": "GitPanel && ChangesList",
     "use_key_equivalents": true,
     "bindings": {
-      "ctrl-j": "git_panel::FocusEditor"
-    }
+      "ctrl-j": "git_panel::FocusEditor",
+    },
   },
   {
     "context": "GitPanel && CommitEditor > Editor",
     "use_key_equivalents": true,
     "bindings": {
-      "ctrl-k": "git_panel::FocusChanges" // NOTE: this one does work somewhy
-    }
+      "ctrl-k": "git_panel::FocusChanges", // NOTE: this one does work somewhy
+    },
   },
   {
     // put key-bindings here if you want them to work in normal & visual mode & project panel
@@ -71,8 +71,8 @@
       "space e": "workspace::ToggleLeftDock", // File explorer toggle
       "space f p": ["projects::OpenRecent", { "create_new_window": false }],
       "space f P": ["projects::OpenRecent", { "create_new_window": true }],
-      "space u n": "workspace::ClearAllNotifications"
-    }
+      "space u n": "workspace::ClearAllNotifications",
+    },
   },
   {
     // put key-bindings here if you want them to work in normal & visual mode
@@ -120,8 +120,8 @@
       "] e": ["editor::GoToDiagnostic", { "severity": "error" }],
       "[ e": ["editor::GoToPreviousDiagnostic", { "severity": "error" }],
       "alt-k": "editor::MoveLineUp",
-      "alt-j": "editor::MoveLineDown"
-    }
+      "alt-j": "editor::MoveLineDown",
+    },
   },
   {
     "context": "VimControl && !menu",
@@ -129,41 +129,35 @@
       "J": ["workspace::SendKeystrokes", "m z J ` z"],
       "f": ["vim::PushFindForward", { "before": false, "multiline": true }],
       "t": ["vim::PushFindForward", { "before": true, "multiline": true }],
-      "shift-f": [
-        "vim::PushFindBackward",
-        { "after": false, "multiline": true }
-      ],
-      "shift-t": [
-        "vim::PushFindBackward",
-        { "after": true, "multiline": true }
-      ],
+      "shift-f": ["vim::PushFindBackward", { "after": false, "multiline": true }],
+      "shift-t": ["vim::PushFindBackward", { "after": true, "multiline": true }],
       "g s a": ["vim::PushAddSurrounds", {}],
       "g s r": ["vim::PushChangeSurrounds", {}],
       "g s d": "vim::PushDeleteSurrounds",
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
-      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"]
-    }
+      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
+    },
   },
   {
     "context": "Editor && vim_mode == normal && (vim_operator == none || vim_operator == n) && !VimWaiting",
     "bindings": {
-      "Q": "pane::CloseActiveItem"
-    }
+      "Q": "pane::CloseActiveItem",
+    },
   },
   {
     "context": "vim_mode == normal || vim_mode == visual",
     "bindings": {
       "s": "vim::PushSneak",
-      "S": "vim::PushSneakBackward"
-    }
+      "S": "vim::PushSneakBackward",
+    },
   },
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
       "p": ["vim::Paste", { "preserve_clipboard": true }],
       "shift-s": ["vim::PushAddSurrounds", {}],
-      "shift-p": ["vim::Paste", { "preserve_clipboard": true }]
-    }
+      "shift-p": ["vim::Paste", { "preserve_clipboard": true }],
+    },
   },
   {
     // Vim: File Tree ("ProjectPanel") actions
@@ -182,15 +176,15 @@
       "shift-a": "project_panel::NewDirectory",
       "shift-y": "workspace::CopyRelativePath",
       "g y": "workspace::CopyPath",
-      "q": "workspace::ToggleLeftDock"
-    }
+      "q": "workspace::ToggleLeftDock",
+    },
   },
   {
     "context": "Editor && jupyter && !ContextEditor",
     "bindings": {
       "ctrl-shift-enter": "repl::Run",
-      "ctrl-cmd-enter": "repl::RunInPlace"
-    }
+      "ctrl-cmd-enter": "repl::RunInPlace",
+    },
   },
   {
     "context": "Terminal",
@@ -202,16 +196,16 @@
       "alt-,": "pane::SwapItemLeft",
       "alt-.": "pane::SwapItemRight",
       "alt-p": "pane::TogglePinTab",
-      "cmd-shift-g": "git_panel::ToggleFocus"
-    }
+      "cmd-shift-g": "git_panel::ToggleFocus",
+    },
   },
   {
     "context": "TabSwitcher",
     "bindings": {
       "k": "menu::SelectPrevious",
       "j": "menu::SelectNext",
-      "x": "tab_switcher::CloseSelectedItem"
-    }
+      "x": "tab_switcher::CloseSelectedItem",
+    },
   },
   {
     "context": "Pane",
@@ -229,28 +223,28 @@
       "cmd-7": ["pane::ActivateItem", 6],
       "cmd-8": ["pane::ActivateItem", 7],
       "cmd-9": ["pane::ActivateItem", 8],
-      "cmd-0": "pane::ActivateLastItem"
-    }
+      "cmd-0": "pane::ActivateLastItem",
+    },
   },
   {
     "context": "vim_operator == d",
     "bindings": {
       "o": "editor::ExpandAllDiffHunks",
-      "r": "git::Restore"
-    }
+      "r": "git::Restore",
+    },
   },
   {
     "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
     "bindings": {
       // mini.ai plugin behavior
       "Q": "vim::MiniQuotes",
-      "B": "vim::MiniBrackets"
-    }
+      "B": "vim::MiniBrackets",
+    },
   },
   {
     "context": "vim_mode == visual",
     "bindings": {
-      "shift-x": "vim::Exchange"
-    }
-  }
+      "shift-x": "vim::Exchange",
+    },
+  },
 ]
