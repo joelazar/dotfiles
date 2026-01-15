@@ -244,6 +244,10 @@ if.app-id = 'com.anthropic.claudefordesktop'
 run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
+if.app-id = 'com.usebruno.app'
+run = ['layout tiling', 'move-node-to-workspace 7']
+
+[[on-window-detected]]
 if.app-id = 'org.wireshark.Wireshark'
 run = ['layout tiling', 'move-node-to-workspace 8']
 
