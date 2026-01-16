@@ -4,7 +4,10 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "USE_BUILTIN_RIPGREP": "0"
   },
-  "installMethod": "native",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -38,7 +41,13 @@
       "Read(~/Code/**)",
       "Edit(~/Code/**)",
       "Write(~/Code/**)",
-      "NotebookEdit(~/Code/**)"
+      "NotebookEdit(~/Code/**)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:forum.obsidian.md)",
+      "WebFetch(domain:yazi-rs.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [
       "Bash( /dev/sda)",
@@ -80,7 +89,8 @@
       "Read(**/credentials/**)",
       "Read(**/.aws/**)",
       "Read(**/.ssh/**)"
-    ]
+    ],
+    "defaultMode": "default"
   },
   "model": "opus",
   "enabledPlugins": {
@@ -90,10 +100,7 @@
     "commit-commands@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
+  "installMethod": "native",
   "PostToolUse": [
     {
       "matcher": "Write|Edit",
