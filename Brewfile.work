@@ -59,7 +59,7 @@ brew "colima"
 brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Play, record, convert, and stream audio and video
+# Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
@@ -151,7 +151,7 @@ brew "httpie"
 brew "hugo"
 # Command-line benchmarking tool
 brew "hyperfine"
-# Tools and libraries to manipulate images in many formats
+# Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # CLI wrapper for basic network utilities on macOS - ip command
 brew "iproute2mac"
@@ -329,6 +329,8 @@ brew "nats-io/nats-tools/nats"
 brew "oven-sh/bun/bun"
 # The AI coding agent built for the terminal.
 brew "sst/tap/opencode"
+# Command-line ElevenLabs TTS with mac-style flags
+brew "steipete/tap/sag"
 # Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole"
 # Password manager that keeps all passwords secure behind one password
@@ -385,8 +387,6 @@ cask "libreoffice"
 cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
-# Verify system files structure, run miscellaneous maintenance and more
-cask "onyx"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
 # WebKit based web browser
@@ -403,8 +403,6 @@ cask "slack"
 cask "sonos"
 # Music streaming service
 cask "spotify"
-# System monitor for the menu bar
-cask "stats"
 # Video game digital distribution service
 cask "steam"
 # Native GUI tool for relational databases

@@ -263,6 +263,6 @@ run = ['layout tiling', 'move-node-to-workspace 8']
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 10'
 
-# [[on-window-detected]]
-# check-further-callbacks = true
-# run = 'layout floating'
+[[on-window-detected]]
+check-further-callbacks = true
+run = 'layout floating'
