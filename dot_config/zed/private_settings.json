@@ -1,4 +1,5 @@
 {
+  "text_rendering_mode": "platform_default",
   "which_key": {
     "delay_ms": 400,
     "enabled": true,
