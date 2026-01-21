@@ -1,4 +1,7 @@
 [
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // GLOBAL: UI Font Scaling (without persist)
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "use_key_equivalents": true,
     "bindings": {
@@ -7,24 +10,39 @@
       "cmd-)": ["zed::ResetUiFontSize", { "persist": false }],
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // WORKSPACE: Zoom toggle
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Workspace",
     "bindings": {
       "ctrl-z": "workspace::ToggleZoom",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PANE NAVIGATION & SPLITTING
+  // Works across: Editor, Terminal, Panels, etc.
+  // - ctrl-h/j/k/l: move between panes (vim-style)
+  // - ctrl-arrows: resize panes
+  // - alt-left/right: switch tabs
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Dock || Terminal || Editor || ProjectPanel || AssistantPanel || CollabPanel || OutlinePanel || ChatPanel || VimControl || EmptyPane || SharedScreen || MarkdownPreview || KeyContextView || Diagnostics",
     "bindings": {
       "cmd-d": "pane::SplitRight",
+      // Navigate between panes (vim-style)
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-l": "workspace::ActivatePaneRight",
       "ctrl-k": "workspace::ActivatePaneUp",
       "ctrl-j": "workspace::ActivatePaneDown",
+      // Resize panes
       "ctrl-right": "vim::ResizePaneRight",
       "ctrl-left": "vim::ResizePaneLeft",
       "ctrl-down": "vim::ResizePaneDown",
       "ctrl-up": "vim::ResizePaneUp",
+      // Tab navigation
       "alt-right": "pane::ActivateNextItem",
       "alt-left": "pane::ActivatePreviousItem",
       "alt-,": "pane::SwapItemLeft",
@@ -32,6 +50,12 @@
       "alt-p": "pane::TogglePinTab",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // GIT PANEL
+  // - q: close panel
+  // - ctrl-j/k: navigate between changes list and commit editor
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "GitPanel",
     "bindings": {
@@ -50,42 +74,67 @@
     "context": "GitPanel && CommitEditor > Editor",
     "use_key_equivalents": true,
     "bindings": {
-      "ctrl-k": "git_panel::FocusChanges", // NOTE: this one does work somewhy
+      "ctrl-k": "git_panel::FocusChanges",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM LEADER BINDINGS: Global (ProjectPanel, EmptyPane, Editor)
+  // These work in normal/visual mode across multiple contexts
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
-    // put key-bindings here if you want them to work in normal & visual mode & project panel
     "context": "ProjectPanel || EmptyPane || (Editor && VimControl && !VimWaiting && !menu)",
     "bindings": {
       "cmd-shift-s": "workspace::SaveWithoutFormat",
+      // Buffers & Tabs
       "space ,": "tab_switcher::ToggleAll",
+      // Git
       "space G": "git_panel::ToggleFocus",
       "cmd-shift-g": "git_panel::ToggleFocus",
-      "cmd-shift-t": "terminal_panel::ToggleFocus",
       "space g g": ["task::Spawn", { "task_name": "lazygit" }],
+      // File explorer & tools
       "space y": ["task::Spawn", { "task_name": "yazi" }],
+      "space e": "workspace::ToggleLeftDock",
+      // Search & Diagnostics
       "space s d": "diagnostics::Deploy",
-      // "space space": ["task::Spawn", { "task_name": "file finder" }],
-      // "space s g": ["task::Spawn", { "task_name": "find in files" }],
       "space s g": "pane::DeploySearch",
-      "space e": "workspace::ToggleLeftDock", // File explorer toggle
-      "space f p": "projects::OpenRecent", // , { "create_new_window": false }],
+      // Projects
+      "space f p": "projects::OpenRecent",
+      // Notifications
       "space u n": "workspace::ClearAllNotifications",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM EDITOR: Leader bindings (normal & visual mode)
+  // Organized by prefix:
+  //   space a: agent/AI
+  //   space b: buffers
+  //   space c: code actions
+  //   space g: git
+  //   space h: marks
+  //   space m: markdown
+  //   space s: search
+  //   space t: tasks
+  //   space u: UI toggles
+  //   space x: extras
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
-    // put key-bindings here if you want them to work in normal & visual mode
     "context": "Editor && VimControl && !VimWaiting && !menu",
     "bindings": {
+      // === Agent/AI ===
       "space a t": "agent::AddSelectionToThread",
+
+      // === Buffers ===
       "space b W": "pane::CloseCleanItems",
       "space b w": "pane::CloseOtherItems",
+
+      // === Code ===
       "space c a": "editor::ToggleCodeActions",
       "space c f": "editor::Format",
       "space c r ": "editor::Rename",
-      // "space e": "pane::RevealInProjectPanel",
-      // "space e": "workspace::ToggleLeftDock",
 
+      // === Git ===
       "space g b": "git::Blame",
       "space g B": "editor::OpenPermalinkToLine",
       "space g Y": "editor::CopyPermalinkToLine",
@@ -93,57 +142,100 @@
       "space g h D": "git::Diff",
       "space g h r": "git::Restore",
       "space g h R": "git::RestoreFile",
+
+      // === Marks ===
       "space h": "vim::ToggleMarksView",
+
+      // === Markdown ===
       "space m p": "markdown::OpenPreview",
       "space m P": "markdown::OpenPreviewToTheSide",
+
+      // === Search ===
       "space s r": ["pane::DeploySearch", { "replace_enabled": true }],
       "space s s": "outline::Toggle",
       "space s w": "pane::DeploySearch",
-      // "space s w": ["task::Spawn", { "task_name": "find in files - selected text" }],
+
+      // === Tasks ===
       "space t L": ["task::Rerun", { "reevaluate_context": true }],
       "space t l": "task::Rerun",
       "space t n": ["editor::SpawnNearestTask", { "reveal": "no_focus" }],
       "space t r": "task::Spawn",
+
+      // === UI Toggles ===
       "space u i": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
       "space u z": "workspace::ToggleCenteredLayout",
-      "space x t": ["pane::DeploySearch", { "query": "TODO|FIXME|NOTE|BUG|HACK|XXX|WARN", "regex": true }],
+
+      // === Extras ===
+      // "space x t": ["pane::DeploySearch", { "query": "TODO|FIXME|NOTE|BUG|HACK|XXX|WARN", "regex": true }],
+
+      // === Motions (display lines) ===
       "j": ["vim::Down", { "display_lines": true }],
       "k": ["vim::Up", { "display_lines": true }],
+
+      // === Yank/Paste ===
       "shift-y": ["workspace::SendKeystrokes", "y $"],
+      "g y": ["workspace::SendKeystrokes", "\" + y"], // yank to + register
+      "g p": "editor::Paste",
+
+      // === Syntax-aware selection ===
       "ctrl-space": "editor::SelectLargerSyntaxNode",
       "backspace": "editor::SelectSmallerSyntaxNode",
-      "g y": ["workspace::SendKeystrokes", "\" + y"],
-      "g p": "editor::Paste",
+
+      // === Navigation ===
       "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
+
+      // === Diagnostics (errors only) ===
       "] e": ["editor::GoToDiagnostic", { "severity": "error" }],
       "[ e": ["editor::GoToPreviousDiagnostic", { "severity": "error" }],
+
+      // === Line movement ===
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM CONTROL: Motion overrides
+  // - J: join lines without moving cursor (mark z, join, return)
+  // - f/t/F/T: multiline find (can jump across lines)
+  // - gs-prefix: surround operations (like mini.surround)
+  // - ctrl-u/d: scroll with auto-center
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "VimControl && !menu",
     "bindings": {
+      // Join without cursor jump
       "J": ["workspace::SendKeystrokes", "m z J ` z"],
+      // Multiline f/t motions
       "f": ["vim::PushFindForward", { "before": false, "multiline": true }],
       "t": ["vim::PushFindForward", { "before": true, "multiline": true }],
       "shift-f": ["vim::PushFindBackward", { "after": false, "multiline": true }],
       "shift-t": ["vim::PushFindBackward", { "after": true, "multiline": true }],
+      // Surround with gs prefix (mini.surround style)
       "g s a": ["vim::PushAddSurrounds", {}],
       "g s r": ["vim::PushChangeSurrounds", {}],
       "g s d": "vim::PushDeleteSurrounds",
+      // Centered scrolling
       "ctrl-u": ["workspace::SendKeystrokes", "ctrl-u z z"],
       "ctrl-d": ["workspace::SendKeystrokes", "ctrl-d z z"],
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM NORMAL MODE: Q to close buffer
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Editor && vim_mode == normal && (vim_operator == none || vim_operator == n) && !VimWaiting",
     "bindings": {
       "Q": "pane::CloseActiveItem",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM SNEAK: s/S for two-char find (like vim-sneak)
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "vim_mode == normal || vim_mode == visual",
     "bindings": {
@@ -151,20 +243,31 @@
       "S": "vim::PushSneakBackward",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM VISUAL MODE
+  // - p/P: paste without overwriting register
+  // - S: surround selection
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
       "p": ["vim::Paste", { "preserve_clipboard": true }],
-      "shift-s": ["vim::PushAddSurrounds", {}],
       "shift-p": ["vim::Paste", { "preserve_clipboard": true }],
+      "shift-s": ["vim::PushAddSurrounds", {}],
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PROJECT PANEL: Vim-style navigation (oil.nvim / netrw inspired)
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
-    // Vim: File Tree ("ProjectPanel") actions
     "context": "ProjectPanel && not_editing",
     "bindings": {
+      // Fold/unfold
       "z c": "project_panel::CollapseSelectedEntry",
       "z o": "project_panel::ExpandSelectedEntry",
+      // File operations
       "shift-o": "project_panel::RevealInFileManager",
       "r": "project_panel::Rename",
       "x": "project_panel::Cut",
@@ -174,18 +277,17 @@
       "shift-d": ["project_panel::Trash", { "skip_prompt": true }],
       "a": "project_panel::NewFile",
       "shift-a": "project_panel::NewDirectory",
+      // Path copying
       "shift-y": "workspace::CopyRelativePath",
       "g y": "workspace::CopyPath",
+      // Close
       "q": "workspace::ToggleLeftDock",
     },
   },
-  {
-    "context": "Editor && jupyter && !ContextEditor",
-    "bindings": {
-      "ctrl-shift-enter": "repl::Run",
-      "ctrl-cmd-enter": "repl::RunInPlace",
-    },
-  },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // TERMINAL
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Terminal",
     "bindings": {
@@ -199,6 +301,10 @@
       "cmd-shift-g": "git_panel::ToggleFocus",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // TAB SWITCHER: vim-style j/k navigation
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "TabSwitcher",
     "bindings": {
@@ -207,6 +313,10 @@
       "x": "tab_switcher::CloseSelectedItem",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PANE: Splits & Tab switching by number
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "Pane",
     "bindings": {
@@ -214,6 +324,7 @@
       "cmd-shift-d": "pane::SplitDown",
       "ctrl-w v": "pane::SplitRight",
       "cmd-d": "pane::SplitRight",
+      // Tab by number
       "cmd-1": ["pane::ActivateItem", 0],
       "cmd-2": ["pane::ActivateItem", 1],
       "cmd-3": ["pane::ActivateItem", 2],
@@ -226,6 +337,12 @@
       "cmd-0": "pane::ActivateLastItem",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM OPERATORS: Git integration
+  // - d o: expand all diff hunks
+  // - d r: restore hunk
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "vim_operator == d",
     "bindings": {
@@ -233,14 +350,23 @@
       "r": "git::Restore",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM TEXT OBJECTS: mini.ai style
+  // - Q: any quote type
+  // - B: any bracket type
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "vim_operator == a || vim_operator == i || vim_operator == cs",
     "bindings": {
-      // mini.ai plugin behavior
       "Q": "vim::MiniQuotes",
       "B": "vim::MiniBrackets",
     },
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // VIM VISUAL: Exchange (swap two selections)
+  // ═══════════════════════════════════════════════════════════════════════════════
   {
     "context": "vim_mode == visual",
     "bindings": {
