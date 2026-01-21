@@ -107,6 +107,7 @@
       "space u i": "editor::ToggleInlayHints",
       "space u w": "editor::ToggleSoftWrap",
       "space u z": "workspace::ToggleCenteredLayout",
+      "space x t": ["pane::DeploySearch", { "query": "TODO|FIXME|NOTE|BUG|HACK|XXX|WARN", "regex": true }],
       "j": ["vim::Down", { "display_lines": true }],
       "k": ["vim::Up", { "display_lines": true }],
       "shift-y": ["workspace::SendKeystrokes", "y $"],
