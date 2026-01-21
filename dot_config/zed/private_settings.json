@@ -39,6 +39,7 @@
   ],
   "agent_servers": {
     "claude": {
+      "default_mode": "bypassPermissions",
       "favorite_models": ["opus", "default"],
       "default_config_options": {},
       "favorite_config_option_values": {},
@@ -481,7 +482,7 @@
         },
       },
     },
-    "ansible-language-server": {
+    "ansible": {
       "settings": {
         "ansible": {
           "path": "ansible",

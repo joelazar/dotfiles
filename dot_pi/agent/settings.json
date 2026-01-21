@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.49.1",
+  "lastChangelogVersion": "0.49.2",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "off",
+  "defaultThinkingLevel": "medium",
   "theme": "dark",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-5",
@@ -14,5 +14,6 @@
     "github-copilot/claude-sonnet-4.5",
     "openai-codex/gpt-5.2-codex",
     "openai-codex/gpt-5.2"
-  ]
+  ],
+  "showHardwareCursor": true
 }

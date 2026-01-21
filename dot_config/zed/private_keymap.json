@@ -69,8 +69,7 @@
       // "space s g": ["task::Spawn", { "task_name": "find in files" }],
       "space s g": "pane::DeploySearch",
       "space e": "workspace::ToggleLeftDock", // File explorer toggle
-      "space f p": ["projects::OpenRecent", { "create_new_window": false }],
-      "space f P": ["projects::OpenRecent", { "create_new_window": true }],
+      "space f p": "projects::OpenRecent", // , { "create_new_window": false }],
       "space u n": "workspace::ClearAllNotifications",
     },
   },
