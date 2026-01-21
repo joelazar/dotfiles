@@ -338,7 +338,7 @@ cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
-cask "aerospace"
+cask "nikitabobko/tap/aerospace"
 # Enable Windows-like alt-tab
 cask "alt-tab"
 # Android SDK component
@@ -360,7 +360,7 @@ cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
 # Menu bar usage monitor for Codex and Claude
-cask "codexbar"
+cask "steipete/tap/codexbar"
 # Voice and text chat software
 cask "discord"
 # Web browser
