@@ -11,6 +11,12 @@
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
+      "TodoWrite",
+      "Glob",
+      "Task",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
       "Bash(cat:*)",
       "Bash(docker compose exec:*)",
       "Bash(docker compose up:*)",
