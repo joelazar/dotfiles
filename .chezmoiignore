@@ -8,6 +8,10 @@ AGENT.md
 TODO.md
 bootstrap.sh
 
+# Exclude node_modules directories
+**/node_modules
+**/node_modules/**
+
 # Ignore aerospace config for non-work machines
 {{ if ne .type "work" }}
 .aerospace.toml

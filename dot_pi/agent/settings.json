@@ -1,11 +1,11 @@
 {
-  "lastChangelogVersion": "0.49.3",
+  "lastChangelogVersion": "0.50.1",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
   "defaultThinkingLevel": "low",
   "theme": "dark",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-5",
+  "defaultModel": "claude-sonnet-4-5",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "anthropic/claude-haiku-4-5",
