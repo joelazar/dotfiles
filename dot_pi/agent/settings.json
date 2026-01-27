@@ -2,10 +2,10 @@
   "lastChangelogVersion": "0.50.1",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "medium",
   "theme": "dark",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-5",
+  "defaultModel": "claude-opus-4-5",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "anthropic/claude-haiku-4-5",
@@ -16,5 +16,6 @@
     "google-gemini-cli/gemini-3-flash-preview",
     "google-gemini-cli/gemini-3-pro-preview"
   ],
-  "showHardwareCursor": true
+  "showHardwareCursor": true,
+  "quietStartup": true
 }
