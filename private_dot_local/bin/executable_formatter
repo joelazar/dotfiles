@@ -1,0 +1,311 @@
+#!/bin/bash
+
+# USB & SD Card Formatting Tool for macOS
+# Requires: gum (brew install gum)
+
+set -e
+
+# Check if gum is installed
+if ! command -v gum &>/dev/null; then
+    echo "Error: gum is not installed. Install it with: brew install gum"
+    exit 1
+fi
+
+# Header
+gum style \
+    --foreground 212 --border-foreground 212 --border double \
+    --align center --width 50 --margin "1 2" --padding "1 2" \
+    '💾 USB & SD Card Formatter' 'for macOS'
+
+# Get list of USB drives and SD cards (filter by protocol)
+get_usb_drives() {
+    diskutil list | grep -E "^/dev/disk" | awk '{print $1}' | while read -r disk; do
+        protocol=$(diskutil info "$disk" 2>/dev/null | grep "Protocol:" | sed 's/.*: *//')
+        if [ "$protocol" = "USB" ] || [ "$protocol" = "Secure Digital" ]; then
+            echo "$disk"
+        fi
+    done
+}
+
+# Get drive info
+get_drive_info() {
+    local disk=$1
+    diskutil info "$disk" | grep -E "Device / Media Name:|Volume Name:|Disk Size:|Volume Free Space:|File System Personality:" | sed 's/^[[:space:]]*//'
+}
+
+# Check if drive/partition is healthy
+check_drive_health() {
+    local disk=$1
+    local disk_base=$(basename "$disk")
+    local issues=()
+
+    # Check each partition
+    for partition in $(diskutil list "$disk" | grep -oE "${disk_base}s[0-9]+"); do
+        local mount_status=$(diskutil info "/dev/$partition" 2>/dev/null | grep "Mounted:" | sed 's/.*: *//')
+        local fs_type=$(diskutil info "/dev/$partition" 2>/dev/null | grep "File System Personality:" | sed 's/.*: *//')
+
+        if [ "$mount_status" = "No" ] && [ -n "$fs_type" ]; then
+            # Try to verify the filesystem
+            verify_output=$(diskutil verifyVolume "/dev/$partition" 2>&1)
+            if echo "$verify_output" | grep -q "exit code"; then
+                error_msg=$(echo "$verify_output" | grep -E "Invalid|Error|failed" | head -1)
+                issues+=("$partition: $error_msg")
+            fi
+        fi
+    done
+
+    if [ ${#issues[@]} -gt 0 ]; then
+        echo "${issues[@]}"
+    fi
+}
+
+# List USB drives
+USB_DRIVES=$(get_usb_drives)
+
+if [ -z "$USB_DRIVES" ]; then
+    gum style --foreground 196 "❌ No external USB drives or SD cards found!"
+    exit 1
+fi
+
+# Create array of drives with info for selection
+DRIVE_OPTIONS=()
+while IFS= read -r drive; do
+    name=$(diskutil info "$drive" | grep "Device / Media Name:" | sed 's/.*: *//')
+    size=$(diskutil info "$drive" | grep "Disk Size:" | sed 's/.*: *//' | cut -d'(' -f1)
+    protocol=$(diskutil info "$drive" | grep "Protocol:" | sed 's/.*: *//')
+    if [ "$protocol" = "Secure Digital" ]; then
+        type_icon="💳 SD"
+    else
+        type_icon="🔌 USB"
+    fi
+    DRIVE_OPTIONS+=("$drive - $type_icon - $name ($size)")
+done <<<"$USB_DRIVES"
+
+# Select a USB drive or SD card
+gum style --foreground 86 "📋 Select a USB drive or SD card:"
+SELECTED=$(gum choose "${DRIVE_OPTIONS[@]}")
+
+if [ -z "$SELECTED" ]; then
+    gum style --foreground 196 "❌ No drive selected!"
+    exit 1
+fi
+
+# Extract disk identifier
+DISK=$(echo "$SELECTED" | cut -d' ' -f1)
+
+# Show disk information
+gum style --foreground 220 --bold "📊 Drive Information:"
+echo ""
+get_drive_info "$DISK" | while read -r line; do
+    gum style --foreground 255 "  $line"
+done
+
+# Check for filesystem issues
+echo ""
+gum style --foreground 245 "🔍 Checking drive health..."
+HEALTH_ISSUES=$(check_drive_health "$DISK" 2>/dev/null)
+if [ -n "$HEALTH_ISSUES" ]; then
+    echo ""
+    gum style --foreground 196 --bold "⚠️  FILESYSTEM ISSUES DETECTED:"
+    gum style --foreground 208 "  This drive has a corrupted filesystem!"
+    gum style --foreground 208 "  This is why macOS shows 'disk not readable' error."
+    gum style --foreground 255 "  $HEALTH_ISSUES"
+    gum style --foreground 86 "  💡 Formatting will fix this issue."
+    DRIVE_CORRUPTED=true
+else
+    DRIVE_CORRUPTED=false
+fi
+
+# Get disk base name (e.g., disk2 from /dev/disk2)
+DISK_BASE=$(basename "$DISK")
+
+# List mounted volumes for this disk using mount command
+MOUNT_POINTS=$(mount | grep "/dev/${DISK_BASE}" | awk -F' on ' '{print $2}' | awk -F' \\(' '{print $1}')
+
+# Show contents if mounted
+if [ -n "$MOUNT_POINTS" ]; then
+    echo ""
+    gum style --foreground 86 "📁 Contents of the drive:"
+    echo ""
+
+    while IFS= read -r mount_point; do
+        if [ -d "$mount_point" ]; then
+            gum style --foreground 220 "  Mount: $mount_point"
+
+            # Show free space
+            FREE_SPACE=$(df -h "$mount_point" | tail -1 | awk '{print $4}')
+            USED_SPACE=$(df -h "$mount_point" | tail -1 | awk '{print $3}')
+            CAPACITY=$(df -h "$mount_point" | tail -1 | awk '{print $5}')
+
+            gum style --foreground 255 "  Used: $USED_SPACE | Free: $FREE_SPACE | Capacity: $CAPACITY"
+            echo ""
+
+            # List contents (limited to first 15 items)
+            gum style --foreground 141 "  Files/Folders:"
+            ls -lah "$mount_point" 2>/dev/null | head -20 | while read -r line; do
+                echo "    $line"
+            done
+            echo ""
+        fi
+    done <<<"$MOUNT_POINTS"
+else
+    if [ "$DRIVE_CORRUPTED" = true ]; then
+        gum style --foreground 208 "⚠️  Drive cannot be mounted due to filesystem corruption"
+    else
+        gum style --foreground 208 "⚠️  Drive is not mounted or has no readable volumes"
+    fi
+fi
+
+# Ask if user wants to format
+echo ""
+if gum confirm "🗑️  Do you want to FORMAT this drive? (ALL DATA WILL BE LOST)"; then
+
+    # Choose filesystem
+    gum style --foreground 86 "📝 Select filesystem format:"
+    FORMAT=$(gum choose \
+        "ExFAT (Best for cross-platform)" \
+        "APFS (Apple - macOS only)" \
+        "APFS Encrypted (Apple - macOS only, secure)" \
+        "Mac OS Extended (HFS+ Journaled)" \
+        "Mac OS Extended Encrypted (HFS+ Journaled, secure)" \
+        "MS-DOS FAT32 (Legacy, <32GB)")
+
+    # Star Trek character names
+    TREK_NAMES=(
+        "KIRK"
+        "SPOCK"
+        "PICARD"
+        "DATA"
+        "WORF"
+        "RIKER"
+        "JANEWAY"
+        "SEVEN"
+        "TUVOK"
+        "BONES"
+        "SCOTTY"
+        "UHURA"
+        "SULU"
+        "CHEKOV"
+        "CRUSHER"
+        "TROI"
+        "LAFORGE"
+        "SISKO"
+        "DAX"
+        "ODO"
+        "QUARK"
+        "BASHIR"
+        "ARCHER"
+        "TPOL"
+        "BURNHAM"
+        "PIKE"
+    )
+
+    # Pick a random Star Trek name
+    RANDOM_NAME=${TREK_NAMES[$RANDOM % ${#TREK_NAMES[@]}]}
+
+    # Get new volume name
+    gum style --foreground 86 "📝 Enter new volume name:"
+    VOLUME_NAME=$(gum input --placeholder "$RANDOM_NAME" --value "$RANDOM_NAME")
+
+    if [ -z "$VOLUME_NAME" ]; then
+        VOLUME_NAME="$RANDOM_NAME"
+    fi
+
+    # Map format selection to diskutil format
+    ENCRYPTED=false
+    case "$FORMAT" in
+    "ExFAT"*)
+        FS_FORMAT="ExFAT"
+        ;;
+    "APFS Encrypted"*)
+        FS_FORMAT="APFS"
+        ENCRYPTED=true
+        ;;
+    "APFS"*)
+        FS_FORMAT="APFS"
+        ;;
+    "Mac OS Extended Encrypted"*)
+        FS_FORMAT="JHFS+"
+        ENCRYPTED=true
+        ;;
+    "Mac OS Extended"*)
+        FS_FORMAT="JHFS+"
+        ;;
+    "MS-DOS"*)
+        FS_FORMAT="MS-DOS FAT32"
+        ;;
+    *)
+        FS_FORMAT="ExFAT"
+        ;;
+    esac
+
+    # Get password if encrypted format selected
+    if [ "$ENCRYPTED" = true ]; then
+        echo ""
+        gum style --foreground 220 "🔐 Encryption requires a password"
+        PASSPHRASE=$(gum input --password --placeholder "Enter encryption password")
+
+        if [ -z "$PASSPHRASE" ]; then
+            gum style --foreground 196 "❌ Password cannot be empty for encryption!"
+            exit 1
+        fi
+
+        PASSPHRASE_CONFIRM=$(gum input --password --placeholder "Confirm encryption password")
+
+        if [ "$PASSPHRASE" != "$PASSPHRASE_CONFIRM" ]; then
+            gum style --foreground 196 "❌ Passwords do not match!"
+            exit 1
+        fi
+    fi
+
+    # Final confirmation
+    echo ""
+    gum style --foreground 196 --bold "⚠️  WARNING: This will ERASE ALL DATA on $DISK"
+    gum style --foreground 255 "   Format: $FS_FORMAT"
+    gum style --foreground 255 "   Name: $VOLUME_NAME"
+    if [ "$ENCRYPTED" = true ]; then
+        gum style --foreground 220 "   🔐 Encryption: YES"
+    fi
+    echo ""
+
+    if gum confirm --default=false "Are you ABSOLUTELY sure?"; then
+        echo ""
+        gum spin --spinner dot --title "Formatting $DISK as $FS_FORMAT..." -- \
+            diskutil eraseDisk "$FS_FORMAT" "$VOLUME_NAME" GPT "$DISK"
+
+        # Handle encryption if selected
+        if [ "$ENCRYPTED" = true ]; then
+            echo ""
+            # Find the volume to encrypt
+            VOLUME_DISK=$(diskutil list "$DISK" | grep "$VOLUME_NAME" | awk '{print $NF}')
+
+            if [ -n "$VOLUME_DISK" ]; then
+                gum spin --spinner dot --title "🔐 Encrypting volume..." -- \
+                    diskutil apfs encryptVolume "/dev/$VOLUME_DISK" -user disk -passphrase "$PASSPHRASE"
+                gum style --foreground 46 "🔐 Volume encrypted successfully!"
+            else
+                gum style --foreground 208 "⚠️  Could not find volume to encrypt. You may need to encrypt manually."
+            fi
+        fi
+
+        echo ""
+        gum style --foreground 46 "✅ Drive formatted successfully!"
+        echo ""
+
+        # Show new drive info
+        gum style --foreground 86 "📊 New drive information:"
+        diskutil info "$DISK" | grep -E "Volume Name:|Disk Size:|Volume Free Space:|File System Personality:" | sed 's/^/  /'
+
+        echo ""
+        if gum confirm "⏏️  Do you want to eject the drive?"; then
+            gum spin --spinner dot --title "Ejecting $DISK..." -- \
+                diskutil eject "$DISK"
+            echo ""
+            gum style --foreground 46 "✅ Drive ejected safely! You can remove it now."
+        fi
+    else
+        gum style --foreground 208 "❌ Format cancelled."
+    fi
+else
+    gum style --foreground 86 "👋 Goodbye! No changes were made."
+fi

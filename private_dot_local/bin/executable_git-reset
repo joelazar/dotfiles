@@ -1,0 +1,148 @@
+#!/bin/bash
+
+# Reset git repositories to their default branch (main or master) and drop all local changes
+# Usage: git-reset [dir1] [dir2] ...
+# If no arguments provided, uses current working directory
+
+# Check if gum is installed
+if ! command -v gum &>/dev/null; then
+    echo "Error: gum is not installed. Install it with: brew install gum"
+    exit 1
+fi
+
+# Array of directories - from arguments or current directory
+if [[ $# -gt 0 ]]; then
+    directories=("$@")
+else
+    directories=("$(pwd)")
+fi
+
+# Function to determine default branch
+get_default_branch() {
+    local dir="$1"
+    cd "$dir" || return 1
+
+    # Try to get the default branch from remote
+    local default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+
+    # If that fails, check if main exists, otherwise use master
+    if [[ -z "$default_branch" ]]; then
+        if git show-ref --verify --quiet refs/remotes/origin/main; then
+            default_branch="main"
+        elif git show-ref --verify --quiet refs/remotes/origin/master; then
+            default_branch="master"
+        else
+            # Try to find any branch that might be the default
+            default_branch=$(git branch -r | grep -E 'origin/(main|master)' | head -1 | sed 's@.*origin/@@' | xargs)
+            if [[ -z "$default_branch" ]]; then
+                default_branch="main" # fallback
+            fi
+        fi
+    fi
+
+    echo "$default_branch"
+}
+
+# Function to check if repo has local changes
+has_local_changes() {
+    # Check for uncommitted changes (staged, unstaged, or untracked)
+    if ! git diff --quiet HEAD 2>/dev/null || \
+       ! git diff --cached --quiet 2>/dev/null || \
+       [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
+        return 0
+    fi
+    return 1
+}
+
+# Function to reset a single git repository
+reset_repo() {
+    local dir="$1"
+
+    # Change to directory
+    cd "$dir" || {
+        echo "  ❌ Failed to change to directory: $dir"
+        return 1
+    }
+
+    # Get the default branch
+    default_branch=$(get_default_branch "$dir")
+
+    # Check for local changes and ask for confirmation
+    if has_local_changes; then
+        echo ""
+        gum style --foreground 220 "⚠️  $dir has local changes:"
+        git status --short | head -10
+        local total_changes=$(git status --short | wc -l | tr -d ' ')
+        if [[ $total_changes -gt 10 ]]; then
+            echo "  ... and $((total_changes - 10)) more"
+        fi
+        echo ""
+        if ! gum confirm "Drop local changes and reset to origin/$default_branch?" </dev/tty; then
+            echo "  ⏭️  $dir → skipped"
+            return 0
+        fi
+    fi
+
+    # Fetch latest changes and check for repository errors
+    fetch_output=$(git fetch origin 2>&1)
+    fetch_exit_code=$?
+
+    if [ $fetch_exit_code -ne 0 ]; then
+        if echo "$fetch_output" | grep -q "Repository not found\|Could not read from remote repository"; then
+            echo "  🗑️  $dir → remote not found, deleted"
+            cd ..
+            rm -rf "$dir"
+            return 1
+        else
+            echo "  ❌ $dir → fetch failed"
+            return 1
+        fi
+    fi
+
+    # Reset any uncommitted changes
+    git reset --hard HEAD &>/dev/null
+    git clean -fd &>/dev/null
+
+    # Switch to default branch (force checkout to ignore local changes)
+    if ! git checkout -f "$default_branch" &>/dev/null; then
+        echo "  ❌ $dir → checkout $default_branch failed"
+        return 1
+    fi
+
+    # Reset to upstream branch, dropping all local changes
+    if git reset --hard "origin/$default_branch" &>/dev/null; then
+        echo "  ✅ $dir → reset & pulled $default_branch"
+    else
+        echo "  ❌ $dir → reset to $default_branch failed"
+        return 1
+    fi
+}
+
+# Loop through each directory
+for dir in "${directories[@]}"; do
+    # Check if directory exists
+    if [[ ! -d "$dir" ]]; then
+        echo "❌ $dir → directory does not exist"
+        continue
+    fi
+
+    # Check if it's a git repository
+    if [[ -d "$dir/.git" ]]; then
+        reset_repo "$dir"
+    else
+        # Not a git repo, search subdirectories
+        echo "📁 $dir → scanning for git repos..."
+        found_repos=0
+        while IFS= read -r -d '' subdir; do
+            repo_dir="$(dirname "$subdir")"
+            reset_repo "$repo_dir"
+            ((found_repos++))
+        done < <(find "$dir" -maxdepth 2 -type d -name ".git" -print0)
+
+        if [[ $found_repos -eq 0 ]]; then
+            echo "  ❌ no git repositories found"
+        else
+            echo "  📊 processed $found_repos repo(s)"
+        fi
+    fi
+done
