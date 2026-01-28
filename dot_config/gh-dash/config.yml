@@ -73,6 +73,10 @@ keybindings:
         gh pr checkout {{.PrNumber}} &&
         nvim
       name: open in nvim
+    - key: P
+      command: >
+        gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo
+      name: move to draft
     - key: T
       name: retrigger workflows
       command: >
