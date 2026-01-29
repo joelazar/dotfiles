@@ -11,19 +11,22 @@
   "security": {
     "auth": {
       "selectedType": "oauth-personal"
-    }
+    },
+    "enablePermanentToolApproval": true
   },
   "tools": {
     "useRipgrep": true,
     "shell": {
       "showColor": true
-    }
+    },
+    "autoAccept": true
   },
   "general": {
     "enablePromptCompletion": true,
     "vimMode": false,
     "disableAutoUpdate": true,
-    "previewFeatures": true
+    "previewFeatures": true,
+    "enableAutoUpdate": false
   },
   "output": {
     "format": "text"
@@ -33,6 +36,8 @@
   },
   "telemetry": {
     "enabled": false
+  },
+  "experimental": {
+    "plan": true
   }
 }
-
