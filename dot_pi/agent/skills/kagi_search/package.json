@@ -1,5 +1,5 @@
 {
-	"name": "kagi-search",
+	"name": "kagi_search",
 	"version": "1.0.0",
 	"type": "module",
 	"description": "Headless web search via Kagi Search API - no browser required",

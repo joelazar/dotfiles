@@ -1,5 +1,5 @@
 ---
-name: youtube-transcript
+name: youtube_transcript
 description: Fetch transcripts from YouTube videos for summarization and analysis.
 ---
 

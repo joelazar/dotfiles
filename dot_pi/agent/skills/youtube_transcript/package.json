@@ -1,5 +1,5 @@
 {
-  "name": "youtube-transcript",
+  "name": "youtube_transcript",
   "version": "1.0.0",
   "type": "module",
   "dependencies": {

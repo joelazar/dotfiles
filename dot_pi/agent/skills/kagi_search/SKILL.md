@@ -1,5 +1,5 @@
 ---
-name: kagi-search
+name: kagi_search
 description: Web search and content extraction via Kagi Search API. Use for searching documentation, facts, or any web content. Lightweight, no browser required.
 ---
 

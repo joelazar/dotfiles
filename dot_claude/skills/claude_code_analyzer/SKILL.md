@@ -1,5 +1,5 @@
 ---
-name: claude-code-analyzer
+name: claude_code_analyzer
 description: Analyzes Claude Code usage patterns and provides comprehensive recommendations. Runs usage analysis, discovers GitHub community resources, suggests CLAUDE.md improvements, and fetches latest docs on-demand. Use when user wants to optimize their Claude Code workflow, create configurations (agents/skills/commands), or set up project documentation.
 ---
 
