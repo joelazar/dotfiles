@@ -212,6 +212,15 @@
   // AGENT SERVERS (external AI agents)
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
+    "mistral-vibe": {
+      "type": "registry"
+    },
+    "opencode": {
+      "type": "registry"
+    },
+    "github-copilot": {
+      "type": "registry",
+    },
     "claude": {
       "default_mode": "bypassPermissions",
       "favorite_models": ["opus", "default"],
