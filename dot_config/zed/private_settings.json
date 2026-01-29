@@ -213,10 +213,10 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
     "mistral-vibe": {
-      "type": "registry"
+      "type": "registry",
     },
     "opencode": {
-      "type": "registry"
+      "type": "registry",
     },
     "github-copilot": {
       "type": "registry",
