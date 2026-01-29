@@ -12,3 +12,17 @@ command = "$SHELL -ic 'alias' | grep -E '^(alias )?{split:=:0}='"
 
 [ui.preview_panel]
 size = 30
+
+[keybindings]
+enter = "actions:copy_name"
+ctrl-y = "actions:copy_value"
+
+[actions.copy_name]
+description = "Copy the alias name to clipboard"
+command = "printf '%s' '{split:=:0}' | pbcopy 2>/dev/null || printf '%s' '{split:=:0}' | xclip -selection clipboard"
+mode = "fork"
+
+[actions.copy_value]
+description = "Copy the alias value to clipboard"
+command = "printf '%s' '{split:=:1..}' | pbcopy 2>/dev/null || printf '%s' '{split:=:1..}' | xclip -selection clipboard"
+mode = "fork"

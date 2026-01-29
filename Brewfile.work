@@ -273,6 +273,8 @@ brew "tealdeer"
 brew "television"
 # Secrets management tool for developers
 brew "teller"
+# Powerful free data recovery utility
+brew "testdisk"
 # Terminal multiplexer
 brew "tmux"
 # Program that allows you to count code, quickly
@@ -465,6 +467,7 @@ go "mvdan.cc/gofumpt"
 go "golang.org/x/tools/cmd/goimports"
 go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
 go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/nametake/golangci-lint-langserver"
 go "github.com/segmentio/golines"
 go "github.com/cosmos72/gomacro"
 go "github.com/fatih/gomodifytags"

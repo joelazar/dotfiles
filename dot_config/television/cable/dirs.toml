@@ -7,7 +7,22 @@ requirements = ["fd"]
 command = ["fd -t d", "fd -t d --hidden"]
 
 [preview]
-command = "ls -la --color=always '{}'"
+command = "ls -la --color=always '{}' 2>/dev/null || ls -laG '{}'"
 
 [keybindings]
 shortcut = "f2"
+enter = "actions:cd"
+ctrl-l = "actions:edit"
+ctrl-enter = "actions:edit"
+ctrl-o = "actions:edit"
+f12 = "actions:edit"
+
+[actions.cd]
+description = "Open a shell in the selected directory"
+command = "cd '{}' && $SHELL"
+mode = "execute"
+
+[actions.edit]
+description = "Open the selected directory in editor"
+command = "$EDITOR {} >/dev/tty"
+mode = "execute"

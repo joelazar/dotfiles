@@ -29,5 +29,5 @@ mode = "fork"
 
 [actions.edit]
 description = "Open the selected file in editor"
-command = "${EDITOR:-vim} '{}'"
+command = "$EDITOR {} >/dev/tty"
 mode = "execute"

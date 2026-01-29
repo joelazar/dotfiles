@@ -62,3 +62,17 @@ output = "{split:|:0}"
 
 [preview]
 command = '''bash -c 'LINE=$(grep -n -i "^[[:space:]]*host " "{split:|:1}" | grep -w "{split:|:0}" | head -n 1 | cut -d: -f1); bat --color=always -p "{split:|:1}" --highlight-line $LINE -r $((LINE)):$((LINE+2))' '''
+
+[keybindings]
+ctrl-s = "actions:connect"
+ctrl-e = "actions:edit_config"
+
+[actions.connect]
+description = "SSH into the selected host"
+command = "ssh '{split:|:0}'"
+mode = "execute"
+
+[actions.edit_config]
+description = "Edit the SSH config file containing this host"
+command = "$EDITOR '{split:|:1}' >/dev/tty"
+mode = "execute"
