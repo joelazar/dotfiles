@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+# Generic script to update all git submodules to their latest default branch (main/master)
+
+echo "Starting submodule update..."
+
+# Use git submodule foreach to iterate through all submodules
+git submodule foreach --recursive '
+    # Fetch latest references from origin
+    git fetch origin -q
+    
+    # Detect the default branch (HEAD) from the remote
+    # This handles repositories using "main", "master", or other default branch names
+    TARGET_BRANCH=$(git remote show origin | grep "HEAD branch" | sed "s/.*: //")
+    
+    # Fallback if detection fails (unlikely on standard git servers)
+    if [ -z "$TARGET_BRANCH" ]; then
+        echo "  Warning: Could not detect HEAD branch for $name. Trying main..."
+        if git show-ref --verify --quiet refs/remotes/origin/main; then
+            TARGET_BRANCH="main"
+        else
+            TARGET_BRANCH="master"
+        fi
+    fi
+    
+    echo "  Processing $name: Checking out and pulling $TARGET_BRANCH"
+    
+    # Checkout the target branch
+    git checkout "$TARGET_BRANCH" -q
+    
+    # Pull the latest changes
+    git pull origin "$TARGET_BRANCH" -q
+'
+
+echo "All submodules updated successfully."

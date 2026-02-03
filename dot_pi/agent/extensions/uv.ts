@@ -29,9 +29,10 @@ export default function (pi: ExtensionAPI) {
     commandPrefix: `export PATH="${interceptedCommandsPath}:$PATH"`,
   });
 
-  pi.on("session_start", (_event, ctx) => {
-    ctx.ui.notify("UV interceptor loaded", "info");
-  });
+  // Uncomment to notify when the extension is loaded
+  // pi.on("session_start", (_event, ctx) => {
+  //   ctx.ui.notify("UV interceptor loaded", "info");
+  // });
 
   pi.registerTool(bashTool);
 }
