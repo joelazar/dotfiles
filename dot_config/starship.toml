@@ -38,3 +38,11 @@ style = 'bold yellow'
 symbol = '🧙'
 disabled = false
 
+[line_break]
+disabled = false
+
+[directory]
+truncate_to_repo = false
+truncation_length = 0
+
+

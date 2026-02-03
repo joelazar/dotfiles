@@ -1,7 +1,7 @@
 /**
  * Q&A extraction hook - extracts questions from assistant responses
  *
- * Alternative to qna.ts with a custom interactive TUI for answering questions.
+ * Custom interactive TUI for answering questions.
  *
  * Demonstrates the "prompt generator" pattern with custom TUI:
  * 1. /answer command gets the last assistant message
@@ -20,6 +20,7 @@ import {
 	Key,
 	matchesKey,
 	truncateToWidth,
+	type TUI,
 	visibleWidth,
 	wrapTextWithAnsi,
 } from "@mariozechner/pi-tui";
@@ -66,11 +67,11 @@ Example output:
   ]
 }`;
 
+const CODEX_MODEL_ID = "gpt-5.1-codex-mini";
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
 
 /**
- * Check if the current model is a Claude Opus or Sonnet model from Anthropic provider.
- * If so, try to use claude-haiku-4-5 instead for cost efficiency.
+ * Prefer Codex mini for extraction when available, otherwise fallback to haiku or the current model.
  */
 async function selectExtractionModel(
 	currentModel: Model<Api>,
@@ -79,14 +80,12 @@ async function selectExtractionModel(
 		getApiKey: (model: Model<Api>) => Promise<string | undefined>;
 	},
 ): Promise<Model<Api>> {
-	if (currentModel.provider !== "anthropic") {
-		return currentModel;
-	}
-
-	const modelId = currentModel.id.toLowerCase();
-	const isOpusOrSonnet = modelId.includes("opus") || modelId.includes("sonnet");
-	if (!isOpusOrSonnet) {
-		return currentModel;
+	const codexModel = modelRegistry.find("openai-codex", CODEX_MODEL_ID);
+	if (codexModel) {
+		const apiKey = await modelRegistry.getApiKey(codexModel);
+		if (apiKey) {
+			return codexModel;
+		}
 	}
 
 	const haikuModel = modelRegistry.find("anthropic", HAIKU_MODEL_ID);
@@ -134,7 +133,7 @@ class QnAComponent implements Component {
 	private answers: string[];
 	private currentIndex: number = 0;
 	private editor: Editor;
-	private tui: { requestRender: () => void };
+	private tui: TUI;
 	private onDone: (result: string | null) => void;
 	private showingConfirmation: boolean = false;
 
@@ -152,7 +151,7 @@ class QnAComponent implements Component {
 
 	constructor(
 		questions: ExtractedQuestion[],
-		tui: { requestRender: () => void },
+		tui: TUI,
 		onDone: (result: string | null) => void,
 	) {
 		this.questions = questions;
@@ -170,7 +169,7 @@ class QnAComponent implements Component {
 			},
 		};
 
-		this.editor = new Editor(editorTheme);
+		this.editor = new Editor(tui, editorTheme);
 		// Disable the editor's built-in submit (which clears the editor)
 		// We'll handle Enter ourselves to preserve the text
 		this.editor.disableSubmit = true;
@@ -449,7 +448,7 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			// Select the best model for extraction (prefer haiku for cost efficiency)
+			// Select the best model for extraction (prefer Codex mini, then haiku)
 			const extractionModel = await selectExtractionModel(ctx.model, ctx.modelRegistry);
 
 			// Run extraction with loader UI

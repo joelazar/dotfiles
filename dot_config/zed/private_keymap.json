@@ -18,6 +18,8 @@
     "context": "Workspace",
     "bindings": {
       "ctrl-z": "workspace::ToggleZoom",
+      "ctrl-shift-tab": "pane::ActivatePreviousItem",
+      "ctrl-tab": "pane::ActivateNextItem",
     },
   },
 

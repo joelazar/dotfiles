@@ -1,11 +1,11 @@
 {
-  "lastChangelogVersion": "0.50.3",
+  "lastChangelogVersion": "0.51.2",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
   "defaultThinkingLevel": "medium",
   "theme": "dark",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-5",
+  "defaultProvider": "openai-codex",
+  "defaultModel": "gpt-5.2-codex",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "anthropic/claude-haiku-4-5",
@@ -14,7 +14,8 @@
     "openai-codex/gpt-5.2-codex",
     "openai-codex/gpt-5.1-codex-mini",
     "google-gemini-cli/gemini-3-flash-preview",
-    "google-gemini-cli/gemini-3-pro-preview"
+    "google-gemini-cli/gemini-3-pro-preview",
+    "ollama/devstral-small-2"
   ],
   "showHardwareCursor": true,
   "quietStartup": true
