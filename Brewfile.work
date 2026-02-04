@@ -10,6 +10,7 @@ tap "mongodb/brew"
 tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
+tap "protonpass/tap"
 tap "sst/tap"
 tap "steipete/tap"
 tap "tw93/tap"
@@ -329,6 +330,8 @@ brew "mongodb/brew/mongodb-database-tools"
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
+# Proton Pass CLI - Command-line interface for Proton Pass
+brew "protonpass/tap/pass-cli"
 # The AI coding agent built for the terminal.
 brew "sst/tap/opencode"
 # Command-line ElevenLabs TTS with mac-style flags
@@ -361,6 +364,8 @@ cask "claude-code"
 cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# OpenAI's Codex desktop app for managing coding agents
+cask "codex-app"
 # Menu bar usage monitor for Codex and Claude
 cask "steipete/tap/codexbar"
 # Voice and text chat software
@@ -393,6 +398,8 @@ cask "obsidian"
 cask "openvpn-connect"
 # WebKit based web browser
 cask "orion"
+# Desktop client for Proton Pass
+cask "proton-pass"
 # VPN client focusing on security
 cask "protonvpn"
 # Control your tools with a few keystrokes
