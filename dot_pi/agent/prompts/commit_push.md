@@ -12,8 +12,7 @@ description: Commit and push changes
 
 Based on the above changes:
 
-1. Create a new branch if on main
-2. Create a single commit with an appropriate message (IMPORTANT: examine recent commits and follow the EXACT same style, emoji usage, capitalization, and format)
-3. Push the branch to origin
+1. Create a single commit with an appropriate message (IMPORTANT: examine recent commits and follow the EXACT same style, emoji usage, capitalization, and format)
+2. Push the branch to origin
 
 You have the capability to call multiple tools in a single response. You MUST do all of the above in a single message. Do not use any other tools or do anything else. Do not send any other text or messages besides these tool calls.
