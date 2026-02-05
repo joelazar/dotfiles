@@ -13,7 +13,7 @@
     "ss02": true, // cursive italics
     "ss03": true, // alternative ampersand (&)
     "ss05": true, // alternative @ symbol
-    "ss07": true, // alternative >= <= ligatures
+    "ss07": true // alternative >= <= ligatures
   },
   "cursor_blink": false,
   "rounded_selection": false,
@@ -36,7 +36,7 @@
   "vim": {
     "use_system_clipboard": "never", // use vim registers, not system clipboard
     "use_smartcase_find": true, // case-insensitive find unless uppercase
-    "highlight_on_yank_duration": 500, // visual feedback on yank (ms)
+    "highlight_on_yank_duration": 500 // visual feedback on yank (ms)
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -44,7 +44,7 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "which_key": {
     "enabled": true,
-    "delay_ms": 400,
+    "delay_ms": 400
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -53,18 +53,18 @@
   "git": {
     "inline_blame": {
       "delay_ms": 200,
-      "show_commit_summary": true,
-    },
+      "show_commit_summary": true
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
   // INLAY HINTS & INDENT GUIDES
   // ══════════════════════════════════════════════════════════════════════════════
   "inlay_hints": {
-    "enabled": true,
+    "enabled": true
   },
   "indent_guides": {
-    "coloring": "indent_aware", // different colors per indent level
+    "coloring": "indent_aware" // different colors per indent level
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -72,7 +72,7 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "preview_tabs": {
     "enable_keep_preview_on_code_navigation": true,
-    "enable_preview_from_file_finder": true,
+    "enable_preview_from_file_finder": true
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -94,11 +94,11 @@
   "bottom_dock_layout": "right_aligned",
   "centered_layout": {
     "left_padding": 0.15,
-    "right_padding": 0.15,
+    "right_padding": 0.15
   },
   "active_pane_modifiers": {
     "inactive_opacity": 0.7,
-    "border_size": 0.5,
+    "border_size": 0.5
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -107,7 +107,7 @@
   "title_bar": {
     "show_menus": true,
     "show_branch_icon": true,
-    "show_sign_in": false,
+    "show_sign_in": false
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -115,20 +115,20 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "tab_bar": {
     "show_nav_history_buttons": false,
-    "show_tab_bar_buttons": false,
+    "show_tab_bar_buttons": false
   },
   "tabs": {
     "show_diagnostics": "errors",
     "git_status": true,
     "file_icons": true,
-    "activate_on_close": "neighbour",
+    "activate_on_close": "neighbour"
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
   // SCROLLBAR
   // ══════════════════════════════════════════════════════════════════════════════
   "scrollbar": {
-    "show": "system",
+    "show": "system"
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -138,18 +138,18 @@
     "default_width": 300,
     "auto_fold_dirs": false,
     "auto_reveal_entries": false,
-    "entry_spacing": "standard",
+    "entry_spacing": "standard"
   },
   "outline_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "collaboration_panel": {
-    "default_width": 300,
+    "default_width": 300
   },
   "git_panel": {
     "tree_view": true,
     "sort_by_path": true,
-    "default_width": 300,
+    "default_width": 300
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -157,7 +157,7 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "file_finder": {
     "modal_max_width": "medium",
-    "include_ignored": "all",
+    "include_ignored": "all"
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -165,47 +165,46 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "diagnostics": {
     "inline": {
-      "enabled": true,
-    },
+      "enabled": true
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
   // MESSAGES & CALLS
   // ══════════════════════════════════════════════════════════════════════════════
   "message_editor": {
-    "auto_replace_emoji_shortcode": false,
+    "auto_replace_emoji_shortcode": false
   },
   "calls": {
-    "mute_on_join": true,
+    "mute_on_join": true
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
   // AI / EDIT PREDICTIONS
   // ══════════════════════════════════════════════════════════════════════════════
-  "features": {
-    "edit_prediction_provider": "copilot",
-  },
-
   // ══════════════════════════════════════════════════════════════════════════════
   // AGENT (AI Assistant)
   // ══════════════════════════════════════════════════════════════════════════════
+  "edit_predictions": {
+    "provider": "mercury"
+  },
   "agent": {
     "inline_assistant_model": {
       "provider": "copilot_chat",
-      "model": "claude-haiku-4.5",
+      "model": "claude-sonnet-4.5"
     },
     "use_modifier_to_send": true,
     "play_sound_when_agent_done": true,
     "commit_message_model": {
       "provider": "copilot_chat",
-      "model": "gpt-5-mini",
+      "model": "gpt-5-mini"
     },
     "always_allow_tool_actions": true,
     "enable_feedback": false,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5",
-    },
+      "model": "claude-opus-4.5"
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -213,32 +212,32 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
     "mistral-vibe": {
-      "type": "registry",
+      "type": "registry"
     },
     "opencode": {
-      "type": "registry",
+      "type": "registry"
     },
     "github-copilot": {
-      "type": "registry",
+      "type": "registry"
     },
     "claude": {
       "default_mode": "bypassPermissions",
       "favorite_models": ["opus", "default"],
       "default_config_options": {},
-      "favorite_config_option_values": {},
+      "favorite_config_option_values": {}
     },
     "codex": {
-      "default_mode": "full-access",
+      "default_mode": "full-access"
     },
     "gemini": {
-      "ignore_system_version": false,
+      "ignore_system_version": false
     },
     "Goose 🪿": {
       "type": "custom",
       "command": "goose",
       "args": ["acp"],
-      "env": {},
-    },
+      "env": {}
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -251,10 +250,10 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/Users/joelazar/Code/jets"],
-        },
-      ],
-    },
+          "paths": ["/Users/joelazar/Code/jets"]
+        }
+      ]
+    }
   ],
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -262,7 +261,7 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "terminal": {
     "scrollbar": {
-      "show": "never",
+      "show": "never"
     },
     "max_scroll_history_lines": 50000,
     "blinking": "off",
@@ -272,19 +271,19 @@
       "ss02": true,
       "ss03": true,
       "ss05": true,
-      "ss07": true,
+      "ss07": true
     },
     "detect_venv": {
       "on": {
-        "activate_script": "fish",
-      },
+        "activate_script": "fish"
+      }
     },
     "env": {
       "GIT_EDITOR": "zed --wait",
-      "EDITOR": "zed",
+      "EDITOR": "zed"
     },
     "minimum_contrast": 0,
-    "keep_selection_on_copy": false,
+    "keep_selection_on_copy": false
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -314,7 +313,7 @@
     "**/__pycache__",
     "**/.ropeproject",
     "**/.pytest_cache",
-    "**/.ruff_cache",
+    "**/.ruff_cache"
   ],
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -335,7 +334,7 @@
       "**/group_vars/**.yml",
       "**/group_vars/**.yaml",
       "**playbook*.yaml",
-      "**playbook*.yml",
+      "**playbook*.yml"
     ],
     "Dockerfile": ["Dockerfile*"],
     "Helm": [
@@ -344,10 +343,10 @@
       "**/templates/**/*.yml",
       "**/helmfile.d/**/*.yaml",
       "**/helmfile.d/**/*.yml",
-      "**/values*.yaml",
+      "**/values*.yaml"
     ],
     "Shell Script": ["*.envrc*"],
-    "Nginx": ["**/nginx/**/*.conf", "nginx.conf"],
+    "Nginx": ["**/nginx/**/*.conf", "nginx.conf"]
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -355,13 +354,13 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "language_models": {
     "openai": {
-      "available_models": [],
+      "available_models": []
     },
     "anthropic": {
-      "available_models": [],
+      "available_models": []
     },
     "google": {
-      "available_models": [],
+      "available_models": []
     },
     "deepseek": {
       "api_url": "https://api.deepseek.com",
@@ -369,18 +368,18 @@
         {
           "name": "deepseek-chat",
           "display_name": "DeepSeek Chat",
-          "max_tokens": 64000,
+          "max_tokens": 64000
         },
         {
           "name": "deepseek-reasoner",
           "display_name": "DeepSeek Reasoner",
           "max_tokens": 64000,
-          "max_output_tokens": 4096,
-        },
-      ],
+          "max_output_tokens": 4096
+        }
+      ]
     },
     "zed.dev": {
-      "available_models": [],
+      "available_models": []
     },
     "ollama": {
       "available_models": [
@@ -388,19 +387,19 @@
           "name": "devstral",
           "display_name": "Mistral Devstral - 24B",
           "max_tokens": 131072,
-          "supports_tools": true,
+          "supports_tools": true
         },
         {
           "name": "qwen3-coder:30b",
           "display_name": "Qwen 3 Coder - 30B-A3B",
           "max_tokens": 262144,
-          "supports_tools": true,
+          "supports_tools": true
         },
         {
           "name": "qwen3:4b",
           "display_name": "Qwen 3 - 4B",
           "max_tokens": 32768,
-          "supports_tools": true,
+          "supports_tools": true
         },
         {
           "name": "gpt-oss:20b",
@@ -408,9 +407,9 @@
           "max_tokens": 131072,
           "supports_tools": true,
           "supports_thinking": true,
-          "supports_images": true,
-        },
-      ],
+          "supports_images": true
+        }
+      ]
     },
     "openai_compatible": {
       "Cerebras": {
@@ -424,12 +423,12 @@
               "tools": true,
               "images": true,
               "parallel_tool_calls": true,
-              "prompt_cache_key": false,
-            },
-          },
-        ],
-      },
-    },
+              "prompt_cache_key": false
+            }
+          }
+        ]
+      }
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -440,37 +439,37 @@
     "rust-analyzer": {
       "initialization_options": {
         "check": {
-          "command": "clippy",
+          "command": "clippy"
         },
         "cargo": {
           "allFeatures": true,
           "loadOutDirsFromCheck": true,
           "buildScripts": {
-            "enable": true,
-          },
+            "enable": true
+          }
         },
         "procMacro": {
           "enable": true,
           "ignored": {
             "async-trait": ["async_trait"],
             "napi-derive": ["napi"],
-            "async-recursion": ["async_recursion"],
-          },
+            "async-recursion": ["async_recursion"]
+          }
         },
         "rust": {
-          "analyzerTargetDir": true,
+          "analyzerTargetDir": true
         },
         "inlayHints": {
           "maxLength": null,
           "lifetimeElisionHints": {
             "enable": "skip_trivial",
-            "useParameterNames": true,
+            "useParameterNames": true
           },
           "closureReturnTypeHints": {
-            "enable": "always",
-          },
-        },
-      },
+            "enable": "always"
+          }
+        }
+      }
     },
     // Python: basedpyright with relaxed type checking
     "basedpyright": {
@@ -487,32 +486,32 @@
               "reportUnknownLambdaType": "none",
               "reportUnknownMemberType": "none",
               "reportUnknownParameterType": "none",
-              "reportUnknownVariableType": "none",
-            },
-          },
-        },
-      },
+              "reportUnknownVariableType": "none"
+            }
+          }
+        }
+      }
     },
     // Ansible: lint enabled
     "ansible": {
       "settings": {
         "ansible": {
-          "path": "ansible",
+          "path": "ansible"
         },
         "executionEnvironment": {
-          "enabled": false,
+          "enabled": false
         },
         "python": {
-          "interpreterPath": "python3",
+          "interpreterPath": "python3"
         },
         "validation": {
           "enabled": true,
           "lint": {
             "enabled": true,
-            "path": "ansible-lint",
-          },
-        },
-      },
+            "path": "ansible-lint"
+          }
+        }
+      }
     },
     // Go: gofumpt, semantic tokens, codelenses, hints
     "gopls": {
@@ -532,7 +531,7 @@
           "test": true,
           "tidy": true,
           "upgrade_dependency": true,
-          "vendor": true,
+          "vendor": true
         },
         "hints": {
           "assignVariableTypes": true,
@@ -541,22 +540,22 @@
           "constantValues": true,
           "functionTypeParameters": true,
           "parameterNames": true,
-          "rangeVariableTypes": true,
+          "rangeVariableTypes": true
         },
         "analyses": {
           "nilness": true,
           "unusedparams": true,
           "unusedwrite": true,
-          "useany": true,
-        },
-      },
+          "useany": true
+        }
+      }
     },
     // golangci-lint
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="],
-      },
-    },
+        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
+      }
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -569,42 +568,42 @@
         {
           "external": {
             "command": "bash",
-            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"],
-          },
-        },
+            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
+          }
+        }
       ],
-      "language_servers": ["ty", "..."],
+      "language_servers": ["ty", "..."]
     },
     "JavaScript": {
       "code_actions_on_format": {
-        "source.fixAll.eslint": true,
-      },
+        "source.fixAll.eslint": true
+      }
     },
     "Go": {
       "format_on_save": "on",
-      "language_servers": ["!harper-ls", "..."],
+      "language_servers": ["!harper-ls", "..."]
     },
     "Markdown": {
-      "format_on_save": "on",
+      "format_on_save": "on"
     },
     "Terraform": {
       "format_on_save": "on",
       "formatter": {
         "external": {
           "command": "tofu",
-          "arguments": ["fmt", "-"],
-        },
-      },
+          "arguments": ["fmt", "-"]
+        }
+      }
     },
     "Fish": {
       "format_on_save": "on",
       "formatter": {
         "external": {
           "command": "fish_indent",
-          "arguments": [],
-        },
-      },
-    },
+          "arguments": []
+        }
+      }
+    }
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -640,11 +639,11 @@
     "toml": true,
     "vscode-icons": true,
     "wakatime": true,
-    "zig": true,
+    "zig": true
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
   // THEME OVERRIDES (empty - using defaults)
   // ══════════════════════════════════════════════════════════════════════════════
-  "theme_overrides": {},
+  "theme_overrides": {}
 }
