@@ -1,5 +1,5 @@
 ---
-name: improve_skill
+name: improve-skill
 description: "Analyze coding agent session transcripts to improve existing skills or create new ones. Use when asked to improve a skill based on a session, or extract a new skill from session history."
 ---
 
