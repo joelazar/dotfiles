@@ -348,6 +348,8 @@ cask "nikitabobko/tap/aerospace"
 cask "alt-tab"
 # Android SDK component
 cask "android-platform-tools"
+# AI Coding Agent IDE
+cask "antigravity"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
 # Open source IDE for exploring and testing APIs
