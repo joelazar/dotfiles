@@ -250,7 +250,20 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/Users/joelazar/Code/jets"]
+          "paths": [
+            "/Users/joelazar/Code/jets"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "openclaw",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/openclaw"
+          ]
         }
       ]
     }

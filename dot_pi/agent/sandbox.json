@@ -55,9 +55,8 @@
       "~/.config/chezmoi/**",
       "~/.npm/**",
       "~/.bun/install/cache/**",
+      "~/Library/Caches/**",
       "~/Library/pnpm/store/**",
-      "~/Library/Caches/pnpm/**",
-      "~/Library/Caches/Yarn/**",
       "~/.yarn/**",
       "~/.cache/yarn/**"
     ],

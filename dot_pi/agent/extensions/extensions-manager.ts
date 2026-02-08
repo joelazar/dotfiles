@@ -12,10 +12,10 @@ import {
   mkdirSync,
   readFileSync,
   readdirSync,
-  statSync,
   writeFileSync,
 } from "node:fs";
 import {
+  basename,
   dirname,
   extname,
   isAbsolute,
@@ -28,11 +28,15 @@ import type {
   ExtensionAPI,
   ExtensionCommandContext,
 } from "@mariozechner/pi-coding-agent";
-import { getSettingsListTheme } from "@mariozechner/pi-coding-agent";
+import {
+  DynamicBorder,
+  getSettingsListTheme,
+} from "@mariozechner/pi-coding-agent";
 import {
   Container,
   type SettingItem,
   SettingsList,
+  Text,
 } from "@mariozechner/pi-tui";
 
 type Scope = "project" | "global";
@@ -57,7 +61,12 @@ interface ExtensionEntry {
   enabled: boolean;
 }
 
-const EXTENSION_FILE_EXTENSIONS = new Set([".ts", ".js", ".mjs", ".cjs"]);
+const EXTENSION_FILE_EXTENSIONS = new Set([".ts", ".js"]);
+const INDEX_ENTRY_FILES = ["index.ts", "index.js"];
+
+interface PiManifest {
+  extensions?: string[];
+}
 
 function resolveAgentDir(): string {
   const configured = process.env.PI_CODING_AGENT_DIR;
@@ -130,8 +139,16 @@ function parseOverrides(
     if (!target) continue;
 
     const absPath = isAbsolute(target) ? target : resolve(baseDir, target);
-    if (kind === "+") include.add(absPath);
-    if (kind === "-") exclude.add(absPath);
+    const resolvedPaths = (() => {
+      if (!existsSync(absPath)) return [absPath];
+      const maybeEntries = resolveExtensionEntries(absPath);
+      return maybeEntries.length > 0 ? maybeEntries : [absPath];
+    })();
+
+    for (const resolvedPath of resolvedPaths) {
+      if (kind === "+") include.add(resolvedPath);
+      if (kind === "-") exclude.add(resolvedPath);
+    }
   }
 
   return { include, exclude };
@@ -163,13 +180,34 @@ function setOverride(
   const plusAbsolute = `+${extensionPath}`;
   const minusAbsolute = `-${extensionPath}`;
 
-  const filtered = current.filter(
-    (value) =>
-      value !== plusRelative &&
-      value !== minusRelative &&
-      value !== plusAbsolute &&
-      value !== minusAbsolute,
-  );
+  const legacyDirAbsolute = INDEX_ENTRY_FILES.includes(basename(extensionPath))
+    ? dirname(extensionPath)
+    : undefined;
+  const legacyDirRelative = legacyDirAbsolute
+    ? toRelativeOrAbsolute(legacyDirAbsolute, baseDir)
+    : undefined;
+
+  const filtered = current.filter((value) => {
+    if (
+      value === plusRelative ||
+      value === minusRelative ||
+      value === plusAbsolute ||
+      value === minusAbsolute
+    ) {
+      return false;
+    }
+
+    if (!legacyDirAbsolute || !legacyDirRelative) {
+      return true;
+    }
+
+    return (
+      value !== `+${legacyDirAbsolute}` &&
+      value !== `-${legacyDirAbsolute}` &&
+      value !== `+${legacyDirRelative}` &&
+      value !== `-${legacyDirRelative}`
+    );
+  });
 
   if (enabled) {
     filtered.push(plusRelative);
@@ -183,6 +221,34 @@ function setOverride(
   };
 }
 
+function resolveExtensionEntries(dir: string): string[] {
+  const packageJsonPath = join(dir, "package.json");
+  if (existsSync(packageJsonPath)) {
+    try {
+      const content = readFileSync(packageJsonPath, "utf-8");
+      const pkg = JSON.parse(content) as { pi?: PiManifest };
+      const entries = pkg?.pi?.extensions;
+      if (Array.isArray(entries) && entries.length > 0) {
+        return entries
+          .filter((entry): entry is string => typeof entry === "string")
+          .map((entry) => resolve(dir, entry))
+          .filter((entryPath) => existsSync(entryPath));
+      }
+    } catch {
+      // ignore malformed package.json; fall back to index file discovery
+    }
+  }
+
+  for (const file of INDEX_ENTRY_FILES) {
+    const indexPath = join(dir, file);
+    if (existsSync(indexPath)) {
+      return [indexPath];
+    }
+  }
+
+  return [];
+}
+
 function discoverExtensionsInDir(dir: string): string[] {
   if (!existsSync(dir)) return [];
   const result: string[] = [];
@@ -194,14 +260,9 @@ function discoverExtensionsInDir(dir: string): string[] {
       result.push(fullPath);
       continue;
     }
+
     if (entry.isDirectory()) {
-      const hasIndex = ["index.ts", "index.js", "index.mjs", "index.cjs"].some(
-        (name) => existsSync(join(fullPath, name)),
-      );
-      const hasPackage = existsSync(join(fullPath, "package.json"));
-      if (hasIndex || hasPackage) {
-        result.push(fullPath);
-      }
+      result.push(...resolveExtensionEntries(fullPath));
     }
   }
 
@@ -214,8 +275,14 @@ function buildEntryDisplayName(
   config: ScopeConfig,
 ): string {
   const relativePath = relative(config.extensionsDir, path);
-  const shortName =
+  let shortName =
     relativePath && !relativePath.startsWith("..") ? relativePath : path;
+
+  const base = basename(shortName);
+  if (INDEX_ENTRY_FILES.includes(base)) {
+    shortName = dirname(shortName);
+  }
+
   return `[${scope}] ${shortName}`;
 }
 
@@ -299,20 +366,20 @@ export default function extensionsManager(pi: ExtensionAPI) {
           values: ["enabled", "disabled"],
         }));
 
-        const title = new (class {
-          render(_width: number) {
-            return [
-              theme.fg("accent", theme.bold("Extension Manager")),
-              theme.fg("muted", "Apply changes with /reload"),
-              "",
-            ];
-          }
-          invalidate() {}
-        })();
+        const container = new Container();
+        container.addChild(
+          new DynamicBorder((s: string) => theme.fg("accent", s)),
+        );
+        container.addChild(
+          new Text(theme.fg("accent", theme.bold("Extension Manager")), 1, 0),
+        );
+        container.addChild(
+          new Text(theme.fg("muted", "Apply changes with /reload"), 1, 0),
+        );
 
         const settingsList = new SettingsList(
           items,
-          Math.min(items.length + 2, 16),
+          Math.min(items.length, 14),
           getSettingsListTheme(),
           (id, newValue) => {
             const entry = entries.find((item) => item.id === id);
@@ -327,11 +394,20 @@ export default function extensionsManager(pi: ExtensionAPI) {
           () => {
             done(undefined);
           },
+          { enableSearch: true },
         );
 
-        const container = new Container();
-        container.addChild(title);
         container.addChild(settingsList);
+        container.addChild(
+          new Text(
+            theme.fg("dim", "Enter/Space toggle • / search • Esc close"),
+            1,
+            0,
+          ),
+        );
+        container.addChild(
+          new DynamicBorder((s: string) => theme.fg("accent", s)),
+        );
 
         return {
           render(width: number) {

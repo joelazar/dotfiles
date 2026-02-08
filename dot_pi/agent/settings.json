@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.52.6",
+  "lastChangelogVersion": "0.52.8",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "medium",
+  "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.3-codex",
@@ -15,5 +15,9 @@
     "anthropic/claude-opus-4-6"
   ],
   "showHardwareCursor": true,
-  "quietStartup": true
+  "quietStartup": true,
+  "extensions": [
+    "-extensions/sandbox/index.ts",
+    "+extensions/path-policy.ts"
+  ]
 }
