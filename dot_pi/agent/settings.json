@@ -2,10 +2,10 @@
   "lastChangelogVersion": "0.52.8",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "medium",
   "theme": "tokyo-night",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "google-gemini-cli/gemini-3-pro-preview",
@@ -17,7 +17,6 @@
   "showHardwareCursor": true,
   "quietStartup": true,
   "extensions": [
-    "-extensions/sandbox/index.ts",
-    "+extensions/path-policy.ts"
+    "-extensions/sandbox/index.ts"
   ]
 }

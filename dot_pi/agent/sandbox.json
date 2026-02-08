@@ -1,8 +1,5 @@
 {
   "enabled": true,
-  "uv": {
-    "enabled": true
-  },
   "network": {
     "allowedDomains": ["*"],
     "deniedDomains": []

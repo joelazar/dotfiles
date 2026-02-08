@@ -281,6 +281,11 @@ function buildEntryDisplayName(
   const base = basename(shortName);
   if (INDEX_ENTRY_FILES.includes(base)) {
     shortName = dirname(shortName);
+  } else {
+    const ext = extname(shortName);
+    if (EXTENSION_FILE_EXTENSIONS.has(ext)) {
+      shortName = shortName.slice(0, -ext.length);
+    }
   }
 
   return `[${scope}] ${shortName}`;

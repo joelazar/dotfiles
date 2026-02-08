@@ -15,20 +15,13 @@ import {
 
 interface SandboxConfig extends SandboxRuntimeConfig {
   enabled?: boolean;
-  uv?: {
-    enabled?: boolean;
-  };
 }
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const interceptedCommandsPath = join(__dirname, "..", "intercepted-commands");
 const nodeProxyBootstrapPath = join(__dirname, "node-proxy-bootstrap.mjs");
 
 const DEFAULT_CONFIG: SandboxConfig = {
   enabled: true,
-  uv: {
-    enabled: true,
-  },
   network: {
     allowedDomains: [
       "npmjs.org",
@@ -89,9 +82,6 @@ function deepMerge(
   }
   if (overrides.filesystem) {
     result.filesystem = { ...base.filesystem, ...overrides.filesystem };
-  }
-  if (overrides.uv) {
-    result.uv = { ...base.uv, ...overrides.uv };
   }
 
   const extOverrides = overrides as {
@@ -228,7 +218,6 @@ export default function (pi: ExtensionAPI) {
 
   let sandboxEnabled = false;
   let sandboxInitialized = false;
-  let uvEnabled = true;
   let allowAllDomainsMode = false;
   let commandPrefix = "";
 
@@ -237,10 +226,6 @@ export default function (pi: ExtensionAPI) {
     label: "bash (sandboxed)",
     async execute(id, params, signal, onUpdate, _ctx) {
       if (!sandboxEnabled || !sandboxInitialized) {
-        if (uvEnabled) {
-          const uvBash = createBashTool(localCwd, { commandPrefix });
-          return uvBash.execute(id, params, signal, onUpdate);
-        }
         return localBash.execute(id, params, signal, onUpdate);
       }
 
@@ -261,28 +246,18 @@ export default function (pi: ExtensionAPI) {
     const config = loadConfig(ctx.cwd);
     const normalizedNetwork = normalizeNetworkConfig(config.network);
 
-    uvEnabled = config.uv?.enabled !== false;
     allowAllDomainsMode = normalizedNetwork.allowAllDomains;
-
-    const prefixLines = [
-      `export NODE_OPTIONS="--import=${nodeProxyBootstrapPath} \${NODE_OPTIONS:-}"`,
-    ];
-    if (uvEnabled) {
-      prefixLines.unshift(`export PATH="${interceptedCommandsPath}:$PATH"`);
-    }
-    commandPrefix = prefixLines.join("\n");
+    commandPrefix = `export NODE_OPTIONS="--import=${nodeProxyBootstrapPath} \${NODE_OPTIONS:-}"`;
 
     if (noSandbox) {
       sandboxEnabled = false;
       ctx.ui.notify("Sandbox disabled via --no-sandbox", "warning");
-      if (uvEnabled) ctx.ui.notify("UV command interception enabled", "info");
       return;
     }
 
     if (!config.enabled) {
       sandboxEnabled = false;
       ctx.ui.notify("Sandbox disabled via config", "info");
-      if (uvEnabled) ctx.ui.notify("UV command interception enabled", "info");
       return;
     }
 
@@ -290,7 +265,6 @@ export default function (pi: ExtensionAPI) {
     if (platform !== "darwin" && platform !== "linux") {
       sandboxEnabled = false;
       ctx.ui.notify(`Sandbox not supported on ${platform}`, "warning");
-      if (uvEnabled) ctx.ui.notify("UV command interception enabled", "info");
       return;
     }
 
@@ -314,7 +288,7 @@ export default function (pi: ExtensionAPI) {
       sandboxInitialized = true;
 
       ctx.ui.notify(
-        `Sandbox initialized${allowAllDomainsMode ? " (network allow-all mode)" : ""}${uvEnabled ? " + UV interception" : ""}`,
+        `Sandbox initialized${allowAllDomainsMode ? " (network allow-all mode)" : ""}`,
         "info",
       );
     } catch (err) {
@@ -348,7 +322,6 @@ export default function (pi: ExtensionAPI) {
         "Sandbox Configuration:",
         "",
         `Enabled: ${config.enabled !== false ? "yes" : "no"}`,
-        `UV Interception: ${config.uv?.enabled !== false ? "yes" : "no"}`,
         "",
         "Network:",
         `  Allowed: ${config.network?.allowedDomains?.join(", ") || "(none)"}`,
