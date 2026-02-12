@@ -18,7 +18,7 @@ extract = [
   { run = "ya pub extract --list %s", desc = "Extract here", for = "macos" },
 ]
 play = [
-  { run = "mpv --force-window %s", desc = "Play", orphan = true, for = "macos" },
+  { run = 'open -a IINA %s', desc = "Play", orphan = true, for = "macos" },
 ]
 
 [open]
