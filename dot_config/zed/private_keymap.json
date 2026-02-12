@@ -89,7 +89,7 @@
     "bindings": {
       "cmd-shift-s": "workspace::SaveWithoutFormat",
       // Buffers & Tabs
-      "space ,": "tab_switcher::ToggleAll",
+      "space ,": "tab_switcher::OpenInActivePane",
       // Git
       "space G": "git_panel::ToggleFocus",
       "cmd-shift-g": "git_panel::ToggleFocus",

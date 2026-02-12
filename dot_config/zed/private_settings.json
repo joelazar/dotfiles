@@ -189,6 +189,9 @@
     "provider": "mercury"
   },
   "agent": {
+    "tool_permissions": {
+      "default": "allow"
+    },
     "inline_assistant_model": {
       "provider": "copilot_chat",
       "model": "claude-sonnet-4.5"
@@ -199,11 +202,10 @@
       "provider": "copilot_chat",
       "model": "gpt-5-mini"
     },
-    "always_allow_tool_actions": true,
     "enable_feedback": false,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5"
+      "model": "claude-opus-4.6"
     }
   },
 
@@ -250,9 +252,7 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/Users/joelazar/Code/jets"
-          ]
+          "paths": ["/Users/joelazar/Code/jets"]
         }
       ]
     },
@@ -261,9 +261,7 @@
       "args": [],
       "projects": [
         {
-          "paths": [
-            "/home/openclaw"
-          ]
+          "paths": ["/home/openclaw"]
         }
       ]
     }
@@ -534,7 +532,13 @@
         "completeUnimported": true,
         "staticcheck": false,
         "semanticTokens": true,
-        "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
+        "directoryFilters": [
+          "-.git",
+          "-.vscode",
+          "-.idea",
+          "-.vscode-test",
+          "-node_modules"
+        ],
         "experimentalPostfixCompletions": true,
         "codelenses": {
           "gc_details": true,
@@ -566,7 +570,14 @@
     // golangci-lint
     "golangci-lint": {
       "initialization_options": {
-        "command": ["golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--output.text.path="]
+        "command": [
+          "golangci-lint",
+          "run",
+          "--output.json.path",
+          "stdout",
+          "--show-stats=false",
+          "--output.text.path="
+        ]
       }
     }
   },
@@ -581,7 +592,10 @@
         {
           "external": {
             "command": "bash",
-            "arguments": ["-c", "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"]
+            "arguments": [
+              "-c",
+              "ruff check --select=I --fix --stdin-filename {buffer_path} | ruff format --stdin-filename {buffer_path}"
+            ]
           }
         }
       ],
