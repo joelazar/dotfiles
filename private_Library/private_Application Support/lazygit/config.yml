@@ -3,10 +3,12 @@ notARepository: "skip"
 promptToReturnFromSubprocess: false
 git:
   pagers:
-    - pager: delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - pager: delta --dark --paging=never --no-gitconfig --line-numbers --hunk-header-style=omit --file-modified-label='' --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+    - pager: delta --dark --paging=never --no-gitconfig --line-numbers --hunk-header-style=omit --file-modified-label='' --side-by-side --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   parseEmoji: true
   remoteBranchSortOrder: "alphabetical"
 gui:
+  sidePanelWidth: 0.25
   useHunkModeInStagingView: true
   skipDiscardChangeWarning: true
   showCommandLog: false

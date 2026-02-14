@@ -293,7 +293,7 @@ If you're setting up on a completely fresh macOS system without Homebrew or chez
 ## Theming 🎨
 
 - **Tokyo Night** are used across terminal, editors, and CLI tools for a consistent look.
-- Fonts: Fira Code, Fira Code Retina, FiraCode Nerd Font
+- Fonts: Maple Mono, Maple Mono NF
 
 ---
 

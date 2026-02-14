@@ -7,13 +7,13 @@
   "ui_font_size": 13.0,
   "agent_ui_font_size": 13.0,
   "buffer_font_size": 12.0,
-  "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_family": "Maple Mono NF",
   "buffer_font_features": {
-    "liga": true, // standard ligatures (-> => != etc)
-    "ss02": true, // cursive italics
-    "ss03": true, // alternative ampersand (&)
-    "ss05": true, // alternative @ symbol
-    "ss07": true // alternative >= <= ligatures
+    "calt": true, // standard ligatures (-> => != etc)
+    "cv02": true, // alternative `a` with top arm
+    "cv05": true, // alternative `g` in double story style
+    "cv61": true, // alternative `,` and `;` with straight tail
+    "cv63": true // alternative `<=` in arrow style
   },
   "cursor_blink": false,
   "rounded_selection": false,
@@ -276,13 +276,13 @@
     },
     "max_scroll_history_lines": 50000,
     "blinking": "off",
-    "font_family": "FiraCode Nerd Font",
+    "font_family": "Maple Mono NF",
     "font_features": {
-      "liga": true,
-      "ss02": true,
-      "ss03": true,
-      "ss05": true,
-      "ss07": true
+      "calt": true,
+      "cv02": true,
+      "cv05": true,
+      "cv61": true,
+      "cv63": true
     },
     "detect_venv": {
       "on": {

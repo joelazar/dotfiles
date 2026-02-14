@@ -98,8 +98,8 @@ brew "oven-sh/bun/bun"
 cask "calibre"
 # Web browser
 cask "firefox"
-cask "font-fira-code"
-cask "font-fira-code-nerd-font"
+cask "font-maple-mono"
+cask "font-maple-mono-nf"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
 # VPN client focusing on security

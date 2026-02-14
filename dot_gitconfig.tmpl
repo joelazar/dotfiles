@@ -16,6 +16,8 @@
     cp       = cherry-pick
     d        = diff
     dc       = diff --cached
+    ds       = -c delta.side-by-side=true diff        # Side-by-side diff.
+    dcs      = -c delta.side-by-side=true diff --cached # Side-by-side diff (cached).
     f        = fetch --prune
     hash     = rev-parse HEAD
     lc       = shortlog --email --numbered --summary --no-merges # List contributors.
@@ -141,9 +143,13 @@
 
 [delta]
 
+    dark = true
     syntax-theme = zenburn
     navigate = true
-    light = false
+    line-numbers = true
+    hunk-header-style = omit
+    file-modified-label =
+    hyperlinks = true
     true-color = always
 
 [diff "bin"]

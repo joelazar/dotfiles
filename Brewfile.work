@@ -206,8 +206,6 @@ brew "mise"
 brew "mob"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
-# Media player based on MPlayer and mplayer2
-brew "mpv"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -374,8 +372,9 @@ cask "steipete/tap/codexbar"
 cask "discord"
 # Web browser
 cask "firefox"
-cask "font-fira-code"
-cask "font-fira-code-nerd-font"
+cask "font-maple-mono"
+cask "font-maple-mono-nf"
+cask "font-maple-mono"
 # Kext-less implementation of FUSE
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
@@ -384,8 +383,6 @@ cask "ghostty@tip"
 cask "google-chrome"
 # Client for the Google Drive storage service
 cask "google-drive"
-# Keyboard shortcuts for every button on your screen
-cask "homerow"
 # Free and open-source media player
 cask "iina"
 # Menu bar manager

@@ -349,7 +349,7 @@ gui.column.format:
 
 # Font name for packet list, protocol tree, and hex dump panes. (Qt)
 # A string
-gui.qt.font_name: FiraCode Nerd Font,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
+gui.qt.font_name: Maple Mono NF,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 ####### User Interface: Layout ########
 

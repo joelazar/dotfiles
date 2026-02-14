@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.52.9",
+  "lastChangelogVersion": "0.52.12",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "medium",
+  "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-4-6",
@@ -12,7 +12,8 @@
     "openai-codex/gpt-5.3-codex",
     "anthropic/claude-sonnet-4-5",
     "openai-codex/gpt-5.2",
-    "anthropic/claude-opus-4-6"
+    "anthropic/claude-opus-4-6",
+    "openai-codex/gpt-5.3-codex-spark"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
