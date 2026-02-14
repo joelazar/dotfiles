@@ -11,4 +11,3 @@ command = "aws rds describe-db-instances --db-instance-identifier '{split:\t:0}'
 
 [ui.preview_panel]
 size = 60
-

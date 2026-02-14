@@ -44,4 +44,3 @@ mode = "fork"
 description = "Add a comment to the selected issue"
 command = "gh issue comment {strip_ansi|split:#:1|split: :0}"
 mode = "execute"
-
