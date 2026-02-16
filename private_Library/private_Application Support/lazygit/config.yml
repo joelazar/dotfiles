@@ -204,5 +204,5 @@ customCommands:
   - key: "D"
     command: "git add -AN 2>/dev/null; git diff | diffnav"
     context: "files"
-    subprocess: true
     description: "View diff in diffnav"
+    output: terminal
