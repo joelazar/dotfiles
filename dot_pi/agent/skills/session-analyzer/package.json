@@ -1,0 +1,7 @@
+{
+    "name": "session-analyzer",
+    "type": "module",
+    "dependencies": {
+        "@mariozechner/pi-coding-agent": "*"
+    }
+}
