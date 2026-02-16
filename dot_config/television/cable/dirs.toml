@@ -11,20 +11,12 @@ command = "ls -la --color=always '{}'"
 
 [keybindings]
 shortcut = "f2"
-enter = "actions:cd"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
-f12 = "actions:edit"
 
 [actions.cd]
 description = "Open a shell in the selected directory"
 command = "cd '{}' && $SHELL"
 mode = "execute"
 
-[actions.edit]
-description = "Open the selected directory in editor"
-command = "$EDITOR {} >/dev/tty"
 [actions.goto_parent_dir]
 description = "Re-opens tv in the parent directory"
 command = "tv dirs .."

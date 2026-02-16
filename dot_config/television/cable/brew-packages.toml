@@ -4,7 +4,10 @@ description = "List and manage Homebrew packages"
 requirements = ["brew"]
 
 [source]
-command = ["brew list --formula", "brew list --cask"]
+command = [
+  "brew list --formula",
+  "brew list --cask",
+]
 
 [preview]
 command = "brew info '{}'"

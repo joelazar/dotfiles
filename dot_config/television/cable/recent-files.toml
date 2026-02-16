@@ -15,12 +15,8 @@ env = { BAT_THEME = "ansi" }
 
 [keybindings]
 enter = "actions:edit"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
-f12 = "actions:edit"
 
 [actions.edit]
 description = "Open the selected file in editor"
-command = "$EDITOR {} >/dev/tty"
+command = "${EDITOR:-vim} '{}'"
 mode = "execute"

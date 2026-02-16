@@ -11,12 +11,8 @@ command = "bat -n --color=always '{}'"
 
 [keybindings]
 enter = "actions:edit"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
-f12 = "actions:edit"
 
 [actions.edit]
 description = "Edit the selected dotfile"
-command = "$EDITOR {} >/dev/tty"
+command = "${EDITOR:-vim} '{}'"
 mode = "execute"

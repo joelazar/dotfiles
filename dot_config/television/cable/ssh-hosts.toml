@@ -1,78 +1,18 @@
 [metadata]
 name = "ssh-hosts"
-description = "A channel to select from SSH hosts"
-requirements = ["ssh", "bat"]
-
-[ui.features]
-preview_panel = { enabled = true, visible = true }
-remote_control = { enabled = true, visible = false }
-help_panel = { enabled = true, visible = false }
-status_bar = { enabled = true, visible = false }
+description = "A channel to select hosts from your SSH config"
+requirements = ["grep", "tr", "cut", "awk"]
 
 [source]
-command = '''
-bash -c '
-# Function to recursively read included SSH config files
-get_ssh_config_files() {
-  local config_file="$1"
-  local base_dir="$(dirname "$config_file")"
-
-  # Print the current config file
-  echo "$config_file"
-
-  # Find Include directives and recursively process them
-  if [ -f "$config_file" ]; then
-    grep -i "^[[:space:]]*Include[[:space:]]" "$config_file" 2>/dev/null | while read -r line; do
-      # Extract the include path (remove "Include" keyword)
-      include_path=$(echo "$line" | sed "s/^[[:space:]]*[Ii]nclude[[:space:]]*//")
-
-      # Handle relative paths
-      if [[ "$include_path" != /* ]]; then
-        include_path="$base_dir/$include_path"
-      fi
-
-      # Expand glob patterns and process each file
-      for file in $include_path; do
-        if [ -f "$file" ]; then
-          get_ssh_config_files "$file"
-        fi
-      done
-    done
-  fi
-}
-
-# Extract SSH hosts from various sources
-(
-  # From SSH config files (including all included files)
-  {
-    get_ssh_config_files ~/.ssh/config
-    [ -f /etc/ssh/ssh_config ] && get_ssh_config_files /etc/ssh/ssh_config
-  } | sort -u | while read -r config_file; do
-    if [ -f "$config_file" ]; then
-      grep -i "^[[:space:]]*host " "$config_file" |
-        awk -v file="$config_file" "{for (i = 2; i <= NF; i++) printf \"%s|%s\\n\", \$i, file}"
-    fi
-  done | grep -v "[*?%]"
-
-) | sort -u | grep -v "^$"
-'
-'''
-display = "{split:|:0}"
-output = "{split:|:0}"
+command = "grep -E '^Host(name)? ' $HOME/.ssh/config | tr -s ' ' | cut -d' ' -f2- | tr ' ' '\n' | grep -v '^$'"
 
 [preview]
-command = '''bash -c 'LINE=$(grep -n -i "^[[:space:]]*host " "{split:|:1}" | grep -w "{split:|:0}" | head -n 1 | cut -d: -f1); bat --color=always -p "{split:|:1}" --highlight-line $LINE -r $((LINE)):$((LINE+2))' '''
+command = "awk '/^Host / { found=0 } /^Host (.*[[:space:]])?'{}'([[:space:]].*)?$/ { found=1 } found' $HOME/.ssh/config"
 
 [keybindings]
-ctrl-s = "actions:connect"
-ctrl-e = "actions:edit_config"
+enter = "actions:connect"
 
 [actions.connect]
 description = "SSH into the selected host"
-command = "ssh '{split:|:0}'"
-mode = "execute"
-
-[actions.edit_config]
-description = "Edit the SSH config file containing this host"
-command = "$EDITOR '{split:|:1}' >/dev/tty"
+command = "ssh '{}'"
 mode = "execute"

@@ -106,6 +106,7 @@
     "commit-commands@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
   "installMethod": "native",
   "PostToolUse": [
     {
@@ -117,6 +118,5 @@
         }
       ]
     }
-  ],
-  "skipDangerousModePermissionPrompt": true
+  ]
 }

@@ -9,7 +9,7 @@ This channel uses `fd` to find directories that contain a `.git` subdirectory, a
 
 [source]
 # this is a macos version of the command. While perfectly usable on linux, you may want to tweak it a bit.
-command = "fd -g .git -HL -t d -d 10 --prune ~/Code/ --exec dirname '{}'"
+command = "fd -g .git -HL -t d -d 10 --prune ~ -E 'Library' -E 'Application Support' --exec dirname '{}'"
 display = "{split:/:-1}"
 
 [preview]
@@ -18,10 +18,6 @@ command = "cd '{}'; git log -n 200 --pretty=medium --all --graph --color"
 [keybindings]
 enter = "actions:cd"
 ctrl-e = "actions:edit"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
-f12 = "actions:edit"
 
 [actions.cd]
 description = "Open a new shell in the selected repository"
@@ -30,5 +26,5 @@ mode = "execute"
 
 [actions.edit]
 description = "Open the repository in editor"
-command = "$EDITOR {} >/dev/tty"
+command = "${EDITOR:-vim} '{}'"
 mode = "execute"

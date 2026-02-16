@@ -18,12 +18,8 @@ preview_panel = { header = "{strip_ansi|split:\\::..2}" }
 
 [keybindings]
 enter = "actions:edit"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
-f12 = "actions:edit"
 
 [actions.edit]
 description = "Open file in editor at the comment"
-command = "$EDITOR +{strip_ansi|split:\\::1} {strip_ansi|split:\\::0} >/dev/tty"
+command = "${EDITOR:-vim} '+{strip_ansi|split:\\::1}' '{strip_ansi|split:\\::0}'"
 mode = "execute"

@@ -4,7 +4,10 @@ description = "Browse PDF files"
 requirements = ["fd", "pdftotext"]
 
 [source]
-command = ["fd -t f -e pdf .", "fd -t f -e pdf -H ."]
+command = [
+  "fd -t f -e pdf .",
+  "fd -t f -e pdf -H .",
+]
 
 [preview]
 command = "pdftotext -l 2 -layout '{}' - 2>/dev/null | head -100 || file '{}'"

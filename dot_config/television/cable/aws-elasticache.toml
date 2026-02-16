@@ -11,3 +11,4 @@ command = "aws elasticache describe-cache-clusters --cache-cluster-id '{split:\t
 
 [ui.preview_panel]
 size = 60
+

@@ -12,15 +12,12 @@ env = { BAT_THEME = "ansi" }
 
 [keybindings]
 shortcut = "f1"
-ctrl-l = "actions:edit"
-ctrl-enter = "actions:edit"
-ctrl-o = "actions:edit"
 f12 = "actions:edit"
 ctrl-up = "actions:goto_parent_dir"
 
 [actions.edit]
 description = "Opens the selected entries with the default editor (falls back to vim)"
-command = "$EDITOR {} >/dev/tty"
+command = "${EDITOR:-vim} '{}'"
 # use `mode = "fork"` if you want to return to tv afterwards
 mode = "execute"
 
