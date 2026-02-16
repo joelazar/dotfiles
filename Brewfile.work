@@ -374,6 +374,8 @@ cask "discord"
 cask "firefox"
 cask "font-maple-mono"
 cask "font-maple-mono-nf"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
 cask "font-maple-mono"
 # Kext-less implementation of FUSE
 cask "fuse-t"
@@ -385,8 +387,6 @@ cask "google-chrome"
 cask "google-drive"
 # Free and open-source media player
 cask "iina"
-# Menu bar manager
-cask "jordanbaird-ice@beta"
 # Free cross-platform office suite, fresh version
 cask "libreoffice"
 # Tool to control external monitor brightness & volume
@@ -397,6 +397,8 @@ cask "obsidian"
 cask "openvpn-connect"
 # WebKit based web browser
 cask "orion"
+# Client for Proton Drive
+cask "proton-drive"
 # Desktop client for Proton Pass
 cask "proton-pass"
 # VPN client focusing on security
@@ -417,6 +419,8 @@ cask "steam"
 cask "tableplus"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
+# Menu bar manager
+cask "thaw"
 # Open-source code editor
 cask "visual-studio-code"
 # Network protocol analyzer
