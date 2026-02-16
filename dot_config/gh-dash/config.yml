@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://gh-dash.dev/schema.json
 prSections:
   - title: 🚀 My PRs
     filters: is:open assignee:@me -is:draft sort:created-desc
@@ -24,6 +25,23 @@ issuesSections:
     filters: is:open author:@me
   - title: 🎯 Assigned
     filters: is:open assignee:@me
+notificationsSections:
+  - title: 📬 All
+    filters: ""
+  - title: 🆕 Review Requested
+    filters: "reason:review-requested"
+  - title: 💬 Participating
+    filters: "reason:participating"
+  - title: 📣 Mentioned
+    filters: "reason:mention"
+  - title: ✍️ Created
+    filters: "reason:author"
+  - title: 🏷️ Assigned
+    filters: "reason:assign"
+  - title: 👥 Team Mentioned
+    filters: "reason:team-mention"
+  - title: 🔔 Subscribed
+    filters: "reason:subscribed"
 defaults:
   preview:
     open: true
@@ -32,17 +50,49 @@ defaults:
   issuesLimit: 20
   notificationsLimit: 40
   view: prs
+  prApproveComment: ""
+  dateFormat: relative
   refetchIntervalMinutes: 10
+  layout:
+    prs:
+      updatedAt:
+        width: 7
+      repo:
+        width: 15
+      author:
+        width: 15
+      assignees:
+        width: 20
+        hidden: true
+      base:
+        width: 15
+        hidden: true
+      lines:
+        width: 16
+    issues:
+      updatedAt:
+        width: 7
+      repo:
+        width: 15
+      creator:
+        width: 10
+      assignees:
+        width: 20
+        hidden: true
 repoPaths:
   onomondo/*: ~/Code/onomondo/*
 pager:
   diff: diffnav
+showAuthorIcons: true
+smartFilteringAtLaunch: true
+confirmQuit: true
 keybindings:
-  prs:
+  universal:
     - key: g
       command: >
         cd {{.RepoPath}} && lazygit
       name: lazygit
+  prs:
     - key: D
       command: >
         cd {{.RepoPath}} &&
@@ -94,9 +144,32 @@ keybindings:
         gh run rerun --repo {{.RepoName}} $RUN_ID;
         echo "Done!"
         '
-
+  issues:
+    - key: C
+      command: >
+        cd {{.RepoPath}} && nvim
+      name: open in nvim
+    - key: P
+      command: >
+        gh issue pin {{.IssueNumber}} --repo {{.RepoName}}
+      name: pin issue
 theme:
   ui:
     sectionsShowCount: true
     table:
+      showSeparators: true
       compact: false
+  colors:
+    text:
+      primary: "#c0caf5"
+      secondary: "#7aa2f7"
+      inverted: "#1a1b26"
+      faint: "#565f89"
+      warning: "#f7768e"
+      success: "#9ece6a"
+    background:
+      selected: "#283457"
+    border:
+      primary: "#7aa2f7"
+      secondary: "#3b4261"
+      faint: "#292e42"
