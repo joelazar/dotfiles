@@ -42,7 +42,7 @@
 
 [mergetool "nvim"]
 
-    cmd = nvim -f -c DiffviewOpen
+    cmd = nvim -f "$MERGED" -c "DiffviewOpen"
 
 [difftool]
 
@@ -54,8 +54,17 @@
 
 [diff]
 
+    algorithm = histogram
     colorMoved = default
     tool = nvim
+
+[branch]
+
+    sort = -committerdate
+
+[commit]
+
+    verbose = true
 
 [merge]
 
@@ -146,6 +155,7 @@
     # Make `git push` automatically push relevant
     # annotated tags when pushing branches out.
 
+    autoSetupRemote = true
     default = simple
     followTags = true
 
@@ -182,6 +192,10 @@
 [credential "https://gist.github.com"]
 
     helper = !/usr/bin/gh auth git-credential
+
+[rerere]
+
+    enabled = true
 
 [init]
 
