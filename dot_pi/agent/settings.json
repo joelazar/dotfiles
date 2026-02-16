@@ -19,5 +19,8 @@
   "quietStartup": true,
   "extensions": [
     "-extensions/sandbox/index.ts"
+  ],
+  "packages": [
+    "npm:pi-interactive-shell"
   ]
 }

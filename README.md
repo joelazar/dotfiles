@@ -40,7 +40,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 - **Editor and terminal integration** (Neovim, Zed, Ghostty)
 - **Rich shell experience** (Fish, Starship, Atuin, Direnv, Television)
 - **Developer tooling** for Python, Go, Rust, Node.js, Docker, Kubernetes, and more
-- **AI/LLM integration** (Claude Code, Pi Agent, Goose, Gemini, OpenCode, Codex, Copilot, and local models via Ollama)
+- **AI/LLM integration** (Claude Code, Pi Agent, Gemini, Codex, and local models via Ollama)
 - **Window management** with AeroSpace tiling WM
 
 ---
@@ -59,7 +59,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
   - Snippet support for JavaScript, TypeScript, and TSX
   - Theming: Tokyo Night, VSCode Icons (Dark)
   - File/folder exclusions for performance
-  - AI/LLM agent integration (Copilot, Anthropic, OpenAI, DeepSeek, Goose, Ollama, etc.)
+  - AI/LLM agent integration (Anthropic, OpenAI, DeepSeek, Ollama, etc.)
   - Edit predictions via Copilot/Mercury
 
 ### [Yazi](https://yazi-rs.github.io/) 🦆
@@ -275,11 +275,8 @@ A significant part of this setup is dedicated to AI-assisted development:
 
 - **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions and Wakatime integration
 - **[Pi Agent](https://github.com/nicholasgriffintn/pi-coding-agent)** — Coding agent with custom skills (GitHub, Kagi search, YouTube transcripts, web browsing, frontend design), prompt templates (commit, PR creation, code review, catchup), extensions (sandbox, image gen, notifications), and Tokyo Night theme. Config in [`dot_pi/`](dot_pi/)
-- **[Goose](https://github.com/block/goose)** — Open-source AI coding agent
 - **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** — Google's Gemini from the terminal
-- **[OpenCode](https://github.com/opencode-ai/opencode)** — Open-source AI coding assistant
 - **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent
-- **[GitHub Copilot CLI](https://docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-the-command-line)** — Copilot in the terminal
 - **[Ollama](https://ollama.com/)** — Local LLM runner for self-hosted models
 - **[`ai-update`](private_dot_local/bin/executable_ai-update)** — Script to keep all AI tools up to date
 
@@ -288,8 +285,8 @@ A significant part of this setup is dedicated to AI-assisted development:
 ## Package Management 📦
 
 - **Homebrew**: All packages and casks are managed via [`Brewfile.private`](Brewfile.private) and [`Brewfile.work`](Brewfile.work)
-- **Bun**: Global JavaScript/TypeScript packages (e.g., `claude-code`, `pi-coding-agent`, `copilot`) installed via [`run_once_install_packages.sh`](run_once_install_packages.sh.tmpl)
-- **UV**: Python tool management (e.g., `mistral-vibe`, `gitingest`)
+- **Bun**: Global JavaScript/TypeScript packages (e.g., `claude-code`, `pi-coding-agent`) installed via [`run_once_install_packages.sh`](run_once_install_packages.sh.tmpl)
+- **UV**: Python tool management (e.g., `gitingest`)
 - **Go, Rust**: Install scripts for language-specific tools and formatters
 
 ---
@@ -353,7 +350,7 @@ See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
 | Script | Description |
 |--------|-------------|
 | [`agent-md`](private_dot_local/bin/executable_agent-md) | Manage AGENTS.md and CLAUDE.md files for AI coding agents |
-| [`ai-update`](private_dot_local/bin/executable_ai-update) | Update all AI/LLM CLI tools (Claude, Gemini, Goose, Codex, etc.) |
+| [`ai-update`](private_dot_local/bin/executable_ai-update) | Update all AI/LLM CLI tools (Claude, Gemini, Codex, etc.) |
 | [`backup`](private_dot_local/bin/executable_backup) | Encrypted backup utility using `restic` and `age` |
 | [`cht`](private_dot_local/bin/executable_cht) | Cheat sheet lookup via cht.sh |
 | [`claude-review`](private_dot_local/bin/executable_claude-review) | Pre-commit hook for AI code review |

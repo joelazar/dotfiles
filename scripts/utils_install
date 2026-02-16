@@ -230,6 +230,12 @@ install_uv_tool() {
     execute "uv tool install $PACKAGENAME" "$PACKAGENAME"
 }
 
+install_pi_package() {
+    declare -r PACKAGENAME="$1"
+
+    execute "pi install $PACKAGENAME" "$PACKAGENAME"
+}
+
 install_packages_from_list() {
     local -r type="$1"
     local -r installer="$2"

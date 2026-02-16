@@ -1,6 +1,5 @@
 tap "aws/tap"
 tap "buo/cask-upgrade"
-tap "charmbracelet/tap"
 tap "dlvhdr/formulae"
 tap "hashicorp/tap"
 tap "jakehilborn/jakehilborn"
@@ -11,7 +10,6 @@ tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "protonpass/tap"
-tap "sst/tap"
 tap "steipete/tap"
 tap "tw93/tap"
 # Run your GitHub Actions locally
@@ -36,8 +34,6 @@ brew "bash"
 brew "bat"
 # Remove large files or passwords from Git history like git-filter-branch
 brew "bfg"
-# Open source, extensible AI agent that goes beyond code suggestions
-brew "block-goose-cli"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Open-source, cross-platform JavaScript runtime environment
@@ -188,8 +184,6 @@ brew "lima-additional-guestagents"
 brew "litecli"
 # LLM inference in C/C++
 brew "llama.cpp"
-# Access large language models from the command-line
-brew "llm"
 # Next-gen compiler infrastructure
 brew "llvm"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -312,8 +306,6 @@ brew "zig"
 brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
-# A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
-brew "charmbracelet/tap/crush"
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav"
 # Terraform
@@ -330,8 +322,6 @@ brew "nats-io/nats-tools/nats"
 brew "oven-sh/bun/bun"
 # Proton Pass CLI - Command-line interface for Proton Pass
 brew "protonpass/tap/pass-cli"
-# The AI coding agent built for the terminal.
-brew "sst/tap/opencode"
 # Command-line ElevenLabs TTS with mac-style flags
 brew "steipete/tap/sag"
 # Comprehensive macOS cleanup and application uninstall tool
@@ -372,8 +362,6 @@ cask "steipete/tap/codexbar"
 cask "discord"
 # Web browser
 cask "firefox"
-cask "font-maple-mono"
-cask "font-maple-mono-nf"
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-maple-mono"

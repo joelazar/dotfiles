@@ -213,15 +213,6 @@
   // AGENT SERVERS (external AI agents)
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
-    "mistral-vibe": {
-      "type": "registry"
-    },
-    "opencode": {
-      "type": "registry"
-    },
-    "github-copilot": {
-      "type": "registry"
-    },
     "claude": {
       "default_mode": "bypassPermissions",
       "favorite_models": ["opus", "default"],
@@ -233,12 +224,6 @@
     },
     "gemini": {
       "ignore_system_version": false
-    },
-    "Goose 🪿": {
-      "type": "custom",
-      "command": "goose",
-      "args": ["acp"],
-      "env": {}
     }
   },
 
@@ -657,7 +642,6 @@
     "material-icon-theme": true,
     "nginx": true,
     "nix": true,
-    "opencode": true,
     "prisma": true,
     "scheme": true,
     "sql": true,
