@@ -10,56 +10,30 @@
     a        = commit --amend --no-edit
     br       = branch --list --remote
     c        = commit
-    ca       = !git add -A && gitmoji -c             # Commit all changes.
+    ca       = !git add -A && gitmoji -c
     cl       = clean -fxd
     co       = checkout
     cp       = cherry-pick
-    d        = diff
+    d        = "!git add -AN 2>/dev/null; git diff"
     dc       = diff --cached
-    ds       = -c delta.side-by-side=true diff        # Side-by-side diff.
-    dcs      = -c delta.side-by-side=true diff --cached # Side-by-side diff (cached).
+    dn       = "!git add -AN 2>/dev/null; git diff | diffnav"
+    ds       = "!git add -AN 2>/dev/null; git -c delta.side-by-side=true diff"
+    dcs      = -c delta.side-by-side=true diff --cached
     f        = fetch --prune
     hash     = rev-parse HEAD
-    lc       = shortlog --email --numbered --summary --no-merges # List contributors.
+    lc       = shortlog --email --numbered --summary --no-merges
     lg       = log --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
     lgall    = log --all --graph --date=relative --pretty=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar) %C(white)%s %C(dim white) [%an] %C(bold yellow)%d'
-    lh       = log -p -10                            # Show custom log.
+    lh       = log -p -10
     p        = pull
     pushf    = push --force-with-lease
     res      = reset --hard HEAD
-    rlc      = reset --hard HEAD~1                   # Remove last commit.
+    rlc      = reset --hard HEAD~1
     s        = status
-    sres     = reset --soft HEAD~1                   # Undo last commit.
+    sres     = reset --soft HEAD~1
     sub      = submodule update --init --recursive
 	  uncommit = reset --soft HEAD^
 	  unstage  = reset HEAD --
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Find commits by source code.
-
-    cc = "!f() { \
-        git log --pretty=custom --decorate --date=short -S\"$1\"; \
-    }; f"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # Find commits by commit message.
-
-    cm = "!f() { \
-        git log --pretty=custom --decorate --date=short --grep=\"$1\"; \
-    }; f"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    # List remote branches.
-
-    lrb = "!f() { \
-        remote="${1:-origin}"; \
-        git ls-remote --heads "$remote"; \
-    }; f"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 [mergetool]
 
@@ -184,7 +158,6 @@
 
     # Don't guess the user's identity.
     # https://github.com/git/git/blob/90f7b16b3adc78d4bbabbd426fb69aa78c714f71/Documentation/config.txt#L2847-L2855
-
     useConfigOnly = true
 
 [url "git@github.com:"]
