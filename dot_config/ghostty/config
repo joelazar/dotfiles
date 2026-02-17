@@ -11,7 +11,7 @@ theme = tokyonight
 
 working-directory = home
 window-inherit-working-directory = false
-tab-inherit-working-directory = false
+tab-inherit-working-directory = true
 split-inherit-working-directory = false
 window-inherit-font-size = false
 cursor-style-blink = false
