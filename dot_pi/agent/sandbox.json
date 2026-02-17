@@ -21,6 +21,7 @@
       "~/.config/gh/hosts.yml",
       "~/.gem/credentials",
       "**/.env*",
+      "**/.secret*",
       "**/*.pem",
       "**/*.key",
       "**/*.p12",

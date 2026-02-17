@@ -18,6 +18,7 @@
     "/Users/joelazar/.codex/auth.json",
     "**/.env*",
     "**/*.pem",
+    "**/.secret*",
     "**/*.key",
     "**/*.p12",
     "**/*.pfx",
