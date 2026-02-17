@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "currentMode": "default",
+  "modes": {
+    "default": {
+      "provider": "anthropic",
+      "modelId": "claude-opus-4-6",
+      "thinkingLevel": "medium"
+    },
+    "fast": {
+      "provider": "anthropic",
+      "modelId": "claude-sonnet-4-5",
+      "thinkingLevel": "medium"
+    },
+    "deep": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.3-codex",
+      "thinkingLevel": "high"
+    }
+  }
+}
