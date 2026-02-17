@@ -274,11 +274,92 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 A significant part of this setup is dedicated to AI-assisted development:
 
 - **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions and Wakatime integration
-- **[Pi Agent](https://github.com/nicholasgriffintn/pi-coding-agent)** — Coding agent with custom skills (GitHub, Kagi search, YouTube transcripts, web browsing, frontend design), prompt templates (commit, PR creation, code review, catchup), extensions (sandbox, image gen, notifications), and Tokyo Night theme. Config in [`dot_pi/`](dot_pi/)
+- **[Pi Agent](https://github.com/mariozechner/pi-coding-agent)** — Heavily customized coding agent harness (see detailed section below). Config in [`dot_pi/`](dot_pi/)
 - **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** — Google's Gemini from the terminal
 - **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent
 - **[Ollama](https://ollama.com/)** — Local LLM runner for self-hosted models
 - **[`ai-update`](private_dot_local/bin/executable_ai-update)** — Script to keep all AI tools up to date
+
+### [Pi Agent](https://github.com/mariozechner/pi-coding-agent) 🥧
+
+- **Config:** See [`dot_pi/`](dot_pi/)
+- **Features:**
+  - Multi-provider coding agent TUI with Tokyo Night theme
+  - Default model: Claude Opus 4.6 (Anthropic), with Gemini, OpenAI Codex, and local Ollama models enabled
+  - Sandbox execution with comprehensive credential/secret path blocking
+  - Path policy to guard sensitive files from agent reads/writes
+  - Python command interception (`pip`, `poetry`, `python`) → automatically redirected to `uv`
+  - Ghostty terminal integration (title, progress bar)
+  - Lazygit integration via `/lazygit` command or `Ctrl+G`
+  - Desktop notifications on task completion
+  - Session naming, session breakdown analysis, and CWD history tracking
+  - Sub-agent system with specialized roles (planner, reviewer, scout, worker)
+
+- **Skills:**
+
+  | Skill                | Description                                                            |
+  | -------------------- | ---------------------------------------------------------------------- |
+  | `frontend-design`    | Design and implement production-ready frontend interfaces              |
+  | `github`             | Interact with GitHub using the `gh` CLI (issues, PRs, CI runs, search) |
+  | `improve-skill`      | Analyze session transcripts to improve or create skills                |
+  | `kagi-search`        | Web search and content extraction via Kagi Search API                  |
+  | `session-analyzer`   | Mine session history for automation opportunities                      |
+  | `summarize`          | Convert URLs/files (PDF, DOCX, HTML) to Markdown via `markitdown`      |
+  | `uv`                 | Use `uv` instead of pip/python/venv for Python workflows               |
+  | `web-browser`        | Remote-control Chrome via CDP for web interaction                      |
+  | `youtube-transcript` | Fetch YouTube video transcripts for analysis                           |
+
+- **Prompt Templates:**
+
+  | Template           | Description                                                  |
+  | ------------------ | ------------------------------------------------------------ |
+  | `address-comments` | Get GitHub PR and address all non-resolved review comments   |
+  | `catchup`          | Read all changed code in current branch vs default branch    |
+  | `clean-gone`       | Clean up git branches marked as `[gone]` (deleted on remote) |
+  | `commit`           | Create a git commit                                          |
+  | `create-pr`        | Commit, push, and open a PR                                  |
+  | `double-check`     | Double-check recent work and look for edge cases             |
+  | `explain-codebase` | Scan and explain the whole codebase                          |
+  | `search-web`       | Search the web for a given query                             |
+
+- **Extensions:**
+
+  | Extension               | Description                                                       |
+  | ----------------------- | ----------------------------------------------------------------- |
+  | `antigravity-image-gen` | Image generation via Antigravity models                           |
+  | `answer`                | Q&A extraction from assistant responses                           |
+  | `commit-shortcut`       | Quick commit shortcut                                             |
+  | `cwd-history`           | Track working directory history across sessions                   |
+  | `editor-with-context`   | See last agent response when composing prompts                    |
+  | `extensions-manager`    | Manage extensions from within Pi                                  |
+  | `files`                 | File management utilities                                         |
+  | `ghostty`               | Ghostty terminal title and progress bar integration               |
+  | `handoff`               | Transfer context to a new focused session                         |
+  | `lazygit`               | Open lazygit with `/lazygit` or `Ctrl+G`                          |
+  | `loop`                  | Loop/repeat task execution                                        |
+  | `notify`                | Desktop notifications on completion                               |
+  | `path-policy`           | Block reads/writes to sensitive credential paths                  |
+  | `permission-gate`       | Permission gate for dangerous operations                          |
+  | `prompt-editor`         | Custom prompt editor with model selector                          |
+  | `review`                | Code review (inspired by Codex's review feature)                  |
+  | `sandbox`               | Sandboxed execution with network/filesystem restrictions          |
+  | `session-breakdown`     | Analyze and summarize session activity                            |
+  | `session-name`          | Auto-name sessions                                                |
+  | `subagent`              | Delegate to specialized agents (planner, reviewer, scout, worker) |
+  | `todos`                 | File-based todo management in `.pi/todos`                         |
+  | `uv-intercept`          | Intercept `pip`/`poetry`/`python` → redirect to `uv`              |
+  | `whimsical`             | Fun/whimsical messages                                            |
+
+- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents)
+
+- **Credits:** Many skills and extensions are adapted from or inspired by the work of others:
+
+  | Author          | GitHub                                       | Contributions                                                                                                                                                                                                                                                                                                                                |
+  | --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi Agent itself ([pi-mono](https://github.com/badlogic/pi-mono)), extensions (`antigravity-image-gen`, `editor-with-context`, `handoff`, `notify`, `permission-gate`, `sandbox`, `session-name`, `subagent`), skills (`youtube-transcript`, `kagi-search` adapted from `brave-search` in [pi-skills](https://github.com/badlogic/pi-skills)) |
+  | Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions (`answer`, `files`, `loop`, `prompt-editor`, `review`, `session-breakdown`, `todos`, `whimsical`), intercepted commands (`pip`/`poetry`/`python` → `uv`), skills (`frontend-design`, `github`, `summarize`, `uv`, `web-browser`) from [agent-stuff](https://github.com/mitsuhiko/agent-stuff)                                     |
+  | Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from [pi-ghostty](https://github.com/HazAT/pi-ghostty)                                                                                                                                                                                                                                                                   |
+  | Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from [pi-skills](https://github.com/ferologics/pi-skills)                                                                                                                                                                                                                                                           |
 
 ---
 
@@ -347,26 +428,26 @@ If you're setting up on a completely fresh macOS system without Homebrew or chez
 
 See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
 
-| Script | Description |
-|--------|-------------|
-| [`agent-md`](private_dot_local/bin/executable_agent-md) | Manage AGENTS.md and CLAUDE.md files for AI coding agents |
-| [`ai-update`](private_dot_local/bin/executable_ai-update) | Update all AI/LLM CLI tools (Claude, Gemini, Codex, etc.) |
-| [`backup`](private_dot_local/bin/executable_backup) | Encrypted backup utility using `restic` and `age` |
-| [`cht`](private_dot_local/bin/executable_cht) | Cheat sheet lookup via cht.sh |
-| [`claude-review`](private_dot_local/bin/executable_claude-review) | Pre-commit hook for AI code review |
-| [`custom-update`](private_dot_local/bin/executable_custom-update) | Update system packages, tools, and configs |
-| [`fonttest`](private_dot_local/bin/executable_fonttest) | Test terminal font rendering |
-| [`formatter`](private_dot_local/bin/executable_formatter) | USB & SD card formatting tool with `gum` UI |
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager) | Find and manage git repositories recursively |
-| [`git-reset`](private_dot_local/bin/executable_git-reset) | Reset repos to default branch and drop local changes |
-| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new) | Create git worktrees alongside current repo |
-| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update) | Update Obsidian plugins and themes |
-| [`rgfzf`](private_dot_local/bin/executable_rgfzf) | Ripgrep + FZF interactive search |
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Switch primary display on multi-monitor setups |
-| [`transfer`](private_dot_local/bin/executable_transfer) | Upload files via transfer.sh |
-| [`untilfail`](private_dot_local/bin/executable_untilfail) | Run a command repeatedly until it fails |
-| [`update-submodules`](private_dot_local/bin/executable_update-submodules) | Update all git submodules to latest |
-| [`wtfport`](private_dot_local/bin/executable_wtfport) | Find/kill processes listening on a given port |
+| Script                                                                        | Description                                               |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------- |
+| [`agent-md`](private_dot_local/bin/executable_agent-md)                       | Manage AGENTS.md and CLAUDE.md files for AI coding agents |
+| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Update all AI/LLM CLI tools (Claude, Gemini, Codex, etc.) |
+| [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backup utility using `restic` and `age`         |
+| [`cht`](private_dot_local/bin/executable_cht)                                 | Cheat sheet lookup via cht.sh                             |
+| [`claude-review`](private_dot_local/bin/executable_claude-review)             | Pre-commit hook for AI code review                        |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Update system packages, tools, and configs                |
+| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Test terminal font rendering                              |
+| [`formatter`](private_dot_local/bin/executable_formatter)                     | USB & SD card formatting tool with `gum` UI               |
+| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)       | Find and manage git repositories recursively              |
+| [`git-reset`](private_dot_local/bin/executable_git-reset)                     | Reset repos to default branch and drop local changes      |
+| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Create git worktrees alongside current repo               |
+| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Update Obsidian plugins and themes                        |
+| [`rgfzf`](private_dot_local/bin/executable_rgfzf)                             | Ripgrep + FZF interactive search                          |
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Switch primary display on multi-monitor setups            |
+| [`transfer`](private_dot_local/bin/executable_transfer)                       | Upload files via transfer.sh                              |
+| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Run a command repeatedly until it fails                   |
+| [`update-submodules`](private_dot_local/bin/executable_update-submodules)     | Update all git submodules to latest                       |
+| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Find/kill processes listening on a given port             |
 
 Many scripts use [gum](https://github.com/charmbracelet/gum) for interactive TUI, plus FZF, Bat, and Age for enhanced workflows.
 
