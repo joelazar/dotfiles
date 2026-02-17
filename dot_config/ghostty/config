@@ -60,13 +60,17 @@ keybind = shift+page_up=adjust_selection:page_up
 keybind = super+physical:three=goto_tab:3
 keybind = super+right=text:\x05
 keybind = super+d=new_split:right
-keybind = super+ctrl+down=resize_split:down,10
+# resize mode: super+r to enter, h/j/k/l to resize, escape to exit
+keybind = super+r=activate_key_table:resize
+keybind = resize/h=resize_split:left,10
+keybind = resize/j=resize_split:down,10
+keybind = resize/k=resize_split:up,10
+keybind = resize/l=resize_split:right,10
+keybind = resize/escape=deactivate_key_table
 keybind = shift+end=adjust_selection:end
 keybind = super+plus=increase_font_size:0.5
 keybind = super+q=quit
 keybind = super+home=scroll_to_top
-keybind = super+ctrl+left=resize_split:left,10
-keybind = super+ctrl+up=resize_split:up,10
 keybind = super+left=text:\x01
 keybind = super+shift+up=jump_to_prompt:-1
 keybind = shift+right=adjust_selection:right
@@ -78,8 +82,7 @@ keybind = super+a=select_all
 keybind = super+shift+enter=toggle_split_zoom
 keybind = super+alt+down=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
-keybind = super+ctrl+right=resize_split:right,10
-keybind = super+alt+shift+j=write_scrollback_file:open
+keybind = super+alt+shift+j=write_scrollback_file:open,html
 keybind = shift+down=adjust_selection:down
 keybind = ctrl+shift+tab=previous_tab
 keybind = super+n=new_window
@@ -91,7 +94,7 @@ keybind = super+left_bracket=goto_split:previous
 keybind = super+physical:nine=last_tab
 keybind = super+right_bracket=goto_split:next
 keybind = super+end=scroll_to_bottom
-keybind = super+shift+j=write_scrollback_file:paste
+keybind = super+shift+j=write_scrollback_file:paste,html
 keybind = super+shift+d=new_split:down
 keybind = super+zero=reset_font_size
 keybind = super+physical:five=goto_tab:5
@@ -126,6 +129,8 @@ keybind = super+ctrl+k=goto_split:top
 keybind = super+ctrl+l=goto_split:right
 keybind = super+shift+enter=new_split:auto
 
+keybind = super+shift+t=prompt_tab_title
+
 keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
 
@@ -133,5 +138,5 @@ keybind = super+shift+r=reload_config
 keybind = shift+enter=text:\n
 
 # shell-integration-features = no-cursor,sudo,title
-shell-integration-features = no-cursor,sudo,title,ssh-env,no-ssh-terminfo
+shell-integration-features = sudo,title,ssh-env,no-ssh-terminfo
 
