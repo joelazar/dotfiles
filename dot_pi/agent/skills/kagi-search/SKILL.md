@@ -1,11 +1,13 @@
 ---
 name: kagi-search
-description: Web search and content extraction via Kagi Search API. Use for searching documentation, facts, or any web content. Lightweight, no browser required.
+description: Fast web search and content extraction via Kagi Search API. Uses a Go backend for quick startup and supports JSON output.
 ---
 
 # Kagi Search
 
-Web search and content extraction using the official Kagi Search API. No browser required.
+Fast web search and content extraction using the official Kagi Search API.
+
+This skill now uses a Go backend (auto-built on first run) for faster startup and fewer dependency issues.
 
 ## Setup
 
@@ -19,11 +21,7 @@ Requires a Kagi account with API access enabled.
    ```bash
    export KAGI_API_KEY="your-api-key-here"
    ```
-6. Install dependencies (run once):
-   ```bash
-   cd {baseDir}
-   npm install
-   ```
+6. Ensure Go 1.26 is installed and available in `PATH` (https://go.dev/dl/)
 
 ## Pricing
 
@@ -32,43 +30,55 @@ The Kagi Search API is priced at $25 for 1000 queries (2.5 cents per search).
 ## Search
 
 ```bash
-{baseDir}/search.js "query"                         # Basic search (10 results)
-{baseDir}/search.js "query" -n 20                   # More results (max 100)
-{baseDir}/search.js "query" --content               # Include page content as markdown
-{baseDir}/search.js "query" -n 5 --content          # Combined options
+{baseDir}/kagi-search search "query"                              # Basic search (10 results)
+{baseDir}/kagi-search search "query" -n 20                        # More results (max 100)
+{baseDir}/kagi-search search "query" --content                    # Include extracted page content
+{baseDir}/kagi-search search "query" --json                       # JSON output
+{baseDir}/kagi-search search "query" -n 5 --content --json        # Combined options
 ```
 
-### Options
+### Search options
 
 - `-n <num>` - Number of results (default: 10, max: 100)
-- `--content` - Fetch and include page content as markdown
+- `--content` - Fetch and include page content for each result
+- `--json` - Emit JSON output
+- `--timeout <sec>` - HTTP timeout in seconds (default: 15)
+- `--max-content-chars <num>` - Max chars per fetched result content (default: 5000)
 
 ## Extract Page Content
 
 ```bash
-{baseDir}/content.js https://example.com/article
+{baseDir}/kagi-search content https://example.com/article
+{baseDir}/kagi-search content https://example.com/article --json
 ```
 
-Fetches a URL and extracts readable content as markdown.
+### Content options
 
-## Output Format
+- `--json` - Emit JSON output
+- `--timeout <sec>` - HTTP timeout in seconds (default: 20)
+- `--max-chars <num>` - Max chars to output (default: 20000)
 
-```
---- Result 1 ---
-Title: Page Title
-Link: https://example.com/page
-Published: 2024-01-15T00:00:00Z
-Snippet: Description from search results
-Content: (if --content flag used)
-  Markdown content extracted from the page...
+## Output
 
---- Result 2 ---
-...
+### Default (text)
 
---- Related Searches ---
-- related term 1
-- related term 2
-```
+`kagi-search search` prints readable text blocks, and `kagi-search content` prints extracted content.
+
+### JSON (`--json`)
+
+`kagi-search search --json` returns:
+
+- `query`
+- `meta` (includes API metadata like `ms`, `api_balance` when provided)
+- `results[]` with `title`, `link`, `snippet`, optional `published`, optional `content`
+- `related_searches[]`
+
+`kagi-search content --json` returns:
+
+- `url`
+- `title`
+- `content`
+- `error` (only when extraction fails)
 
 ## When to Use
 
@@ -80,4 +90,6 @@ Content: (if --content flag used)
 ## Notes
 
 - Search results inherit your Kagi account settings (personalized results, blocked/promoted sites)
-- Results may include related search suggestions at the end
+- Results may include related search suggestions (`t:1` objects)
+- Content extraction uses `codeberg.org/readeck/go-readability/v2` (Readability v2)
+- The Go binary is cached under `{baseDir}/.bin/` and rebuilt automatically when source changes
