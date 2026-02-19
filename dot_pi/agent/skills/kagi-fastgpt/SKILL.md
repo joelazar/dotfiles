@@ -1,9 +1,9 @@
 ---
-name: fastgpt
+name: kagi-fastgpt
 description: Ask questions and get AI-synthesized answers backed by live web search, via Kagi's FastGPT API. Returns a direct answer with cited references. Use when you need a quick, authoritative answer rather than raw search results.
 ---
 
-# FastGPT
+# Kagi FastGPT
 
 Get AI-generated answers with cited web sources using [Kagi's FastGPT API](https://help.kagi.com/kagi/api/fastgpt.html). FastGPT runs a full web search under the hood and synthesizes results into a concise answer — ideal for factual questions, API lookups, and current-events queries.
 
@@ -21,7 +21,7 @@ Requires a Kagi account with API access enabled. Uses the same `KAGI_API_KEY` as
    ```bash
    export KAGI_API_KEY="your-api-key-here"
    ```
-6. Ensure Go 1.21+ is installed (https://go.dev/dl/)
+6. Ensure Go 1.26+ is installed (https://go.dev/dl/)
 
 ## Pricing
 
@@ -30,11 +30,11 @@ Requires a Kagi account with API access enabled. Uses the same `KAGI_API_KEY` as
 ## Usage
 
 ```bash
-{baseDir}/fastgpt "query"                        # Ask a question (default)
-{baseDir}/fastgpt "query" --json                 # JSON output
-{baseDir}/fastgpt "query" --no-refs              # Answer only, no references
-{baseDir}/fastgpt "query" --no-cache             # Bypass response cache
-{baseDir}/fastgpt "query" --timeout 60           # Custom timeout (default: 30s)
+{baseDir}/kagi-fastgpt "query"                        # Ask a question (default)
+{baseDir}/kagi-fastgpt "query" --json                 # JSON output
+{baseDir}/kagi-fastgpt "query" --no-refs              # Answer only, no references
+{baseDir}/kagi-fastgpt "query" --no-cache             # Bypass response cache
+{baseDir}/kagi-fastgpt "query" --timeout 60           # Custom timeout (default: 30s)
 ```
 
 ### Options
@@ -76,7 +76,7 @@ Returns a JSON object with:
 
 ## When to Use
 
-- **Use FastGPT** when you need a direct answer synthesized from web sources (e.g. "What version of X was released last month?", "How do I configure Y?")
+- **Use kagi-fastgpt** when you need a direct answer synthesized from web sources (e.g. "What version of X was released last month?", "How do I configure Y?")
 - **Use kagi-search** when you need raw search results to scan, compare, or extract data from yourself
 - **Use web-browser** when you need to interact with a page or the content is behind JavaScript
 
@@ -85,7 +85,7 @@ Returns a JSON object with:
 If the binary is missing or you want to rebuild:
 
 ```bash
-cd {baseDir} && go build -o fastgpt .
+cd {baseDir} && go build -o .bin/kagi-fastgpt .
 ```
 
 The binary has no external dependencies — only the Go standard library.

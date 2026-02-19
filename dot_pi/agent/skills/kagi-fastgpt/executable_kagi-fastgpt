@@ -3,7 +3,7 @@ set -euo pipefail
 
 BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BIN_DIR="$BASE_DIR/.bin"
-BIN="$BIN_DIR/fastgpt"
+BIN="$BIN_DIR/kagi-fastgpt"
 
 if ! command -v go >/dev/null 2>&1; then
   echo "Error: Go 1.26+ is required but not installed or not in PATH." >&2
