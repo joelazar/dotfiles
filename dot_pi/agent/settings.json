@@ -1,11 +1,11 @@
 {
-  "lastChangelogVersion": "0.53.0",
+  "lastChangelogVersion": "0.54.0",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "medium",
   "theme": "tokyo-night",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-4-6",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.3-codex",
