@@ -300,6 +300,8 @@ brew "wrk"
 brew "yarn"
 # Blazing fast terminal file manager written in Rust, based on async I/O
 brew "yazi"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
 # Programming language designed for robustness, optimality, and clarity
 brew "zig"
 # Shell extension to navigate your filesystem faster
@@ -365,6 +367,7 @@ cask "firefox"
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-maple-mono"
+cask "font-maple-mono-nf"
 # Kext-less implementation of FUSE
 cask "fuse-t"
 # Terminal emulator that uses platform-native UI and GPU acceleration
