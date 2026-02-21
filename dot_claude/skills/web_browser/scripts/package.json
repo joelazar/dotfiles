@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "dependencies": {
-    "puppeteer-core": "^24.34.0",
-    "ws": "^8.18.0"
-  }
-}
