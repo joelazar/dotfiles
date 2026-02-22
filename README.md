@@ -330,6 +330,7 @@ A significant part of this setup is dedicated to AI-assisted development:
   | `answer`                | Q&A extraction from assistant responses                           |
   | `commit-shortcut`       | Quick commit shortcut                                             |
   | `cwd-history`           | Track working directory history across sessions                   |
+  | `delta`                 | Syntax-highlighted diffs for the edit tool via delta              |
   | `editor-with-context`   | See last agent response when composing prompts                    |
   | `extensions-manager`    | Manage extensions from within Pi                                  |
   | `files`                 | File management utilities                                         |
