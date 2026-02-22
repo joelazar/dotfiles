@@ -201,7 +201,7 @@ customCommands:
     command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
     context: "commitFiles"
     description: "Compare (difftool) with local copy"
-  - key: "D"
+  - key: "V"
     command: "git add -AN 2>/dev/null; git diff | diffnav"
     context: "files"
     description: "View diff in diffnav"
