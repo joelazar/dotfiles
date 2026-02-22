@@ -230,6 +230,8 @@ brew "poppler"
 brew "portaudio"
 # Object-relational database system
 brew "postgresql@18"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
 # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew "proctools"
 # Command-line YAML and XML processor that wraps jq
