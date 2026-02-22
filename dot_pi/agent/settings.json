@@ -14,10 +14,7 @@
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": [
-    "-extensions/sandbox/index.ts"
-  ],
-  "packages": [
-    "npm:pi-interactive-shell"
-  ]
+  "extensions": ["-extensions/sandbox/index.ts"],
+  "packages": ["npm:pi-interactive-shell"]
 }
+

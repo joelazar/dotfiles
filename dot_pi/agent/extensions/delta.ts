@@ -24,8 +24,14 @@ type DeltaDetails = EditToolDetails & { __deltaOutput?: string };
 /**
  * Convert pi's custom diff format to standard unified diff.
  *
- * Pi format:  `-  5 old line` / `+  5 new line` / `   6 context`
- * Standard:   `-old line`     / `+new line`      / ` context`
+ * Pi format uses a 3-character prefix field:
+ *   ` - 443  old line`   (removed)
+ *   ` + 443  new line`   (added)
+ *   `   443  context`    (context)
+ *   `       ...`         (ellipsis, no line number)
+ *
+ * Standard unified diff:
+ *   `-old line` / `+new line` / ` context`
  */
 function piDiffToUnified(piDiff: string, filePath?: string): string {
   const lines = piDiff.split("\n");
@@ -36,14 +42,14 @@ function piDiffToUnified(piDiff: string, filePath?: string): string {
   const body: string[] = [];
 
   for (const line of lines) {
-    // Match prefix (+, -, or space), optional line number, then content.
-    // The prefix is strictly one of the three characters, not any whitespace.
-    const match = line.match(/^([+ -])(\s*(\d+))? (.*)$/);
+    // 3-char prefix: ` + `, ` - `, or `   `, then optional line number, then content
+    const match = line.match(/^( [+-] |   )(\d+)?(.*)$/);
     if (!match) {
       body.push(line);
       continue;
     }
-    const [, prefix, , lineNumStr, content] = match;
+    const [, prefixField, lineNumStr, content] = match;
+    const prefix = prefixField.trim(); // "+", "-", or ""
     const lineNum = lineNumStr ? parseInt(lineNumStr, 10) : undefined;
 
     if (!foundStart && lineNum !== undefined) {
@@ -73,21 +79,34 @@ function piDiffToUnified(piDiff: string, filePath?: string): string {
   ].join("\n");
 }
 
-/**
- * Pipe a unified diff through delta and return ANSI output.
- * Uses the user's gitconfig delta settings (theme, decorations, etc.)
- * with overrides only for paging and output mode.
- */
+/** Read the user's delta syntax-theme from gitconfig, if set. */
+function getDeltaSyntaxTheme(): string | null {
+  try {
+    return execFileSync("git", ["config", "--get", "delta.syntax-theme"], {
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    }).trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+const deltaSyntaxTheme = getDeltaSyntaxTheme();
+
 function runDelta(unifiedDiff: string): string | null {
   try {
-    const result = execFileSync(
-      "delta",
-      [
-        "--color-only",
-        "--paging=never",
-        "--file-style=omit",
-        "--hunk-header-style=omit",
-      ],
+    const args = [
+      "--color-only",
+      "--no-gitconfig",
+      "--paging=never",
+      "--file-style=omit",
+      "--hunk-header-style=omit",
+    ];
+    if (deltaSyntaxTheme) {
+      args.push(`--syntax-theme=${deltaSyntaxTheme}`);
+    }
+
+    const result = execFileSync("delta", args,
       {
         encoding: "utf-8",
         input: unifiedDiff,
