@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.54.0",
+  "lastChangelogVersion": "0.54.1",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
   "defaultThinkingLevel": "medium",
@@ -14,7 +14,10 @@
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": ["-extensions/sandbox/index.ts"],
-  "packages": ["npm:pi-interactive-shell"]
+  "extensions": [
+    "-extensions/sandbox/index.ts"
+  ],
+  "packages": [
+    "npm:pi-interactive-shell"
+  ]
 }
-
