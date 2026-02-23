@@ -7,8 +7,6 @@ SOURCE_DIR=$(chezmoi source-path)
 
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
-execute "ya pkg upgrade" "Update yazi plugins"
-
 execute "ai-update" "Update AI tools"
 
 execute "tv update-channels" "Update Television channels"
@@ -17,7 +15,7 @@ execute "obsidian-update" "Update Obsidian plugins and themes"
 
 execute "brew cleanup" "Cleanup brew"
 
-execute "nvim --headless -c \"MasonUpdateAll\" -c \"qa!\"" "Update Neovim Mason packages"
+execute "nvim --headless -c 'autocmd User MasonUpdateAllComplete qall' -c 'MasonUpdateAll'" "Update Neovim Mason packages"
 
 ask_for_confirmation "Remove macOS Trash and .local/share/Trash directories?"
 if answer_is_yes; then
