@@ -37,7 +37,6 @@ import {
   type SelectItem,
   SelectList,
   Text,
-  Key,
 } from "@mariozechner/pi-tui";
 import path from "node:path";
 import { promises as fs } from "node:fs";
@@ -46,12 +45,24 @@ import { promises as fs } from "node:fs";
 // Module-level state means only one review can be active at a time.
 // This is intentional - the UI and /end-review command assume a single active review.
 let reviewOriginId: string | undefined = undefined;
+let endReviewInProgress = false;
+let reviewLoopFixingEnabled = false;
+let reviewLoopInProgress = false;
 
 const REVIEW_STATE_TYPE = "review-session";
+const REVIEW_ANCHOR_TYPE = "review-anchor";
+const REVIEW_SETTINGS_TYPE = "review-settings";
+const REVIEW_LOOP_MAX_ITERATIONS = 10;
+const REVIEW_LOOP_START_TIMEOUT_MS = 15000;
+const REVIEW_LOOP_START_POLL_MS = 50;
 
 type ReviewSessionState = {
   active: boolean;
   originId?: string;
+};
+
+type ReviewSettingsState = {
+  loopFixingEnabled?: boolean;
 };
 
 function setReviewWidget(ctx: ExtensionContext, active: boolean) {
@@ -62,11 +73,12 @@ function setReviewWidget(ctx: ExtensionContext, active: boolean) {
   }
 
   ctx.ui.setWidget("review", (_tui, theme) => {
-    const text = new Text(
-      theme.fg("warning", "Review session active, return with /end-review"),
-      0,
-      0,
-    );
+    const message = reviewLoopInProgress
+      ? "Review session active (loop fixing running)"
+      : reviewLoopFixingEnabled
+        ? "Review session active (loop fixing enabled), return with /end-review"
+        : "Review session active, return with /end-review";
+    const text = new Text(theme.fg("warning", message), 0, 0);
     return {
       render(width: number) {
         return text.render(width);
@@ -102,6 +114,265 @@ function applyReviewState(ctx: ExtensionContext) {
   setReviewWidget(ctx, false);
 }
 
+function getReviewSettings(ctx: ExtensionContext): ReviewSettingsState {
+  let state: ReviewSettingsState | undefined;
+  for (const entry of ctx.sessionManager.getEntries()) {
+    if (entry.type === "custom" && entry.customType === REVIEW_SETTINGS_TYPE) {
+      state = entry.data as ReviewSettingsState | undefined;
+    }
+  }
+
+  return {
+    loopFixingEnabled: state?.loopFixingEnabled === true,
+  };
+}
+
+function applyReviewSettings(ctx: ExtensionContext) {
+  const state = getReviewSettings(ctx);
+  reviewLoopFixingEnabled = state.loopFixingEnabled === true;
+}
+
+function parseMarkdownHeading(
+  line: string,
+): { level: number; title: string } | null {
+  const headingMatch = line.match(/^\s*(#{1,6})\s+(.+?)\s*$/);
+  if (!headingMatch) {
+    return null;
+  }
+
+  const rawTitle = headingMatch[2].replace(/\s+#+\s*$/, "").trim();
+  return {
+    level: headingMatch[1].length,
+    title: rawTitle,
+  };
+}
+
+function getFindingsSectionBounds(
+  lines: string[],
+): { start: number; end: number } | null {
+  let start = -1;
+  let findingsHeadingLevel: number | null = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const heading = parseMarkdownHeading(line);
+    if (heading && /^findings\b/i.test(heading.title)) {
+      start = i + 1;
+      findingsHeadingLevel = heading.level;
+      break;
+    }
+    if (/^\s*findings\s*:?\s*$/i.test(line)) {
+      start = i + 1;
+      break;
+    }
+  }
+
+  if (start < 0) {
+    return null;
+  }
+
+  let end = lines.length;
+  for (let i = start; i < lines.length; i++) {
+    const line = lines[i];
+    const heading = parseMarkdownHeading(line);
+    if (heading) {
+      const normalizedTitle = heading.title.replace(/[*_`]/g, "").trim();
+      if (
+        /^(review scope|verdict|overall verdict|fix queue|constraints(?:\s*&\s*preferences)?)\b:?/i.test(
+          normalizedTitle,
+        )
+      ) {
+        end = i;
+        break;
+      }
+
+      if (/\[P[0-3]\]/i.test(heading.title)) {
+        continue;
+      }
+
+      if (
+        findingsHeadingLevel !== null &&
+        heading.level <= findingsHeadingLevel
+      ) {
+        end = i;
+        break;
+      }
+    }
+
+    if (
+      /^\s*(review scope|verdict|overall verdict|fix queue|constraints(?:\s*&\s*preferences)?)\b:?/i.test(
+        line,
+      )
+    ) {
+      end = i;
+      break;
+    }
+  }
+
+  return { start, end };
+}
+
+function isLikelyFindingLine(line: string): boolean {
+  if (!/\[P[0-3]\]/i.test(line)) {
+    return false;
+  }
+
+  if (/^\s*(?:[-*+]|(?:\d+)[.)]|#{1,6})\s+priority\s+tag\b/i.test(line)) {
+    return false;
+  }
+
+  if (
+    /^\s*(?:[-*+]|(?:\d+)[.)]|#{1,6})\s+\[P[0-3]\]\s*-\s*(?:drop everything|urgent|normal|low|nice to have)\b/i.test(
+      line,
+    )
+  ) {
+    return false;
+  }
+
+  const allPriorityTags = line.match(/\[P[0-3]\]/gi) ?? [];
+  if (allPriorityTags.length > 1) {
+    return false;
+  }
+
+  if (/^\s*(?:[-*+]|(?:\d+)[.)])\s+/.test(line)) {
+    return true;
+  }
+
+  if (/^\s*#{1,6}\s+/.test(line)) {
+    return true;
+  }
+
+  if (/^\s*(?:\*\*|__)?\[P[0-3]\](?:\*\*|__)?(?=\s|:|-)/i.test(line)) {
+    return true;
+  }
+
+  return false;
+}
+
+function normalizeVerdictValue(value: string): string {
+  return value
+    .trim()
+    .replace(/^[-*+]\s*/, "")
+    .replace(/^['"`]+|['"`]+$/g, "")
+    .toLowerCase();
+}
+
+function isNeedsAttentionVerdictValue(value: string): boolean {
+  const normalized = normalizeVerdictValue(value);
+  if (!normalized.includes("needs attention")) {
+    return false;
+  }
+
+  if (/\bnot\s+needs\s+attention\b/.test(normalized)) {
+    return false;
+  }
+
+  // Reject rubric/choice phrasing like "correct or needs attention", but
+  // keep legitimate verdict text that may contain unrelated "or".
+  if (/\bcorrect\b/.test(normalized) && /\bor\b/.test(normalized)) {
+    return false;
+  }
+
+  return true;
+}
+
+function hasNeedsAttentionVerdict(messageText: string): boolean {
+  const lines = messageText.split(/\r?\n/);
+
+  for (const line of lines) {
+    const inlineMatch = line.match(
+      /^\s*(?:[*-+]\s*)?(?:overall\s+)?verdict\s*:\s*(.+)$/i,
+    );
+    if (inlineMatch && isNeedsAttentionVerdictValue(inlineMatch[1])) {
+      return true;
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const heading = parseMarkdownHeading(line);
+
+    let verdictLevel: number | null = null;
+    if (heading) {
+      const normalizedHeading = heading.title.replace(/[*_`]/g, "").trim();
+      if (!/^(?:overall\s+)?verdict\b/i.test(normalizedHeading)) {
+        continue;
+      }
+      verdictLevel = heading.level;
+    } else if (!/^\s*(?:overall\s+)?verdict\s*:?\s*$/i.test(line)) {
+      continue;
+    }
+
+    for (let j = i + 1; j < lines.length; j++) {
+      const verdictLine = lines[j];
+      const nextHeading = parseMarkdownHeading(verdictLine);
+      if (nextHeading) {
+        const normalizedNextHeading = nextHeading.title
+          .replace(/[*_`]/g, "")
+          .trim();
+        if (verdictLevel === null || nextHeading.level <= verdictLevel) {
+          break;
+        }
+        if (
+          /^(review scope|findings|fix queue|constraints(?:\s*&\s*preferences)?)\b:?/i.test(
+            normalizedNextHeading,
+          )
+        ) {
+          break;
+        }
+      }
+
+      const trimmed = verdictLine.trim();
+      if (!trimmed) {
+        continue;
+      }
+
+      if (isNeedsAttentionVerdictValue(trimmed)) {
+        return true;
+      }
+
+      if (/\bcorrect\b/i.test(normalizeVerdictValue(trimmed))) {
+        break;
+      }
+    }
+  }
+
+  return false;
+}
+
+function hasBlockingReviewFindings(messageText: string): boolean {
+  const lines = messageText.split(/\r?\n/);
+  const bounds = getFindingsSectionBounds(lines);
+  const candidateLines = bounds ? lines.slice(bounds.start, bounds.end) : lines;
+
+  let inCodeFence = false;
+  let foundTaggedFinding = false;
+  for (const line of candidateLines) {
+    if (/^\s*```/.test(line)) {
+      inCodeFence = !inCodeFence;
+      continue;
+    }
+    if (inCodeFence) {
+      continue;
+    }
+
+    if (!isLikelyFindingLine(line)) {
+      continue;
+    }
+
+    foundTaggedFinding = true;
+    if (/\[(P0|P1|P2)\]/i.test(line)) {
+      return true;
+    }
+  }
+
+  if (foundTaggedFinding) {
+    return false;
+  }
+
+  return hasNeedsAttentionVerdict(messageText);
+}
+
 // Review target types (matching Codex's approach)
 type ReviewTarget =
   | { type: "uncommitted" }
@@ -114,6 +385,9 @@ type ReviewTarget =
 // Prompts (adapted from Codex)
 const UNCOMMITTED_PROMPT =
   "Review the current code changes (staged, unstaged, and untracked files) and provide prioritized findings.";
+
+const LOCAL_CHANGES_REVIEW_INSTRUCTIONS =
+  "Also include local working-tree changes (staged, unstaged, and untracked files) from this branch. Use `git status --porcelain`, `git diff`, `git diff --staged`, and `git ls-files --others --exclude-standard` so local fixes are part of this review cycle.";
 
 const BASE_BRANCH_PROMPT_WITH_MERGE_BASE =
   "Review the code changes against the base branch '{baseBranch}'. The merge base commit for this comparison is {mergeBaseSha}. Run `git diff {mergeBaseSha}` to inspect the changes relative to {baseBranch}. Provide prioritized, actionable findings.";
@@ -139,7 +413,9 @@ const FOLDER_REVIEW_PROMPT =
 // The detailed review rubric (adapted from Codex's review_prompt.md)
 const REVIEW_RUBRIC = `# Review Guidelines
 
-You are acting as a code reviewer for a proposed code change.
+You are acting as a code reviewer for a proposed code change made by another engineer.
+
+Below are default guidelines for determining what to flag. These are not the final word — if you encounter more specific guidelines elsewhere (in a developer message, user message, file, or project review guidelines appended below), those override these general instructions.
 
 ## Determining what to flag
 
@@ -150,7 +426,7 @@ Flag issues that:
 4. Were introduced in the changes being reviewed (not pre-existing bugs).
 5. The author would likely fix if aware of them.
 6. Don't rely on unstated assumptions about the codebase or author's intent.
-7. Have provable impact on other parts of the code (not speculation).
+7. Have provable impact on other parts of the code — it is not enough to speculate that a change may disrupt another part, you must identify the parts that are provably affected.
 8. Are clearly not intentional changes by the author.
 9. Be particularly careful with untrusted user input and follow the specific guidelines to review.
 
@@ -167,10 +443,11 @@ Flag issues that:
 2. Communicate severity appropriately - don't exaggerate.
 3. Be brief - at most 1 paragraph.
 4. Keep code snippets under 3 lines, wrapped in inline code or code blocks.
-5. Explicitly state scenarios/environments where the issue arises.
-6. Use a matter-of-fact tone - helpful AI assistant, not accusatory.
-7. Write for quick comprehension without close reading.
-8. Avoid excessive flattery or unhelpful phrases like "Great job...".
+5. Use \`\`\`suggestion blocks ONLY for concrete replacement code (minimal lines; no commentary inside the block). Preserve the exact leading whitespace of the replaced lines.
+6. Explicitly state scenarios/environments where the issue arises.
+7. Use a matter-of-fact tone - helpful AI assistant, not accusatory.
+8. Write for quick comprehension without close reading.
+9. Avoid excessive flattery or unhelpful phrases like "Great job...".
 
 ## Review priorities
 
@@ -185,7 +462,7 @@ Flag issues that:
 ## Priority levels
 
 Tag each finding with a priority level in the title:
-- [P0] - Drop everything to fix. Blocking release/operations. Only for universal issues.
+- [P0] - Drop everything to fix. Blocking release/operations. Only for universal issues that do not depend on assumptions about inputs.
 - [P1] - Urgent. Should be addressed in the next cycle.
 - [P2] - Normal. To be fixed eventually.
 - [P3] - Low. Nice to have.
@@ -194,9 +471,11 @@ Tag each finding with a priority level in the title:
 
 Provide your findings in a clear, structured format:
 1. List each finding with its priority tag, file location, and explanation.
-2. Keep line references as short as possible (avoid ranges over 5-10 lines).
-3. At the end, provide an overall verdict: "correct" (no blocking issues) or "needs attention" (has blocking issues).
-4. Ignore trivial style issues unless they obscure meaning or violate documented standards.
+2. Findings must reference locations that overlap with the actual diff — don't flag pre-existing code.
+3. Keep line references as short as possible (avoid ranges over 5-10 lines; pick the most suitable subrange).
+4. At the end, provide an overall verdict: "correct" (no blocking issues) or "needs attention" (has blocking issues).
+5. Ignore trivial style issues unless they obscure meaning or violate documented standards.
+6. Do not generate a full PR fix — only flag issues and optionally provide short suggestion blocks.
 
 Output all findings the author would fix if they knew about them. If there are no qualifying findings, explicitly state the code looks good. Don't stop at the first finding - list every qualifying issue.`;
 
@@ -454,20 +733,25 @@ async function getDefaultBranch(pi: ExtensionAPI): Promise<string> {
 async function buildReviewPrompt(
   pi: ExtensionAPI,
   target: ReviewTarget,
+  options?: { includeLocalChanges?: boolean },
 ): Promise<string> {
+  const includeLocalChanges = options?.includeLocalChanges === true;
+
   switch (target.type) {
     case "uncommitted":
       return UNCOMMITTED_PROMPT;
 
     case "baseBranch": {
       const mergeBase = await getMergeBase(pi, target.branch);
-      if (mergeBase) {
-        return BASE_BRANCH_PROMPT_WITH_MERGE_BASE.replace(
-          /{baseBranch}/g,
-          target.branch,
-        ).replace(/{mergeBaseSha}/g, mergeBase);
-      }
-      return BASE_BRANCH_PROMPT_FALLBACK.replace(/{branch}/g, target.branch);
+      const basePrompt = mergeBase
+        ? BASE_BRANCH_PROMPT_WITH_MERGE_BASE.replace(
+            /{baseBranch}/g,
+            target.branch,
+          ).replace(/{mergeBaseSha}/g, mergeBase)
+        : BASE_BRANCH_PROMPT_FALLBACK.replace(/{branch}/g, target.branch);
+      return includeLocalChanges
+        ? `${basePrompt} ${LOCAL_CHANGES_REVIEW_INSTRUCTIONS}`
+        : basePrompt;
     }
 
     case "commit":
@@ -484,21 +768,20 @@ async function buildReviewPrompt(
 
     case "pullRequest": {
       const mergeBase = await getMergeBase(pi, target.baseBranch);
-      if (mergeBase) {
-        return PULL_REQUEST_PROMPT.replace(
-          /{prNumber}/g,
-          String(target.prNumber),
-        )
-          .replace(/{title}/g, target.title)
-          .replace(/{baseBranch}/g, target.baseBranch)
-          .replace(/{mergeBaseSha}/g, mergeBase);
-      }
-      return PULL_REQUEST_PROMPT_FALLBACK.replace(
-        /{prNumber}/g,
-        String(target.prNumber),
-      )
-        .replace(/{title}/g, target.title)
-        .replace(/{baseBranch}/g, target.baseBranch);
+      const basePrompt = mergeBase
+        ? PULL_REQUEST_PROMPT.replace(/{prNumber}/g, String(target.prNumber))
+            .replace(/{title}/g, target.title)
+            .replace(/{baseBranch}/g, target.baseBranch)
+            .replace(/{mergeBaseSha}/g, mergeBase)
+        : PULL_REQUEST_PROMPT_FALLBACK.replace(
+            /{prNumber}/g,
+            String(target.prNumber),
+          )
+            .replace(/{title}/g, target.title)
+            .replace(/{baseBranch}/g, target.baseBranch);
+      return includeLocalChanges
+        ? `${basePrompt} ${LOCAL_CHANGES_REVIEW_INSTRUCTIONS}`
+        : basePrompt;
     }
 
     case "folder":
@@ -543,24 +826,102 @@ function getUserFacingHint(target: ReviewTarget): string {
   }
 }
 
-// Review preset options for the selector
+type AssistantSnapshot = {
+  id: string;
+  text: string;
+  stopReason?: string;
+};
+
+function extractAssistantTextContent(content: unknown): string {
+  if (typeof content === "string") {
+    return content.trim();
+  }
+
+  if (!Array.isArray(content)) {
+    return "";
+  }
+
+  const textParts = content
+    .filter((part): part is { type: "text"; text: string } =>
+      Boolean(
+        part &&
+        typeof part === "object" &&
+        "type" in part &&
+        part.type === "text" &&
+        "text" in part,
+      ),
+    )
+    .map((part) => part.text);
+  return textParts.join("\n").trim();
+}
+
+function getLastAssistantSnapshot(
+  ctx: ExtensionContext,
+): AssistantSnapshot | null {
+  const entries = ctx.sessionManager.getBranch();
+  for (let i = entries.length - 1; i >= 0; i--) {
+    const entry = entries[i];
+    if (entry.type !== "message" || entry.message.role !== "assistant") {
+      continue;
+    }
+
+    const assistantMessage = entry.message as {
+      content?: unknown;
+      stopReason?: string;
+    };
+    return {
+      id: entry.id,
+      text: extractAssistantTextContent(assistantMessage.content),
+      stopReason: assistantMessage.stopReason,
+    };
+  }
+
+  return null;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function waitForLoopTurnToStart(
+  ctx: ExtensionContext,
+  previousAssistantId?: string,
+): Promise<boolean> {
+  const deadline = Date.now() + REVIEW_LOOP_START_TIMEOUT_MS;
+
+  while (Date.now() < deadline) {
+    const lastAssistantId = getLastAssistantSnapshot(ctx)?.id;
+    if (
+      !ctx.isIdle() ||
+      ctx.hasPendingMessages() ||
+      (lastAssistantId && lastAssistantId !== previousAssistantId)
+    ) {
+      return true;
+    }
+    await sleep(REVIEW_LOOP_START_POLL_MS);
+  }
+
+  return false;
+}
+
+// Review preset options for the selector (keep this order stable)
 const REVIEW_PRESETS = [
   {
-    value: "pullRequest",
-    label: "Review a pull request",
-    description: "(GitHub PR)",
+    value: "uncommitted",
+    label: "Review uncommitted changes",
+    description: "",
   },
   {
     value: "baseBranch",
     label: "Review against a base branch",
     description: "(local)",
   },
-  {
-    value: "uncommitted",
-    label: "Review uncommitted changes",
-    description: "",
-  },
   { value: "commit", label: "Review a commit", description: "" },
+  {
+    value: "pullRequest",
+    label: "Review a pull request",
+    description: "(GitHub PR)",
+  },
   {
     value: "folder",
     label: "Review a folder (or more)",
@@ -569,17 +930,32 @@ const REVIEW_PRESETS = [
   { value: "custom", label: "Custom review instructions", description: "" },
 ] as const;
 
+const TOGGLE_LOOP_FIXING_VALUE = "toggleLoopFixing" as const;
+type ReviewPresetValue =
+  | (typeof REVIEW_PRESETS)[number]["value"]
+  | typeof TOGGLE_LOOP_FIXING_VALUE;
+
 export default function reviewExtension(pi: ExtensionAPI) {
-  pi.on("session_start", (_event, ctx) => {
+  function setReviewLoopFixingEnabled(enabled: boolean) {
+    reviewLoopFixingEnabled = enabled;
+    pi.appendEntry(REVIEW_SETTINGS_TYPE, { loopFixingEnabled: enabled });
+  }
+
+  function applyAllReviewState(ctx: ExtensionContext) {
+    applyReviewSettings(ctx);
     applyReviewState(ctx);
+  }
+
+  pi.on("session_start", (_event, ctx) => {
+    applyAllReviewState(ctx);
   });
 
   pi.on("session_switch", (_event, ctx) => {
-    applyReviewState(ctx);
+    applyAllReviewState(ctx);
   });
 
   pi.on("session_tree", (_event, ctx) => {
-    applyReviewState(ctx);
+    applyAllReviewState(ctx);
   });
 
   /**
@@ -610,23 +986,34 @@ export default function reviewExtension(pi: ExtensionAPI) {
   async function showReviewSelector(
     ctx: ExtensionContext,
   ): Promise<ReviewTarget | null> {
-    // Determine smart default and reorder items
+    // Determine smart default (but keep the list order stable)
     const smartDefault = await getSmartDefault();
-    const items: SelectItem[] = REVIEW_PRESETS.slice() // copy to avoid mutating original
-      .sort((a, b) => {
-        // Put smart default first
-        if (a.value === smartDefault) return -1;
-        if (b.value === smartDefault) return 1;
-        return 0;
-      })
-      .map((preset) => ({
-        value: preset.value,
-        label: preset.label,
-        description: preset.description,
-      }));
+    const presetItems: SelectItem[] = REVIEW_PRESETS.map((preset) => ({
+      value: preset.value,
+      label: preset.label,
+      description: preset.description,
+    }));
+    const smartDefaultIndex = presetItems.findIndex(
+      (item) => item.value === smartDefault,
+    );
 
     while (true) {
-      const result = await ctx.ui.custom<string | null>(
+      const loopToggleLabel = reviewLoopFixingEnabled
+        ? "Disable Loop Fixing"
+        : "Enable Loop Fixing";
+      const loopToggleDescription = reviewLoopFixingEnabled
+        ? "(currently on)"
+        : "(currently off)";
+      const items: SelectItem[] = [
+        ...presetItems,
+        {
+          value: TOGGLE_LOOP_FIXING_VALUE,
+          label: loopToggleLabel,
+          description: loopToggleDescription,
+        },
+      ];
+
+      const result = await ctx.ui.custom<ReviewPresetValue | null>(
         (tui, theme, _kb, done) => {
           const container = new Container();
           container.addChild(
@@ -644,7 +1031,12 @@ export default function reviewExtension(pi: ExtensionAPI) {
             noMatch: (text) => theme.fg("warning", text),
           });
 
-          selectList.onSelect = (item) => done(item.value);
+          // Preselect the smart default without reordering the list
+          if (smartDefaultIndex >= 0) {
+            selectList.setSelectedIndex(smartDefaultIndex);
+          }
+
+          selectList.onSelect = (item) => done(item.value as ReviewPresetValue);
           selectList.onCancel = () => done(null);
 
           container.addChild(selectList);
@@ -674,6 +1066,16 @@ export default function reviewExtension(pi: ExtensionAPI) {
 
       if (!result) return null;
 
+      if (result === TOGGLE_LOOP_FIXING_VALUE) {
+        const nextEnabled = !reviewLoopFixingEnabled;
+        setReviewLoopFixingEnabled(nextEnabled);
+        ctx.ui.notify(
+          nextEnabled ? "Loop fixing enabled" : "Loop fixing disabled",
+          "info",
+        );
+        continue;
+      }
+
       // Handle each preset type
       switch (result) {
         case "uncommitted":
@@ -686,6 +1088,13 @@ export default function reviewExtension(pi: ExtensionAPI) {
         }
 
         case "commit": {
+          if (reviewLoopFixingEnabled) {
+            ctx.ui.notify(
+              "Loop mode does not work with commit review.",
+              "error",
+            );
+            break;
+          }
           const target = await showCommitSelector(ctx);
           if (target) return target;
           break;
@@ -722,15 +1131,26 @@ export default function reviewExtension(pi: ExtensionAPI) {
     ctx: ExtensionContext,
   ): Promise<ReviewTarget | null> {
     const branches = await getLocalBranches(pi);
+    const currentBranch = await getCurrentBranch(pi);
     const defaultBranch = await getDefaultBranch(pi);
 
-    if (branches.length === 0) {
-      ctx.ui.notify("No branches found", "error");
+    // Never offer the current branch as a base branch (reviewing against itself is meaningless).
+    const candidateBranches = currentBranch
+      ? branches.filter((b) => b !== currentBranch)
+      : branches;
+
+    if (candidateBranches.length === 0) {
+      ctx.ui.notify(
+        currentBranch
+          ? `No other branches found (current branch: ${currentBranch})`
+          : "No branches found",
+        "error",
+      );
       return null;
     }
 
     // Sort branches with default branch first
-    const sortedBranches = branches.sort((a, b) => {
+    const sortedBranches = candidateBranches.sort((a, b) => {
       if (a === defaultBranch) return -1;
       if (b === defaultBranch) return 1;
       return a.localeCompare(b);
@@ -985,70 +1405,72 @@ export default function reviewExtension(pi: ExtensionAPI) {
     ctx: ExtensionCommandContext,
     target: ReviewTarget,
     useFreshSession: boolean,
-  ): Promise<void> {
+    options?: { includeLocalChanges?: boolean },
+  ): Promise<boolean> {
     // Check if we're already in a review
     if (reviewOriginId) {
       ctx.ui.notify(
         "Already in a review. Use /end-review to finish first.",
         "warning",
       );
-      return;
+      return false;
     }
 
     // Handle fresh session mode
     if (useFreshSession) {
-      // Store current position (where we'll return to)
-      const originId = ctx.sessionManager.getLeafId() ?? undefined;
+      // Store current position (where we'll return to).
+      // In an empty session there is no leaf yet, so create a lightweight anchor first.
+      let originId = ctx.sessionManager.getLeafId() ?? undefined;
       if (!originId) {
-        ctx.ui.notify(
-          "Failed to determine review origin. Try again from a session with messages.",
-          "error",
-        );
-        return;
+        pi.appendEntry(REVIEW_ANCHOR_TYPE, {
+          createdAt: new Date().toISOString(),
+        });
+        originId = ctx.sessionManager.getLeafId() ?? undefined;
+      }
+      if (!originId) {
+        ctx.ui.notify("Failed to determine review origin.", "error");
+        return false;
       }
       reviewOriginId = originId;
 
       // Keep a local copy so session_tree events during navigation don't wipe it
       const lockedOriginId = originId;
 
-      // Find the first user message in the session
+      // Find the first user message in the session.
+      // If none exists (e.g. brand-new session), we'll stay on the current leaf.
       const entries = ctx.sessionManager.getEntries();
       const firstUserMessage = entries.find(
         (e) => e.type === "message" && e.message.role === "user",
       );
 
-      if (!firstUserMessage) {
-        ctx.ui.notify("No user message found in session", "error");
-        reviewOriginId = undefined;
-        return;
-      }
-
-      // Navigate to first user message to create a new branch from that point
-      // Label it as "code-review" so it's visible in the tree
-      try {
-        const result = await ctx.navigateTree(firstUserMessage.id, {
-          summarize: false,
-          label: "code-review",
-        });
-        if (result.cancelled) {
+      if (firstUserMessage) {
+        // Navigate to first user message to create a new branch from that point
+        // Label it as "code-review" so it's visible in the tree
+        try {
+          const result = await ctx.navigateTree(firstUserMessage.id, {
+            summarize: false,
+            label: "code-review",
+          });
+          if (result.cancelled) {
+            reviewOriginId = undefined;
+            return false;
+          }
+        } catch (error) {
+          // Clean up state if navigation fails
           reviewOriginId = undefined;
-          return;
+          ctx.ui.notify(
+            `Failed to start review: ${error instanceof Error ? error.message : String(error)}`,
+            "error",
+          );
+          return false;
         }
-      } catch (error) {
-        // Clean up state if navigation fails
-        reviewOriginId = undefined;
-        ctx.ui.notify(
-          `Failed to start review: ${error instanceof Error ? error.message : String(error)}`,
-          "error",
-        );
-        return;
+
+        // Clear the editor (navigating to user message fills it with the message text)
+        ctx.ui.setEditorText("");
       }
 
       // Restore origin after navigation events (session_tree can reset it)
       reviewOriginId = lockedOriginId;
-
-      // Clear the editor (navigating to user message fills it with the message text)
-      ctx.ui.setEditorText("");
 
       // Show widget indicating review is active
       setReviewWidget(ctx, true);
@@ -1060,7 +1482,9 @@ export default function reviewExtension(pi: ExtensionAPI) {
       });
     }
 
-    const prompt = await buildReviewPrompt(pi, target);
+    const prompt = await buildReviewPrompt(pi, target, {
+      includeLocalChanges: options?.includeLocalChanges === true,
+    });
     const hint = getUserFacingHint(target);
     const projectGuidelines = await loadProjectReviewGuidelines(ctx.cwd);
 
@@ -1076,6 +1500,7 @@ export default function reviewExtension(pi: ExtensionAPI) {
 
     // Send as a user message that triggers a turn
     pi.sendUserMessage(fullPrompt);
+    return true;
   }
 
   /**
@@ -1186,6 +1611,184 @@ export default function reviewExtension(pi: ExtensionAPI) {
     };
   }
 
+  function isLoopCompatibleTarget(target: ReviewTarget): boolean {
+    if (target.type !== "commit") {
+      return true;
+    }
+
+    return false;
+  }
+
+  async function runLoopFixingReview(
+    ctx: ExtensionCommandContext,
+    target: ReviewTarget,
+  ): Promise<void> {
+    if (reviewLoopInProgress) {
+      ctx.ui.notify("Loop fixing review is already running.", "warning");
+      return;
+    }
+
+    reviewLoopInProgress = true;
+    setReviewWidget(ctx, Boolean(reviewOriginId));
+    try {
+      ctx.ui.notify(
+        "Loop fixing enabled: using Empty branch mode and cycling until no blocking findings remain.",
+        "info",
+      );
+
+      for (let pass = 1; pass <= REVIEW_LOOP_MAX_ITERATIONS; pass++) {
+        const reviewBaselineAssistantId = getLastAssistantSnapshot(ctx)?.id;
+        const started = await executeReview(ctx, target, true, {
+          includeLocalChanges: true,
+        });
+        if (!started) {
+          ctx.ui.notify(
+            "Loop fixing stopped before starting the review pass.",
+            "warning",
+          );
+          return;
+        }
+
+        const reviewTurnStarted = await waitForLoopTurnToStart(
+          ctx,
+          reviewBaselineAssistantId,
+        );
+        if (!reviewTurnStarted) {
+          ctx.ui.notify(
+            "Loop fixing stopped: review pass did not start in time.",
+            "error",
+          );
+          return;
+        }
+
+        await ctx.waitForIdle();
+
+        const reviewSnapshot = getLastAssistantSnapshot(ctx);
+        if (
+          !reviewSnapshot ||
+          reviewSnapshot.id === reviewBaselineAssistantId
+        ) {
+          ctx.ui.notify(
+            "Loop fixing stopped: could not read the review result.",
+            "warning",
+          );
+          return;
+        }
+
+        if (reviewSnapshot.stopReason === "aborted") {
+          ctx.ui.notify("Loop fixing stopped: review was aborted.", "warning");
+          return;
+        }
+
+        if (reviewSnapshot.stopReason === "error") {
+          ctx.ui.notify(
+            "Loop fixing stopped: review failed with an error.",
+            "error",
+          );
+          return;
+        }
+
+        if (reviewSnapshot.stopReason === "length") {
+          ctx.ui.notify(
+            "Loop fixing stopped: review output was truncated (stopReason=length).",
+            "warning",
+          );
+          return;
+        }
+
+        if (!hasBlockingReviewFindings(reviewSnapshot.text)) {
+          const finalized = await executeEndReviewAction(
+            ctx,
+            "returnAndSummarize",
+            {
+              showSummaryLoader: true,
+              notifySuccess: false,
+            },
+          );
+          if (finalized !== "ok") {
+            return;
+          }
+
+          ctx.ui.notify(
+            "Loop fixing complete: no blocking findings remain.",
+            "info",
+          );
+          return;
+        }
+
+        ctx.ui.notify(
+          `Loop fixing pass ${pass}: found blocking findings, returning to fix them...`,
+          "info",
+        );
+
+        const fixBaselineAssistantId = getLastAssistantSnapshot(ctx)?.id;
+        const sentFixPrompt = await executeEndReviewAction(
+          ctx,
+          "returnAndFix",
+          {
+            showSummaryLoader: true,
+            notifySuccess: false,
+          },
+        );
+        if (sentFixPrompt !== "ok") {
+          return;
+        }
+
+        const fixTurnStarted = await waitForLoopTurnToStart(
+          ctx,
+          fixBaselineAssistantId,
+        );
+        if (!fixTurnStarted) {
+          ctx.ui.notify(
+            "Loop fixing stopped: fix pass did not start in time.",
+            "error",
+          );
+          return;
+        }
+
+        await ctx.waitForIdle();
+
+        const fixSnapshot = getLastAssistantSnapshot(ctx);
+        if (!fixSnapshot || fixSnapshot.id === fixBaselineAssistantId) {
+          ctx.ui.notify(
+            "Loop fixing stopped: could not read the fix pass result.",
+            "warning",
+          );
+          return;
+        }
+        if (fixSnapshot.stopReason === "aborted") {
+          ctx.ui.notify(
+            "Loop fixing stopped: fix pass was aborted.",
+            "warning",
+          );
+          return;
+        }
+        if (fixSnapshot.stopReason === "error") {
+          ctx.ui.notify(
+            "Loop fixing stopped: fix pass failed with an error.",
+            "error",
+          );
+          return;
+        }
+        if (fixSnapshot.stopReason === "length") {
+          ctx.ui.notify(
+            "Loop fixing stopped: fix pass output was truncated (stopReason=length).",
+            "warning",
+          );
+          return;
+        }
+      }
+
+      ctx.ui.notify(
+        `Loop fixing stopped after ${REVIEW_LOOP_MAX_ITERATIONS} passes (safety limit reached).`,
+        "warning",
+      );
+    } finally {
+      reviewLoopInProgress = false;
+      setReviewWidget(ctx, Boolean(reviewOriginId));
+    }
+  }
+
   // Register the /review command
   pi.registerCommand("review", {
     description:
@@ -1193,6 +1796,11 @@ export default function reviewExtension(pi: ExtensionAPI) {
     handler: async (args, ctx) => {
       if (!ctx.hasUI) {
         ctx.ui.notify("Review requires interactive mode", "error");
+        return;
+      }
+
+      if (reviewLoopInProgress) {
+        ctx.ui.notify("Loop fixing review is already running.", "warning");
         return;
       }
 
@@ -1247,12 +1855,27 @@ export default function reviewExtension(pi: ExtensionAPI) {
           return;
         }
 
+        if (reviewLoopFixingEnabled && !isLoopCompatibleTarget(target)) {
+          ctx.ui.notify("Loop mode does not work with commit review.", "error");
+          if (fromSelector) {
+            target = null;
+            continue;
+          }
+          return;
+        }
+
+        if (reviewLoopFixingEnabled) {
+          await runLoopFixingReview(ctx, target);
+          return;
+        }
+
         // Determine if we should use fresh session mode
         // Check if this is a new session (no messages yet)
         const entries = ctx.sessionManager.getEntries();
         const messageCount = entries.filter((e) => e.type === "message").length;
 
-        let useFreshSession = false;
+        // In an empty session, default to fresh review mode so /end-review works consistently.
+        let useFreshSession = messageCount === 0;
 
         if (messageCount > 0) {
           // Existing session - ask user which mode they want
@@ -1272,7 +1895,6 @@ export default function reviewExtension(pi: ExtensionAPI) {
 
           useFreshSession = choice === "Empty branch";
         }
-        // If messageCount === 0, useFreshSession stays false (current session mode)
 
         await executeReview(ctx, target, useFreshSession);
         return;
@@ -1280,100 +1902,99 @@ export default function reviewExtension(pi: ExtensionAPI) {
     },
   });
 
-  // Custom prompt for review summaries - focuses on capturing review findings
-  const REVIEW_SUMMARY_PROMPT = `We are switching to a coding session to continue working on the code. 
-Create a structured summary of this review branch for context when returning later.
-	
-You MUST summarize the code review that was performed in this branch so that the user can act on it.
+  // Custom prompt for review summaries - focuses on preserving actionable findings
+  const REVIEW_SUMMARY_PROMPT = `We are leaving a code-review branch and returning to the main coding branch.
+Create a structured handoff that can be used immediately to implement fixes.
 
-1. What was reviewed (files, changes, scope)
-2. Key findings and their priority levels (P0-P3)
-3. The overall verdict (correct vs needs attention)
-4. Any action items or recommendations
+You MUST summarize the review that happened in this branch so findings can be acted on.
+Do not omit findings: include every actionable issue that was identified.
 
-YOU MUST append a message with this EXACT format at the end of your summary:
+Required sections (in order):
 
-## Next Steps
-1. [What should happen next to act on the review]
+## Review Scope
+- What was reviewed (files/paths, changes, and scope)
+
+## Verdict
+- "correct" or "needs attention"
+
+## Findings
+For EACH finding, include:
+- Priority tag ([P0]..[P3]) and short title
+- File location (\`path/to/file.ext:line\`)
+- Why it matters (brief)
+- What should change (brief, actionable)
+
+## Fix Queue
+1. Ordered implementation checklist (highest priority first)
 
 ## Constraints & Preferences
-- [Any constraints, preferences, or requirements mentioned]
-- [Or "(none)" if none were mentioned]
+- Any constraints or preferences mentioned during review
+- Or "(none)"
 
-## Code Review Findings
+Preserve exact file paths, function names, and error messages where available.`;
 
-[P0] Short Title
+  const REVIEW_FIX_FINDINGS_PROMPT = `Use the latest review summary in this session and implement the review findings now.
 
-File: path/to/file.ext:line_number
+Instructions:
+1. Treat the summary's Findings/Fix Queue as a checklist.
+2. Fix in priority order: P0, P1, then P2 (include P3 if quick and safe).
+3. If a finding is invalid/already fixed/not possible right now, briefly explain why and continue.
+4. Run relevant tests/checks for touched code where practical.
+5. End with: fixed items, deferred/skipped items (with reasons), and verification results.`;
 
-\`\`\`
-affected code snippet
-\`\`\`
+  type EndReviewAction = "returnOnly" | "returnAndFix" | "returnAndSummarize";
+  type EndReviewActionResult = "ok" | "cancelled" | "error";
+  type EndReviewActionOptions = {
+    showSummaryLoader?: boolean;
+    notifySuccess?: boolean;
+  };
 
-Preserve exact file paths, function names, and error messages.
-`;
+  function getActiveReviewOrigin(ctx: ExtensionContext): string | undefined {
+    if (reviewOriginId) {
+      return reviewOriginId;
+    }
 
-  // Register the /end-review command
-  pi.registerCommand("end-review", {
-    description: "Complete review and return to original position",
-    handler: async (args, ctx) => {
-      if (!ctx.hasUI) {
-        ctx.ui.notify("End-review requires interactive mode", "error");
-        return;
-      }
+    const state = getReviewState(ctx);
+    if (state?.active && state.originId) {
+      reviewOriginId = state.originId;
+      return reviewOriginId;
+    }
 
-      // Check if we're in a fresh session review
-      if (!reviewOriginId) {
-        const state = getReviewState(ctx);
-        if (state?.active && state.originId) {
-          reviewOriginId = state.originId;
-        } else if (state?.active) {
-          setReviewWidget(ctx, false);
-          pi.appendEntry(REVIEW_STATE_TYPE, { active: false });
-          ctx.ui.notify(
-            "Review state was missing origin info; cleared review status.",
-            "warning",
-          );
-          return;
-        } else {
-          ctx.ui.notify(
-            "Not in a review branch (use /review first, or review was started in current session mode)",
-            "info",
-          );
-          return;
-        }
-      }
+    if (state?.active) {
+      setReviewWidget(ctx, false);
+      pi.appendEntry(REVIEW_STATE_TYPE, { active: false });
+      ctx.ui.notify(
+        "Review state was missing origin info; cleared review status.",
+        "warning",
+      );
+    }
 
-      // Ask about summarization (Summarize is default/first option)
-      const summaryChoice = await ctx.ui.select("Summarize review branch?", [
-        "Summarize",
-        "No summary",
-      ]);
+    return undefined;
+  }
 
-      if (summaryChoice === undefined) {
-        // User cancelled - keep state so they can call /end-review again
-        ctx.ui.notify("Cancelled. Use /end-review to try again.", "info");
-        return;
-      }
+  function clearReviewState(ctx: ExtensionContext) {
+    setReviewWidget(ctx, false);
+    reviewOriginId = undefined;
+    pi.appendEntry(REVIEW_STATE_TYPE, { active: false });
+  }
 
-      const wantsSummary = summaryChoice === "Summarize";
-      const originId = reviewOriginId;
-
-      if (wantsSummary) {
-        // Show spinner while summarizing
-        const result = await ctx.ui.custom<{
-          cancelled: boolean;
-          error?: string;
-        } | null>((tui, theme, _kb, done) => {
+  async function navigateWithSummary(
+    ctx: ExtensionCommandContext,
+    originId: string,
+    showLoader: boolean,
+  ): Promise<{ cancelled: boolean; error?: string } | null> {
+    if (showLoader && ctx.hasUI) {
+      return ctx.ui.custom<{ cancelled: boolean; error?: string } | null>(
+        (tui, theme, _kb, done) => {
           const loader = new BorderedLoader(
             tui,
             theme,
-            "Summarizing review branch...",
+            "Returning and summarizing review branch...",
           );
           loader.onAbort = () => done(null);
 
           ctx
-            .navigateTree(originId!, {
+            .navigateTree(originId, {
               summarize: true,
               customInstructions: REVIEW_SUMMARY_PROMPT,
               replaceInstructions: true,
@@ -1387,74 +2008,171 @@ Preserve exact file paths, function names, and error messages.
             );
 
           return loader;
-        });
+        },
+      );
+    }
 
-        if (result === null) {
-          // User aborted - keep state so they can try again
+    try {
+      return await ctx.navigateTree(originId, {
+        summarize: true,
+        customInstructions: REVIEW_SUMMARY_PROMPT,
+        replaceInstructions: true,
+      });
+    } catch (error) {
+      return {
+        cancelled: false,
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+
+  async function executeEndReviewAction(
+    ctx: ExtensionCommandContext,
+    action: EndReviewAction,
+    options: EndReviewActionOptions = {},
+  ): Promise<EndReviewActionResult> {
+    const originId = getActiveReviewOrigin(ctx);
+    if (!originId) {
+      if (!getReviewState(ctx)?.active) {
+        ctx.ui.notify(
+          "Not in a review branch (use /review first, or review was started in current session mode)",
+          "info",
+        );
+      }
+      return "error";
+    }
+
+    const notifySuccess = options.notifySuccess ?? true;
+
+    if (action === "returnOnly") {
+      try {
+        const result = await ctx.navigateTree(originId, { summarize: false });
+        if (result.cancelled) {
           ctx.ui.notify(
-            "Summarization cancelled. Use /end-review to try again.",
+            "Navigation cancelled. Use /end-review to try again.",
             "info",
           );
-          return;
+          return "cancelled";
         }
+      } catch (error) {
+        ctx.ui.notify(
+          `Failed to return: ${error instanceof Error ? error.message : String(error)}`,
+          "error",
+        );
+        return "error";
+      }
 
-        if (result.error) {
-          // Real error - keep state so they can try again
-          ctx.ui.notify(`Summarization failed: ${result.error}`, "error");
-          return;
-        }
-
-        // Clear state only on success
-        setReviewWidget(ctx, false);
-        reviewOriginId = undefined;
-        pi.appendEntry(REVIEW_STATE_TYPE, { active: false });
-
-        if (result.cancelled) {
-          ctx.ui.notify("Navigation cancelled", "info");
-          return;
-        }
-
-        // Pre-fill prompt if editor is empty
-        if (!ctx.ui.getEditorText().trim()) {
-          ctx.ui.setEditorText("Act on the code review");
-        }
-
+      clearReviewState(ctx);
+      if (notifySuccess) {
         ctx.ui.notify(
           "Review complete! Returned to original position.",
           "info",
         );
-      } else {
-        // No summary - just navigate back
-        try {
-          const result = await ctx.navigateTree(originId!, {
-            summarize: false,
-          });
-
-          if (result.cancelled) {
-            // Keep state so they can try again
-            ctx.ui.notify(
-              "Navigation cancelled. Use /end-review to try again.",
-              "info",
-            );
-            return;
-          }
-
-          // Clear state only on success
-          setReviewWidget(ctx, false);
-          reviewOriginId = undefined;
-          pi.appendEntry(REVIEW_STATE_TYPE, { active: false });
-          ctx.ui.notify(
-            "Review complete! Returned to original position.",
-            "info",
-          );
-        } catch (error) {
-          // Keep state so they can try again
-          ctx.ui.notify(
-            `Failed to return: ${error instanceof Error ? error.message : String(error)}`,
-            "error",
-          );
-        }
       }
+      return "ok";
+    }
+
+    const summaryResult = await navigateWithSummary(
+      ctx,
+      originId,
+      options.showSummaryLoader ?? false,
+    );
+    if (summaryResult === null) {
+      ctx.ui.notify(
+        "Summarization cancelled. Use /end-review to try again.",
+        "info",
+      );
+      return "cancelled";
+    }
+
+    if (summaryResult.error) {
+      ctx.ui.notify(`Summarization failed: ${summaryResult.error}`, "error");
+      return "error";
+    }
+
+    if (summaryResult.cancelled) {
+      ctx.ui.notify(
+        "Navigation cancelled. Use /end-review to try again.",
+        "info",
+      );
+      return "cancelled";
+    }
+
+    clearReviewState(ctx);
+
+    if (action === "returnAndSummarize") {
+      if (!ctx.ui.getEditorText().trim()) {
+        ctx.ui.setEditorText("Act on the review findings");
+      }
+      if (notifySuccess) {
+        ctx.ui.notify("Review complete! Returned and summarized.", "info");
+      }
+      return "ok";
+    }
+
+    pi.sendUserMessage(REVIEW_FIX_FINDINGS_PROMPT, { deliverAs: "followUp" });
+    if (notifySuccess) {
+      ctx.ui.notify(
+        "Review complete! Returned and queued a follow-up to fix findings.",
+        "info",
+      );
+    }
+    return "ok";
+  }
+
+  async function runEndReview(ctx: ExtensionCommandContext): Promise<void> {
+    if (!ctx.hasUI) {
+      ctx.ui.notify("End-review requires interactive mode", "error");
+      return;
+    }
+
+    if (reviewLoopInProgress) {
+      ctx.ui.notify(
+        "Loop fixing review is running. Wait for it to finish.",
+        "info",
+      );
+      return;
+    }
+
+    if (endReviewInProgress) {
+      ctx.ui.notify("/end-review is already running", "info");
+      return;
+    }
+
+    endReviewInProgress = true;
+    try {
+      const choice = await ctx.ui.select("Finish review:", [
+        "Return only",
+        "Return and fix findings",
+        "Return and summarize",
+      ]);
+
+      if (choice === undefined) {
+        ctx.ui.notify("Cancelled. Use /end-review to try again.", "info");
+        return;
+      }
+
+      const action: EndReviewAction =
+        choice === "Return and fix findings"
+          ? "returnAndFix"
+          : choice === "Return and summarize"
+            ? "returnAndSummarize"
+            : "returnOnly";
+
+      await executeEndReviewAction(ctx, action, {
+        showSummaryLoader: true,
+        notifySuccess: true,
+      });
+    } finally {
+      endReviewInProgress = false;
+    }
+  }
+
+  // Register the /end-review command
+  pi.registerCommand("end-review", {
+    description: "Complete review and return to original position",
+    handler: async (_args, ctx) => {
+      await runEndReview(ctx);
     },
   });
 }
