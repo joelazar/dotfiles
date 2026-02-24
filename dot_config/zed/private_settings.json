@@ -641,5 +641,26 @@
   // ══════════════════════════════════════════════════════════════════════════════
   // THEME OVERRIDES (empty - using defaults)
   // ══════════════════════════════════════════════════════════════════════════════
-  "theme_overrides": {},
+  "theme_overrides": {
+    "Tokyo Night": {
+      "syntax": {
+        "comment": {
+          "font_style": "italic",
+          "font_weight": 300,
+        },
+        "keyword": {
+          "font_style": "italic",
+        },
+        "keyword.import": {
+          "font_style": "italic",
+        },
+        "keyword.type": {
+          "font_style": "italic",
+        },
+        "type": {
+          "font_style": "italic",
+        },
+      },
+    },
+  },
 }
