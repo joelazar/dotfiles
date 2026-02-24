@@ -1,0 +1,8 @@
+- **Key directories**: `dot_config/` (app configs), `private_dot_local/bin/` (custom scripts), `scripts/` (utilities)
+- **File naming**: `dot_*` → dotfiles, `private_*` → sensitive data, `run_once_*` → setup scripts, `.tmpl` → templates
+- **Templates**: Use Go text/template with variables like `{{ .email }}`, `{{ .name }}`, `{{ .chezmoi.sourceDir }}`
+- **Always run `chezmoi apply` after making changes** to deploy them to the actual dotfile locations. Without this step, edits in the chezmoi source directory have no effect on the live system.
+- **Shell**: Bash with error handling, use `scripts/utils` patterns, descriptive function names
+  - Use `gum` for interactive prompts, spinners, styled output, and confirmations (with plain fallbacks when gum is unavailable)
+  - Source `scripts/utils` for consistent color/style helper functions
+  - Validate scripts with `bash -n` and `shellcheck` before finishing
