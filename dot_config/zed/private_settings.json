@@ -226,6 +226,14 @@
     "gemini": {
       "ignore_system_version": false,
     },
+    "pi": {
+      "type": "custom",
+      "command": "/Users/joelazar/.bun/bin/pi-acp",
+      "args": [],
+      "env": {
+        "PI_ACP_STARTUP_INFO": "true",
+      },
+    },
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -616,9 +624,11 @@
     "fish": true,
     "git-firefly": true,
     "github-actions": true,
+    "go-snippets": true,
     "golangci-lint": true,
     "harper": true,
     "helm": true,
+    "html": true,
     "latex": true,
     "log": true,
     "lua": true,
