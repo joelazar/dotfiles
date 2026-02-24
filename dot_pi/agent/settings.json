@@ -18,6 +18,7 @@
     "-extensions/sandbox/index.ts"
   ],
   "packages": [
-    "npm:pi-interactive-shell"
+    "npm:pi-interactive-shell",
+    "npm:pi-peon-ping"
   ]
 }

@@ -18,14 +18,10 @@
     "useRipgrep": true,
     "shell": {
       "showColor": true
-    },
-    "autoAccept": true
+    }
   },
   "general": {
-    "enablePromptCompletion": true,
     "vimMode": false,
-    "disableAutoUpdate": true,
-    "previewFeatures": true,
     "enableAutoUpdate": false
   },
   "output": {
@@ -39,5 +35,56 @@
   },
   "experimental": {
     "plan": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "name": "peon-start",
+            "type": "command",
+            "command": "bash ~/.claude/hooks/peon-ping/adapters/gemini.sh SessionStart"
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "peon-after-agent",
+            "type": "command",
+            "command": "bash ~/.claude/hooks/peon-ping/adapters/gemini.sh AfterAgent"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "peon-after-tool",
+            "type": "command",
+            "command": "bash ~/.claude/hooks/peon-ping/adapters/gemini.sh AfterTool"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "name": "peon-notification",
+            "type": "command",
+            "command": "bash ~/.claude/hooks/peon-ping/adapters/gemini.sh Notification"
+          }
+        ]
+      }
+    ]
   }
 }
+
