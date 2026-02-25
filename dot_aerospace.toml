@@ -193,7 +193,11 @@ run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed-Preview'
-run = 'move-node-to-workspace 2'
+run = ['layout tiling', 'move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'com.kagi.kagimacOS'
@@ -245,10 +249,6 @@ run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
-run = ['layout tiling', 'move-node-to-workspace 6']
-
-[[on-window-detected]]
-if.app-id = 'com.openai.codex'
 run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
