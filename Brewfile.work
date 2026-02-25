@@ -132,7 +132,7 @@ brew "gofumpt"
 # Language server for `golangci-lint`
 brew "golangci-lint-langserver"
 # Go Language's command-line interface for database migrations
-brew "goose", link: false
+brew "goose"
 # Human friendly `go test` runner
 brew "gotestsum"
 # Tool for glamorous shell scripts
@@ -416,7 +416,7 @@ cask "thaw"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
-cask "zed@preview"
+cask "zed"
 # Gecko based web browser
 cask "zen"
 go "golang.org/x/tools/cmd/callgraph"
