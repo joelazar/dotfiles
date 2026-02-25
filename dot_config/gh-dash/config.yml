@@ -93,7 +93,7 @@ keybindings:
         cd {{.RepoPath}} && lazygit
       name: lazygit
   prs:
-    - key: D
+    - key: F
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
@@ -103,11 +103,11 @@ keybindings:
       command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
       name: approve
-    - key: m
+    - key: E
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --delete-branch
       name: merge
-    - key: M
+    - key: ctrl+e
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --delete-branch
       name: merge (admin)
@@ -115,7 +115,7 @@ keybindings:
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto --delete-branch
       name: merge (auto)
-    - key: N
+    - key: ctrl+n
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
       name: disable auto merge

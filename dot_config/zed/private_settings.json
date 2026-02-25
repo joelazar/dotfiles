@@ -190,6 +190,7 @@
     "provider": "mercury",
   },
   "agent": {
+    "single_file_review": false,
     "tool_permissions": {
       "default": "allow",
     },
