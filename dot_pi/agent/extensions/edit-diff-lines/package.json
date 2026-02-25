@@ -1,0 +1,8 @@
+{
+  "name": "edit-diff-lines",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "diff": "^7.0.0"
+  }
+}
