@@ -11,16 +11,26 @@
  * Example .pi/path-policy.json:
  * {
  *   "enabled": true,
- *   "blockedPaths": [".env", ".env.*", "secrets/", "config/private.json"],
+ *   "blockedPaths": [".env", ".env.*", "**\/.env", "secrets/\*\*", "config/private.json"],
  *   "blockedTools": ["read", "edit", "write"],
  *   "guardBash": true,
  *   "audit": true
  * }
+ *
+ * Glob notes:
+ * - `*` matches within one path segment (no `/`)
+ * - `**` matches across directories
+ * - `?` matches one character in a segment
  */
 
-import { appendFileSync, existsSync, readFileSync } from "node:fs";
+import {
+  appendFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+} from "node:fs";
 import { homedir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { dirname, join, posix, relative, resolve } from "node:path";
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
 type BlockedTool = "read" | "edit" | "write";
@@ -57,16 +67,31 @@ const DEFAULT_CONFIG: PathPolicyConfig = {
 };
 
 const BASH_FILE_OP_HINT =
-  /\b(cat|less|more|head|tail|grep|rg|sed|awk|tee|cp|mv|rm|touch|truncate|nano|vim|vi)\b|>>?|<</;
+  /\b(cat|less|more|head|tail|grep|rg|sed|awk|tee|cp|mv|rm|touch|truncate|nano|vim|vi|chmod|chown|chgrp|ln|mkdir|rmdir|find)\b|>>?|<</;
+
+const SHELL_META_TOKENS = new Set([
+  "|",
+  "||",
+  "&&",
+  ";",
+  "&",
+  "(",
+  ")",
+]);
+
+function stripPathPrefix(pathValue: string): string {
+  const trimmed = pathValue.trim();
+  return trimmed.startsWith("@") ? trimmed.slice(1) : trimmed;
+}
 
 function normalizePath(value: string): string {
-  let normalized = value.trim().replaceAll("\\", "/");
-  while (normalized.includes("//")) {
-    normalized = normalized.replaceAll("//", "/");
-  }
-  if (normalized.startsWith("./")) {
-    normalized = normalized.slice(2);
-  }
+  const stripped = stripPathPrefix(value).replaceAll("\\", "/").trim();
+  if (!stripped) return "";
+
+  let normalized = posix.normalize(stripped);
+  if (normalized === ".") return "";
+
+  if (normalized.startsWith("./")) normalized = normalized.slice(2);
   if (normalized.length > 1 && normalized.endsWith("/")) {
     normalized = normalized.slice(0, -1);
   }
@@ -77,6 +102,25 @@ function escapeRegExp(value: string): string {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+function globToRegexSource(globPattern: string): string {
+  let source = escapeRegExp(globPattern);
+
+  // `**/foo` should match both `foo` and `a/b/foo`.
+  source = source.replace(/^\\\*\\\*\//, "(?:.*/)?");
+
+  // `foo/**` should match both `foo` and descendants.
+  source = source.replace(/\/\\\*\\\*$/, "(?:/.*)?");
+
+  // `**` crosses directories, `*` stays within a segment.
+  source = source.replace(/\\\*\\\*/g, ".*");
+  source = source.replace(/\\\*/g, "[^/]*");
+
+  // `?` matches a single character in a segment.
+  source = source.replace(/\\\?/g, "[^/]");
+
+  return source;
+}
+
 function compileRule(pattern: string): CompiledRule | null {
   const raw = pattern.trim();
   if (!raw) return null;
@@ -84,8 +128,9 @@ function compileRule(pattern: string): CompiledRule | null {
   const normalized = normalizePath(raw);
   if (!normalized) return null;
 
-  if (normalized.includes("*")) {
-    const regexSource = normalized.split("*").map(escapeRegExp).join(".*");
+  const hasGlob = normalized.includes("*") || normalized.includes("?");
+  if (hasGlob) {
+    const regexSource = globToRegexSource(normalized);
     return {
       raw,
       normalized,
@@ -194,19 +239,19 @@ function loadConfig(cwd: string): PathPolicyConfig {
 }
 
 function resolveCandidates(cwd: string, inputPath: string): string[] {
-  const absolute = normalizePath(resolve(cwd, inputPath));
+  const cleanedInput = stripPathPrefix(inputPath);
+  const rawCandidate = normalizePath(cleanedInput);
+
+  const absolute = normalizePath(resolve(cwd, cleanedInput));
   const rel = normalizePath(relative(cwd, absolute));
 
   const candidates = new Set<string>();
-  candidates.add(absolute);
+  if (rawCandidate) candidates.add(rawCandidate);
+  if (absolute) candidates.add(absolute);
 
   const isOutsideWorkspace =
-    rel === ".." ||
-    rel.startsWith("../") ||
-    rel === "" ||
-    rel.startsWith("..\\") ||
-    rel === ".";
-  if (!isOutsideWorkspace) {
+    rel === ".." || rel.startsWith("../") || rel.startsWith("..\\") || rel === ".";
+  if (rel && !isOutsideWorkspace) {
     candidates.add(rel);
   }
 
@@ -214,16 +259,16 @@ function resolveCandidates(cwd: string, inputPath: string): string[] {
 }
 
 function evaluatePath(
-  path: string,
+  pathValue: string,
   cwd: string,
   rules: CompiledRule[],
 ): PolicyDecision {
-  const normalizedPath = normalizePath(path);
+  const normalizedPath = normalizePath(pathValue);
   if (!normalizedPath) {
     return { blocked: false, normalizedPath };
   }
 
-  const candidates = resolveCandidates(cwd, path);
+  const candidates = resolveCandidates(cwd, pathValue);
 
   for (const rule of rules) {
     for (const candidate of candidates) {
@@ -242,16 +287,17 @@ function evaluatePath(
 
 function logDecision(
   toolName: string,
-  path: string,
+  pathValue: string,
   allowed: boolean,
   reason?: string,
 ) {
   const timestamp = new Date().toISOString();
   const status = allowed ? "ALLOWED" : "BLOCKED";
   const reasonSuffix = reason ? ` (${reason})` : "";
-  const line = `[${timestamp}] ${status} ${toolName}: ${path}${reasonSuffix}\n`;
+  const line = `[${timestamp}] ${status} ${toolName}: ${pathValue}${reasonSuffix}\n`;
 
   try {
+    mkdirSync(dirname(LOG_FILE), { recursive: true });
     appendFileSync(LOG_FILE, line);
   } catch {
     // Best-effort logging only.
@@ -261,7 +307,7 @@ function logDecision(
 function extractPathFromInput(input: unknown): string | undefined {
   if (!input || typeof input !== "object") return undefined;
   const maybePath = (input as Record<string, unknown>).path;
-  return typeof maybePath === "string" ? maybePath : undefined;
+  return typeof maybePath === "string" ? stripPathPrefix(maybePath) : undefined;
 }
 
 function extractCommandFromInput(input: unknown): string | undefined {
@@ -270,55 +316,213 @@ function extractCommandFromInput(input: unknown): string | undefined {
   return typeof maybeCommand === "string" ? maybeCommand : undefined;
 }
 
-function tokenizeShellCommand(command: string): string[] {
-  const matches = command.match(/"[^"]*"|'[^']*'|`[^`]*`|\S+/g) ?? [];
-  return matches.map((token) => {
-    if (token.length >= 2) {
-      const first = token[0];
-      const last = token[token.length - 1];
-      if (
-        (first === '"' && last === '"') ||
-        (first === "'" && last === "'") ||
-        (first === "`" && last === "`")
-      ) {
-        return token.slice(1, -1);
+function splitShellSubcommands(command: string): string[] {
+  const commands: string[] = [];
+  let current = "";
+
+  let inSingle = false;
+  let inDouble = false;
+  let escaped = false;
+
+  for (let i = 0; i < command.length; i++) {
+    const ch = command[i];
+    const next = command[i + 1];
+
+    if (escaped) {
+      current += ch;
+      escaped = false;
+      continue;
+    }
+
+    if (ch === "\\" && !inSingle) {
+      current += ch;
+      escaped = true;
+      continue;
+    }
+
+    if (ch === "'" && !inDouble) {
+      inSingle = !inSingle;
+      current += ch;
+      continue;
+    }
+
+    if (ch === '"' && !inSingle) {
+      inDouble = !inDouble;
+      current += ch;
+      continue;
+    }
+
+    if (!inSingle && !inDouble) {
+      const isSingleSep = ch === ";" || ch === "\n";
+      const isDoubleSep =
+        (ch === "&" && next === "&") || (ch === "|" && next === "|");
+      const isPipeSep = ch === "|";
+      const isBackgroundSep = ch === "&";
+
+      if (isSingleSep || isDoubleSep || isPipeSep || isBackgroundSep) {
+        const trimmed = current.trim();
+        if (trimmed.length > 0) commands.push(trimmed);
+        current = "";
+
+        if (isDoubleSep) i += 1;
+        continue;
       }
     }
-    return token;
-  });
+
+    current += ch;
+  }
+
+  const tail = current.trim();
+  if (tail.length > 0) commands.push(tail);
+
+  return commands.length > 0 ? commands : [command.trim()].filter(Boolean);
 }
 
-function extractPossiblePathsFromCommand(command: string): string[] {
-  const shellMetas = new Set(["|", "||", "&&", ";", "(", ")"]);
-  const tokens = tokenizeShellCommand(command);
+function tokenizeShellCommand(command: string): string[] {
+  const tokens: string[] = [];
+  let current = "";
+
+  let inSingle = false;
+  let inDouble = false;
+  let escaped = false;
+
+  const pushCurrent = () => {
+    if (!current) return;
+    tokens.push(current);
+    current = "";
+  };
+
+  for (let i = 0; i < command.length; i++) {
+    const ch = command[i];
+    const next = command[i + 1];
+
+    if (escaped) {
+      current += ch;
+      escaped = false;
+      continue;
+    }
+
+    if (ch === "\\" && !inSingle) {
+      escaped = true;
+      continue;
+    }
+
+    if (ch === "'" && !inDouble) {
+      inSingle = !inSingle;
+      continue;
+    }
+
+    if (ch === '"' && !inSingle) {
+      inDouble = !inDouble;
+      continue;
+    }
+
+    if (!inSingle && !inDouble) {
+      if (/\s/.test(ch)) {
+        pushCurrent();
+        continue;
+      }
+
+      const twoChar = `${ch}${next ?? ""}`;
+      if (["&&", "||", ">>", "<<"].includes(twoChar)) {
+        pushCurrent();
+        tokens.push(twoChar);
+        i += 1;
+        continue;
+      }
+
+      if (["|", ";", "&", "(", ")", ">", "<"].includes(ch)) {
+        pushCurrent();
+        tokens.push(ch);
+        continue;
+      }
+    }
+
+    current += ch;
+  }
+
+  pushCurrent();
+  return tokens;
+}
+
+function isEnvAssignment(token: string): boolean {
+  return /^[A-Za-z_][A-Za-z0-9_]*=.*/.test(token);
+}
+
+function isRedirectionToken(token: string): boolean {
+  if ([">", ">>", "<", "<<"].includes(token)) return true;
+  return /^[0-9]*>>?$/.test(token) || /^[0-9]*<<?$/.test(token);
+}
+
+function looksLikePathToken(token: string, cwd: string): boolean {
+  if (!token) return false;
+  if (SHELL_META_TOKENS.has(token)) return false;
+  if (token.includes("://")) return false;
+
+  if (
+    token.startsWith("@") ||
+    token.startsWith("./") ||
+    token.startsWith("../") ||
+    token.startsWith("/") ||
+    token.startsWith("~") ||
+    token.startsWith("$HOME") ||
+    token.startsWith("${HOME}") ||
+    token.includes("/") ||
+    token.includes("*")
+  ) {
+    return true;
+  }
+
+  return existsSync(resolve(cwd, token));
+}
+
+function extractPossiblePathsFromCommand(command: string, cwd: string): string[] {
+  const subcommands = splitShellSubcommands(command);
   const paths: string[] = [];
 
-  for (const token of tokens) {
-    if (!token || shellMetas.has(token) || token.startsWith("-")) {
-      continue;
-    }
+  for (const sub of subcommands) {
+    const tokens = tokenizeShellCommand(sub);
+    if (tokens.length === 0) continue;
 
-    if (token.startsWith(">") || token.startsWith("<")) {
-      const redirected = token.slice(1);
-      if (redirected) paths.push(redirected);
-      continue;
-    }
+    for (let i = 0; i < tokens.length; i++) {
+      const token = tokens[i];
+      if (!token) continue;
 
-    const equalsIndex = token.indexOf("=");
-    if (equalsIndex > 0 && equalsIndex < token.length - 1) {
-      const rhs = token.slice(equalsIndex + 1);
-      if (rhs.includes("/") || rhs.startsWith(".") || rhs.includes(".")) {
-        paths.push(rhs);
+      if (SHELL_META_TOKENS.has(token)) continue;
+
+      // Handle redirections in both forms: > file and >file
+      if (isRedirectionToken(token)) {
+        const next = tokens[i + 1];
+        if (next && looksLikePathToken(next, cwd)) {
+          paths.push(stripPathPrefix(next));
+          i += 1;
+        }
+        continue;
       }
-      continue;
-    }
 
-    if (token.includes("/") || token.startsWith(".") || token.includes(".")) {
-      paths.push(token);
+      if (token.startsWith(">") || token.startsWith("<")) {
+        const redirected = stripPathPrefix(token.slice(1));
+        if (redirected && looksLikePathToken(redirected, cwd)) {
+          paths.push(redirected);
+        }
+        continue;
+      }
+
+      if (token.startsWith("-")) continue;
+      if (isEnvAssignment(token)) {
+        const equalsIndex = token.indexOf("=");
+        const rhs = stripPathPrefix(token.slice(equalsIndex + 1));
+        if (rhs && looksLikePathToken(rhs, cwd)) paths.push(rhs);
+        continue;
+      }
+
+      if (looksLikePathToken(token, cwd)) {
+        paths.push(stripPathPrefix(token));
+      }
     }
   }
 
-  return paths;
+  return [...new Set(paths)];
 }
 
 export default function pathPolicyExtension(pi: ExtensionAPI) {
@@ -327,40 +531,51 @@ export default function pathPolicyExtension(pi: ExtensionAPI) {
     .map(compileRule)
     .filter((rule): rule is CompiledRule => rule !== null);
 
-  pi.on("session_start", async (_event, ctx) => {
-    config = loadConfig(ctx.cwd);
+  const refreshConfig = (cwd: string) => {
+    config = loadConfig(cwd);
     rules = config.blockedPaths
       .map(compileRule)
       .filter((rule): rule is CompiledRule => rule !== null);
+  };
+
+  pi.on("session_start", async (_event, ctx) => {
+    refreshConfig(ctx.cwd);
+  });
+
+  pi.on("session_switch", async (_event, ctx) => {
+    refreshConfig(ctx.cwd);
   });
 
   pi.on("tool_call", async (event, ctx) => {
+    // Keep config live without requiring /reload or session restart.
+    refreshConfig(ctx.cwd);
+
     if (!config.enabled) return undefined;
 
     if (
       isBlockedTool(event.toolName) &&
       config.blockedTools.includes(event.toolName)
     ) {
-      const path = extractPathFromInput(event.input);
-      if (!path) return undefined;
+      const pathValue = extractPathFromInput(event.input);
+      if (!pathValue) return undefined;
 
-      const decision = evaluatePath(path, ctx.cwd, rules);
+      const decision = evaluatePath(pathValue, ctx.cwd, rules);
       if (!decision.blocked) {
         if (config.audit)
-          logDecision(event.toolName, decision.normalizedPath || path, true);
+          logDecision(event.toolName, decision.normalizedPath || pathValue, true);
         return undefined;
       }
 
-      const reason = `Path "${path}" matches blocked rule "${decision.rule}"`;
+      const reason = `Path "${pathValue}" matches blocked rule "${decision.rule}"`;
       if (config.audit)
         logDecision(
           event.toolName,
-          decision.normalizedPath || path,
+          decision.normalizedPath || pathValue,
           false,
           reason,
         );
       if (ctx.hasUI) {
-        ctx.ui.notify(`Blocked ${event.toolName}: ${path}`, "warning");
+        ctx.ui.notify(`Blocked ${event.toolName}: ${pathValue}`, "warning");
       }
       return { block: true, reason };
     }
@@ -369,7 +584,7 @@ export default function pathPolicyExtension(pi: ExtensionAPI) {
       const command = extractCommandFromInput(event.input);
       if (!command || !BASH_FILE_OP_HINT.test(command)) return undefined;
 
-      const candidatePaths = extractPossiblePathsFromCommand(command);
+      const candidatePaths = extractPossiblePathsFromCommand(command, ctx.cwd);
       for (const candidatePath of candidatePaths) {
         const decision = evaluatePath(candidatePath, ctx.cwd, rules);
         if (!decision.blocked) continue;
@@ -394,13 +609,15 @@ export default function pathPolicyExtension(pi: ExtensionAPI) {
   pi.registerCommand("path-policy", {
     description: "Show active path-policy configuration",
     handler: async (_args, ctx) => {
+      refreshConfig(ctx.cwd);
+
       const tools = config.blockedTools.join(", ") || "(none)";
       const sortedPaths = [...config.blockedPaths].sort((a, b) =>
         a.localeCompare(b),
       );
       const pathLines =
         sortedPaths.length > 0
-          ? sortedPaths.map((path) => `  - ${path}`)
+          ? sortedPaths.map((pathValue) => `  - ${pathValue}`)
           : ["  (none)"];
 
       const lines = [
@@ -415,24 +632,5 @@ export default function pathPolicyExtension(pi: ExtensionAPI) {
       ctx.ui.notify(lines.join("\n"), "info");
     },
   });
-
-  pi.registerCommand("path-policy-test", {
-    description:
-      "Test whether a path is blocked (usage: /path-policy-test <path>)",
-    handler: async (args, ctx) => {
-      const path = args.trim();
-      if (!path) {
-        ctx.ui.notify("Usage: /path-policy-test <path>", "warning");
-        return;
-      }
-
-      const decision = evaluatePath(path, ctx.cwd, rules);
-      if (decision.blocked) {
-        ctx.ui.notify(`BLOCKED: ${path} (rule: ${decision.rule})`, "warning");
-        return;
-      }
-
-      ctx.ui.notify(`ALLOWED: ${path}`, "info");
-    },
-  });
 }
+

@@ -1,5 +1,5 @@
 /**
- * Lazygit extension - open lazygit with /lazygit command or ctrl+g shortcut
+ * Lazygit extension - open lazygit with /lazygit command or ctrl+shift+g shortcut
  *
  * Suspends pi's TUI, gives lazygit full terminal control,
  * and restores pi when lazygit exits.

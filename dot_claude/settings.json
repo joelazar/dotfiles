@@ -169,6 +169,16 @@
             "async": true
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/joelazar/.claude/hooks/peon-ping/scripts/hook-handle-use.sh",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "Stop": [
