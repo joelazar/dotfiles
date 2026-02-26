@@ -54,12 +54,12 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
   - Modern, collaborative code editor with Vim mode enabled
   - Custom keybindings for navigation, pane management, and Git integration
   - Integrated terminal with custom font and environment variables
-  - LSP support for Python, Go, Bash, Helm, Ansible, Markdown, etc.
+  - LSP support for Python, Go, Bash, Helm, Ansible, Markdown, HTML, etc.
   - Custom tasks for running tests, scripts, and tools like `lazygit` and `yazi`
-  - Snippet support for JavaScript, TypeScript, and TSX
-  - Theming: Tokyo Night, VSCode Icons (Dark)
+  - Snippet support for JavaScript, TypeScript, TSX, and Go
+  - Theming: Tokyo Night with cursive italic overrides (comments, keywords), VSCode Icons (Dark)
   - File/folder exclusions for performance
-  - AI/LLM agent integration (Anthropic, OpenAI, DeepSeek, Ollama, etc.)
+  - AI/LLM agent integration (Anthropic, OpenAI, DeepSeek, Ollama, Pi via `pi-acp` server)
   - Edit predictions via Copilot/Mercury
 
 ### [Yazi](https://yazi-rs.github.io/) 🦆
@@ -197,7 +197,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
   - Fuzzy finder for files, directories, history, and processes
   - Custom preview commands using `bat` and `eza`
   - Toggle between files/directories/hidden files modes
-  - Used in scripts like `rgfzf` for project search
+  - Used in various scripts for project search
 
 ### [Ripgrep](https://github.com/BurntSushi/ripgrep) 🦸
 
@@ -276,7 +276,7 @@ A significant part of this setup is dedicated to AI-assisted development:
 - **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions and Wakatime integration
 - **[Pi Agent](https://github.com/mariozechner/pi-coding-agent)** — Heavily customized coding agent harness (see detailed section below). Config in [`dot_pi/`](dot_pi/)
 - **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** — Google's Gemini from the terminal
-- **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent
+- **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent. Config in [`dot_codex/`](dot_codex/)
 - **[Ollama](https://ollama.com/)** — Local LLM runner for self-hosted models
 - **[`ai-update`](private_dot_local/bin/executable_ai-update)** — Script to keep all AI tools up to date
 
@@ -285,7 +285,7 @@ A significant part of this setup is dedicated to AI-assisted development:
 - **Config:** See [`dot_pi/`](dot_pi/)
 - **Features:**
   - Multi-provider coding agent TUI with Tokyo Night theme
-  - Default model: Claude Opus 4.6 (Anthropic), with Gemini, OpenAI Codex, and local Ollama models enabled
+  - Default model: Claude Sonnet 4.6 (Anthropic), with Gemini, OpenAI Codex, and local Ollama models enabled
   - Sandbox execution with comprehensive credential/secret path blocking
   - Path policy to guard sensitive files from agent reads/writes
   - Python command interception (`pip`, `poetry`, `python`) → automatically redirected to `uv`
@@ -301,8 +301,13 @@ A significant part of this setup is dedicated to AI-assisted development:
   | -------------------- | ---------------------------------------------------------------------- |
   | `frontend-design`    | Design and implement production-ready frontend interfaces              |
   | `github`             | Interact with GitHub using the `gh` CLI (issues, PRs, CI runs, search) |
+  | `humanizer`          | Detect and rewrite AI writing patterns for natural-sounding text       |
   | `improve-skill`      | Analyze session transcripts to improve or create skills                |
+  | `kagi-enrich`        | Search Kagi's non-commercial Teclis and TinyGem indexes                |
+  | `kagi-fastgpt`       | AI-synthesized answers backed by live Kagi web search                  |
   | `kagi-search`        | Web search and content extraction via Kagi Search API                  |
+  | `kagi-summarizer`    | Summarize URLs or text using Kagi's Universal Summarizer               |
+  | `native-web-search`  | Quick web search with concise summaries and source URLs                |
   | `session-analyzer`   | Mine session history for automation opportunities                      |
   | `summarize`          | Convert URLs/files (PDF, DOCX, HTML) to Markdown via `markitdown`      |
   | `uv`                 | Use `uv` instead of pip/python/venv for Python workflows               |
@@ -328,9 +333,10 @@ A significant part of this setup is dedicated to AI-assisted development:
   | ----------------------- | ----------------------------------------------------------------- |
   | `antigravity-image-gen` | Image generation via Antigravity models                           |
   | `answer`                | Q&A extraction from assistant responses                           |
-  | `commit-shortcut`       | Quick commit shortcut                                             |
+  | `commit-shortcut`       | AI-powered commit message generation with model selection         |
+  | `context`               | Show context window usage, skills, costs, and token totals        |
   | `cwd-history`           | Track working directory history across sessions                   |
-  | `delta`                 | Syntax-highlighted diffs for the edit tool via delta              |
+  | `edit-diff-lines`       | Per-line Tokyo Night-style syntax-highlighted diffs for edits     |
   | `editor-with-context`   | See last agent response when composing prompts                    |
   | `extensions-manager`    | Manage extensions from within Pi                                  |
   | `files`                 | File management utilities                                         |
@@ -342,7 +348,7 @@ A significant part of this setup is dedicated to AI-assisted development:
   | `path-policy`           | Block reads/writes to sensitive credential paths                  |
   | `permission-gate`       | Permission gate for dangerous operations                          |
   | `prompt-editor`         | Custom prompt editor with model selector                          |
-  | `review`                | Code review (inspired by Codex's review feature)                  |
+  | `review`                | Code review with auto-fixing loop until no P0-P2 issues remain    |
   | `sandbox`               | Sandboxed execution with network/filesystem restrictions          |
   | `session-breakdown`     | Analyze and summarize session activity                            |
   | `session-name`          | Auto-name sessions                                                |
@@ -351,16 +357,16 @@ A significant part of this setup is dedicated to AI-assisted development:
   | `uv-intercept`          | Intercept `pip`/`poetry`/`python` → redirect to `uv`              |
   | `whimsical`             | Fun/whimsical messages                                            |
 
-- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents)
+- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents), `pi-peon-ping` (sound notifications)
 
 - **Credits:** Many skills and extensions are adapted from or inspired by the work of others:
 
-  | Author          | GitHub                                       | Contributions                                                                                                                                                                                                                                                                                                                                |
-  | --------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi Agent itself ([pi-mono](https://github.com/badlogic/pi-mono)), extensions (`antigravity-image-gen`, `editor-with-context`, `handoff`, `notify`, `permission-gate`, `sandbox`, `session-name`, `subagent`), skills (`youtube-transcript`, `kagi-search` adapted from `brave-search` in [pi-skills](https://github.com/badlogic/pi-skills)) |
-  | Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions (`answer`, `files`, `loop`, `prompt-editor`, `review`, `session-breakdown`, `todos`, `whimsical`), intercepted commands (`pip`/`poetry`/`python` → `uv`), skills (`frontend-design`, `github`, `summarize`, `uv`, `web-browser`) from [agent-stuff](https://github.com/mitsuhiko/agent-stuff)                                     |
-  | Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from [pi-ghostty](https://github.com/HazAT/pi-ghostty)                                                                                                                                                                                                                                                                   |
-  | Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from [pi-skills](https://github.com/ferologics/pi-skills)                                                                                                                                                                                                                                                           |
+  | Author          | GitHub                                       | Contributions                                                                                                                                                                                                                                                                                                                                         |
+  | --------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi Agent itself ([pi-mono](https://github.com/badlogic/pi-mono)), extensions (`antigravity-image-gen`, `editor-with-context`, `handoff`, `notify`, `permission-gate`, `sandbox`, `session-name`, `subagent`), skills (`youtube-transcript`, `kagi-search` adapted from `brave-search` in [pi-skills](https://github.com/badlogic/pi-skills))          |
+  | Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions (`answer`, `context`, `files`, `loop`, `prompt-editor`, `review`, `session-breakdown`, `todos`, `whimsical`), intercepted commands (`pip`/`poetry`/`python` → `uv`), skills (`frontend-design`, `github`, `humanizer`, `native-web-search`, `summarize`, `uv`, `web-browser`) from [agent-stuff](https://github.com/mitsuhiko/agent-stuff) |
+  | Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from [pi-ghostty](https://github.com/HazAT/pi-ghostty)                                                                                                                                                                                                                                                                            |
+  | Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from [pi-skills](https://github.com/ferologics/pi-skills)                                                                                                                                                                                                                                                                    |
 
 ---
 
@@ -435,7 +441,6 @@ See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
 | [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Update all AI/LLM CLI tools (Claude, Gemini, Codex, etc.) |
 | [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backup utility using `restic` and `age`         |
 | [`cht`](private_dot_local/bin/executable_cht)                                 | Cheat sheet lookup via cht.sh                             |
-| [`claude-review`](private_dot_local/bin/executable_claude-review)             | Pre-commit hook for AI code review                        |
 | [`custom-update`](private_dot_local/bin/executable_custom-update)             | Update system packages, tools, and configs                |
 | [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Test terminal font rendering                              |
 | [`formatter`](private_dot_local/bin/executable_formatter)                     | USB & SD card formatting tool with `gum` UI               |
@@ -443,7 +448,6 @@ See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
 | [`git-reset`](private_dot_local/bin/executable_git-reset)                     | Reset repos to default branch and drop local changes      |
 | [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Create git worktrees alongside current repo               |
 | [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Update Obsidian plugins and themes                        |
-| [`rgfzf`](private_dot_local/bin/executable_rgfzf)                             | Ripgrep + FZF interactive search                          |
 | [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Switch primary display on multi-monitor setups            |
 | [`transfer`](private_dot_local/bin/executable_transfer)                       | Upload files via transfer.sh                              |
 | [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Run a command repeatedly until it fails                   |
