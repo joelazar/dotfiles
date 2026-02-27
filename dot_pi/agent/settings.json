@@ -4,8 +4,8 @@
   "collapseChangelog": false,
   "defaultThinkingLevel": "high",
   "theme": "tokyo-night",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.3-codex",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.3-codex",
@@ -18,7 +18,6 @@
     "-extensions/sandbox/index.ts"
   ],
   "packages": [
-    "npm:pi-interactive-shell",
-    "npm:pi-peon-ping"
+    "npm:pi-interactive-shell"
   ]
 }

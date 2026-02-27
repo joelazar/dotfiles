@@ -9,7 +9,6 @@ tap "mongodb/brew"
 tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
-tap "peonping/tap"
 tap "protonpass/tap"
 tap "steipete/tap"
 tap "tw93/tap"
@@ -325,8 +324,6 @@ brew "mongodb/brew/mongodb-database-tools"
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
-# Sound effects and desktop notifications for AI coding agents
-brew "peonping/tap/peon-ping"
 # Proton Pass CLI - Command-line interface for Proton Pass
 brew "protonpass/tap/pass-cli"
 # Command-line ElevenLabs TTS with mac-style flags

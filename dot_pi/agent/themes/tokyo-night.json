@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/main/packages/coding-agent/theme-schema.json",
+  "$schema": "https://raw.githubusercontent.com/badlogic/pi-mono/main/packages/coding-agent/src/modes/interactive/theme/theme-schema.json",
   "name": "tokyo-night",
   "vars": {
     "cyan": "#7dcfff",
@@ -22,8 +22,8 @@
     "background": "#1a1b26",
     "userMsgBg": "#16161e",
     "toolPendingBg": "#1f2335",
-    "toolSuccessBg": "#1f2d2f",
-    "toolErrorBg": "#2a1f2f"
+    "toolSuccessBg": "#1a2b32",
+    "toolErrorBg": "#2d202a"
   },
   "colors": {
     "accent": "accent",
@@ -70,7 +70,7 @@
     "syntaxKeyword": "magenta",
     "syntaxFunction": "blue",
     "syntaxVariable": "cyan",
-    "syntaxString": "yellow",
+    "syntaxString": "green",
     "syntaxNumber": "orange",
     "syntaxType": "blue1",
     "syntaxOperator": "cyan",
@@ -84,5 +84,10 @@
     "thinkingXhigh": "#bb9af7",
 
     "bashMode": "green"
+  },
+  "export": {
+    "pageBg": "background",
+    "cardBg": "toolPendingBg",
+    "infoBg": "darkGray"
   }
 }

@@ -258,6 +258,12 @@ export default function (pi: ExtensionAPI) {
       pattern: /\bgit\s+reset\b.*--hard\b/i,
       label: "git reset --hard (loses uncommitted changes)",
     },
+
+    // Destructive SQL commands
+    { pattern: /\b(DROP|TRUNCATE|DELETE\s+FROM)\b/i, label: "destructive SQL statement" },
+
+    // Raw block device writes
+    { pattern: />\s*\/dev\/sd[a-z]/i, label: "write to raw block device (/dev/sd*)" },
   ];
 
   const fullCommandDangerRules: Rule[] = [

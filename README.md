@@ -357,7 +357,7 @@ A significant part of this setup is dedicated to AI-assisted development:
   | `uv-intercept`          | Intercept `pip`/`poetry`/`python` → redirect to `uv`              |
   | `whimsical`             | Fun/whimsical messages                                            |
 
-- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents), `pi-peon-ping` (sound notifications)
+- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents)
 
 - **Credits:** Many skills and extensions are adapted from or inspired by the work of others:
 

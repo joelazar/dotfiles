@@ -2,7 +2,11 @@ model = "gpt-5.3-codex"
 model_reasoning_effort = "medium"
 approval_policy = "on-request"
 personality = "pragmatic"
-notify = ["bash", "/home/joelazar/.claude/hooks/peon-ping/adapters/codex.sh"]
 
 [tui]
-status_line = ["model-with-reasoning", "current-dir", "git-branch", "context-remaining"]
+status_line = [
+  "model-with-reasoning",
+  "current-dir",
+  "git-branch",
+  "context-remaining",
+]

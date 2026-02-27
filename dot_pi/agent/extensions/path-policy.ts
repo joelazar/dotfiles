@@ -60,7 +60,7 @@ const LOG_FILE = join(homedir(), ".pi", "agent", "path-policy.log");
 
 const DEFAULT_CONFIG: PathPolicyConfig = {
   enabled: true,
-  blockedPaths: [".env", ".env.*", "secrets/"],
+  blockedPaths: [".env", ".env.*", "secrets/", ".git/", ".ssh/", "**/*id_rsa*", ".pi/"],
   blockedTools: ["read", "edit", "write"],
   guardBash: false,
   audit: false,
