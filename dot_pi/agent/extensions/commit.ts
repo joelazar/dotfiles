@@ -118,6 +118,36 @@ function extractText(
     .trim();
 }
 
+function buildCommitUrl(remoteUrl: string, hash: string): string {
+  if (!remoteUrl || !hash) return "";
+
+  let url = remoteUrl;
+
+  // SSH → HTTPS: git@github.com:user/repo.git → https://github.com/user/repo
+  const sshMatch = url.match(/^git@([^:]+):(.+?)(?:\.git)?$/);
+  if (sshMatch) {
+    url = `https://${sshMatch[1]}/${sshMatch[2]}`;
+  }
+
+  // Strip trailing .git from HTTPS URLs
+  url = url.replace(/\.git$/, "");
+
+  // Only support known forges
+  if (
+    !url.includes("github.com") &&
+    !url.includes("gitlab.com") &&
+    !url.includes("bitbucket.org")
+  ) {
+    return "";
+  }
+
+  if (url.includes("bitbucket.org")) {
+    return `${url}/commits/${hash}`;
+  }
+
+  return `${url}/commit/${hash}`;
+}
+
 async function selectCommitModel(
   ctx: ExtensionContext,
 ): Promise<Model<Api> | null> {
@@ -323,9 +353,34 @@ async function doCommit(
 
   const firstLine = commitResult.stdout.split("\n")[0] || "";
   const match = firstLine.match(/^\[(\S+)\s+([a-f0-9]+)\]\s+(.*)$/);
-  const summary = match
-    ? `✓ ${match[1]} ${match[2]} — ${match[3]}`
-    : firstLine || "Committed!";
+
+  const [logRes, hashRes, remoteRes] = await Promise.all([
+    runGit(pi, ["log", "-1", "--pretty=format:%B"]),
+    runGit(pi, ["rev-parse", "HEAD"]),
+    runGit(pi, ["remote", "get-url", "origin"]),
+  ]);
+  const fullMessage = logRes.code === 0 ? logRes.stdout.trim() : "";
+  const fullHash = hashRes.code === 0 ? hashRes.stdout.trim() : "";
+  const commitUrl =
+    remoteRes.code === 0
+      ? buildCommitUrl(remoteRes.stdout.trim(), fullHash)
+      : "";
+
+  let summary: string;
+  if (match) {
+    const prefix = `✓ ${match[1]} ${match[2]}`;
+    if (fullMessage) {
+      summary = `${prefix}\n${fullMessage}`;
+    } else {
+      summary = `${prefix} — ${match[3]}`;
+    }
+  } else {
+    summary = fullMessage || firstLine || "Committed!";
+  }
+
+  if (commitUrl) {
+    summary += `\n\n${commitUrl}`;
+  }
 
   report(pi, ctx, summary, "info");
 }
