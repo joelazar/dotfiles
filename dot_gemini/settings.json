@@ -22,7 +22,12 @@
   },
   "general": {
     "vimMode": false,
-    "enableAutoUpdate": false
+    "enableAutoUpdate": false,
+    "sessionRetention": {
+      "enabled": true,
+      "maxAge": "30d",
+      "warningAcknowledged": true
+    }
   },
   "output": {
     "format": "text"
