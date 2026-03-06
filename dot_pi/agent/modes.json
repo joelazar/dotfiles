@@ -10,11 +10,11 @@
     "fast": {
       "provider": "anthropic",
       "modelId": "claude-sonnet-4-6",
-      "thinkingLevel": "medium"
+      "thinkingLevel": "low"
     },
     "deep": {
       "provider": "openai-codex",
-      "modelId": "gpt-5.3-codex",
+      "modelId": "gpt-5.4",
       "thinkingLevel": "high"
     }
   }
