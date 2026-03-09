@@ -43,7 +43,7 @@
 
 [mergetool "nvim"]
 
-    cmd = nvim -f "$MERGED" -c "DiffviewOpen"
+    cmd = nvim -f "$MERGED" -c "CodeDiff merge \"$MERGED\""
 
 [difftool]
 
@@ -51,7 +51,7 @@
 
 [difftool "nvim"]
 
-    cmd = nvim -f -c DiffviewOpen
+    cmd = nvim -f "$LOCAL" "$REMOTE" +"CodeDiff file $LOCAL $REMOTE"
 
 [diff]
 

@@ -97,8 +97,8 @@ keybindings:
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
-        nvim -c ":DiffviewOpen $(gh repo view {{.RepoName}} --json defaultBranchRef --jq '.defaultBranchRef.name')...{{.HeadRefName}}"
-      name: diff default branch
+        nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"
+      name: diff base branch
     - key: ctrl+a
       command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
