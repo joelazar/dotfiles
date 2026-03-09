@@ -93,28 +93,24 @@ keybindings:
         cd {{.RepoPath}} && lazygit
       name: lazygit
   prs:
-    - key: F
+    - key: ctrl+d
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
-        nvim -c ":DiffviewOpen main...{{.HeadRefName}}"
-      name: diff main
-    - key: v
+        nvim -c ":DiffviewOpen $(gh repo view {{.RepoName}} --json defaultBranchRef --jq '.defaultBranchRef.name')...{{.HeadRefName}}"
+      name: diff default branch
+    - key: ctrl+a
       command: >
         gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
       name: approve
-    - key: E
-      command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --delete-branch
-      name: merge
-    - key: ctrl+e
+    - key: ctrl+m
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --delete-branch
       name: merge (admin)
     - key: n
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto --delete-branch
-      name: merge (auto)
+      name: enable auto merge
     - key: ctrl+n
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
@@ -129,7 +125,7 @@ keybindings:
       command: >
         gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo
       name: move to draft
-    - key: T
+    - key: t
       name: retrigger workflows
       command: >
         fish -c '
