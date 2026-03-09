@@ -216,8 +216,6 @@ brew "opentofu"
 brew "ouch"
 # CLI for Postgres with auto-completion and syntax highlighting
 brew "pgcli"
-# Execute binaries from Python packages in isolated environments
-brew "pipx"
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager
@@ -360,8 +358,6 @@ cask "cleanshot"
 cask "codex"
 # OpenAI's Codex desktop app for managing coding agents
 cask "codex-app"
-# Menu bar usage monitor for Codex and Claude
-cask "steipete/tap/codexbar"
 # Voice and text chat software
 cask "discord"
 # Web browser
@@ -372,6 +368,8 @@ cask "font-maple-mono"
 cask "font-maple-mono-nf"
 # Kext-less implementation of FUSE
 cask "fuse-t"
+# Set of tools to manage resources and applications hosted on Google Cloud
+cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty@tip"
 # Web browser
@@ -386,8 +384,6 @@ cask "monitorcontrol"
 cask "obsidian"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
-# Client for Proton Drive
-cask "proton-drive"
 # Desktop client for Proton Pass
 cask "proton-pass"
 # VPN client focusing on security
@@ -410,6 +406,8 @@ cask "tableplus"
 cask "tailscale-app"
 # Menu bar manager
 cask "thaw"
+# Multimedia player
+cask "vlc"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
@@ -434,6 +432,7 @@ go "github.com/abenz1267/gomvp"
 go "golang.org/x/tools/cmd/gonew"
 go "golang.org/x/tools/gopls"
 go "golang.org/x/tools/cmd/gorename"
+go "github.com/securego/gosec/v2/cmd/gosec"
 go "github.com/cweill/gotests/gotests"
 go "gotest.tools/gotestsum"
 go "golang.org/x/vuln/cmd/govulncheck"
@@ -444,3 +443,5 @@ go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "bpf-linker"
+uv "ansible"
+uv "nginx-language-server"

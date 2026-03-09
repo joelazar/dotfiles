@@ -51,6 +51,7 @@ BUN_PACKAGES=(
     "ccusage"
     "npm-check"
     "pi-acp"
+    "@googleworkspace/cli"
 )
 
 install_packages_from_list "BUN" "install_bun_package" "${BUN_PACKAGES[@]}"
@@ -75,9 +76,7 @@ UV_TOOLS=(
 install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
 
 # Pi packages
-PI_PACKAGES=(
-    "npm:pi-interactive-shell"
-)
+PI_PACKAGES=()
 
 install_packages_from_list "Pi" "install_pi_package" "${PI_PACKAGES[@]}"
 

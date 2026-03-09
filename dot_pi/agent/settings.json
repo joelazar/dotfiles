@@ -1,11 +1,11 @@
 {
-  "lastChangelogVersion": "0.56.2",
+  "lastChangelogVersion": "0.57.1",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "medium",
   "theme": "tokyo-night",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.3-codex",
@@ -18,7 +18,5 @@
   "extensions": [
     "-extensions/sandbox/index.ts"
   ],
-  "packages": [
-    "npm:pi-interactive-shell"
-  ]
+  "packages": []
 }
