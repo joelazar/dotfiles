@@ -67,6 +67,7 @@ keybind = resize/j=resize_split:down,10
 keybind = resize/k=resize_split:up,10
 keybind = resize/l=resize_split:right,10
 keybind = resize/escape=deactivate_key_table
+keybind = resize/catch_all=ignore
 keybind = shift+end=adjust_selection:end
 keybind = super+plus=increase_font_size:0.5
 keybind = super+q=quit
@@ -139,6 +140,9 @@ keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
 
 keybind = super+shift+r=reload_config
+
+keybind = super+grave_accent=goto_window:next
+keybind = super+shift+grave_accent=goto_window:previous
 keybind = shift+enter=text:\n
 
 # shell-integration-features = no-cursor,sudo,title

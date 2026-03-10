@@ -371,7 +371,7 @@ cask "fuse-t"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
 # Terminal emulator that uses platform-native UI and GPU acceleration
-cask "ghostty@tip"
+cask "ghostty"
 # Web browser
 cask "google-chrome"
 # Client for the Google Drive storage service
