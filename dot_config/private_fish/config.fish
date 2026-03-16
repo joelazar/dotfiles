@@ -80,13 +80,14 @@ alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias g="git"
 alias l='eza --color=auto --icons=auto --group-directories-first'
-alias ls='eza --color=auto --icons=auto --group-directories-first'
 alias lg='lazygit'
 alias ll='eza --long --all --color=auto --icons=auto --group-directories-first --git'
+alias ls='eza --color=auto --icons=auto --group-directories-first'
 alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
-alias psql="psql-17"
+alias psql="psql-18"
+alias python='python3'
 alias q="exit"
 alias rmf='/bin/rm'
 alias v='nvim'
