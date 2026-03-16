@@ -23,7 +23,18 @@ Output ONLY the raw commit message text. No markdown formatting, no code fences,
 
 Follow the repository's existing commit style from recent commits.
 
-${commitStyleInstructions}`;
+${commitStyleInstructions}
+
+**Writing style for commit messages — keep it human and concise:**
+- Write like a human developer, not a press release. Be direct and specific.
+- Avoid AI-isms: don't use words like "enhance", "leverage", "crucial", "streamline", "comprehensive", "robust", "utilize", "facilitate", "foster", "delve", "landscape", "tapestry", "testament", "underscore", "pivotal", "garner", "showcase".
+- Don't inflate importance. "Fix null check in parser" beats "Address critical issue in parsing infrastructure".
+- No promotional tone, no vague superlatives ("significant improvement", "major enhancement").
+- No rule-of-three padding. Don't force three items when one or two suffice.
+- No negative parallelisms ("not just X, but Y").
+- No filler phrases ("in order to", "it is important to note").
+- Keep the subject line short (~50 chars). If a body is needed, use terse bullet points, not prose paragraphs.
+- Prefer simple verbs: "fix", "add", "remove", "update", "rename", "move", "split", "drop" over fancy synonyms.`;
 
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
 const GEMINI_FLASH_MODEL_ID = "gemini-3-flash-preview";
@@ -87,16 +98,26 @@ function buildCommitUserMessage(
     diff: string;
     branch: string;
     log: string;
+    stagedOnly: boolean;
   },
   additionalInstructions: string,
 ): string {
+  const diffLabel = context.stagedOnly
+    ? "staged changes only"
+    : "staged and unstaged changes";
+
   let message = `## Context
 
 `;
   message += `- Current git status:\n\`\`\`\n${context.status.trim()}\n\`\`\`\n\n`;
-  message += `- Current git diff (staged and unstaged changes):\n\`\`\`\n${context.diff.trim()}\n\`\`\`\n\n`;
+  message += `- Current git diff (${diffLabel}):\n\`\`\`\n${context.diff.trim()}\n\`\`\`\n\n`;
   message += `- Current branch: ${context.branch.trim()}\n\n`;
   message += `- Recent commits for style reference:\n\`\`\`\n${context.log.trim()}\n\`\`\``;
+
+  if (context.stagedOnly) {
+    message +=
+      "\n\n**Note:** Only staged changes are shown above. The commit message should describe ONLY these staged changes, ignoring any unstaged modifications.";
+  }
 
   if (additionalInstructions.trim()) {
     message += `\n\n## Additional instructions\n${additionalInstructions.trim()}`;
@@ -272,18 +293,26 @@ async function doCommit(
     return;
   }
 
-  const [statusResult, diffResult, branchResult, logResult, porcelainResult] =
-    await Promise.all([
-      runGit(pi, ["status"]),
-      runGit(pi, ["diff", "HEAD"]),
-      runGit(pi, ["branch", "--show-current"]),
-      runGit(pi, ["log", "--pretty=format:%s", "-20"]),
-      runGit(pi, ["status", "--porcelain"]),
-    ]);
+  const [
+    statusResult,
+    stagedDiffResult,
+    fullDiffResult,
+    branchResult,
+    logResult,
+    porcelainResult,
+  ] = await Promise.all([
+    runGit(pi, ["status"]),
+    runGit(pi, ["diff", "--cached"]),
+    runGit(pi, ["diff", "HEAD"]),
+    runGit(pi, ["branch", "--show-current"]),
+    runGit(pi, ["log", "--pretty=format:%s", "-20"]),
+    runGit(pi, ["status", "--porcelain"]),
+  ]);
 
   if (
     statusResult.code !== 0 ||
-    diffResult.code !== 0 ||
+    stagedDiffResult.code !== 0 ||
+    fullDiffResult.code !== 0 ||
     branchResult.code !== 0 ||
     logResult.code !== 0 ||
     porcelainResult.code !== 0
@@ -293,6 +322,18 @@ async function doCommit(
   }
 
   if (!porcelainResult.stdout.trim()) {
+    report(pi, ctx, "No changes to commit", "info");
+    return;
+  }
+
+  const hasStagedChanges = stagedDiffResult.stdout.trim().length > 0;
+
+  // If there are staged changes, commit only those; otherwise commit everything
+  const diffForMessage = hasStagedChanges
+    ? stagedDiffResult.stdout
+    : fullDiffResult.stdout;
+
+  if (!diffForMessage.trim()) {
     report(pi, ctx, "No changes to commit", "info");
     return;
   }
@@ -310,9 +351,10 @@ async function doCommit(
     buildCommitUserMessage(
       {
         status: statusResult.stdout,
-        diff: diffResult.stdout,
+        diff: diffForMessage,
         branch: branchResult.stdout,
         log: logResult.stdout,
+        stagedOnly: hasStagedChanges,
       },
       additionalInstructions,
     ),
@@ -323,15 +365,18 @@ async function doCommit(
     return;
   }
 
-  const addResult = await runGit(pi, ["add", "-A"]);
-  if (addResult.code !== 0) {
-    report(
-      pi,
-      ctx,
-      `git add failed: ${addResult.stderr || addResult.stdout}`,
-      "error",
-    );
-    return;
+  // Only run `git add -A` if there were no staged changes (commit everything mode)
+  if (!hasStagedChanges) {
+    const addResult = await runGit(pi, ["add", "-A"]);
+    if (addResult.code !== 0) {
+      report(
+        pi,
+        ctx,
+        `git add failed: ${addResult.stderr || addResult.stdout}`,
+        "error",
+      );
+      return;
+    }
   }
 
   const commitArgs = buildCommitArgs(commitMessage);
