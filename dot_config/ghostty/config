@@ -61,7 +61,7 @@ keybind = super+physical:three=goto_tab:3
 keybind = super+right=text:\x05
 keybind = super+d=new_split:right
 # resize mode: super+r to enter, h/j/k/l to resize, escape to exit
-keybind = super+r=activate_key_table:resize
+keybind = super+shift+r=activate_key_table:resize
 keybind = resize/h=resize_split:left,10
 keybind = resize/j=resize_split:down,10
 keybind = resize/k=resize_split:up,10
