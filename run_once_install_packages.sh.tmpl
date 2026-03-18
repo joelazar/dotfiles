@@ -75,6 +75,9 @@ UV_TOOLS=(
 
 install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
 
+# UV tools with extra dependencies
+execute "uv tool install ansible-core --with ansible" "ansible-core (with ansible)"
+
 # Pi packages
 PI_PACKAGES=()
 

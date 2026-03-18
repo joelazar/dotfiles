@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.58.4",
+  "lastChangelogVersion": "0.60.0",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
   "defaultThinkingLevel": "medium",
@@ -21,5 +21,7 @@
   "packages": [
     "https://github.com/davebcn87/pi-autoresearch",
     "/Users/joelazar/Code/joelazar/pi-side-chat"
-  ]
+  ],
+  "transport": "auto",
+  "treeFilterMode": "default"
 }
