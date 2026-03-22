@@ -222,17 +222,20 @@
   // AGENT SERVERS (external AI agents)
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
-    "claude": {
-      "default_mode": "bypassPermissions",
-      "favorite_models": ["opus", "default"],
-      "default_config_options": {},
-      "favorite_config_option_values": {},
-    },
-    "codex": {
-      "default_mode": "full-access",
-    },
     "gemini": {
-      "ignore_system_version": false,
+      "type": "registry"
+    },
+    "codex-acp": {
+      "type": "registry",
+      "default_mode": "full-access"
+    },
+    "claude-acp": {
+      "type": "registry",
+      "default_mode": "bypassPermissions",
+      "favorite_models": [
+        "opus",
+        "default"
+      ]
     },
     "pi-acp": {
       "type": "registry",
