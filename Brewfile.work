@@ -244,6 +244,8 @@ brew "restic"
 brew "ripgrep"
 # Wrapper around ripgrep that adds multiple rich file types
 brew "ripgrep-all"
+# CLI proxy to minimize LLM token consumption
+brew "rtk"
 # Powerful, clean, object-oriented scripting language
 brew "ruby"
 # CLI search and replace | Space Age seD
@@ -444,4 +446,5 @@ go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "bpf-linker"
 uv "ansible"
+uv "ansible-core", with: ["ansible"]
 uv "nginx-language-server"
