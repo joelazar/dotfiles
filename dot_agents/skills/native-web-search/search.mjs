@@ -246,27 +246,63 @@ function collectModuleCandidates() {
 
 async function loadPiAi() {
   const tried = [];
+  let piAi;
 
   try {
-    return await import("@mariozechner/pi-ai");
+    piAi = await import("@mariozechner/pi-ai");
   } catch (err) {
     tried.push(
       `@mariozechner/pi-ai (${err?.code || err?.message || "not found"})`,
     );
   }
 
-  for (const candidate of collectModuleCandidates()) {
-    if (!existsSync(candidate)) continue;
-    try {
-      return await import(pathToFileURL(candidate).href);
-    } catch (err) {
-      tried.push(`${candidate} (${err?.code || err?.message || "failed"})`);
+  if (!piAi) {
+    for (const candidate of collectModuleCandidates()) {
+      if (!existsSync(candidate)) continue;
+      try {
+        piAi = await import(pathToFileURL(candidate).href);
+        break;
+      } catch (err) {
+        tried.push(`${candidate} (${err?.code || err?.message || "failed"})`);
+      }
     }
   }
 
-  throw new Error(
-    `Could not load @mariozechner/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
-  );
+  if (!piAi) {
+    throw new Error(
+      `Could not load @mariozechner/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
+    );
+  }
+
+  // If getOAuthApiKey is not exported from the main entry point,
+  // load it from the oauth submodule and merge it in.
+  if (typeof piAi.getOAuthApiKey !== "function") {
+    for (const candidate of collectModuleCandidates()) {
+      const oauthPath = join(dirname(candidate), "utils", "oauth", "index.js");
+      if (!existsSync(oauthPath)) {
+        const oauthPath2 = join(dirname(candidate), "oauth.js");
+        if (existsSync(oauthPath2)) {
+          try {
+            const oauthMod = await import(pathToFileURL(oauthPath2).href);
+            if (typeof oauthMod.getOAuthApiKey === "function") {
+              piAi = { ...piAi, ...oauthMod };
+              break;
+            }
+          } catch {}
+        }
+        continue;
+      }
+      try {
+        const oauthMod = await import(pathToFileURL(oauthPath).href);
+        if (typeof oauthMod.getOAuthApiKey === "function") {
+          piAi = { ...piAi, ...oauthMod };
+          break;
+        }
+      } catch {}
+    }
+  }
+
+  return piAi;
 }
 
 function pickFastModel(provider, requestedModel, piAi) {

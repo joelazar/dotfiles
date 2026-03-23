@@ -2,8 +2,8 @@
   "name": "pi-local-extensions",
   "private": true,
   "dependencies": {
-    "@mariozechner/pi-ai": "^0.61.1",
-    "@mariozechner/pi-tui": "^0.61.1",
+    "@mariozechner/pi-ai": "^0.62.0",
+    "@mariozechner/pi-tui": "^0.62.0",
     "@sinclair/typebox": "^0.34.41",
     "diff": "^7.0.0"
   }
