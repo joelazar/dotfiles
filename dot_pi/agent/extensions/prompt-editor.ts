@@ -1320,4 +1320,12 @@ export default function (pi: ExtensionAPI) {
 		}
 	});
 
+	// Cancel any pending async editor loads when the user opens a selector
+	// (e.g., /resume). Without this, the async loadPromptHistoryForCwd can
+	// complete while the session selector is showing and call setEditorComponent,
+	// which clears the editorContainer and causes rendering artifacts.
+	pi.on("session_before_switch", async () => {
+		++loadCounter;
+	});
+
 }
