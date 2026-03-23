@@ -1,3 +1,9 @@
+/**
+ * BTW - Side-chat popover for quick questions
+ *
+ * Opens a lightweight side-chat thread without interrupting the main conversation.
+ * `/btw <text>` asks immediately, `/btw` opens an interactive side thread.
+ */
 import {
   buildSessionContext,
   codingTools,

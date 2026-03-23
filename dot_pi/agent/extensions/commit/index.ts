@@ -1,3 +1,9 @@
+/**
+ * Commit - AI-powered git commit message generator
+ *
+ * Generates commit messages that match the repository's existing style
+ * and conventions. Examines recent commits for format, emoji usage, and structure.
+ */
 import {
   completeSimple,
   type Api,

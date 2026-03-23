@@ -1,3 +1,10 @@
+/**
+ * Prompt Editor - Mode-based model and thinking level switching
+ *
+ * Provides a /mode command to switch between named prompt modes, each with
+ * its own provider, model, and thinking level. Modes are persisted and
+ * the editor border color reflects the current thinking level.
+ */
 import type { ExtensionAPI, ExtensionContext, ModelSelectEvent, ThinkingLevel } from "@mariozechner/pi-coding-agent";
 import { CustomEditor, ModelSelectorComponent, SettingsManager } from "@mariozechner/pi-coding-agent";
 import path from "node:path";

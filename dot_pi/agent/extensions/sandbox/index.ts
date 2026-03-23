@@ -1,3 +1,10 @@
+/**
+ * Sandbox - OS-level sandboxing for bash commands
+ *
+ * Wraps bash tool execution with SandboxManager to restrict network access
+ * and filesystem operations. Configurable via sandbox.json with domain
+ * allowlists and filesystem policies.
+ */
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";

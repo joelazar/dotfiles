@@ -1,3 +1,9 @@
+/**
+ * Whimsical - Fun loading messages
+ *
+ * Replaces the default "Thinking..." status with random whimsical messages
+ * like "Combobulating...", "Pontificating...", and "Woolgathering...".
+ */
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
 const messages = [

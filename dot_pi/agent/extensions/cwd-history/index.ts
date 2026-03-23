@@ -1,3 +1,9 @@
+/**
+ * CWD History - Cross-session prompt history by working directory
+ *
+ * Seeds the prompt editor history with recent prompts from the current session
+ * and other sessions started in the same working directory.
+ */
 import type {
   ExtensionAPI,
   ExtensionContext,
@@ -6,11 +12,6 @@ import { CustomEditor } from "@mariozechner/pi-coding-agent";
 import path from "node:path";
 import os from "node:os";
 import fs from "node:fs/promises";
-
-/**
- * Extension that seeds the prompt editor history with recent prompts from the
- * current session and other sessions started in the same working directory.
- */
 const MAX_HISTORY_ENTRIES = 100;
 const MAX_RECENT_PROMPTS = 30;
 
