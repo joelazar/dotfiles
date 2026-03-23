@@ -281,7 +281,7 @@ class BtwOverlay extends Container implements Focusable {
   }
 
   handleInput(data: string): void {
-    if (this.keybindings.matches(data, "selectCancel")) {
+    if (this.keybindings.matches(data, "tui.select.cancel")) {
       this.onDismissCallback();
       return;
     }

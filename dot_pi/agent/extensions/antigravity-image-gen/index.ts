@@ -442,6 +442,7 @@ export default function antigravityImageGen(pi: ExtensionAPI) {
     label: "Generate image",
     description:
       "Generate an image via Google Antigravity image models. Returns the image as a tool result attachment. Optional saving via save=project|global|custom|none, or PI_IMAGE_SAVE_MODE/PI_IMAGE_SAVE_DIR.",
+    promptSnippet: "Generate images via Google Antigravity models with optional saving to project/global/custom paths",
     parameters: TOOL_PARAMS,
     async execute(_toolCallId, params: ToolParams, signal, onUpdate, ctx) {
       const { accessToken, projectId } = await getCredentials(ctx);
