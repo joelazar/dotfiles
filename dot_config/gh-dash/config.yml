@@ -125,6 +125,12 @@ keybindings:
       command: >
         gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo
       name: move to draft
+    - key: S
+      command: >
+        cd {{.RepoPath}} &&
+        gh pr checkout {{.PrNumber}} &&
+        $SHELL
+      name: open shell
     - key: t
       name: retrigger workflows
       command: >

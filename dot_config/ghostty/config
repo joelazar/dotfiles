@@ -118,6 +118,8 @@ keybind = super+s=text:\x13
 keybind = super+shift+g=text:\x1b[103;6u
 # remap cmd+shift+c to ctrl+shift+c (CSI u: 99='c', 6=1+shift+ctrl)
 keybind = super+shift+c=text:\x1b[99;6u
+# remap cmd+shift+e to ctrl+shift+e (CSI u: 101='e', 6=1+shift+ctrl)
+keybind = super+shift+e=text:\x1b[101;6u
 
 # search entire scrollback history in default text editor
 keybind = super+shift+f=write_screen_file:open
