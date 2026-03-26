@@ -147,6 +147,8 @@
     "auto_fold_dirs": false,
     "auto_reveal_entries": false,
     "entry_spacing": "standard",
+    "bold_folder_labels": true,
+    "diagnostic_badges": "all",
   },
   "outline_panel": {
     "dock": "right",
@@ -158,6 +160,8 @@
     "tree_view": true,
     "sort_by_path": true,
     "default_width": 300,
+    "show_count_badge": true,
+    "file_icons": true,
   },
 
   // ══════════════════════════════════════════════════════════════════════════════
@@ -194,7 +198,7 @@
   // AGENT (AI Assistant)
   // ══════════════════════════════════════════════════════════════════════════════
   "edit_predictions": {
-    "provider": "mercury",
+    "provider": "zed",
   },
   "agent": {
     "single_file_review": false,
@@ -223,19 +227,16 @@
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
     "gemini": {
-      "type": "registry"
+      "type": "registry",
     },
     "codex-acp": {
       "type": "registry",
-      "default_mode": "full-access"
+      "default_mode": "full-access",
     },
     "claude-acp": {
       "type": "registry",
       "default_mode": "bypassPermissions",
-      "favorite_models": [
-        "opus",
-        "default"
-      ]
+      "favorite_models": ["opus", "default"],
     },
     "pi-acp": {
       "type": "registry",
