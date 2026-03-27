@@ -148,7 +148,7 @@
     "auto_reveal_entries": false,
     "entry_spacing": "standard",
     "bold_folder_labels": true,
-    "diagnostic_badges": "all",
+    "diagnostic_badges": true,
   },
   "outline_panel": {
     "dock": "right",
