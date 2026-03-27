@@ -871,10 +871,10 @@ export default function (pi: ExtensionAPI) {
       throw new Error("No active model selected.");
     }
 
-    const apiKey = await ctx.modelRegistry.getApiKey(model);
-    if (!apiKey) {
+    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
+    if (!auth.ok) {
       throw new Error(
-        `No credentials available for ${model.provider}/${model.id}.`,
+        auth.error || `No credentials available for ${model.provider}/${model.id}.`,
       );
     }
 
@@ -972,9 +972,9 @@ export default function (pi: ExtensionAPI) {
       return;
     }
 
-    const apiKey = await ctx.modelRegistry.getApiKey(model);
-    if (!apiKey) {
-      const message = `No credentials available for ${model.provider}/${model.id}.`;
+    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
+    if (!auth.ok) {
+      const message = auth.error || `No credentials available for ${model.provider}/${model.id}.`;
       setOverlayStatus(message);
       notify(ctx, message, "error");
       return;

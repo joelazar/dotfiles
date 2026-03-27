@@ -188,8 +188,8 @@ async function selectCommitModel(
       continue;
     }
 
-    const apiKey = await ctx.modelRegistry.getApiKey(model);
-    if (apiKey) {
+    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
+    if (auth.ok) {
       return model;
     }
   }
@@ -203,7 +203,8 @@ async function generateCommitMessage(
   model: Model<Api>,
   userMessageText: string,
 ): Promise<string | null> {
-  const apiKey = await ctx.modelRegistry.getApiKey(model);
+  const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
+  if (!auth.ok) throw new Error(auth.error);
 
   const userMessage: UserMessage = {
     role: "user",
@@ -218,7 +219,7 @@ async function generateCommitMessage(
         systemPrompt: COMMIT_MESSAGE_SYSTEM_PROMPT,
         messages: [userMessage],
       },
-      { apiKey, reasoning: "medium" },
+      { apiKey: auth.apiKey, headers: auth.headers, reasoning: "medium" },
     );
 
     if (response.stopReason === "aborted") {
@@ -246,7 +247,8 @@ async function generateCommitMessage(
           messages: [userMessage],
         },
         {
-          apiKey,
+          apiKey: auth.apiKey,
+          headers: auth.headers,
           signal: loader.signal,
           reasoning: "medium",
         },

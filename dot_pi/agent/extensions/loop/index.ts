@@ -102,22 +102,22 @@ function getConditionText(mode: LoopMode, condition?: string): string {
 
 async function selectSummaryModel(
   ctx: ExtensionContext,
-): Promise<{ model: Model<Api>; apiKey: string } | null> {
+): Promise<{ model: Model<Api>; apiKey: string; headers?: Record<string, string> } | null> {
   if (!ctx.model) return null;
 
   if (ctx.model.provider === "anthropic") {
     const haikuModel = ctx.modelRegistry.find("anthropic", HAIKU_MODEL_ID);
     if (haikuModel) {
-      const apiKey = await ctx.modelRegistry.getApiKey(haikuModel);
-      if (apiKey) {
-        return { model: haikuModel, apiKey };
+      const auth = await ctx.modelRegistry.getApiKeyAndHeaders(haikuModel);
+      if (auth.ok) {
+        return { model: haikuModel, apiKey: auth.apiKey!, headers: auth.headers };
       }
     }
   }
 
-  const apiKey = await ctx.modelRegistry.getApiKey(ctx.model);
-  if (!apiKey) return null;
-  return { model: ctx.model, apiKey };
+  const auth = await ctx.modelRegistry.getApiKeyAndHeaders(ctx.model);
+  if (!auth.ok) return null;
+  return { model: ctx.model, apiKey: auth.apiKey!, headers: auth.headers };
 }
 
 async function summarizeBreakoutCondition(
@@ -139,7 +139,7 @@ async function summarizeBreakoutCondition(
   const response = await complete(
     selection.model,
     { systemPrompt: SUMMARY_SYSTEM_PROMPT, messages: [userMessage] },
-    { apiKey: selection.apiKey },
+    { apiKey: selection.apiKey, headers: selection.headers },
   );
 
   if (response.stopReason === "aborted" || response.stopReason === "error") {
@@ -456,8 +456,8 @@ export default function loopExtension(pi: ExtensionAPI): void {
 
   pi.on("session_before_compact", async (event, ctx) => {
     if (!loopState.active || !loopState.mode || !ctx.model) return;
-    const apiKey = await ctx.modelRegistry.getApiKey(ctx.model);
-    if (!apiKey) return;
+    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(ctx.model);
+    if (!auth.ok) return;
 
     const instructionParts = [
       event.customInstructions,
@@ -470,7 +470,7 @@ export default function loopExtension(pi: ExtensionAPI): void {
       const compaction = await compact(
         event.preparation,
         ctx.model,
-        apiKey,
+        auth.apiKey!,
         instructionParts,
         event.signal,
       );
