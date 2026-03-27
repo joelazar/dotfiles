@@ -85,8 +85,15 @@ outer.right = 0
 #
 
 cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
-cmd-space = 'exec-and-forget open /Applications/Claude.app'
-# cmd-ctrl-alt-e = 'exec-and-forget open /Applications/Zed.app'
+cmd-ctrl-alt-space = 'exec-and-forget open /Applications/Claude.app'
+cmd-ctrl-alt-z = 'exec-and-forget open /Applications/Zed.app'
+cmd-ctrl-alt-b = 'exec-and-forget open -a Firefox'
+cmd-ctrl-alt-o = 'exec-and-forget open -a Obsidian'
+cmd-ctrl-alt-t = 'exec-and-forget open -a Todoist'
+cmd-ctrl-alt-s = 'exec-and-forget open -a Slack'
+cmd-ctrl-alt-d = 'exec-and-forget open -a Discord'
+cmd-ctrl-alt-m = 'exec-and-forget open -a Spotify'
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 cmd-ctrl-alt-slash = 'layout tiles horizontal vertical'

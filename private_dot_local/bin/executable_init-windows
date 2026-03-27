@@ -15,12 +15,11 @@
 
 # Open all listed apps by bundle identifier
 open -b "com.mitchellh.ghostty"          # Ghostty
+open -b "com.anthropic.claudefordesktop" # Claude
 open -b "dev.zed.Zed"                    # Zed
-open -b "app.zen-browser.zen"            # Zen
+open -b "org.mozilla.firefox"            # Firefox
 open -b "md.obsidian"                    # Obsidian
 open -b "com.todoist.mac.Todoist"        # Todoist
 open -b "com.tinyspeck.slackmacgap"      # Slack
 open -b "com.hnc.Discord"                # Discord
 open -b "com.spotify.client"             # Spotify
-open -b "com.openai.chat"                # ChatGPT
-open -b "com.anthropic.claudefordesktop" # Claude
