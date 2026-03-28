@@ -29,7 +29,7 @@ fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.modular/bin
-fish_add_path $HOME/.antigravity/antigravity/bin
+fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 # brew specific paths
 fish_add_path /opt/homebrew/sbin

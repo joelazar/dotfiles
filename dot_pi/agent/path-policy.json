@@ -40,7 +40,8 @@
     "**/.config/gh/hosts.yml",
     "**/.gem/credentials",
     "**/id_rsa",
-    "**/id_ed25519"
+    "**/id_ed25519",
+    "**/Obsidian/journal/**"
   ],
   "blockedTools": ["read", "edit", "write"],
   "guardBash": true,
