@@ -205,7 +205,7 @@ brew "mongosh"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
-brew "neovim", args: ["HEAD"]
+brew "neovim"
 # Libraries for security-enabled client and server applications
 brew "nss"
 # Create, run, and share large language models (LLMs)
@@ -448,3 +448,4 @@ cargo "bpf-linker"
 uv "ansible"
 uv "ansible-core", with: ["ansible"]
 uv "nginx-language-server"
+uv "openshell"
