@@ -10,3 +10,6 @@ status_line = [
   "git-branch",
   "context-remaining",
 ]
+
+[plugins."github@openai-curated"]
+enabled = true
