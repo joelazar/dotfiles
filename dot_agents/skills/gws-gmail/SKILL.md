@@ -1,12 +1,13 @@
 ---
 name: gws-gmail
-version: 1.0.0
 description: "Gmail: Send, read, and manage email."
 metadata:
+  version: 0.22.5
   openclaw:
     category: "productivity"
     requires:
-      bins: ["gws"]
+      bins:
+        - gws
     cliHelp: "gws gmail --help"
 ---
 
@@ -24,6 +25,10 @@ gws gmail <resource> <method> [flags]
 |---------|-------------|
 | [`+send`](../gws-gmail-send/SKILL.md) | Send an email |
 | [`+triage`](../gws-gmail-triage/SKILL.md) | Show unread inbox summary (sender, subject, date) |
+| [`+reply`](../gws-gmail-reply/SKILL.md) | Reply to a message (handles threading automatically) |
+| [`+reply-all`](../gws-gmail-reply-all/SKILL.md) | Reply-all to a message (handles threading automatically) |
+| [`+forward`](../gws-gmail-forward/SKILL.md) | Forward a message to new recipients |
+| [`+read`](../gws-gmail-read/SKILL.md) | Read a message and extract its body or headers |
 | [`+watch`](../gws-gmail-watch/SKILL.md) | Watch for new emails and stream them as NDJSON |
 
 ## API Resources
