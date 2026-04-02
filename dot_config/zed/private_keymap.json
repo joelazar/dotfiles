@@ -187,6 +187,8 @@
       // === Navigation ===
       "g r": "editor::FindAllReferences",
       "g f": "editor::OpenExcerpts",
+      "ctrl-t": "pane::GoToOlderTag", // jump back in go-to-definition tag stack
+      "ctrl-i": "pane::GoToNewerTag", // jump forward in go-to-definition tag stack
 
       // === Diagnostics (errors only) ===
       "] e": ["editor::GoToDiagnostic", { "severity": "error" }],
