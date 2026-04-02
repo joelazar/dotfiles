@@ -168,10 +168,10 @@ brew "jupyterlab"
 brew "k9s"
 # Save disk space by cleaning non-essential files from software projects
 brew "kondo"
-# Kubernetes command-line interface
-brew "kubernetes-cli"
 # Tool that can switch between kubectl contexts easily and create aliases
 brew "kubectx"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
 # Lazier way to manage everything docker
 brew "lazydocker"
 # Simple terminal UI for git commands
@@ -353,7 +353,7 @@ cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Terminal-based AI coding assistant
-cask "claude-code"
+cask "claude-code@latest"
 # Screen capturing tool
 cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
