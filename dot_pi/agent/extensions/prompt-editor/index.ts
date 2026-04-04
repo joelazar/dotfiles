@@ -1282,24 +1282,6 @@ export default function (pi: ExtensionAPI) {
 		applyEditor(pi, ctx);
 	});
 
-	pi.on("session_switch", async (_event, ctx) => {
-		lastObservedModel = { provider: ctx.model?.provider, modelId: ctx.model?.id };
-		await ensureRuntime(pi, ctx);
-		customOverlay = null;
-
-		const inferred = inferModeFromSelection(ctx, pi, runtime.data);
-		if (inferred) {
-			runtime.currentMode = inferred;
-			runtime.lastRealMode = inferred;
-		} else {
-			runtime.currentMode = CUSTOM_MODE_NAME;
-			customOverlay = getCurrentSelectionSpec(pi, ctx);
-		}
-
-		applyEditor(pi, ctx);
-	});
-
-
 	pi.on("model_select", async (event: ModelSelectEvent, ctx) => {
 		// Always track the last observed model for overlay/store correctness.
 		lastObservedModel = { provider: event.model.provider, modelId: event.model.id };
@@ -1325,14 +1307,6 @@ export default function (pi: ExtensionAPI) {
 		if (ctx.hasUI) {
 			requestEditorRender?.();
 		}
-	});
-
-	// Cancel any pending async editor loads when the user opens a selector
-	// (e.g., /resume). Without this, the async loadPromptHistoryForCwd can
-	// complete while the session selector is showing and call setEditorComponent,
-	// which clears the editorContainer and causes rendering artifacts.
-	pi.on("session_before_switch", async () => {
-		++loadCounter;
 	});
 
 }

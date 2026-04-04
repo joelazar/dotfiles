@@ -16,7 +16,6 @@ import {
 import type {
   ExtensionAPI,
   ExtensionContext,
-  SessionSwitchEvent,
 } from "@mariozechner/pi-coding-agent";
 import { compact } from "@mariozechner/pi-coding-agent";
 import {
@@ -510,7 +509,4 @@ export default function loopExtension(pi: ExtensionAPI): void {
     await restoreLoopState(ctx);
   });
 
-  pi.on("session_switch", async (_event: SessionSwitchEvent, ctx) => {
-    await restoreLoopState(ctx);
-  });
 }

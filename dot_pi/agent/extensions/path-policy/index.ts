@@ -542,10 +542,6 @@ export default function pathPolicyExtension(pi: ExtensionAPI) {
     refreshConfig(ctx.cwd);
   });
 
-  pi.on("session_switch", async (_event, ctx) => {
-    refreshConfig(ctx.cwd);
-  });
-
   pi.on("tool_call", async (event, ctx) => {
     // Keep config live without requiring /reload or session restart.
     refreshConfig(ctx.cwd);

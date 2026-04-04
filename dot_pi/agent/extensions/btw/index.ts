@@ -1102,10 +1102,6 @@ export default function (pi: ExtensionAPI) {
     await restoreThread(ctx);
   });
 
-  pi.on("session_switch", async (_event, ctx) => {
-    await restoreThread(ctx);
-  });
-
   pi.on("session_tree", async (_event, ctx) => {
     await restoreThread(ctx);
   });

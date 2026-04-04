@@ -266,8 +266,4 @@ export default function (pi: ExtensionAPI) {
   pi.on("session_start", (_event, ctx) => {
     applyEditorWithHistory(pi, ctx);
   });
-
-  pi.on("session_switch", (_event, ctx) => {
-    applyEditorWithHistory(pi, ctx);
-  });
 }
