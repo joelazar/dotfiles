@@ -200,6 +200,7 @@
   // AGENT (AI Assistant)
   // ══════════════════════════════════════════════════════════════════════════════
   "edit_predictions": {
+    "disabled_globs": [],
     "provider": "zed",
   },
   "agent": {

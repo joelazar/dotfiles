@@ -202,6 +202,8 @@ brew "mise"
 brew "mob"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
+# NCurses Disk Usage
+brew "ncdu"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -449,3 +451,4 @@ uv "ansible"
 uv "ansible-core", with: ["ansible"]
 uv "nginx-language-server"
 uv "openshell"
+uv "pylatexenc"
