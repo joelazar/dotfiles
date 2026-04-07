@@ -10,6 +10,7 @@ tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "protonpass/tap"
+tap "schpet/tap"
 tap "steipete/tap"
 tap "tw93/tap"
 # Run your GitHub Actions locally
@@ -328,6 +329,8 @@ brew "nats-io/nats-tools/nats"
 brew "oven-sh/bun/bun"
 # Proton Pass CLI - Command-line interface for Proton Pass
 brew "protonpass/tap/pass-cli"
+# CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
+brew "schpet/tap/linear"
 # Command-line ElevenLabs TTS with mac-style flags
 brew "steipete/tap/sag"
 # Comprehensive macOS cleanup and application uninstall tool

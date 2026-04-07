@@ -147,7 +147,6 @@
     "auto_fold_dirs": false,
     "auto_reveal_entries": false,
     "entry_spacing": "standard",
-    "bold_folder_labels": true,
     "diagnostic_badges": true,
     "git_status_indicator": true, // show git status colors on files in project panel
   },
