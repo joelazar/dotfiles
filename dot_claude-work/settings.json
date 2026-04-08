@@ -102,10 +102,13 @@
     ],
     "defaultMode": "default"
   },
+
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
   },
   "autoUpdatesChannel": "stable",
   "voiceEnabled": false,

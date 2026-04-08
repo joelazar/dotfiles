@@ -1,0 +1,37 @@
+#!/bin/bash
+# Managed by chezmoi — tracked settings are defined below.
+# Local-only sections like [projects.*] are preserved from the existing file.
+
+set -euo pipefail
+
+# --- Tracked config (edit here) ---
+MANAGED_CONFIG='model = "gpt-5.4"
+model_reasoning_effort = "high"
+approval_policy = "on-request"
+personality = "pragmatic"
+
+[tui]
+status_line = [
+  "model-with-reasoning",
+  "current-dir",
+  "git-branch",
+  "context-remaining",
+]
+
+[plugins."github@openai-curated"]
+enabled = true
+'
+
+# --- Read existing file from stdin ---
+EXISTING="$(cat)"
+
+# If no existing file or no projects section, just output managed config
+if [ -z "$EXISTING" ] || ! echo "$EXISTING" | tomlq -e '.projects' >/dev/null 2>&1; then
+  echo "$MANAGED_CONFIG"
+  exit 0
+fi
+
+# Merge: managed config + projects from existing file
+echo "$MANAGED_CONFIG" | tomlq -t \
+  --slurpfile existing <(echo "$EXISTING" | tomlq '.') \
+  '. * {projects: $existing[0].projects}'

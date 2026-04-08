@@ -262,6 +262,7 @@
     },
     {
       "host": "openclaw",
+      "username": "openclaw",
       "args": [],
       "projects": [
         {

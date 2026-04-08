@@ -70,7 +70,7 @@ set -gx LC_COLLATE C
 
 # zoxide configuration
 set -gx _ZO_ECHO 1
-set -gx _ZO_EXCLUDE_DIRS "$HOME/Code/onomondo/core-base/*:$HOME/.cache:$HOME/.local/share/nvim/lazy"
+set -gx _ZO_EXCLUDE_DIRS "$HOME/.cache:$HOME/.local/share/nvim/lazy"
 
 alias :q="exit"
 alias c="clear"
@@ -94,6 +94,7 @@ alias v='nvim'
 alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
+alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work command claude'
 
 # infra
 alias k='kubectl'
