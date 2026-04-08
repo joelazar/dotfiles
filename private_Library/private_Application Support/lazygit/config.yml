@@ -212,7 +212,7 @@ customCommands:
     command: "pi -p --no-session '/commit'"
     context: "files"
     description: "AI commit with pi"
-    output: terminal
+    output: log
   - key: "<c-g>"
     command: "gitmoji -c"
     context: "files"
