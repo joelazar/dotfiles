@@ -36,6 +36,7 @@ Optional flags:
 ## Output expectations
 
 The script instructs the model to:
+
 - search the internet for the requested topic
 - provide a concise summary for the given purpose
 - include full canonical URLs (`https://...`) for each key finding

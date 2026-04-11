@@ -25,12 +25,12 @@ gws sheets +append --spreadsheet <ID>
 
 ## Flags
 
-| Flag | Required | Default | Description |
-|------|----------|---------|-------------|
-| `--spreadsheet` | ✓ | — | Spreadsheet ID |
-| `--values` | — | — | Comma-separated values (simple strings) |
-| `--json-values` | — | — | JSON array of rows, e.g. '[["a","b"],["c","d"]]' |
-| `--range` | — | `A1` | Target range in A1 notation (e.g. 'Sheet2!A1') to select a specific tab |
+| Flag            | Required | Default | Description                                                             |
+| --------------- | -------- | ------- | ----------------------------------------------------------------------- |
+| `--spreadsheet` | ✓        | —       | Spreadsheet ID                                                          |
+| `--values`      | —        | —       | Comma-separated values (simple strings)                                 |
+| `--json-values` | —        | —       | JSON array of rows, e.g. '[["a","b"],["c","d"]]'                        |
+| `--range`       | —        | `A1`    | Target range in A1 notation (e.g. 'Sheet2!A1') to select a specific tab |
 
 ## Examples
 

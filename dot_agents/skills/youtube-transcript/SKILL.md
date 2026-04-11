@@ -21,6 +21,7 @@ npm install
 ```
 
 Accepts video ID or full URL:
+
 - `EBw7gsDPAYQ`
 - `https://www.youtube.com/watch?v=EBw7gsDPAYQ`
 - `https://youtu.be/EBw7gsDPAYQ`

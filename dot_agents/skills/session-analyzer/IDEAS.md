@@ -21,15 +21,18 @@ Patterns that span worktrees are missed entirely.
 import { execSync } from "child_process";
 
 function getWorktreePaths(cwd) {
-    try {
-        const output = execSync("git worktree list --porcelain", { cwd, encoding: "utf8" });
-        return output
-            .split("\n")
-            .filter(line => line.startsWith("worktree "))
-            .map(line => line.replace("worktree ", ""));
-    } catch {
-        return [cwd]; // Not a git repo or no worktrees
-    }
+  try {
+    const output = execSync("git worktree list --porcelain", {
+      cwd,
+      encoding: "utf8",
+    });
+    return output
+      .split("\n")
+      .filter((line) => line.startsWith("worktree "))
+      .map((line) => line.replace("worktree ", ""));
+  } catch {
+    return [cwd]; // Not a git repo or no worktrees
+  }
 }
 ```
 

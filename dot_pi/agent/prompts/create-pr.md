@@ -1,6 +1,7 @@
 ---
 description: Commit, push, and open a PR
 ---
+
 ## Context
 
 - Current git status: `git status`
