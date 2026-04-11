@@ -1,6 +1,6 @@
 ---
 name: web-browser
-description: "Allows to interact with web pages by performing actions such as clicking buttons, filling out forms, and navigating links. It works by remote controlling Google Chrome or Chromium browsers using the Chrome DevTools Protocol (CDP). When Claude needs to browse the web, it can use this skill to do so."
+description: "Interact with web pages by clicking buttons, filling forms, navigating links, and running JavaScript through Chrome or Chromium via the Chrome DevTools Protocol (CDP). Use this from any coding agent when browser automation is needed."
 license: Stolen from Mario
 ---
 

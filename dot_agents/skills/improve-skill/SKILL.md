@@ -5,7 +5,7 @@ description: "Analyze coding agent session transcripts to improve existing skill
 
 # Improve Skill
 
-This skill helps analyze coding agent sessions to improve or create skills. It works with Claude Code, Pi, and Codex session files.
+This skill helps analyze coding agent sessions to improve or create skills. It is meant to work across the main local coding-agent CLIs you use, with examples for common setups such as pi, Claude Code, Codex, and Gemini when session logs are available.
 
 ## Quick Start
 
@@ -18,7 +18,7 @@ Extract the current session and generate an improvement prompt:
 
 ## Session Extraction
 
-The `extract-session.js` script finds and parses session files from any of the three agents:
+The `extract-session.js` script finds and parses session files from multiple agent CLIs:
 
 ```bash
 # Auto-detect (uses most recent session for current working directory)
@@ -36,11 +36,14 @@ The `extract-session.js` script finds and parses session files from any of the t
 ./scripts/extract-session.js /path/to/session.jsonl
 ```
 
-**Session file locations:**
+**Known session file locations:**
 
 - **Claude Code**: `~/.claude/projects/<encoded-cwd>/*.jsonl`
-- **Pi**: `~/.pi/agent/sessions/<encoded-cwd>/*.jsonl`
+- **pi**: `~/.pi/agent/sessions/<encoded-cwd>/*.jsonl`
 - **Codex**: `~/.codex/sessions/YYYY/MM/DD/*.jsonl`
+- **Gemini CLI**: use its exported transcript or a direct session file path when available
+
+If auto-detection misses the agent, pass the session file path explicitly.
 
 ## Workflow: Improve an Existing Skill
 
@@ -52,10 +55,11 @@ When asked to improve a skill based on a session:
    ./scripts/extract-session.js > /tmp/session-transcript.txt
    ```
 
-2. **Find the existing skill** in one of these locations:
+2. **Find the existing skill** in the relevant skill directory for the current agent or shared dotfiles repo. Common locations include:
    - `~/.codex/skills/<skill-name>/SKILL.md`
    - `~/.claude/skills/<skill-name>/SKILL.md`
    - `~/.pi/agent/skills/<skill-name>/SKILL.md`
+   - `~/.../dot_agents/skills/<skill-name>/SKILL.md`
 
 3. **Generate an improvement prompt** for a new session:
 
@@ -118,7 +122,7 @@ Create a new skill that captures:
 3. Common pitfalls and how to avoid them
 4. Example usage for typical scenarios
 
-Write the skill to: ~/.codex/skills/<skill-name>/SKILL.md
+Write the skill to the appropriate shared or agent-specific skill path, for example: ~/.../dot_agents/skills/<skill-name>/SKILL.md
 
 Use this format:
 ---
@@ -139,7 +143,7 @@ description: "<one-line description>"
 
 ## Why a Separate Session?
 
-The improvement prompt is meant to be copied into a **fresh agent session** because:
+The improvement prompt is meant to be copied into a **fresh coding-agent session** because:
 
 1. **Token efficiency** - The current session already has a lot of context; starting fresh means only the transcript and skill are loaded
 2. **Clean analysis** - The new session can focus purely on improvement without being influenced by the current task
@@ -154,5 +158,6 @@ When analyzing a transcript, look for:
 - **Workarounds** - What did the agent have to figure out that wasn't documented?
 - **Errors** - What failed and how was it resolved?
 - **Successful patterns** - What worked well and should be highlighted?
+- **Agent-neutral guidance** - What should be phrased in terms of capabilities and workflows instead of one specific CLI?
 
 Keep skills concise - focus on the most important information and examples.

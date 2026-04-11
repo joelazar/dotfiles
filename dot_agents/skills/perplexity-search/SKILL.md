@@ -144,7 +144,7 @@ python3 perplexity_search.py --search "OpenTelemetry AI agents" --json
 
 ## API key
 
-Requires `PERPLEXITY_API_KEY` in the environment. The helper also checks `~/.claude/.env`.
+Requires `PERPLEXITY_API_KEY` in the environment.
 
 ## Validation
 

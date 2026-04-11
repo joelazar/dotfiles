@@ -58,4 +58,6 @@ This will:
 
 1. convert to Markdown via `uvx --from 'markitdown[pdf]' markitdown`
 2. write the full Markdown to a temp `.md` file and print its path as a "Hint" line
-3. run `pi --model claude-haiku-4-5` (no-tools, no-session) to summarize using your extra prompt
+3. run a lightweight summarization model or CLI available in the current environment using your extra prompt
+
+Prefer whichever local agent/model CLI is already available. If you mainly use pi, `pi --model claude-haiku-4-5` remains a good default, but the workflow should stay agent-neutral.

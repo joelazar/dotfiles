@@ -1,11 +1,11 @@
 ---
 name: session-analyzer
-description: Analyze pi session transcripts to discover patterns that could become AGENTS.md rules, skills, or prompt templates. Mines your usage history for automation opportunities.
+description: Analyze coding-agent session transcripts to discover patterns that could become AGENTS.md rules, skills, or prompt templates. Mines your usage history for automation opportunities across local coding-agent tools.
 ---
 
 # Session Analyzer
 
-Extracts and analyzes your pi session transcripts to find recurring patterns that could be automated.
+Extracts and analyzes your coding-agent session transcripts to find recurring patterns that could be automated.
 
 ## Usage
 
@@ -19,7 +19,7 @@ Extracts and analyzes your pi session transcripts to find recurring patterns tha
 # Match multiple dirs by pattern (worktrees, variants, etc.)
 {baseDir}/analyze.js --pattern orders-app
 
-# Extract + analyze with subagents
+# Extract + analyze with helper agents / parallel analyzers
 {baseDir}/analyze.js --analyze
 
 # Pattern + analyze (finds all matching session dirs)
@@ -31,10 +31,11 @@ Extracts and analyzes your pi session transcripts to find recurring patterns tha
 
 ## What It Does
 
-1. **Extract**: Reads all session files for the given working directory from `~/.pi/agent/sessions/`
+1. **Extract**: Reads all session files for the given working directory from the configured transcript source(s)
+   - Today this is primarily set up around pi transcripts, but the skill should be described and used in an agent-neutral way
    - Use `--pattern` to match multiple directories (e.g., worktrees, feature branches)
 2. **Split**: Chunks transcripts into ~100k char files (fits in context window)
-3. **Analyze** (optional): Spawns pi subagents to identify:
+3. **Analyze** (optional): Spawns helper agents / parallel analysis runs to identify:
    - **AGENTS.md patterns**: Coding style rules, conventions you repeat
    - **Skill patterns**: Multi-step workflows you do often
    - **Prompt templates**: Reusable prompts for common tasks
