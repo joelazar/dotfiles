@@ -26,6 +26,9 @@
     "sessionRetention": {
       "enabled": true,
       "maxAge": "30d"
+    },
+    "plan": {
+      "enabled": true
     }
   },
   "output": {
@@ -37,8 +40,8 @@
   "telemetry": {
     "enabled": false
   },
-  "experimental": {
-    "plan": true
+  "experimental": {},
+  "agents": {
+    "overrides": {}
   }
 }
-
