@@ -102,7 +102,6 @@
     ],
     "defaultMode": "default"
   },
-
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
@@ -110,8 +109,9 @@
     "code-simplifier@claude-plugins-official": true,
     "skill-creator@claude-plugins-official": true
   },
+  "effortLevel": "high",
   "autoUpdatesChannel": "stable",
   "voiceEnabled": false,
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "model": "opus[1m]"
 }
