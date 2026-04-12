@@ -75,8 +75,8 @@ Example output:
   ]
 }`;
 
-const CODEX_MODEL_ID = "gpt-5.1-codex-mini";
-const HAIKU_MODEL_ID = "claude-haiku-4-5";
+const OPENAI_MODEL_ID = "gpt-5.4-mini";
+const ANTHROPIC_MODEL_ID = "claude-haiku-4-5";
 
 /**
  * Prefer Codex mini for extraction when available, otherwise fallback to haiku or the current model.
@@ -85,10 +85,15 @@ async function selectExtractionModel(
   currentModel: Model<Api>,
   modelRegistry: {
     find: (provider: string, modelId: string) => Model<Api> | undefined;
-    getApiKeyAndHeaders: (model: Model<Api>) => Promise<{ ok: boolean; apiKey?: string; headers?: Record<string, string>; error?: string }>;
+    getApiKeyAndHeaders: (model: Model<Api>) => Promise<{
+      ok: boolean;
+      apiKey?: string;
+      headers?: Record<string, string>;
+      error?: string;
+    }>;
   },
 ): Promise<Model<Api>> {
-  const codexModel = modelRegistry.find("openai-codex", CODEX_MODEL_ID);
+  const codexModel = modelRegistry.find("openai-codex", OPENAI_MODEL_ID);
   if (codexModel) {
     const auth = await modelRegistry.getApiKeyAndHeaders(codexModel);
     if (auth.ok) {
@@ -96,7 +101,7 @@ async function selectExtractionModel(
     }
   }
 
-  const haikuModel = modelRegistry.find("anthropic", HAIKU_MODEL_ID);
+  const haikuModel = modelRegistry.find("anthropic", ANTHROPIC_MODEL_ID);
   if (!haikuModel) {
     return currentModel;
   }
@@ -490,7 +495,8 @@ export default function (pi: ExtensionAPI) {
         loader.onAbort = () => done(null);
 
         const doExtract = async () => {
-          const auth = await ctx.modelRegistry.getApiKeyAndHeaders(extractionModel);
+          const auth =
+            await ctx.modelRegistry.getApiKeyAndHeaders(extractionModel);
           if (!auth.ok) throw new Error(auth.error);
           const userMessage: UserMessage = {
             role: "user",
@@ -501,7 +507,11 @@ export default function (pi: ExtensionAPI) {
           const response = await complete(
             extractionModel,
             { systemPrompt: SYSTEM_PROMPT, messages: [userMessage] },
-            { apiKey: auth.apiKey, headers: auth.headers, signal: loader.signal },
+            {
+              apiKey: auth.apiKey,
+              headers: auth.headers,
+              signal: loader.signal,
+            },
           );
 
           if (response.stopReason === "aborted") {

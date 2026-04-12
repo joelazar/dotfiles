@@ -312,7 +312,7 @@ function pickFastModel(provider, requestedModel, piAi) {
     if (requestedModel) return { id: requestedModel, baseUrl: undefined };
     if (provider === "openai-codex")
       return {
-        id: "gpt-5.1-codex-mini",
+        id: "gpt-5.4-mini",
         baseUrl: "https://chatgpt.com/backend-api",
       };
     return { id: "claude-haiku-4-5", baseUrl: "https://api.anthropic.com" };
@@ -326,12 +326,8 @@ function pickFastModel(provider, requestedModel, piAi) {
 
   const preferredIds =
     provider === "openai-codex"
-      ? ["gpt-5.1-codex-mini", "gpt-5.3-codex-spark", "gpt-5.1"]
-      : [
-          "claude-haiku-4-5",
-          "claude-3-5-haiku-latest",
-          "claude-3-5-haiku-20241022",
-        ];
+      ? ["gpt-5.4-mini", "gpt-5.4"]
+      : ["claude-haiku-4-5"];
 
   for (const id of preferredIds) {
     const found = models.find((m) => m.id === id);

@@ -2,22 +2,20 @@
   "lastChangelogVersion": "0.66.1",
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "medium",
   "theme": "tokyo-night",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-6",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.3-codex",
+    "openai-codex/gpt-5.4",
     "anthropic/claude-opus-4-6",
-    "anthropic/claude-sonnet-4-6",
-    "openai-codex/gpt-5.4"
+    "anthropic/claude-sonnet-4-6"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": [
-    "-extensions/sandbox/index.ts"
-  ],
+  "extensions": ["-extensions/sandbox/index.ts"],
   "packages": [
     "https://github.com/davebcn87/pi-autoresearch",
     "/Users/joelazar/Code/joelazar/pi-side-chat",
@@ -26,3 +24,4 @@
   "transport": "auto",
   "treeFilterMode": "default"
 }
+

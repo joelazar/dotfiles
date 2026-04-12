@@ -7,9 +7,14 @@
       "modelId": "claude-opus-4-6",
       "thinkingLevel": "medium"
     },
-    "fast": {
+    "fast-claude": {
       "provider": "anthropic",
       "modelId": "claude-sonnet-4-6",
+      "thinkingLevel": "low"
+    },
+    "fast-gpt": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.3-codex",
       "thinkingLevel": "low"
     },
     "deep": {
