@@ -6,23 +6,18 @@ import {
 	FeatureStateParseError,
 	FeatureStateReadError,
 	FeatureStateWriteError,
-	FinderOperationError,
 	type FeatureStateLoadError,
 	type GrepSearchError,
 	type PathResolutionError,
 } from "./errors.ts";
 import { formatGrepError, formatPathResolutionError } from "./error-format.ts";
-import { formatCandidateLines, resolutionSummary, type FindFilesResponse, type GrepSearchResponse, type HealthCheck, type ResolvedPath, type RuntimeMetadata } from "./fff.ts";
+import { type FindFilesResponse, type GrepSearchResponse, type HealthCheck, type ResolvedPath, type RuntimeMetadata } from "./fff.ts";
 
-export const STATUS_KEY = "pi-fff";
-export const RESULT_WIDGET_KEY = "pi-fff-results";
 const GLOBAL_FEATURES_PATH = join(getAgentDir(), "extensions", "pi-fff.json");
-export const CUSTOM_TOOL_NAMES = ["find_files", "resolve_file", "related_files", "fff_grep", "fff_multi_grep"] as const;
+export const CUSTOM_TOOL_NAMES = ["find_files", "fff_multi_grep"] as const;
 export const FFF_RUNTIME_NOT_READY_TEXT = "FFF runtime is not ready.";
-export const PROMPT_GUIDANCE_TEXT =
-	"pi-fff is active. Prefer read/grep and the FFF-backed tools over bash for repo discovery. Use grep for code content and bare identifiers, find_files when exploring which files exist for a topic, and resolve_file when you want to turn an approximate path into one file before reading or editing. Keep grep queries simple: prefer plain text over regex unless regex is truly needed, search one identifier at a time, and use fff_multi_grep when you need multiple naming variants in one pass. Use broad constraints like '*.ts query' or 'src/ query' instead of mixing many words into the pattern. After one or two good greps, read the best file instead of repeatedly grepping similar patterns. If grep returns nothing, simplify the query rather than making it more complex. When custom FFF search tools return a cursor, reuse that cursor to continue the same search instead of starting over.";
 
-export type FeatureKey = "autocomplete" | "builtInToolEnhancements" | "agentTools" | "promptGuidance" | "statusUI";
+export type FeatureKey = "autocomplete" | "builtInToolEnhancements" | "agentTools" | "statusUI";
 
 export type FeatureDefinition = {
 	id: FeatureKey;
@@ -37,9 +32,8 @@ type FeatureState = {
 export const FEATURE_DEFINITIONS: FeatureDefinition[] = [
 	{ id: "autocomplete", label: "Autocomplete", description: "Use FFF for @... editor autocomplete" },
 	{ id: "builtInToolEnhancements", label: "Built-in tool enhancements", description: "Use FFF to improve built-in read and grep" },
-	{ id: "agentTools", label: "Agent tools", description: "Enable find_files / resolve_file / related_files / fff_grep / fff_multi_grep" },
-	{ id: "promptGuidance", label: "Prompt guidance", description: "Inject FFF usage guidance into the system prompt" },
-	{ id: "statusUI", label: "Status UI", description: "Show footer status, result widgets, and startup notices" },
+	{ id: "agentTools", label: "Agent tools", description: "Enable find_files / fff_multi_grep" },
+	{ id: "statusUI", label: "Status UI", description: "Show startup notices" },
 ];
 export const ALL_FEATURE_KEYS = FEATURE_DEFINITIONS.map((feature) => feature.id);
 
@@ -51,19 +45,8 @@ export function buildReadFailureMessage(action: string, query: string, error: Pa
 	return formatPathResolutionError(action, query, error);
 }
 
-export function buildRelatedFilesFailureMessage(query: string, error: PathResolutionError | FinderOperationError): string {
-	return buildReadFailureMessage("related-files", query, error);
-}
-
 export function buildGrepFailureMessage(error: GrepSearchError, pathQuery?: string): string {
 	return formatGrepError(error, pathQuery);
-}
-
-export function formatResolvedPathResult(resolution: ResolvedPath, limit: number): string {
-	return [
-		resolutionSummary(resolution),
-		...(resolution.candidates.length > 1 ? ["Other candidates:", ...formatCandidateLines(resolution.candidates.slice(1), Math.max(0, limit - 1))] : []),
-	].join("\n");
 }
 
 export function locationToReadParams(resolution: ResolvedPath, offset: number | undefined, limit: number | undefined) {
@@ -98,18 +81,8 @@ export function normalizeOutputMode(mode: string | undefined): "content" | "file
 	return undefined;
 }
 
-export function looksLikeRegexPattern(pattern: string): boolean {
-	return /\\[AbBdDsSwWZz0-9]/.test(pattern)
-		|| /\[[^\]]+\]/.test(pattern)
-		|| /\([^)]*[|)][^)]*\)/.test(pattern)
-		|| /[{}|^$]/.test(pattern)
-		|| /\.([*+?])/.test(pattern)
-		|| /(^|[^\\])[+?*]($|\s)/.test(pattern);
-}
-
-export function inferFffGrepMode(params: { pattern: string; literal?: boolean }): "plain" | "regex" {
-	if (params.literal) return "plain";
-	return looksLikeRegexPattern(params.pattern) ? "regex" : "plain";
+export function inferFffGrepMode(literal?: boolean): "plain" | "regex" {
+	return literal === false ? "regex" : "plain";
 }
 
 export function buildErrorDetails(error?: { message: string } | null) {
@@ -156,10 +129,6 @@ export function buildFindFilesDetails(result?: FindFilesResponse, disabledFeatur
 		disabled: disabledFeature !== undefined,
 		feature: disabledFeature ?? null,
 	};
-}
-
-export function widgetLinesForSearch(title: string, body: string): string[] {
-	return [title, ...body.split("\n").slice(0, 20)];
 }
 
 export function buildStatusReport(args: {

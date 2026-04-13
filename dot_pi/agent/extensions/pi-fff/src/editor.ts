@@ -1,5 +1,7 @@
+import type { KeybindingsManager } from "@mariozechner/pi-coding-agent";
 import { CustomEditor } from "@mariozechner/pi-coding-agent";
-import type { AutocompleteItem, AutocompleteProvider, AutocompleteSuggestions } from "@mariozechner/pi-tui";
+import type { AutocompleteItem, AutocompleteProvider, AutocompleteSuggestions, TUI } from "@mariozechner/pi-tui";
+import type { EditorTheme } from "@mariozechner/pi-tui";
 import type { FffRuntime } from "./fff.ts";
 
 const PATH_DELIMITERS = new Set([" ", "\t", '"', "'", "="]);
@@ -64,7 +66,7 @@ function toSuggestion(relativePath: string, label: string, description: string, 
 	};
 }
 
-export class FffAtAutocompleteProvider implements AutocompleteProvider {
+class FffAtAutocompleteProvider implements AutocompleteProvider {
 	constructor(
 		private readonly baseProvider: AutocompleteProvider,
 		private readonly runtime: FffRuntime,
@@ -121,32 +123,17 @@ export class FffAtAutocompleteProvider implements AutocompleteProvider {
 	}
 }
 
-/**
- * Monkey-patch Editor.prototype.setAutocompleteProvider so that ANY editor
- * (default, PromptEditor, HistoryEditor, etc.) wraps its autocomplete
- * provider with FffAtAutocompleteProvider.
- *
- * This avoids the setEditorComponent conflict where multiple extensions
- * (pi-fff, prompt-editor, cwd-history) each call setEditorComponent and
- * the last one wins — losing the fff autocomplete wrapping.
- */
-const EditorPrototype = Object.getPrototypeOf(CustomEditor.prototype) as {
-	setAutocompleteProvider(provider: AutocompleteProvider): void;
-};
-const originalSetAutocompleteProvider = EditorPrototype.setAutocompleteProvider;
-
-let activeRuntime: FffRuntime | null = null;
-let autocompleteEnabled = true;
-
-export function enableAutocompletePatching(runtime: FffRuntime | null, enabled: boolean): void {
-	activeRuntime = runtime;
-	autocompleteEnabled = enabled;
-}
-
-EditorPrototype.setAutocompleteProvider = function (this: typeof EditorPrototype, provider: AutocompleteProvider): void {
-	if (activeRuntime && autocompleteEnabled) {
-		originalSetAutocompleteProvider.call(this, new FffAtAutocompleteProvider(provider, activeRuntime));
-	} else {
-		originalSetAutocompleteProvider.call(this, provider);
+export class FffEditor extends CustomEditor {
+	constructor(
+		tui: TUI,
+		theme: EditorTheme,
+		keybindings: KeybindingsManager,
+		private readonly runtime: FffRuntime,
+	) {
+		super(tui, theme, keybindings);
 	}
-};
+
+	override setAutocompleteProvider(provider: AutocompleteProvider): void {
+		super.setAutocompleteProvider(new FffAtAutocompleteProvider(provider, this.runtime));
+	}
+}

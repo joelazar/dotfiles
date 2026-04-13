@@ -1,6 +1,6 @@
 {
   "name": "pi-fff",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "FFF-powered fuzzy file resolution, autocomplete, and content search extension for pi",
   "type": "module",
   "scripts": {

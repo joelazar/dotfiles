@@ -357,6 +357,16 @@ test("grepSearch suggests a relevant file path when content search is empty", as
 				nextCursor: null,
 			});
 		},
+		multiGrep(): Result<GrepResult> {
+			return ok({
+				items: [],
+				totalMatched: 0,
+				totalFilesSearched: 1,
+				totalFiles: 2,
+				filteredFileCount: 2,
+				nextCursor: null,
+			});
+		},
 		fileSearch(query): Result<SearchResult> {
 			assert.equal(query, "src/components/button.ts");
 			const items = [
@@ -429,17 +439,27 @@ test("multiGrepSearch falls back to single-pattern grep when multi-grep is empty
 	assert.match(result.value.formatted, /src\/example.ts:7: const second_variant = true;/);
 });
 
-test("grepSearch pushes scope and glob into native constraints when possible", async () => {
-	const root = await mkdtemp(join(tmpdir(), "pi-fff-"));
-	await mkdir(join(root, "src"), { recursive: true });
-	await writeFile(join(root, "src", "example.ts"), "export const needle = true;\n", "utf8");
-
-	const calls: Array<{ query: string; cursor: GrepCursor | null | undefined }> = [];
+test("grepSearch uses multi-grep engine for slash/brace literal patterns", async () => {
+	let grepCalls = 0;
+	let multiCalls = 0;
+	const pattern = "/repos/{owner}/{repo}/pulls/{pull_number}/files";
 	const finder = createMockFinder({
-		grep(query, options): Result<GrepResult> {
-			calls.push({ query, cursor: options?.cursor });
+		grep(): Result<GrepResult> {
+			grepCalls += 1;
 			return ok({
-				items: [makeMatch("src/example.ts", 1, "export const needle = true;")],
+				items: [],
+				totalMatched: 0,
+				totalFilesSearched: 1,
+				totalFiles: 1,
+				filteredFileCount: 1,
+				nextCursor: null,
+			});
+		},
+		multiGrep(options): Result<GrepResult> {
+			multiCalls += 1;
+			assert.deepEqual(options.patterns, [pattern]);
+			return ok({
+				items: [makeMatch("spec.yaml", 3, `  ${pattern}:`)],
 				totalMatched: 1,
 				totalFilesSearched: 1,
 				totalFiles: 1,
@@ -449,12 +469,48 @@ test("grepSearch pushes scope and glob into native constraints when possible", a
 		},
 	});
 
+	const runtime = new FffRuntime(process.cwd(), { finder });
+	const result = await runtime.grepSearch({ pattern, mode: "plain", limit: 5 });
+	assert.equal(result.isOk(), true);
+	if (result.isErr()) assert.fail(result.error.message);
+	assert.equal(multiCalls, 1);
+	assert.equal(grepCalls, 0);
+	assert.equal(result.value.items.length, 1);
+	assert.equal(result.value.items[0]?.relativePath, "spec.yaml");
+});
+
+test("grepSearch keeps pattern query plain and applies scope/glob as post-filters", async () => {
+	const root = await mkdtemp(join(tmpdir(), "pi-fff-"));
+	await mkdir(join(root, "src"), { recursive: true });
+	await writeFile(join(root, "src", "example.ts"), "export const needle = true;\n", "utf8");
+
+	const calls: Array<{ query: string; cursor: GrepCursor | null | undefined }> = [];
+	const finder = createMockFinder({
+		grep(query, options): Result<GrepResult> {
+			calls.push({ query, cursor: options?.cursor });
+			return ok({
+				items: [
+					makeMatch("src/example.ts", 1, "export const needle = true;"),
+					makeMatch("src/example.js", 2, "const needle = true;"),
+					makeMatch("other/ignore.ts", 3, "export const needle = true;"),
+				],
+				totalMatched: 3,
+				totalFilesSearched: 3,
+				totalFiles: 3,
+				filteredFileCount: 3,
+				nextCursor: null,
+			});
+		},
+	});
+
 	const runtime = new FffRuntime(root, { finder });
-	const result = await runtime.grepSearch({ pattern: "needle", pathQuery: "src", glob: "*.ts", limit: 5 });
+	const result = await runtime.grepSearch({ pattern: "needle", pathQuery: "src", glob: "**/*.ts", limit: 5 });
 	assert.equal(result.isOk(), true);
 	if (result.isErr()) assert.fail(result.error.message);
 	assert.equal(calls.length, 1);
-	assert.equal(calls[0]?.query, "src/ *.ts needle");
-	assert.equal(result.value.constraintQuery, "src/ *.ts");
+	assert.equal(calls[0]?.query, "needle");
+	assert.equal(result.value.constraintQuery, undefined);
 	assert.equal(result.value.scope?.relativePath, "src");
+	assert.equal(result.value.items.length, 1);
+	assert.equal(result.value.items[0]?.relativePath, "src/example.ts");
 });

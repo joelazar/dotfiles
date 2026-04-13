@@ -1,20 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { buildStatusReport, inferFffGrepMode, PROMPT_GUIDANCE_TEXT } from "../src/extension-common.ts";
+import { buildStatusReport, inferFffGrepMode } from "../src/extension-common.ts";
 
-test("inferFffGrepMode stays plain-first unless pattern clearly looks like regex", () => {
-	assert.equal(inferFffGrepMode({ pattern: "needle", literal: false }), "plain");
-	assert.equal(inferFffGrepMode({ pattern: "foo.bar", literal: false }), "plain");
-	assert.equal(inferFffGrepMode({ pattern: "foo.*bar", literal: false }), "regex");
-	assert.equal(inferFffGrepMode({ pattern: "\\d+", literal: false }), "regex");
-	assert.equal(inferFffGrepMode({ pattern: "literal.*text", literal: true }), "plain");
-});
-
-test("PROMPT_GUIDANCE_TEXT includes MCP-style grep guidance", () => {
-	assert.match(PROMPT_GUIDANCE_TEXT, /bare identifiers/i);
-	assert.match(PROMPT_GUIDANCE_TEXT, /plain text over regex/i);
-	assert.match(PROMPT_GUIDANCE_TEXT, /one or two good greps/i);
-	assert.match(PROMPT_GUIDANCE_TEXT, /multi_grep/i);
+test("inferFffGrepMode only enables regex when explicitly requested", () => {
+	assert.equal(inferFffGrepMode(undefined), "plain");
+	assert.equal(inferFffGrepMode(true), "plain");
+	assert.equal(inferFffGrepMode(false), "regex");
 });
 
 test("buildStatusReport includes runtime paths, tracker state, and classification mode", () => {

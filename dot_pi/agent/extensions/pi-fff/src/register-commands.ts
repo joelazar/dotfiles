@@ -6,8 +6,6 @@ import { FffRuntime } from "./fff.ts";
 export type CommandRegistrationDeps = {
 	getRuntime(): FffRuntime | null;
 	isFeatureEnabled(feature: FeatureKey): boolean;
-	setWidget(ctx: ExtensionContext, title: string, body: string): void;
-	setStatus(ctx: ExtensionContext, nextStatus: string): void;
 	getEnabledFeatures(): Set<FeatureKey>;
 	setEnabledFeatures(next: Set<FeatureKey>): void;
 	persistFeatures(): Promise<void>;
@@ -117,7 +115,6 @@ export function registerCommands(pi: ExtensionAPI, deps: CommandRegistrationDeps
 				ctx.ui.notify(`FFF reindex failed: ${result.error.message}`, "error");
 				return;
 			}
-			deps.setStatus(ctx, "fff: reindexing");
 			ctx.ui.notify("FFF reindex started", "info");
 		},
 	});
@@ -142,8 +139,7 @@ export function registerCommands(pi: ExtensionAPI, deps: CommandRegistrationDeps
 				healthError: healthResult.isErr() ? healthResult.error : null,
 				features: FEATURE_DEFINITIONS.map((feature) => ({ label: feature.label, enabled: deps.isFeatureEnabled(feature.id) })),
 			});
-			deps.setWidget(ctx, "fff-status", report);
-			ctx.ui.notify(`fff: ${statusResult.value.state}`, "info");
+			ctx.ui.notify(report, "info");
 		},
 	});
 }

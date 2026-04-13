@@ -203,32 +203,12 @@ function trimCursorStore(map: Map<string, StoredGrepContinuation>) {
 	}
 }
 
-function combineConstraints(parts: Array<string | undefined | null>): string | undefined {
-	const combined = parts
-		.flatMap((part) => (part ? [part.trim()] : []))
-		.filter((part) => part.length > 0)
-		.join(" ");
-	return combined || undefined;
-}
-
-function nativeConstraintForScope(scope: ResolvedPath | undefined): string | null | undefined {
-	if (!scope) return undefined;
-	if (/\s/.test(scope.relativePath)) return null;
-	if (scope.pathType === "directory") {
-		const value = scope.relativePath.endsWith("/") ? scope.relativePath : `${scope.relativePath}/`;
-		return value;
-	}
-	return scope.relativePath;
-}
-
-function nativeConstraintForGlob(glob: string | undefined): string | null | undefined {
-	if (!glob?.trim()) return undefined;
-	const normalized = normalizeSlashes(glob.trim());
-	return /\s/.test(normalized) ? null : normalized;
-}
-
 function buildSingleGrepQuery(pattern: string, constraintQuery: string | undefined): string {
 	return constraintQuery ? `${constraintQuery} ${pattern}` : pattern;
+}
+
+function shouldUseMultiForSinglePlainPattern(pattern: string): boolean {
+	return /[/{}/]/.test(pattern);
 }
 
 function grepRequestKey(request: SingleGrepRequest | MultiGrepRequest, constraintQuery: string | undefined): string {
@@ -582,8 +562,20 @@ export class FffRuntime {
 	}
 
 	private runFinderGrep(finder: FileFinder, request: SingleGrepRequest | MultiGrepRequest, constraintQuery: string | undefined, engineCursor: GrepCursor | null): AppResult<GrepResult, FinderOperationError> {
-		return request.kind === "single"
-			? safeFinderCall("grep", () =>
+		if (request.kind === "single") {
+			if (request.mode === "plain" && shouldUseMultiForSinglePlainPattern(request.pattern)) {
+				return safeFinderCall("multiGrep", () =>
+					finder.multiGrep({
+						patterns: [request.pattern],
+						constraints: constraintQuery,
+						cursor: engineCursor,
+						beforeContext: request.context,
+						afterContext: request.context > 0 ? request.context : AUTO_EXPAND_AFTER_CONTEXT,
+						maxMatchesPerFile: MAX_MATCHES_PER_FILE,
+					}),
+				);
+			}
+			return safeFinderCall("grep", () =>
 				finder.grep(buildSingleGrepQuery(request.pattern, constraintQuery), {
 					mode: request.mode,
 					cursor: engineCursor,
@@ -591,17 +583,18 @@ export class FffRuntime {
 					afterContext: request.context > 0 ? request.context : AUTO_EXPAND_AFTER_CONTEXT,
 					maxMatchesPerFile: MAX_MATCHES_PER_FILE,
 				}),
-			)
-			: safeFinderCall("multiGrep", () =>
-				finder.multiGrep({
-					patterns: request.patterns,
-					constraints: constraintQuery,
-					cursor: engineCursor,
-					beforeContext: request.context,
-					afterContext: request.context > 0 ? request.context : AUTO_EXPAND_AFTER_CONTEXT,
-					maxMatchesPerFile: MAX_MATCHES_PER_FILE,
-				}),
 			);
+		}
+		return safeFinderCall("multiGrep", () =>
+			finder.multiGrep({
+				patterns: request.patterns,
+				constraints: constraintQuery,
+				cursor: engineCursor,
+				beforeContext: request.context,
+				afterContext: request.context > 0 ? request.context : AUTO_EXPAND_AFTER_CONTEXT,
+				maxMatchesPerFile: MAX_MATCHES_PER_FILE,
+			}),
+		);
 	}
 
 	private async buildNoMatchFallback(
@@ -744,15 +737,9 @@ export class FffRuntime {
 		}
 
 		const resolvedScope = scopeResult && scopeResult.isOk() ? scopeResult.value : undefined;
-		const nativeScopeConstraint = nativeConstraintForScope(resolvedScope);
-		const nativeGlobConstraint = nativeConstraintForGlob(request.glob);
-		const constraintQuery = combineConstraints([
-			request.constraints,
-			nativeScopeConstraint === null ? undefined : nativeScopeConstraint,
-			nativeGlobConstraint === null ? undefined : nativeGlobConstraint,
-		]);
-		const postFilterScope = nativeScopeConstraint === null ? resolvedScope : undefined;
-		const postFilterGlob = nativeGlobConstraint === null ? globToRegExp(request.glob ?? "") : null;
+		const constraintQuery = request.constraints?.trim() ? request.constraints.trim() : undefined;
+		const postFilterScope = resolvedScope;
+		const postFilterGlob = request.glob ? globToRegExp(request.glob) : null;
 		const requestKey = grepRequestKey(request, constraintQuery);
 
 		const continuation = this.getGrepContinuation(request.cursor);
