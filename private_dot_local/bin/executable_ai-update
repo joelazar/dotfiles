@@ -15,3 +15,7 @@ echo
 echo "🥧 Update Pi Coding Agent"
 bun install -g "@mariozechner/pi-coding-agent"
 echo
+
+echo "🥧 Update Pi extensions"
+pi update
+echo

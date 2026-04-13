@@ -17,6 +17,11 @@
       "modelId": "gpt-5.3-codex",
       "thinkingLevel": "low"
     },
+    "fastest": {
+      "provider": "openai-codex",
+      "modelId": "gpt-5.4-mini",
+      "thinkingLevel": "medium"
+    },
     "deep": {
       "provider": "openai-codex",
       "modelId": "gpt-5.4",

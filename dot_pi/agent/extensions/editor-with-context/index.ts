@@ -13,6 +13,7 @@
 import type { ExtensionAPI, SessionEntry } from "@mariozechner/pi-coding-agent";
 
 const SEPARATOR = "--- YOUR RESPONSE BELOW (only this part will be sent) ---";
+const SEPARATOR_RE = /^-{2,}\s*YOUR RESPONSE BELOW.*-{2,}\s*$/im;
 
 function getLastAssistantText(entries: SessionEntry[]): string | undefined {
   for (let i = entries.length - 1; i >= 0; i--) {
@@ -48,13 +49,24 @@ function extractUserText(
 ): string | undefined {
   if (!editorContent) return undefined;
 
-  const idx = editorContent.indexOf(SEPARATOR);
+  // Try exact match first, then fuzzy regex (handles editor mangling)
+  let idx = editorContent.indexOf(SEPARATOR);
+  let sepLen = SEPARATOR.length;
+
   if (idx === -1) {
-    // No separator found - treat entire content as user text
-    return editorContent.trim() || undefined;
+    const match = SEPARATOR_RE.exec(editorContent);
+    if (match) {
+      idx = match.index;
+      sepLen = match[0].length;
+    }
   }
 
-  const text = editorContent.substring(idx + SEPARATOR.length).trim();
+  if (idx === -1) {
+    // Still no separator — refuse to send to avoid leaking context
+    return undefined;
+  }
+
+  const text = editorContent.substring(idx + sepLen).trim();
   return text || undefined;
 }
 

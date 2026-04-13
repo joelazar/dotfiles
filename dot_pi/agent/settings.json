@@ -15,7 +15,9 @@
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": ["-extensions/sandbox/index.ts"],
+  "extensions": [
+    "-extensions/sandbox/index.ts"
+  ],
   "packages": [
     "https://github.com/davebcn87/pi-autoresearch",
     "/Users/joelazar/Code/joelazar/pi-side-chat",
@@ -24,4 +26,3 @@
   "transport": "auto",
   "treeFilterMode": "default"
 }
-

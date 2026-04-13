@@ -1,5 +1,5 @@
 {
-  "name": "edit-diff-lines",
+  "name": "multi-edit",
   "private": true,
   "version": "1.0.0",
   "dependencies": {
