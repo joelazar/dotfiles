@@ -6,7 +6,7 @@ import {
 	saveGlobalFeatureState,
 	type FeatureKey,
 } from "./extension-common.ts";
-import { FffEditor } from "./editor.ts";
+import { enableAutocompletePatching } from "./editor.ts";
 import { FffRuntime } from "./fff.ts";
 import { registerCommands } from "./register-commands.ts";
 import { registerTools } from "./register-tools.ts";
@@ -30,12 +30,11 @@ export default function (pi: ExtensionAPI) {
 		pi.setActiveTools(Array.from(activeTools));
 	};
 
-	const applyUiConfiguration = (ctx: ExtensionContext) => {
-		if (isFeatureEnabled("autocomplete") && runtime) {
-			ctx.ui.setEditorComponent((tui, theme, keybindings) => new FffEditor(tui, theme, keybindings, runtime!));
-		} else {
-			ctx.ui.setEditorComponent(undefined);
-		}
+	const applyUiConfiguration = (_ctx: ExtensionContext) => {
+		enableAutocompletePatching(
+			isFeatureEnabled("autocomplete") ? runtime : null,
+			isFeatureEnabled("autocomplete"),
+		);
 
 		syncCustomToolActivation();
 	};
@@ -100,6 +99,7 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.on("session_shutdown", async () => {
+		enableAutocompletePatching(null, false);
 		runtime?.dispose();
 		runtime = null;
 	});
