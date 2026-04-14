@@ -198,36 +198,20 @@ if.app-id = "com.mitchellh.ghostty"
 run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
-if.app-id = 'dev.zed.Zed'
-run = ['layout tiling', 'move-node-to-workspace 2']
-
-[[on-window-detected]]
-if.app-id = 'com.openai.codex'
-run = ['layout tiling', 'move-node-to-workspace 2']
-
-[[on-window-detected]]
-if.app-id = 'com.tinyapp.TablePlus'
-run = ['layout tiling', 'move-node-to-workspace 2']
-
-[[on-window-detected]]
-if.app-id = 'com.kagi.kagimacOS'
-run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace 3'
+run = 'move-node-to-workspace 2'
 
 # [[on-window-detected]]
 # if.app-id = 'com.1password.1password'
@@ -238,6 +222,18 @@ run = 'move-node-to-workspace 3'
 # run = ['layout floating', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'org.whispersystems.signal-desktop'
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 4'
 
@@ -246,20 +242,16 @@ if.app-id = 'com.todoist.mac.Todoist'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = ['layout tiling', 'move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id = 'com.openai.codex'
+run = ['layout tiling', 'move-node-to-workspace 5']
+
+[[on-window-detected]]
 if.app-id = 'com.hnc.Discord'
-run = ['layout tiling', 'move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['layout tiling', 'move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'org.whispersystems.signal-desktop'
-run = ['layout tiling', 'move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-id = 'com.apple.MobileSMS'
-run = ['layout tiling', 'move-node-to-workspace 5']
+run = ['layout tiling', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
@@ -271,6 +263,10 @@ run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
 if.app-id = 'com.usebruno.app'
+run = ['layout tiling', 'move-node-to-workspace 7']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyapp.TablePlus'
 run = ['layout tiling', 'move-node-to-workspace 7']
 
 [[on-window-detected]]
