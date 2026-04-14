@@ -1,12 +1,5 @@
 [
   {
-    "label": "python: run current file in venv",
-    "command": "source .venv/bin/activate.fish && direnv export fish | source && python $ZED_RELATIVE_FILE",
-    "use_new_terminal": false,
-    "allow_concurrent_runs": false,
-    "reveal": "always",
-  },
-  {
     "label": "lazygit",
     "command": "lazygit",
     "use_new_terminal": false,
@@ -17,9 +10,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "yazi",
@@ -29,7 +22,7 @@
     "hide": "always",
     "reveal": "always",
     "cwd": "$ZED_DIRNAME",
-    "env": { "EDITOR": "zed" },
+    "env": { "EDITOR": "zed" }
   },
   {
     "label": "file finder",
@@ -42,9 +35,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "find in files",
@@ -57,9 +50,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "find in files - selected text",
@@ -72,9 +65,9 @@
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
   },
   {
     "label": "github browse",
@@ -85,7 +78,7 @@
     "reveal": "never",
     "reveal_target": "dock",
     "hide": "always",
-    "shell": "system",
+    "shell": "system"
   },
   {
     "label": "go: add struct tags",
@@ -101,15 +94,15 @@
       "camelcase",
       "-skip-unexported",
       "-quiet",
-      "-w",
+      "-w"
     ],
     "reveal": "never",
     "hide": "always",
     "shell": {
       "with_arguments": {
         "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
-  },
+        "args": ["--noediting", "--norc", "--noprofile"]
+      }
+    }
+  }
 ]

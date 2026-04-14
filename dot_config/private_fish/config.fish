@@ -135,8 +135,7 @@ alias urlencode='python3 -c "import sys, urllib.parse as ul; \
 
 starship init fish | source
 zoxide init fish | source
-direnv hook fish | source
-fnm env --use-on-cd | source
+mise activate fish | source
 atuin init fish --disable-up-arrow | source
 source $HOME/.config/television/shell/integration.fish
 

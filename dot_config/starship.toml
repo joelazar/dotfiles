@@ -10,12 +10,10 @@ disabled = true
 variable = "YAZI_LEVEL"
 format = "[🦆](yellow) "
 
-[direnv]
-disabled = false
-format = '[$symbol$loaded]($style) '
-detect_files = [".envrc", ".env"]
-loaded_msg = "👍"
-unloaded_msg = "🚫"
+[env_var.MISE_ENV]
+variable = "MISE_ENV_DISPLAY"
+format = '[$env_value]($style) '
+style = "bold yellow"
 
 [git_metrics]
 disabled = false
@@ -44,5 +42,3 @@ disabled = false
 [directory]
 truncate_to_repo = false
 truncation_length = 0
-
-

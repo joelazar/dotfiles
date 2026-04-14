@@ -67,8 +67,6 @@ brew "pkgconf"
 brew "czkawka"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
-# Load/unload environment variables based on $PWD
-brew "direnv"
 # Tool for exploring each layer in a docker image
 brew "dive"
 # Measure DNS performance by simulating network conditions
@@ -107,8 +105,6 @@ brew "fish"
 brew "fisher"
 # Command-line tools for fly.io services
 brew "flyctl"
-# Fast and simple Node.js version manager
-brew "fnm"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GNU compiler collection
@@ -343,8 +339,6 @@ cask "1password"
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "nikitabobko/tap/aerospace"
-# Enable Windows-like alt-tab
-cask "alt-tab"
 # Android SDK component
 cask "android-platform-tools"
 # AI Coding Agent IDE
