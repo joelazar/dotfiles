@@ -233,6 +233,8 @@ brew "portaudio"
 brew "postgresql@18"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Terminal slideshow tool
+brew "presenterm"
 # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew "proctools"
 # Command-line YAML and XML processor that wraps jq
@@ -451,7 +453,7 @@ go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "bpf-linker"
 uv "ansible"
-uv "ansible-core", with: ["ansible"]
+uv "ansible-core", with: ["ansible", "netaddr"]
 uv "nginx-language-server"
 uv "openshell"
 uv "pylatexenc"
