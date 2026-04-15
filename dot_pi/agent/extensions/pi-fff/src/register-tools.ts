@@ -1,3 +1,5 @@
+import { homedir } from "node:os";
+import { resolve } from "node:path";
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { createGrepTool, createReadTool } from "@mariozechner/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
@@ -28,6 +30,20 @@ function textResult<T>(text: string, details: T) {
 		content: [{ type: "text" as const, text }],
 		details,
 	};
+}
+
+function expandTilde(value: string): string {
+	if (value === "~") return homedir();
+	if (value.startsWith("~/") || value.startsWith("~\\")) return homedir() + value.slice(1);
+	return value;
+}
+
+function isOutsideProject(path: string | undefined, projectRoot: string, cwd: string): boolean {
+	if (!path) return false;
+	const expanded = expandTilde(path.trim());
+	const resolved = resolve(cwd, expanded);
+	const normalizedRoot = projectRoot.endsWith("/") ? projectRoot : `${projectRoot}/`;
+	return !resolved.startsWith(normalizedRoot) && resolved !== projectRoot;
 }
 
 export function registerTools(pi: ExtensionAPI, deps: ToolRegistrationDeps): void {
@@ -118,6 +134,7 @@ export function registerTools(pi: ExtensionAPI, deps: ToolRegistrationDeps): voi
 				!runtime
 				|| !deps.isFeatureEnabled("builtInToolEnhancements")
 				|| grepNeedsBuiltinFallback({ pattern: params.pattern, ignoreCase: params.ignoreCase, literal: fallbackLiteral })
+				|| isOutsideProject(params.path, runtime.getProjectRoot(), ctx.cwd)
 			) {
 				return original.execute(toolCallId, builtinParams, signal, onUpdate);
 			}

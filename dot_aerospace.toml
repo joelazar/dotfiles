@@ -151,6 +151,10 @@ cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
 cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
 cmd-ctrl-alt-shift-0 = 'move-node-to-workspace 10'
 
+# Disable macOS Cmd+Tab app switcher
+cmd-tab = []
+cmd-shift-tab = []
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 cmd-ctrl-alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor

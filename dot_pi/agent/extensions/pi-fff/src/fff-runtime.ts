@@ -2,6 +2,7 @@ import { FileFinder } from "@ff-labs/fff-node";
 import { Result } from "better-result";
 import { getAgentDir } from "@mariozechner/pi-coding-agent";
 import { mkdir, stat } from "node:fs/promises";
+import { homedir } from "node:os";
 import { dirname, isAbsolute, relative, resolve } from "node:path";
 import {
 	AmbiguousPathError,
@@ -78,10 +79,17 @@ function stripQuotes(value: string): string {
 	return value;
 }
 
+function expandTilde(value: string): string {
+	if (value === "~") return homedir();
+	if (value.startsWith("~/") || value.startsWith("~\\")) return homedir() + value.slice(1);
+	return value;
+}
+
 function normalizePathQuery(value: string): string {
 	let normalized = value.trim();
 	if (normalized.startsWith("@")) normalized = normalized.slice(1);
-	return normalizeSlashes(stripQuotes(normalized.trim()));
+	normalized = normalizeSlashes(stripQuotes(normalized.trim()));
+	return expandTilde(normalized);
 }
 
 function relativeFrom(basePath: string, targetPath: string): string {
@@ -252,6 +260,10 @@ export class FffRuntime {
 		this.options = options;
 		this.basePath = options.projectRoot ?? cwd;
 		if (options.finder) this.finder = options.finder;
+	}
+
+	getProjectRoot(): string {
+		return this.basePath;
 	}
 
 	async ensure(): Promise<AppResult<FileFinder, RuntimeInitializationError>> {
