@@ -21,7 +21,8 @@
   "packages": [
     "https://github.com/davebcn87/pi-autoresearch",
     "/Users/joelazar/Code/joelazar/pi-side-chat",
-    "npm:pi-interactive-shell"
+    "npm:pi-interactive-shell",
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
   ],
   "transport": "auto",
   "treeFilterMode": "default"

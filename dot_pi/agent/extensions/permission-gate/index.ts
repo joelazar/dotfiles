@@ -20,6 +20,23 @@ type Rule = {
 const CATASTROPHIC_RM_REASON =
   "Blocked by built-in security rule: catastrophic rm target (/, ~, $HOME, ., ..).";
 
+const HOME_DIR = process.env.HOME ? path.resolve(process.env.HOME) : null;
+
+const SAFE_GENERATED_DELETE_BASENAMES = new Set([
+  "node_modules",
+  ".bin",
+  "dist",
+  "build",
+  "coverage",
+  ".cache",
+  "session-transcripts",
+]);
+
+const DESTRUCTIVE_SQL_PATTERN =
+  /\b(?:DROP\s+(?:TABLE|DATABASE|SCHEMA|VIEW|INDEX|ROLE|USER|EXTENSION)\b|TRUNCATE(?:\s+TABLE)?\b|DELETE\s+FROM\b)/i;
+
+const SQL_CLIENT_PATTERN = /\b(psql|pgcli|mysql|mariadb|sqlite3|duckdb|sqlcmd|clickhouse-client)\b/i;
+
 function shellSplitWords(input: string): string[] {
   const words: string[] = [];
   let current = "";
@@ -189,11 +206,21 @@ function isCatastrophicPathTarget(token: string): boolean {
 }
 
 function isCatastrophicRm(command: string): boolean {
+  const parsed = parseRmCommand(command);
+  if (!parsed) return false;
+
+  const { pathTokens } = parsed;
+  if (pathTokens.length === 0) return false;
+  return pathTokens.some(isCatastrophicPathTarget);
+}
+
+function parseRmCommand(command: string): { optionTokens: string[]; pathTokens: string[] } | null {
   const words = shellSplitWords(command);
-  if (words.length === 0) return false;
+  if (words.length === 0) return null;
 
-  if (words[0].toLowerCase() !== "rm") return false;
+  if (words[0].toLowerCase() !== "rm") return null;
 
+  const optionTokens: string[] = [];
   const pathTokens: string[] = [];
   let sawDoubleDash = false;
 
@@ -204,14 +231,155 @@ function isCatastrophicRm(command: string): boolean {
     }
 
     if (!sawDoubleDash && token.startsWith("-")) {
+      optionTokens.push(token);
       continue;
     }
 
     pathTokens.push(token);
   }
 
+  return { optionTokens, pathTokens };
+}
+
+function hasShellGlob(token: string): boolean {
+  return /[*?[\]]/.test(token);
+}
+
+function resolvePathLikeTokenAbsolute(token: string, cwd: string): string | null {
+  const raw = token.trim();
+  if (raw.length === 0) return null;
+
+  if (hasShellGlob(raw)) return null;
+
+  if (/\$\{(?!HOME\})[^}]+\}/.test(raw)) return null;
+  if (/\$(?!HOME\b)[A-Za-z_][A-Za-z0-9_]*/.test(raw)) return null;
+
+  if (raw.startsWith("${HOME}")) {
+    if (!HOME_DIR) return null;
+    return path.resolve(HOME_DIR, `.${raw.slice("${HOME}".length)}`);
+  }
+
+  if (raw.startsWith("$HOME")) {
+    if (!HOME_DIR) return null;
+    return path.resolve(HOME_DIR, `.${raw.slice("$HOME".length)}`);
+  }
+
+  if (raw === "~" || raw.startsWith("~/")) {
+    if (!HOME_DIR) return null;
+    return path.resolve(HOME_DIR, `.${raw.slice(1)}`);
+  }
+
+  if (path.isAbsolute(raw)) {
+    return path.resolve(raw);
+  }
+
+  return path.resolve(cwd, raw);
+}
+
+function isWithinPath(parent: string, candidate: string): boolean {
+  const normalizedParent = path.resolve(parent);
+  const normalizedCandidate = path.resolve(candidate);
+
+  if (normalizedParent === normalizedCandidate) return true;
+
+  const relative = path.relative(normalizedParent, normalizedCandidate);
+  return relative !== "" && !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+
+function isManagedDeletePath(absPath: string): boolean {
+  if (!HOME_DIR) return false;
+
+  const managedRoots = [
+    path.join(HOME_DIR, ".pi", "agent", "extensions"),
+    path.join(HOME_DIR, ".pi", "agent", "git"),
+    path.join(HOME_DIR, ".pi", "agent", "skills"),
+    path.join(HOME_DIR, ".agents", "skills"),
+    path.join(HOME_DIR, ".claude", "commands"),
+    path.join(HOME_DIR, ".claude", "skills"),
+    path.join(HOME_DIR, ".local", "share", "chezmoi"),
+  ];
+
+  return managedRoots.some((root) => absPath !== root && isWithinPath(root, absPath));
+}
+
+function isClearlyGeneratedDeletePath(absPath: string): boolean {
+  const normalized = path.resolve(absPath);
+
+  if (
+    isWithinPath("/tmp", normalized)
+    || isWithinPath("/private/tmp", normalized)
+    || isWithinPath("/var/folders", normalized)
+  ) {
+    return true;
+  }
+
+  const segments = normalized.split(path.sep).filter(Boolean);
+  return segments.some((segment) => SAFE_GENERATED_DELETE_BASENAMES.has(segment));
+}
+
+function isRmRecursiveFlag(token: string): boolean {
+  if (token === "--recursive") return true;
+  return /^-[^-]+$/.test(token) && /[rR]/.test(token);
+}
+
+function isRmForceFlag(token: string): boolean {
+  if (token === "--force") return true;
+  return /^-[^-]+$/.test(token) && token.slice(1).includes("f");
+}
+
+function deletesTopLevelProjectPath(absPath: string, cwd: string): boolean {
+  if (!isWithinPath(cwd, absPath)) return false;
+
+  const relative = path.relative(path.resolve(cwd), absPath);
+  const segments = relative.split(path.sep).filter(Boolean);
+  return segments.length <= 1;
+}
+
+function isRiskyRmSubcommand(command: string, cwd: string): boolean {
+  const parsed = parseRmCommand(command);
+  if (!parsed) return false;
+
+  const { optionTokens, pathTokens } = parsed;
   if (pathTokens.length === 0) return false;
-  return pathTokens.some(isCatastrophicPathTarget);
+
+  if (pathTokens.some(isCatastrophicPathTarget)) return true;
+  if (pathTokens.some(hasShellGlob)) return true;
+
+  const resolvedTargets = pathTokens.map((token) => resolvePathLikeTokenAbsolute(token, cwd));
+  if (resolvedTargets.some((target) => !target)) return true;
+
+  const targets = resolvedTargets as string[];
+  const allSafeTargets = targets.every(
+    (target) => isWithinPath(cwd, target) || isManagedDeletePath(target) || isClearlyGeneratedDeletePath(target),
+  );
+
+  if (!allSafeTargets) return true;
+  if (pathTokens.length > 8) return true;
+
+  const hasRecursive = optionTokens.some(isRmRecursiveFlag);
+  if (
+    hasRecursive
+    && targets.some((target) => deletesTopLevelProjectPath(target, cwd) && !isClearlyGeneratedDeletePath(target))
+  ) {
+    return true;
+  }
+
+  const hasForce = optionTokens.some(isRmForceFlag);
+  return hasForce && pathTokens.length > 5;
+}
+
+function isDestructiveSqlSubcommand(command: string): boolean {
+  return SQL_CLIENT_PATTERN.test(command) && DESTRUCTIVE_SQL_PATTERN.test(command);
+}
+
+function resolveCdTarget(command: string, cwd: string): string | null {
+  const words = shellSplitWords(command);
+  if (words.length === 0 || words[0].toLowerCase() !== "cd") return null;
+
+  const rawTarget = words[1] ?? "~";
+  if (rawTarget === "-") return null;
+
+  return resolvePathLikeTokenAbsolute(rawTarget, cwd);
 }
 
 function collectMatches(subcommands: string[], rules: Rule[]): Array<{ label: string; command: string }> {
@@ -228,11 +396,33 @@ function collectMatches(subcommands: string[], rules: Rule[]): Array<{ label: st
   return matches;
 }
 
+function collectCustomMatches(
+  subcommands: string[],
+  cwd: string,
+): Array<{ label: string; command: string }> {
+  const matches: Array<{ label: string; command: string }> = [];
+  let effectiveCwd = cwd;
+
+  for (const sub of subcommands) {
+    if (isRiskyRmSubcommand(sub, effectiveCwd)) {
+      matches.push({ label: "file deletion (rm)", command: sub });
+    }
+
+    if (isDestructiveSqlSubcommand(sub)) {
+      matches.push({ label: "destructive SQL statement", command: sub });
+    }
+
+    const nextCwd = resolveCdTarget(sub, effectiveCwd);
+    if (nextCwd) {
+      effectiveCwd = nextCwd;
+    }
+  }
+
+  return matches;
+}
+
 export default function (pi: ExtensionAPI) {
   const subcommandDangerRules: Rule[] = [
-    // File deletion — any rm invocation (with or without flags)
-    { pattern: /\brm\s+/i, label: "file deletion (rm)" },
-
     // Privilege escalation
     { pattern: /\bsudo\b/i, label: "privilege escalation (sudo)" },
 
@@ -258,9 +448,6 @@ export default function (pi: ExtensionAPI) {
       pattern: /\bgit\s+reset\b.*--hard\b/i,
       label: "git reset --hard (loses uncommitted changes)",
     },
-
-    // Destructive SQL commands
-    { pattern: /\b(DROP|TRUNCATE|DELETE\s+FROM)\b/i, label: "destructive SQL statement" },
 
     // Raw block device writes
     { pattern: />\s*\/dev\/sd[a-z]/i, label: "write to raw block device (/dev/sd*)" },
@@ -289,11 +476,12 @@ export default function (pi: ExtensionAPI) {
     }
 
     const subMatches = collectMatches(subcommands, subcommandDangerRules);
+    const customMatches = collectCustomMatches(subcommands, ctx.cwd);
     const fullMatches = fullCommandDangerRules
       .filter(({ pattern }) => pattern.test(command))
       .map(({ label }) => ({ label, command }));
 
-    const allMatches = [...subMatches, ...fullMatches];
+    const allMatches = [...subMatches, ...customMatches, ...fullMatches];
     if (allMatches.length === 0) return undefined;
 
     const labels = [...new Set(allMatches.map((m) => m.label))];
