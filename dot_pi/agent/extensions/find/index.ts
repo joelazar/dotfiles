@@ -98,7 +98,7 @@ function relativizeResults(searchPath: string, matches: string[]): string[] {
   });
 }
 
-export default function findPathAware(pi: ExtensionAPI): void {
+export default function findExtension(pi: ExtensionAPI): void {
   const base = createFindToolDefinition(process.cwd());
 
   pi.registerTool({
