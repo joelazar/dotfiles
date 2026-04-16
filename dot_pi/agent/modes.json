@@ -4,7 +4,7 @@
   "modes": {
     "default": {
       "provider": "anthropic",
-      "modelId": "claude-opus-4-6",
+      "modelId": "claude-opus-4-7",
       "thinkingLevel": "medium"
     },
     "fast-claude": {

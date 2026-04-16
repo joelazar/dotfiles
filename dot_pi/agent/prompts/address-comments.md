@@ -1,5 +1,6 @@
 ---
 description: Get GitHub PR and address all non-resolved comments
+argument-hint: "[PR number]"
 ---
 
 Get the GitHub pull request of the actual branch and address all non-resolved comments on the pull request.
