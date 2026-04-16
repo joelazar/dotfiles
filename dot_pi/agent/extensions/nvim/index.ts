@@ -1,5 +1,5 @@
 /**
- * Nvim extension - open nvim, using the git changed files picker when available.
+ * Nvim extension - open nvim, using the git changed files picker when there are changes.
  *
  * Suspends pi's TUI, gives nvim full terminal control, and restores pi when nvim exits.
  */
@@ -24,7 +24,17 @@ function shouldOpenGitPicker(cwd: string): boolean {
     stdio: "ignore",
   });
 
-  return hasHead.status === 0;
+  if (hasHead.status !== 0) {
+    return false;
+  }
+
+  const status = spawnSync("git", ["status", "--short", "--untracked-files=all"], {
+    cwd,
+    env: process.env,
+    encoding: "utf8",
+  });
+
+  return status.status === 0 && status.stdout.trim().length > 0;
 }
 
 function runNvim(ctx: {
