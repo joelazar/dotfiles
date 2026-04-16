@@ -1,0 +1,52 @@
+#!/bin/bash
+# Managed by chezmoi — tracked settings are defined below.
+# Local-only keys (see LOCAL_KEYS) are preserved from the existing file
+# so churn in things like the changelog version / default model is ignored.
+
+set -euo pipefail
+
+# --- Tracked config (edit here) ---
+MANAGED_CONFIG='{
+  "hideThinkingBlock": true,
+  "collapseChangelog": false,
+  "theme": "tokyo-night",
+  "doubleEscapeAction": "tree",
+  "enabledModels": [
+    "openai-codex/gpt-5.3-codex",
+    "openai-codex/gpt-5.4",
+    "anthropic/claude-opus-4-6",
+    "anthropic/claude-sonnet-4-6"
+  ],
+  "showHardwareCursor": true,
+  "quietStartup": true,
+  "extensions": [
+    "-extensions/sandbox/index.ts"
+  ],
+  "packages": [
+    "https://github.com/davebcn87/pi-autoresearch",
+    "/Users/joelazar/Code/joelazar/pi-side-chat",
+    "npm:pi-interactive-shell",
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
+  ],
+  "transport": "auto",
+  "treeFilterMode": "default"
+}'
+
+# Local-only keys — preserved from the existing file, never overwritten.
+LOCAL_KEYS='["lastChangelogVersion", "defaultThinkingLevel", "defaultProvider", "defaultModel"]'
+
+# --- Read existing file from stdin ---
+EXISTING="$(cat)"
+
+# No existing file → just emit the managed config
+if [ -z "$EXISTING" ] || ! echo "$EXISTING" | jq -e . >/dev/null 2>&1; then
+  echo "$MANAGED_CONFIG" | jq .
+  exit 0
+fi
+
+# Merge: managed config + preserved local keys from the existing file
+jq -n \
+  --argjson managed  "$MANAGED_CONFIG" \
+  --argjson existing "$EXISTING" \
+  --argjson keys     "$LOCAL_KEYS" \
+  '$managed + ($existing | with_entries(select(.key as $k | $keys | index($k))))'
