@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/notify.ts
 /**
  * Desktop Notification Extension
  *

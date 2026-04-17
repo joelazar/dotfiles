@@ -1,3 +1,5 @@
+// Source: HazAT/pi-ghostty (https://github.com/HazAT/pi-ghostty)
+//   Path: extensions/ghostty.ts
 /**
  * ghostty - Ghostty terminal title and progress bar integration.
  *

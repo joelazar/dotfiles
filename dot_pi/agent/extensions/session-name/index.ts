@@ -1,3 +1,5 @@
+// Source: badlogic/pi-mono (https://github.com/badlogic/pi-mono)
+//   Path: packages/coding-agent/examples/extensions/session-name.ts
 /**
  * Session naming example.
  *

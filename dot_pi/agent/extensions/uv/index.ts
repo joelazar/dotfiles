@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/uv.ts
 /**
  * UV Extension - Redirects Python tooling to uv equivalents
  *

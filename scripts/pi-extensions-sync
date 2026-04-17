@@ -1,0 +1,218 @@
+#!/usr/bin/env bash
+# pi-extensions-sync
+#
+# Pulls the latest changes in the upstream source repos for each pi extension
+# under dot_pi/agent/extensions/, diffs the upstream file against the local
+# (chezmoi) copy, and prints a short recommendation about what to port.
+#
+# Each extension's index.ts is expected to begin with a 2-line header:
+#
+#   // Source: owner/repo (https://github.com/owner/repo)
+#   //   Path: <path/within/repo>
+#
+# Usage:
+#   scripts/pi-extensions-sync                  # all extensions
+#   scripts/pi-extensions-sync answer review    # only these
+#   scripts/pi-extensions-sync --no-pull ...    # skip git pull
+#   scripts/pi-extensions-sync --full ...       # print full diff, not summary
+
+set -euo pipefail
+
+# shellcheck source=./utils
+UTILS="$(dirname "$0")/utils"
+# shellcheck disable=SC1090
+[ -f "$UTILS" ] && source "$UTILS" || true
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+say()  { if have gum; then gum style --foreground 12 "$*"; else echo "==> $*"; fi; }
+warn() { if have gum; then gum style --foreground 3  "$*"; else echo "!!  $*" >&2; fi; }
+ok()   { if have gum; then gum style --foreground 2  "$*"; else echo "✓   $*"; fi; }
+hr()   { if have gum; then gum style --foreground 8 "$(printf '─%.0s' $(seq 1 60))"; else echo "------------------------------------------------------------"; fi; }
+
+CHEZMOI_DIR="${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}"
+EXT_DIR="$CHEZMOI_DIR/dot_pi/agent/extensions"
+
+# Candidate parent dirs to search for each repo clone.
+CLONE_ROOTS=(
+    "$HOME/Code/ai/pi"
+    "$HOME/Code/ai"
+    "$HOME/Code"
+)
+
+PULL=1
+FULL_DIFF=0
+NORMALIZE=0
+TARGETS=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --no-pull)  PULL=0 ;;
+        --full)     FULL_DIFF=1 ;;
+        --format)   NORMALIZE=1 ;;
+        -h|--help)
+            sed -n '2,20p' "$0"
+            exit 0
+            ;;
+        -*) warn "unknown flag: $1"; exit 2 ;;
+        *)  TARGETS+=("$1") ;;
+    esac
+    shift
+done
+
+# Find local clone for a repo "owner/name".
+find_clone() {
+    local repo="$1" name="${1##*/}"
+    for root in "${CLONE_ROOTS[@]}"; do
+        [ -d "$root/$name/.git" ] && { echo "$root/$name"; return 0; }
+    done
+    # Fallback: scan for any git remote matching the repo.
+    for root in "${CLONE_ROOTS[@]}"; do
+        [ -d "$root" ] || continue
+        while IFS= read -r -d '' gitdir; do
+            local dir="${gitdir%/.git}"
+            local url
+            url="$(git -C "$dir" remote get-url origin 2>/dev/null || true)"
+            case "$url" in
+                *"$repo"*) echo "$dir"; return 0 ;;
+            esac
+        done < <(find "$root" -maxdepth 3 -type d -name .git -print0 2>/dev/null)
+    done
+    return 1
+}
+
+# Parse the 2-line header. Echoes "repo|url|path".
+parse_header() {
+    local file="$1"
+    local line1 line2
+    line1="$(sed -n '1p' "$file")"
+    line2="$(sed -n '2p' "$file")"
+    case "$line1" in
+        "// Source: "*) : ;;
+        *) return 1 ;;
+    esac
+    local repo url path
+    # line1: "// Source: owner/repo (https://...)"
+    repo="${line1#// Source: }"; repo="${repo%% *}"
+    url="${line1#*\(}"; url="${url%\)*}"
+    # line2: "//   Path: <path>"
+    path="${line2#*Path: }"
+    echo "$repo|$url|$path"
+}
+
+# Diff one extension.
+process_one() {
+    local ext_name="$1"
+    local local_file="$EXT_DIR/$ext_name/index.ts"
+
+    if [ ! -f "$local_file" ]; then
+        warn "$ext_name: no index.ts at $local_file"
+        return
+    fi
+
+    local hdr
+    if ! hdr="$(parse_header "$local_file")"; then
+        warn "$ext_name: no '// Source:' header — skipping"
+        return
+    fi
+    local repo url path
+    IFS='|' read -r repo url path <<<"$hdr"
+
+    hr
+    say "$ext_name  ($repo :: $path)"
+
+    local clone
+    if ! clone="$(find_clone "$repo")"; then
+        warn "  clone not found locally for $repo — skipping"
+        return
+    fi
+
+    if [ "$PULL" -eq 1 ]; then
+        if ! git -C "$clone" diff --quiet || ! git -C "$clone" diff --cached --quiet; then
+            warn "  $clone has local changes, skipping pull"
+        else
+            if (cd "$clone" && git pull --ff-only --quiet); then
+                ok "  pulled $clone"
+            else
+                warn "  pull failed in $clone"
+            fi
+        fi
+    fi
+
+    local upstream_file="$clone/$path"
+    if [ "$path" = "." ] || [ -d "$upstream_file" ]; then
+        warn "  upstream path is a directory — compare manually: $upstream_file"
+        return
+    fi
+    if [ ! -f "$upstream_file" ]; then
+        warn "  upstream file missing: $upstream_file"
+        return
+    fi
+
+    # Strip the 2-line header from the local file for a fair diff.
+    local stripped upstream_copy
+    stripped="$(mktemp)".ts
+    upstream_copy="$(mktemp)".ts
+    tail -n +3 "$local_file" > "$stripped"
+    cp "$upstream_file" "$upstream_copy"
+
+    # Optionally normalize both sides with the same formatter so we only see
+    # *semantic* differences, not indentation / import-wrap churn.
+    if [ "$NORMALIZE" -eq 1 ] && have prettier; then
+        prettier --write --no-config --log-level silent \
+            --parser typescript \
+            --use-tabs false --tab-width 2 --print-width 100 --trailing-comma all \
+            "$stripped" "$upstream_copy" 2>/dev/null || warn "  prettier normalization failed"
+    fi
+    upstream_file="$upstream_copy"
+
+    if diff -q "$stripped" "$upstream_file" >/dev/null 2>&1; then
+        ok "  in sync with upstream"
+        rm -f "$stripped" "$upstream_copy"
+        return
+    fi
+
+    local added removed
+    added=$({ diff "$stripped" "$upstream_file"   || true; } | grep -c '^> ' || true)
+    removed=$({ diff "$stripped" "$upstream_file" || true; } | grep -c '^< ' || true)
+    echo "  upstream vs local: +$added / -$removed lines"
+
+    if [ "$FULL_DIFF" -eq 1 ]; then
+        diff -u "$stripped" "$upstream_file" || true
+    else
+        # short context diff, truncated
+        { diff -u "$stripped" "$upstream_file" || true; } | head -60 || true
+        local total
+        total=$({ diff -u "$stripped" "$upstream_file" || true; } | wc -l | tr -d ' ')
+        if [ "$total" -gt 60 ]; then
+            echo "  … diff truncated ($total lines total). Re-run with --full to see everything."
+        fi
+    fi
+
+    # Heuristic suggestion
+    echo
+    if [ "$added" -gt 0 ] && [ "$removed" -lt 20 ]; then
+        say "  💡 Suggestion: upstream has $added new lines. Likely safe to port; review for new features/bugfixes to merge into your local copy."
+    elif [ "$added" -gt 0 ] && [ "$removed" -ge 20 ]; then
+        say "  ⚠️  Suggestion: divergent ($removed local-only lines). Cherry-pick carefully — your customizations may conflict with upstream refactors."
+    else
+        say "  ℹ️  Suggestion: upstream removed/changed lines, little new content. Review to ensure you're not missing a bugfix."
+    fi
+
+    rm -f "$stripped" "$upstream_copy"
+}
+
+# Figure out targets
+if [ ${#TARGETS[@]} -eq 0 ]; then
+    for d in "$EXT_DIR"/*/; do
+        [ -f "$d/index.ts" ] || continue
+        TARGETS+=("$(basename "$d")")
+    done
+fi
+
+say "pi-extensions-sync — ${#TARGETS[@]} extension(s)"
+for t in "${TARGETS[@]}"; do
+    process_one "$t"
+done
+hr
+ok "done"

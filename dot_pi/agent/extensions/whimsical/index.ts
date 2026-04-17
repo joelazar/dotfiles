@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/whimsical.ts
 /**
  * Whimsical - Fun loading messages
  *

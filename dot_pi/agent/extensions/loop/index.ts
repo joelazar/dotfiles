@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/loop.ts
 /**
  * Loop Extension
  *
@@ -16,6 +18,7 @@ import {
 import type {
   ExtensionAPI,
   ExtensionContext,
+  SessionSwitchEvent,
 } from "@mariozechner/pi-coding-agent";
 import { compact } from "@mariozechner/pi-coding-agent";
 import {
@@ -99,9 +102,11 @@ function getConditionText(mode: LoopMode, condition?: string): string {
   }
 }
 
-async function selectSummaryModel(
-  ctx: ExtensionContext,
-): Promise<{ model: Model<Api>; apiKey: string; headers?: Record<string, string> } | null> {
+async function selectSummaryModel(ctx: ExtensionContext): Promise<{
+  model: Model<Api>;
+  apiKey?: string;
+  headers?: Record<string, string>;
+} | null> {
   if (!ctx.model) return null;
 
   if (ctx.model.provider === "anthropic") {
@@ -109,14 +114,18 @@ async function selectSummaryModel(
     if (haikuModel) {
       const auth = await ctx.modelRegistry.getApiKeyAndHeaders(haikuModel);
       if (auth.ok) {
-        return { model: haikuModel, apiKey: auth.apiKey!, headers: auth.headers };
+        return {
+          model: haikuModel,
+          apiKey: auth.apiKey,
+          headers: auth.headers,
+        };
       }
     }
   }
 
   const auth = await ctx.modelRegistry.getApiKeyAndHeaders(ctx.model);
   if (!auth.ok) return null;
-  return { model: ctx.model, apiKey: auth.apiKey!, headers: auth.headers };
+  return { model: ctx.model, apiKey: auth.apiKey, headers: auth.headers };
 }
 
 async function summarizeBreakoutCondition(
@@ -358,7 +367,6 @@ export default function loopExtension(pi: ExtensionAPI): void {
     label: "Signal Loop Success",
     description:
       "Stop the active loop when the breakout condition is satisfied. Only call this tool when explicitly instructed to do so by the user, tool or system prompt.",
-    promptSnippet: "Stop the active loop when the breakout condition is satisfied",
     parameters: Type.Object({}),
     async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
       if (!loopState.active) {
@@ -469,7 +477,8 @@ export default function loopExtension(pi: ExtensionAPI): void {
       const compaction = await compact(
         event.preparation,
         ctx.model,
-        auth.apiKey!,
+        auth.apiKey ?? "",
+        auth.headers,
         instructionParts,
         event.signal,
       );
@@ -509,4 +518,7 @@ export default function loopExtension(pi: ExtensionAPI): void {
     await restoreLoopState(ctx);
   });
 
+  pi.on("session_switch", async (_event: SessionSwitchEvent, ctx) => {
+    await restoreLoopState(ctx);
+  });
 }

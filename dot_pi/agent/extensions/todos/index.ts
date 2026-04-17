@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/todos.ts
 /**
  * This extension stores todo items as files under <todo-dir> (defaults to .pi/todos,
  * or the path in PI_TODO_PATH).  Each todo is a standalone markdown file named
@@ -56,7 +58,6 @@ import {
   Text,
   TUI,
   fuzzyMatch,
-  getEditorKeybindings,
   matchesKey,
   truncateToWidth,
   visibleWidth,
@@ -97,6 +98,10 @@ interface TodoSettings {
   gc: boolean;
   gcDays: number;
 }
+
+type KeybindingMatcher = {
+  matches: (keyData: string, keybindingId: string) => boolean;
+};
 
 const TodoParams = Type.Object({
   action: StringEnum([
@@ -285,6 +290,7 @@ class TodoSelectorComponent extends Container implements Focusable {
   private onCancelCallback: () => void;
   private tui: TUI;
   private theme: Theme;
+  private keybindings: KeybindingMatcher;
   private headerText: Text;
   private hintText: Text;
   private currentSessionId?: string;
@@ -301,6 +307,7 @@ class TodoSelectorComponent extends Container implements Focusable {
   constructor(
     tui: TUI,
     theme: Theme,
+    keybindings: KeybindingMatcher,
     todos: TodoFrontMatter[],
     onSelect: (todo: TodoFrontMatter) => void,
     onCancel: () => void,
@@ -314,6 +321,7 @@ class TodoSelectorComponent extends Container implements Focusable {
     super();
     this.tui = tui;
     this.theme = theme;
+    this.keybindings = keybindings;
     this.currentSessionId = currentSessionId;
     this.allTodos = todos;
     this.filteredTodos = todos;
@@ -449,7 +457,7 @@ class TodoSelectorComponent extends Container implements Focusable {
   }
 
   handleInput(keyData: string): void {
-    const kb = getEditorKeybindings();
+    const kb = this.keybindings;
     if (kb.matches(keyData, "tui.select.up")) {
       if (this.filteredTodos.length === 0) return;
       this.selectedIndex =
@@ -636,15 +644,18 @@ class TodoDetailOverlayComponent {
   private viewHeight = 0;
   private totalLines = 0;
   private onAction: (action: TodoOverlayAction) => void;
+  private keybindings: KeybindingMatcher;
 
   constructor(
     tui: TUI,
     theme: Theme,
+    keybindings: KeybindingMatcher,
     todo: TodoRecord,
     onAction: (action: TodoOverlayAction) => void,
   ) {
     this.tui = tui;
     this.theme = theme;
+    this.keybindings = keybindings;
     this.todo = todo;
     this.onAction = onAction;
     this.markdown = new Markdown(
@@ -661,7 +672,7 @@ class TodoDetailOverlayComponent {
   }
 
   handleInput(keyData: string): void {
-    const kb = getEditorKeybindings();
+    const kb = this.keybindings;
     if (kb.matches(keyData, "tui.select.cancel")) {
       this.onAction("back");
       return;
@@ -678,11 +689,17 @@ class TodoDetailOverlayComponent {
       this.scrollBy(1);
       return;
     }
-    if (kb.matches(keyData, "tui.select.pageUp")) {
+    if (
+      kb.matches(keyData, "tui.select.pageUp") ||
+      matchesKey(keyData, Key.left)
+    ) {
       this.scrollBy(-this.viewHeight || -1);
       return;
     }
-    if (kb.matches(keyData, "tui.select.pageDown")) {
+    if (
+      kb.matches(keyData, "tui.select.pageDown") ||
+      matchesKey(keyData, Key.right)
+    ) {
       this.scrollBy(this.viewHeight || 1);
       return;
     }
@@ -792,7 +809,8 @@ class TodoDetailOverlayComponent {
       this.theme.fg("accent", "enter") +
       this.theme.fg("muted", " work on todo");
     const back = this.theme.fg("dim", "esc back");
-    const pieces = [work, back];
+    const nav = this.theme.fg("dim", "↑/↓: move. ←/→: page.");
+    const pieces = [work, back, nav];
 
     let line = pieces.join(this.theme.fg("muted", " • "));
     if (this.totalLines > this.viewHeight) {
@@ -1607,7 +1625,6 @@ export default function todosExtension(pi: ExtensionAPI) {
       "Title is the short summary; body is long-form markdown notes (update replaces, append adds). " +
       "Todo ids are shown as TODO-<hex>; id parameters accept TODO-<hex> or the raw hex filename. " +
       "Claim tasks before working on them to avoid conflicts, and close them when complete.",
-    promptSnippet: `Manage file-based todos in ${todosDirLabel} (list, list-all, get, create, update, append, delete, claim, release)`,
     parameters: TodoParams,
 
     async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
@@ -2000,21 +2017,6 @@ export default function todosExtension(pi: ExtensionAPI) {
 
   pi.registerCommand("todos", {
     description: "List todos from .pi/todos",
-    getArgumentCompletions: (argumentPrefix: string) => {
-      const todos = listTodosSync(getTodosDir(process.cwd()));
-      if (!todos.length) return null;
-      const matches = filterTodos(todos, argumentPrefix);
-      if (!matches.length) return null;
-      return matches.map((todo) => {
-        const title = todo.title || "(untitled)";
-        const tags = todo.tags.length ? ` • ${todo.tags.join(", ")}` : "";
-        return {
-          value: title,
-          label: `${formatTodoId(todo.id)} ${title}`,
-          description: `${todo.status || "open"}${tags}`,
-        };
-      });
-    },
     handler: async (args, ctx) => {
       const todosDir = getTodosDir(ctx.cwd);
       const todos = await listTodos(todosDir);
@@ -2029,7 +2031,7 @@ export default function todosExtension(pi: ExtensionAPI) {
 
       let nextPrompt: string | null = null;
       let rootTui: TUI | null = null;
-      await ctx.ui.custom<void>((tui, theme, _kb, done) => {
+      await ctx.ui.custom<void>((tui, theme, keybindings, done) => {
         rootTui = tui;
         let selector: TodoSelectorComponent | null = null;
         let actionMenu: TodoActionMenuComponent | null = null;
@@ -2103,10 +2105,11 @@ export default function todosExtension(pi: ExtensionAPI) {
           record: TodoRecord,
         ): Promise<TodoOverlayAction> => {
           const action = await ctx.ui.custom<TodoOverlayAction>(
-            (overlayTui, overlayTheme, _overlayKb, overlayDone) =>
+            (overlayTui, overlayTheme, overlayKeybindings, overlayDone) =>
               new TodoDetailOverlayComponent(
                 overlayTui,
                 overlayTheme,
+                overlayKeybindings,
                 record,
                 overlayDone,
               ),
@@ -2266,6 +2269,7 @@ export default function todosExtension(pi: ExtensionAPI) {
         selector = new TodoSelectorComponent(
           tui,
           theme,
+          keybindings,
           todos,
           (todo) => {
             void handleSelect(todo);

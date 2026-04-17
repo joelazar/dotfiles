@@ -1,3 +1,5 @@
+// Source: mitsuhiko/agent-stuff (https://github.com/mitsuhiko/agent-stuff)
+//   Path: extensions/answer.ts
 /**
  * Q&A extraction hook - extracts questions from assistant responses
  *
@@ -19,6 +21,7 @@ import {
 import type {
   ExtensionAPI,
   ExtensionContext,
+  ModelRegistry,
 } from "@mariozechner/pi-coding-agent";
 import { BorderedLoader } from "@mariozechner/pi-coding-agent";
 import {
@@ -83,15 +86,7 @@ const ANTHROPIC_MODEL_ID = "claude-haiku-4-5";
  */
 async function selectExtractionModel(
   currentModel: Model<Api>,
-  modelRegistry: {
-    find: (provider: string, modelId: string) => Model<Api> | undefined;
-    getApiKeyAndHeaders: (model: Model<Api>) => Promise<{
-      ok: boolean;
-      apiKey?: string;
-      headers?: Record<string, string>;
-      error?: string;
-    }>;
-  },
+  modelRegistry: ModelRegistry,
 ): Promise<Model<Api>> {
   const codexModel = modelRegistry.find("openai-codex", OPENAI_MODEL_ID);
   if (codexModel) {
@@ -497,7 +492,9 @@ export default function (pi: ExtensionAPI) {
         const doExtract = async () => {
           const auth =
             await ctx.modelRegistry.getApiKeyAndHeaders(extractionModel);
-          if (!auth.ok) throw new Error(auth.error);
+          if (!auth.ok) {
+            throw new Error(auth.error);
+          }
           const userMessage: UserMessage = {
             role: "user",
             content: [{ type: "text", text: lastAssistantText! }],

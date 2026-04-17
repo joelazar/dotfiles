@@ -1,3 +1,5 @@
+// Source: samfoy/pi-essentials (https://github.com/samfoy/pi-essentials)
+//   Path: src/auto-session-name.ts
 /**
  * oh-pi Auto Session Name Extension
  *
