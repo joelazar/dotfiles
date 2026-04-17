@@ -1,8 +1,5 @@
 {
   "enabledFeatures": [
-    "autocomplete",
-    "builtInToolEnhancements",
-    "agentTools",
-    "promptGuidance"
+    "autocomplete"
   ]
 }

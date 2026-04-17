@@ -23,10 +23,10 @@ MANAGED_CONFIG='{
     "-extensions/sandbox/index.ts"
   ],
   "packages": [
-    "https://github.com/davebcn87/pi-autoresearch",
+    "/Users/joelazar/Code/ai/pi/pi-autoresearch",
+    "/Users/joelazar/Code/ai/pi/pi-review",
     "/Users/joelazar/Code/joelazar/pi-side-chat",
     "/Users/joelazar/Code/joelazar/pi-nvim",
-    "npm:pi-interactive-shell",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
   ],
   "transport": "auto",
