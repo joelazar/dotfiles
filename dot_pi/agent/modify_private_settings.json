@@ -39,9 +39,16 @@ LOCAL_KEYS='["lastChangelogVersion", "defaultThinkingLevel", "defaultProvider", 
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
 
+# Emit JSON without a trailing newline so we match how the pi app rewrites
+# the file (it writes no final newline, which otherwise causes churn).
+emit() {
+  # shellcheck disable=SC2005
+  printf '%s' "$(cat)"
+}
+
 # No existing file → just emit the managed config
 if [ -z "$EXISTING" ] || ! echo "$EXISTING" | jq -e . >/dev/null 2>&1; then
-  echo "$MANAGED_CONFIG" | jq .
+  echo "$MANAGED_CONFIG" | jq . | emit
   exit 0
 fi
 
@@ -50,4 +57,5 @@ jq -n \
   --argjson managed  "$MANAGED_CONFIG" \
   --argjson existing "$EXISTING" \
   --argjson keys     "$LOCAL_KEYS" \
-  '$managed + ($existing | with_entries(select(.key as $k | $keys | index($k))))'
+  '$managed + ($existing | with_entries(select(.key as $k | $keys | index($k))))' \
+  | emit
