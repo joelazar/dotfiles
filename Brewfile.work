@@ -381,6 +381,8 @@ cask "google-chrome"
 cask "google-drive"
 # Free and open-source media player
 cask "iina"
+# Voice-to-text transcription and paste tool
+cask "kitlangton-hex"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
