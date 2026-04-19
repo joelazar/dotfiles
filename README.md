@@ -10,7 +10,7 @@
 
 ![joedotfiles - neovim](https://github.com/user-attachments/assets/b1f074d8-afb9-46eb-a75d-6d7e9837b565)
 
-### [Eza](https://github.com/eza-community/eza) + [FZF](https://github.com/junegunn/fzf) 📂🔍
+### [Eza](https://github.com/eza-community/eza) + [fzf](https://github.com/junegunn/fzf) 📂🔍
 
 ![joedotfiles - eza+fzf](https://github.com/user-attachments/assets/9f991e04-a29d-411d-a88e-b039e4b69179)
 
@@ -30,447 +30,305 @@
 
 ## Overview 🧰
 
-These are my personal dotfiles for macOS, managed with [chezmoi](https://github.com/twpayne/chezmoi). They automate the setup and configuration of my development environment, including shell, editors, CLI tools, and GUI apps.
+This repo is the source of truth for my macOS setup.
 
-### Key Features ✨
+I use [chezmoi](https://www.chezmoi.io/) to manage shell config, editor settings, package installs, macOS defaults, AI tooling, and a pile of small workflow tweaks that are easy to forget until you lose them. The point is simple: I should be able to set up a new machine, run `chezmoi apply`, and get back to work without rebuilding my environment from memory.
 
-- **Automated setup** with `chezmoi`, [`bootstrap.sh`](bootstrap.sh), and [`run_once_install_packages.sh`](run_once_install_packages.sh.tmpl)
-- **Consistent theming** (Tokyo Night everywhere)
-- **Modern CLI utilities** for navigation, search, and productivity
-- **Editor and terminal integration** (Neovim, Zed, Ghostty)
-- **Rich shell experience** (Fish, Starship, Atuin, Direnv, Television)
-- **Developer tooling** for Python, Go, Rust, Node.js, Docker, Kubernetes, and more
-- **AI/LLM integration** (Claude Code, Pi Agent, Gemini, Codex, and local models via Ollama)
-- **Window management** with AeroSpace tiling WM
+A few quick facts:
 
----
-
-## Notable Tools & Configurations 🛠️
-
-### [Zed](https://zed.dev/) 🦋
-
-- **Config:** See [`dot_config/zed/private_settings.json`](dot_config/zed/private_settings.json), [`private_keymap.json`](dot_config/zed/private_keymap.json), and [`tasks.json`](dot_config/zed/tasks.json)
-- **Features:**
-  - Modern, collaborative code editor with Vim mode enabled
-  - Custom keybindings for navigation, pane management, and Git integration
-  - Integrated terminal with custom font and environment variables
-  - LSP support for Python, Go, Bash, Helm, Ansible, Markdown, HTML, etc.
-  - Custom tasks for running tests, scripts, and tools like `lazygit` and `yazi`
-  - Snippet support for JavaScript, TypeScript, TSX, and Go
-  - Theming: Tokyo Night with cursive italic overrides (comments, keywords), VSCode Icons (Dark)
-  - File/folder exclusions for performance
-  - AI/LLM agent integration (Anthropic, OpenAI, DeepSeek, Ollama, Pi via `pi-acp` server)
-  - Edit predictions via Copilot/Mercury
-
-### [Yazi](https://yazi-rs.github.io/) 🦆
-
-- **Config:** See [`dot_config/yazi/`](dot_config/yazi/)
-- **Features:**
-  - Fast, TUI file manager with preview and plugin support
-  - Custom keymaps for diffing, toggling preview panes, smart filtering, archiving, and image rotation/conversion (PNG/JPEG)
-  - Opener rules for editing, browsing, extracting, and playing files (including IINA for video)
-  - Plugins for Git integration, diff, compress, and more
-  - Theming: Tokyo Night flavor
-  - Integration with `$EDITOR` and `$BROWSER` environment variables
-
-### [Fish Shell](https://fishshell.com/) 🐟
-
-- **Config:** See [`dot_config/private_fish/`](dot_config/private_fish/)
-- **Features:**
-  - Vi key bindings, custom greeting, and prompt (Starship)
-  - Extensive aliases for Git, Docker, Kubernetes, OpenTofu, and more
-  - Custom PATH setup for Homebrew, Go, Node, Python, Rust, Antigravity, etc.
-  - Plugin management via Fisher (`fish_plugins`)
-  - FZF integration with advanced keybindings and preview commands
-  - Atuin for shell history, Direnv for project environments, Zoxide for smart `cd`
-  - Television shell integration for smart autocomplete (Ctrl+T triggers contextual channels)
-  - Custom functions (e.g., `ssh-tunnel`, `yy` for Yazi directory jumping, `diff` with diffnav, `fido2` for FIDO2 file encryption)
-
-### [Neovim](https://neovim.io/) 🥷
-
-- **Config:** [joelazar/nvim-config](https://github.com/joelazar/nvim-config)
-- **Features:**
-  - Lua-based configuration
-  - Integrated with system clipboard, LSP, Treesitter, and more
-  - Custom keybindings and plugins for productivity
-  - Used as default editor and man pager
-
-### [Lazygit](https://github.com/jesseduffield/lazygit) & [Lazydocker](https://github.com/jesseduffield/lazydocker) 🦥🐳
-
-- **Config:** See [`private_Library/private_Application Support/lazygit/config.yml`](private_Library/private_Application%20Support/lazygit/config.yml) and [`lazydocker/config.yml`](private_Library/private_Application%20Support/jesseduffield/lazydocker/config.yml)
-- **Features:**
-  - Tokyo Night themed UI with rounded borders and nerd font icons
-  - Custom keybindings for branch management, PR creation, GitHub integration, and more
-  - Integration with `delta` for syntax-highlighted diffs (including side-by-side mode)
-  - Custom commands for common workflows
-  - Hunk mode staging view
-
-### [Ghostty](https://ghostty.app/) 👻
-
-- **Config:** See [`dot_config/ghostty/config`](dot_config/ghostty/config)
-- **Features:**
-  - GPU-accelerated terminal emulator
-  - Maple Mono NF font with custom ligature features
-  - Tokyo Night theme
-  - Quick terminal (drop-down from top), hidden window buttons
-  - Custom keybindings for splits and navigation
-  - Integration with Fish shell
-  - Massive scrollback buffer (1B lines)
-
-### [Television](https://github.com/alexpasmantier/television) 📺
-
-- **Config:** See [`dot_config/television/`](dot_config/television/)
-- **Features:**
-  - Blazing fast TUI fuzzy finder with preview support
-  - Tokyo Night theme
-  - 80+ custom cable channels for: files, dirs, git (branches, log, diff, stash, worktrees, submodules, repos), Docker (containers, images, volumes, networks, compose), Kubernetes (pods, deployments, services, contexts), AWS (S3, EC2, RDS, ElastiCache, Secrets Manager), SSH hosts, todo comments, and much more
-  - Shell integration with Fish: context-aware autocomplete (e.g., `git checkout` → branches, `cd` → dirs, `ssh` → hosts)
-  - Custom actions per channel (edit, open, delete, etc.)
-
-### [AeroSpace](https://github.com/nikitabobko/AeroSpace) 🪟
-
-- **Config:** See [`dot_aerospace.toml`](dot_aerospace.toml)
-- **Features:**
-  - Tiling window manager for macOS (i3-like)
-  - Workspace assignments for apps (e.g., browsers → 2, Slack/Discord → 4, Signal/Messages → 5)
-  - Keyboard-driven window management with `alt` key shortcuts
-
-### [gh-dash](https://github.com/dlvhdr/gh-dash) 📊
-
-- **Config:** See [`dot_config/gh-dash/config.yml`](dot_config/gh-dash/config.yml)
-- **Features:**
-  - GitHub dashboard for PRs and issues in the terminal
-  - Custom sections: my PRs, drafts, review requested, involves me, recently closed
-  - Filters for bot PRs (Renovate, Dependabot, GitHub Actions)
-  - Custom keybindings: approve, merge, auto-merge, draft toggle, lazygit, diffview
-  - Integration with `diffnav` for diff paging
-
-### [Eza](https://github.com/eza-community/eza) 📁
-
-- **Config:** See [`dot_config/eza/theme.yml`](dot_config/eza/theme.yml)
-- **Features:**
-  - Modern replacement for `ls` with icons, Git status, and colorized output
-  - Custom color theme matching Tokyo Night
-  - Used in aliases for `ls`, `ll`, etc.
-
-### [Atuin](https://github.com/atuinsh/atuin) 🕰️
-
-- **Config:** See [`dot_config/atuin/config.toml`](dot_config/atuin/config.toml)
-- **Features:**
-  - Shell history sync and search
-  - Session-based filtering for up-arrow history
-  - Compact style and custom inline height
-
-### [Starship Prompt](https://starship.rs/) 🌟
-
-- **Config:** See [`dot_config/starship.toml`](dot_config/starship.toml)
-- **Features:**
-  - Custom prompt symbols and module settings
-  - Integration with Direnv, Sudo, Mise, Yazi level indicator, and more
-  - Git metrics display
-
-### [Direnv](https://direnv.net/) 🌱
-
-- **Config:** See [`dot_config/direnv/direnv.toml`](dot_config/direnv/direnv.toml)
-- **Features:**
-  - Automatic loading of `.envrc` and `.env` files for project-specific environments
-
-### [Delta](https://github.com/dandavison/delta) & [Diffnav](https://github.com/dlvhdr/diffnav) 🌈
-
-- **Config:** See [`dot_config/bat/bat.conf`](dot_config/bat/bat.conf) and Git config
-- **Features:**
-  - `delta` for syntax-highlighted diffs in Git and Lazygit
-  - `diffnav` as the default Git diff pager for interactive navigation
-  - Custom `diff` Fish function wrapping `diffnav`
-
-### [Btop](https://github.com/aristocratos/btop) 📊
-
-- **Config:** See [`dot_config/btop/btop.conf`](dot_config/btop/btop.conf)
-- **Features:**
-  - Resource monitor
-  - Vim keybindings and detailed graphs
-
-### [fzf](https://github.com/junegunn/fzf) 🔎
-
-- **Config:** See Fish config and custom scripts
-- **Features:**
-  - Fuzzy finder for files, directories, history, and processes
-  - Custom preview commands using `bat` and `eza`
-  - Toggle between files/directories/hidden files modes
-  - Used in various scripts for project search
-
-### [Ripgrep](https://github.com/BurntSushi/ripgrep) 🦸
-
-- **Config:** See [`dot_config/ripgrep/config`](dot_config/ripgrep/config)
-- **Features:**
-  - Fast recursive search with custom ignore rules and color output
-
-### [Fastfetch](https://github.com/fastfetch-cli/fastfetch) ⚡
-
-- **Config:** See [`dot_config/fastfetch/config.conf`](dot_config/fastfetch/config.conf)
-- **Features:**
-  - Fast system information tool (neofetch alternative)
-
-### [Bruno](https://www.usebruno.com/) 🐶
-
-- **Features:**
-  - API client for developers
-  - Open-source alternative to Postman
-  - Also available as CLI tool (`bruno-cli`)
-
-### [Ice](https://github.com/jordanbaird/Ice) ❄️
-
-- **Features:**
-  - Menu bar customization tool for macOS
-  - Hide, reorder, or add custom menu bar items
-  - Customize appearance and behavior of the menu bar
-
-### [pgcli](https://www.pgcli.com/) 🐘
-
-- **Config:** See [`dot_config/pgcli/config`](dot_config/pgcli/config)
-- **Features:**
-  - Enhanced Postgres CLI with auto-completion, syntax highlighting, and Vi mode
-
-### [K9s](https://k9scli.io/) ☸️
-
-- **Config:** See [`private_Library/private_Application Support/k9s/`](private_Library/private_Application%20Support/k9s/)
-- **Features:**
-  - Terminal UI for Kubernetes clusters
-  - Custom plugins for viewing logs with `bat`
-  - Custom aliases for quick navigation
-
-### [Wireshark](https://www.wireshark.org/) 🦈
-
-- **Config:** See [`dot_config/wireshark/preferences`](dot_config/wireshark/preferences)
-- **Features:**
-  - Custom font and column setup for packet analysis
-  - Telecom-specific settings
-
-### [Harper](https://github.com/elijah-potter/harper) 📝
-
-- **Config:** See [`dot_config/harper/config.toml`](dot_config/harper/config.toml)
-- **Features:**
-  - Grammar checker LSP used in Zed and Neovim
-
-### [gh-repo-man](https://github.com/2kabhishek/gh-repo-man) 🗂️
-
-- **Config:** See [`dot_config/gh-repo-man/config.yml`](dot_config/gh-repo-man/config.yml)
-- **Features:**
-  - GitHub CLI extension for managing and cloning repositories
-  - Organized by username in `~/Code/` with FZF preview
-  - Cached repo lists and README previews
-
-### [Mise](https://mise.jdx.dev/) 🔧
-
-- **Config:** See [`dot_config/mise/config.toml`](dot_config/mise/config.toml)
-- **Features:**
-  - Dev tool version manager (asdf alternative)
-  - Integrated with Starship prompt
+- **Platform:** macOS
+- **Dotfile manager:** [chezmoi](https://www.chezmoi.io/)
+- **Profiles:** `private`, `work`, and `workstation`
+- **Bootstrap path:** [`bootstrap.sh`](bootstrap.sh)
+- **First-run automation:** [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) and [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
+- **Theme:** Tokyo Night across most of the stack
+- **Fonts:** Maple Mono / Maple Mono NF
 
 ---
 
-## AI/LLM Tooling 🤖
+## What lives here 📁
 
-A significant part of this setup is dedicated to AI-assisted development:
-
-- **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions
-- **[Pi Agent](https://github.com/mariozechner/pi-coding-agent)** — Heavily customized coding agent harness (see detailed section below). Config in [`dot_pi/`](dot_pi/)
-- **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** — Google's Gemini from the terminal
-- **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent. Config in [`dot_codex/`](dot_codex/)
-- **[Ollama](https://ollama.com/)** — Local LLM runner for self-hosted models
-- **[`ai-update`](private_dot_local/bin/executable_ai-update)** — Script to keep all AI tools up to date
-
-### [Pi Agent](https://github.com/mariozechner/pi-coding-agent) 🥧
-
-- **Config:** See [`dot_pi/`](dot_pi/)
-- **Features:**
-  - Multi-provider coding agent TUI with Tokyo Night theme
-  - Default model: Claude Sonnet 4.6 (Anthropic), with Gemini, OpenAI Codex, and local Ollama models enabled
-  - Sandbox execution with comprehensive credential/secret path blocking
-  - Path policy to guard sensitive files from agent reads/writes
-  - Python command interception (`pip`, `poetry`, `python`) → automatically redirected to `uv`
-  - Ghostty terminal integration (title, progress bar)
-  - Lazygit integration via `/lazygit` command or `Ctrl+G`
-  - Desktop notifications on task completion
-  - Session naming, session breakdown analysis, and CWD history tracking
-  - Sub-agent system with specialized roles (planner, reviewer, scout, worker)
-
-- **Skills:**
-
-  | Skill                | Description                                                            |
-  | -------------------- | ---------------------------------------------------------------------- |
-  | `frontend-design`    | Design and implement production-ready frontend interfaces              |
-  | `github`             | Interact with GitHub using the `gh` CLI (issues, PRs, CI runs, search) |
-  | `humanizer`          | Detect and rewrite AI writing patterns for natural-sounding text       |
-  | `improve-skill`      | Analyze session transcripts to improve or create skills                |
-  | `kagi-enrich`        | Search Kagi's non-commercial Teclis and TinyGem indexes                |
-  | `kagi-fastgpt`       | AI-synthesized answers backed by live Kagi web search                  |
-  | `kagi-search`        | Web search and content extraction via Kagi Search API                  |
-  | `kagi-summarizer`    | Summarize URLs or text using Kagi's Universal Summarizer               |
-  | `native-web-search`  | Quick web search with concise summaries and source URLs                |
-  | `session-analyzer`   | Mine session history for automation opportunities                      |
-  | `summarize`          | Convert URLs/files (PDF, DOCX, HTML) to Markdown via `markitdown`      |
-  | `uv`                 | Use `uv` instead of pip/python/venv for Python workflows               |
-  | `web-browser`        | Remote-control Chrome via CDP for web interaction                      |
-  | `youtube-transcript` | Fetch YouTube video transcripts for analysis                           |
-
-- **Prompt Templates:**
-
-  | Template           | Description                                                  |
-  | ------------------ | ------------------------------------------------------------ |
-  | `address-comments` | Get GitHub PR and address all non-resolved review comments   |
-  | `catchup`          | Read all changed code in current branch vs default branch    |
-  | `clean-gone`       | Clean up git branches marked as `[gone]` (deleted on remote) |
-  | `commit`           | Create a git commit                                          |
-  | `create-pr`        | Commit, push, and open a PR                                  |
-  | `double-check`     | Double-check recent work and look for edge cases             |
-  | `explain-codebase` | Scan and explain the whole codebase                          |
-  | `search-web`       | Search the web for a given query                             |
-
-- **Extensions:**
-
-  | Extension               | Description                                                       |
-  | ----------------------- | ----------------------------------------------------------------- |
-  | `antigravity-image-gen` | Image generation via Antigravity models                           |
-  | `answer`                | Q&A extraction from assistant responses                           |
-  | `commit-shortcut`       | AI-powered commit message generation with model selection         |
-  | `context`               | Show context window usage, skills, costs, and token totals        |
-  | `cwd-history`           | Track working directory history across sessions                   |
-  | `edit-diff-lines`       | Per-line Tokyo Night-style syntax-highlighted diffs for edits     |
-  | `editor-with-context`   | See last agent response when composing prompts                    |
-  | `extensions-manager`    | Manage extensions from within Pi                                  |
-  | `files`                 | File management utilities                                         |
-  | `ghostty`               | Ghostty terminal title and progress bar integration               |
-  | `handoff`               | Transfer context to a new focused session                         |
-  | `lazygit`               | Open lazygit with `/lazygit` or `Ctrl+G`                          |
-  | `loop`                  | Loop/repeat task execution                                        |
-  | `notify`                | Desktop notifications on completion                               |
-  | `path-policy`           | Block reads/writes to sensitive credential paths                  |
-  | `permission-gate`       | Permission gate for dangerous operations                          |
-  | `prompt-editor`         | Custom prompt editor with model selector                          |
-  | `review`                | Code review with auto-fixing loop until no P0-P2 issues remain    |
-  | `sandbox`               | Sandboxed execution with network/filesystem restrictions          |
-  | `session-breakdown`     | Analyze and summarize session activity                            |
-  | `session-name`          | Auto-name sessions                                                |
-  | `subagent`              | Delegate to specialized agents (planner, reviewer, scout, worker) |
-  | `todos`                 | File-based todo management in `.pi/todos`                         |
-  | `uv-intercept`          | Intercept `pip`/`poetry`/`python` → redirect to `uv`              |
-  | `whimsical`             | Fun/whimsical messages                                            |
-
-- **Packages:** `pi-interactive-shell` (interactive shell overlay for delegating to sub-agents)
-
-- **Credits:** Many skills and extensions are adapted from or inspired by the work of others:
-
-  | Author          | GitHub                                       | Contributions                                                                                                                                                                                                                                                                                                                                         |
-  | --------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi Agent itself ([pi-mono](https://github.com/badlogic/pi-mono)), extensions (`antigravity-image-gen`, `editor-with-context`, `handoff`, `notify`, `permission-gate`, `sandbox`, `session-name`, `subagent`), skills (`youtube-transcript`, `kagi-search` adapted from `brave-search` in [pi-skills](https://github.com/badlogic/pi-skills))          |
-  | Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions (`answer`, `context`, `files`, `loop`, `prompt-editor`, `review`, `session-breakdown`, `todos`, `whimsical`), intercepted commands (`pip`/`poetry`/`python` → `uv`), skills (`frontend-design`, `github`, `humanizer`, `native-web-search`, `summarize`, `uv`, `web-browser`) from [agent-stuff](https://github.com/mitsuhiko/agent-stuff) |
-  | Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from [pi-ghostty](https://github.com/HazAT/pi-ghostty)                                                                                                                                                                                                                                                                            |
-  | Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from [pi-skills](https://github.com/ferologics/pi-skills)                                                                                                                                                                                                                                                                    |
+| Path                                                                                                                     | What it contains                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
+| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, prompts, themes, modes, and local extensions                                                               |
+| [`dot_agents/skills/`](dot_agents/skills/)                                                                               | Local skill library for coding agents                                                                                              |
+| [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                          |
+| [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                              |
+| [`dot_gemini/`](dot_gemini/)                                                                                             | Gemini CLI settings                                                                                                                |
+| [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                      |
+| [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                           |
+| [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows                                                                                  |
+| [`Brewfile.private`](Brewfile.private), [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                       |
 
 ---
 
-## Package Management 📦
+## Highlights ✨
 
-- **Homebrew**: All packages and casks are managed via [`Brewfile.private`](Brewfile.private) and [`Brewfile.work`](Brewfile.work)
-- **Bun**: Global JavaScript/TypeScript packages (e.g., `claude-code`, `pi-coding-agent`) installed via [`run_once_install_packages.sh`](run_once_install_packages.sh.tmpl)
-- **UV**: Python tool management (e.g., `gitingest`)
-- **Go, Rust**: Install scripts for language-specific tools and formatters
+### Shell and terminal 🐚
+
+My day-to-day shell is Fish, with config in [`dot_config/private_fish/`](dot_config/private_fish/).
+
+That setup includes:
+
+- vi-style key bindings
+- [Starship](https://starship.rs/) prompt with `mise`, `sudo`, and Yazi indicators via [`dot_config/starship.toml`](dot_config/starship.toml)
+- [Atuin](https://github.com/atuinsh/atuin) for history
+- [Zoxide](https://github.com/ajeetdsouza/zoxide) for smarter directory jumping
+- [Mise](https://mise.jdx.dev/) for runtime management via [`dot_config/mise/config.toml`](dot_config/mise/config.toml)
+- [Television](https://github.com/alexpasmantier/television) shell integration so `Ctrl+T` opens context-aware pickers instead of a generic file list
+
+The terminal is [Ghostty](https://ghostty.org/), configured in [`dot_config/ghostty/config`](dot_config/ghostty/config). It uses Tokyo Night, Maple Mono NF, split navigation shortcuts, a huge scrollback buffer, and a top-mounted quick terminal.
+
+### Editors ✍️
+
+I mostly use [Zed](https://zed.dev/) and Neovim.
+
+Zed is configured in [`dot_config/zed/`](dot_config/zed/) with:
+
+- Vim mode and which-key hints
+- custom pane and tab navigation
+- tuned git panel and inline blame
+- Television-powered file and text search tasks
+- Yazi and Lazygit tasks wired into the editor
+- AI assistant defaults for day-to-day coding work
+
+Neovim lives in a separate repo: [joelazar/nvim-config](https://github.com/joelazar/nvim-config). This repo bootstraps it during first-run setup.
+
+### Search, navigation, and file management 🔎
+
+A lot of this setup is about moving around quickly:
+
+- [Yazi](https://yazi-rs.github.io/) for file management via [`dot_config/yazi/`](dot_config/yazi/)
+- [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) for fast terminal navigation
+- [Eza](https://github.com/eza-community/eza) for directory listings via [`dot_config/eza/`](dot_config/eza/)
+- [Television](https://github.com/alexpasmantier/television) with **97 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
+
+Those Television channels cover far more than files. There are pickers for git branches, worktrees, diffs, repositories, Docker and Kubernetes resources, AWS resources, ports, launchd services, recent files, markdown search, and more.
+
+### Git and GitHub workflow 🌿
+
+Git tooling is a big part of this repo:
+
+- [Lazygit](https://github.com/jesseduffield/lazygit) config in [`private_Library/private_Application Support/lazygit/config.yml`](private_Library/private_Application%20Support/lazygit/config.yml)
+- [gh-dash](https://github.com/dlvhdr/gh-dash) config in [`dot_config/gh-dash/config.yml`](dot_config/gh-dash/config.yml)
+- [gh-repo-man](https://github.com/2kabhishek/gh-repo-man) config in [`dot_config/gh-repo-man/config.yml`](dot_config/gh-repo-man/config.yml)
+- `delta` + `diffnav` for readable diffs
+- custom scripts for repo cleanup, worktree creation, and recursive repo management
+
+The Lazygit setup includes custom PR commands, conventional commit helpers, GitHub shortcuts, Tokyo Night styling, and delta-powered diff views.
+
+### macOS workflow 🍎
+
+This repo also handles the machine itself, not just terminal tools.
+
+- [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager config in [`dot_aerospace.toml`](dot_aerospace.toml)
+- macOS defaults and shell/editor bootstrapping in [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
+- launch agents in [`private_Library/LaunchAgents/`](private_Library/LaunchAgents/)
+- app defaults, file associations, Dock behavior, keyboard repeat, Touch ID for `sudo`, and similar setup tasks
+
+AeroSpace is set up with workspace assignments, vim-style focus movement, resize modes, and app launch shortcuts for tools I use constantly.
 
 ---
 
-## Setup Instructions ⚡
+## AI and coding-agent setup 🤖
 
-### First-time setup (fresh system)
+A lot of this repo is devoted to AI-assisted development. That part has grown quite a bit.
 
-If you're setting up on a completely fresh macOS system without Homebrew or chezmoi:
+### Agent clients and configs 🛠️
 
-1. **Run the bootstrap script:**
+This repo currently tracks config for:
 
-   ```sh
-   curl -sSL https://raw.githubusercontent.com/joelazar/dotfiles/main/bootstrap.sh | bash
-   ```
+- [Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code) in [`dot_claude/`](dot_claude/)
+- a separate Claude work profile in [`dot_claude-work/`](dot_claude-work/)
+- [Pi](https://github.com/mariozechner/pi-coding-agent) in [`dot_pi/`](dot_pi/)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli) in [`dot_gemini/`](dot_gemini/)
+- [Codex](https://github.com/openai/codex) templates in [`dot_codex/`](dot_codex/)
+- [Ollama](https://ollama.com/) for local models
 
-   Or clone and run locally:
+There is also a small helper script, [`ai-update`](private_dot_local/bin/executable_ai-update), that updates the main CLI agents I use.
 
-   ```sh
-   git clone https://github.com/joelazar/dotfiles.git
-   cd dotfiles
-   ./bootstrap.sh
-   ```
+### Pi agent 🥧
 
-   This script will:
-   - Install Homebrew (if not present)
-   - Install chezmoi via Homebrew
-   - Initialize and apply the dotfiles configuration
+Pi is where most of the custom work happens.
 
-### Manual setup (if you already have brew and chezmoi)
+The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 
-1. **Install chezmoi** (if not already installed):
+- Tokyo Night theme and custom modes in [`dot_pi/agent/modes.json`](dot_pi/agent/modes.json)
+- local model definitions in [`dot_pi/agent/models.json`](dot_pi/agent/models.json)
+- path blocking for secrets and sensitive files in [`dot_pi/agent/path-policy.json`](dot_pi/agent/path-policy.json)
+- prompt templates in [`dot_pi/agent/prompts/`](dot_pi/agent/prompts/)
+- a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json)
 
-   ```sh
-   brew install chezmoi
-   ```
+Current Pi modes are built around a few practical defaults rather than a giant matrix:
 
-2. **Initialize dotfiles:**
+- `default`: Claude Opus 4.7
+- `fast-claude`: Claude Sonnet 4.6
+- `fast-gpt`: GPT-5.3 Codex
+- `fastest`: GPT-5.4 mini
+- `deep`: GPT-5.4
 
-   ```sh
-   chezmoi init https://github.com/joelazar/dotfiles.git
-   chezmoi apply
-   ```
+### Local Pi extensions 🧩
 
-### Post-installation steps
+There are **25 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
 
-3. **Install packages:**
+- `pi-fff` for fuzzy file finding and indexed code search
+- `multi-edit` for batch edits and patch-style edits
+- `default-tools` to enable `grep` and `find` by default
+- `prompt-editor` for editing and storing prompt/model combinations
+- `copy-command` for pulling runnable commands out of responses
+- `lazygit` and `ghostty` integrations
+- `path-policy`, `permission-gate`, and `sandbox` for guardrails
+- `todos`, `loop`, `session-breakdown`, and `auto-session-name` for session management
+- `uv` to steer Python workflows toward `uv`
 
-   The `run_once_install_packages.sh` script runs automatically on first `chezmoi apply`. It installs Homebrew packages, Bun globals, Go tools, Rust tools, UV tools, and more.
+### Local skills 🎯
 
-4. **Apply system settings:**
+The agent skill library under [`dot_agents/skills/`](dot_agents/skills/) currently includes **43 skills**.
 
-   The `run_once_settings.sh` script also runs automatically, configuring macOS defaults (Dock, Finder, keyboard, trackpad, etc.).
+That set covers a few different categories:
+
+- **Design and frontend work:** `frontend-design`, `impeccable`, `adapt`, `animate`, `polish`, `typeset`, `layout`, `colorize`, and related design skills
+- **Workflow and coding support:** `github`, `humanizer`, `session-analyzer`, `summarize`, `tmux`, `uv`, `web-browser`, `youtube-transcript`
+- **Research and external systems:** `perplexity-search`, `pdf`, `linear-cli`, `mermaid`, `pi-share`
+- **Google Workspace helpers:** calendar, docs, drive, gmail, and sheets skills
 
 ---
 
-## Custom Scripts 🧑‍💻
+## Package management 📦
 
-See [`private_dot_local/bin/`](private_dot_local/bin/) for utility scripts:
+Package installation is split by machine type:
 
-| Script                                                                        | Description                                               |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------- |
-| [`agent-md`](private_dot_local/bin/executable_agent-md)                       | Manage AGENTS.md and CLAUDE.md files for AI coding agents |
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Update all AI/LLM CLI tools (Claude, Gemini, Codex, etc.) |
-| [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backup utility using `restic` and `age`         |
-| [`cht`](private_dot_local/bin/executable_cht)                                 | Cheat sheet lookup via cht.sh                             |
-| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Update system packages, tools, and configs                |
-| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Test terminal font rendering                              |
-| [`formatter`](private_dot_local/bin/executable_formatter)                     | USB & SD card formatting tool with `gum` UI               |
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)       | Find and manage git repositories recursively              |
-| [`git-reset`](private_dot_local/bin/executable_git-reset)                     | Reset repos to default branch and drop local changes      |
-| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Create git worktrees alongside current repo               |
-| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Update Obsidian plugins and themes                        |
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Switch primary display on multi-monitor setups            |
-| [`transfer`](private_dot_local/bin/executable_transfer)                       | Upload files via transfer.sh                              |
-| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Run a command repeatedly until it fails                   |
-| [`update-submodules`](private_dot_local/bin/executable_update-submodules)     | Update all git submodules to latest                       |
-| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Find/kill processes listening on a given port             |
+- [`Brewfile.private`](Brewfile.private)
+- [`Brewfile.work`](Brewfile.work)
+- [`Brewfile.workstation`](Brewfile.workstation)
 
-Many scripts use [gum](https://github.com/charmbracelet/gum) for interactive TUI, plus FZF, Bat, and Age for enhanced workflows.
+On first apply, [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) takes care of the rest. That script installs Homebrew packages, Bun globals, Go tools, UV tools, GitHub CLI plugins, Yazi plugins, and a few extra utilities.
+
+Some notable pieces from the current setup:
+
+- Bun packages for Pi, Codex usage tooling, Defuddle, Obsidian automation, and Google Workspace CLI access
+- UV-managed tools such as `gitingest`, `pylatexenc`, and `nginx-language-server`
+- GitHub CLI plugins like `gh-dash`, `gh-repo-man`, and `gh-markdown-preview`
+
+---
+
+## Setup ⚡
+
+### Fresh machine 🆕
+
+If Homebrew and chezmoi are not installed yet, start with:
+
+```sh
+curl -sSL https://raw.githubusercontent.com/joelazar/dotfiles/main/bootstrap.sh | bash
+```
+
+Or clone locally and run:
+
+```sh
+git clone https://github.com/joelazar/dotfiles.git
+cd dotfiles
+./bootstrap.sh
+```
+
+### Existing chezmoi setup 🔧
+
+If you already have Homebrew and chezmoi:
+
+```sh
+brew install chezmoi
+chezmoi init https://github.com/joelazar/dotfiles.git
+chezmoi apply
+```
+
+### First-time prompts 💬
+
+During initialization, chezmoi asks for:
+
+- git email
+- git username
+- machine type: `work`, `private`, or `workstation`
+
+Those values come from [`.chezmoi.toml.tmpl`](.chezmoi.toml.tmpl).
+
+### Important note ⚠️
+
+This repo is the **chezmoi source directory**, not the live destination.
+
+If you edit files here, you need to run:
+
+```sh
+chezmoi apply
+```
+
+Without that step, your real dotfiles under `$HOME` will not change.
+
+---
+
+## Day-to-day maintenance 🔁
+
+A few commands I use a lot:
+
+```sh
+chezmoi apply            # push source changes into the live home directory
+chezmoi diff             # preview what will change
+```
+
+There is also a local Pi extension in [`.pi/extensions/chezmoi-auto-apply/`](.pi/extensions/chezmoi-auto-apply/) that automatically runs `chezmoi apply` after agent-driven edits in this repo.
+
+---
+
+## Custom scripts 🧑‍💻
+
+Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_local/bin/).
+
+| Script                                                                        | What it does                                                               |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`agent-md`](private_dot_local/bin/executable_agent-md)                       | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for coding-agent projects |
+| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Updates Claude Code, Gemini CLI, Codex, Pi, and Pi extensions              |
+| [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backups with `restic` and `age`                                  |
+| [`cht`](private_dot_local/bin/executable_cht)                                 | Quick cheat-sheet lookup via cht.sh                                        |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Runs broader system and tool updates                                       |
+| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Checks terminal font rendering                                             |
+| [`formatter`](private_dot_local/bin/executable_formatter)                     | Formats USB drives and SD cards with a `gum` UI                            |
+| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)       | Finds git repos recursively and offers interactive actions                 |
+| [`git-reset`](private_dot_local/bin/executable_git-reset)                     | Resets repos back to their default branch state                            |
+| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Creates sibling worktrees for the current repo                             |
+| [`init-windows`](private_dot_local/bin/executable_init-windows)               | Opens my usual app set for a work session                                  |
+| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Triggers Obsidian plugin and theme updates across vaults                   |
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups                        |
+| [`transfer`](private_dot_local/bin/executable_transfer)                       | Uploads files through transfer.sh                                          |
+| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Repeats a command until it fails                                           |
+| [`update-submodules`](private_dot_local/bin/executable_update-submodules)     | Updates git submodules                                                     |
+| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Shows what is listening on a port and can kill it                          |
+
+Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
 
 ---
 
 ## Theming 🎨
 
-- **Tokyo Night** is used consistently across all tools: Ghostty, Zed, Neovim, Lazygit, Yazi, Television, Eza, Bat, Pi Agent, and more.
-- **Fonts:** Maple Mono, Maple Mono NF (with custom OpenType features: `cv02`, `cv05`, `cv61`, `cv63`)
+Tokyo Night is the common thread through most of the environment: Ghostty, Zed, Lazygit, Television, Eza, Bat, and Pi all use it in one form or another.
+
+Fonts are centered on Maple Mono and Maple Mono NF, including OpenType alternates like `cv02`, `cv05`, `cv61`, and `cv63`.
 
 ---
 
 ## Acknowledgements 🙏
 
-- Some utility functions and setup scripts are adapted from [alrra/dotfiles](https://github.com/alrra/dotfiles).
+Some helper functions and setup patterns were originally adapted from [alrra/dotfiles](https://github.com/alrra/dotfiles).
+
+Parts of the Pi setup are also adapted from or inspired by work from:
+
+| Author          | GitHub                                       | Contributions                                                                                                                                                                                                                       |
+| --------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi itself, plus extensions and skills adapted from the Pi ecosystem, including `antigravity-image-gen`, `editor-with-context`, `notify`, `permission-gate`, `sandbox`, `session-name`, and `youtube-transcript`-related work        |
+| Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions and skills adapted from `agent-stuff`, including `answer`, `context`, `loop`, `prompt-editor`, `session-breakdown`, `todos`, `whimsical`, `frontend-design`, `github`, `humanizer`, `summarize`, `uv`, and `web-browser` |
+| Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from `pi-ghostty`                                                                                                                                                                                               |
+| Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from the Pi skills ecosystem                                                                                                                                                                               |
 
 ---
 
 ## License 📄
 
-The code is available under the [MIT license](LICENSE).
+This repository is available under the [MIT license](LICENSE).
