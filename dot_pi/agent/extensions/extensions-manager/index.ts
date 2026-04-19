@@ -1,35 +1,30 @@
 /**
  * Extensions Manager
  *
- * Provides a /extensions command to enable/disable discovered extensions.
- * Changes are written to settings.json as exact path overrides (+path / -path).
+ * Provides a /extensions command to enable/disable all discovered extensions —
+ * top-level (auto-discovered from .pi/extensions or ~/.pi/agent/extensions,
+ * plus local paths listed in settings.extensions) and package-installed
+ * (npm:/git:/local directories listed in settings.packages).
+ *
+ * Writes exact-path +/- patterns into the right settings scope:
+ *   - Top-level: settings.extensions (project or global)
+ *   - Package:   settings.packages[i].extensions filter on the owning package
  *
  * NOTE: Changes take effect after `/reload`.
  */
 
-import {
-  existsSync,
-  mkdirSync,
-  readFileSync,
-  readdirSync,
-  writeFileSync,
-} from "node:fs";
-import {
-  basename,
-  dirname,
-  extname,
-  isAbsolute,
-  join,
-  relative,
-  resolve,
-} from "node:path";
 import { homedir } from "node:os";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import type {
   ExtensionAPI,
   ExtensionCommandContext,
+  PackageSource,
+  ResolvedResource,
 } from "@mariozechner/pi-coding-agent";
 import {
+  DefaultPackageManager,
   DynamicBorder,
+  SettingsManager,
   getSettingsListTheme,
 } from "@mariozechner/pi-coding-agent";
 import {
@@ -39,325 +34,196 @@ import {
   Text,
 } from "@mariozechner/pi-tui";
 
-type Scope = "project" | "global";
-
-interface SettingsFile {
-  extensions?: unknown;
-  [key: string]: unknown;
-}
-
-interface ScopeConfig {
-  scope: Scope;
-  settingsPath: string;
-  baseDir: string;
-  extensionsDir: string;
-}
-
-interface ExtensionEntry {
+interface EntryState {
   id: string;
-  scope: Scope;
-  path: string;
   displayName: string;
   enabled: boolean;
-}
-
-const EXTENSION_FILE_EXTENSIONS = new Set([".ts", ".js"]);
-const INDEX_ENTRY_FILES = ["index.ts", "index.js"];
-
-interface PiManifest {
-  extensions?: string[];
+  resource: ResolvedResource;
 }
 
 function resolveAgentDir(): string {
   const configured = process.env.PI_CODING_AGENT_DIR;
-  if (!configured) {
-    return join(homedir(), ".pi", "agent");
-  }
-  if (configured.startsWith("~/")) {
-    return join(homedir(), configured.slice(2));
-  }
+  if (!configured) return join(homedir(), ".pi", "agent");
+  if (configured.startsWith("~/")) return join(homedir(), configured.slice(2));
   return resolve(configured);
 }
 
-function getScopeConfig(ctx: ExtensionCommandContext): ScopeConfig[] {
-  const projectBaseDir = join(ctx.cwd, ".pi");
-  const globalBaseDir = resolveAgentDir();
-  return [
-    {
-      scope: "project",
-      settingsPath: join(projectBaseDir, "settings.json"),
-      baseDir: projectBaseDir,
-      extensionsDir: join(projectBaseDir, "extensions"),
-    },
-    {
-      scope: "global",
-      settingsPath: join(globalBaseDir, "settings.json"),
-      baseDir: globalBaseDir,
-      extensionsDir: join(globalBaseDir, "extensions"),
-    },
-  ];
-}
+function buildDisplayName(res: ResolvedResource): string {
+  const { path, metadata } = res;
+  const fileName = basename(path);
+  const parent = basename(dirname(path));
+  const short =
+    parent && parent !== "extensions" && parent !== "."
+      ? `${parent}/${fileName}`
+      : fileName;
 
-function readSettings(path: string): SettingsFile {
-  if (!existsSync(path)) {
-    return {};
+  const scopeTag = `[${metadata.scope}]`;
+  if (metadata.origin === "package") {
+    return `${scopeTag} ${metadata.source} · ${short}`;
   }
-  try {
-    const parsed = JSON.parse(readFileSync(path, "utf-8")) as unknown;
-    if (
-      typeof parsed === "object" &&
-      parsed !== null &&
-      !Array.isArray(parsed)
-    ) {
-      return parsed as SettingsFile;
-    }
-    return {};
-  } catch {
-    return {};
+  if (metadata.source === "auto") {
+    return `${scopeTag} ${short}`;
   }
+  return `${scopeTag} ${metadata.source} · ${short}`;
 }
 
-function writeSettings(path: string, settings: SettingsFile): void {
-  mkdirSync(dirname(path), { recursive: true });
-  writeFileSync(path, `${JSON.stringify(settings, null, 2)}\n`, "utf-8");
+function getTopLevelBaseDir(
+  scope: "user" | "project" | "temporary",
+  cwd: string,
+  agentDir: string,
+): string {
+  return scope === "project" ? join(cwd, ".pi") : agentDir;
 }
 
-function parseOverrides(
-  settings: SettingsFile,
-  baseDir: string,
-): { include: Set<string>; exclude: Set<string> } {
-  const include = new Set<string>();
-  const exclude = new Set<string>();
-  const entries = Array.isArray(settings.extensions) ? settings.extensions : [];
-
-  for (const entry of entries) {
-    if (typeof entry !== "string" || entry.length < 2) continue;
-    const kind = entry[0];
-    if (kind !== "+" && kind !== "-") continue;
-
-    const target = entry.slice(1);
-    if (!target) continue;
-
-    const absPath = isAbsolute(target) ? target : resolve(baseDir, target);
-    const resolvedPaths = (() => {
-      if (!existsSync(absPath)) return [absPath];
-      const maybeEntries = resolveExtensionEntries(absPath);
-      return maybeEntries.length > 0 ? maybeEntries : [absPath];
-    })();
-
-    for (const resolvedPath of resolvedPaths) {
-      if (kind === "+") include.add(resolvedPath);
-      if (kind === "-") exclude.add(resolvedPath);
-    }
+function computePattern(
+  res: ResolvedResource,
+  cwd: string,
+  agentDir: string,
+): string {
+  if (res.metadata.origin === "package") {
+    const base = res.metadata.baseDir ?? dirname(res.path);
+    return relative(base, res.path);
   }
-
-  return { include, exclude };
+  const base = getTopLevelBaseDir(res.metadata.scope, cwd, agentDir);
+  return relative(base, res.path);
 }
 
-function toRelativeOrAbsolute(path: string, baseDir: string): string {
-  const rel = relative(baseDir, path);
-  if (rel && !rel.startsWith("..") && !isAbsolute(rel)) {
-    return rel;
-  }
-  return path;
+function stripPrefix(p: string): string {
+  return p.startsWith("!") || p.startsWith("+") || p.startsWith("-")
+    ? p.slice(1)
+    : p;
 }
 
-function setOverride(
-  settings: SettingsFile,
-  baseDir: string,
-  extensionPath: string,
+function toggleTopLevel(
+  settingsManager: SettingsManager,
+  res: ResolvedResource,
   enabled: boolean,
-): SettingsFile {
-  const current = Array.isArray(settings.extensions)
-    ? settings.extensions.filter(
-        (value): value is string => typeof value === "string",
-      )
-    : [];
+  pattern: string,
+): void {
+  const scope = res.metadata.scope;
+  const settings =
+    scope === "project"
+      ? settingsManager.getProjectSettings()
+      : settingsManager.getGlobalSettings();
+  const current = (settings.extensions ?? []) as string[];
+  const updated = current.filter((p) => stripPrefix(p) !== pattern);
+  updated.push(enabled ? `+${pattern}` : `-${pattern}`);
 
-  const relativePath = toRelativeOrAbsolute(extensionPath, baseDir);
-  const plusRelative = `+${relativePath}`;
-  const minusRelative = `-${relativePath}`;
-  const plusAbsolute = `+${extensionPath}`;
-  const minusAbsolute = `-${extensionPath}`;
+  if (scope === "project") {
+    settingsManager.setProjectExtensionPaths(updated);
+  } else {
+    settingsManager.setExtensionPaths(updated);
+  }
+}
 
-  const legacyDirAbsolute = INDEX_ENTRY_FILES.includes(basename(extensionPath))
-    ? dirname(extensionPath)
-    : undefined;
-  const legacyDirRelative = legacyDirAbsolute
-    ? toRelativeOrAbsolute(legacyDirAbsolute, baseDir)
-    : undefined;
+function togglePackage(
+  settingsManager: SettingsManager,
+  res: ResolvedResource,
+  enabled: boolean,
+  pattern: string,
+): void {
+  const scope = res.metadata.scope;
+  const settings =
+    scope === "project"
+      ? settingsManager.getProjectSettings()
+      : settingsManager.getGlobalSettings();
+  const packages: PackageSource[] = [
+    ...((settings.packages ?? []) as PackageSource[]),
+  ];
 
-  const filtered = current.filter((value) => {
-    if (
-      value === plusRelative ||
-      value === minusRelative ||
-      value === plusAbsolute ||
-      value === minusAbsolute
-    ) {
-      return false;
-    }
+  const idx = packages.findIndex((pkg) => {
+    const source = typeof pkg === "string" ? pkg : pkg.source;
+    return source === res.metadata.source;
+  });
+  if (idx === -1) return;
 
-    if (!legacyDirAbsolute || !legacyDirRelative) {
-      return true;
-    }
+  let pkg = packages[idx];
+  if (typeof pkg === "string") {
+    pkg = { source: pkg };
+    packages[idx] = pkg;
+  }
 
-    return (
-      value !== `+${legacyDirAbsolute}` &&
-      value !== `-${legacyDirAbsolute}` &&
-      value !== `+${legacyDirRelative}` &&
-      value !== `-${legacyDirRelative}`
-    );
+  const current = (pkg.extensions ?? []) as string[];
+  const updated = current.filter((p) => stripPrefix(p) !== pattern);
+  updated.push(enabled ? `+${pattern}` : `-${pattern}`);
+
+  pkg.extensions = updated.length > 0 ? updated : undefined;
+
+  const hasFilters = (
+    ["extensions", "skills", "prompts", "themes"] as const
+  ).some((k) => pkg![k] !== undefined);
+  if (!hasFilters) {
+    packages[idx] = pkg.source;
+  }
+
+  if (scope === "project") {
+    settingsManager.setProjectPackages(packages);
+  } else {
+    settingsManager.setPackages(packages);
+  }
+}
+
+function toggleEntry(
+  settingsManager: SettingsManager,
+  res: ResolvedResource,
+  enabled: boolean,
+  cwd: string,
+  agentDir: string,
+): void {
+  const pattern = computePattern(res, cwd, agentDir);
+  if (!pattern) return;
+  if (res.metadata.origin === "package") {
+    togglePackage(settingsManager, res, enabled, pattern);
+  } else {
+    toggleTopLevel(settingsManager, res, enabled, pattern);
+  }
+}
+
+async function loadEntries(ctx: ExtensionCommandContext): Promise<{
+  entries: EntryState[];
+  settingsManager: SettingsManager;
+  agentDir: string;
+}> {
+  const agentDir = resolveAgentDir();
+  const settingsManager = SettingsManager.create(ctx.cwd, agentDir);
+  const pm = new DefaultPackageManager({
+    cwd: ctx.cwd,
+    agentDir,
+    settingsManager,
   });
 
-  if (enabled) {
-    filtered.push(plusRelative);
-  } else {
-    filtered.push(minusRelative);
-  }
+  // Skip any missing/uninstalled sources rather than prompting in a TUI.
+  const resolved = await pm.resolve(async () => "skip");
 
-  return {
-    ...settings,
-    extensions: filtered,
-  };
-}
-
-function resolveExtensionEntries(dir: string): string[] {
-  const packageJsonPath = join(dir, "package.json");
-  if (existsSync(packageJsonPath)) {
-    try {
-      const content = readFileSync(packageJsonPath, "utf-8");
-      const pkg = JSON.parse(content) as { pi?: PiManifest };
-      const entries = pkg?.pi?.extensions;
-      if (Array.isArray(entries) && entries.length > 0) {
-        return entries
-          .filter((entry): entry is string => typeof entry === "string")
-          .map((entry) => resolve(dir, entry))
-          .filter((entryPath) => existsSync(entryPath));
+  const entries: EntryState[] = resolved.extensions
+    .map((res, i) => ({
+      id: `${res.metadata.origin}:${res.metadata.scope}:${res.metadata.source}:${res.path}:${i}`,
+      displayName: buildDisplayName(res),
+      enabled: res.enabled,
+      resource: res,
+    }))
+    .sort((a, b) => {
+      const ao = a.resource.metadata.origin;
+      const bo = b.resource.metadata.origin;
+      if (ao !== bo) return ao === "package" ? -1 : 1;
+      if (a.resource.metadata.scope !== b.resource.metadata.scope) {
+        return a.resource.metadata.scope === "user" ? -1 : 1;
       }
-    } catch {
-      // ignore malformed package.json; fall back to index file discovery
-    }
-  }
+      return a.displayName.localeCompare(b.displayName);
+    });
 
-  for (const file of INDEX_ENTRY_FILES) {
-    const indexPath = join(dir, file);
-    if (existsSync(indexPath)) {
-      return [indexPath];
-    }
-  }
-
-  return [];
-}
-
-function discoverExtensionsInDir(dir: string): string[] {
-  if (!existsSync(dir)) return [];
-  const result: string[] = [];
-  const entries = readdirSync(dir, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const fullPath = join(dir, entry.name);
-    if (entry.isFile() && EXTENSION_FILE_EXTENSIONS.has(extname(entry.name))) {
-      result.push(fullPath);
-      continue;
-    }
-
-    if (entry.isDirectory()) {
-      result.push(...resolveExtensionEntries(fullPath));
-    }
-  }
-
-  return result;
-}
-
-function buildEntryDisplayName(
-  path: string,
-  scope: Scope,
-  config: ScopeConfig,
-): string {
-  const relativePath = relative(config.extensionsDir, path);
-  let shortName =
-    relativePath && !relativePath.startsWith("..") ? relativePath : path;
-
-  const base = basename(shortName);
-  if (INDEX_ENTRY_FILES.includes(base)) {
-    shortName = dirname(shortName);
-  } else {
-    const ext = extname(shortName);
-    if (EXTENSION_FILE_EXTENSIONS.has(ext)) {
-      shortName = shortName.slice(0, -ext.length);
-    }
-  }
-
-  return `[${scope}] ${shortName}`;
-}
-
-function collectEntries(ctx: ExtensionCommandContext): {
-  entries: ExtensionEntry[];
-  settingsByScope: Map<Scope, SettingsFile>;
-  configByScope: Map<Scope, ScopeConfig>;
-} {
-  const settingsByScope = new Map<Scope, SettingsFile>();
-  const configByScope = new Map<Scope, ScopeConfig>();
-  const entriesByPath = new Map<string, ExtensionEntry>();
-
-  for (const config of getScopeConfig(ctx)) {
-    configByScope.set(config.scope, config);
-    const settings = readSettings(config.settingsPath);
-    settingsByScope.set(config.scope, settings);
-
-    const { include, exclude } = parseOverrides(settings, config.baseDir);
-    const discovered = discoverExtensionsInDir(config.extensionsDir);
-    const combined = new Set<string>([...discovered, ...include, ...exclude]);
-
-    for (const fullPath of combined) {
-      const key = `${config.scope}:${fullPath}`;
-      const enabled = !exclude.has(fullPath);
-      entriesByPath.set(key, {
-        id: key,
-        scope: config.scope,
-        path: fullPath,
-        displayName: buildEntryDisplayName(fullPath, config.scope, config),
-        enabled,
-      });
-    }
-  }
-
-  const entries = Array.from(entriesByPath.values()).sort((a, b) =>
-    a.displayName.localeCompare(b.displayName),
-  );
-  return { entries, settingsByScope, configByScope };
-}
-
-function updateEntryState(
-  entry: ExtensionEntry,
-  enabled: boolean,
-  settingsByScope: Map<Scope, SettingsFile>,
-  configByScope: Map<Scope, ScopeConfig>,
-): void {
-  const config = configByScope.get(entry.scope);
-  const settings = settingsByScope.get(entry.scope);
-  if (!config || !settings) return;
-
-  const nextSettings = setOverride(
-    settings,
-    config.baseDir,
-    entry.path,
-    enabled,
-  );
-  settingsByScope.set(entry.scope, nextSettings);
-  writeSettings(config.settingsPath, nextSettings);
-  entry.enabled = enabled;
+  return { entries, settingsManager, agentDir };
 }
 
 export default function extensionsManager(pi: ExtensionAPI) {
   pi.registerCommand("extensions", {
     description: "Enable/disable extensions (apply with /reload)",
     handler: async (_args, ctx) => {
-      const { entries, settingsByScope, configByScope } = collectEntries(ctx);
+      const { entries, settingsManager, agentDir } = await loadEntries(ctx);
 
       if (entries.length === 0) {
         ctx.ui.notify(
-          "No extensions discovered in .pi/extensions or ~/.pi/agent/extensions",
+          "No extensions discovered (check .pi/extensions, ~/.pi/agent/extensions, and settings.packages)",
           "warning",
         );
         return;
@@ -389,12 +255,15 @@ export default function extensionsManager(pi: ExtensionAPI) {
           (id, newValue) => {
             const entry = entries.find((item) => item.id === id);
             if (!entry) return;
-            updateEntryState(
-              entry,
-              newValue === "enabled",
-              settingsByScope,
-              configByScope,
+            const enabled = newValue === "enabled";
+            toggleEntry(
+              settingsManager,
+              entry.resource,
+              enabled,
+              ctx.cwd,
+              agentDir,
             );
+            entry.enabled = enabled;
           },
           () => {
             done(undefined);
@@ -427,6 +296,16 @@ export default function extensionsManager(pi: ExtensionAPI) {
           },
         };
       });
+
+      try {
+        await settingsManager.flush();
+      } catch (err) {
+        ctx.ui.notify(
+          `Failed to persist settings: ${(err as Error).message}`,
+          "error",
+        );
+        return;
+      }
 
       ctx.ui.notify(
         "Extension settings updated. Run /reload to apply.",
