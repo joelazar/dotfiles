@@ -415,8 +415,6 @@ cask "vlc"
 cask "wireshark-app"
 # Multiplayer code editor
 cask "zed"
-# Gecko based web browser
-cask "zen"
 go "golang.org/x/tools/cmd/callgraph"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/davidrjenni/reftools/cmd/fillswitch"

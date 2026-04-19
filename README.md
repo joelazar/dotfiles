@@ -273,7 +273,7 @@ These are my personal dotfiles for macOS, managed with [chezmoi](https://github.
 
 A significant part of this setup is dedicated to AI-assisted development:
 
-- **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions and Wakatime integration
+- **[Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code)** — Anthropic's CLI coding agent with custom permissions
 - **[Pi Agent](https://github.com/mariozechner/pi-coding-agent)** — Heavily customized coding agent harness (see detailed section below). Config in [`dot_pi/`](dot_pi/)
 - **[Gemini CLI](https://github.com/google-gemini/gemini-cli)** — Google's Gemini from the terminal
 - **[Codex](https://github.com/openai/codex)** — OpenAI's coding agent. Config in [`dot_codex/`](dot_codex/)

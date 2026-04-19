@@ -15,9 +15,6 @@
     "quick_actions": false,
     "breadcrumbs": true,
   },
-  "notification_panel": {
-    "button": false,
-  },
   "status_bar": {
     "show_active_file": false,
     "cursor_position_button": true,
@@ -245,7 +242,7 @@
       "model": "claude-sonnet-4.6",
     },
     "use_modifier_to_send": true,
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": "always",
     "show_turn_stats": true, // show timer + token count per turn
     "commit_message_model": {
       "provider": "copilot_chat",
@@ -637,7 +634,7 @@
     "Go": {
       "format_on_save": "on",
       "language_servers": ["!harper-ls", "..."],
-      "lsp_folding_ranges": "on", // use gopls for smarter fold ranges
+      "document_folding_ranges": "on",
     },
     "Markdown": {
       "format_on_save": "on",
@@ -695,7 +692,6 @@
     "tokyo-night": true,
     "toml": true,
     "vscode-icons": true,
-    "wakatime": true,
     "zig": true,
   },
 
