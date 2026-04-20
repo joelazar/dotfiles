@@ -80,7 +80,6 @@ keybind = super+minus=decrease_font_size:0.5
 keybind = shift+page_down=adjust_selection:page_down
 keybind = ctrl+tab=next_tab
 keybind = super+a=select_all
-keybind = super+shift+enter=toggle_split_zoom
 keybind = super+alt+down=goto_split:bottom
 keybind = super+ctrl+f=toggle_fullscreen
 keybind = super+alt+shift+j=write_scrollback_file:open,html
@@ -134,7 +133,6 @@ keybind = super+ctrl+h=goto_split:left
 keybind = super+ctrl+j=goto_split:bottom
 keybind = super+ctrl+k=goto_split:top
 keybind = super+ctrl+l=goto_split:right
-keybind = super+shift+enter=new_split:auto
 
 keybind = super+shift+t=prompt_tab_title
 

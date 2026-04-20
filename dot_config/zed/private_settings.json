@@ -20,8 +20,16 @@
     "cursor_position_button": true,
     "active_language_button": true,
   },
-  "theme": "Tokyo Night",
-  "icon_theme": "Material Icon Theme",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Tokyo Night"
+  },
+  "icon_theme": {
+    "mode": "light",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "ui_font_size": 13.0,
   "agent_ui_font_size": 13.0,
   "buffer_font_size": 12.0,
@@ -250,6 +258,8 @@
     },
     "enable_feedback": false,
     "default_model": {
+      "effort": "medium",
+      "enable_thinking": true,
       "provider": "copilot_chat",
       "model": "claude-sonnet-4.6",
     },
