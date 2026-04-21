@@ -11,9 +11,12 @@
  */
 
 import type {
+  BeforeAgentStartEvent,
+  BuildSystemPromptOptions,
   ExtensionAPI,
   ExtensionCommandContext,
   ExtensionContext,
+  Skill,
   ToolResultEvent,
 } from "@mariozechner/pi-coding-agent";
 import { DynamicBorder } from "@mariozechner/pi-coding-agent";
@@ -161,6 +164,17 @@ function buildSkillIndex(pi: ExtensionAPI, cwd: string): SkillIndexEntry[] {
       };
     })
     .filter((x) => x.name && x.skillDir);
+}
+
+function skillIndexFromPromptOptions(
+  skills: Skill[] | undefined,
+): SkillIndexEntry[] {
+  if (!skills?.length) return [];
+  return skills.map((s) => ({
+    name: normalizeSkillName(s.name),
+    skillFilePath: path.resolve(s.filePath),
+    skillDir: path.resolve(s.baseDir),
+  }));
 }
 
 const SKILL_LOADED_ENTRY = "context:skill_loaded";
@@ -479,18 +493,36 @@ export default function contextExtension(pi: ExtensionAPI) {
   let lastSessionId: string | null = null;
   let cachedLoadedSkills = new Set<string>();
   let cachedSkillIndex: SkillIndexEntry[] = [];
+  // Snapshot of the structured prompt options used on the most recent
+  // before_agent_start — lets /context report what pi actually loaded
+  // instead of re-scanning cwd.
+  let lastPromptOptions: BuildSystemPromptOptions | null = null;
 
   const ensureCaches = (ctx: ExtensionContext) => {
     const sid = ctx.sessionManager.getSessionId();
     if (sid !== lastSessionId) {
       lastSessionId = sid;
       cachedLoadedSkills = getLoadedSkillsFromSession(ctx);
-      cachedSkillIndex = buildSkillIndex(pi, ctx.cwd);
+      cachedSkillIndex = [];
+      lastPromptOptions = null;
     }
-    if (cachedSkillIndex.length === 0) {
+    // Prefer skill index from last prompt snapshot; fall back to command
+    // registry when no agent turn has run yet this session.
+    const snapshotIndex = skillIndexFromPromptOptions(
+      lastPromptOptions?.skills,
+    );
+    if (snapshotIndex.length > 0) {
+      cachedSkillIndex = snapshotIndex;
+    } else if (cachedSkillIndex.length === 0) {
       cachedSkillIndex = buildSkillIndex(pi, ctx.cwd);
     }
   };
+
+  pi.on("before_agent_start", (event: BeforeAgentStartEvent) => {
+    if (event.systemPromptOptions) {
+      lastPromptOptions = event.systemPromptOptions;
+    }
+  });
 
   const matchSkillForPath = (absPath: string): string | null => {
     let best: SkillIndexEntry | null = null;
@@ -547,11 +579,23 @@ export default function contextExtension(pi: ExtensionAPI) {
         .map((p) => (p === "<unknown>" ? p : path.basename(p)))
         .sort((a, b) => a.localeCompare(b));
 
-      const skills = skillCmds
-        .map((c) => normalizeSkillName(c.name))
-        .sort((a, b) => a.localeCompare(b));
+      // Prefer skills from last prompt snapshot (the set pi actually
+      // formatted into the system prompt) over the command registry.
+      const skills = (
+        lastPromptOptions?.skills?.length
+          ? lastPromptOptions.skills.map((s) => normalizeSkillName(s.name))
+          : skillCmds.map((c) => normalizeSkillName(c.name))
+      ).sort((a, b) => a.localeCompare(b));
 
-      const agentFiles = await loadProjectContextFiles(ctx.cwd);
+      // Prefer context files from last prompt snapshot — that's exactly
+      // what pi loaded into the system prompt. Fall back to disk scan if
+      // no agent turn has run yet this session.
+      const agentFiles =
+        lastPromptOptions?.contextFiles?.map((f) => ({
+          path: f.path,
+          tokens: estimateTokens(f.content),
+          bytes: Buffer.byteLength(f.content, "utf8"),
+        })) ?? (await loadProjectContextFiles(ctx.cwd));
       const agentFilePaths = agentFiles.map((f) =>
         shortenPath(f.path, ctx.cwd),
       );

@@ -240,6 +240,7 @@
     "provider": "zed",
   },
   "agent": {
+    "max_content_width": 1200.0,
     "button": false,
     "single_file_review": false,
     "tool_permissions": {
