@@ -1,6 +1,6 @@
 ---
 name: perplexity-search
-description: Web search, grounded answers, reasoning, and deep research via the Perplexity API.
+description: "Perplexity-specific modes — raw search results, reasoning, deep research, sonar models with filters (recency, domain, country, date). Use ONLY when the user explicitly says 'use perplexity', 'with sonar', 'deep research', 'perplexity reason', OR needs perplexity-specific features (raw ranked results, --search filters, --deep, --reason). DO NOT use for general 'search the web for X' — use the `web-search` skill instead."
 allowed-tools: [Bash, Read]
 ---
 

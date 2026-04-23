@@ -1,9 +1,9 @@
 ---
-name: native-web-search
-description: "Trigger native web search. Use when you need quick internet research with concise summaries and full source URLs."
+name: ai-search
+description: "Low-level AI provider web search (codex, anthropic, gemini-cli). DO NOT use for general web search — use the `web-search` skill instead. Use this skill ONLY when the user explicitly says 'use ai-search', 'use codex', 'use gemini', 'use claude search', or asks to compare AI providers / get a specific model's native search."
 ---
 
-# Native Web Search
+# AI Search
 
 Use this skill to run a **fast model with native web search enabled** and get a concise research summary with explicit full URLs.
 
@@ -28,10 +28,14 @@ node search.mjs "vite 7 breaking changes" --purpose "prepare migration checklist
 
 Optional flags:
 
-- `--provider openai-codex|anthropic`
-- `--model <model-id>`
+- `--provider openai-codex|anthropic|gemini-cli`
+- `--model <model-id>` (for `gemini-cli`, defaults to `gemini-3.1-flash-lite-preview`)
 - `--timeout <ms>`
 - `--json`
+
+The `gemini-cli` provider shells out to the local `gemini` CLI with `-y` (yolo)
+and forces use of the built-in `google_web_search` tool. No API key needed —
+gemini-cli uses its own auth.
 
 ## Output expectations
 

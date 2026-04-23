@@ -124,6 +124,7 @@ function normalizeProvider(provider) {
   if (p.includes("anthropic") || p.includes("claude")) return "anthropic";
   if (p.includes("codex") || p === "openai" || p.startsWith("openai"))
     return "openai-codex";
+  if (p.includes("gemini")) return "gemini-cli";
   return undefined;
 }
 
@@ -138,8 +139,39 @@ function pickProvider(argProvider, settings, auth) {
   if (auth?.anthropic) return "anthropic";
 
   throw new Error(
-    "Could not determine provider. Pass --provider openai-codex|anthropic",
+    "Could not determine provider. Pass --provider openai-codex|anthropic|gemini-cli",
   );
+}
+
+function pickGeminiModel(requested) {
+  // Fast model preferred for web search
+  return requested || process.env.GEMINI_FAST_MODEL || "gemini-3.1-flash-lite-preview";
+}
+
+function runGeminiCliSearch({ model, query, purpose, timeoutMs }) {
+  const prompt =
+    buildSystemPrompt() +
+    "\n\n" +
+    buildUserPrompt(query, purpose) +
+    "\n\nYou MUST use the google_web_search tool to gather fresh information. Do not use any other web tool.";
+
+  const args = ["-m", model, "-y", "-p", prompt];
+  const res = spawnSync("gemini", args, {
+    encoding: "utf8",
+    timeout: timeoutMs,
+    maxBuffer: 16 * 1024 * 1024,
+    stdio: ["ignore", "pipe", "pipe"],
+    env: { ...process.env },
+  });
+  if (res.error) throw new Error(`gemini-cli failed: ${res.error.message}`);
+  if (res.status !== 0) {
+    throw new Error(
+      `gemini-cli exited with status ${res.status}: ${res.stderr || res.stdout}`,
+    );
+  }
+  const text = (res.stdout || "").trim();
+  if (!text) throw new Error("gemini-cli returned empty output");
+  return text;
 }
 
 function decodeJwtAccountId(jwt) {
@@ -639,40 +671,53 @@ async function main() {
   const settings = readJson(settingsPath, {});
 
   const provider = pickProvider(args.provider, settings, auth);
-  const piAi = await loadPiAi();
-  const model = pickFastModel(provider, args.model, piAi);
-  const { apiKey, accountId } = await resolveApiKey(
-    provider,
-    auth,
-    authPath,
-    piAi,
-  );
 
-  const text =
-    provider === "openai-codex"
-      ? await runCodexSearch({
-          model: model.id,
-          apiKey,
-          accountId,
-          query: args.query,
-          purpose: args.purpose,
-          timeoutMs: args.timeoutMs,
-          baseUrl: model.baseUrl,
-        })
-      : await runAnthropicSearch({
-          model: model.id,
-          apiKey,
-          query: args.query,
-          purpose: args.purpose,
-          timeoutMs: args.timeoutMs,
-        });
+  let modelId;
+  let text;
+  if (provider === "gemini-cli") {
+    modelId = pickGeminiModel(args.model);
+    text = runGeminiCliSearch({
+      model: modelId,
+      query: args.query,
+      purpose: args.purpose,
+      timeoutMs: args.timeoutMs,
+    });
+  } else {
+    const piAi = await loadPiAi();
+    const model = pickFastModel(provider, args.model, piAi);
+    modelId = model.id;
+    const { apiKey, accountId } = await resolveApiKey(
+      provider,
+      auth,
+      authPath,
+      piAi,
+    );
+    text =
+      provider === "openai-codex"
+        ? await runCodexSearch({
+            model: modelId,
+            apiKey,
+            accountId,
+            query: args.query,
+            purpose: args.purpose,
+            timeoutMs: args.timeoutMs,
+            baseUrl: model.baseUrl,
+          })
+        : await runAnthropicSearch({
+            model: modelId,
+            apiKey,
+            query: args.query,
+            purpose: args.purpose,
+            timeoutMs: args.timeoutMs,
+          });
+  }
 
   if (args.json) {
     console.log(
       JSON.stringify(
         {
           provider,
-          model: model.id,
+          model: modelId,
           query: args.query,
           purpose: args.purpose,
           result: text,
@@ -685,7 +730,7 @@ async function main() {
   }
 
   console.log(`Provider: ${provider}`);
-  console.log(`Model: ${model.id}`);
+  console.log(`Model: ${modelId}`);
   console.log("");
   console.log(text);
 }
