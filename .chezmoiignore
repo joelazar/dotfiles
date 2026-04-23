@@ -17,3 +17,8 @@ bootstrap.sh
 {{ if ne .type "work" }}
 .aerospace.toml
 {{ end }}
+
+.pi/agent/sessions
+.pi/agent/auth.json
+.pi/agent/pi-fff/
+.git
