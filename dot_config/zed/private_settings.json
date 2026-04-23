@@ -176,6 +176,7 @@
   // PANELS
   // ══════════════════════════════════════════════════════════════════════════════
   "project_panel": {
+    "dock": "right",
     "button": false,
     "default_width": 300,
     "auto_fold_dirs": false,
@@ -189,10 +190,12 @@
     "dock": "right",
   },
   "collaboration_panel": {
+    "dock": "right",
     "button": false,
     "default_width": 300,
   },
   "git_panel": {
+    "dock": "right",
     "button": false,
     "tree_view": true,
     "sort_by_path": true,
@@ -240,6 +243,7 @@
     "provider": "zed",
   },
   "agent": {
+    "dock": "left",
     "max_content_width": 1200.0,
     "button": false,
     "single_file_review": false,
