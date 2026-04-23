@@ -34,7 +34,9 @@ MANAGED_CONFIG='{
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
   ],
   "transport": "auto",
-  "treeFilterMode": "default"
+  "treeFilterMode": "default",
+  "steeringMode": "all",
+  "followUpMode": "one-at-a-time"
 }'
 
 # Local-only keys — preserved from the existing file, never overwritten.
