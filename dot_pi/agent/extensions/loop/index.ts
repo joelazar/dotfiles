@@ -8,7 +8,7 @@
  * signal_loop_success tool.
  */
 
-import { Type } from "@sinclair/typebox";
+import { Type } from "typebox";
 import {
   complete,
   type Api,
@@ -373,6 +373,7 @@ export default function loopExtension(pi: ExtensionAPI): void {
         return {
           content: [{ type: "text", text: "No active loop is running." }],
           details: { active: false },
+          terminate: true,
         };
       }
 
@@ -381,6 +382,7 @@ export default function loopExtension(pi: ExtensionAPI): void {
       return {
         content: [{ type: "text", text: "Loop ended." }],
         details: { active: false },
+        terminate: true,
       };
     },
   });

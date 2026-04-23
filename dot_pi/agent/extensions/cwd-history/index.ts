@@ -15,6 +15,9 @@ import fs from "node:fs/promises";
 const MAX_HISTORY_ENTRIES = 100;
 const MAX_RECENT_PROMPTS = 30;
 
+// Cached thinking level to survive stale-pi access during/after session replacement.
+let lastKnownThinkingLevel: ReturnType<ExtensionAPI["getThinkingLevel"]> | undefined;
+
 interface PromptEntry {
   text: string;
   timestamp: number;
@@ -218,13 +221,21 @@ function setEditorHistory(
   ctx: ExtensionContext,
   history: PromptEntry[],
 ) {
+  const uiTheme = ctx.ui.theme;
   ctx.ui.setEditorComponent((tui, theme, keybindings) => {
     const editor = new HistoryEditor(tui, theme, keybindings);
     const borderColor = (text: string) => {
       const isBashMode = editor.getText().trimStart().startsWith("!");
+      let thinking: ReturnType<ExtensionAPI["getThinkingLevel"]>;
+      try {
+        thinking = pi.getThinkingLevel();
+        lastKnownThinkingLevel = thinking;
+      } catch {
+        thinking = lastKnownThinkingLevel ?? "off";
+      }
       const colorFn = isBashMode
-        ? ctx.ui.theme.getBashModeBorderColor()
-        : ctx.ui.theme.getThinkingBorderColor(pi.getThinkingLevel());
+        ? uiTheme.getBashModeBorderColor()
+        : uiTheme.getThinkingBorderColor(thinking);
       return colorFn(text);
     };
 

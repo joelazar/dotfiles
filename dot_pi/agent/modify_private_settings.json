@@ -25,11 +25,12 @@ MANAGED_CONFIG='{
   "packages": [
     "/Users/joelazar/Code/ai/pi/pi-autoresearch",
     "/Users/joelazar/Code/ai/pi/pi-review",
+    "/Users/joelazar/Code/ai/pi/pi-fff",
     "/Users/joelazar/Code/ai/pi/pi-codex-image",
     "/Users/joelazar/Code/ai/pi/condensed-milk-pi",
     "/Users/joelazar/Code/ai/pi/caveman-milk-pi",
-    "/Users/joelazar/Code/joelazar/pi-side-chat",
-    "/Users/joelazar/Code/joelazar/pi-nvim",
+    "/Users/joelazar/Code/ai/pi/pi-side-chat",
+    "/Users/joelazar/Code/ai/pi/pi-nvim",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
   ],
   "transport": "auto",

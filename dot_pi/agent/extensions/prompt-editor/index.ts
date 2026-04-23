@@ -407,11 +407,10 @@ function orderedModeNames(modes: Record<string, ModeSpec>): string[] {
 }
 
 function getModeBorderColor(
-  ctx: ExtensionContext,
+  theme: ExtensionContext["ui"]["theme"],
   pi: ExtensionAPI,
   mode: string,
 ): (text: string) => string {
-  const theme = ctx.ui.theme;
   const spec = runtime.data.modes[mode];
 
   // Explicit color override in JSON.
@@ -426,7 +425,7 @@ function getModeBorderColor(
   }
 
   // Default: derive from the current thinking level.
-  return theme.getThinkingBorderColor(pi.getThinkingLevel());
+  return theme.getThinkingBorderColor(safeGetThinkingLevel(pi));
 }
 
 function formatModeLabel(mode: string): string {
@@ -602,6 +601,19 @@ async function persistRuntime(
 // because ctx.model is a snapshot-ish view that is updated via the model_select event.
 // Track the last observed model ourselves and use it for overlays / storing.
 let lastObservedModel: { provider?: string; modelId?: string } = {};
+
+// Cached thinking level, refreshed from fresh pi instances in event handlers.
+// Used during render to avoid stale-pi throws after session replacement.
+let lastKnownThinkingLevel: ReturnType<ExtensionAPI["getThinkingLevel"]> | undefined;
+function safeGetThinkingLevel(pi: ExtensionAPI) {
+  try {
+    const level = pi.getThinkingLevel();
+    lastKnownThinkingLevel = level;
+    return level;
+  } catch {
+    return lastKnownThinkingLevel ?? "off";
+  }
+}
 
 function getCurrentSelectionSpec(
   pi: ExtensionAPI,
@@ -1362,18 +1374,19 @@ function setEditor(
   ctx: ExtensionContext,
   history: PromptEntry[],
 ) {
+  const uiTheme = ctx.ui.theme;
   ctx.ui.setEditorComponent((tui, theme, keybindings) => {
     const editor = new PromptEditor(tui, theme, keybindings);
     requestEditorRender = () => editor.requestRenderNow();
     editor.modeLabelProvider = () => runtime.currentMode;
     // Keep the mode label color stable (match footer/status bar).
-    editor.modeLabelColor = (text: string) => ctx.ui.theme.fg("dim", text);
+    editor.modeLabelColor = (text: string) => uiTheme.fg("dim", text);
     const borderColor = (text: string) => {
       const isBashMode = editor.getText().trimStart().startsWith("!");
       if (isBashMode) {
-        return ctx.ui.theme.getBashModeBorderColor()(text);
+        return uiTheme.getBashModeBorderColor()(text);
       }
-      return getModeBorderColor(ctx, pi, runtime.currentMode)(text);
+      return getModeBorderColor(uiTheme, pi, runtime.currentMode)(text);
     };
 
     editor.borderColor = borderColor;
