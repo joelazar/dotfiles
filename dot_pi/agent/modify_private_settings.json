@@ -12,18 +12,25 @@ MANAGED_CONFIG='{
   "theme": "tokyo-night",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "openai-codex/gpt-5.3-codex",
-    "openai-codex/gpt-5.4",
+    "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-7",
     "anthropic/claude-sonnet-4-6"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
   "extensions": [
-    "-extensions/sandbox/index.ts"
+    "-extensions/sandbox/index.ts",
+    "-extensions/antigravity-image-gen/index.ts",
+    "-extensions/loop/index.ts"
   ],
   "packages": [
-    "/Users/joelazar/Code/ai/pi/pi-autoresearch",
+    {
+      "source": "/Users/joelazar/Code/ai/pi/pi-autoresearch",
+      "extensions": [
+        "-extensions/pi-autoresearch/index.ts"
+      ],
+      "skills": []
+    },
     "/Users/joelazar/Code/ai/pi/pi-review",
     "/Users/joelazar/Code/ai/pi/pi-fff",
     "/Users/joelazar/Code/ai/pi/pi-codex-image",
@@ -36,7 +43,10 @@ MANAGED_CONFIG='{
   "transport": "auto",
   "treeFilterMode": "default",
   "steeringMode": "all",
-  "followUpMode": "one-at-a-time"
+  "followUpMode": "one-at-a-time",
+  "terminal": {
+    "showTerminalProgress": true
+  }
 }'
 
 # Local-only keys — preserved from the existing file, never overwritten.

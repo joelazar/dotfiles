@@ -149,6 +149,20 @@ function togglePackage(
 
   pkg.extensions = updated.length > 0 ? updated : undefined;
 
+  // Package skills are discovered independently from package extensions. Without
+  // mirroring the package toggle here, disabling a package extension such as
+  // pi-autoresearch still leaves its `/skill:*` commands loaded. Treat an
+  // extension disable as disabling the package's companion skills too; when the
+  // extension is re-enabled, restore the default package behavior by removing
+  // the explicit empty skills filter.
+  if (enabled) {
+    if (Array.isArray(pkg.skills) && pkg.skills.length === 0) {
+      pkg.skills = undefined;
+    }
+  } else {
+    pkg.skills = [];
+  }
+
   const hasFilters = (
     ["extensions", "skills", "prompts", "themes"] as const
   ).some((k) => pkg![k] !== undefined);

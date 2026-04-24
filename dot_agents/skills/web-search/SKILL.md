@@ -1,6 +1,6 @@
 ---
 name: web-search
-description: "DEFAULT web search skill. Tiered: kagi quick → codex → anthropic → perplexity, escalates only if answer insufficient. Use this for ANY task that needs fresh internet data. Trigger phrases (all route here): 'search the web', 'web-search', 'websearch', 'search on the internet', 'search on internet', 'on the internet', 'look up', 'lookup', 'find online', 'find on the web', 'search for X', 'search after X', 'do research', 'do some research', 'make a research', 'research about X', 'research topic', 'what is the latest X', 'current version of Y', 'recent docs for Z', 'check if package exists', 'find the URL for', 'who/what/when/where on the internet', 'google it', 'find out about'. ALWAYS prefer this skill over `kagi`, `perplexity-search`, or `ai-search` unless the user explicitly names a specific provider (e.g. 'use kagi', 'with perplexity', 'via codex')."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→anthropic→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude/gemini, or ai-search."
 allowed-tools: [Bash, Read]
 ---
 

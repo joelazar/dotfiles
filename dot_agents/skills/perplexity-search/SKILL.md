@@ -1,6 +1,6 @@
 ---
 name: perplexity-search
-description: "Perplexity-specific modes — raw search results, reasoning, deep research, sonar models with filters (recency, domain, country, date). Use ONLY when the user explicitly says 'use perplexity', 'with sonar', 'deep research', 'perplexity reason', OR needs perplexity-specific features (raw ranked results, --search filters, --deep, --reason). DO NOT use for general 'search the web for X' — use the `web-search` skill instead."
+description: "Perplexity-specific search: sonar, raw ranked results, reasoning/deep research, recency/domain/country/date filters. Use only when user names Perplexity/Sonar/deep research or needs these filters; otherwise use web-search."
 allowed-tools: [Bash, Read]
 ---
 

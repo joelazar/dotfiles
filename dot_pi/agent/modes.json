@@ -14,17 +14,12 @@
     },
     "fast-gpt": {
       "provider": "openai-codex",
-      "modelId": "gpt-5.3-codex",
+      "modelId": "gpt-5.5",
       "thinkingLevel": "low"
-    },
-    "fastest": {
-      "provider": "openai-codex",
-      "modelId": "gpt-5.4-mini",
-      "thinkingLevel": "medium"
     },
     "deep": {
       "provider": "openai-codex",
-      "modelId": "gpt-5.4",
+      "modelId": "gpt-5.5",
       "thinkingLevel": "high"
     }
   }

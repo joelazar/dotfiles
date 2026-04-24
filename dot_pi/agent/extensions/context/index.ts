@@ -284,6 +284,108 @@ function renderUsageBar(
   return `${sysStr}${toolsStr}${conStr}${remStr}`;
 }
 
+function buildSystemPromptBreakdown(
+  options: BuildSystemPromptOptions | null,
+  fullSystemPrompt: string,
+  agentTokens: number,
+  skillsCount: number,
+): Array<{ label: string; tokens: number }> {
+  const out: Array<{ label: string; tokens: number }> = [];
+  if (!fullSystemPrompt) return out;
+
+  const total = estimateTokens(fullSystemPrompt);
+  const appendTokens = estimateTokens(options?.appendSystemPrompt ?? "");
+  const customTokens = estimateTokens(options?.customPrompt ?? "");
+  const skillsMarker = "<available_skills>";
+  const skillsTokens = fullSystemPrompt.includes(skillsMarker)
+    ? estimateTokens(
+        fullSystemPrompt.slice(fullSystemPrompt.indexOf(skillsMarker)),
+      )
+    : 0;
+  const cwdDateMatch = fullSystemPrompt.match(
+    /\nCurrent date: .*\nCurrent working directory: .*$/s,
+  );
+  const cwdDateTokens = estimateTokens(cwdDateMatch?.[0] ?? "");
+
+  if (customTokens > 0)
+    out.push({ label: "custom prompt", tokens: customTokens });
+  else {
+    const baseTokens = Math.max(
+      0,
+      total - appendTokens - agentTokens - skillsTokens - cwdDateTokens,
+    );
+    out.push({ label: "pi base prompt/docs/guidelines", tokens: baseTokens });
+  }
+  if (appendTokens > 0)
+    out.push({ label: "appendSystemPrompt", tokens: appendTokens });
+  if (agentTokens > 0)
+    out.push({ label: "AGENTS/context files", tokens: agentTokens });
+  if (skillsTokens > 0)
+    out.push({ label: `skills index (${skillsCount})`, tokens: skillsTokens });
+  if (cwdDateTokens > 0)
+    out.push({ label: "date + cwd", tokens: cwdDateTokens });
+
+  const accounted = out.reduce((a, x) => a + x.tokens, 0);
+  const drift = total - accounted;
+  if (Math.abs(drift) > 10)
+    out.push({ label: "unclassified/rounding", tokens: drift });
+  return out;
+}
+
+function escapeXmlForPrompt(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function buildSkillPromptBreakdown(
+  skills: Skill[] | undefined,
+): Array<{ name: string; tokens: number }> {
+  if (!skills?.length) return [];
+  return skills
+    .filter((s) => !s.disableModelInvocation)
+    .map((s) => {
+      const entry = [
+        "  <skill>",
+        `    <name>${escapeXmlForPrompt(s.name)}</name>`,
+        `    <description>${escapeXmlForPrompt(s.description)}</description>`,
+        `    <location>${escapeXmlForPrompt(s.filePath)}</location>`,
+        "  </skill>",
+      ].join("\n");
+      return {
+        name: normalizeSkillName(s.name),
+        tokens: estimateTokens(entry),
+      };
+    })
+    .sort((a, b) => b.tokens - a.tokens || a.name.localeCompare(b.name));
+}
+
+function buildSkillPromptBreakdownFromCommands(
+  commands: ReturnType<ExtensionAPI["getCommands"]>,
+  cwd: string,
+): Array<{ name: string; tokens: number }> {
+  return commands
+    .filter((c) => c.source === "skill")
+    .map((c) => {
+      const name = normalizeSkillName(c.name);
+      const filePath = c.sourceInfo?.path
+        ? normalizeReadPath(c.sourceInfo.path, cwd)
+        : "";
+      const entry = [
+        "  <skill>",
+        `    <name>${escapeXmlForPrompt(name)}</name>`,
+        `    <description>${escapeXmlForPrompt(c.description ?? "")}</description>`,
+        `    <location>${escapeXmlForPrompt(filePath)}</location>`,
+        "  </skill>",
+      ].join("\n");
+      return { name, tokens: estimateTokens(entry) };
+    })
+    .sort((a, b) => b.tokens - a.tokens || a.name.localeCompare(b.name));
+}
+
 function joinComma(items: string[]): string {
   return items.join(", ");
 }
@@ -311,6 +413,9 @@ type ContextViewData = {
     activeTools: number;
   } | null;
   agentFiles: string[];
+  systemBreakdown: Array<{ label: string; tokens: number }>;
+  skillBreakdown: Array<{ name: string; tokens: number }>;
+  toolBreakdown: Array<{ name: string; tokens: number }>;
   extensions: string[];
   skills: string[];
   loadedSkills: string[];
@@ -411,16 +516,36 @@ class ContextView implements Component {
     // System prompt + tools totals (approx)
     if (this.data.usage) {
       const u = this.data.usage;
+      const breakdown = (items: Array<{ name: string; tokens: number }>) =>
+        items.map((x) => `${x.name} ~${x.tokens.toLocaleString()} tok`).join(", ");
+
+      lines.push(this.theme.fg("accent", this.theme.bold("Prompt")));
       lines.push(
         muted("System: ") +
           text(`~${u.systemPromptTokens.toLocaleString()} tok`) +
           muted(` (AGENTS ~${u.agentTokens.toLocaleString()})`),
       );
+      if (this.data.systemBreakdown.length > 0) {
+        lines.push(
+          muted("  breakdown: ") +
+            text(
+              this.data.systemBreakdown
+                .map((x) => `${x.label} ~${x.tokens.toLocaleString()} tok`)
+                .join("; "),
+            ),
+        );
+      }
       lines.push(
         muted("Tools: ") +
           text(`~${u.toolsTokens.toLocaleString()} tok`) +
           muted(` (${u.activeTools} active)`),
       );
+      if (this.data.toolBreakdown.length > 0) {
+        lines.push(muted("  active: ") + text(breakdown(this.data.toolBreakdown)));
+      }
+
+      lines.push("");
+      lines.push(this.theme.fg("accent", this.theme.bold("Project")));
     }
 
     lines.push(
@@ -430,10 +555,12 @@ class ContextView implements Component {
             ? joinComma(this.data.agentFiles)
             : "(none)",
         ),
-    );
+      );
     lines.push("");
+
+    lines.push(this.theme.fg("accent", this.theme.bold("Extensions")));
     lines.push(
-      muted(`Extensions (${this.data.extensions.length}): `) +
+      muted(`Loaded (${this.data.extensions.length}): `) +
         text(
           this.data.extensions.length
             ? joinComma(this.data.extensions)
@@ -442,7 +569,19 @@ class ContextView implements Component {
     );
 
     const loaded = new Set(this.data.loadedSkills);
-    const skillsRendered = this.data.skills.length
+    lines.push("");
+    lines.push(this.theme.fg("accent", this.theme.bold("Skills")));
+    if (this.data.skillBreakdown.length > 0) {
+      lines.push(
+        muted(`Available (${this.data.skills.length}): `) +
+          text(
+            this.data.skillBreakdown
+              .map((x) => `${x.name} ~${x.tokens.toLocaleString()} tok`)
+              .join(", "),
+          ),
+      );
+    } else {
+      const skillsRendered = this.data.skills.length
       ? joinCommaStyled(
           this.data.skills,
           (name) =>
@@ -452,7 +591,8 @@ class ContextView implements Component {
           this.theme.fg("muted", ", "),
         )
       : "(none)";
-    lines.push(muted(`Skills (${this.data.skills.length}): `) + skillsRendered);
+      lines.push(muted(`Available (${this.data.skills.length}): `) + skillsRendered);
+    }
     lines.push("");
     lines.push(
       muted("Session: ") +
@@ -605,6 +745,15 @@ export default function contextExtension(pi: ExtensionAPI) {
       const systemPromptTokens = systemPrompt
         ? estimateTokens(systemPrompt)
         : 0;
+      const systemBreakdown = buildSystemPromptBreakdown(
+        lastPromptOptions,
+        systemPrompt,
+        agentTokens,
+        skills.length,
+      );
+      const skillBreakdown = lastPromptOptions?.skills?.length
+        ? buildSkillPromptBreakdown(lastPromptOptions.skills)
+        : buildSkillPromptBreakdownFromCommands(commands, ctx.cwd);
 
       const usage = ctx.getContextUsage();
       const messageTokens = usage?.tokens ?? 0;
@@ -619,12 +768,17 @@ export default function contextExtension(pi: ExtensionAPI) {
         pi.getAllTools().map((t) => [t.name, t] as const),
       );
       let toolsTokens = 0;
+      const toolBreakdown: Array<{ name: string; tokens: number }> = [];
       for (const name of activeToolNames) {
         const info = toolInfoByName.get(name);
         const blob = `${name}\n${info?.description ?? ""}`;
-        toolsTokens += estimateTokens(blob);
+        const tokens = Math.round(estimateTokens(blob) * TOOL_FUDGE);
+        toolsTokens += tokens;
+        toolBreakdown.push({ name, tokens });
       }
-      toolsTokens = Math.round(toolsTokens * TOOL_FUDGE);
+      toolBreakdown.sort(
+        (a, b) => b.tokens - a.tokens || a.name.localeCompare(b.name),
+      );
 
       const effectiveTokens = messageTokens + toolsTokens;
       const percent = ctxWindow > 0 ? (effectiveTokens / ctxWindow) * 100 : 0;
@@ -643,21 +797,47 @@ export default function contextExtension(pi: ExtensionAPI) {
         } else {
           lines.push("Window: (unknown)");
         }
+        lines.push("Prompt");
         lines.push(
-          `System: ~${systemPromptTokens.toLocaleString()} tok (AGENTS ~${agentTokens.toLocaleString()})`,
+          `  System: ~${systemPromptTokens.toLocaleString()} tok (AGENTS ~${agentTokens.toLocaleString()} tok)`,
         );
+        if (systemBreakdown.length > 0) {
+          lines.push(
+            `  System breakdown: ${systemBreakdown
+              .map((x) => `${x.label} ~${x.tokens.toLocaleString()} tok`)
+              .join("; ")}`,
+          );
+        }
         lines.push(
-          `Tools: ~${toolsTokens.toLocaleString()} tok (${activeToolNames.length} active)`,
+          `  Tools: ~${toolsTokens.toLocaleString()} tok (${activeToolNames.length} active)`,
         );
+        if (toolBreakdown.length > 0) {
+          lines.push(
+            `  Tool detail: ${toolBreakdown
+              .map((x) => `${x.name} ~${x.tokens.toLocaleString()} tok`)
+              .join(", ")}`,
+          );
+        }
+        lines.push("Project");
         lines.push(
-          `AGENTS: ${agentFilePaths.length ? joinComma(agentFilePaths) : "(none)"}`,
+          `  AGENTS (${agentFilePaths.length}): ${agentFilePaths.length ? joinComma(agentFilePaths) : "(none)"}`,
         );
+        lines.push("Extensions");
         lines.push(
-          `Extensions (${extensionFiles.length}): ${extensionFiles.length ? joinComma(extensionFiles) : "(none)"}`,
+          `  Loaded (${extensionFiles.length}): ${extensionFiles.length ? joinComma(extensionFiles) : "(none)"}`,
         );
-        lines.push(
-          `Skills (${skills.length}): ${skills.length ? joinComma(skills) : "(none)"}`,
-        );
+        lines.push("Skills");
+        if (skillBreakdown.length > 0) {
+          lines.push(
+            `  Available (${skills.length}): ${skillBreakdown
+              .map((x) => `${x.name} ~${x.tokens.toLocaleString()} tok`)
+              .join(", ")}`,
+          );
+        } else {
+          lines.push(
+            `  Available (${skills.length}): ${skills.length ? joinComma(skills) : "(none)"}`,
+          );
+        }
         lines.push(
           `Session: ${sessionUsage.totalTokens.toLocaleString()} tokens · ${formatUsd(sessionUsage.totalCost)}`,
         );
@@ -691,6 +871,9 @@ export default function contextExtension(pi: ExtensionAPI) {
             }
           : null,
         agentFiles: agentFilePaths,
+        systemBreakdown,
+        skillBreakdown,
+        toolBreakdown,
         extensions: extensionFiles,
         skills,
         loadedSkills,

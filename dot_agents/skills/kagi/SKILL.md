@@ -1,6 +1,6 @@
 ---
 name: kagi
-description: "Terminal CLI for Kagi subscribers — translate, summarize, news, batch, assistant, lenses, bangs, redirects, etc. Use this skill ONLY when the user explicitly mentions 'kagi' by name, OR needs Kagi-specific features (translate, news, smallweb, lens management, bangs, ask-page, summarize URL, assistant threads). DO NOT use for general web search — use the `web-search` skill instead."
+description: "Kagi CLI: search/quick, translate, summarize, news/smallweb, lenses, bangs, redirects, assistant. Use only when user names Kagi or needs Kagi-specific features; otherwise use web-search."
 license: MIT
 compatibility: Requires Kagi subscription for most features. Works on macOS, Linux, and Windows. Install via Homebrew, Scoop, npm, or direct script.
 metadata:

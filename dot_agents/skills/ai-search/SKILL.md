@@ -1,6 +1,6 @@
 ---
 name: ai-search
-description: "Low-level AI provider web search (codex, anthropic, gemini-cli). DO NOT use for general web search — use the `web-search` skill instead. Use this skill ONLY when the user explicitly says 'use ai-search', 'use codex', 'use gemini', 'use claude search', or asks to compare AI providers / get a specific model's native search."
+description: "Low-level provider web search via codex, anthropic/Claude, or gemini-cli. Use only when user names ai-search/codex/gemini/claude search, compares providers, or wants native search; otherwise use web-search."
 ---
 
 # AI Search
