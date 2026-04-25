@@ -115,9 +115,12 @@
       "autoUpdate": true
     }
   },
-  "showThinkingSummaries": true,
+  "effortLevel": "high",
   "autoUpdatesChannel": "stable",
-  "voiceEnabled": false,
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "voiceEnabled": false,
+  "theme": "dark-ansi",
+  "preferredNotifChannel": "ghostty",
+  "fileCheckpointingEnabled": false
 }

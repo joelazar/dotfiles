@@ -5,8 +5,8 @@
 set -euo pipefail
 
 # --- Tracked config (edit here) ---
-MANAGED_CONFIG='model = "gpt-5.4"
-model_reasoning_effort = "high"
+MANAGED_CONFIG='model = "gpt-5.5"
+model_reasoning_effort = "low"
 approval_policy = "on-request"
 personality = "pragmatic"
 
@@ -18,20 +18,43 @@ status_line = [
   "context-remaining",
 ]
 
+[tui.model_availability_nux]
+"gpt-5.5" = 2
+
 [plugins."github@openai-curated"]
 enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/joelazar/.codex/.tmp/bundled-marketplaces/openai-bundled"
 '
 
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
 
-# If no existing file or no projects section, just output managed config
-if [ -z "$EXISTING" ] || ! echo "$EXISTING" | tomlq -e '.projects' >/dev/null 2>&1; then
+# If no existing file, just output managed config
+if [ -z "$EXISTING" ]; then
   echo "$MANAGED_CONFIG"
   exit 0
 fi
 
-# Merge: managed config + projects from existing file
+# Merge: managed config + projects + marketplaces.*.last_updated from existing
+# (last_updated is auto-written by codex; preserve it instead of clobbering.)
 echo "$MANAGED_CONFIG" | tomlq -t \
   --slurpfile existing <(echo "$EXISTING" | tomlq '.') \
-  '. * {projects: $existing[0].projects}'
+  '
+    . as $managed
+    | ($existing[0].projects // null) as $projects
+    | ($existing[0].marketplaces // {}) as $existing_mkt
+    | .marketplaces = (
+        ($managed.marketplaces // {})
+        | with_entries(
+            .value.last_updated = ($existing_mkt[.key].last_updated // .value.last_updated // null)
+            | .value |= with_entries(select(.value != null))
+          )
+      )
+    | if $projects then .projects = $projects else . end
+  '

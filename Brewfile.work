@@ -1,6 +1,7 @@
 tap "aws/tap"
 tap "buo/cask-upgrade"
 tap "dlvhdr/formulae"
+tap "grafana/grafana"
 tap "hashicorp/tap"
 tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
@@ -379,8 +380,12 @@ cask "ghostty"
 cask "google-chrome"
 # Client for the Google Drive storage service
 cask "google-drive"
+# Chromium-based web browser
+cask "helium-browser"
 # Free and open-source media player
 cask "iina"
+# Vector graphics editor
+cask "inkscape"
 # Voice-to-text transcription and paste tool
 cask "kitlangton-hex"
 # Tool to control external monitor brightness & volume
@@ -446,6 +451,7 @@ go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "bpf-linker"
+cargo "kagi"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "nginx-language-server"

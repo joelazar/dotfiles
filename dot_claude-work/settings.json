@@ -101,6 +101,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "opus[1m]",
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
@@ -117,10 +118,12 @@
       "autoUpdate": true
     }
   },
-  "showThinkingSummaries": true,
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
-  "voiceEnabled": false,
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "model": "opus[1m]"
+  "voiceEnabled": false,
+  "theme": "dark-ansi",
+  "preferredNotifChannel": "ghostty",
+  "fileCheckpointingEnabled": false
 }
