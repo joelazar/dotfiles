@@ -314,6 +314,8 @@ brew "zoxide"
 brew "aws/tap/eks-node-viewer"
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav"
+# Grafana Cloud CLI
+brew "grafana/grafana/gcx"
 # Terraform
 brew "hashicorp/tap/terraform"
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.
