@@ -15,6 +15,7 @@ env = { BAT_THEME = "ansi" }
 
 [keybindings]
 enter = "actions:edit"
+ctrl-enter = "actions:edit"
 
 [actions.edit]
 description = "Open the selected file in editor"

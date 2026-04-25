@@ -17,7 +17,7 @@ command = "cd '{}'; git log -n 200 --pretty=medium --all --graph --color"
 
 [keybindings]
 enter = "actions:cd"
-ctrl-e = "actions:edit"
+ctrl-enter = "actions:edit"
 
 [actions.cd]
 description = "Open a new shell in the selected repository"

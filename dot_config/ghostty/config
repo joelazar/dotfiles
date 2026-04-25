@@ -144,6 +144,8 @@ keybind = super+shift+r=reload_config
 keybind = super+grave_accent=goto_window:next
 keybind = super+shift+grave_accent=goto_window:previous
 keybind = shift+enter=text:\n
+# remap ctrl+enter to CSI u ctrl+enter
+keybind = ctrl+enter=text:\x1b[13;5u
 
 # shell-integration-features = no-cursor,sudo,title
 shell-integration-features = sudo,title,ssh-env,no-ssh-terminfo

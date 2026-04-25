@@ -11,6 +11,7 @@ command = "bat -n --color=always '{}'"
 
 [keybindings]
 enter = "actions:edit"
+ctrl-enter = "actions:edit"
 
 [actions.edit]
 description = "Edit the selected dotfile"

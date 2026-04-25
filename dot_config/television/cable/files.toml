@@ -11,8 +11,7 @@ command = "bat -n --color=always '{}'"
 env = { BAT_THEME = "ansi" }
 
 [keybindings]
-shortcut = "f1"
-enter = "actions:edit"
+ctrl-enter = "actions:edit"
 ctrl-up = "actions:goto_parent_dir"
 
 [actions.edit]
