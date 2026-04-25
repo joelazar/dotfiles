@@ -19,3 +19,7 @@ echo
 echo "🥧 Update Pi extensions"
 pi update
 echo
+
+echo "🔀 Rebase Pi packages on upstream/main"
+"${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-rebase"
+echo

@@ -1,0 +1,206 @@
+#!/usr/bin/env bash
+# pi-packages-rebase
+#
+# For every local pi package referenced in ~/.pi/agent/settings.json, rebase
+# every local branch (except `upstream-main` itself) on top of `upstream/main`.
+#
+# A package is "rebaseable" if its repo has both an `origin` and an `upstream`
+# remote (i.e. it's a fork you maintain). Repos without an `upstream` remote
+# are skipped — they're either your own projects or read-only clones.
+#
+# Behavior per repo:
+#   - Skip if working tree is dirty.
+#   - Skip if HEAD is detached.
+#   - `git fetch upstream --prune`.
+#   - Fast-forward `upstream-main` to `upstream/main` if it exists.
+#   - For each local branch (except `upstream-main`):
+#       * Skip if already contained in upstream/main (nothing to do).
+#       * `git rebase upstream/main`. On conflict: abort, report, continue.
+#   - Restore the original branch.
+#
+# Usage:
+#   scripts/pi-packages-rebase            # rebase all
+#   scripts/pi-packages-rebase --dry-run  # show plan, no changes
+#   scripts/pi-packages-rebase pi-fff     # only matching repos (basename)
+
+set -euo pipefail
+
+UTILS="$(dirname "$0")/utils"
+# shellcheck disable=SC1090
+[ -f "$UTILS" ] && source "$UTILS" || true
+
+have() { command -v "$1" >/dev/null 2>&1; }
+say()  { if have gum; then gum style --foreground 12 "$*"; else echo "==> $*"; fi; }
+warn() { if have gum; then gum style --foreground 3  "$*"; else echo "!!  $*" >&2; fi; }
+ok()   { if have gum; then gum style --foreground 2  "$*"; else echo "✓   $*"; fi; }
+err()  { if have gum; then gum style --foreground 1  "$*"; else echo "✗   $*" >&2; fi; }
+hr()   { if have gum; then gum style --foreground 8 "$(printf '─%.0s' $(seq 1 60))"; else echo "------------------------------------------------------------"; fi; }
+
+SETTINGS="${PI_SETTINGS:-$HOME/.pi/agent/settings.json}"
+DRY_RUN=0
+TARGETS=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --dry-run|-n) DRY_RUN=1 ;;
+        -h|--help)
+            sed -n '2,28p' "$0"
+            exit 0
+            ;;
+        -*) err "unknown flag: $1"; exit 2 ;;
+        *)  TARGETS+=("$1") ;;
+    esac
+    shift
+done
+
+if [ ! -f "$SETTINGS" ]; then
+    err "settings file not found: $SETTINGS"
+    exit 1
+fi
+have jq || { err "jq required"; exit 1; }
+
+# Extract package source paths (object form: .source; string form: itself).
+mapfile -t PKG_PATHS < <(jq -r '
+    .packages // []
+    | .[]
+    | if type == "object" then .source else . end
+    | select(. != null and . != "")
+' "$SETTINGS")
+
+if [ ${#PKG_PATHS[@]} -eq 0 ]; then
+    warn "no packages in $SETTINGS"
+    exit 0
+fi
+
+# Map each package path → git repo root (handles subpaths like .../packages/foo).
+declare -A SEEN_ROOTS=()
+ROOTS=()
+for p in "${PKG_PATHS[@]}"; do
+    if [ ! -d "$p" ]; then
+        warn "missing path: $p"
+        continue
+    fi
+    root="$(git -C "$p" rev-parse --show-toplevel 2>/dev/null || true)"
+    if [ -z "$root" ]; then
+        warn "not a git repo: $p"
+        continue
+    fi
+    [ -n "${SEEN_ROOTS[$root]:-}" ] && continue
+    SEEN_ROOTS[$root]=1
+
+    # Filter by basename if targets given
+    if [ ${#TARGETS[@]} -gt 0 ]; then
+        match=0
+        base="$(basename "$root")"
+        for t in "${TARGETS[@]}"; do
+            [ "$t" = "$base" ] && match=1 && break
+        done
+        [ "$match" -eq 0 ] && continue
+    fi
+    ROOTS+=("$root")
+done
+
+say "pi-packages-rebase — ${#ROOTS[@]} repo(s)"
+[ "$DRY_RUN" -eq 1 ] && warn "dry-run: no changes will be made"
+
+SUMMARY=()
+
+process_repo() {
+    local root="$1"
+    local name; name="$(basename "$root")"
+
+    hr
+    say "$name  ($root)"
+
+    # Has upstream remote?
+    if ! git -C "$root" remote get-url upstream >/dev/null 2>&1; then
+        ok "  no 'upstream' remote — skipping"
+        SUMMARY+=("skip  $name (no upstream)")
+        return
+    fi
+
+    # Working tree clean?
+    if ! git -C "$root" diff --quiet || ! git -C "$root" diff --cached --quiet; then
+        warn "  working tree dirty — skipping"
+        SUMMARY+=("skip  $name (dirty)")
+        return
+    fi
+
+    # HEAD detached?
+    local cur
+    cur="$(git -C "$root" symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
+    if [ -z "$cur" ]; then
+        warn "  detached HEAD — skipping"
+        SUMMARY+=("skip  $name (detached)")
+        return
+    fi
+
+    if [ "$DRY_RUN" -eq 1 ]; then
+        local branches
+        branches="$(git -C "$root" for-each-ref --format='%(refname:short)' refs/heads/ \
+            | grep -v '^upstream-main$' | tr '\n' ' ')"
+        echo "  would: fetch upstream, rebase [$branches] onto upstream/main"
+        SUMMARY+=("dry   $name")
+        return
+    fi
+
+    # Fetch upstream
+    if ! git -C "$root" fetch upstream --prune --quiet; then
+        err "  fetch upstream failed"
+        SUMMARY+=("fail  $name (fetch)")
+        return
+    fi
+    ok "  fetched upstream"
+
+    # FF upstream-main if it exists
+    if git -C "$root" show-ref --verify --quiet refs/heads/upstream-main; then
+        git -C "$root" checkout --quiet upstream-main
+        if git -C "$root" merge --ff-only --quiet upstream/main; then
+            ok "  upstream-main fast-forwarded"
+        else
+            warn "  upstream-main has diverged from upstream/main — leaving alone"
+        fi
+    fi
+
+    # Rebase each local branch (except upstream-main) onto upstream/main
+    local rebased=0 skipped=0 failed=0 conflicts=()
+    while IFS= read -r br; do
+        [ "$br" = "upstream-main" ] && continue
+
+        # Already contained in upstream/main? nothing to do.
+        if git -C "$root" merge-base --is-ancestor "$br" upstream/main; then
+            echo "  $br: already in upstream/main, skipping"
+            ((skipped++)) || true
+            continue
+        fi
+
+        git -C "$root" checkout --quiet "$br"
+        if git -C "$root" rebase --quiet upstream/main; then
+            ok "  $br: rebased onto upstream/main"
+            ((rebased++)) || true
+        else
+            git -C "$root" rebase --abort 2>/dev/null || true
+            err "  $br: rebase conflict — aborted"
+            conflicts+=("$br")
+            ((failed++)) || true
+        fi
+    done < <(git -C "$root" for-each-ref --format='%(refname:short)' refs/heads/)
+
+    # Restore original branch
+    git -C "$root" checkout --quiet "$cur" 2>/dev/null || true
+
+    local msg="$name  rebased=$rebased skipped=$skipped failed=$failed"
+    [ ${#conflicts[@]} -gt 0 ] && msg="$msg conflicts=[${conflicts[*]}]"
+    SUMMARY+=("$msg")
+}
+
+for r in "${ROOTS[@]}"; do
+    process_repo "$r"
+done
+
+hr
+say "summary"
+for line in "${SUMMARY[@]}"; do
+    echo "  $line"
+done
+ok "done"
