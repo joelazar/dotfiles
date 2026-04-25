@@ -38,7 +38,9 @@ MANAGED_CONFIG='{
     "/Users/joelazar/Code/ai/pi/caveman-milk-pi",
     "/Users/joelazar/Code/ai/pi/pi-side-chat",
     "/Users/joelazar/Code/ai/pi/pi-nvim",
-    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use"
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-fast",
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity"
   ],
   "transport": "auto",
   "treeFilterMode": "default",
