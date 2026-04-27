@@ -76,36 +76,8 @@ customCommands:
   - key: "<c-r>"
     description: "Create pull request on GitHub"
     context: files, localBranches
-    prompts:
-      - type: "input"
-        title: "Pull Request Title"
-        key: "title"
-        initialValue: ""
-      - type: "input"
-        title: "Base Branch (leave empty for default branch)"
-        key: "base"
-        initialValue: ""
-      - type: "menu"
-        title: "Create as draft PR?"
-        key: "draft"
-        options:
-          - name: "No"
-            value: ""
-            key: "n"
-          - name: "Yes"
-            value: "--draft"
-            key: "y"
-      - type: "menu"
-        title: "Add Reviewers"
-        key: "reviewers"
-        options:
-          - name: "Default"
-            value: ""
-          - name: "CNS"
-            value: "--reviewer peterbornerup,farhadh,jdejnek"
-    command: >
-      gh pr create --assignee @me --title "{{.Form.title}}" --fill {{ if ne .Form.base "" }}--base "{{.Form.base}}"{{ end }} {{.Form.draft}} {{ if eq .Form.reviewers "other" }}--reviewer "{{.Form.customReviewers}}"{{ else }}{{.Form.reviewers}}{{ end }}
-
+    command: "pr-create"
+    output: terminal
     loadingText: "Creating pull request on GitHub"
   - key: "o"
     command: "gh repo view --web"

@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+temp_files=()
+cleanup() {
+  rm -f "${temp_files[@]}"
+}
+trap cleanup EXIT
+
+prompt_input() {
+  local prompt=$1
+  if command -v gum >/dev/null 2>&1; then
+    gum input --prompt "$prompt: "
+  else
+    read -r -p "$prompt: " value
+    printf '%s\n' "$value"
+  fi
+}
+
+prompt_menu() {
+  local title=$1
+  shift
+  if command -v gum >/dev/null 2>&1; then
+    gum choose --header "$title" "$@"
+  else
+    local choice
+    select choice in "$@"; do
+      [[ -n "$choice" ]] && printf '%s\n' "$choice" && break
+    done
+  fi
+}
+
+generate_pr_description() {
+  local body_file=$1
+  local prompt_file
+  prompt_file=$(mktemp)
+  temp_files+=("$prompt_file")
+
+  cat >"$prompt_file" <<'EOF'
+Use the humanizer skill. Generate a short GitHub pull request description for the current branch.
+
+Requirements:
+- Keep it concise and natural.
+- Summarize actual code/config changes in this PR.
+- Prefer 2-4 bullets.
+- Do not invent details.
+- Do not include Linear ticket lines.
+- Output only the PR description body.
+EOF
+
+  if command -v gum >/dev/null 2>&1; then
+    gum spin --title "Generating PR description with pi..." -- pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
+  else
+    echo "Generating PR description with pi..."
+    pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
+  fi
+}
+
+edit_pr_description() {
+  local body_file=$1
+  local editor=${EDITOR:-vi}
+
+  "$editor" "$body_file"
+}
+
+ensure_branch_pushed() {
+  local push_choice
+
+  if ! git rev-parse --verify --quiet '@{u}' >/dev/null; then
+    push_choice=$(prompt_menu "Current branch has no upstream. Push branch now?" "Yes" "No")
+    if [[ "$push_choice" != "Yes" ]]; then
+      echo "Current branch has no upstream. Push branch first."
+      exit 1
+    fi
+    git push --set-upstream origin "$(git branch --show-current)"
+    return
+  fi
+
+  local unpushed
+  unpushed=$(git rev-list --count '@{u}..HEAD')
+  if [[ "$unpushed" -ne 0 ]]; then
+    push_choice=$(prompt_menu "Current branch has $unpushed unpushed commit(s). Push branch now?" "Yes" "No")
+    if [[ "$push_choice" != "Yes" ]]; then
+      echo "Current branch has $unpushed unpushed commit(s). Push branch first."
+      exit 1
+    fi
+    git push
+  fi
+}
+
+ensure_branch_pushed
+
+title=$(prompt_input "Pull Request Title")
+base=$(prompt_input "Base Branch (leave empty for default branch)")
+draft_choice=$(prompt_menu "Create as draft PR?" "No" "Yes")
+reviewer_choice=$(prompt_menu "Add Reviewers" "Default" "CNS")
+generate_description=$(prompt_menu "Generate PR description with pi?" "No" "Yes")
+
+body_file=""
+if [[ "$generate_description" == "Yes" ]]; then
+  body_file=$(mktemp -t pr-description.XXXXXX.md)
+  temp_files+=("$body_file")
+  generate_pr_description "$body_file"
+fi
+
+linear_links=()
+add_linear=$(prompt_menu "Any Linear ticket(s) linked to this PR?" "No" "Yes")
+while [[ "$add_linear" == "Yes" ]]; do
+  linear_ticket=$(prompt_input "Linear ticket ID (example: ABC-123)")
+  linear_relation=$(prompt_menu "Relationship for $linear_ticket" "Closes" "Ref")
+
+  if [[ -n "$linear_ticket" ]]; then
+    linear_links+=("$linear_relation $linear_ticket")
+  fi
+
+  add_linear=$(prompt_menu "Add another Linear ticket?" "No" "Yes")
+done
+
+if [[ -n "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
+  {
+    printf '\n\n'
+    printf '%s\n' "${linear_links[@]}"
+  } >>"$body_file"
+fi
+
+edit_description=$(prompt_menu "Open PR description in \$EDITOR before creating PR?" "No" "Yes")
+if [[ "$edit_description" == "Yes" ]]; then
+  if [[ -z "$body_file" ]]; then
+    body_file=$(mktemp -t pr-description.XXXXXX.md)
+    temp_files+=("$body_file")
+  fi
+  edit_pr_description "$body_file"
+fi
+
+args=(pr create --assignee @me --title "$title" --fill)
+
+if [[ -n "$body_file" ]]; then
+  args+=(--body-file "$body_file")
+fi
+
+if [[ -n "$base" ]]; then
+  args+=(--base "$base")
+fi
+
+if [[ "$draft_choice" == "Yes" ]]; then
+  args+=(--draft)
+fi
+
+if [[ "$reviewer_choice" == "CNS" ]]; then
+  args+=(--reviewer "peterbornerup,farhadh,jdejnek")
+fi
+
+pr_url=$(gh "${args[@]}")
+printf '%s\n' "$pr_url"
+
+if [[ -z "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
+  edit_body_file=$(mktemp -t pr-description.XXXXXX.md)
+  temp_files+=("$edit_body_file")
+
+  gh pr view "$pr_url" --json body --jq '.body' >"$edit_body_file"
+  {
+    printf '\n\n'
+    printf '%s\n' "${linear_links[@]}"
+  } >>"$edit_body_file"
+
+  gh pr edit "$pr_url" --body-file "$edit_body_file" >/dev/null
+  echo "Added Linear links to PR description."
+fi
