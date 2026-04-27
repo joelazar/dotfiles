@@ -1,18 +1,111 @@
 [metadata]
 name = "ssh-hosts"
-description = "A channel to select hosts from your SSH config"
-requirements = ["grep", "tr", "cut", "awk"]
+description = "A channel to select hosts from your SSH config, including Include files"
+requirements = ["python3", "ssh"]
 
 [source]
-command = "grep -E '^Host(name)? ' $HOME/.ssh/config | tr -s ' ' | cut -d' ' -f2- | tr ' ' '\n' | grep -v '^$'"
+command = '''python3 -c 'import glob, os, shlex
+seen = set()
+files = []
+def expand_include(pattern, base):
+    pattern = os.path.expanduser(os.path.expandvars(pattern))
+    if not os.path.isabs(pattern):
+        pattern = os.path.join(base, pattern)
+    return glob.glob(pattern)
+def visit(path):
+    path = os.path.abspath(os.path.expanduser(os.path.expandvars(path)))
+    if path in seen:
+        return
+    seen.add(path)
+    files.append(path)
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError:
+        return
+    base = os.path.dirname(path)
+    for line in lines:
+        try:
+            parts = shlex.split(line, comments=True, posix=True)
+        except ValueError:
+            continue
+        if parts and parts[0].lower() == "include":
+            for include in parts[1:]:
+                for match in expand_include(include, base):
+                    visit(match)
+visit("~/.ssh/config")
+hosts = set()
+for path in files:
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError:
+        continue
+    for line in lines:
+        try:
+            parts = shlex.split(line, comments=True, posix=True)
+        except ValueError:
+            continue
+        if parts and parts[0].lower() == "host":
+            for host in parts[1:]:
+                if not any(char in host for char in "*?!["):
+                    hosts.add(host)
+print("\n".join(sorted(hosts, key=str.lower)))' '''
 
 [preview]
-command = "awk '/^Host / { found=0 } /^Host (.*[[:space:]])?'{}'([[:space:]].*)?$/ { found=1 } found' $HOME/.ssh/config"
+command = '''python3 -c 'import glob, os, shlex, sys
+host = sys.argv[1]
+seen = set()
+files = []
+def expand_include(pattern, base):
+    pattern = os.path.expanduser(os.path.expandvars(pattern))
+    if not os.path.isabs(pattern):
+        pattern = os.path.join(base, pattern)
+    return glob.glob(pattern)
+def visit(path):
+    path = os.path.abspath(os.path.expanduser(os.path.expandvars(path)))
+    if path in seen:
+        return
+    seen.add(path)
+    files.append(path)
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError:
+        return
+    base = os.path.dirname(path)
+    for line in lines:
+        try:
+            parts = shlex.split(line, comments=True, posix=True)
+        except ValueError:
+            continue
+        if parts and parts[0].lower() == "include":
+            for include in parts[1:]:
+                for match in expand_include(include, base):
+                    visit(match)
+visit("~/.ssh/config")
+matched = False
+for path in files:
+    found = False
+    try:
+        lines = open(path, encoding="utf-8").read().splitlines()
+    except OSError:
+        continue
+    for line in lines:
+        try:
+            parts = shlex.split(line, comments=True, posix=True)
+        except ValueError:
+            parts = []
+        if parts and parts[0].lower() == "host":
+            found = host in parts[1:]
+        if found:
+            print(line)
+            matched = True
+if not matched:
+    print("No Host block found for " + host)' '{}' '''
 
 [keybindings]
-enter = "actions:connect"
+ctrl-enter = "actions:connect"
 
 [actions.connect]
 description = "SSH into the selected host"
 command = "ssh '{}'"
+shell = "fish"
 mode = "execute"
