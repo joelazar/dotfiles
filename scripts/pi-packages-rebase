@@ -103,26 +103,24 @@ done
 say "pi-packages-rebase — ${#ROOTS[@]} repo(s)"
 [ "$DRY_RUN" -eq 1 ] && warn "dry-run: no changes will be made"
 
-SUMMARY=()
+NO_CHANGE=0
+PRINTED=0
 
 process_repo() {
     local root="$1"
     local name; name="$(basename "$root")"
 
-    hr
-    say "$name  ($root)"
-
     # Has upstream remote?
     if ! git -C "$root" remote get-url upstream >/dev/null 2>&1; then
-        ok "  no 'upstream' remote — skipping"
-        SUMMARY+=("skip  $name (no upstream)")
         return
     fi
 
     # Working tree clean?
     if ! git -C "$root" diff --quiet || ! git -C "$root" diff --cached --quiet; then
+        PRINTED=1
+        hr
+        say "$name  ($root)"
         warn "  working tree dirty — skipping"
-        SUMMARY+=("skip  $name (dirty)")
         return
     fi
 
@@ -130,34 +128,53 @@ process_repo() {
     local cur
     cur="$(git -C "$root" symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
     if [ -z "$cur" ]; then
+        PRINTED=1
+        hr
+        say "$name  ($root)"
         warn "  detached HEAD — skipping"
-        SUMMARY+=("skip  $name (detached)")
         return
     fi
 
     if [ "$DRY_RUN" -eq 1 ]; then
+        PRINTED=1
+        hr
+        say "$name  ($root)"
         local branches
         branches="$(git -C "$root" for-each-ref --format='%(refname:short)' refs/heads/ \
             | grep -v '^upstream-main$' | tr '\n' ' ')"
         echo "  would: fetch upstream, rebase [$branches] onto upstream/main"
-        SUMMARY+=("dry   $name")
         return
     fi
+
+    local before_upstream after_upstream update_log
+    before_upstream="$(git -C "$root" rev-parse --verify upstream/main 2>/dev/null || true)"
 
     # Fetch upstream
     if ! git -C "$root" fetch upstream --prune --quiet; then
+        PRINTED=1
+        hr
+        say "$name  ($root)"
         err "  fetch upstream failed"
-        SUMMARY+=("fail  $name (fetch)")
         return
     fi
-    ok "  fetched upstream"
+    after_upstream="$(git -C "$root" rev-parse --verify upstream/main 2>/dev/null || true)"
+    update_log=""
+    if [ -n "$before_upstream" ] && [ -n "$after_upstream" ] && [ "$before_upstream" != "$after_upstream" ]; then
+        update_log="$(git -C "$root" log --no-merges --format='    %h %s' "$before_upstream..$after_upstream")"
+    elif [ -z "$before_upstream" ] && [ -n "$after_upstream" ]; then
+        update_log="$(git -C "$root" log --no-merges -n 20 --format='    %h %s' "$after_upstream")"
+    fi
 
     # FF upstream-main if it exists
+    local upstream_main_changed=0
     if git -C "$root" show-ref --verify --quiet refs/heads/upstream-main; then
         git -C "$root" checkout --quiet upstream-main
         if git -C "$root" merge --ff-only --quiet upstream/main; then
-            ok "  upstream-main fast-forwarded"
+            [ -n "$update_log" ] && upstream_main_changed=1
         else
+            PRINTED=1
+            hr
+            say "$name  ($root)"
             warn "  upstream-main has diverged from upstream/main — leaving alone"
         fi
     fi
@@ -169,16 +186,35 @@ process_repo() {
 
         # Already contained in upstream/main? nothing to do.
         if git -C "$root" merge-base --is-ancestor "$br" upstream/main; then
-            echo "  $br: already in upstream/main, skipping"
             ((skipped++)) || true
             continue
         fi
 
         git -C "$root" checkout --quiet "$br"
         if git -C "$root" rebase --quiet upstream/main; then
+            if [ $((rebased + failed)) -eq 0 ]; then
+                PRINTED=1
+                hr
+                say "$name  ($root)"
+                if [ -n "$update_log" ]; then
+                    ok "  upstream/main updated"
+                    echo "$update_log"
+                fi
+                [ "$upstream_main_changed" -eq 1 ] && ok "  upstream-main fast-forwarded"
+            fi
             ok "  $br: rebased onto upstream/main"
             ((rebased++)) || true
         else
+            if [ $((rebased + failed)) -eq 0 ]; then
+                PRINTED=1
+                hr
+                say "$name  ($root)"
+                if [ -n "$update_log" ]; then
+                    ok "  upstream/main updated"
+                    echo "$update_log"
+                fi
+                [ "$upstream_main_changed" -eq 1 ] && ok "  upstream-main fast-forwarded"
+            fi
             git -C "$root" rebase --abort 2>/dev/null || true
             err "  $br: rebase conflict — aborted"
             conflicts+=("$br")
@@ -189,18 +225,24 @@ process_repo() {
     # Restore original branch
     git -C "$root" checkout --quiet "$cur" 2>/dev/null || true
 
-    local msg="$name  rebased=$rebased skipped=$skipped failed=$failed"
-    [ ${#conflicts[@]} -gt 0 ] && msg="$msg conflicts=[${conflicts[*]}]"
-    SUMMARY+=("$msg")
+    if [ -n "$update_log" ] && [ $((rebased + failed)) -eq 0 ]; then
+        PRINTED=1
+        hr
+        say "$name  ($root)"
+        ok "  upstream/main updated"
+        echo "$update_log"
+        [ "$upstream_main_changed" -eq 1 ] && ok "  upstream-main fast-forwarded"
+    fi
+
+    if [ -z "$update_log" ] && [ "$rebased" -eq 0 ] && [ "$failed" -eq 0 ]; then
+        ((NO_CHANGE++)) || true
+    fi
 }
 
 for r in "${ROOTS[@]}"; do
     process_repo "$r"
 done
 
-hr
-say "summary"
-for line in "${SUMMARY[@]}"; do
-    echo "  $line"
-done
-ok "done"
+if [ "$PRINTED" -eq 0 ]; then
+    ok "no updates"
+fi
