@@ -46,6 +46,10 @@ MANAGED_CONFIG='{
   "treeFilterMode": "default",
   "steeringMode": "all",
   "followUpMode": "one-at-a-time",
+  "warnings": {
+    "anthropicExtraUsage": false
+  },
+  "enableInstallTelemetry": true,
   "terminal": {
     "showTerminalProgress": true
   }
