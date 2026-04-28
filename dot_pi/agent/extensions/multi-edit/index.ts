@@ -27,7 +27,10 @@ import {
 } from "fs/promises";
 import { isAbsolute, resolve as resolvePath } from "path";
 import type { EditToolDetails, Theme } from "@mariozechner/pi-coding-agent";
-import { highlightCode } from "@mariozechner/pi-coding-agent";
+import {
+  highlightCode,
+  withFileMutationQueue,
+} from "@mariozechner/pi-coding-agent";
 import { homedir } from "os";
 import { Text, visibleWidth, truncateToWidth } from "@mariozechner/pi-tui";
 
@@ -218,12 +221,58 @@ function normalizeToLF(text: string): string {
   return text.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
 }
 
+function normalizePathArg(filePath: string): string {
+  let trimmed = filePath.trim();
+  if (trimmed.startsWith("@")) {
+    trimmed = trimmed.slice(1).trimStart();
+  }
+  if (trimmed === "~") {
+    return homedir();
+  }
+  if (trimmed.startsWith("~/")) {
+    return resolvePath(homedir(), trimmed.slice(2));
+  }
+  return trimmed;
+}
+
+function resolveToolPath(cwd: string, filePath: string): string {
+  const normalized = normalizePathArg(filePath);
+  if (!normalized) {
+    throw new Error("Path cannot be empty");
+  }
+  return isAbsolute(normalized)
+    ? resolvePath(normalized)
+    : resolvePath(cwd, normalized);
+}
+
 function resolvePatchPath(cwd: string, filePath: string): string {
-  const trimmed = filePath.trim();
-  if (!trimmed) {
+  const normalized = normalizePathArg(filePath);
+  if (!normalized) {
     throw new Error("Patch path cannot be empty");
   }
-  return isAbsolute(trimmed) ? resolvePath(trimmed) : resolvePath(cwd, trimmed);
+  return resolveToolPath(cwd, normalized);
+}
+
+function getClassicTargetPaths(edits: EditItem[], cwd: string): string[] {
+  return [...new Set(edits.map((edit) => resolveToolPath(cwd, edit.path)))];
+}
+
+function getPatchTargetPaths(ops: PatchOperation[], cwd: string): string[] {
+  return [...new Set(ops.map((op) => resolvePatchPath(cwd, op.path)))];
+}
+
+function withMutationQueues<T>(
+  absolutePaths: string[],
+  fn: () => Promise<T>,
+): Promise<T> {
+  const paths = [...new Set(absolutePaths)].sort();
+  const run = (index: number): Promise<T> => {
+    if (index >= paths.length) {
+      return fn();
+    }
+    return withFileMutationQueue(paths[index], () => run(index + 1));
+  };
+  return run(0);
 }
 
 function ensureTrailingNewline(content: string): string {
@@ -720,9 +769,7 @@ async function applyClassicEdits(
   const editOrder: string[] = []; // track insertion order of keys
 
   for (let i = 0; i < edits.length; i++) {
-    const abs = isAbsolute(edits[i].path)
-      ? resolvePath(edits[i].path)
-      : resolvePath(cwd, edits[i].path);
+    const abs = resolveToolPath(cwd, edits[i].path);
     if (!fileGroups.has(abs)) {
       fileGroups.set(abs, []);
       editOrder.push(abs);
@@ -814,9 +861,7 @@ async function applyClassicEdits(
       results[index] = {
         path: edit.path,
         success: true,
-        message: dryRun
-          ? `Would edit ${edit.path}.`
-          : `Edited ${edit.path}.`,
+        message: dryRun ? `Would edit ${edit.path}.` : `Edited ${edit.path}.`,
       };
     }
 
@@ -1134,45 +1179,50 @@ export default function (pi: ExtensionAPI) {
       if (patch !== undefined) {
         const ops = parsePatch(patch);
 
-        // Preflight on virtual filesystem before mutating real files.
-        await applyPatchOperations(
-          ops,
-          createVirtualWorkspace(ctx.cwd),
-          ctx.cwd,
-          signal,
-          { collectDiff: false },
-        );
+        return withMutationQueues(
+          getPatchTargetPaths(ops, ctx.cwd),
+          async () => {
+            // Preflight on virtual filesystem before mutating real files.
+            await applyPatchOperations(
+              ops,
+              createVirtualWorkspace(ctx.cwd),
+              ctx.cwd,
+              signal,
+              { collectDiff: false },
+            );
 
-        // Apply for real.
-        const applied = await applyPatchOperations(
-          ops,
-          createRealWorkspace(),
-          ctx.cwd,
-          signal,
-          { collectDiff: true },
-        );
-        const summary = applied
-          .map((r, i) => `${i + 1}. ${r.message}`)
-          .join("\n");
-        const combinedDiff = applied
-          .filter((r) => r.diff)
-          .map((r) => `File: ${r.path}\n${r.diff}`)
-          .join("\n\n");
-        const firstChangedLine = applied.find(
-          (r) => r.firstChangedLine !== undefined,
-        )?.firstChangedLine;
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: `Applied patch with ${applied.length} operation(s).\n${summary}`,
-            },
-          ],
-          details: {
-            diff: combinedDiff,
-            firstChangedLine,
+            // Apply for real.
+            const applied = await applyPatchOperations(
+              ops,
+              createRealWorkspace(),
+              ctx.cwd,
+              signal,
+              { collectDiff: true },
+            );
+            const summary = applied
+              .map((r, i) => `${i + 1}. ${r.message}`)
+              .join("\n");
+            const combinedDiff = applied
+              .filter((r) => r.diff)
+              .map((r) => `File: ${r.path}\n${r.diff}`)
+              .join("\n\n");
+            const firstChangedLine = applied.find(
+              (r) => r.firstChangedLine !== undefined,
+            )?.firstChangedLine;
+            return {
+              content: [
+                {
+                  type: "text" as const,
+                  text: `Applied patch with ${applied.length} operation(s).\n${summary}`,
+                },
+              ],
+              details: {
+                diff: combinedDiff,
+                firstChangedLine,
+              },
+            };
           },
-        };
+        );
       }
 
       // Build classic edit list.
@@ -1228,67 +1278,72 @@ export default function (pi: ExtensionAPI) {
         }
       }
 
-      // Preflight pass on virtual workspace before mutating real files.
-      // Uses sequential occurrence matching so same-file edits are resolved
-      // in file order (positional ordering).
-      try {
-        await applyClassicEdits(
-          edits,
-          createVirtualWorkspace(ctx.cwd),
-          ctx.cwd,
-          signal,
-          { collectDiff: false, dryRun: true },
-        );
-      } catch (err: any) {
-        throw new Error(
-          `Preflight failed before mutating files.\n${err.message ?? String(err)}`,
-        );
-      }
+      return withMutationQueues(
+        getClassicTargetPaths(edits, ctx.cwd),
+        async () => {
+          // Preflight pass on virtual workspace before mutating real files.
+          // Uses sequential occurrence matching so same-file edits are resolved
+          // in file order (positional ordering).
+          try {
+            await applyClassicEdits(
+              edits,
+              createVirtualWorkspace(ctx.cwd),
+              ctx.cwd,
+              signal,
+              { collectDiff: false, dryRun: true },
+            );
+          } catch (err: any) {
+            throw new Error(
+              `Preflight failed before mutating files.\n${err.message ?? String(err)}`,
+            );
+          }
 
-      // Apply for real.
-      const results = await applyClassicEdits(
-        edits,
-        createRealWorkspace(),
-        ctx.cwd,
-        signal,
-        { collectDiff: true },
-      );
+          // Apply for real.
+          const results = await applyClassicEdits(
+            edits,
+            createRealWorkspace(),
+            ctx.cwd,
+            signal,
+            { collectDiff: true },
+          );
 
-      if (results.length === 1) {
-        const r = results[0];
-        return {
-          content: [{ type: "text" as const, text: r.message }],
-          details: {
-            diff: r.diff ?? "",
-            firstChangedLine: r.firstChangedLine,
-          },
-        };
-      }
+          if (results.length === 1) {
+            const r = results[0];
+            return {
+              content: [{ type: "text" as const, text: r.message }],
+              details: {
+                diff: r.diff ?? "",
+                firstChangedLine: r.firstChangedLine,
+              },
+            };
+          }
 
-      const combinedDiff = results
-        .filter((r) => r.diff)
-        .map((r) => r.diff)
-        .join("\n");
+          const combinedDiff = results
+            .filter((r) => r.diff)
+            .map((r) => r.diff)
+            .join("\n");
 
-      const firstChanged = results.find(
-        (r) => r.firstChangedLine !== undefined,
-      )?.firstChangedLine;
-      const summary = results
-        .map((r, i) => `${i + 1}. ${r.message}`)
-        .join("\n");
+          const firstChanged = results.find(
+            (r) => r.firstChangedLine !== undefined,
+          )?.firstChangedLine;
+          const summary = results
+            .map((r, i) => `${i + 1}. ${r.message}`)
+            .join("\n");
 
-      return {
-        content: [
-          {
-            type: "text" as const,
-            text: `Applied ${results.length} edit(s) successfully.\n${summary}`,
-          },
-        ],
-        details: {
-          diff: combinedDiff,
-          firstChangedLine: firstChanged,
+          return {
+            content: [
+              {
+                type: "text" as const,
+                text: `Applied ${results.length} edit(s) successfully.\n${summary}`,
+              },
+            ],
+            details: {
+              diff: combinedDiff,
+              firstChangedLine: firstChanged,
+            },
+          };
         },
-      };
+      );
     },
   });
 }
