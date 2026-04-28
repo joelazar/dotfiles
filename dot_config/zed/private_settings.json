@@ -23,12 +23,12 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Tokyo Night"
+    "dark": "Tokyo Night",
   },
   "icon_theme": {
     "mode": "light",
     "light": "Material Icon Theme",
-    "dark": "Material Icon Theme"
+    "dark": "Material Icon Theme",
   },
   "ui_font_size": 13.0,
   "agent_ui_font_size": 13.0,
@@ -139,13 +139,13 @@
   // TITLE BAR
   // ══════════════════════════════════════════════════════════════════════════════
   "title_bar": {
+    "show_branch_status_icon": true,
     "show_user_picture": false,
     "show_onboarding_banner": true,
     "show_project_items": true,
     "show_branch_name": true,
     "show_user_menu": false,
     "show_menus": true,
-    "show_branch_icon": true,
     "show_sign_in": false,
   },
 
@@ -176,7 +176,7 @@
   // PANELS
   // ══════════════════════════════════════════════════════════════════════════════
   "project_panel": {
-    "dock": "right",
+    "dock": "left",
     "button": false,
     "default_width": 300,
     "auto_fold_dirs": false,
@@ -195,7 +195,7 @@
     "default_width": 300,
   },
   "git_panel": {
-    "dock": "right",
+    "dock": "left",
     "button": false,
     "tree_view": true,
     "sort_by_path": true,
@@ -243,7 +243,8 @@
     "provider": "zed",
   },
   "agent": {
-    "dock": "left",
+    "sidebar_side": "right",
+    "dock": "right",
     "max_content_width": 1200.0,
     "button": false,
     "single_file_review": false,
