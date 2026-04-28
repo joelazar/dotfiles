@@ -710,9 +710,10 @@ async function applyClassicEdits(
   workspace: Workspace,
   cwd: string,
   signal?: AbortSignal,
-  options?: { collectDiff?: boolean },
+  options?: { collectDiff?: boolean; dryRun?: boolean },
 ): Promise<EditResult[]> {
   const collectDiff = options?.collectDiff ?? false;
+  const dryRun = options?.dryRun ?? false;
 
   // Group edits by resolved absolute path, preserving order.
   const fileGroups = new Map<string, { index: number; edit: EditItem }[]>();
@@ -783,7 +784,9 @@ async function applyClassicEdits(
           results[index] = {
             path: edit.path,
             success: true,
-            message: `Skipped redundant edit in ${edit.path} (already replaced all occurrences).`,
+            message: dryRun
+              ? `Would skip redundant edit in ${edit.path} (already replaced all occurrences).`
+              : `Skipped redundant edit in ${edit.path} (already replaced all occurrences).`,
           };
           continue;
         }
@@ -811,7 +814,9 @@ async function applyClassicEdits(
       results[index] = {
         path: edit.path,
         success: true,
-        message: `Edited ${edit.path}.`,
+        message: dryRun
+          ? `Would edit ${edit.path}.`
+          : `Edited ${edit.path}.`,
       };
     }
 
@@ -1232,7 +1237,7 @@ export default function (pi: ExtensionAPI) {
           createVirtualWorkspace(ctx.cwd),
           ctx.cwd,
           signal,
-          { collectDiff: false },
+          { collectDiff: false, dryRun: true },
         );
       } catch (err: any) {
         throw new Error(
