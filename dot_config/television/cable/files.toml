@@ -4,10 +4,21 @@ description = "A channel to select files and directories"
 requirements = ["fd", "bat"]
 
 [source]
-command = ["fd -t f", "fd -t f -H"]
+# Press Ctrl+S to cycle between modes:
+# files, gitignored files, hidden + gitignored files,
+# directories, gitignored directories, hidden + gitignored directories
+command = [
+  "fd -t f",
+  "fd -t f -I",
+  "fd -t f -H -I",
+  "fd -t d",
+  "fd -t d -I",
+  "fd -t d -H -I",
+]
 
 [preview]
-command = "bat -n --color=always '{}'"
+command = "if test -d '{}'; ls -la '{}'; else; bat -n --color=always '{}'; end"
+shell = "fish"
 env = { BAT_THEME = "ansi" }
 
 [keybindings]
