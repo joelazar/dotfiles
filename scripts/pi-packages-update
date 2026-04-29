@@ -1,0 +1,352 @@
+#!/usr/bin/env bash
+# pi-packages-update
+#
+# For every local pi package referenced in ~/.pi/agent/settings.json:
+#   - choose the canonical remote (`upstream` if present, otherwise `origin`)
+#   - fetch that remote
+#   - fast-forward local branches that track that canonical remote
+#   - rebase your own local branches on top of the canonical default branch
+#
+# This supports both fork checkouts (`origin` = your fork, `upstream` = source)
+# and read-only/source checkouts with no personal remote (`origin` = source).
+#
+# Behavior per repo:
+#   - Skip if working tree is dirty.
+#   - Skip if HEAD is detached.
+#   - `git fetch <canonical-remote> --prune`.
+#   - Fast-forward branches tracking `<canonical-remote>/*` (for example
+#     `upstream-main` -> `upstream/main`, or `main` -> `origin/main` in repos
+#     without a personal fork remote). Origin-only repos are printed even when
+#     already up to date, so read-only/source checkouts are visible.
+#   - Rebase other local branches onto the canonical default branch.
+#   - On conflict or diverged upstream-tracking branch: abort/report/continue.
+#   - Restore the original branch.
+#
+# Usage:
+#   scripts/pi-packages-update            # update all
+#   scripts/pi-packages-update --dry-run  # show plan, no changes
+#   scripts/pi-packages-update pi-fff     # only matching repos (basename)
+
+set -euo pipefail
+
+UTILS="$(dirname "$0")/utils"
+# shellcheck disable=SC1090
+[ -f "$UTILS" ] && source "$UTILS" || true
+
+have() { command -v "$1" >/dev/null 2>&1; }
+say()  { if have gum; then gum style --foreground 12 "$*"; else echo "==> $*"; fi; }
+warn() { if have gum; then gum style --foreground 3  "$*"; else echo "!!  $*" >&2; fi; }
+ok()   { if have gum; then gum style --foreground 2  "$*"; else echo "✓   $*"; fi; }
+err()  { if have gum; then gum style --foreground 1  "$*"; else echo "✗   $*" >&2; fi; }
+hr()   { if have gum; then gum style --foreground 8 "$(printf '─%.0s' $(seq 1 60))"; else echo "------------------------------------------------------------"; fi; }
+
+SETTINGS="${PI_SETTINGS:-$HOME/.pi/agent/settings.json}"
+DRY_RUN=0
+TARGETS=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --dry-run|-n) DRY_RUN=1 ;;
+        -h|--help)
+            sed -n '2,29p' "$0"
+            exit 0
+            ;;
+        -*) err "unknown flag: $1"; exit 2 ;;
+        *)  TARGETS+=("$1") ;;
+    esac
+    shift
+done
+
+if [ ! -f "$SETTINGS" ]; then
+    err "settings file not found: $SETTINGS"
+    exit 1
+fi
+have jq || { err "jq required"; exit 1; }
+
+# Extract package source paths (object form: .source; string form: itself).
+mapfile -t PKG_PATHS < <(jq -r '
+    .packages // []
+    | .[]
+    | if type == "object" then .source else . end
+    | select(. != null and . != "")
+' "$SETTINGS")
+
+if [ ${#PKG_PATHS[@]} -eq 0 ]; then
+    warn "no packages in $SETTINGS"
+    exit 0
+fi
+
+remote_exists() {
+    local root="$1" remote="$2"
+    git -C "$root" remote get-url "$remote" >/dev/null 2>&1
+}
+
+canonical_remote() {
+    local root="$1"
+    if remote_exists "$root" upstream; then
+        echo upstream
+    elif remote_exists "$root" origin; then
+        echo origin
+    fi
+}
+
+resolve_base_ref() {
+    local root="$1" remote="$2" head ref
+
+    head="$(git -C "$root" symbolic-ref --quiet --short "refs/remotes/$remote/HEAD" 2>/dev/null || true)"
+    if [ -n "$head" ] && git -C "$root" rev-parse --verify --quiet "$head^{commit}" >/dev/null; then
+        echo "$head"
+        return
+    fi
+
+    for ref in "$remote/main" "$remote/master"; do
+        if git -C "$root" rev-parse --verify --quiet "$ref^{commit}" >/dev/null; then
+            echo "$ref"
+            return
+        fi
+    done
+}
+
+branch_upstream_remote() {
+    local root="$1" branch="$2"
+    git -C "$root" config --get "branch.$branch.remote" 2>/dev/null || true
+}
+
+branch_upstream_ref() {
+    local root="$1" branch="$2" remote merge
+    remote="$(branch_upstream_remote "$root" "$branch")"
+    merge="$(git -C "$root" config --get "branch.$branch.merge" 2>/dev/null || true)"
+
+    if [ -n "$remote" ] && [ -n "$merge" ]; then
+        echo "$remote/${merge#refs/heads/}"
+    fi
+}
+
+# Map each package path → git repo root (handles subpaths like .../packages/foo).
+declare -A SEEN_ROOTS=()
+ROOTS=()
+for p in "${PKG_PATHS[@]}"; do
+    if [ ! -d "$p" ]; then
+        warn "missing path: $p"
+        continue
+    fi
+    root="$(git -C "$p" rev-parse --show-toplevel 2>/dev/null || true)"
+    if [ -z "$root" ]; then
+        warn "not a git repo: $p"
+        continue
+    fi
+    [ -n "${SEEN_ROOTS[$root]:-}" ] && continue
+    SEEN_ROOTS[$root]=1
+
+    # Filter by basename if targets given
+    if [ ${#TARGETS[@]} -gt 0 ]; then
+        match=0
+        base="$(basename "$root")"
+        for t in "${TARGETS[@]}"; do
+            [ "$t" = "$base" ] && match=1 && break
+        done
+        [ "$match" -eq 0 ] && continue
+    fi
+    ROOTS+=("$root")
+done
+
+say "pi-packages-update — ${#ROOTS[@]} repo(s)"
+[ "$DRY_RUN" -eq 1 ] && warn "dry-run: no changes will be made"
+
+NO_CHANGE=0
+PRINTED=0
+
+process_repo() {
+    local root="$1"
+    local name; name="$(basename "$root")"
+    local repo_printed=0 update_log_printed=0 update_log="" base_ref=""
+
+    print_repo_header() {
+        if [ "$repo_printed" -eq 0 ]; then
+            PRINTED=1
+            repo_printed=1
+            hr
+            say "$name  ($root)"
+        fi
+    }
+
+    print_update_log() {
+        if [ "$update_log_printed" -eq 0 ]; then
+            update_log_printed=1
+            if [ -n "$update_log" ]; then
+                ok "  $base_ref updated"
+                echo "$update_log"
+            fi
+        fi
+    }
+
+    print_repo_with_log() {
+        print_repo_header
+        print_update_log
+    }
+
+    local remote
+    remote="$(canonical_remote "$root")"
+    [ -z "$remote" ] && return
+
+    # Working tree clean?
+    if ! git -C "$root" diff --quiet || ! git -C "$root" diff --cached --quiet; then
+        print_repo_header
+        warn "  working tree dirty — skipping"
+        return
+    fi
+
+    # HEAD detached?
+    local cur
+    cur="$(git -C "$root" symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
+    if [ -z "$cur" ]; then
+        print_repo_header
+        warn "  detached HEAD — skipping"
+        return
+    fi
+
+    if [ "$DRY_RUN" -eq 1 ]; then
+        print_repo_header
+        local pull_branches=() rebase_branches=() br branch_remote branch_ref
+        base_ref="$(resolve_base_ref "$root" "$remote")"
+        while IFS= read -r br; do
+            branch_remote="$(branch_upstream_remote "$root" "$br")"
+            branch_ref="$(branch_upstream_ref "$root" "$br")"
+            if [ "$br" = "upstream-main" ] && [ "$remote" = "upstream" ] && [ -z "$branch_ref" ]; then
+                branch_remote="$remote"
+                branch_ref="${base_ref:-$remote/main}"
+            fi
+            if [ "$branch_remote" = "$remote" ] && [ -n "$branch_ref" ]; then
+                pull_branches+=("$br->$branch_ref")
+            else
+                rebase_branches+=("$br")
+            fi
+        done < <(git -C "$root" for-each-ref --format='%(refname:short)' refs/heads/)
+        echo "  would: fetch $remote"
+        [ ${#pull_branches[@]} -gt 0 ] && echo "  would: fast-forward [${pull_branches[*]}]"
+        if [ ${#rebase_branches[@]} -gt 0 ]; then
+            echo "  would: rebase [${rebase_branches[*]}] onto ${base_ref:-$remote default branch}"
+        fi
+        return
+    fi
+
+    local before_base_ref before_commit after_commit
+    before_base_ref="$(resolve_base_ref "$root" "$remote")"
+    before_commit=""
+    if [ -n "$before_base_ref" ]; then
+        before_commit="$(git -C "$root" rev-parse --verify "$before_base_ref" 2>/dev/null || true)"
+    fi
+
+    # Fetch canonical remote (upstream in forks, origin in source/read-only clones).
+    if ! git -C "$root" fetch "$remote" --prune --quiet; then
+        print_repo_header
+        err "  fetch $remote failed"
+        return
+    fi
+
+    base_ref="$(resolve_base_ref "$root" "$remote")"
+    if [ -z "$base_ref" ]; then
+        print_repo_header
+        warn "  no $remote default branch found — skipping"
+        return
+    fi
+
+    after_commit="$(git -C "$root" rev-parse --verify "$base_ref" 2>/dev/null || true)"
+    if [ -n "$before_commit" ] && [ -n "$after_commit" ] && [ "$before_commit" != "$after_commit" ]; then
+        update_log="$(git -C "$root" log --no-merges --format='    %h %s' "$before_commit..$after_commit")"
+    elif [ -z "$before_commit" ] && [ -n "$after_commit" ]; then
+        update_log="$(git -C "$root" log --no-merges -n 20 --format='    %h %s' "$after_commit")"
+    fi
+
+    # Fast-forward upstream-tracking branches; rebase own branches onto canonical base.
+    local pulled=0 rebased=0 skipped=0 failed=0 checked=0
+    local br branch_remote branch_ref branch_commit tracking_commit
+    while IFS= read -r br; do
+        branch_remote="$(branch_upstream_remote "$root" "$br")"
+        branch_ref="$(branch_upstream_ref "$root" "$br")"
+        if [ "$br" = "upstream-main" ] && [ "$remote" = "upstream" ] && [ -z "$branch_ref" ]; then
+            branch_remote="$remote"
+            branch_ref="$base_ref"
+        fi
+
+        if [ "$branch_remote" = "$remote" ] && [ -n "$branch_ref" ]; then
+            if ! git -C "$root" rev-parse --verify --quiet "$branch_ref^{commit}" >/dev/null; then
+                print_repo_with_log
+                warn "  $br: tracking ref missing ($branch_ref) — skipping"
+                ((failed++)) || true
+                continue
+            fi
+
+            branch_commit="$(git -C "$root" rev-parse --verify "$br" 2>/dev/null || true)"
+            tracking_commit="$(git -C "$root" rev-parse --verify "$branch_ref" 2>/dev/null || true)"
+            if [ "$branch_commit" = "$tracking_commit" ]; then
+                if [ "$remote" = "origin" ]; then
+                    print_repo_with_log
+                    ok "  $br: already up to date with $branch_ref"
+                    ((checked++)) || true
+                fi
+                ((skipped++)) || true
+                continue
+            fi
+
+            if git -C "$root" merge-base --is-ancestor "$br" "$branch_ref"; then
+                git -C "$root" checkout --quiet "$br"
+                if git -C "$root" merge --ff-only --quiet "$branch_ref"; then
+                    print_repo_with_log
+                    ok "  $br: pulled $branch_ref"
+                    ((pulled++)) || true
+                else
+                    print_repo_with_log
+                    err "  $br: pull from $branch_ref failed"
+                    ((failed++)) || true
+                fi
+            elif git -C "$root" merge-base --is-ancestor "$branch_ref" "$br"; then
+                print_repo_with_log
+                warn "  $br: ahead of $branch_ref — leaving alone"
+                ((skipped++)) || true
+            else
+                print_repo_with_log
+                err "  $br: diverged from $branch_ref — leaving alone"
+                ((failed++)) || true
+            fi
+            continue
+        fi
+
+        # Already contained in canonical base? nothing to do.
+        if git -C "$root" merge-base --is-ancestor "$br" "$base_ref"; then
+            ((skipped++)) || true
+            continue
+        fi
+
+        git -C "$root" checkout --quiet "$br"
+        if git -C "$root" rebase --quiet "$base_ref"; then
+            print_repo_with_log
+            ok "  $br: rebased onto $base_ref"
+            ((rebased++)) || true
+        else
+            print_repo_with_log
+            git -C "$root" rebase --abort 2>/dev/null || true
+            err "  $br: rebase conflict — aborted"
+            ((failed++)) || true
+        fi
+    done < <(git -C "$root" for-each-ref --format='%(refname:short)' refs/heads/)
+
+    # Restore original branch
+    git -C "$root" checkout --quiet "$cur" 2>/dev/null || true
+
+    if [ -n "$update_log" ] && [ $((pulled + rebased + failed)) -eq 0 ]; then
+        print_repo_with_log
+    fi
+
+    if [ -z "$update_log" ] && [ "$pulled" -eq 0 ] && [ "$rebased" -eq 0 ] && [ "$failed" -eq 0 ] && [ "$checked" -eq 0 ]; then
+        ((NO_CHANGE++)) || true
+    fi
+}
+
+for r in "${ROOTS[@]}"; do
+    process_repo "$r"
+done
+
+if [ "$PRINTED" -eq 0 ]; then
+    ok "no updates"
+fi
