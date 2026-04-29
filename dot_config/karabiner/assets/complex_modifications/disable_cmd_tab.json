@@ -1,0 +1,21 @@
+{
+  "title": "Disable Cmd+Tab",
+  "rules": [
+    {
+      "description": "Block Cmd+Tab and Cmd+Shift+Tab",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "tab",
+            "modifiers": {
+              "mandatory": ["command"],
+              "optional": ["shift", "caps_lock", "option", "control", "fn"]
+            }
+          },
+          "to": []
+        }
+      ]
+    }
+  ]
+}

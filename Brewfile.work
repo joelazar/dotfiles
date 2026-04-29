@@ -388,6 +388,8 @@ cask "helium-browser"
 cask "iina"
 # Vector graphics editor
 cask "inkscape"
+# Keyboard customiser
+cask "karabiner-elements"
 # Voice-to-text transcription and paste tool
 cask "kitlangton-hex"
 # Tool to control external monitor brightness & volume
