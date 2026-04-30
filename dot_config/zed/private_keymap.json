@@ -169,7 +169,7 @@
       "space u z": "workspace::ToggleCenteredLayout",
 
       // === Extras ===
-      // "space x t": ["pane::DeploySearch", { "query": "TODO|FIXME|NOTE|BUG|HACK|XXX|WARN", "regex": true }],
+      "space x t": ["pane::DeploySearch", { "query": "TODO|FIXME|NOTE|BUG|HACK|XXX|WARN", "regex": true }],
 
       // === Motions (display lines) ===
       "j": ["vim::Down", { "display_lines": true }],
