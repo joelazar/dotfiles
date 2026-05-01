@@ -1375,12 +1375,22 @@ function setEditor(
   history: PromptEntry[],
 ) {
   const uiTheme = ctx.ui.theme;
-  ctx.ui.setEditorComponent((tui, theme, keybindings) => {
-    const editor = new PromptEditor(tui, theme, keybindings);
-    requestEditorRender = () => editor.requestRenderNow();
-    editor.modeLabelProvider = () => runtime.currentMode;
-    // Keep the mode label color stable (match footer/status bar).
-    editor.modeLabelColor = (text: string) => uiTheme.fg("dim", text);
+  const existingFactory = ctx.ui.getEditorComponent?.() as
+    | (((...args: ConstructorParameters<typeof CustomEditor>) => CustomEditor) & {
+        __promptEditorBase?: (...args: ConstructorParameters<typeof CustomEditor>) => CustomEditor;
+      })
+    | undefined;
+  const previousFactory = existingFactory?.__promptEditorBase ?? existingFactory;
+  const nextFactory = ((tui, theme, keybindings) => {
+    const editor = previousFactory?.(tui, theme, keybindings) ?? new PromptEditor(tui, theme, keybindings);
+    requestEditorRender = () => tui.requestRender();
+
+    if (editor instanceof PromptEditor) {
+      editor.modeLabelProvider = () => runtime.currentMode;
+      // Keep the mode label color stable (match footer/status bar).
+      editor.modeLabelColor = (text: string) => uiTheme.fg("dim", text);
+    }
+
     const borderColor = (text: string) => {
       const isBashMode = editor.getText().trimStart().startsWith("!");
       if (isBashMode) {
@@ -1390,12 +1400,14 @@ function setEditor(
     };
 
     editor.borderColor = borderColor;
-    editor.lockBorderColor();
+    editor.lockBorderColor?.();
     for (const prompt of history) {
       editor.addToHistory?.(prompt.text);
     }
     return editor;
-  });
+  }) as typeof existingFactory;
+  if (nextFactory) nextFactory.__promptEditorBase = previousFactory;
+  ctx.ui.setEditorComponent(nextFactory);
 }
 
 function applyEditor(pi: ExtensionAPI, ctx: ExtensionContext) {
@@ -1551,12 +1563,41 @@ export default function (pi: ExtensionAPI) {
     customOverlay = {
       provider: event.model.provider,
       modelId: event.model.id,
-      thinkingLevel: pi.getThinkingLevel(),
+      thinkingLevel: safeGetThinkingLevel(pi),
     };
 
     // Do not persist/select custom.
     if (ctx.hasUI) {
       requestEditorRender?.();
     }
+  });
+
+  pi.on("thinking_level_select", async (event, ctx) => {
+    lastKnownThinkingLevel = event.level;
+
+    if (runtime.applying) {
+      requestEditorRender?.();
+      return;
+    }
+
+    await ensureRuntime(pi, ctx);
+    const inferred = inferModeFromSelection(ctx, pi, runtime.data);
+    if (inferred) {
+      runtime.currentMode = inferred;
+      runtime.lastRealMode = inferred;
+      customOverlay = null;
+    } else {
+      if (runtime.currentMode !== CUSTOM_MODE_NAME) {
+        runtime.lastRealMode = runtime.currentMode;
+      }
+      runtime.currentMode = CUSTOM_MODE_NAME;
+      customOverlay = {
+        provider: lastObservedModel.provider,
+        modelId: lastObservedModel.modelId,
+        thinkingLevel: event.level,
+      };
+    }
+
+    requestEditorRender?.();
   });
 }

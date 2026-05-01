@@ -43,11 +43,9 @@ ${commitStyleInstructions}
 - Prefer simple verbs: "fix", "add", "remove", "update", "rename", "move", "split", "drop" over fancy synonyms.`;
 
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
-const GEMINI_FLASH_MODEL_ID = "gemini-3-flash-preview";
 
 const MODEL_CANDIDATES: Array<{ provider: string; modelId: string }> = [
   { provider: "anthropic", modelId: HAIKU_MODEL_ID },
-  { provider: "google-gemini-cli", modelId: GEMINI_FLASH_MODEL_ID },
 ];
 
 type GitExecResult = { stdout: string; stderr: string; code: number };
