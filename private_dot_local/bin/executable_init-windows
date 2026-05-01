@@ -17,7 +17,7 @@
 open -b "com.mitchellh.ghostty"          # Ghostty
 open -b "com.anthropic.claudefordesktop" # Claude
 open -b "dev.zed.Zed"                    # Zed
-open -b "org.mozilla.firefox"            # Firefox
+open -b "net.imput.helium"               # Helium
 open -b "md.obsidian"                    # Obsidian
 open -b "com.todoist.mac.Todoist"        # Todoist
 open -b "com.tinyspeck.slackmacgap"      # Slack

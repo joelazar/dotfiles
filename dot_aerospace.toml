@@ -87,7 +87,7 @@ outer.right = 0
 cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
 cmd-ctrl-alt-space = 'exec-and-forget open /Applications/Claude.app'
 cmd-ctrl-alt-z = 'exec-and-forget open /Applications/Zed.app'
-cmd-ctrl-alt-b = 'exec-and-forget open -a Firefox'
+cmd-ctrl-alt-b = 'exec-and-forget open -a Helium'
 cmd-ctrl-alt-o = 'exec-and-forget open -a Obsidian'
 cmd-ctrl-alt-s = 'exec-and-forget open -a Slack'
 cmd-ctrl-alt-d = 'exec-and-forget open -a Discord'
@@ -203,10 +203,6 @@ run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-id = 'org.mozilla.firefox'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]

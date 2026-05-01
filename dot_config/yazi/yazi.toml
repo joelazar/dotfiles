@@ -10,7 +10,7 @@ edit = [
   { run = '${EDITOR:-vi} %s', desc = "Edit", block = true, orphan = false, for = "macos" },
 ]
 browser = [
-  { run = '${BROWSER:-firefox} %s', desc = "Browser", orphan = true, for = "macos" },
+  { run = '${BROWSER:-/Applications/Helium.app/Contents/MacOS/Helium} %s', desc = "Browser", orphan = true, for = "macos" },
 ]
 open = [{ run = "open %s", desc = "Open", orphan = true, for = "macos" }]
 reveal = [{ run = "open -R %s1", desc = "Reveal", for = "macos" }]

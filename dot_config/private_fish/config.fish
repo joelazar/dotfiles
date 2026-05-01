@@ -7,7 +7,7 @@ set -U fish_greeting
 fish_vi_key_bindings
 
 # Make default programs
-set -gx BROWSER firefox
+set -gx BROWSER "/Applications/Helium.app/Contents/MacOS/Helium"
 set -gx PAGER "bat --plain"
 set -gx TERMINAL ghostty
 if not set -q ZED_TERM
