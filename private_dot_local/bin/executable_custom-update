@@ -5,6 +5,16 @@ SOURCE_DIR=$(chezmoi source-path)
 . "$SOURCE_DIR/scripts/utils_install" &&
     . "$SOURCE_DIR/scripts/utils"
 
+empty_macos_trash() {
+    osascript <<'APPLESCRIPT'
+try
+    tell application "Finder" to empty trash
+on error number -128
+    -- User canceled. Not fatal.
+end try
+APPLESCRIPT
+}
+
 execute "fish -c 'fish_update_completions'" "Update fish completions"
 
 execute "ai-update" "Update AI tools"
@@ -19,5 +29,5 @@ execute "nvim --headless -c 'autocmd User MasonUpdateAllComplete qall' -c 'Mason
 
 ask_for_confirmation "Empty macOS Trash?"
 if answer_is_yes; then
-    execute "osascript -e 'tell application \"Finder\" to empty trash'" "Empty macOS Trash"
+    empty_macos_trash
 fi
