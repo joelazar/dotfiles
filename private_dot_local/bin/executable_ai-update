@@ -12,14 +12,10 @@ echo "🚀 Update Codex"
 brew upgrade codex
 echo
 
-echo "🥧 Update Pi Coding Agent"
-bun install -g "@mariozechner/pi-coding-agent"
-echo
-
-echo "🥧 Update Pi extensions"
+echo "🥧 Update Pi"
 pi update
 echo
 
-echo "🔀 Update Pi packages from canonical remotes"
+echo "🥧 Update Pi extensions"
 "${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
 echo
