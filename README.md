@@ -48,18 +48,18 @@ A few quick facts:
 
 ## What lives here 📁
 
-| Path                                                                                                                     | What it contains                                                                                                                   |
-| ------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
-| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, prompts, themes, modes, and local extensions                                                               |
-| [`dot_agents/skills/`](dot_agents/skills/)                                                                               | Local skill library for coding agents                                                                                              |
-| [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                          |
-| [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                              |
-| [`dot_gemini/`](dot_gemini/)                                                                                             | Gemini CLI settings                                                                                                                |
-| [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                      |
-| [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                           |
-| [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows                                                                                  |
-| [`Brewfile.private`](Brewfile.private), [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                       |
+| Path                                                                                                                     | What it contains                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more          |
+| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, prompts, themes, modes, and local extensions                                                                        |
+| [`dot_agents/`](dot_agents/)                                                                                             | Local skill library organized into `skills/`, `frontend-skills/`, and `python-skills/`, plus `improve-skill` and `skill-creator` meta-tools |
+| [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                                   |
+| [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                                       |
+| [`dot_gemini/`](dot_gemini/)                                                                                             | Gemini CLI settings                                                                                                                         |
+| [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                               |
+| [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                                    |
+| [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                                           |
+| [`Brewfile.private`](Brewfile.private), [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                                |
 
 ---
 
@@ -123,6 +123,7 @@ The Lazygit setup includes custom PR commands, conventional commit helpers, GitH
 This repo also handles the machine itself, not just terminal tools.
 
 - [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager config in [`dot_aerospace.toml`](dot_aerospace.toml)
+- [Karabiner-Elements](https://karabiner-elements.pqrs.org/) keyboard remapping in [`dot_config/private_karabiner/`](dot_config/private_karabiner/), including a `disable_cmd_tab.json` profile
 - macOS defaults and shell/editor bootstrapping in [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
 - launch agents in [`private_Library/LaunchAgents/`](private_Library/LaunchAgents/)
 - app defaults, file associations, Dock behavior, keyboard repeat, Touch ID for `sudo`, and similar setup tasks
@@ -146,7 +147,7 @@ This repo currently tracks config for:
 - [Codex](https://github.com/openai/codex) templates in [`dot_codex/`](dot_codex/)
 - [Ollama](https://ollama.com/) for local models
 
-There is also a small helper script, [`ai-update`](private_dot_local/bin/executable_ai-update), that updates the main CLI agents I use.
+There is also a small helper script, [`ai-update`](private_dot_local/bin/executable_ai-update), that updates the main CLI agents and Pi extensions.
 
 ### Pi agent 🥧
 
@@ -160,20 +161,17 @@ The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 - prompt templates in [`dot_pi/agent/prompts/`](dot_pi/agent/prompts/)
 - a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json)
 
-Current Pi modes are built around a few practical defaults rather than a giant matrix:
+Current Pi modes are built around a few practical defaults:
 
-- `default`: Claude Opus 4.7
-- `fast-claude`: Claude Sonnet 4.6
-- `fast-gpt`: GPT-5.3 Codex
-- `fastest`: GPT-5.4 mini
-- `deep`: GPT-5.4
+- `default`: Claude Opus 4.7, medium thinking
+- `fast-claude`: Claude Sonnet 4.6, low thinking
+- `fast-gpt`: GPT-5.5, low thinking
+- `deep`: GPT-5.5, high thinking
 
 ### Local Pi extensions 🧩
 
-There are **25 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
+There are around **22 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
 
-- `pi-fff` for fuzzy file finding and indexed code search
-- `multi-edit` for batch edits and patch-style edits
 - `default-tools` to enable `grep` and `find` by default
 - `prompt-editor` for editing and storing prompt/model combinations
 - `copy-command` for pulling runnable commands out of responses
@@ -181,17 +179,19 @@ There are **25 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agen
 - `path-policy`, `permission-gate`, and `sandbox` for guardrails
 - `todos`, `loop`, `session-breakdown`, and `auto-session-name` for session management
 - `uv` to steer Python workflows toward `uv`
+- `whimsical` for diagram generation
 
 ### Local skills 🎯
 
-The agent skill library under [`dot_agents/skills/`](dot_agents/skills/) currently includes **43 skills**.
+The skill library under [`dot_agents/`](dot_agents/) is organized into three directories: `skills/` for general-purpose tools, `frontend-skills/` for web UI work, and `python-skills/` for Python tooling. Around 21 skills total, tracked by [`dot_skill-lock.json`](dot_skill-lock.json).
 
-That set covers a few different categories:
+General skills cover research and external systems (`ai-search`, `kagi`, `perplexity-search`, `web-search`, `pdf`, `linear-cli`, `mermaid`), workflow helpers (`github`, `humanizer`, `session-analyzer`, `summarize`, `tmux`, `gcx`), and Google Workspace access (calendar, docs, drive, gmail, sheets).
 
-- **Design and frontend work:** `frontend-design`, `impeccable`, `adapt`, `animate`, `polish`, `typeset`, `layout`, `colorize`, and related design skills
-- **Workflow and coding support:** `github`, `humanizer`, `session-analyzer`, `summarize`, `tmux`, `uv`, `web-browser`, `youtube-transcript`
-- **Research and external systems:** `perplexity-search`, `pdf`, `linear-cli`, `mermaid`, `pi-share`
-- **Google Workspace helpers:** calendar, docs, drive, gmail, and sheets skills
+Frontend skills live under `frontend-skills/` and are anchored by `impeccable` — a v3.0 subcommand system with a large reference library covering `live`, `harden`, `document`, `onboard`, `shape`, `teach`, `brand`, `product`, and more. `frontend-design` and `web-browser` round out that category.
+
+Python tooling lives under `python-skills/` and currently just has `uv`.
+
+Two meta-tools, `improve-skill` and `skill-creator`, live at the `dot_agents/` level. They're for building and evaluating new skills rather than using them directly.
 
 ---
 
@@ -210,6 +210,7 @@ Some notable pieces from the current setup:
 - Bun packages for Pi, Codex usage tooling, Defuddle, Obsidian automation, and Google Workspace CLI access
 - UV-managed tools such as `gitingest`, `pylatexenc`, and `nginx-language-server`
 - GitHub CLI plugins like `gh-dash`, `gh-repo-man`, and `gh-markdown-preview`
+- Casks: Helium browser, Karabiner-Elements, Inkscape, Grafana
 
 ---
 
@@ -296,6 +297,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Creates sibling worktrees for the current repo                             |
 | [`init-windows`](private_dot_local/bin/executable_init-windows)               | Opens my usual app set for a work session                                  |
 | [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Triggers Obsidian plugin and theme updates across vaults                   |
+| [`pr-create`](private_dot_local/bin/executable_pr-create)                     | Creates pull requests with a guided interactive prompt                     |
 | [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups                        |
 | [`transfer`](private_dot_local/bin/executable_transfer)                       | Uploads files through transfer.sh                                          |
 | [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Repeats a command until it fails                                           |

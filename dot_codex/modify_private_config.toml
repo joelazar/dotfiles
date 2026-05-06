@@ -19,7 +19,7 @@ status_line = [
 ]
 
 [tui.model_availability_nux]
-"gpt-5.5" = 2
+"gpt-5.5" = 3
 
 [plugins."github@openai-curated"]
 enabled = true
