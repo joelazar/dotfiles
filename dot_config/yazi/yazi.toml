@@ -84,14 +84,16 @@ rules = [
 ]
 
 [[plugin.prepend_fetchers]]
-id = "git"
-name = "*"
-run = "git"
+id    = "git"
+url   = "*"
+run   = "git"
+group = "git"
 
 [[plugin.prepend_fetchers]]
-id = "git"
-name = "*/"
-run = "git"
+id    = "git"
+url   = "*/"
+run   = "git"
+group = "git"
 
 [plugin]
 prepend_previewers = [
