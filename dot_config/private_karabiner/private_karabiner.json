@@ -19,33 +19,6 @@
                                 "type": "basic"
                             }
                         ]
-                    },
-                    {
-                        "description": "Hyper u/n page navigation",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "u",
-                                    "modifiers": {
-                                        "mandatory": ["left_shift", "left_command", "left_control", "left_option"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "page_up" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "n",
-                                    "modifiers": {
-                                        "mandatory": ["left_shift", "left_command", "left_control", "left_option"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "page_down" }],
-                                "type": "basic"
-                            }
-                        ]
                     }
                 ]
             },
