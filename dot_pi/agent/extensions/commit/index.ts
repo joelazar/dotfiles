@@ -9,12 +9,12 @@ import {
   type Api,
   type Model,
   type UserMessage,
-} from "@mariozechner/pi-ai";
-import { BorderedLoader } from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-ai";
+import { BorderedLoader } from "@earendil-works/pi-coding-agent";
 import type {
   ExtensionAPI,
   ExtensionContext,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 
 const commitStyleInstructions = `**IMPORTANT**: Before creating commit messages:
 1. Examine the recent commits to understand the commit message style and conventions used in this repository

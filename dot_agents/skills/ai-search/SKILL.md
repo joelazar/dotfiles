@@ -49,4 +49,4 @@ The script instructs the model to:
 ## Notes
 
 - No extra npm install is required.
-- If module resolution fails, set `PI_AI_MODULE_PATH` to `@mariozechner/pi-ai`'s `dist/index.js` path.
+- If module resolution fails, set `PI_AI_MODULE_PATH` to `@earendil-works/pi-ai`'s `dist/index.js` path.

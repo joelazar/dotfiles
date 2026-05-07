@@ -216,7 +216,7 @@ function collectModuleCandidates() {
     let dir = start;
     for (let i = 0; i < 8; i++) {
       add(
-        join(dir, "node_modules", "@mariozechner", "pi-ai", "dist", "index.js"),
+        join(dir, "node_modules", "@earendil-works", "pi-ai", "dist", "index.js"),
       );
       add(join(dir, "packages", "ai", "dist", "index.js"));
       add(join(dir, "ai", "dist", "index.js"));
@@ -238,7 +238,7 @@ function collectModuleCandidates() {
           piDir,
           "..",
           "node_modules",
-          "@mariozechner",
+          "@earendil-works",
           "pi-ai",
           "dist",
           "index.js",
@@ -250,7 +250,7 @@ function collectModuleCandidates() {
           "..",
           "..",
           "node_modules",
-          "@mariozechner",
+          "@earendil-works",
           "pi-ai",
           "dist",
           "index.js",
@@ -281,10 +281,10 @@ async function loadPiAi() {
   let piAi;
 
   try {
-    piAi = await import("@mariozechner/pi-ai");
+    piAi = await import("@earendil-works/pi-ai");
   } catch (err) {
     tried.push(
-      `@mariozechner/pi-ai (${err?.code || err?.message || "not found"})`,
+      `@earendil-works/pi-ai (${err?.code || err?.message || "not found"})`,
     );
   }
 
@@ -302,7 +302,7 @@ async function loadPiAi() {
 
   if (!piAi) {
     throw new Error(
-      `Could not load @mariozechner/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
+      `Could not load @earendil-works/pi-ai. Set PI_AI_MODULE_PATH to its dist/index.js.\nTried:\n- ${tried.join("\n- ")}`,
     );
   }
 

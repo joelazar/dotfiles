@@ -8,7 +8,7 @@
  * while the agent is working, with a brief completion flash when done.
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 

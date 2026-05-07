@@ -10,7 +10,7 @@
  * Write your reply below the separator, save and close to send.
  */
 
-import type { ExtensionAPI, SessionEntry } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI, SessionEntry } from "@earendil-works/pi-coding-agent";
 
 const SEPARATOR = "--- YOUR RESPONSE BELOW (only this part will be sent) ---";
 const SEPARATOR_RE = /^-{2,}\s*YOUR RESPONSE BELOW.*-{2,}\s*$/im;

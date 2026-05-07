@@ -18,7 +18,7 @@ import { spawn } from "child_process";
 import { createInterface } from "readline";
 import { homedir, tmpdir } from "os";
 import { join, resolve } from "path";
-import { parseSessionEntries } from "@mariozechner/pi-coding-agent";
+import { parseSessionEntries } from "@earendil-works/pi-coding-agent";
 
 const MAX_CHARS_PER_FILE = 100_000; // ~20k tokens
 

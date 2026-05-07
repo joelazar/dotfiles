@@ -5,7 +5,7 @@
  * in addition to the default read, bash, edit, write.
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function defaultTools(pi: ExtensionAPI) {
   pi.on("session_start", () => {

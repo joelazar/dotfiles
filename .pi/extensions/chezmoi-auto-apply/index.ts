@@ -8,7 +8,7 @@
  * Project-local extension — only loads when working in this repo.
  */
 
-import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 export default function chezmoiAutoApply(pi: ExtensionAPI) {
   pi.on("tool_result", async (event) => {

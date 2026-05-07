@@ -20,19 +20,19 @@ import type {
   ExtensionCommandContext,
   PackageSource,
   ResolvedResource,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 import {
   DefaultPackageManager,
   DynamicBorder,
   SettingsManager,
   getSettingsListTheme,
-} from "@mariozechner/pi-coding-agent";
+} from "@earendil-works/pi-coding-agent";
 import {
   Container,
   type SettingItem,
   SettingsList,
   Text,
-} from "@mariozechner/pi-tui";
+} from "@earendil-works/pi-tui";
 
 interface EntryState {
   id: string;
