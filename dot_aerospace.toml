@@ -232,11 +232,19 @@ if.app-id = 'com.apple.MobileSMS'
 run = ['layout tiling', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = ['layout tiling', 'move-node-to-workspace 3']
+
+[[on-window-detected]]
 if.app-id = 'md.obsidian'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.calibre'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
@@ -248,15 +256,15 @@ if.app-id = 'com.openai.codex'
 run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
-if.app-id = 'com.hnc.Discord'
-run = ['layout tiling', 'move-node-to-workspace 3']
-
-[[on-window-detected]]
 if.app-id = 'com.openai.chat'
 run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
 if.app-id = 'com.anthropic.claudefordesktop'
+run = ['layout tiling', 'move-node-to-workspace 6']
+
+[[on-window-detected]]
+if.app-id = 'com.google.GeminiMacOS'
 run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]

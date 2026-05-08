@@ -26,7 +26,7 @@
     "dark": "Catppuccin Mocha"
   },
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Catppuccin Mocha",
     "dark": "Material Icon Theme"
   },
