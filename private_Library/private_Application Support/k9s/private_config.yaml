@@ -16,6 +16,8 @@ k9s:
   # Default port forward host
   portForwardAddress: localhost
   ui: # NOTE! [K9s v0.30.0]
+    # Catppuccin Mocha skin (file in skins/catppuccin-mocha.yaml)
+    skin: catppuccin-mocha
     # Enable mouse support. Default false
     enableMouse: false
     # Set to true to hide K9s header. Default false
