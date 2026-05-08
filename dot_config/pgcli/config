@@ -106,7 +106,11 @@ table_format = psql
 # Syntax Style. Possible values: manni, igor, xcode, vim, autumn, vs, rrt,
 # native, perldoc, borland, tango, emacs, friendly, monokai, paraiso-dark,
 # colorful, murphy, bw, pastie, paraiso-light, trac, default, fruity
-syntax_style = default
+# Catppuccin Mocha pygments style. Provided by `catppuccin[pygments]`,
+# installed into pgcli's uv tool venv:
+#   uv tool install pgcli --with 'catppuccin[pygments]'
+# Falls back to default highlighting if package missing.
+syntax_style = catppuccin-mocha
 
 # Keybindings:
 # When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
@@ -151,32 +155,36 @@ null_string = '<null>'
 # manage pager on startup
 enable_pager = True
 
-# Custom colors for the completion menu, toolbar, etc.
+# Custom colors — Catppuccin Mocha palette
+# https://github.com/catppuccin/catppuccin?tab=readme-ov-file#-palette
+#   base=#1e1e2e crust=#11111b text=#cdd6f4 surface0=#313244 surface1=#45475a
+#   overlay0=#6c7086 mauve=#cba6f7 blue=#89b4fa green=#a6e3a1 yellow=#f9e2af
+#   red=#f38ba8 teal=#94e2d5
 [colors]
-Token.Menu.Completions.Completion.Current = 'bg:#ffffff #000000'
-Token.Menu.Completions.Completion = 'bg:#008888 #ffffff'
-Token.Menu.Completions.Meta.Current = 'bg:#44aaaa #000000'
-Token.Menu.Completions.Meta = 'bg:#448888 #ffffff'
-Token.Menu.Completions.MultiColumnMeta = 'bg:#aaffff #000000'
-Token.Menu.Completions.ProgressButton = 'bg:#003333'
-Token.Menu.Completions.ProgressBar = 'bg:#00aaaa'
-Token.SelectedText = '#ffffff bg:#6666aa'
-Token.SearchMatch = '#ffffff bg:#4444aa'
-Token.SearchMatch.Current = '#ffffff bg:#44aa44'
-Token.Toolbar = 'bg:#222222 #aaaaaa'
-Token.Toolbar.Off = 'bg:#222222 #888888'
-Token.Toolbar.On = 'bg:#222222 #ffffff'
+Token.Menu.Completions.Completion.Current = 'bg:#cba6f7 #11111b bold'
+Token.Menu.Completions.Completion = 'bg:#313244 #cdd6f4'
+Token.Menu.Completions.Meta.Current = 'bg:#b4befe #11111b'
+Token.Menu.Completions.Meta = 'bg:#45475a #bac2de'
+Token.Menu.Completions.MultiColumnMeta = 'bg:#585b70 #cdd6f4'
+Token.Menu.Completions.ProgressButton = 'bg:#11111b'
+Token.Menu.Completions.ProgressBar = 'bg:#cba6f7'
+Token.SelectedText = '#11111b bg:#cba6f7'
+Token.SearchMatch = '#11111b bg:#f9e2af'
+Token.SearchMatch.Current = '#11111b bg:#a6e3a1'
+Token.Toolbar = 'bg:#181825 #bac2de'
+Token.Toolbar.Off = 'bg:#181825 #6c7086'
+Token.Toolbar.On = 'bg:#181825 #cdd6f4'
 Token.Toolbar.Search = 'noinherit bold'
 Token.Toolbar.Search.Text = 'nobold'
 Token.Toolbar.System = 'noinherit bold'
 Token.Toolbar.Arg = 'noinherit bold'
 Token.Toolbar.Arg.Text = 'nobold'
-Token.Toolbar.Transaction.Valid = 'bg:#222222 #00ff5f bold'
-Token.Toolbar.Transaction.Failed = 'bg:#222222 #ff005f bold'
+Token.Toolbar.Transaction.Valid = 'bg:#181825 #a6e3a1 bold'
+Token.Toolbar.Transaction.Failed = 'bg:#181825 #f38ba8 bold'
 
 # color of table
 # you can use token or custom colors
-Token.Output.Header = "#00ff5f bold"
+Token.Output.Header = "#cba6f7 bold"
 Token.Output.OddRow = ""
 Token.Output.EvenRow = ""
 

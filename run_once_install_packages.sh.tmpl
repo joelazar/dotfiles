@@ -79,6 +79,8 @@ install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
 
 # UV tools with extra dependencies
 execute "uv tool install ansible-core --with ansible --with netaddr" "ansible-core (with ansible, netaddr)"
+# psycopg[binary] bundles libpq; catppuccin[pygments] provides syntax_style
+execute "uv tool install pgcli --with 'psycopg[binary]' --with 'catppuccin[pygments]'" "pgcli (catppuccin + psycopg-binary)"
 
 # Pi packages
 PI_PACKAGES=()

@@ -219,7 +219,6 @@ brew "opentofu"
 # Painless compression and decompression for your terminal
 brew "ouch"
 # CLI for Postgres with auto-completion and syntax highlighting
-brew "pgcli"
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager

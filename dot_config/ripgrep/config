@@ -7,3 +7,13 @@
 --glob=!.git/
 --glob=!package-lock.json
 --glob=!yarn.lock
+
+# Catppuccin Mocha colors
+# mauve=#cba6f7(203,166,247) blue=#89b4fa(137,180,250)
+# green=#a6e3a1(166,227,161) yellow=#f9e2af(249,226,175)
+--colors=path:fg:137,180,250
+--colors=path:style:bold
+--colors=line:fg:249,226,175
+--colors=column:fg:166,227,161
+--colors=match:fg:203,166,247
+--colors=match:style:bold
