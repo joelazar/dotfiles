@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Tokyo Night theme colors (only define if not already set)
+# Catppuccin Mocha theme colors (only define if not already set)
 if [[ -z "${PURPLE:-}" ]]; then
-    readonly PURPLE="#bd93f9"
-    readonly GREEN="#50fa7b"
-    readonly RED="#ff5555"
-    readonly YELLOW="#f1fa8c"
-    readonly CYAN="#8be9fd"
-    readonly ORANGE="#ffb86c"
-    readonly PINK="#ff79c6"
+    readonly PURPLE="#cba6f7"  # mauve
+    readonly GREEN="#a6e3a1"
+    readonly RED="#f38ba8"
+    readonly YELLOW="#f9e2af"
+    readonly CYAN="#89dceb"   # sky
+    readonly ORANGE="#fab387" # peach
+    readonly PINK="#f5c2e7"
 fi
 
 # Gum wrapper functions for common UI patterns

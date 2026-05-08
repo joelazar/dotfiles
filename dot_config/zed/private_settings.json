@@ -700,6 +700,9 @@
   "auto_install_extensions": {
     "ansible": true,
     "basher": true,
+    "catppuccin": true,
+    "catppuccin-blur": true,
+    "catppuccin-icons": true,
     "csv": true,
     "docker-compose": true,
     "dockerfile": true,
@@ -712,6 +715,7 @@
     "harper": true,
     "helm": true,
     "html": true,
+    "kanagawa-themes": true,
     "latex": true,
     "log": true,
     "lua": true,
@@ -724,9 +728,9 @@
     "scheme": true,
     "sql": true,
     "terraform": true,
-    "tokyo-night": true,
     "toml": true,
     "vscode-icons": true,
+    "zedokai": true,
     "zig": true
   },
 
@@ -734,7 +738,7 @@
   // THEME OVERRIDES (empty - using defaults)
   // ══════════════════════════════════════════════════════════════════════════════
   "theme_overrides": {
-    "Tokyo Night": {
+    "Catppuccin Mocha": {
       "syntax": {
         "comment": {
           "font_style": "italic",

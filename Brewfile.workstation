@@ -11,7 +11,9 @@ brew "btop"
 # Core application library for C
 brew "glib"
 # Manage your dotfiles across multiple diverse machines, securely
+brew "ccusage"
 brew "chezmoi"
+brew "defuddle"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
@@ -40,6 +42,8 @@ brew "fnm"
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
+brew "gitingest"
+brew "googleworkspace-cli"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Interact with Google Gemini AI models from the command-line

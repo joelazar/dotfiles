@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export SOURCE_DIR="{{ .chezmoi.sourceDir }}"
 . "{{ joinPath .chezmoi.sourceDir "scripts/utils" }}"
 . "{{ joinPath .chezmoi.sourceDir "scripts/utils_install" }}"
 
@@ -48,13 +49,10 @@ BUN_PACKAGES=(
     "@earendil-works/pi-coding-agent"
     "@ccusage/codex"
     "@ccusage/pi"
-    "ccusage"
-    "defuddle"
     "lat.md"
     "npm-check"
     "obsidian-headless"
     "pi-acp"
-    "@googleworkspace/cli"
 )
 
 install_packages_from_list "BUN" "install_bun_package" "${BUN_PACKAGES[@]}"
@@ -64,7 +62,8 @@ GO_PACKAGES=(
     "github.com/cosmos72/gomacro@latest:gomacro"
 )
 
-print_in_purple "Go packages\n"
+echo ""
+print_in_purple "Go packages"
 for package in "${GO_PACKAGES[@]}"; do
     IFS=':' read -r pkg_path pkg_name <<<"$package"
     install_go_package "$pkg_path" "${pkg_name:-$(basename "$pkg_path")}"
@@ -72,7 +71,6 @@ done
 
 # UV tools
 UV_TOOLS=(
-    "gitingest"
     "pylatexenc"
     "nginx-language-server"
 )
@@ -101,7 +99,8 @@ if setup_github_cli; then
         "yusukebe/gh-markdown-preview"
     )
 
-    print_in_purple "GH plugins\n"
+    echo ""
+    print_in_purple "GH plugins"
     for plugin in "${GH_PLUGINS[@]}"; do
         install_gh_plugin "$plugin"
     done
@@ -114,7 +113,6 @@ YAZI_PLUGINS=(
     "yazi-rs/plugins:diff"
     "yazi-rs/plugins:git"
     "ndtoan96/ouch"
-    "BennyOe/tokyo-night"
 )
 
 install_yazi_plugins "${YAZI_PLUGINS[@]}"

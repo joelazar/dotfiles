@@ -41,7 +41,7 @@ A few quick facts:
 - **Profiles:** `private`, `work`, and `workstation`
 - **Bootstrap path:** [`bootstrap.sh`](bootstrap.sh)
 - **First-run automation:** [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) and [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
-- **Theme:** Tokyo Night across most of the stack
+- **Theme:** Catppuccin Mocha across most of the stack
 - **Fonts:** Maple Mono / Maple Mono NF
 
 ---
@@ -78,7 +78,7 @@ That setup includes:
 - [Mise](https://mise.jdx.dev/) for runtime management via [`dot_config/mise/config.toml`](dot_config/mise/config.toml)
 - [Television](https://github.com/alexpasmantier/television) shell integration so `Ctrl+T` opens context-aware pickers instead of a generic file list
 
-The terminal is [Ghostty](https://ghostty.org/), configured in [`dot_config/ghostty/config`](dot_config/ghostty/config). It uses Tokyo Night, Maple Mono NF, split navigation shortcuts, a huge scrollback buffer, and a top-mounted quick terminal.
+The terminal is [Ghostty](https://ghostty.org/), configured in [`dot_config/ghostty/config`](dot_config/ghostty/config). It uses Catppuccin Mocha, Maple Mono NF, split navigation shortcuts, a huge scrollback buffer, and a top-mounted quick terminal.
 
 ### Editors ✍️
 
@@ -116,7 +116,7 @@ Git tooling is a big part of this repo:
 - `delta` + `diffnav` for readable diffs
 - custom scripts for repo cleanup, worktree creation, and recursive repo management
 
-The Lazygit setup includes custom PR commands, conventional commit helpers, GitHub shortcuts, Tokyo Night styling, and delta-powered diff views.
+The Lazygit setup includes custom PR commands, conventional commit helpers, GitHub shortcuts, Catppuccin Mocha styling, and delta-powered diff views.
 
 ### macOS workflow 🍎
 
@@ -155,7 +155,7 @@ Pi is where most of the custom work happens.
 
 The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 
-- Tokyo Night theme and custom modes in [`dot_pi/agent/modes.json`](dot_pi/agent/modes.json)
+- Catppuccin Mocha theme and custom modes in [`dot_pi/agent/modes.json`](dot_pi/agent/modes.json)
 - local model definitions in [`dot_pi/agent/models.json`](dot_pi/agent/models.json)
 - path blocking for secrets and sensitive files in [`dot_pi/agent/path-policy.json`](dot_pi/agent/path-policy.json)
 - prompt templates in [`dot_pi/agent/prompts/`](dot_pi/agent/prompts/)
@@ -310,7 +310,7 @@ Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts
 
 ## Theming 🎨
 
-Tokyo Night is the common thread through most of the environment: Ghostty, Zed, Lazygit, Television, Eza, Bat, and Pi all use it in one form or another.
+Catppuccin Mocha is the common thread through most of the environment: Ghostty, Tmux, Fish, Yazi, Television, Lazygit, Bat, Btop, Starship, Atuin, Eza, Delta, Fzf, Gh-Dash, K9s, and Zed all use it in one form or another.
 
 Fonts are centered on Maple Mono and Maple Mono NF, including OpenType alternates like `cv02`, `cv05`, `cv61`, and `cv63`.
 

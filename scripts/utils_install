@@ -1,6 +1,10 @@
 #!/bin/bash
 
-SOURCE_DIR=$(chezmoi source-path)
+# Honor SOURCE_DIR from caller (run_once template) to avoid chezmoi-state-lock
+# contention when this script runs as part of `chezmoi apply`. Fall back to
+# `chezmoi source-path` and finally to the canonical default.
+SOURCE_DIR="${SOURCE_DIR:-$(chezmoi source-path 2>/dev/null)}"
+SOURCE_DIR="${SOURCE_DIR:-$HOME/.local/share/chezmoi}"
 
 . "$SOURCE_DIR/scripts/utils"
 
@@ -41,6 +45,7 @@ install_gum() {
 
 install_chezmoi() {
     if ! cmd_exists "chezmoi"; then
+        echo ""
         print_in_purple "🏠 Installing and configuring Chezmoi"
         brew install chezmoi
 
@@ -64,6 +69,7 @@ install_chezmoi() {
 }
 
 install_brew_packages() {
+    echo ""
     print_in_purple "🍺 Installing packages from Brewfile"
     local brewfile=""
 
@@ -89,6 +95,7 @@ install_brew_packages() {
 
 install_rust() {
     if ! cmd_exists "rustc"; then
+        echo ""
         print_in_purple "🦀 Installing Rust using rustup"
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
         print_success "Rust installed and configured"
@@ -99,6 +106,7 @@ install_rust() {
 
 install_magic() {
     if ! cmd_exists "magic"; then
+        echo ""
         print_in_purple "🪄 Installing Magic from Modular"
 
         # Install Magic
@@ -150,6 +158,7 @@ install_yazi_plugins() {
     local -a plugin_list=("${@}")
 
     if cmd_exists "yazi"; then
+        echo ""
         print_in_purple "📁 Installing Yazi plugins"
 
         # Make sure yazi config directory exists
@@ -170,10 +179,15 @@ install_yazi_plugins() {
         done
 
         # Install theme if not already present
-        if [ ! -d "$HOME/.config/yazi/flavors/tokyo-night.yazi" ]; then
-            execute "git clone https://github.com/BennyOe/tokyo-night.yazi.git ~/.config/yazi/flavors/tokyo-night.yazi" "Yazi Tokyo Night theme"
+        if [ ! -d "$HOME/.config/yazi/flavors/catppuccin-mocha.yazi" ]; then
+            execute "git clone https://github.com/yazi-rs/flavors.git /tmp/yazi-flavors-clone && cp -R /tmp/yazi-flavors-clone/catppuccin-mocha.yazi ~/.config/yazi/flavors/ && rm -rf /tmp/yazi-flavors-clone" "Yazi Catppuccin Mocha theme"
         else
-            print_success "Yazi Tokyo Night theme already installed"
+            print_success "Yazi Catppuccin Mocha theme already installed"
+        fi
+        # Clean up old tokyo-night theme
+        if [ -d "$HOME/.config/yazi/flavors/tokyo-night.yazi" ]; then
+            rm -rf "$HOME/.config/yazi/flavors/tokyo-night.yazi"
+            print_success "Removed old Yazi Tokyo Night theme"
         fi
     else
         print_warning "Yazi not installed. Skipping Yazi plugins installation."
@@ -241,7 +255,13 @@ install_packages_from_list() {
     local -r installer="$2"
     local -a packages=("${@:3}")
 
-    print_in_purple "$type packages\n"
+    # Skip empty package lists so we don't print a header with nothing under it.
+    if [ "${#packages[@]}" -eq 0 ]; then
+        return 0
+    fi
+
+    echo ""
+    print_in_purple "$type packages"
 
     for package in "${packages[@]}"; do
         $installer "$package"

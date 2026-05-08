@@ -41,6 +41,11 @@ fish_add_path /opt/homebrew/opt/openjdk/bin/
 set -gx FD_DEFAULT_COMMAND 'fd --hidden --follow'
 set -gx FZF_DEFAULT_COMMAND "$FD_DEFAULT_COMMAND --exclude .git --exclude node_modules --exclude .venv"
 set -gx FZF_DEFAULT_OPTS '
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc
+  --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8
+  --color=selected-bg:#45475a
+  --color=border:#6c7086,label:#cdd6f4
   --bind \'ctrl-t:transform:if not string match -q "Files*" $FZF_PROMPT; echo "change-prompt(Files> )+reload:fd --type f --color always"; else; echo "change-prompt(Directories> )+reload:fd --type d --color always"; end\'
   --height 50%
   --layout=reverse

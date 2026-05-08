@@ -28,7 +28,7 @@ fi
 
 execute "if [ ! -d $HOME/.config/nvim ]; then git clone git@github.com:joelazar/nvim-config.git $HOME/.config/nvim; fi;" "Clone neovim config repo"
 
-execute "fish -c 'echo y | fish_config theme save \"TokyoNight Night\"'" "Set fish theme"
+execute "fish -c 'fish_config theme choose \"Catppuccin Mocha\"'" "Set fish theme"
 
 show_section "⌨️  Keyboard and System Settings" "$CYAN"
 
@@ -69,11 +69,10 @@ execute "defaults write -g NSAutomaticWindowAnimationsEnabled -bool false" "Disa
 
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
-execute "duti -s dev.zed.Zed-Preview public.plain-text all" "Set Zed as the default app for plain text files"
+execute "duti -s dev.zed.Zed public.plain-text all" "Set Zed as the default app for plain text files"
 
-execute "duti -s dev.zed.Zed-Preview public.comma-separated-values-text all" "Set Zed as the default app for CSV files"
+execute "duti -s dev.zed.Zed public.comma-separated-values-text all" "Set Zed as the default app for CSV files"
 
-execute "duti -s dev.zed.Zed-Preview public.data all" "Set Zed as the default app for data files"
 
 execute "duti -s com.colliderli.iina .mp4 all" "Set IINA as the default app for MP4 files"
 

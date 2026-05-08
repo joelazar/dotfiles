@@ -163,15 +163,16 @@ theme:
       compact: false
   colors:
     text:
-      primary: "#c0caf5"
-      secondary: "#7aa2f7"
-      inverted: "#1a1b26"
-      faint: "#565f89"
-      warning: "#f7768e"
-      success: "#9ece6a"
+      primary: "#cdd6f4"
+      secondary: "#cba6f7"
+      inverted: "#11111b"
+      faint: "#bac2de"
+      warning: "#f9e2af"
+      success: "#a6e3a1"
+      error: "#f38ba8"
     background:
-      selected: "#283457"
+      selected: "#313244"
     border:
-      primary: "#7aa2f7"
-      secondary: "#3b4261"
-      faint: "#292e42"
+      primary: "#cba6f7"
+      secondary: "#45475a"
+      faint: "#313244"

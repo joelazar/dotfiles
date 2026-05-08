@@ -6,13 +6,13 @@
 
 set -e  # Exit on any error
 
-# Tokyo Night theme colors
-readonly PURPLE="#bd93f9"
-readonly GREEN="#50fa7b"
-readonly RED="#ff5555"
-readonly YELLOW="#f1fa8c"
-readonly CYAN="#8be9fd"
-readonly ORANGE="#ffb86c"
+# Catppuccin Mocha theme colors
+readonly PURPLE="#cba6f7"  # mauve
+readonly GREEN="#a6e3a1"
+readonly RED="#f38ba8"
+readonly YELLOW="#f9e2af"
+readonly CYAN="#89dceb"    # sky
+readonly ORANGE="#fab387"  # peach
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -25,19 +25,19 @@ print_in_color() {
 }
 
 print_in_purple() {
-    print_in_color "\033[38;2;189;147;249m$1\033[m\n"
+    print_in_color "\033[38;2;203;166;247m$1\033[m\n"  # mauve
 }
 
 print_in_green() {
-    print_in_color "\033[38;2;80;250;123m$1\033[m\n"
+    print_in_color "\033[38;2;166;227;161m$1\033[m\n"
 }
 
 print_in_yellow() {
-    print_in_color "\033[38;2;241;250;140m$1\033[m\n"
+    print_in_color "\033[38;2;249;226;175m$1\033[m\n"
 }
 
 print_in_red() {
-    print_in_color "\033[38;2;255;85;85m$1\033[m\n"
+    print_in_color "\033[38;2;243;139;168m$1\033[m\n"
 }
 
 print_error() {

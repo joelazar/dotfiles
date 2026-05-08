@@ -7,7 +7,7 @@ font-feature = +cv63
 
 font-size = 13.0
 
-theme = tokyonight
+theme = catppuccin-mocha
 
 working-directory = home
 window-inherit-working-directory = false

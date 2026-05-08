@@ -9,7 +9,7 @@ set -euo pipefail
 MANAGED_CONFIG='{
   "hideThinkingBlock": true,
   "collapseChangelog": false,
-  "theme": "tokyo-night",
+  "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.5",

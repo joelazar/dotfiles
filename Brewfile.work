@@ -47,9 +47,11 @@ brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Mozilla CA bundle for Python
+brew "ccusage"
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
+brew "defuddle"
 # Cross-platform make
 brew "cmake"
 # Linux virtual machines
@@ -123,7 +125,9 @@ brew "git-lfs"
 # Interactive command-line tool for using emoji in commit messages
 brew "gitmoji"
 # Open source programming language to build simple/reliable/efficient software
+brew "gitingest"
 brew "go"
+brew "googleworkspace-cli"
 # Stricter gofmt
 brew "gofumpt"
 # Language server for `golangci-lint`
@@ -382,6 +386,8 @@ cask "ghostty"
 cask "google-chrome"
 # Client for the Google Drive storage service
 cask "google-drive"
+# Native desktop AI assistant from Google
+cask "google-gemini"
 # Chromium-based web browser
 cask "helium-browser"
 # Free and open-source media player

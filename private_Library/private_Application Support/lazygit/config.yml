@@ -18,31 +18,36 @@ gui:
   showBottomLine: false
   showRandomTip: false
   border: "rounded"
+  # Catppuccin Mocha (mauve accent)
   theme:
     activeBorderColor:
-      - "#ff9e64"
+      - "#cba6f7"
       - "bold"
     inactiveBorderColor:
-      - "#27a1b9"
+      - "#a6adc8"
     searchingActiveBorderColor:
-      - "#ff9e64"
+      - "#f9e2af"
       - "bold"
     optionsTextColor:
-      - "#7aa2f7"
+      - "#89b4fa"
     selectedLineBgColor:
-      - "#283457"
+      - "#313244"
+    inactiveViewSelectedLineBgColor:
+      - "#6c7086"
     cherryPickedCommitFgColor:
-      - "#7aa2f7"
+      - "#cba6f7"
     cherryPickedCommitBgColor:
-      - "#bb9af7"
+      - "#45475a"
     markedBaseCommitFgColor:
-      - "#7aa2f7"
+      - "#89b4fa"
     markedBaseCommitBgColor:
-      - "#e0af68"
+      - "#f9e2af"
     unstagedChangesColor:
-      - "#db4b4b"
+      - "#f38ba8"
     defaultFgColor:
-      - "#c0caf5"
+      - "#cdd6f4"
+  authorColors:
+    "*": "#b4befe"
 update:
   method: never
 customCommands:
