@@ -14,7 +14,9 @@ MANAGED_CONFIG='{
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-7",
-    "anthropic/claude-sonnet-4-6"
+    "anthropic/claude-sonnet-4-6",
+    "anthropic-extra/claude-opus-4-7",
+    "anthropic-extra/claude-sonnet-4-6"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
