@@ -139,6 +139,45 @@ async function loadProjectContextFiles(
   return out;
 }
 
+function parseDisableModelInvocationFromFrontmatter(
+  content: string,
+): boolean {
+  // Minimal YAML scan: look for `disable-model-invocation: true` inside the
+  // leading `---` ... `---` block. Avoids pulling in a YAML parser.
+  if (!content.startsWith("---")) return false;
+  const end = content.indexOf("\n---", 3);
+  if (end < 0) return false;
+  const fm = content.slice(3, end);
+  for (const raw of fm.split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    const m = line.match(/^disable-model-invocation\s*:\s*(\S+)/i);
+    if (m) return m[1].toLowerCase() === "true";
+  }
+  return false;
+}
+
+async function readDisableModelInvocation(
+  filePath: string,
+): Promise<boolean> {
+  if (!filePath || !existsSync(filePath)) return false;
+  try {
+    // Frontmatter sits at the top; read a small slice instead of the full file.
+    const fh = await fs.open(filePath, "r");
+    try {
+      const buf = Buffer.alloc(4096);
+      const { bytesRead } = await fh.read(buf, 0, buf.length, 0);
+      return parseDisableModelInvocationFromFrontmatter(
+        buf.slice(0, bytesRead).toString("utf8"),
+      );
+    } finally {
+      await fh.close();
+    }
+  } catch {
+    return false;
+  }
+}
+
 function normalizeSkillName(name: string): string {
   return name.startsWith("skill:") ? name.slice("skill:".length) : name;
 }
@@ -382,9 +421,11 @@ function buildSkillPromptBreakdown(
 function buildSkillPromptBreakdownFromCommands(
   commands: ReturnType<ExtensionAPI["getCommands"]>,
   cwd: string,
+  userInvokedByName?: Map<string, boolean>,
 ): Array<{ name: string; tokens: number }> {
   return commands
     .filter((c) => c.source === "skill")
+    .filter((c) => !userInvokedByName?.get(normalizeSkillName(c.name)))
     .map((c) => {
       const name = normalizeSkillName(c.name);
       const filePath = c.sourceInfo?.path
@@ -425,7 +466,7 @@ type ContextViewData = {
   skillBreakdown: Array<{ name: string; tokens: number; source?: string }>;
   toolBreakdown: Array<{ name: string; tokens: number }>;
   extensions: string[];
-  skills: Array<{ name: string; source?: string }>;
+  skills: Array<{ name: string; source?: string; userInvoked?: boolean }>;
   loadedSkills: string[];
   session: { totalTokens: number; totalCost: number };
 };
@@ -598,14 +639,17 @@ class ContextView implements Component {
         a.name.localeCompare(b.name),
       );
       for (const s of sortedSkills) {
-        const nameStyled = loaded.has(s.name)
-          ? this.theme.fg("success", s.name)
-          : text(s.name);
+        const nameStyled = s.userInvoked
+          ? this.theme.fg("warning", s.name)
+          : loaded.has(s.name)
+            ? this.theme.fg("success", s.name)
+            : text(s.name);
         const tok = tokensByName.get(s.name);
         const tokStr =
           tok != null ? muted(` ~${tok.toLocaleString()} tok`) : "";
+        const tagStr = s.userInvoked ? dim(" [user-invoked]") : "";
         const srcStr = s.source ? dim(`  (${s.source})`) : "";
-        lines.push(muted("  - ") + nameStyled + tokStr + srcStr);
+        lines.push(muted("  - ") + nameStyled + tokStr + tagStr + srcStr);
       }
     }
     lines.push("");
@@ -753,6 +797,44 @@ export default function contextExtension(pi: ExtensionAPI) {
 
       // Prefer skills from last prompt snapshot (the set pi actually
       // formatted into the system prompt) over the command registry.
+      // Track which ones are user-invoked only (disableModelInvocation):
+      // those don't appear in the system prompt but can still be triggered
+      // via /skill:name.
+      const userInvokedByName = new Map<string, boolean>();
+      if (lastPromptOptions?.skills?.length) {
+        for (const s of lastPromptOptions.skills) {
+          userInvokedByName.set(
+            normalizeSkillName(s.name),
+            !!s.disableModelInvocation,
+          );
+        }
+      }
+      // Fill in any skills we don't have a snapshot flag for by reading
+      // the SKILL.md frontmatter directly. This covers the common case of
+      // /context being invoked before any agent turn has run, when
+      // `lastPromptOptions` is still null.
+      const skillFileByName = new Map<string, string>();
+      for (const c of skillCmds) {
+        const n = normalizeSkillName(c.name);
+        const p = c.sourceInfo?.path
+          ? normalizeReadPath(c.sourceInfo.path, ctx.cwd)
+          : "";
+        if (n && p && !skillFileByName.has(n)) skillFileByName.set(n, p);
+      }
+      if (lastPromptOptions?.skills?.length) {
+        for (const s of lastPromptOptions.skills) {
+          const n = normalizeSkillName(s.name);
+          if (n && s.filePath && !skillFileByName.has(n)) {
+            skillFileByName.set(n, path.resolve(s.filePath));
+          }
+        }
+      }
+      await Promise.all(
+        [...skillFileByName.entries()].map(async ([n, p]) => {
+          if (userInvokedByName.has(n)) return;
+          userInvokedByName.set(n, await readDisableModelInvocation(p));
+        }),
+      );
       const skillNames = (
         lastPromptOptions?.skills?.length
           ? lastPromptOptions.skills.map((s) => normalizeSkillName(s.name))
@@ -763,6 +845,7 @@ export default function contextExtension(pi: ExtensionAPI) {
         source: skillSourceByName.get(name)
           ? shortenHome(skillSourceByName.get(name)!)
           : undefined,
+        userInvoked: userInvokedByName.get(name) ?? false,
       }));
 
       // Prefer context files from last prompt snapshot — that's exactly
@@ -792,7 +875,11 @@ export default function contextExtension(pi: ExtensionAPI) {
       );
       const skillBreakdownRaw = lastPromptOptions?.skills?.length
         ? buildSkillPromptBreakdown(lastPromptOptions.skills)
-        : buildSkillPromptBreakdownFromCommands(commands, ctx.cwd);
+        : buildSkillPromptBreakdownFromCommands(
+            commands,
+            ctx.cwd,
+            userInvokedByName,
+          );
       const skillBreakdown = skillBreakdownRaw.map((x) => ({
         ...x,
         source: skillSourceByName.get(x.name)
@@ -893,8 +980,9 @@ export default function contextExtension(pi: ExtensionAPI) {
           for (const s of sortedSkills) {
             const tok = tokensByName.get(s.name);
             const tokStr = tok != null ? ` ~${tok.toLocaleString()} tok` : "";
+            const tagStr = s.userInvoked ? " [user-invoked]" : "";
             const srcStr = s.source ? `  (${s.source})` : "";
-            lines.push(`    - ${s.name}${tokStr}${srcStr}`);
+            lines.push(`    - ${s.name}${tokStr}${tagStr}${srcStr}`);
           }
         }
         lines.push(
