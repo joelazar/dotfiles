@@ -1,0 +1,38 @@
+#!/bin/bash
+#
+# Restore third-party agent skills from skills-lock.json using the `skills` CLI
+# (https://www.npmjs.com/package/skills).
+#
+# This script re-runs whenever the lockfile content changes, thanks to the
+# embedded hash below.
+#
+# skills-lock.json hash: {{ include "dot_agents/skills-lock.json" | sha256sum }}
+
+set -euo pipefail
+
+. "{{ joinPath .chezmoi.sourceDir "scripts/utils" }}"
+
+LOCKFILE="${HOME}/.agents/skills-lock.json"
+
+if [[ ! -f "$LOCKFILE" ]]; then
+    show_message "⚠️  $LOCKFILE not found; skipping skill restore." "$ORANGE"
+    exit 0
+fi
+
+if ! cmd_exists "skills"; then
+    show_message "⚠️  'skills' CLI not installed; run install_packages first." "$ORANGE"
+    exit 0
+fi
+
+show_section "🧩 Restoring third-party skills from skills-lock.json" "$CYAN"
+
+# `skills experimental_install` resolves the lockfile from the cwd and writes
+# skills into <cwd>/.agents/skills/ (and friends), so we run it from $HOME with
+# a temporary symlink to the canonical lockfile.
+TMP_LINK="${HOME}/skills-lock.json"
+cleanup() { [[ -L "$TMP_LINK" ]] && rm -f "$TMP_LINK"; }
+trap cleanup EXIT
+
+ln -sf "$LOCKFILE" "$TMP_LINK"
+cd "$HOME"
+skills experimental_install -y

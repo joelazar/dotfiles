@@ -1,6 +1,7 @@
 ---
 name: mermaid
 description: "Must read guide on creating/editing mermaid charts with valiation tools"
+disable-model-invocation: true
 ---
 
 # Mermaid Skill
