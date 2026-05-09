@@ -64,6 +64,7 @@ brew "coreutils"
 brew "curl"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+brew "whisper-cpp"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Duplicate file utility
