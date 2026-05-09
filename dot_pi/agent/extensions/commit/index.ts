@@ -17,11 +17,35 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 
 const commitStyleInstructions = `**IMPORTANT**: Before creating commit messages:
-1. Examine the recent commits to understand the commit message style and conventions used in this repository
-2. Follow the EXACT same format, emoji usage, capitalization, and structure as the recent commits
-3. Use appropriate gitmoji or emoji prefix if the repository uses them (e.g., :sparkles:, :wrench:, :bug:, :fire:, :recycle:)
-4. If the changes are non-trivial (e.g., multiple files changed, complex logic changes, refactors, or anything that benefits from explanation), include a commit body separated by a blank line from the subject. The body should briefly explain **what** changed and **why**.
-5. **Commit body readability**: Wrap body lines at ~72 characters. Structure the body with bullet points (- or *) — one per logical change or noteworthy detail. Avoid prose paragraphs; prefer a scannable list. Keep it concise — a few bullets is ideal, not a wall of text.`;
+1. Examine the recent commits to understand the commit message *format* (gitmoji vs conventional commits, capitalization, tense, prefix style, line length).
+2. Match that format — but DO NOT just copy the most-frequent gitmoji. Pick the gitmoji that genuinely fits THIS change. The recent log is for *style*, not for emoji selection.
+3. **Gitmoji selection** (only if the repo uses gitmoji). Pick the single best fit for the dominant change:
+   - :sparkles: new feature / new file added for a feature
+   - :bug: bug fix
+   - :recycle: refactor (no behavior change)
+   - :art: code structure / formatting / readability
+   - :zap: performance
+   - :fire: remove code or files
+   - :truck: move / rename files
+   - :memo: docs (README, comments, markdown)
+   - :lipstick: UI / styling / theme
+   - :wrench: configuration files (settings, configs, dotfiles tweaks)
+   - :hammer: dev scripts / tooling
+   - :arrow_up: dependency upgrades
+   - :heavy_plus_sign: add a dependency
+   - :heavy_minus_sign: remove a dependency
+   - :lock: security
+   - :rotating_light: lint/warning fixes
+   - :white_check_mark: tests
+   - :construction: WIP
+   - :rewind: revert
+   - :tada: initial commit / project setup
+   Default to :wrench: ONLY for genuine config tweaks. For everything else, pick the matching emoji above.
+4. **Body — when to include one**:
+   - NO body for: single-file edits, renames, version bumps, config tweaks, simple removals, one-line fixes, anything obvious from the subject.
+   - YES body for: multiple unrelated files, refactors that need rationale, behavior changes, anything where a teammate would ask "why?".
+   - When in doubt, omit the body. Subject-only commits are good.
+5. **Body format** (when present): wrap at ~72 chars, use \`-\` bullets, one per logical change. Max 3-5 bullets. No prose paragraphs, no wall of text. Skip the body entirely rather than padding it.`;
 
 const COMMIT_MESSAGE_SYSTEM_PROMPT = `You are a git commit message generator.
 
@@ -47,6 +71,58 @@ const HAIKU_MODEL_ID = "claude-haiku-4-5";
 const MODEL_CANDIDATES: Array<{ provider: string; modelId: string }> = [
   { provider: "anthropic", modelId: HAIKU_MODEL_ID },
 ];
+
+// Cap diff size sent to the model. Huge diffs (theme switches,
+// generated files) make Haiku slower without improving the message.
+const MAX_DIFF_CHARS = 60_000;
+
+function truncateDiff(diff: string): { text: string; truncated: boolean } {
+  if (diff.length <= MAX_DIFF_CHARS) return { text: diff, truncated: false };
+  return { text: diff.slice(0, MAX_DIFF_CHARS), truncated: true };
+}
+
+// Pathspecs for files whose *contents* shouldn't be sent to the model.
+// The diff stat (computed without these exclusions) will still show that
+// they changed, so the model can mention them in the message.
+const NOISY_PATHSPECS: string[] = [
+  // Lockfiles
+  ":(exclude,glob)**/package-lock.json",
+  ":(exclude,glob)**/yarn.lock",
+  ":(exclude,glob)**/pnpm-lock.yaml",
+  ":(exclude,glob)**/bun.lock",
+  ":(exclude,glob)**/bun.lockb",
+  ":(exclude,glob)**/Cargo.lock",
+  ":(exclude,glob)**/poetry.lock",
+  ":(exclude,glob)**/uv.lock",
+  ":(exclude,glob)**/Pipfile.lock",
+  ":(exclude,glob)**/Gemfile.lock",
+  ":(exclude,glob)**/composer.lock",
+  ":(exclude,glob)**/go.sum",
+  ":(exclude,glob)**/mix.lock",
+  ":(exclude,glob)**/flake.lock",
+  ":(exclude,glob)**/pubspec.lock",
+  // Minified / generated bundles
+  ":(exclude,glob)**/*.min.js",
+  ":(exclude,glob)**/*.min.css",
+  ":(exclude,glob)**/*.map",
+  // Common generated output dirs
+  ":(exclude,glob)**/dist/**",
+  ":(exclude,glob)**/build/**",
+  ":(exclude,glob)**/.next/**",
+  ":(exclude,glob)**/node_modules/**",
+  ":(exclude,glob)**/__pycache__/**",
+  ":(exclude,glob)**/*.generated.*",
+  ":(exclude,glob)**/*_generated.*",
+  ":(exclude,glob)**/*.pb.go",
+  ":(exclude,glob)**/*.pb.ts",
+  // Snapshots
+  ":(exclude,glob)**/__snapshots__/**",
+];
+
+function diffArgsExcludingNoise(base: string[]): string[] {
+  // git diff <base...> -- . <pathspecs>
+  return [...base, "--", ".", ...NOISY_PATHSPECS];
+}
 
 type GitExecResult = { stdout: string; stderr: string; code: number };
 
@@ -87,7 +163,7 @@ async function ensureGitRepo(
 
 async function getGitContext(pi: ExtensionAPI) {
   const [status, diff, branch, log] = await Promise.all([
-    runGit(pi, ["status"]),
+    runGit(pi, ["status", "--short", "--branch"]),
     runGit(pi, ["diff", "HEAD"]),
     runGit(pi, ["branch", "--show-current"]),
     runGit(pi, ["log", "--pretty=format:%s", "-20"]),
@@ -100,6 +176,8 @@ function buildCommitUserMessage(
   context: {
     status: string;
     diff: string;
+    diffStat?: string;
+    diffTruncated?: boolean;
     branch: string;
     log: string;
     stagedOnly: boolean;
@@ -110,13 +188,17 @@ function buildCommitUserMessage(
     ? "staged changes only"
     : "staged and unstaged changes";
 
-  let message = `## Context
-
-`;
-  message += `- Current git status:\n\`\`\`\n${context.status.trim()}\n\`\`\`\n\n`;
-  message += `- Current git diff (${diffLabel}):\n\`\`\`\n${context.diff.trim()}\n\`\`\`\n\n`;
+  let message = `## Context\n\n`;
+  message += `- Current git status (short):\n\`\`\`\n${context.status.trim()}\n\`\`\`\n\n`;
+  if (context.diffStat) {
+    message += `- Diff stat:\n\`\`\`\n${context.diffStat.trim()}\n\`\`\`\n\n`;
+  }
+  const diffNote = context.diffTruncated
+    ? ` — TRUNCATED at ${MAX_DIFF_CHARS} chars; rely on the diff stat above for the full picture`
+    : "";
+  message += `- Current git diff (${diffLabel}, lockfiles/generated files excluded — see stat above for those)${diffNote}:\n\`\`\`\n${context.diff.trim() || "(no diff content; only excluded files changed)"}\n\`\`\`\n\n`;
   message += `- Current branch: ${context.branch.trim()}\n\n`;
-  message += `- Recent commits for style reference:\n\`\`\`\n${context.log.trim()}\n\`\`\``;
+  message += `- Recent commits for style reference (FORMAT only, not for emoji selection):\n\`\`\`\n${context.log.trim()}\n\`\`\``;
 
   if (context.stagedOnly) {
     message +=
@@ -217,7 +299,7 @@ async function generateCommitMessage(
         systemPrompt: COMMIT_MESSAGE_SYSTEM_PROMPT,
         messages: [userMessage],
       },
-      { apiKey: auth.apiKey, headers: auth.headers, reasoning: "medium" },
+      { apiKey: auth.apiKey, headers: auth.headers, reasoning: "low" },
     );
 
     if (response.stopReason === "aborted") {
@@ -248,7 +330,7 @@ async function generateCommitMessage(
           apiKey: auth.apiKey,
           headers: auth.headers,
           signal: loader.signal,
-          reasoning: "medium",
+          reasoning: "low",
         },
       );
 
@@ -299,56 +381,66 @@ async function doCommit(
     return;
   }
 
-  const [
-    statusResult,
-    stagedDiffResult,
-    fullDiffResult,
-    branchResult,
-    logResult,
-    porcelainResult,
-  ] = await Promise.all([
-    runGit(pi, ["status"]),
-    runGit(pi, ["diff", "--cached"]),
-    runGit(pi, ["diff", "HEAD"]),
+  // Phase 1: cheap calls in parallel + start model selection.
+  // Defer the (potentially huge) diff to phase 2 once we know which one we need.
+  const [statusResult, branchResult, logResult, modelPromise] = await Promise.all([
+    runGit(pi, ["status", "--short", "--branch"]),
     runGit(pi, ["branch", "--show-current"]),
     runGit(pi, ["log", "--pretty=format:%s", "-20"]),
-    runGit(pi, ["status", "--porcelain"]),
+    selectCommitModel(ctx),
   ]);
 
   if (
     statusResult.code !== 0 ||
-    stagedDiffResult.code !== 0 ||
-    fullDiffResult.code !== 0 ||
     branchResult.code !== 0 ||
-    logResult.code !== 0 ||
-    porcelainResult.code !== 0
+    logResult.code !== 0
   ) {
     report(pi, ctx, "Failed to gather git context", "error");
     return;
   }
 
-  if (!porcelainResult.stdout.trim()) {
+  // Parse short status to detect staged vs unstaged without an extra git call.
+  // Lines starting with "## " are the branch header; first column is index/staged.
+  const statusLines = statusResult.stdout
+    .split("\n")
+    .filter((l) => l.length > 0 && !l.startsWith("## "));
+  if (statusLines.length === 0) {
+    report(pi, ctx, "No changes to commit", "info");
+    return;
+  }
+  const hasStagedChanges = statusLines.some(
+    (l) => l[0] !== " " && l[0] !== "?",
+  );
+
+  // Phase 2: fetch a full stat (so the model still sees lockfile/generated
+  // changes), plus the actual diff with noisy paths excluded.
+  const baseArgs = hasStagedChanges ? ["diff", "--cached"] : ["diff", "HEAD"];
+  const [diffResult, diffStatResult] = await Promise.all([
+    runGit(pi, diffArgsExcludingNoise(baseArgs)),
+    runGit(pi, [...baseArgs, "--stat"]),
+  ]);
+
+  if (diffResult.code !== 0 || diffStatResult.code !== 0) {
+    report(pi, ctx, "Failed to gather git diff", "error");
+    return;
+  }
+
+  // If the filtered diff is empty but the stat isn't, the changes are entirely
+  // noisy files (e.g. just a lockfile bump). Still proceed using the stat.
+  if (!diffResult.stdout.trim() && !diffStatResult.stdout.trim()) {
     report(pi, ctx, "No changes to commit", "info");
     return;
   }
 
-  const hasStagedChanges = stagedDiffResult.stdout.trim().length > 0;
-
-  // If there are staged changes, commit only those; otherwise commit everything
-  const diffForMessage = hasStagedChanges
-    ? stagedDiffResult.stdout
-    : fullDiffResult.stdout;
-
-  if (!diffForMessage.trim()) {
-    report(pi, ctx, "No changes to commit", "info");
-    return;
-  }
-
-  const model = await selectCommitModel(ctx);
+  const model = modelPromise;
   if (!model) {
     report(pi, ctx, "No model selected", "error");
     return;
   }
+
+  const { text: diffText, truncated: diffTruncated } = truncateDiff(
+    diffResult.stdout,
+  );
 
   const commitMessage = await generateCommitMessage(
     pi,
@@ -357,7 +449,9 @@ async function doCommit(
     buildCommitUserMessage(
       {
         status: statusResult.stdout,
-        diff: diffForMessage,
+        diff: diffText,
+        diffStat: diffStatResult.stdout,
+        diffTruncated,
         branch: branchResult.stdout,
         log: logResult.stdout,
         stagedOnly: hasStagedChanges,
@@ -405,13 +499,23 @@ async function doCommit(
   const firstLine = commitResult.stdout.split("\n")[0] || "";
   const match = firstLine.match(/^\[(\S+)\s+([a-f0-9]+)\]\s+(.*)$/);
 
-  const [logRes, hashRes, remoteRes] = await Promise.all([
-    runGit(pi, ["log", "-1", "--pretty=format:%B"]),
-    runGit(pi, ["rev-parse", "HEAD"]),
+  // Combine post-commit info into one git call: hash on first line, then full body.
+  const [postRes, remoteRes] = await Promise.all([
+    runGit(pi, ["log", "-1", "--pretty=format:%H%n%B"]),
     runGit(pi, ["remote", "get-url", "origin"]),
   ]);
-  const fullMessage = logRes.code === 0 ? logRes.stdout.trim() : "";
-  const fullHash = hashRes.code === 0 ? hashRes.stdout.trim() : "";
+  let fullHash = "";
+  let fullMessage = "";
+  if (postRes.code === 0) {
+    const out = postRes.stdout;
+    const nl = out.indexOf("\n");
+    if (nl >= 0) {
+      fullHash = out.slice(0, nl).trim();
+      fullMessage = out.slice(nl + 1).trim();
+    } else {
+      fullHash = out.trim();
+    }
+  }
   const commitUrl =
     remoteRes.code === 0
       ? buildCommitUrl(remoteRes.stdout.trim(), fullHash)
