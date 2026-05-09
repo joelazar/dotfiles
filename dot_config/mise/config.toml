@@ -2,3 +2,6 @@
 idiomatic_version_file_enable_tools = ["node"]
 auto_install = true
 trusted_config_paths = ["~/Code/onomondo", "~/Code/joelazar"]
+
+[tools]
+node = "24"
