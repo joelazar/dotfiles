@@ -197,6 +197,45 @@
 
   function id8() { return crypto.randomUUID().replace(/-/g, '').slice(0, 8); }
 
+  // Modal-aware chrome: keep our floating UI clickable inside Radix /
+  // Headless UI / vaul portals.
+  //
+  // Two host-page behaviors break us when the picked element lives inside a
+  // modal dialog:
+  //
+  //   1. Modal scroll-lock disables outside pointer events. Radix's
+  //      `DismissableLayer` sets `document.body.style.pointerEvents = 'none'`
+  //      while a modal is open and only restores `auto` on the layer. Our
+  //      chrome inherits `none` from <body> and becomes unclickable.
+  //   2. The dialog's outside-interaction handler (Radix's
+  //      `usePointerDownOutside`) listens at document level and dismisses
+  //      the dialog whenever a `pointerdown` lands outside the layer node.
+  //      Our chrome is a sibling of <body>, so Radix classifies our clicks
+  //      as outside and tears the dialog down mid-task.
+  //
+  // We can't reliably re-parent our chrome into the dialog subtree (z-index
+  // stacking, scroll containers, theming all become host-page concerns), so
+  // we defang both behaviors at our root:
+  //
+  //   - `pointer-events: auto !important` overrides the inherited `none`.
+  //   - Stop `pointerdown` / `mousedown` propagation so the document-level
+  //     dismiss listener never fires for our clicks.
+  //   - Stop `focusin` propagation so any focus shifts inside our chrome
+  //     don't read as "focus moved outside the dialog" to focus traps.
+  //
+  // Click events still bubble normally — only the early pointer/focus
+  // signals that drive outside-interaction detection are silenced.
+  function defangOutsideHandlers(rootEl, { setPointerEvents = true } = {}) {
+    if (!rootEl) return;
+    if (setPointerEvents) {
+      rootEl.style.setProperty('pointer-events', 'auto', 'important');
+    }
+    const stop = (e) => e.stopPropagation();
+    rootEl.addEventListener('pointerdown', stop);
+    rootEl.addEventListener('mousedown', stop);
+    rootEl.addEventListener('focusin', stop);
+  }
+
   // ---------------------------------------------------------------------------
   // Highlight overlay
   // ---------------------------------------------------------------------------
@@ -336,6 +375,11 @@
     annotOverlayEl.addEventListener('pointerup', onAnnotUp);
     annotOverlayEl.addEventListener('pointercancel', onAnnotUp);
     document.body.appendChild(annotOverlayEl);
+    // Modal-host friendliness: pointer-events is already 'auto' on this
+    // overlay; we only need to silence the host's outside-interaction
+    // listeners. Don't override pointer-events here (the overlay toggles
+    // visibility via display:none, which is fine).
+    defangOutsideHandlers(annotOverlayEl, { setPointerEvents: false });
   }
 
   function updateClearChip() {
@@ -811,6 +855,7 @@
       maxWidth: '520px', minWidth: '320px',
     });
     document.body.appendChild(barEl);
+    defangOutsideHandlers(barEl);
   }
 
   function positionBar() {
@@ -1330,6 +1375,7 @@
 
     pickerEl.appendChild(grid);
     document.body.appendChild(pickerEl);
+    defangOutsideHandlers(pickerEl);
 
     // Cache the palette on the picker so toggleActionPicker's state refresh
     // uses the same theme-aware colors when it repaints chips.
@@ -1443,6 +1489,10 @@
 
     paramsPanelEl.appendChild(paramsPanelBody);
     document.body.appendChild(paramsPanelEl);
+    // Don't override pointer-events: the panel toggles between 'none' (closed,
+    // click-through) and 'auto' (open) on its own. Just silence the host's
+    // outside-interaction listeners while the panel is open.
+    defangOutsideHandlers(paramsPanelEl, { setPointerEvents: false });
     paramsPanelInner = paramsPanelEl; // compatibility alias for the rest of the code
   }
 
@@ -2572,11 +2622,15 @@
       if (!isTransparentColor(cs.backgroundColor)) return cs.backgroundColor;
       node = node.parentElement;
     }
-    return (
-      getComputedStyle(document.body).backgroundColor ||
-      getComputedStyle(document.documentElement).backgroundColor ||
-      '#ffffff'
-    );
+    // The walk already passed through <body> and <html>; if they had been
+    // opaque we would have returned. Falling through with the previous
+    // `getComputedStyle(body).backgroundColor || …` chain is a trap: that
+    // call returns the literal string `"rgba(0, 0, 0, 0)"` for a page that
+    // never set its own bg, which is truthy and short-circuits the chain to
+    // transparent-black — modern-screenshot then renders the capture on a
+    // black canvas and the shader overlay flashes solid black during load.
+    // The browser canvas defaults to white, so we do too.
+    return '#ffffff';
   }
 
   // Capture the element (with current annotations baked in) and return a PNG
@@ -3024,8 +3078,16 @@ void main() {
 
   function showToast(message, duration) {
     if (toastEl) toastEl.remove();
+    // Stack the toast above the global bar (which sits at bottom:14px) so
+    // the two never overlap. Read the bar's actual rect — its height varies
+    // with hover-expanded labels — and fall back to a sensible default
+    // when the bar isn't mounted yet.
+    const barRect = globalBarEl?.getBoundingClientRect();
+    const barTopFromBottom = barRect && barRect.height > 0
+      ? Math.max(16, window.innerHeight - barRect.top + 12)
+      : 16;
     toastEl = el('div', {
-      position: 'fixed', bottom: '16px', left: '50%',
+      position: 'fixed', bottom: barTopFromBottom + 'px', left: '50%',
       transform: 'translateX(-50%) translateY(8px)',
       background: C.ink, color: C.white,
       fontFamily: FONT, fontSize: '12px',
@@ -3148,13 +3210,33 @@ void main() {
       // page bg. Used for screenshots and theme QA.
       const override = localStorage.getItem('impeccable-dev-theme');
       if (override === 'light' || override === 'dark') return override;
-      const bg = getComputedStyle(document.body).backgroundColor
-        || getComputedStyle(document.documentElement).backgroundColor;
-      const m = bg.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
-      if (!m) return 'light';
-      const [, r, g, b] = m;
+
+      // Walk body → html, taking the first opaque background. The browser's
+      // default body / html background is `rgba(0, 0, 0, 0)`, which a naive
+      // regex would read as black and mislabel a perfectly white page as
+      // dark. Honoring alpha avoids that — and falling through to <html>
+      // catches the common pattern of a bg only on <html> (or only on body).
+      function readOpaque(el) {
+        if (!el) return null;
+        const bg = getComputedStyle(el).backgroundColor;
+        const m = bg.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*([\d.]+))?\s*\)/);
+        if (!m) return null;
+        const alpha = m[4] == null ? 1 : parseFloat(m[4]);
+        if (alpha < 0.5) return null; // transparent / nearly transparent → skip
+        return [+m[1], +m[2], +m[3]];
+      }
+
+      const rgb = readOpaque(document.body) || readOpaque(document.documentElement);
+      // Both transparent → fall back to the browser's effective canvas color.
+      // White is the universal default; only one in a thousand sites swaps it
+      // via `color-scheme: dark` on <html>, and `prefers-color-scheme` lets
+      // us catch that case.
+      if (!rgb) {
+        return matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      const [r, g, b] = rgb;
       // Perceptual luminance (Rec. 709)
-      const L = (0.2126 * +r + 0.7152 * +g + 0.0722 * +b) / 255;
+      const L = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
       return L > 0.55 ? 'light' : 'dark';
     } catch { return 'light'; }
   }
@@ -3357,15 +3439,24 @@ void main() {
     });
     inner.appendChild(divider);
 
-    // Exit (subtle × on the right) — SVG for baseline-free centering
+    // Exit × on the right — intentionally subtle (textDim at rest, text on
+    // hover) so it sits behind the active toggles in visual hierarchy.
+    //
+    // Explicit padding + box-sizing here is load-bearing: a host page like
+    // `button { padding: 0.5rem 1rem; }` (very common in resets) would
+    // otherwise inflate this 24x24 button into 56x40 and push the SVG out
+    // of the visible bar — the X stays invisible even though the styles in
+    // DevTools look fine. Every other chrome button sets padding inline;
+    // this one needed it too.
     const exitBtn = el('button', {
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      width: '26px', height: '26px', borderRadius: '6px',
+      padding: '0', boxSizing: 'border-box',
+      width: '24px', height: '24px', borderRadius: '6px',
       border: 'none', background: 'transparent',
       color: P.textDim, fontFamily: FONT, fontSize: '0', lineHeight: '0',
       cursor: 'pointer', transition: 'color 0.12s ease, background 0.12s ease',
     });
-    exitBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="2.5" y1="2.5" x2="9.5" y2="9.5"/><line x1="9.5" y1="2.5" x2="2.5" y2="9.5"/></svg>';
+    exitBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="11" y2="11"/><line x1="11" y1="3" x2="3" y2="11"/></svg>';
     exitBtn.title = 'Exit live mode';
     exitBtn.addEventListener('mouseenter', () => { exitBtn.style.color = P.text; exitBtn.style.background = P.exitHover; });
     exitBtn.addEventListener('mouseleave', () => { exitBtn.style.color = P.textDim; exitBtn.style.background = 'transparent'; });
@@ -3383,6 +3474,7 @@ void main() {
     });
 
     document.body.appendChild(globalBarEl);
+    defangOutsideHandlers(globalBarEl);
 
     requestAnimationFrame(() => {
       globalBarEl.style.opacity = '1';
@@ -3595,6 +3687,11 @@ void main() {
     designShadow.appendChild(root);
 
     document.body.appendChild(designHost);
+    // The host is pointer-events: none; the panel inside the shadow DOM
+    // manages its own auto/none. Events bubble through the shadow boundary,
+    // so attaching here silences host-page outside-interaction handlers
+    // without touching the host's click-through behavior.
+    defangOutsideHandlers(designHost, { setPointerEvents: false });
 
     loadDesignPrefs();
     renderDesignChrome();

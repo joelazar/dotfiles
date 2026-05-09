@@ -29,7 +29,7 @@ Chat is overhead. No recap, no tutorial output, no pasting PRODUCT / DESIGN bodi
 node .agents/skills/impeccable/scripts/live.mjs
 ```
 
-Output JSON: `{ ok, serverPort, serverToken, pageFiles, hasProduct, product, productPath, hasDesign, design, designPath, migrated }`. `pageFiles` is the list of HTML entries the live script was injected into. Keep PRODUCT.md and DESIGN.md in mind for variant generation — **DESIGN.md wins on visual decisions; PRODUCT.md wins on strategic/voice decisions.** If `migrated: true`, the loader auto-renamed legacy `.impeccable.md` to `PRODUCT.md`; mention this once and suggest `$impeccable document` for the matching DESIGN.md.
+Output JSON: `{ ok, serverPort, serverToken, pageFiles, hasProduct, product, productPath, hasDesign, design, designPath, migrated }`. `pageFiles` is the list of HTML entries the live script was injected into. Keep PRODUCT.md and DESIGN.md in mind for variant generation — **DESIGN.md wins on visual decisions; PRODUCT.md wins on strategic/voice decisions.** When DESIGN.md is missing, identity is **not** absent — extract it from CSS variables, computed styles, and sibling components on the page (see Step 4 Phase A). Identity preservation is the default; departure from existing identity requires an explicit trigger from PRODUCT.md anti-references or the user's freeform prompt. If `migrated: true`, the loader auto-renamed legacy `.impeccable.md` to `PRODUCT.md`; mention this once and suggest `$impeccable document` for the matching DESIGN.md.
 
 `serverPort` and `serverToken` belong to the small **Impeccable live helper** HTTP server (serves `/live.js`, SSE, and `/poll`). That port is **not** your dev server and is usually not the URL you open to view the app. The browser page is whatever origin serves one of the `pageFiles` entries (Vite / Next / Bun / tunnel / LAN hostname).
 
@@ -74,7 +74,7 @@ Reading annotations precisely:
 ### 2. Wrap the element
 
 ```bash
-node .agents/skills/impeccable/scripts/live-wrap.mjs --id EVENT_ID --count EVENT_COUNT --element-id "ELEMENT_ID" --classes "class1,class2" --tag "div"
+node .agents/skills/impeccable/scripts/live-wrap.mjs --id EVENT_ID --count EVENT_COUNT --element-id "ELEMENT_ID" --classes "class1,class2" --tag "div" --text "TEXT_SNIPPET"
 ```
 
 Flag mapping — keep them separate, don't collapse into `--query`:
@@ -82,8 +82,11 @@ Flag mapping — keep them separate, don't collapse into `--query`:
 - `--element-id` ← `event.element.id`
 - `--classes` ← `event.element.classes` joined with commas
 - `--tag` ← `event.element.tagName`
+- `--text` ← first ~80 chars of `event.element.textContent` (trim, single-line). **Pass this every call.** When the picked element shares classes + tag with sibling components (a list of `<Card>`s, repeating sections), this is what disambiguates which branch in source to wrap. Without it, wrap silently lands on the first match and may rewrite the wrong element.
 
 The helper searches ID first, then classes, then tag + class combo. If `event.pageUrl` implies the file (e.g. `/` is usually `index.html`), pass `--file PATH` to skip the search. `--query` is a fallback for raw text search only — do not use it for normal element lookups.
+
+If `--text` matches multiple candidates equally well, wrap exits with `{ error: "element_ambiguous", candidates: [...] }` and `fallback: "agent-driven"` — read the candidate line ranges, decide which one matches the picked element from page context, and write the wrapper manually per the fallback flow.
 
 Output on success: `{ file, insertLine, commentSyntax }`.
 
@@ -101,38 +104,81 @@ If `event.action` is `impeccable` (the default freeform action), use SKILL.md's 
 
 Any other `event.action` (`bolder`, `quieter`, `distill`, `polish`, `typeset`, `colorize`, `layout`, `adapt`, `animate`, `delight`, `overdrive`): Read `reference/<action>.md` before planning. Each sub-command encodes a specific discipline; skipping its reference produces generic output. Those files may require specific params; layer them on top of the §7 budget, not instead of it.
 
-### 4. Plan three genuinely distinct directions
+### 4. Plan three variants — identity first, then mode, then axes
 
-Before writing a single line of code, name each variant.
+The wrong frame for live mode is "show three different design directions." Live runs on an existing surface — the brand has already been chosen. The job is variation **within identity**, not selection between identities. Failure mode: three editorial-typographic variants on a brief that wasn't editorial. Bigger failure mode: three off-brand variants the user can't accept because they don't look like their product.
 
-**For freeform (`action` is `impeccable`, or the user supplied a free prompt):** each variant must anchor to a different **archetype** — a real-world design analogue specific enough to be recognizable at a glance. Not "modern landing page." Not "minimal product hero." Examples:
+Four phases. Do them in order.
 
-- *Broadsheet masthead with rule-divided columns* (think NYT print edition)
-- *Klim Type Foundry specimen page* (dense, technical, catalog-driven)
-- *Japanese print-poster minimalism with a single oversize glyph*
-- *Bloomberg Terminal status bar*
-- *Condé Nast Traveler feature layout*
+#### Phase A: Extract the identity (non-skippable)
 
-Then commit each variant to a different **primary axis** of difference:
+The existing surface has an identity already. Read it before planning anything. Sources, in priority order:
+
+1. **DESIGN.md** if loaded — read the visual system fields (palette, type pairing, motion, components). This is the authoritative answer.
+2. **CSS custom properties** in the page's stylesheets (`:root { --color-...; --font-...; ... }`) — these are de-facto tokens.
+3. **Computed styles** on the picked element and its parent — colors, fonts, spacing scales, corner radii.
+4. **Sibling components on the page** — what visual rhetoric do existing components use? (Asymmetric or centered? Dense or airy? Bold or quiet?)
+
+Write down what you see in **one sentence**. The sentence describes the surface that's actually on screen — it is not aspirational, not opinionated, not edited toward what the brand "should" be. Capture, in roughly this order:
+
+- The dominant surface color and accent color, by hex or token name (use the actual values, not categories like "warm" or "neutral").
+- The type pairing — the actual font names loaded, primary first.
+- The layout topology — how the dominant elements are arranged (stacked / side-by-side / grid / asymmetric / overlay).
+- The surface treatment — corners, borders, shadows, density of decoration.
+- The voice tone you read off the copy itself, not off the aesthetic feel.
+
+Be specific. "Modern" is not a color, "elegant" is not a type pairing, "clean" is not a layout. If you can't extract a real value for an axis, skip it rather than fabricate. The point is to record what is, not to describe what you wish it were.
+
+Do not include adjectives that name an aesthetic family ("editorial-leaning", "terminal-flavored", "brutalist") — those are conclusions, not data. They belong to Phase C lane selection in departure mode, not to identity description. Letting them sneak into Phase A is how the identity-lock collapses into a self-fulfilling prophecy.
+
+This sentence is the **identity lock**. Every variant must be readable as the same brand if rendered side by side. Skipping this phase is the primary cause of off-brand variants. Absence of DESIGN.md is never an excuse — extract from CSS and computed styles instead.
+
+#### Phase B: Pick mode (default vs departure)
+
+**Default mode** — the existing identity is preserved. Variants vary expression axes within it. *This is the right mode for ~90% of live sessions.* The user picked an element on a real product they're shipping; they expect variants of *their* hero, not three different brands' heroes.
+
+**Departure mode** — the existing identity is rejected. Variants propose alternatives consistent with PRODUCT.md voice. Trigger only when at least one is true:
+
+- PRODUCT.md anti-references explicitly call out the current surface ("the current `index.html` is itself an example"; "diffuse away from this"; "the page on screen is the failure"). Generic anti-references that describe what to avoid in general do **not** trigger departure mode — only ones that point at *this* surface specifically.
+- The user's freeform prompt explicitly asks for departure ("rebuild this from scratch", "what if it weren't editorial at all", "show me something completely different").
+
+If you're unsure, you're in default mode. The cost of being wrong about default is "three on-brand variants with similar feel" — recoverable, the user picks none. The cost of being wrong about departure is "three off-brand variants" — unrecoverable, the user is annoyed.
+
+#### Phase C: Plan three variants
+
+**Default mode.** Each variant commits to a different **primary axis** of difference, while preserving the identity sentence. The six axes:
 
 1. **Hierarchy** — which element commands the eye?
 2. **Layout topology** — stacked / side-by-side / grid / asymmetric / overlay
-3. **Typographic system** — pairing, scale ratio, case/weight strategy
-4. **Color strategy** — Restrained / Committed / Full palette / Drenched
+3. **Typographic system** — pairing logic, scale ratio, case/weight strategy *within the available faces*
+4. **Color strategy** — which existing palette role carries the surface (Restrained / Committed / Full palette / Drenched). Use the brand's existing palette tokens, not new colors.
 5. **Density** — minimal / comfortable / dense
 6. **Structural decomposition** — merge, split, progressive disclosure
 
-Three variants → three DIFFERENT primary axes, not three riffs on color.
+Three variants → three DIFFERENT axes. The trio reads as *the same brand at three angles*. Do not introduce new fonts, new palette hues, or new aesthetic-family signals — those belong to departure mode.
 
-**When the primary axis is color or theme, forbid the trio from sharing theme + dominant hue.** Two dark-plus-one-dark is not distinct. Aim for one dark-neutral-accent, one light-drenched, one full-palette-saturated — three color worlds, not three shades of the same.
+**While planning each variant, also name its 2–3 parameter knobs** (per the §7 budget table). Parameters are part of the design, not a decoration added afterward. If the variant explores density, expose a density knob. If it explores color commitment, expose a color-amount range. Deciding "what's tunable" during planning produces better knobs than retrofitting them onto finished HTML.
 
-**The squint test (before writing code).** Write the three one-sentence descriptions side by side:
+**Departure mode.** Each variant anchors to a different **aesthetic direction**, derived from the brand's stated voice and register in PRODUCT.md. Do NOT pick from a fixed catalog of lane categories. The right three directions for this brand are not the same as the right three for another brand, and picking from a list is itself the training-data reflex (the model selects "Swiss-grid, Terminal, Industrial-signage" every time because those are the furthest-from-editorial items in any enumerated list).
 
-> V1: Broadsheet masthead, ruled columns, 24px ink on cream.
-> V2: Enormous italic title, catalog spec rows, heavy monospace data.
-> V3: Card-framed poster with one oversize glyph, magenta veil.
+Instead, work from the brand:
 
-If two of them rhyme ("both use big type" / "both are stacks of sections" / "both feature the CTA prominently"), rework the offender. Freeform variants failing the squint test is the primary failure mode of this flow — three-of-the-same with minor styling tweaks.
+1. Read PRODUCT.md's Brand Personality words. What physical, spatial, or material experiences would embody those words if design were not involved? (A personality described as "specific, earned, unmistakable" evokes a hand-stamped letter, a numbered print, a watchmaker's loupe. A personality described as "restless, loud, unfiltered" evokes a concert poster, a spray-painted wall, a megaphone.)
+2. From those physical experiences, derive three visual directions that are genuinely different from each other AND from the current surface you're departing.
+3. Avoid the **reflex-reject lanes** in [brand.md](brand.md). Don't trade one monoculture for another. If you find yourself reaching for "Swiss-grid" or "Terminal" or "Industrial-signage" by reflex, you are pattern-matching a catalog in your training data, not reading the brand. Start over from the personality words.
+4. Each direction must be expressible in one concrete sentence that names a real-world referent ("a museum exhibition label system for a contemporary art gallery" not "clean and minimal"). If your sentence contains only adjectives, it's not concrete enough.
+5. **While planning each direction, also name its 2–3 parameter knobs** (per the §7 budget table). The same principle as default mode: decide "what's tunable" during planning, not after writing the HTML. A departure-mode hero with 0 parameters is not "bold creative vision," it's a missed opportunity for the user to fine-tune the direction they pick.
+
+#### Phase D: Squint test
+
+**Default mode squint.** Read each variant's identity sentence and compare to the locked identity from Phase A. If any variant has drifted to a different palette, type voice, or visual rhetoric, it has crossed into departure mode by accident — rework. Then check that each variant commits to a different primary axis. Three "tighter density" variants is failure.
+
+**Departure mode squint.** Two passes, family before sentence:
+
+1. **Family pass.** Label each variant with one design-family word of your own choosing (any concrete noun: *exhibition, storefront, cockpit, recipe-card, playbill, field-manual*). If any two variants share a label, or if the label could apply to the other variants equally well, rework. Do not use a fixed vocabulary list for the labels. *This pass is non-negotiable in departure mode and catches the monoculture failure that the sentence pass misses.*
+2. **Sentence pass.** Write three one-sentence descriptions side by side. If two of them rhyme ("both feature big type" / "both are stacks of sections" / "both center the CTA"), rework the offender.
+
+**When the primary axis is color or theme, forbid the trio from sharing theme + dominant hue.** Two dark-plus-one-dark is not distinct. Aim for three color worlds, not three shades of the same.
 
 **For action-specific invocations**, each variant must vary along the dimension the action names:
 
@@ -150,7 +196,13 @@ If two of them rhyme ("both use big type" / "both are stacks of sections" / "bot
 
 ### 5. Apply the freeform prompt (if present)
 
-`event.freeformPrompt` is the user's ceiling on direction — all variants must honor it — but still explore meaningfully different *interpretations*. "Make it feel like a newspaper front page" → variant 1 = broadsheet masthead + rule-divided columns, variant 2 = tabloid headline + single dominant image, variant 3 = minimalist editorial with oversized drop cap. Not three newspapers in the same voice.
+`event.freeformPrompt` is the user's ceiling on direction — all variants must honor it — but still explore meaningfully different *interpretations*. The interpretations stay within whichever mode you picked in Phase B.
+
+In **default mode**, the prompt narrows the axes you choose, not the identity. *"Make it feel more confident"* → variant 1 amplifies hierarchy (one element commands the eye), variant 2 commits the existing accent color (Committed strategy on the brand's hue), variant 3 tightens density and removes decorative slack. Three different axes, same brand.
+
+In **departure mode**, the prompt narrows the lanes you draw from, not the families. *"Make it feel like a newspaper front page"* would itself be a departure-mode prompt; honor it but pick three meaningfully different newspaper-adjacent lanes (broadsheet vs. tabloid vs. trade journal), and run the family pass to confirm they don't collapse into one.
+
+When the prompt and PRODUCT.md anti-references conflict (the prompt asks for X, the anti-references ban X), the anti-references win — they describe the brand's standing position, the prompt is one moment.
 
 ### 6. Write all variants in a single edit
 
@@ -181,6 +233,25 @@ The first variant has no `display: none` (visible by default). All others do. If
 
 One edit, all variants — the browser's MutationObserver picks everything up in one pass.
 
+**Author every `:scope` rule with a descendant combinator.** The `@scope` boundary is the **variant wrapper `<div data-impeccable-variant="N">`**, not the element you're designing. A bare `:scope { background: cream; }` styles the wrapper, not the inner replacement, so the cream lands on a `display: contents` shell while the actual element keeps page defaults. Always step in: `:scope > .card`, `:scope > section`, `:scope .hero-title`, etc. The fake test agent's CSS in `tests/live-e2e/agent.mjs` is a faithful template — every rule starts `:scope > ...`.
+
+**JSX / TSX target files.** Wrap `<style>` content in a template literal so the CSS `{` / `}` aren't parsed as JSX expressions, and use `className=` / `style={{…}}` on every variant element. Keep `data-impeccable-*` attributes as-is — they're plain strings:
+
+```tsx
+<style data-impeccable-css="SESSION_ID">{`
+  @scope ([data-impeccable-variant="1"]) { ... }
+  @scope ([data-impeccable-variant="2"]) { ... }
+`}</style>
+<div data-impeccable-variant="1">
+  {/* variant 1 */}
+</div>
+<div data-impeccable-variant="2" style={{ display: 'none' }}>
+  {/* variant 2 */}
+</div>
+```
+
+The wrap script already gives you a single-rooted JSX wrapper — a `<div data-impeccable-variants="…">` outer element with the marker comments tucked inside. Drop the variants block above into the "Variants: insert below this line" comment and the source stays valid TSX.
+
 ### 7. Parameters (composition-sized, 0–4 per variant)
 
 Each variant can expose **coarse** knobs alongside the full HTML/CSS replacement. The browser docks a small panel to the right of the outline with one control per parameter. The user drags/clicks and sees instant feedback: there is zero regeneration cost because the knob toggles a CSS variable or data attribute that the variant's scoped CSS is already authored against.
@@ -189,7 +260,7 @@ Each variant can expose **coarse** knobs alongside the full HTML/CSS replacement
 
 **When to add.** As soon as the variant’s scoped CSS has a meaningful continuous or stepped axis: density, color amount, type scale, motion intensity, column weight, and so on. If you can imagine the user muttering “a bit tighter” or “a touch more accent” **without** wanting a full regeneration, wire that axis. **Not** micro-margins or one-off nudges; those are not parameters.
 
-**Freeform (`action` is `impeccable`) bias.** You did not load `reference/bolder.md` (etc.), so you must **choose** 1–2 signature-like axes yourself. Prefer knobs that sit on the same dimensions as your three directions (e.g. all three riffs on editorial density → expose `density` or a `steps` “air / snug / packed”; two directions differ mostly in chroma → add `color-amount`). A hero, section, or other **large** surface that ships with **0** params needs a one-line reason in your head (e.g. “truly a fixed-point A/B/C comparison, no shared dial”), not a default habit.
+**Freeform (`action` is `impeccable`) bias.** You did not load a sub-command reference, so you must **choose** signature axes yourself. Match the budget table: for a hero or large composition, that means **2–3 axes per variant**, not 1. Prefer knobs that sit on the dimensions where your three variants actually differ (if density varies, expose it as a `steps` knob; if color commitment varies, expose it as a `range`). A hero that ships with **0** params is almost always a mistake, not a judgment call. A hero with exactly **1** param is underweight unless the design is genuinely a fixed-point comparison. Start from the budget table, not from zero.
 
 **Budget scales with the element's visual weight, not token budget.** Knobs need real estate to read as tunable; three sliders on a single control are noise.
 
@@ -245,6 +316,16 @@ node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID done --fil
 `RELATIVE_PATH` is relative to project root (`public/index.html`, `src/App.tsx`, etc.) — the browser fetches source directly if the dev server lacks HMR.
 
 Then run `live-poll.mjs` again immediately.
+
+### Aborting an in-flight session
+
+If wrap or generation fails after the browser has flipped to GENERATING (e.g. wrap landed on the wrong source branch and you've already reverted it, or generation hit an unrecoverable error), tell the **browser** so its bar resets to PICKING:
+
+```bash
+node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID error "Short reason"
+```
+
+Don't run `live-accept --discard` for this — that's a pure file mutator, the browser doesn't see it, and the bar gets stuck on the GENERATING dots forever (the user has to refresh). `--discard` is only correct when the **browser** initiated the discard (user clicked ✕ during CYCLING) and the agent is just running source-side cleanup the browser already triggered.
 
 ## Handle fallback
 

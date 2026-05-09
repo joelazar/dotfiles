@@ -104,7 +104,7 @@ Every interactive element needs all states:
 
 - **Smooth transitions**: All state changes animated appropriately (150-300ms)
 - **Consistent easing**: Use ease-out-quart/quint/expo for natural deceleration. Never bounce or elastic—they feel dated.
-- **No jank**: 60fps animations, only animate transform and opacity
+- **No jank**: Smooth animations; use atmospheric blur/filter/mask/shadow effects when they add polish, but bound expensive paint areas and avoid casual layout-property animation
 - **Appropriate motion**: Motion serves purpose, not decoration
 - **Reduced motion**: Respects `prefers-reduced-motion`
 

@@ -21,10 +21,12 @@ Decision tree:
 - **Neither file exists (empty project or no context yet)**: do Steps 2-4 (write PRODUCT.md), then decide on DESIGN.md based on whether there's code to analyze.
 - **PRODUCT.md exists, DESIGN.md missing**: skip to Step 5 — offer to run `$impeccable document` for DESIGN.md.
 - **PRODUCT.md exists but has no `## Register` section (legacy)**: add it. Infer a hypothesis from the codebase (see Step 2), confirm with the user, write the field.
-- **Both exist**: ask the user directly to clarify what you cannot infer. which to refresh. Skip the one the user doesn't want changed.
+- **Both exist**: STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer. Ask which file to refresh. Skip the one the user doesn't want changed.
 - **Just DESIGN.md exists (unusual)**: do Steps 2-4 to produce PRODUCT.md.
 
 Never silently overwrite an existing file. Always confirm first.
+
+If teach was invoked as a setup blocker by another command, such as `$impeccable craft landing page`, pause that command here. Complete teach, re-run the loader, then resume the original command with the freshly loaded context. For craft, resume into shape next; teach creates project context, but it is not a substitute for the task-specific shape interview and confirmed design brief.
 
 ## Step 2: Explore the codebase
 
@@ -48,7 +50,22 @@ Note what you've learned and what remains unclear. This exploration feeds both P
 
 ## Step 3: Ask strategic questions (for PRODUCT.md)
 
-ask the user directly to clarify what you cannot infer. Focus only on what you couldn't infer from the codebase.
+STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer. Ask only about what you couldn't infer from the codebase.
+
+### Interview mode, not confirmation mode
+
+If the repo is empty or the user's brief is sparse, run a short interview before proposing PRODUCT.md. Do **not** turn a one-sentence request into a complete inferred PRODUCT.md and ask for blanket confirmation.
+
+- Use the harness's structured question tool when one exists. Otherwise, ask directly in chat and stop.
+- Ask **2-3 questions per round**, then wait for answers.
+- Use inferred answers as hypotheses or options, not as finished facts.
+- Complete at least one real user-answer round before drafting PRODUCT.md, unless every required answer is directly discoverable from repo docs.
+- Round 1 should establish register, users/purpose, and desired outcome.
+- Round 2 should establish brand personality or references, anti-references, and accessibility needs.
+
+### Minimum viable interview
+
+Ask enough to complete PRODUCT.md. At minimum, cover register confirmation, users and purpose, brand personality, anti-references, and accessibility needs unless each answer is directly discoverable from repo context. After at least one interview round, you may propose inferred answers, but the user must confirm them before you write PRODUCT.md. Never synthesize PRODUCT.md from the original task prompt alone.
 
 ### Register (ask first — it shapes everything below)
 
@@ -56,7 +73,7 @@ Every design task is either **brand** (marketing, landing, campaign, long-form c
 
 If Step 2 produced a clear hypothesis, lead with it: *"From the codebase, this looks like a [brand / product] surface — does that match your intent, or should we treat it differently?"*
 
-If the signal is genuinely split (e.g. a product with a big marketing landing), ask the user directly to clarify what you cannot infer. which register describes the **primary** surface. The register can be overridden per task later, but PRODUCT.md carries one default.
+If the signal is genuinely split (e.g. a product with a big marketing landing), STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer. Ask which register describes the **primary** surface. The register can be overridden per task later, but PRODUCT.md carries one default.
 
 ### Users & Purpose
 - Who uses this? What's their context when using it?
@@ -78,6 +95,8 @@ If the signal is genuinely split (e.g. a product with a big marketing landing), 
 Skip questions where the answer is already clear. **Do NOT ask about colors, fonts, radii, or visual styling here** — those belong in DESIGN.md, not PRODUCT.md.
 
 ## Step 4: Write PRODUCT.md
+
+Write PRODUCT.md only after the user has confirmed the strategic answers from Step 3. If an inferred answer is uncertain or unconfirmed, ask before writing.
 
 Synthesize into a strategic document:
 
@@ -134,4 +153,4 @@ Summarize:
 
 If teach was invoked as a blocker by another impeccable command (e.g. the user ran `$impeccable polish` with no PRODUCT.md), resume that original task now with the fresh context.
 
-Optionally ask the user directly to clarify what you cannot infer. whether they'd like a brief summary of PRODUCT.md appended to AGENTS.md for easier agent reference. If yes, append a short **Design Context** pointer section there.
+Optionally STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer. Ask whether they'd like a brief summary of PRODUCT.md appended to AGENTS.md for easier agent reference. If yes, append a short **Design Context** pointer section there.

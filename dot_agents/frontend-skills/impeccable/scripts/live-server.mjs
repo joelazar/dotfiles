@@ -21,11 +21,16 @@ import path from 'node:path';
 import net from 'node:net';
 import { fileURLToPath } from 'node:url';
 import { parseDesignMd } from './design-parser.mjs';
+import { resolveContextDir } from './load-context.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // PID file in the project root so both the server and agent can find it
 // predictably (os.tmpdir() varies across platforms).
 const LIVE_PID_FILE = path.join(process.cwd(), '.impeccable-live.json');
+// PRODUCT.md / DESIGN.md / DESIGN.json live wherever load-context.mjs resolves.
+// Keeps live-server in sync with the loader when users keep the docs in
+// .agents/context/, docs/, or a path set via IMPECCABLE_CONTEXT_DIR.
+const CONTEXT_DIR = resolveContextDir(process.cwd());
 const DEFAULT_POLL_TIMEOUT = 600_000;   // 10 min — agent re-polls on timeout anyway
 const SSE_HEARTBEAT_INTERVAL = 30_000;  // keepalive ping every 30s
 
@@ -113,7 +118,7 @@ function hasProjectContext() {
   // concern, surfaced by the design panel's own empty state. Legacy
   // .impeccable.md is auto-migrated to PRODUCT.md by load-context.mjs.
   try {
-    fs.accessSync(path.join(process.cwd(), 'PRODUCT.md'), fs.constants.R_OK);
+    fs.accessSync(path.join(CONTEXT_DIR, 'PRODUCT.md'), fs.constants.R_OK);
     return true;
   } catch { return false; }
 }
@@ -131,11 +136,21 @@ const VISUAL_ACTIONS = [
   'colorize', 'layout', 'adapt', 'animate', 'delight', 'overdrive',
 ];
 
+// Browser generates ids via crypto.randomUUID().slice(0, 8) (8 hex chars)
+// and variantIds via String(small integer). Restrict to those shapes so
+// any value that reaches a downstream child_process or DOM selector is
+// inert by construction.
+const ID_PATTERN = /^[0-9a-f]{8}$/;
+const VARIANT_ID_PATTERN = /^[0-9]{1,3}$/;
+
+function isValidId(v) { return typeof v === 'string' && ID_PATTERN.test(v); }
+function isValidVariantId(v) { return typeof v === 'string' && VARIANT_ID_PATTERN.test(v); }
+
 function validateEvent(msg) {
   if (!msg || typeof msg !== 'object' || !msg.type) return 'Missing or invalid message';
   switch (msg.type) {
     case 'generate':
-      if (!msg.id || typeof msg.id !== 'string') return 'generate: missing id';
+      if (!isValidId(msg.id)) return 'generate: missing or malformed id';
       if (!msg.action || !VISUAL_ACTIONS.includes(msg.action)) return 'generate: invalid action';
       if (!Number.isInteger(msg.count) || msg.count < 1 || msg.count > 8) return 'generate: count must be 1-8';
       if (!msg.element || !msg.element.outerHTML) return 'generate: missing element context';
@@ -145,8 +160,8 @@ function validateEvent(msg) {
       if (msg.strokes !== undefined && !Array.isArray(msg.strokes)) return 'generate: strokes must be array';
       return null;
     case 'accept':
-      if (!msg.id) return 'accept: missing id';
-      if (!msg.variantId) return 'accept: missing variantId';
+      if (!isValidId(msg.id)) return 'accept: missing or malformed id';
+      if (!isValidVariantId(msg.variantId)) return 'accept: missing or malformed variantId';
       if (msg.paramValues !== undefined) {
         if (typeof msg.paramValues !== 'object' || msg.paramValues === null || Array.isArray(msg.paramValues)) {
           return 'accept: paramValues must be an object';
@@ -154,7 +169,7 @@ function validateEvent(msg) {
       }
       return null;
     case 'discard':
-      return msg.id ? null : 'discard: missing id';
+      return isValidId(msg.id) ? null : 'discard: missing or malformed id';
     case 'exit':
       return null;
     case 'prefetch':
@@ -315,8 +330,8 @@ function createRequestHandler({ detectScript, livePath }) {
       const token = url.searchParams.get('token');
       if (token !== state.token) { res.writeHead(401); res.end('Unauthorized'); return; }
 
-      const mdPath = path.join(process.cwd(), 'DESIGN.md');
-      const jsonPath = path.join(process.cwd(), 'DESIGN.json');
+      const mdPath = path.join(CONTEXT_DIR, 'DESIGN.md');
+      const jsonPath = path.join(CONTEXT_DIR, 'DESIGN.json');
       const mdStat = statOrNull(mdPath);
       const jsonStat = statOrNull(jsonPath);
 

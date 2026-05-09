@@ -38,9 +38,19 @@ Timing matters more than easing. These durations feel right for most UI:
 
 **Avoid bounce and elastic curves.** They were trendy in 2015 but now feel tacky and amateurish. Real objects don't bounce when they stop—they decelerate smoothly. Overshoot effects draw attention to the animation itself rather than the content.
 
-## The Only Two Properties You Should Animate
+## Premium Motion Materials
 
-**transform** and **opacity** only—everything else causes layout recalculation. For height animations (accordions), use `grid-template-rows: 0fr → 1fr` instead of animating `height` directly.
+Transform and opacity are reliable defaults, not the whole palette. Premium interfaces often need atmospheric properties: blur reveals, backdrop-filter panels, saturation or brightness shifts, shadow bloom, SVG filters, masks, clip paths, gradient-position movement, and variable font or shader-driven effects.
+
+Use the right material for the effect:
+
+- **Transform / opacity**: movement, press feedback, simple reveals, list choreography.
+- **Blur / filter / backdrop-filter**: focus pulls, depth, glass or lens effects, softened entrances, atmospheric transitions.
+- **Clip path / masks**: wipes, reveals, editorial cropping, product-like transitions.
+- **Shadow / glow / color filters**: energy, affordance, focus, warmth, active state.
+- **Grid-template rows or FLIP-style transforms**: expanding and reflowing layout without animating `height` directly.
+
+The hard rule is not "transform and opacity only." The hard rule is: avoid animating layout-driving properties casually (`width`, `height`, `top`, `left`, margins), keep expensive effects bounded to small or isolated areas, and verify in-browser that the result is smooth on the target viewports. If blur/filter makes the interaction feel significantly more premium and remains smooth, use it.
 
 ## Staggered Animations
 

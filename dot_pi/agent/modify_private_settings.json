@@ -18,24 +18,9 @@ MANAGED_CONFIG='{
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": [
-    "-extensions/sandbox/index.ts",
-    "-extensions/antigravity-image-gen/index.ts",
-    "-extensions/loop/index.ts"
-  ],
+  "extensions": [],
   "packages": [
-    {
-      "source": "/Users/joelazar/Code/ai/pi/pi-autoresearch",
-      "extensions": [
-        "-extensions/pi-autoresearch/index.ts"
-      ],
-      "skills": []
-    },
     "/Users/joelazar/Code/ai/pi/pi-review",
-    "/Users/joelazar/Code/ai/pi/pi-fff",
-    "/Users/joelazar/Code/ai/pi/pi-codex-image",
-    "/Users/joelazar/Code/ai/pi/condensed-milk-pi",
-    "/Users/joelazar/Code/ai/pi/caveman-milk-pi",
     "/Users/joelazar/Code/ai/pi/pi-side-chat",
     "/Users/joelazar/Code/ai/pi/pi-nvim",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",

@@ -12,7 +12,18 @@ Most AI-generated UIs fail not because of bad code, but because of skipped think
 
 **Do NOT write any code or make any design decisions during this phase.** Your only job is to understand the feature deeply enough to make excellent design decisions later.
 
-Ask these questions in conversation, adapting based on answers. Don't dump them all at once; have a natural dialogue. ask the user directly to clarify what you cannot infer.
+This is a required interaction, not optional guidance. Ask these questions in conversation, adapting based on answers. Don't dump them all at once; have a natural dialogue. STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer.
+
+### Interview cadence
+
+Discovery must include at least one user-answer round unless PRODUCT.md, DESIGN.md, or an already-confirmed brief directly answers the needed design inputs. With a sparse prompt, do **not** synthesize a complete brief for confirmation on the first response.
+
+- Use the harness's structured question tool when one exists. Otherwise, ask directly in chat and stop.
+- Ask **2-3 questions per round**, then wait for answers.
+- Treat PRODUCT.md and DESIGN.md as anchors; they reduce repeated questions but do **not** replace shape for craft. Shape is task-specific.
+- Round 1 should clarify purpose, audience/context, and success or emotional outcome.
+- Round 2 should clarify content/data/states and scope/fidelity.
+- Round 3 should clarify visual direction, constraints, and anti-goals when still unresolved.
 
 ### Purpose & Context
 - What is this feature for? What problem does it solve?
@@ -63,7 +74,11 @@ After the discovery interview, generate a small set of visual direction probes *
 - The requested fidelity is **mid-fi, high-fi, or production-ready**. Skip for sketch-only planning.
 - The current harness has **built-in image generation capability** (for example, Codex with a native image tool). Do **not** ask the user to set up external APIs, shell scripts, or one-off tooling just to do this.
 
-When those conditions are met, this step is the default. Use it to explore visual lanes, not to replace the brief.
+When those conditions are met, this step is mandatory for Codex and any harness with built-in image generation. Use native image generation; in Codex, use the built-in `image_gen` tool via the imagegen skill. If image generation is unavailable, do not ask the user to install APIs or tooling. State in one line that the image step is skipped because the harness lacks native image generation, then proceed.
+
+Use probes to explore visual lanes, not to replace the brief.
+
+Do not skip probes because the final UI will be semantic, editable, code-native, responsive, or accessible. Those are implementation requirements, not reasons to avoid visual exploration.
 
 ### What to generate
 
@@ -89,11 +104,11 @@ The probes should differ in primary visual direction (hierarchy, topology, densi
 - Do **not** treat generated imagery as final UX specification, final copy, or final accessibility behavior.
 - Do **not** use this step for minor refinements of existing work. It's for shaping a new surface or clarifying a big directional choice.
 
-If image generation is unavailable, or the task doesn't benefit from it, skip this phase and proceed directly to the design brief.
+If image generation is unavailable, or the task doesn't benefit from it, skip this phase only with a one-line reason and proceed directly to the design brief.
 
 ## Phase 2: Design Brief
 
-After the interview, synthesize everything into a structured design brief. Present it to the user for confirmation before considering this command complete.
+After the interview and any required probes, synthesize everything into a structured design brief. Present it to the user for explicit confirmation before considering this command complete. Stop after asking for confirmation; do not proceed to craft or implementation in the same response unless the user has already approved the brief.
 
 ### Brief Structure
 
@@ -131,6 +146,6 @@ Anything unresolved that the implementer should resolve during build.
 
 ---
 
-ask the user directly to clarify what you cannot infer. Get explicit confirmation of the brief before finishing. If the user disagrees with any part, revisit the relevant discovery questions.
+STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer. Ask for explicit confirmation of the brief before finishing. If the user disagrees with any part, revisit the relevant discovery questions. A shape run is incomplete until the brief is confirmed.
 
 Once confirmed, the brief is complete. The user can now hand it to $impeccable, or use it to guide any other implementation approach. (If the user wants the full discovery-then-build flow in one step, they should use $impeccable craft instead, which runs this command internally.)

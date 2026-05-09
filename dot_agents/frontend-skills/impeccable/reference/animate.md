@@ -29,7 +29,7 @@ Analyze where motion would improve the experience:
    - Who's the audience? (Motion-sensitive users? Power users who want speed?)
    - What matters most? (One hero animation vs many micro-interactions?)
 
-If any of these are unclear from the codebase, ask the user directly to clarify what you cannot infer.
+If any of these are unclear from the codebase, STOP and use Codex's structured user-input/question tool when available; if unavailable, ask directly in chat to clarify what you cannot infer.
 
 **CRITICAL**: Respect `prefers-reduced-motion`. Always provide non-animated alternatives for users who need them.
 
@@ -122,7 +122,8 @@ Use appropriate techniques for each animation:
 /* Prefer for simple, declarative animations */
 - transitions for state changes
 - @keyframes for complex sequences
-- transform + opacity only (GPU-accelerated)
+- transform and opacity for reliable movement
+- blur, filters, masks, clip paths, shadows, and color shifts for premium atmospheric effects when verified smooth
 ```
 
 ### JavaScript Animation
@@ -134,9 +135,10 @@ Use appropriate techniques for each animation:
 ```
 
 ### Performance
-- **GPU acceleration**: Use `transform` and `opacity`, avoid layout properties
+- **Motion materials**: Use transform/opacity for reliable movement, but use blur, filters, masks, shadows, and color shifts when they materially improve the effect
+- **Layout safety**: Avoid casual animation of layout-driving properties (`width`, `height`, `top`, `left`, margins)
 - **will-change**: Add sparingly for known expensive animations
-- **Reduce paint**: Minimize repaints, use `contain` where appropriate
+- **Bound expensive effects**: Keep blur/filter/shadow areas small or isolated, use `contain` where appropriate
 - **Monitor FPS**: Ensure 60fps on target devices
 
 ### Accessibility
@@ -152,7 +154,7 @@ Use appropriate techniques for each animation:
 
 **NEVER**:
 - Use bounce or elastic easing curves—they feel dated and draw attention to the animation itself
-- Animate layout properties (width, height, top, left)—use transform instead
+- Animate layout properties casually (`width`, `height`, `top`, `left`, margins) when transform, FLIP, or grid-based techniques would work
 - Use durations over 500ms for feedback—it feels laggy
 - Animate without purpose—every animation needs a reason
 - Ignore `prefers-reduced-motion`—this is an accessibility violation

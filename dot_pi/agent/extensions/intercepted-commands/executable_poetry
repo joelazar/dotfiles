@@ -1,3 +1,0 @@
-#!/bin/bash
-echo "Error: Use uv instead of poetry (uv init, uv add, uv sync, uv run)" >&2
-exit 1
