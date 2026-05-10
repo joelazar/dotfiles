@@ -196,6 +196,14 @@ if.app-id = "com.mitchellh.ghostty"
 run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
+if.app-id = "app.supabit.supaterm"
+run = ['layout tiling', 'move-node-to-workspace 1']
+
+[[on-window-detected]]
+if.app-id = "app.supabit.supacode"
+run = ['layout tiling', 'move-node-to-workspace 1']
+
+[[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 run = 'move-node-to-workspace 2'
 

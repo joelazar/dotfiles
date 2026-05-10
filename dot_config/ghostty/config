@@ -7,7 +7,7 @@ font-feature = +cv63
 
 font-size = 13.0
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 
 working-directory = home
 window-inherit-working-directory = false
@@ -111,8 +111,6 @@ keybind = super+v=paste_from_clipboard
 
 # remap cmd+p to ctrl+p
 keybind = super+p=text:\x10
-# remap cmd+s to ctrl+s
-keybind = super+s=text:\x13
 # remap cmd+shift+g to ctrl+shift+g (CSI u: 103='g', 6=1+shift+ctrl)
 keybind = super+shift+g=text:\x1b[103;6u
 # remap cmd+shift+c to ctrl+shift+c (CSI u: 99='c', 6=1+shift+ctrl)
