@@ -1,0 +1,121 @@
+#!/usr/bin/env -S uv run --script --quiet
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "kokoro-onnx",
+#     "soundfile",
+#     "numpy",
+# ]
+# ///
+"""
+kokoro — local TTS CLI wrapper around thewh1teagle/kokoro-onnx.
+
+On first run, downloads ~330 MB of model files to ~/.cache/kokoro/.
+
+Examples:
+  echo "hello world" | kokoro -o out.wav
+  kokoro -t "hello world" -o out.wav
+  kokoro -f script.txt -o out.wav
+  kokoro -t "hello" --voice af_alloy --speed 1.0 -o out.wav
+  kokoro -t "bonjour" --lang fr-fr --voice ff_siwis -o out.wav
+  kokoro --list-voices
+
+Popular voices (American):
+  af_alloy   af_bella    af_heart    af_nova    af_sarah    af_sky
+  am_adam    am_michael  am_onyx     am_puck
+
+British:
+  bf_emma    bf_isabella   bm_george   bm_lewis
+
+See full list: https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+import urllib.request
+from pathlib import Path
+
+CACHE = Path.home() / ".cache" / "kokoro"
+MODEL_URL = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx"
+VOICES_URL = "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin"
+
+
+def _download(url: str, dest: Path) -> None:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_suffix(dest.suffix + ".part")
+    print(f"[kokoro] downloading {url} -> {dest}", file=sys.stderr)
+
+    def hook(blocks: int, block_size: int, total: int) -> None:
+        if total <= 0:
+            return
+        done = min(blocks * block_size, total)
+        pct = done * 100 // total
+        print(f"\r[kokoro]   {pct:3d}% ({done // 1024 // 1024} / {total // 1024 // 1024} MiB)",
+              end="", file=sys.stderr, flush=True)
+
+    urllib.request.urlretrieve(url, tmp, reporthook=hook)
+    print("", file=sys.stderr)
+    tmp.rename(dest)
+
+
+def ensure_models() -> tuple[Path, Path]:
+    model = CACHE / "kokoro-v1.0.onnx"
+    voices = CACHE / "voices-v1.0.bin"
+    if not model.exists():
+        _download(MODEL_URL, model)
+    if not voices.exists():
+        _download(VOICES_URL, voices)
+    return model, voices
+
+
+def read_text(args: argparse.Namespace) -> str:
+    if args.text:
+        return args.text
+    if args.file:
+        return Path(args.file).read_text(encoding="utf-8")
+    if not sys.stdin.isatty():
+        return sys.stdin.read()
+    sys.exit("error: provide --text, --file, or pipe text on stdin")
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(prog="kokoro", description="Local Kokoro TTS CLI",
+                                formatter_class=argparse.RawDescriptionHelpFormatter,
+                                epilog=__doc__)
+    p.add_argument("-t", "--text", help="text to speak")
+    p.add_argument("-f", "--file", help="read text from file")
+    p.add_argument("-o", "--output", default="out.wav", help="output WAV file (default: out.wav)")
+    p.add_argument("--voice", default="af_heart",
+                   help="voice id (default: af_heart). Supports blends like 'af_bella(2)+af_heart(1)'.")
+    p.add_argument("--speed", type=float, default=1.0, help="speech speed multiplier (default: 1.0)")
+    p.add_argument("--lang", default="en-us",
+                   help="language code: en-us, en-gb, fr-fr, es, it, pt-br, hi, ja, zh, ko (default: en-us)")
+    p.add_argument("--list-voices", action="store_true", help="list all available voices and exit")
+    args = p.parse_args()
+
+    model_path, voices_path = ensure_models()
+
+    import soundfile as sf
+    from kokoro_onnx import Kokoro
+
+    kokoro = Kokoro(str(model_path), str(voices_path))
+
+    if args.list_voices:
+        for v in sorted(kokoro.get_voices()):
+            print(v)
+        return
+
+    text = read_text(args).strip()
+    if not text:
+        sys.exit("error: empty input text")
+
+    print(f"[kokoro] voice={args.voice} lang={args.lang} speed={args.speed} out={args.output}",
+          file=sys.stderr)
+    samples, sr = kokoro.create(text, voice=args.voice, speed=args.speed, lang=args.lang)
+    sf.write(args.output, samples, sr)
+    print(f"[kokoro] wrote {args.output}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

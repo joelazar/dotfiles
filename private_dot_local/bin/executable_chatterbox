@@ -1,0 +1,100 @@
+#!/usr/bin/env -S uv run --script --quiet
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "chatterbox-tts",
+#     "resemble-perth",
+#     "setuptools<81",  # perth still imports pkg_resources, removed in setuptools 81+
+#     "torch",
+#     "torchaudio",
+# ]
+# ///
+"""
+chatterbox — local TTS CLI wrapper around resemble-ai/chatterbox.
+
+Examples:
+  echo "hello world" | chatterbox -o out.wav
+  chatterbox -t "hello world" -o out.wav
+  chatterbox -f script.txt -o out.wav
+  chatterbox -t "bonjour" --lang fr -o out.wav
+  chatterbox -t "hi" --voice ref.wav -o out.wav            # zero-shot voice clone
+  chatterbox --list-langs
+"""
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+
+def pick_device() -> str:
+    import torch
+
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def read_text(args: argparse.Namespace) -> str:
+    if args.text:
+        return args.text
+    if args.file:
+        return Path(args.file).read_text(encoding="utf-8")
+    if not sys.stdin.isatty():
+        return sys.stdin.read()
+    sys.exit("error: provide --text, --file, or pipe text on stdin")
+
+
+def main() -> None:
+    p = argparse.ArgumentParser(prog="chatterbox", description="Local Chatterbox TTS CLI")
+    p.add_argument("-t", "--text", help="text to speak")
+    p.add_argument("-f", "--file", help="read text from file")
+    p.add_argument("-o", "--output", default="out.wav", help="output WAV file (default: out.wav)")
+    p.add_argument("--voice", help="path to reference WAV for zero-shot voice cloning")
+    p.add_argument(
+        "--lang",
+        help="language id for the multilingual model (e.g. en, fr, de, es, ja, zh). "
+        "If omitted, the English-only model is used.",
+    )
+    p.add_argument("--device", help="force device: cuda | mps | cpu (default: auto)")
+    p.add_argument("--list-langs", action="store_true", help="list multilingual language ids and exit")
+    args = p.parse_args()
+
+    if args.list_langs:
+        from chatterbox.mtl_tts import SUPPORTED_LANGUAGES  # type: ignore[attr-defined]
+
+        print("\n".join(sorted(SUPPORTED_LANGUAGES)))
+        return
+
+    text = read_text(args).strip()
+    if not text:
+        sys.exit("error: empty input text")
+
+    device = args.device or pick_device()
+    print(f"[chatterbox] device={device} lang={args.lang or 'en'} out={args.output}", file=sys.stderr)
+
+    import torchaudio as ta
+
+    if args.lang:
+        from chatterbox.mtl_tts import ChatterboxMultilingualTTS
+
+        model = ChatterboxMultilingualTTS.from_pretrained(device=device)
+        kwargs = {"language_id": args.lang}
+    else:
+        from chatterbox.tts import ChatterboxTTS
+
+        model = ChatterboxTTS.from_pretrained(device=device)
+        kwargs = {}
+
+    if args.voice:
+        kwargs["audio_prompt_path"] = args.voice
+
+    wav = model.generate(text, **kwargs)
+    ta.save(args.output, wav, model.sr)
+    print(f"[chatterbox] wrote {args.output}", file=sys.stderr)
+
+
+if __name__ == "__main__":
+    main()

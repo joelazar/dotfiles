@@ -50,7 +50,6 @@ brew "btop"
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
-brew "defuddle"
 # Cross-platform make
 brew "cmake"
 # Linux virtual machines
@@ -63,11 +62,12 @@ brew "coreutils"
 brew "curl"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-brew "whisper-cpp"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Duplicate file utility
 brew "czkawka"
+# Extract article content and metadata from web pages
+brew "defuddle"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Tool for exploring each layer in a docker image
@@ -122,16 +122,18 @@ brew "ghostscript"
 brew "git-delta"
 # Git extension for versioning large files
 brew "git-lfs"
+# Turn any Git repository into a prompt-friendly text ingest for LLMs
+brew "gitingest"
 # Interactive command-line tool for using emoji in commit messages
 brew "gitmoji"
 # Open source programming language to build simple/reliable/efficient software
-brew "gitingest"
 brew "go"
-brew "googleworkspace-cli"
 # Stricter gofmt
 brew "gofumpt"
 # Language server for `golangci-lint`
 brew "golangci-lint-langserver"
+# CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
+brew "googleworkspace-cli"
 # Go Language's command-line interface for database migrations
 brew "goose"
 # Human friendly `go test` runner

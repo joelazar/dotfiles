@@ -23,6 +23,10 @@ execute "tv update-channels" "Update Television channels"
 
 execute "obsidian-update" "Update Obsidian plugins and themes"
 
+if command -v save-to-spotify >/dev/null 2>&1; then
+    execute "save-to-spotify update" "Update save-to-spotify CLI"
+fi
+
 execute "brew cleanup" "Cleanup brew"
 
 execute "nvim --headless -c 'autocmd User MasonUpdateAllComplete qall' -c 'MasonUpdateAll'" "Update Neovim Mason packages"
