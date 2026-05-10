@@ -47,7 +47,6 @@ brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Mozilla CA bundle for Python
-brew "ccusage"
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
 brew "chezmoi"
