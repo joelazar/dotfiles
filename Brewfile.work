@@ -219,7 +219,6 @@ brew "ollama"
 brew "opentofu"
 # Painless compression and decompression for your terminal
 brew "ouch"
-# CLI for Postgres with auto-completion and syntax highlighting
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager
@@ -300,6 +299,8 @@ brew "watch"
 brew "watchexec"
 # Internet file retriever
 brew "wget"
+# Port of OpenAI's Whisper model in C/C++
+brew "whisper-cpp"
 # Lexical database for the English language
 brew "wordnet"
 # HTTP benchmarking tool
@@ -420,6 +421,8 @@ cask "sonos"
 cask "spotify"
 # Video game digital distribution service
 cask "steam"
+# Native terminal coding agents command center
+cask "supacode"
 # Native GUI tool for relational databases
 cask "tableplus"
 # Mesh VPN based on WireGuard
@@ -466,4 +469,5 @@ uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "nginx-language-server"
 uv "openshell"
+uv "pgcli", with: ["catppuccin", "psycopg"]
 uv "pylatexenc"
