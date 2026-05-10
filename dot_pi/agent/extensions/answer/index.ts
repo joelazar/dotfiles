@@ -82,12 +82,20 @@ const OPENAI_MODEL_ID = "gpt-5.4-mini";
 const ANTHROPIC_MODEL_ID = "claude-haiku-4-5";
 
 /**
- * Prefer Codex mini for extraction when available, otherwise fallback to haiku or the current model.
+ * Prefer Haiku for extraction when available, otherwise fall back to Codex mini or the current model.
  */
 async function selectExtractionModel(
   currentModel: Model<Api>,
   modelRegistry: ModelRegistry,
 ): Promise<Model<Api>> {
+  const haikuModel = modelRegistry.find("anthropic", ANTHROPIC_MODEL_ID);
+  if (haikuModel) {
+    const auth = await modelRegistry.getApiKeyAndHeaders(haikuModel);
+    if (auth.ok) {
+      return haikuModel;
+    }
+  }
+
   const codexModel = modelRegistry.find("openai-codex", OPENAI_MODEL_ID);
   if (codexModel) {
     const auth = await modelRegistry.getApiKeyAndHeaders(codexModel);
@@ -96,17 +104,7 @@ async function selectExtractionModel(
     }
   }
 
-  const haikuModel = modelRegistry.find("anthropic", ANTHROPIC_MODEL_ID);
-  if (!haikuModel) {
-    return currentModel;
-  }
-
-  const auth = await modelRegistry.getApiKeyAndHeaders(haikuModel);
-  if (!auth.ok) {
-    return currentModel;
-  }
-
-  return haikuModel;
+  return currentModel;
 }
 
 /**
