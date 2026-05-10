@@ -44,8 +44,8 @@ install_rust
 
 show_section "📚 Installing Language-Specific Packages" "$YELLOW"
 
-# BUN packages
-BUN_PACKAGES=(
+# NPM packages (installed via mise-managed global node)
+NPM_PACKAGES=(
     "@earendil-works/pi-coding-agent"
     "ccusage"
     "@ccusage/codex"
@@ -57,7 +57,7 @@ BUN_PACKAGES=(
     "skills"
 )
 
-install_packages_from_list "BUN" "install_bun_package" "${BUN_PACKAGES[@]}"
+install_packages_from_list "NPM" "install_npm_package" "${NPM_PACKAGES[@]}"
 
 # Go packages
 GO_PACKAGES=(

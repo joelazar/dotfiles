@@ -215,6 +215,12 @@ install_bun_package() {
     execute "bun install -g $PACKAGENAME" "$PACKAGENAME"
 }
 
+install_npm_package() {
+    declare -r PACKAGENAME="$1"
+
+    execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
+}
+
 install_rust_package() {
     declare -r PACKAGENAME="$1"
 
