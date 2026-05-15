@@ -59,15 +59,34 @@ const TITLE_RE =
 const TITLE_HINT =
   "format: <type>[(scope)][!]: <subject>  (e.g. feat: add login, fix(api)!: drop v1)";
 
+function normalizeTitleCandidate(raw: string): string {
+  const withoutLeadingEmoji = raw
+    .trim()
+    // Allow gitmoji-style commit subjects like `:recycle: refactor: ...`.
+    .replace(/^(:[a-z0-9_+-]+:\s*)+/i, "")
+    // Also allow leading unicode emoji like `♻️ refactor: ...`.
+    .replace(/^(?:\p{Extended_Pictographic}\ufe0f?\s*)+/u, "")
+    .trim();
+
+  // Allow `:recycle: refactor deployment...` by inserting the missing colon.
+  return withoutLeadingEmoji.replace(
+    /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|deps)(\([^)]+\))?(!)?\s+(.+)/,
+    (_match, type, scope = "", bang = "", subject) =>
+      `${type}${scope}${bang}: ${subject}`,
+  );
+}
+
 async function pickTitle(
   ctx: ExtensionCommandContext,
   pi: ExtensionAPI,
   initial: string,
 ): Promise<string | undefined> {
   let title = initial.trim();
+  const normalizedTitle = normalizeTitleCandidate(title);
 
   // If the user passed something that already validates, accept it.
   if (title && TITLE_RE.test(title)) return title;
+  if (normalizedTitle && TITLE_RE.test(normalizedTitle)) return normalizedTitle;
 
   // Try to auto-derive a title suggestion from the last commit message subject.
   let suggestion = title;
@@ -78,7 +97,7 @@ async function pickTitle(
         timeout: 5_000,
       });
       if (r.code === 0) {
-        const s = r.stdout.trim();
+        const s = normalizeTitleCandidate(r.stdout);
         if (s && TITLE_RE.test(s)) suggestion = s;
       }
     } catch {
@@ -150,14 +169,16 @@ async function autoTitle(
   initial: string,
 ): Promise<string | undefined> {
   const t = initial.trim();
+  const normalized = normalizeTitleCandidate(t);
   if (t && TITLE_RE.test(t)) return t;
+  if (normalized && TITLE_RE.test(normalized)) return normalized;
   try {
     const r = await pi.exec("git", ["log", "-1", "--pretty=%s"], {
       signal: ctx.signal,
       timeout: 5_000,
     });
     if (r.code === 0) {
-      const s = r.stdout.trim();
+      const s = normalizeTitleCandidate(r.stdout);
       if (s && TITLE_RE.test(s)) return s;
     }
   } catch {
