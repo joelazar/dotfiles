@@ -31,24 +31,43 @@ update_check = false
 # search_mode = "fuzzy"
 
 ## which filter mode to use
-## possible values: global, host, session, directory
+## possible values: global, host, session, session-preload, directory, workspace
 # filter_mode = "global"
+
+## Enable project-aware workspace filtering for commands run inside git repositories.
+workspaces = true
 
 ## which filter mode to use when atuin is invoked from a shell up-key binding
 ## the accepted values are identical to those of "filter_mode"
 ## leave unspecified to use same mode set in "filter_mode"
 filter_mode_shell_up_key_binding = "session"
 
+## which search mode to use when atuin is invoked from a shell up-key binding
+## the accepted values are identical to those of "search_mode"
+search_mode_shell_up_key_binding = "prefix"
+
 ## which style to use
 ## possible values: auto, full, compact
 style = "compact"
 
-[theme]
-name = "catppuccin-mocha"
-
 ## the maximum number of lines the interface should take up
 ## set it to 0 to always go full screen
 inline_height = 15
+
+## the maximum number of lines when invoked from a shell up-key binding
+inline_height_shell_up_key_binding = 15
+
+## Strip trailing spaces and tabs before saving commands to history.
+strip_trailing_whitespace = true
+
+## Use Atuin's built-in default regexes to avoid saving common secrets.
+secrets_filter = true
+
+## Execute the selected command on Enter; Tab inserts it for editing.
+enter_accept = true
+
+[theme]
+name = "catppuccin-mocha"
 
 ## enable or disable showing a preview of the selected command
 ## useful when the command is longer than the terminal width and is cut off
@@ -85,3 +104,7 @@ inline_height = 15
 # cwd_filter = [
 #   "^/very/secret/area"
 # ]
+
+[search]
+## Enabled filter modes, in priority order. Workspace is skipped outside git repos.
+filters = ["workspace", "directory", "session", "host", "global"]
