@@ -99,7 +99,7 @@ export default function (pi: ExtensionAPI) {
         await copyToClipboard(selected);
         const preview =
           selected.length > 60 ? selected.slice(0, 57) + "..." : selected;
-        ctx.ui.notify(`Copied: ${preview}`, "success");
+        ctx.ui.notify(`Copied: ${preview}`, "info");
       } catch (e) {
         ctx.ui.notify(`Failed to copy: ${e}`, "error");
       }

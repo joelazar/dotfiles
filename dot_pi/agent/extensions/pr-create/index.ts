@@ -149,7 +149,7 @@ async function pickTitle(
     if (subject === undefined) return undefined; // Esc -> cancel
     const subjectTrim = subject.trim();
     if (!subjectTrim) {
-      ctx.ui.notify("Subject is required — try again or press Esc to cancel", "warn");
+      ctx.ui.notify("Subject is required — try again or press Esc to cancel", "warning");
       continue;
     }
     const scopePart = scope.trim() ? `(${scope.trim()})` : "";
@@ -278,7 +278,7 @@ async function generatePrBody(
   ctx.ui.setStatus("pr-create", undefined);
   ctx.ui.notify(
     `Description generation failed:\n${errors.join("\n")}`,
-    "warn",
+    "warning",
   );
   return undefined;
 }
@@ -464,7 +464,7 @@ async function pickTitleWithAuto(
         if (t === undefined) return undefined;
         const trimmed = t.trim();
         if (!trimmed) {
-          ctx.ui.notify("Title is required — try again or press Esc to cancel", "warn");
+          ctx.ui.notify("Title is required — try again or press Esc to cancel", "warning");
           continue;
         }
         if (!TITLE_RE.test(trimmed)) {
