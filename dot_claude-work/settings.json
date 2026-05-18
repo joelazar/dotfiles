@@ -122,8 +122,8 @@
   "autoUpdatesChannel": "stable",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": false,
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
-  "fileCheckpointingEnabled": false
+  "fileCheckpointingEnabled": false,
+  "voiceEnabled": false
 }

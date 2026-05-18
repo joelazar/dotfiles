@@ -64,7 +64,7 @@ strip_trailing_whitespace = true
 secrets_filter = true
 
 ## Execute the selected command on Enter; Tab inserts it for editing.
-enter_accept = true
+# enter_accept = true
 
 [theme]
 name = "catppuccin-mocha"
@@ -107,4 +107,4 @@ name = "catppuccin-mocha"
 
 [search]
 ## Enabled filter modes, in priority order. Workspace is skipped outside git repos.
-filters = ["workspace", "directory", "session", "host", "global"]
+filters = ["global", "workspace", "directory", "session", "host"]
