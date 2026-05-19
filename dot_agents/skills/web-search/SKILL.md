@@ -1,6 +1,6 @@
 ---
 name: web-search
-description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→anthropic→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude/gemini, or ai-search."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→claude-code→openai-cli→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude-code/openai-cli/gemini, or ai-search."
 allowed-tools: [Bash, Read]
 ---
 
@@ -14,9 +14,10 @@ and lets you escalate when the previous tier's answer is not good enough.
 | Tier | Provider          | Why first / when                                             |
 | ---- | ----------------- | ------------------------------------------------------------ |
 | 1    | `kagi quick`      | Fastest grounded answer, source confidence %, free w/ subscription |
-| 2    | `codex`           | Deeper synthesis, clean canonical URLs, code-aware           |
-| 3    | `anthropic`       | Second analytical opinion when codex hedges or gets it wrong |
-| 4    | `perplexity`      | Most citations, last resort for hard or very recent topics   |
+| 2    | `codex`           | Deeper synthesis, clean canonical URLs, code-aware; uses `gpt-5.5` with low reasoning |
+| 3    | `claude-code`     | Second analytical opinion when codex hedges or gets it wrong; uses Haiku 4.5 with low thinking |
+| 4    | `openai-cli`      | OpenAI API web-search fallback; uses `gpt-5.3-chat-latest`   |
+| 5    | `perplexity`      | Most citations, last resort for hard or very recent topics   |
 
 **Always start at tier 1.** Only escalate to the next tier if the current
 answer is insufficient (vague, hedged, missing key facts, contradicts known
@@ -30,7 +31,7 @@ and time when tier 1 already answers the question.
 Single script, one provider per call:
 
 ```bash
-~/.agents/skills/web-search/search.sh --provider <kagi|codex|anthropic|perplexity> "<query>" [--purpose "<why>"]
+~/.agents/skills/web-search/search.sh --provider <kagi|codex|claude-code|openai-cli|perplexity> "<query>" [--purpose "<why>"]
 ```
 
 Examples:
@@ -46,8 +47,9 @@ Examples:
   "latest stable Firefox version macOS user agent" \
   --purpose "update hardcoded UA in nvim plugin"
 
-# Tier 3 / 4 — only when needed
-~/.agents/skills/web-search/search.sh --provider anthropic "..."
+# Tier 3+ — only when needed
+~/.agents/skills/web-search/search.sh --provider claude-code "..."
+~/.agents/skills/web-search/search.sh --provider openai-cli "..."
 ~/.agents/skills/web-search/search.sh --provider perplexity "..."
 ```
 
@@ -70,8 +72,12 @@ If tier-1 answer satisfies all four → stop. Don't run tier 2+.
 - **kagi**: requires `KAGI_API_KEY` env (already set) and `~/.kagi.toml` with
   session token. Wrapper does `cd $HOME` automatically. Output includes
   source confidence percentages and follow-up questions.
-- **codex / anthropic**: thin wrappers over `native-web-search` skill's
-  `search.mjs`. No extra setup needed if that skill already works.
+- **codex / claude-code / openai-cli / gemini**: thin wrappers over the
+  `ai-search` skill's `search.mjs`, using its current model defaults and
+  reasoning settings. `gemini` is supported for explicit provider requests but
+  is not part of the default tier order.
+- **openai-cli**: additionally requires the `openai` binary on `PATH` and
+  `OPENAI_API_KEY` in the environment.
 - **perplexity**: requires `PERPLEXITY_API_KEY` env. Wraps `perplexity-search`
   skill's `--ask` mode (sonar model).
 
@@ -86,4 +92,4 @@ If tier-1 answer satisfies all four → stop. Don't run tier 2+.
 
 - `kagi` — full kagi-cli toolbox (translate, summarize, news, batch, etc.)
 - `perplexity-search` — search/research/reason/deep modes
-- `ai-search` — direct provider control for codex/anthropic/gemini-cli
+- `ai-search` — direct provider control for codex/claude-code/openai-cli/gemini

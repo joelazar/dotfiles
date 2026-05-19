@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tiered web-search dispatcher. One provider per call.
-# Picks the right backend (kagi quick / codex / anthropic / perplexity) and
-# normalizes invocation/output. See SKILL.md for tier order + escalation rules.
+# Picks the right backend (kagi quick / codex / claude-code / openai-cli / perplexity)
+# and normalizes invocation/output. See SKILL.md for tier order + escalation rules.
 set -uo pipefail
 
 PROVIDER=""
@@ -12,13 +12,14 @@ TIMEOUT_MS=180000
 usage() {
   cat <<'EOF'
 Usage:
-  search.sh --provider <kagi|codex|anthropic|perplexity> "<query>" [--purpose "<why>"] [--timeout <ms>]
+  search.sh --provider <kagi|codex|claude-code|openai-cli|perplexity> "<query>" [--purpose "<why>"] [--timeout <ms>]
 
 Tier order (see SKILL.md):
-  1. kagi        — fastest grounded answer, source confidence %
-  2. codex       — deeper synthesis with clean canonical URLs
-  3. anthropic   — second analytical opinion
-  4. perplexity  — most citations, last resort
+  1. kagi         — fastest grounded answer, source confidence %
+  2. codex        — deeper synthesis with clean canonical URLs (gpt-5.5, low reasoning)
+  3. claude-code  — second analytical opinion (haiku 4.5, low thinking)
+  4. openai-cli   — OpenAI API web_search fallback (gpt-5.3-chat-latest)
+  5. perplexity   — most citations, last resort
 
 Examples:
   search.sh --provider kagi "latest python release" --purpose "update deps"
@@ -86,9 +87,11 @@ Provide concise summary, key findings, full canonical URLs (https://...), call o
 }
 
 case "$PROVIDER" in
-  kagi|kagi-quick)         run_kagi ;;
-  codex|openai|openai-codex) run_search_mjs openai-codex ;;
-  anthropic|claude)        run_search_mjs anthropic ;;
-  perplexity|pplx|sonar)   run_perplexity ;;
+  kagi|kagi-quick)              run_kagi ;;
+  codex|openai-codex)           run_search_mjs codex ;;
+  claude-code|claude|anthropic) run_search_mjs claude-code ;;
+  openai-cli|openai-api)        run_search_mjs openai-cli ;;
+  gemini|gemini-cli)            run_search_mjs gemini ;;
+  perplexity|pplx|sonar)        run_perplexity ;;
   *) echo "Unknown provider: $PROVIDER" >&2; usage; exit 2 ;;
 esac

@@ -1,6 +1,6 @@
 ---
 name: ai-search
-description: "Low-level provider web search via codex, anthropic/Claude, or gemini-cli. Use only when user names ai-search/codex/gemini/claude search, compares providers, or wants native search; otherwise use web-search."
+description: "Low-level provider web search via codex, claude-code, openai-cli, or gemini. Use only when user names ai-search/codex/gemini/claude/openai-cli search, compares providers, or wants native search; otherwise use web-search."
 ---
 
 # AI Search
@@ -28,14 +28,21 @@ node search.mjs "vite 7 breaking changes" --purpose "prepare migration checklist
 
 Optional flags:
 
-- `--provider openai-codex|anthropic|gemini-cli`
-- `--model <model-id>` (for `gemini-cli`, defaults to `gemini-3.1-flash-lite-preview`)
+- `--provider codex|claude-code|openai-cli|gemini`
+- `--model <model-id>` (defaults: `codex` → `gpt-5.5` with low reasoning, `claude-code` → `claude-haiku-4-5` with low thinking budget, `openai-cli` → `gpt-5.3-chat-latest` or `$OPENAI_CLI_MODEL`, `gemini` → `gemini-3.1-flash-lite-preview`)
 - `--timeout <ms>`
 - `--json`
 
-The `gemini-cli` provider shells out to the local `gemini` CLI with `-y` (yolo)
-and forces use of the built-in `google_web_search` tool. No API key needed —
-gemini-cli uses its own auth.
+Provider names are user-facing aliases:
+
+- `codex` uses the existing ChatGPT/Codex OAuth-backed web search path with `gpt-5.5` and low reasoning.
+- `claude-code` uses the existing Anthropic/Claude web search path with `claude-haiku-4-5` and a low thinking budget.
+- `openai-cli` shells out to the official `openai` CLI and calls
+  `openai responses create` with the built-in `web_search_preview` tool. It requires the
+  `openai` binary on `PATH` and `OPENAI_API_KEY` in the environment.
+- `gemini` shells out to the local `gemini` CLI with `-y` (yolo) and forces use
+  of the built-in `google_web_search` tool. No API key needed — gemini-cli uses
+  its own auth.
 
 ## Output expectations
 

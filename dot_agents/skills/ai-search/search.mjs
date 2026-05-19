@@ -72,12 +72,12 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:
-  node search.mjs "<query>" [--purpose "<why>"] [--provider openai-codex|anthropic] [--model <id>] [--json]
+  node search.mjs "<query>" [--purpose "<why>"] [--provider codex|claude-code|openai-cli|gemini] [--model <id>] [--json]
 
 Examples:
   node search.mjs "latest python release" --purpose "update dependency notes"
-  node search.mjs "HTTP/3 browser support 2026" --provider openai-codex
-  node search.mjs "vite 7 breaking changes" --json`;
+  node search.mjs "HTTP/3 browser support 2026" --provider codex
+  node search.mjs "vite 7 breaking changes" --provider openai-cli --json`;
 }
 
 function readJson(path, fallback = {}) {
@@ -121,10 +121,12 @@ function getAgentDir() {
 function normalizeProvider(provider) {
   if (!provider) return undefined;
   const p = String(provider).toLowerCase().trim();
-  if (p.includes("anthropic") || p.includes("claude")) return "anthropic";
-  if (p.includes("codex") || p === "openai" || p.startsWith("openai"))
-    return "openai-codex";
-  if (p.includes("gemini")) return "gemini-cli";
+  if (p === "claude-code" || p === "anthropic" || p.includes("claude"))
+    return "claude-code";
+  if (p === "openai-cli" || p === "openai_api" || p === "openai-api")
+    return "openai-cli";
+  if (p === "codex" || p === "openai-codex") return "codex";
+  if (p === "gemini" || p === "gemini-cli") return "gemini";
   return undefined;
 }
 
@@ -135,17 +137,83 @@ function pickProvider(argProvider, settings, auth) {
   const fromSettings = normalizeProvider(settings?.defaultProvider);
   if (fromSettings) return fromSettings;
 
-  if (auth?.["openai-codex"]) return "openai-codex";
-  if (auth?.anthropic) return "anthropic";
+  if (auth?.["openai-codex"]) return "codex";
+  if (auth?.anthropic) return "claude-code";
+  if (process.env.OPENAI_API_KEY) return "openai-cli";
 
   throw new Error(
-    "Could not determine provider. Pass --provider openai-codex|anthropic|gemini-cli",
+    "Could not determine provider. Pass --provider codex|claude-code|openai-cli|gemini",
   );
 }
 
 function pickGeminiModel(requested) {
   // Fast model preferred for web search
   return requested || process.env.GEMINI_FAST_MODEL || "gemini-3.1-flash-lite-preview";
+}
+
+function pickOpenAiCliModel(requested) {
+  return requested || process.env.OPENAI_CLI_MODEL || "gpt-5.3-chat-latest";
+}
+
+function extractResponseText(payload) {
+  if (!payload || typeof payload !== "object") return "";
+  if (typeof payload.output_text === "string") return payload.output_text.trim();
+
+  const parts = [];
+  for (const item of Array.isArray(payload.output) ? payload.output : []) {
+    for (const content of Array.isArray(item?.content) ? item.content : []) {
+      if (typeof content?.text === "string") parts.push(content.text);
+      if (typeof content?.output_text === "string") parts.push(content.output_text);
+    }
+  }
+  return parts.join("\n\n").trim();
+}
+
+function runOpenAiCliSearch({ model, query, purpose, timeoutMs }) {
+  // The current OpenAI CLI parses option values as JSON when possible.
+  // Pass JSON strings for text fields, and valid JSON for tool configuration.
+  const input = buildUserPrompt(query, purpose);
+  const args = [
+    "responses",
+    "create",
+    "--model",
+    model,
+    "--instructions",
+    JSON.stringify(buildSystemPrompt()),
+    "--input",
+    JSON.stringify(input),
+    "--tool",
+    JSON.stringify({ type: "web_search_preview" }),
+    "--include",
+    JSON.stringify(["web_search_call.action.sources"]),
+    "--format",
+    "json",
+  ];
+
+  const res = spawnSync("openai", args, {
+    encoding: "utf8",
+    timeout: timeoutMs,
+    maxBuffer: 16 * 1024 * 1024,
+    stdio: ["ignore", "pipe", "pipe"],
+    env: { ...process.env },
+  });
+  if (res.error) throw new Error(`openai-cli failed: ${res.error.message}`);
+  if (res.status !== 0) {
+    throw new Error(
+      `openai-cli exited with status ${res.status}: ${res.stderr || res.stdout}`,
+    );
+  }
+
+  const stdout = (res.stdout || "").trim();
+  if (!stdout) throw new Error("openai-cli returned empty output");
+
+  try {
+    const parsed = JSON.parse(stdout);
+    const text = extractResponseText(parsed);
+    return text || stdout;
+  } catch {
+    return stdout;
+  }
 }
 
 function runGeminiCliSearch({ model, query, purpose, timeoutMs }) {
@@ -344,7 +412,7 @@ function pickFastModel(provider, requestedModel, piAi) {
     if (requestedModel) return { id: requestedModel, baseUrl: undefined };
     if (provider === "openai-codex")
       return {
-        id: "gpt-5.4-mini",
+        id: "gpt-5.5",
         baseUrl: "https://chatgpt.com/backend-api",
       };
     return { id: "claude-haiku-4-5", baseUrl: "https://api.anthropic.com" };
@@ -358,13 +426,15 @@ function pickFastModel(provider, requestedModel, piAi) {
 
   const preferredIds =
     provider === "openai-codex"
-      ? ["gpt-5.4-mini", "gpt-5.4"]
-      : ["claude-haiku-4-5"];
+      ? ["gpt-5.5"]
+      : ["claude-haiku-4-5"]; 
 
   for (const id of preferredIds) {
     const found = models.find((m) => m.id === id);
     if (found) return found;
   }
+
+  if (preferredIds[0]) return { ...models[0], id: preferredIds[0] };
 
   const heuristic = models.find((m) =>
     /mini|haiku|spark|flash|fast/i.test(m.id),
@@ -483,6 +553,7 @@ async function runCodexSearch({
     input: [{ role: "user", content: buildUserPrompt(query, purpose) }],
     tools: [{ type: "web_search" }],
     tool_choice: "auto",
+    reasoning: { effort: "low" },
   };
 
   const endpoint = resolveCodexUrl(baseUrl);
@@ -613,8 +684,8 @@ async function runAnthropicSearch({
 }) {
   const body = {
     model,
-    max_tokens: 1800,
-    temperature: 0,
+    max_tokens: 2200,
+    thinking: { type: "enabled", budget_tokens: 1024 },
     system: buildSystemPrompt(),
     tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5 }],
     messages: [{ role: "user", content: buildUserPrompt(query, purpose) }],
@@ -674,7 +745,7 @@ async function main() {
 
   let modelId;
   let text;
-  if (provider === "gemini-cli") {
+  if (provider === "gemini") {
     modelId = pickGeminiModel(args.model);
     text = runGeminiCliSearch({
       model: modelId,
@@ -682,18 +753,27 @@ async function main() {
       purpose: args.purpose,
       timeoutMs: args.timeoutMs,
     });
+  } else if (provider === "openai-cli") {
+    modelId = pickOpenAiCliModel(args.model);
+    text = runOpenAiCliSearch({
+      model: modelId,
+      query: args.query,
+      purpose: args.purpose,
+      timeoutMs: args.timeoutMs,
+    });
   } else {
     const piAi = await loadPiAi();
-    const model = pickFastModel(provider, args.model, piAi);
+    const authProvider = provider === "codex" ? "openai-codex" : provider === "claude-code" ? "anthropic" : provider;
+    const model = pickFastModel(authProvider, args.model, piAi);
     modelId = model.id;
     const { apiKey, accountId } = await resolveApiKey(
-      provider,
+      authProvider,
       auth,
       authPath,
       piAi,
     );
     text =
-      provider === "openai-codex"
+      provider === "codex"
         ? await runCodexSearch({
             model: modelId,
             apiKey,
