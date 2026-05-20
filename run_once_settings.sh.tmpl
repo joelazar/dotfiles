@@ -67,6 +67,38 @@ execute 'defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximiz
 
 execute "defaults write -g NSAutomaticWindowAnimationsEnabled -bool false" "Disable window animations"
 
+execute "defaults write NSGlobalDomain NSWindowResizeTime -float 0.001" "Speed up native window resizing"
+
+execute "defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true" "Expand save dialog by default"
+
+execute "defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true" "Expand save dialog by default in newer apps"
+
+execute "defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false" "Disable smart dash substitution"
+
+execute "defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false" "Disable automatic period substitution"
+
+execute "defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false" "Disable smart quote substitution"
+
+execute "defaults write com.apple.finder ShowStatusBar -bool true" "Finder: show status bar"
+
+execute "defaults write com.apple.finder ShowPathbar -bool true" "Finder: show path bar"
+
+execute "defaults write com.apple.finder _FXSortFoldersFirst -bool true" "Finder: keep folders on top when sorting by name"
+
+execute "defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false" "Finder: disable warning when changing file extensions"
+
+execute "defaults write com.apple.finder FXDefaultSearchScope -string SCcf" "Finder: search current folder by default"
+
+execute "defaults write com.apple.ActivityMonitor ShowCategory -int 0" "Activity Monitor: show all processes"
+
+execute "defaults write com.apple.ActivityMonitor SortColumn -string CPUUsage" "Activity Monitor: sort by CPU usage"
+
+execute "defaults write com.apple.ActivityMonitor SortDirection -int 0" "Activity Monitor: sort descending"
+
+execute "defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true" "Prevent Photos from opening automatically for devices"
+
+execute "killall Finder" "Restart Finder to apply changes"
+
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
 execute "duti -s dev.zed.Zed public.plain-text all" "Set Zed as the default app for plain text files"
