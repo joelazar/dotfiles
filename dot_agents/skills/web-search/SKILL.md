@@ -1,6 +1,6 @@
 ---
 name: web-search
-description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→claude-code→openai-cli→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude-code/openai-cli/gemini, or ai-search."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→claude-code→openai-cli→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude-code/openai-cli, or ai-search."
 allowed-tools: [Bash, Read]
 ---
 
@@ -72,10 +72,9 @@ If tier-1 answer satisfies all four → stop. Don't run tier 2+.
 - **kagi**: requires `KAGI_API_KEY` env (already set) and `~/.kagi.toml` with
   session token. Wrapper does `cd $HOME` automatically. Output includes
   source confidence percentages and follow-up questions.
-- **codex / claude-code / openai-cli / gemini**: thin wrappers over the
+- **codex / claude-code / openai-cli**: thin wrappers over the
   `ai-search` skill's `search.mjs`, using its current model defaults and
-  reasoning settings. `gemini` is supported for explicit provider requests but
-  is not part of the default tier order.
+  reasoning settings.
 - **openai-cli**: additionally requires the `openai` binary on `PATH` and
   `OPENAI_API_KEY` in the environment.
 - **perplexity**: requires `PERPLEXITY_API_KEY` env. Wraps `perplexity-search`
@@ -92,4 +91,4 @@ If tier-1 answer satisfies all four → stop. Don't run tier 2+.
 
 - `kagi` — full kagi-cli toolbox (translate, summarize, news, batch, etc.)
 - `perplexity-search` — search/research/reason/deep modes
-- `ai-search` — direct provider control for codex/claude-code/openai-cli/gemini
+- `ai-search` — direct provider control for codex/claude-code/openai-cli

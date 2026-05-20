@@ -91,7 +91,6 @@ case "$PROVIDER" in
   codex|openai-codex)           run_search_mjs codex ;;
   claude-code|claude|anthropic) run_search_mjs claude-code ;;
   openai-cli|openai-api)        run_search_mjs openai-cli ;;
-  gemini|gemini-cli)            run_search_mjs gemini ;;
   perplexity|pplx|sonar)        run_perplexity ;;
   *) echo "Unknown provider: $PROVIDER" >&2; usage; exit 2 ;;
 esac

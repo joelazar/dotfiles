@@ -112,8 +112,6 @@ brew "flyctl"
 brew "fzf"
 # GNU compiler collection
 brew "gcc"
-# Interact with Google Gemini AI models from the command-line
-brew "gemini-cli"
 # GitHub command-line tool
 brew "gh"
 # Interpreter for PostScript and PDF

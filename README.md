@@ -55,7 +55,6 @@ A few quick facts:
 | [`dot_agents/`](dot_agents/)                                                                                             | Local skill library organized into `skills/`, `frontend-skills/`, and `python-skills/`, plus `improve-skill` and `skill-creator` meta-tools |
 | [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                                   |
 | [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                                       |
-| [`dot_gemini/`](dot_gemini/)                                                                                             | Gemini CLI settings                                                                                                                         |
 | [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                               |
 | [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                                    |
 | [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                                           |
@@ -143,7 +142,6 @@ This repo currently tracks config for:
 - [Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code) in [`dot_claude/`](dot_claude/)
 - a separate Claude work profile in [`dot_claude-work/`](dot_claude-work/)
 - [Pi](https://github.com/mariozechner/pi-coding-agent) in [`dot_pi/`](dot_pi/)
-- [Gemini CLI](https://github.com/google-gemini/gemini-cli) in [`dot_gemini/`](dot_gemini/)
 - [Codex](https://github.com/openai/codex) templates in [`dot_codex/`](dot_codex/)
 - [Ollama](https://ollama.com/) for local models
 
@@ -286,7 +284,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | Script                                                                        | What it does                                                               |
 | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [`agent-md`](private_dot_local/bin/executable_agent-md)                       | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for coding-agent projects |
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Updates Claude Code, Gemini CLI, Codex, Pi, and Pi extensions              |
+| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Updates Claude Code, Codex, Pi, and Pi extensions                          |
 | [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backups with `restic` and `age`                                  |
 | [`cht`](private_dot_local/bin/executable_cht)                                 | Quick cheat-sheet lookup via cht.sh                                        |
 | [`custom-update`](private_dot_local/bin/executable_custom-update)             | Runs broader system and tool updates                                       |

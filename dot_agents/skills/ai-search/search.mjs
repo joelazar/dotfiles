@@ -72,7 +72,7 @@ function parseArgs(argv) {
 
 function usage() {
   return `Usage:
-  node search.mjs "<query>" [--purpose "<why>"] [--provider codex|claude-code|openai-cli|gemini] [--model <id>] [--json]
+  node search.mjs "<query>" [--purpose "<why>"] [--provider codex|claude-code|openai-cli] [--model <id>] [--json]
 
 Examples:
   node search.mjs "latest python release" --purpose "update dependency notes"
@@ -126,7 +126,6 @@ function normalizeProvider(provider) {
   if (p === "openai-cli" || p === "openai_api" || p === "openai-api")
     return "openai-cli";
   if (p === "codex" || p === "openai-codex") return "codex";
-  if (p === "gemini" || p === "gemini-cli") return "gemini";
   return undefined;
 }
 
@@ -142,13 +141,8 @@ function pickProvider(argProvider, settings, auth) {
   if (process.env.OPENAI_API_KEY) return "openai-cli";
 
   throw new Error(
-    "Could not determine provider. Pass --provider codex|claude-code|openai-cli|gemini",
+    "Could not determine provider. Pass --provider codex|claude-code|openai-cli",
   );
-}
-
-function pickGeminiModel(requested) {
-  // Fast model preferred for web search
-  return requested || process.env.GEMINI_FAST_MODEL || "gemini-3.1-flash-lite-preview";
 }
 
 function pickOpenAiCliModel(requested) {
@@ -214,32 +208,6 @@ function runOpenAiCliSearch({ model, query, purpose, timeoutMs }) {
   } catch {
     return stdout;
   }
-}
-
-function runGeminiCliSearch({ model, query, purpose, timeoutMs }) {
-  const prompt =
-    buildSystemPrompt() +
-    "\n\n" +
-    buildUserPrompt(query, purpose) +
-    "\n\nYou MUST use the google_web_search tool to gather fresh information. Do not use any other web tool.";
-
-  const args = ["-m", model, "-y", "-p", prompt];
-  const res = spawnSync("gemini", args, {
-    encoding: "utf8",
-    timeout: timeoutMs,
-    maxBuffer: 16 * 1024 * 1024,
-    stdio: ["ignore", "pipe", "pipe"],
-    env: { ...process.env },
-  });
-  if (res.error) throw new Error(`gemini-cli failed: ${res.error.message}`);
-  if (res.status !== 0) {
-    throw new Error(
-      `gemini-cli exited with status ${res.status}: ${res.stderr || res.stdout}`,
-    );
-  }
-  const text = (res.stdout || "").trim();
-  if (!text) throw new Error("gemini-cli returned empty output");
-  return text;
 }
 
 function decodeJwtAccountId(jwt) {
@@ -745,15 +713,7 @@ async function main() {
 
   let modelId;
   let text;
-  if (provider === "gemini") {
-    modelId = pickGeminiModel(args.model);
-    text = runGeminiCliSearch({
-      model: modelId,
-      query: args.query,
-      purpose: args.purpose,
-      timeoutMs: args.timeoutMs,
-    });
-  } else if (provider === "openai-cli") {
+  if (provider === "openai-cli") {
     modelId = pickOpenAiCliModel(args.model);
     text = runOpenAiCliSearch({
       model: modelId,

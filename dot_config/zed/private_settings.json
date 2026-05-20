@@ -278,9 +278,6 @@
   // AGENT SERVERS (external AI agents)
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
-    "gemini": {
-      "type": "registry"
-    },
     "codex-acp": {
       "type": "registry",
       "default_mode": "full-access"

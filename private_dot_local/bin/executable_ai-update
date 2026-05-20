@@ -4,10 +4,6 @@ echo "🧑‍💻 Updating Claude Code"
 brew upgrade claude-code@latest
 echo
 
-echo "💎 Update Gemini CLI"
-brew upgrade gemini-cli
-echo
-
 echo "🚀 Update Codex"
 brew upgrade codex
 echo
