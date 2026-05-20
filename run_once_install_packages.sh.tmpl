@@ -44,35 +44,10 @@ install_rust
 
 show_section "📚 Installing Language-Specific Packages" "$YELLOW"
 
-# Go packages
-GO_PACKAGES=(
-    "github.com/cosmos72/gomacro@latest:gomacro"
-)
-
-echo ""
-print_in_purple "Go packages"
-for package in "${GO_PACKAGES[@]}"; do
-    IFS=':' read -r pkg_path pkg_name <<<"$package"
-    install_go_package "$pkg_path" "${pkg_name:-$(basename "$pkg_path")}"
-done
-
-# UV tools
-UV_TOOLS=(
-    "pylatexenc"
-    "nginx-language-server"
-)
-
-install_packages_from_list "UV" "install_uv_tool" "${UV_TOOLS[@]}"
-
 # UV tools with extra dependencies
 execute "uv tool install ansible-core --with ansible --with netaddr" "ansible-core (with ansible, netaddr)"
 # psycopg[binary] bundles libpq; catppuccin[pygments] provides syntax_style
 execute "uv tool install pgcli --with 'psycopg[binary]' --with 'catppuccin[pygments]'" "pgcli (catppuccin + psycopg-binary)"
-
-# Pi packages
-PI_PACKAGES=()
-
-install_packages_from_list "Pi" "install_pi_package" "${PI_PACKAGES[@]}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tools and plugins
@@ -85,7 +60,6 @@ if setup_github_cli; then
     GH_PLUGINS=(
         "dlvhdr/gh-dash"
         "2KAbhishek/gh-repo-man"
-        "yusukebe/gh-markdown-preview"
     )
 
     echo ""
