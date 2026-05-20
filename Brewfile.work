@@ -1,5 +1,6 @@
 tap "aws/tap"
 tap "buo/cask-upgrade"
+tap "darrylmorley/whatcable"
 tap "dlvhdr/formulae"
 tap "grafana/grafana"
 tap "hashicorp/tap"
@@ -9,6 +10,7 @@ tap "macos-fuse-t/cask"
 tap "mongodb/brew"
 tap "nats-io/nats-tools"
 tap "nikitabobko/tap"
+tap "openai/tools"
 tap "oven-sh/bun"
 tap "protonpass/tap"
 tap "schpet/tap"
@@ -402,6 +404,8 @@ cask "kitlangton-hex"
 cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
+# The official CLI for the OpenAI API.
+cask "openai/tools/openai"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
 # Desktop client for Proton Pass
@@ -430,6 +434,8 @@ cask "tailscale-app"
 cask "thaw"
 # Multimedia player
 cask "vlc"
+# Menu bar app for USB-C cable diagnostics
+cask "darrylmorley/whatcable/whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
@@ -464,9 +470,15 @@ go "github.com/kyoh86/richgo"
 go "honnef.co/go/tools/cmd/staticcheck"
 cargo "bpf-linker"
 cargo "kagi"
+cargo "lazydiff"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "nginx-language-server"
 uv "openshell"
 uv "pgcli", with: ["catppuccin", "psycopg"]
 uv "pylatexenc"
+npm "@earendil-works/pi-coding-agent"
+npm "ccusage"
+npm "npm-check"
+npm "obsidian-headless"
+npm "skills"
