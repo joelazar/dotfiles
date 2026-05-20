@@ -244,7 +244,7 @@
     "provider": "zed"
   },
   "agent": {
-    "sidebar_side": "right",
+    "sidebar_side": "left",
     "dock": "left",
     "max_content_width": 1200.0,
     "button": false,
