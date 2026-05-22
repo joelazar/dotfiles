@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+app=/Applications/Claude.app/Contents/MacOS/Claude
+data_dir="$HOME/Library/Application Support/Claude-Work"
+log_dir="$HOME/Library/Logs"
+
+mkdir -p "$data_dir" "$log_dir"
+
+if [[ ! -x "$app" ]]; then
+  printf 'Claude is not installed at %s\n' "$app" >&2
+  exit 1
+fi
+
+nohup "$app" --user-data-dir="$data_dir" >"$log_dir/claude-work.log" 2>&1 &

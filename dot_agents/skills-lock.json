@@ -31,6 +31,12 @@
       "skillPath": "skills/gws-gmail/SKILL.md",
       "computedHash": "5e5b5fdb4b4f347310d929657ed773abcaf528b5ac0a68deee12d3d38d307642"
     },
+    "gws-shared": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-shared/SKILL.md",
+      "computedHash": "b197590681ce3d5a52e9c15a68652b5445d111dbfc0dc453f68fb0785aac443c"
+    },
     "gws-sheets": {
       "source": "googleworkspace/cli",
       "sourceType": "github",
@@ -47,7 +53,7 @@
       "source": "pbakaus/impeccable",
       "sourceType": "github",
       "skillPath": "skill/SKILL.md",
-      "computedHash": "8cdf2e788eaca3af7d02026ef9cec55b506100a00d130f938e3fb1ad669c0ad0"
+      "computedHash": "34e59a34b9705187e87039faa5d9585aebe0056ef657f761b905afef276a3362"
     },
     "linear-cli": {
       "source": "schpet/linear-cli",
@@ -65,13 +71,13 @@
       "source": "steipete/clawdis",
       "sourceType": "github",
       "skillPath": "skills/summarize/SKILL.md",
-      "computedHash": "4b090b1eaf9a1d62c50971c6bcd5b4357bca209dcdfe41b2180fdc746352625f"
+      "computedHash": "67b9a5d86c3d9675e53e8bdb3f336661d55ccc689ecaaa3c99d984aa991458b6"
     },
     "tmux": {
       "source": "steipete/clawdis",
       "sourceType": "github",
       "skillPath": "skills/tmux/SKILL.md",
-      "computedHash": "d9c56ff5d25a0a8217eaedfb64b46c05dd20a2c0e0edae75f059ecb1d8833c08"
+      "computedHash": "ac61fad44978a9a2ca345f4c7de49de3f2b27cdb0096cbddf21f817c99d2fbce"
     },
     "web-browser": {
       "source": "mitsuhiko/agent-stuff",
