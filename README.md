@@ -181,13 +181,9 @@ There are around **22 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_
 
 ### Local skills 🎯
 
-The skill library under [`dot_agents/`](dot_agents/) is organized into three directories: `skills/` for general-purpose tools, `frontend-skills/` for web UI work, and `python-skills/` for Python tooling. Around 21 skills total, tracked by [`dot_skill-lock.json`](dot_skill-lock.json).
+The skill library under [`dot_agents/`](dot_agents/) uses the `skills` CLI's global lock file, tracked as [`dot_agents/dot_skill-lock.json`](dot_agents/dot_skill-lock.json) and applied to `~/.agents/.skill-lock.json`.
 
-General skills cover research and external systems (`ai-search`, `kagi`, `perplexity-search`, `web-search`, `pdf`, `linear-cli`, `mermaid`), workflow helpers (`github`, `humanizer`, `session-analyzer`, `summarize`, `tmux`, `gcx`), and Google Workspace access (calendar, docs, drive, gmail, sheets).
-
-Frontend skills live under `frontend-skills/` and are anchored by `impeccable` — a v3.0 subcommand system with a large reference library covering `live`, `harden`, `document`, `onboard`, `shape`, `teach`, `brand`, `product`, and more. `frontend-design` and `web-browser` round out that category.
-
-Python tooling lives under `python-skills/` and currently just has `uv`.
+Local skills live under [`dot_agents/skills/`](dot_agents/skills/). Remote skills are tracked in the lock file and updated with `skills update -g`.
 
 Two meta-tools, `improve-skill` and `skill-creator`, live at the `dot_agents/` level. They're for building and evaluating new skills rather than using them directly.
 

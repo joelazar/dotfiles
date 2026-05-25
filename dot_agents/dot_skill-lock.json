@@ -1,0 +1,269 @@
+{
+  "version": 3,
+  "skills": {
+    "ai-search": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/ai-search",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "d927635e0c4934c2b620dec5e7174cfed3c71068818848636cfa7ddbc5ee1c0e",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/ai-search"
+    },
+    "exe-dev": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/exe-dev",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "21d78d55a704bbe4064e401512fa13505b332c48e332339fa348ac847f7911d0",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/exe-dev"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "gcx": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/gcx",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "5dd1192db9d2c63bbd4a356e29937595facf385f0716b0ab1edcd417e321674c",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/gcx"
+    },
+    "github": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/github",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "b7120307b838bb55164ead25a13d07380801da2063bbd66af964cc9542495413",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/github"
+    },
+    "gws-calendar": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-calendar/SKILL.md",
+      "skillFolderHash": "0c5956e1069552444b00bf45381f08ffa9a7bca9810fefb1801866216008bcfc",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "gws-docs": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-docs/SKILL.md",
+      "skillFolderHash": "10dc2a8aa8cb28524a9d285ddba5602c24c21cbb640718fce522b58d90ee7b97",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "gws-drive": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-drive/SKILL.md",
+      "skillFolderHash": "d637ff849b82a9fc195bcfedea260cffe94eaa31b843b28cd04313b1720bb153",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "gws-gmail": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail/SKILL.md",
+      "skillFolderHash": "5e5b5fdb4b4f347310d929657ed773abcaf528b5ac0a68deee12d3d38d307642",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "gws-shared": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-shared/SKILL.md",
+      "skillFolderHash": "b197590681ce3d5a52e9c15a68652b5445d111dbfc0dc453f68fb0785aac443c",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "gws-sheets": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-sheets/SKILL.md",
+      "skillFolderHash": "21c951f8bf399bb941740ab8b048157b43088ad96b743976e88abb0046d263d2",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/googleworkspace/cli.git"
+    },
+    "humanizer": {
+      "source": "blader/humanizer",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "b813857f183da05d08d5a80adac671df94c139f855809bd47ab8b7bb245546a2",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/blader/humanizer.git"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": "skill/SKILL.md",
+      "skillFolderHash": "34e59a34b9705187e87039faa5d9585aebe0056ef657f761b905afef276a3362",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/pbakaus/impeccable.git"
+    },
+    "kagi-cli": {
+      "source": "/Users/joelazar/Code/rust/kagi-cli/docs",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "c0f78d71728e660a42bebef552b88e2250238de358e69feeb4def8fcfb4ae4d5",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/Code/rust/kagi-cli/docs"
+    },
+    "linear-cli": {
+      "source": "schpet/linear-cli",
+      "sourceType": "github",
+      "skillPath": "skills/linear-cli/SKILL.md",
+      "skillFolderHash": "5f8516b9aa8157e7710ec5d029e1c44a0e55be1c3f834f844d0c7f27dae62580",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/schpet/linear-cli.git"
+    },
+    "listen-later": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/listen-later",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "8eb3f99602be304eeefcc379af447f72113841899ff3c487b2c39fc0539fc60a",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/listen-later"
+    },
+    "mermaid": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/mermaid",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "55e6edaf8d27d683b406fb0c2f1a8e3f12be16d0cfa4c937a0180fe179d01543",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/mermaid"
+    },
+    "pdf": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/pdf/SKILL.md",
+      "skillFolderHash": "cfbc539377088ca7e44a813b30c306327385bbd973cd7a721e1743f60837dd62",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/anthropics/skills.git"
+    },
+    "perplexity-search": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/perplexity-search",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "46cf3b8c616a6b629a7d527f3d38762e08a1a03b9e5efccaf26a17a8459586fe",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/perplexity-search"
+    },
+    "reddit": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/reddit",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "4138cd18b344fa2243f806fe9d50371cf20843483ec4e22a9b1424001ac3fc57",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/reddit"
+    },
+    "save-to-spotify": {
+      "source": "/Users/joelazar/.local/share/save-to-spotify/skills/save-to-spotify",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "f5f513f0f480f4e7469c3b6aab557727cc32161d419fc0290a4f1ed9a01f51f0",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/save-to-spotify/skills/save-to-spotify"
+    },
+    "session-analyzer": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/session-analyzer",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "fd6bda892861eef8153ceee8ada257ddd741328ee5adaf7896ded9a24623c72d",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/session-analyzer"
+    },
+    "simplify": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/simplify",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "7c0add94952762e5b0a6b1a6e9aab776534371e630069bfca0a9d78ed30b7384",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/simplify"
+    },
+    "summarize": {
+      "source": "steipete/clawdis",
+      "sourceType": "github",
+      "skillPath": "skills/summarize/SKILL.md",
+      "skillFolderHash": "67b9a5d86c3d9675e53e8bdb3f336661d55ccc689ecaaa3c99d984aa991458b6",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/steipete/clawdis.git"
+    },
+    "supaterm": {
+      "source": "supabitapp/supaterm-skills",
+      "sourceType": "github",
+      "skillPath": "skills/supaterm/SKILL.md",
+      "skillFolderHash": "755701053bdd773b67172ae7ed1235c2ae428483",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/supabitapp/supaterm-skills.git"
+    },
+    "tmux": {
+      "source": "steipete/clawdis",
+      "sourceType": "github",
+      "skillPath": "skills/tmux/SKILL.md",
+      "skillFolderHash": "ac61fad44978a9a2ca345f4c7de49de3f2b27cdb0096cbddf21f817c99d2fbce",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/steipete/clawdis.git"
+    },
+    "uv": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/uv",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "19402c65ae90e373da59d70f2769c0843558d404335f7bf50509521187252192",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/uv"
+    },
+    "web-browser": {
+      "source": "mitsuhiko/agent-stuff",
+      "sourceType": "github",
+      "skillPath": "skills/web-browser/SKILL.md",
+      "skillFolderHash": "e6c498ce130df429d35478732ac63be9c6caa35441484efbea786adf29117c26",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "https://github.com/mitsuhiko/agent-stuff.git"
+    },
+    "web-search": {
+      "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/web-search",
+      "sourceType": "local",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "9cd144f8984e39e76a0a69bb296a91a180b3290588c39b09bd75fec273c70f9d",
+      "installedAt": "2026-05-25T13:30:00.000Z",
+      "updatedAt": "2026-05-25T13:30:00.000Z",
+      "sourceUrl": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/web-search"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  }
+}
