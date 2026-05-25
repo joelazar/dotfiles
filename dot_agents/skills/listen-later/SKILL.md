@@ -11,49 +11,49 @@ For voice cloning, multilingual, custom cover art, or full podcast production, s
 
 ## Defaults (do not ask unless user overrides)
 
-| | |
-|---|---|
-| Voice | Kokoro `af_heart`, 1.0× (`kokoro` on PATH) |
-| Length | **Mode-dependent** — see below |
-| Show | `📥 Listen Later` (must already exist; resolve URI via `save-to-spotify --json shows`) |
-| Cover | Reuse show cover for the episode (no per-episode art) |
-| Timeline | Chapters only — no images, no link companions |
+|              |                                                                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Voice        | Kokoro `af_heart`, 1.0× (`kokoro` on PATH)                                                                                                              |
+| Length       | **Mode-dependent** — see below                                                                                                                          |
+| Show         | `📥 Listen Later` (must already exist; resolve URI via `save-to-spotify --json shows`)                                                                  |
+| Cover        | Reuse show cover for the episode (no per-episode art)                                                                                                   |
+| Timeline     | Chapters only — no images, no link companions                                                                                                           |
+| Polling      | Off by default. Only poll when the user explicitly asks to wait until ready.                                                                            |
 | Chapter rule | Every chapter ≥30s (Spotify rejects too many short ones). Consolidate adjacent segments into chapters after rendering. First chapter MUST start at `0`. |
 
 ## Mode selection (infer from the user's words, do not ask)
 
-- **Verbatim mode** — default when the user says *"read-up"*, *"save to listen later"*, *"add to my queue"*, or just pastes text. Narrate the **full text**, lightly cleaned for TTS (strip markdown / hashtags / emojis / URLs, expand abbreviations, em dash → hyphen). Do NOT cut content. Length follows the source: ~150 wpm → a 1500-word article becomes ~10 minutes.
-- **Summarize mode** — only when the user says *"summarize"*, *"TL;DR"*, *"short version"*, or *"key points"*. Pick target length from source complexity:
+- **Verbatim mode** — default when the user says _"read-up"_, _"save to listen later"_, _"add to my queue"_, or just pastes text. Narrate the **full text**, lightly cleaned for TTS (strip markdown / hashtags / emojis / URLs, expand abbreviations, em dash → hyphen). Do NOT cut content. Length follows the source: ~150 wpm → a 1500-word article becomes ~10 minutes.
+- **Summarize mode** — only when the user says _"summarize"_, _"TL;DR"_, _"short version"_, or _"key points"_. Pick target length from source complexity:
 
-  | Source | Target |
-  |---|---|
-  | Tweet thread / short blog post (<800 words) | 1–2 min |
-  | Newsletter / medium article (800–3000 words) | 3–5 min |
-  | Long-form essay / report / paper (>3000 words) | 5–8 min |
-  | Dense technical / multi-topic source | bias to the longer end |
+  | Source                                         | Target                 |
+  | ---------------------------------------------- | ---------------------- |
+  | Tweet thread / short blog post (<800 words)    | 1–2 min                |
+  | Newsletter / medium article (800–3000 words)   | 3–5 min                |
+  | Long-form essay / report / paper (>3000 words) | 5–8 min                |
+  | Dense technical / multi-topic source           | bias to the longer end |
 
   Within the target, write 6–12 declarative segments preserving the source's structure 1:1.
 
 Segment count rule of thumb: ~30–60 seconds of speech per segment.
 
-## Interview (one round, then proceed)
+## Interview
 
-Confirm only: **episode title** (propose one). Skip everything else.
+Do not ask for confirmation. Derive the episode title from the source title, article `<title>`, or URL slug. If the user supplies a title, use it.
 
 ## Flow
 
-1. **Preflight**: `save-to-spotify --json auth status` and `which kokoro`. Resolve show URI from the shows list.
-2. **Script**: 6–10 declarative segments, links stripped, abbreviations expanded for TTS, em dashes → hyphens.
-3. **Render**: `kokoro -t "<text>" -o seg_NN.wav` per segment.
-4. **Convert**: each WAV → MP3 at `-ar 44100 -ac 1 -b:a 192k`.
-5. **Silence**: `silence_300.mp3` between segments, `silence_600.mp3` as outer pad.
-6. **Concat**: `pad + seg + (gap + seg)... + pad`, **re-encoded** (no `-c copy`).
-7. **Normalize**: `ffmpeg -i raw.mp3 -af loudnorm episode.mp3`.
-8. **Chapters**: cursor walks the actual MP3 durations. Force first chapter to `start_time_ms: 0`. Then merge adjacent segments until every chapter is ≥30s — typically ends up at 3–5 chapters for a 3-min episode.
-9. **Description**: short HTML — one intro paragraph, `<ul>` of `M:SS — Title`, source link if supplied.
-10. **Upload**: `save-to-spotify --json episodes create --show-id <SHOW_URI> --title "<T>" --file episode.mp3 --image show_cover.jpg --summary "<HTML>"`.
-11. **Timeline**: `save-to-spotify --json timeline set --episode-id <EP_ID> --from-file timeline.json`.
-12. **Poll**: `save-to-spotify --json episodes status <EP_ID>` until `readiness == READY`.
+1. **Preflight**: run one shell block that creates the work directory, checks `save-to-spotify --json auth status`, checks `which kokoro`, extracts the page, and resolves the `📥 Listen Later` show URI from `save-to-spotify --json shows`. Do not inspect files one at a time unless something fails.
+2. **Script**: write `segments.json` with 6–10 declarative segments, links stripped, abbreviations expanded for TTS, em dashes → hyphens. Include chapter titles in the same file.
+3. **Render**: render all segments in one shell block. Prefer parallel Kokoro jobs when there is more than one segment, capped at CPU count: `printf '%s\0' seg_*.txt | xargs -0 -P "$(sysctl -n hw.ncpu 2>/dev/null || nproc)" -I{} sh -c 'kokoro -t "$(cat "$1")" -o "${1%.txt}.wav"' sh {}`.
+4. **Silence**: generate WAV silence once with ffmpeg: 300 ms between segments and 600 ms as outer pad.
+5. **Concat**: concat WAVs with the ffmpeg concat demuxer, then encode and normalize in a single final MP3 command when possible: `ffmpeg -f concat -safe 0 -i concat.txt -af loudnorm -ar 44100 -ac 1 -b:a 192k episode.mp3`.
+6. **Durations**: use `ffprobe` on WAV/MP3 files in one shell block and write `durations.json`.
+7. **Chapters**: cursor walks the actual durations. Force first chapter to `start_time_ms: 0`. Merge adjacent segments until every chapter is ≥30s — typically ends up at 3–5 chapters for a 3-min episode.
+8. **Description**: short HTML — one intro paragraph, `<ul>` of `M:SS — Title`, source link if supplied.
+9. **Upload**: `save-to-spotify --json episodes create --show-id <SHOW_URI> --title "<T>" --file episode.mp3 --image show_cover.jpg --summary "<HTML>"`.
+10. **Timeline**: `save-to-spotify --json timeline set --episode-id <EP_ID> --from-file timeline.json`.
+11. **Poll**: skip by default. If the user explicitly asks to wait until ready, run `save-to-spotify --json episodes status <EP_ID>` until `readiness == READY`.
 
 ## Working directory
 
