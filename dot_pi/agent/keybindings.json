@@ -4,5 +4,6 @@
   "app.model.cycleBackward": [],
   "app.thinking.cycle": ["alt+t"],
   "tui.select.down": ["down", "tab", "ctrl+n"],
-  "tui.select.up": ["up", "shift+tab", "ctrl+p"]
+  "tui.select.up": ["up", "shift+tab", "ctrl+p"],
+  "tui.input.tab": ["ctrl+y", "ctrl+enter"]
 }
