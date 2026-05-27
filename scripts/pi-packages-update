@@ -63,12 +63,14 @@ if [ ! -f "$SETTINGS" ]; then
 fi
 have jq || { err "jq required"; exit 1; }
 
-# Extract package source paths (object form: .source; string form: itself).
+# Extract local package source paths (object form: .source; string form: itself).
 mapfile -t PKG_PATHS < <(jq -r '
     .packages // []
     | .[]
     | if type == "object" then .source else . end
-    | select(. != null and . != "")
+    | strings
+    | select(. != "")
+    | select(test("^(npm:|git:|https?://|ssh://|git://)") | not)
 ' "$SETTINGS")
 
 if [ ${#PKG_PATHS[@]} -eq 0 ]; then

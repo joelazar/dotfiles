@@ -9,7 +9,7 @@ brew upgrade codex
 echo
 
 echo "🥧 Update Pi"
-pi update
+pi update --self
 echo
 
 echo "🥧 Update Pi extensions"
