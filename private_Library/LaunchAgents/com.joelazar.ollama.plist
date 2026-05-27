@@ -52,6 +52,13 @@
         <key>OLLAMA_KEEP_ALIVE</key>
         <string>30m</string>
 
+        <!-- Single model, single parallel request — predictable RAM on 48 GB. -->
+        <key>OLLAMA_NUM_PARALLEL</key>
+        <string>1</string>
+
+        <key>OLLAMA_MAX_LOADED_MODELS</key>
+        <string>1</string>
+
         <!-- Ensure the binary finds Homebrew's env. -->
         <key>PATH</key>
         <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
