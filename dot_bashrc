@@ -2,4 +2,4 @@
 export PATH="/opt/homebrew/bin/:$PATH"
 . "$HOME/.cargo/env"
 
-alias cat=bat
+alias python=python3

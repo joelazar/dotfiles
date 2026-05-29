@@ -8,6 +8,7 @@ set -euo pipefail
 # --- Tracked config (edit here) ---
 MANAGED_CONFIG='{
   "hideThinkingBlock": true,
+  "shellCommandPrefix": "shopt -s expand_aliases\nexport GIT_PAGER=cat PAGER=cat AWS_PAGER=\"\"\nalias python=python3",
   "collapseChangelog": false,
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
