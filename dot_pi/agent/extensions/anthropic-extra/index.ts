@@ -133,7 +133,7 @@ async function refreshAnthropicToken(credentials: OAuthCredentials): Promise<OAu
 export default function (pi: ExtensionAPI) {
 	pi.registerProvider("anthropic-extra", {
 		baseUrl: "https://api.anthropic.com",
-		apiKey: "ANTHROPIC_EXTRA_API_KEY",
+		apiKey: "$ANTHROPIC_EXTRA_API_KEY",
 		api: "anthropic-messages",
 
 		// Mirrors built-in pi-ai anthropic models (see pi-ai/dist/models.generated.js).
