@@ -139,9 +139,10 @@ export default function (pi: ExtensionAPI) {
 		// Mirrors built-in pi-ai anthropic models (see pi-ai/dist/models.generated.js).
 		models: [
 			{
-				id: "claude-opus-4-7",
-				name: "Claude Opus 4.7 (Extra)",
+				id: "claude-opus-4-8",
+				name: "Claude Opus 4.8 (Extra)",
 				reasoning: true,
+				compat: { forceAdaptiveThinking: true },
 				thinkingLevelMap: { xhigh: "xhigh" },
 				input: ["text", "image"],
 				cost: { input: 5, output: 25, cacheRead: 0.5, cacheWrite: 6.25 },
@@ -152,6 +153,7 @@ export default function (pi: ExtensionAPI) {
 				id: "claude-sonnet-4-6",
 				name: "Claude Sonnet 4.6 (Extra)",
 				reasoning: true,
+				compat: { forceAdaptiveThinking: true },
 				input: ["text", "image"],
 				cost: { input: 3, output: 15, cacheRead: 0.3, cacheWrite: 3.75 },
 				contextWindow: 1_000_000,

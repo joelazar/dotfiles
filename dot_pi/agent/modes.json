@@ -4,23 +4,8 @@
   "modes": {
     "default": {
       "provider": "anthropic",
-      "modelId": "claude-opus-4-7",
+      "modelId": "claude-opus-4-8",
       "thinkingLevel": "medium"
-    },
-    "fast-claude": {
-      "provider": "anthropic",
-      "modelId": "claude-sonnet-4-6",
-      "thinkingLevel": "low"
-    },
-    "default-extra": {
-      "provider": "anthropic-extra",
-      "modelId": "claude-opus-4-7",
-      "thinkingLevel": "medium"
-    },
-    "fast-claude-extra": {
-      "provider": "anthropic-extra",
-      "modelId": "claude-sonnet-4-6",
-      "thinkingLevel": "low"
     },
     "fast-gpt": {
       "provider": "openai-codex",
