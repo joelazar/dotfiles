@@ -30,6 +30,23 @@ enabled = true
 [marketplaces.openai-bundled]
 source_type = "local"
 source = "/Users/joelazar/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[desktop]
+appearanceTheme = "dark"
+usePointerCursors = false
+composerEnterBehavior = "cmdIfMultiline"
+preventSleepWhileRunning = true
+keepRemoteControlAwakeWhilePluggedIn = true
+git-branch-prefix = ""
+git-commit-instructions = "check my previous commits styling and follow that when you make commits"
+git-pr-instructions = "when you open up pull request, summarize the changes in a couple of bullet points, make them concise"
+default-service-tier = "priority"
+
+[desktop.open-in-target-preferences]
+global = "zed"
+
+[features]
+js_repl = false
 '
 
 # --- Read existing file from stdin ---
@@ -41,20 +58,29 @@ if [ -z "$EXISTING" ]; then
   exit 0
 fi
 
-# Merge: managed config + projects + marketplaces.*.last_updated from existing
-# (last_updated is auto-written by codex; preserve it instead of clobbering.)
+# Merge tracked config with app-generated, machine-specific sections preserved
+# from the existing file (codex writes these itself; tracking them would create
+# perpetual diffs and leak machine-specific paths):
+#   - projects.*                  : per-machine trust levels
+#   - marketplaces.*.last_updated : auto-written timestamps
+#   - extra plugins / marketplaces / mcp_servers : runtime-generated
+#   - tui.model_availability_nux  : a counter the app decrements
 echo "$MANAGED_CONFIG" | tomlq -t \
   --slurpfile existing <(echo "$EXISTING" | tomlq '.') \
   '
-    . as $managed
-    | ($existing[0].projects // null) as $projects
-    | ($existing[0].marketplaces // {}) as $existing_mkt
+    ($existing[0] // {}) as $e
+    | . as $managed
     | .marketplaces = (
-        ($managed.marketplaces // {})
+        (($managed.marketplaces // {}) + ($e.marketplaces // {}))
         | with_entries(
-            .value.last_updated = ($existing_mkt[.key].last_updated // .value.last_updated // null)
+            .value.last_updated = (($e.marketplaces // {})[.key].last_updated // .value.last_updated // null)
             | .value |= with_entries(select(.value != null))
           )
       )
-    | if $projects then .projects = $projects else . end
+    | .plugins = (($managed.plugins // {}) + ($e.plugins // {}))
+    | if ($e.mcp_servers) then .mcp_servers = $e.mcp_servers else . end
+    | if ($e.projects) then .projects = $e.projects else . end
+    | if ($e.tui.model_availability_nux)
+        then .tui.model_availability_nux = $e.tui.model_availability_nux
+        else . end
   '
