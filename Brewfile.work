@@ -96,6 +96,8 @@ brew "duf"
 brew "duti"
 # Command-line tool to interact with exercism.io
 brew "exercism"
+# Perl lib for reading and writing EXIF metadata
+brew "exiftool"
 # Modern, maintained replacement for ls
 brew "eza"
 # Like neofetch, but much faster because written mostly in C
@@ -118,6 +120,8 @@ brew "gcc"
 brew "gh"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
+# Remote repository management made easy
+brew "ghq"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Git extension for versioning large files
@@ -318,8 +322,6 @@ brew "zig"
 brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
-# Git diff pager based on delta but with a file tree, à la GitHub
-brew "dlvhdr/formulae/diffnav"
 # Grafana Cloud CLI
 brew "grafana/grafana/gcx"
 # Terraform
@@ -350,8 +352,6 @@ cask "1password-cli"
 cask "nikitabobko/tap/aerospace"
 # Android SDK component
 cask "android-platform-tools"
-# AI Coding Agent IDE
-cask "antigravity"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
 # Open source IDE for exploring and testing APIs
@@ -463,13 +463,15 @@ go "github.com/tmc/json-to-struct"
 go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 cargo "bpf-linker"
+cargo "cargo-audit"
 cargo "kagi"
-cargo "lazydiff"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
+npm "corepack"
+npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"
 npm "skills"

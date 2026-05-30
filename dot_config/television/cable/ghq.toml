@@ -1,0 +1,31 @@
+[metadata]
+name = "ghq"
+requirements = ["ghq", "git"]
+description = """
+A channel to select from repositories managed by ghq.
+
+This channel lists repositories under the ghq root via `ghq list -p` and lets you
+preview the git log of the selected repository.
+"""
+
+[source]
+command = "ghq list -p"
+display = "{split:/:-2..}"
+
+[preview]
+command = "cd '{}'; git log -n 200 --pretty=medium --all --graph --color"
+
+[keybindings]
+enter = "actions:cd"
+ctrl-enter = "actions:edit"
+
+[actions.cd]
+description = "Open a new shell in the selected repository"
+command = "cd '{}' && $SHELL"
+mode = "execute"
+
+[actions.edit]
+description = "Open the repository in editor"
+command = "${EDITOR:-vim} {}"
+shell = "bash"
+mode = "execute"

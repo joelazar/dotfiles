@@ -10,6 +10,7 @@
 - Always use `fd` instead of `find`.
 - Use `jq` for JSON processing
 - Fish shell is the primary shell
+- Clone new repos with `ghq get <url>` (root is `~/Code`, layout `~/Code/<host>/<owner>/<repo>`)
 
 ## Coding fundamental principles
 

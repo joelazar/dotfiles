@@ -17,8 +17,6 @@
     d        = "!git add -AN 2>/dev/null; git diff"
     dc       = diff --cached
     dn       = "!git add -AN 2>/dev/null; git diff | diffnav"
-    ds       = "!git add -AN 2>/dev/null; git -c delta.side-by-side=true diff"
-    dcs      = -c delta.side-by-side=true diff --cached
     f        = fetch --prune
     hash     = rev-parse HEAD
     lc       = shortlog --email --numbered --summary --no-merges
@@ -116,7 +114,7 @@
 
 [pager]
 
-    diff = delta
+    diff = diffnav
     log = delta
     reflog = delta
     show = delta

@@ -6,7 +6,7 @@ ui:
   hideFooter: true
 
   # Start with the file tree hidden (toggle with 'e')
-  showFileTree: true
+  showFileTree: false
 
   # Customize the file tree width (default: 26)
   fileTreeWidth: 30
@@ -25,3 +25,6 @@ ui:
 
   # Use side-by-side diff view (default: true, set false for unified)
   sideBySide: true
+
+  # How many levels of folders to open on start (-1 = all, 0 = none, 1 = first level, etc.)
+  startFoldersOpenDepth: 1
