@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+MISE="$(command -v mise || echo /opt/homebrew/bin/mise)"
+NODE24="$("$MISE" where node@24)"
+exec "$NODE24/bin/node" \
+  "$NODE24/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js" "$@"
