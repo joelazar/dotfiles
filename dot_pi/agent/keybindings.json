@@ -1,5 +1,6 @@
 {
   "app.models.clearAll": ["alt+x"],
+  "app.model.select": ["ctrl+space"],
   "app.model.cycleForward": [],
   "app.model.cycleBackward": [],
   "app.thinking.cycle": ["alt+t"],

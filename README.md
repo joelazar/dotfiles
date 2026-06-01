@@ -153,26 +153,19 @@ Pi is where most of the custom work happens.
 
 The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 
-- Catppuccin Mocha theme and custom modes in [`dot_pi/agent/modes.json`](dot_pi/agent/modes.json)
+- Catppuccin Mocha theme
 - local model definitions in [`dot_pi/agent/models.json`](dot_pi/agent/models.json)
 - path blocking for secrets and sensitive files in [`dot_pi/agent/path-policy.json`](dot_pi/agent/path-policy.json)
 - prompt templates in [`dot_pi/agent/prompts/`](dot_pi/agent/prompts/)
 - a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json)
 
-Current Pi modes are built around a few practical defaults:
-
-- `default`: Claude Opus 4.7, medium thinking
-- `fast-claude`: Claude Sonnet 4.6, low thinking
-- `fast-gpt`: GPT-5.5, low thinking
-- `deep`: GPT-5.5, high thinking
+Models are switched with Pi's built-in selector, bound to `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels` in the managed settings.
 
 ### Local Pi extensions 🧩
 
-There are around **22 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
+There are **9 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
 
 - `default-tools` to enable `grep` and `find` by default
-- `prompt-editor` for editing and storing prompt/model combinations
-- `copy-command` for pulling runnable commands out of responses
 - `lazygit` and `ghostty` integrations
 - `path-policy`, `permission-gate`, and `sandbox` for guardrails
 - `todos`, `loop`, `session-breakdown`, and `auto-session-name` for session management

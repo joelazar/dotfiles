@@ -14,17 +14,13 @@ MANAGED_CONFIG='{
   "doubleEscapeAction": "tree",
   "enabledModels": [
     "openai-codex/gpt-5.5",
-    "anthropic/claude-opus-4-8",
-    "anthropic/claude-sonnet-4-6",
-    "anthropic-extra/claude-opus-4-8",
-    "anthropic-extra/claude-sonnet-4-6"
+    "anthropic/claude-opus-4-8"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
   "extensions": [],
   "packages": [
     "/Users/joelazar/Code/ai/pi/pi-review",
-    "/Users/joelazar/Code/ai/pi/pi-side-chat",
     "/Users/joelazar/Code/ai/pi/pi-nvim",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-fast",
