@@ -160,37 +160,28 @@ function splitShellSubcommands(command: string): string[] {
   return commands.length > 0 ? commands : [command.trim()].filter(Boolean);
 }
 
+const HOME_PREFIXES = ["${HOME}", "$HOME", "~"] as const;
+
+function matchesHomePrefix(raw: string, prefix: string): boolean {
+  if (prefix === "~") return raw === "~" || raw.startsWith("~/");
+  return raw.startsWith(prefix);
+}
+
+function trimTrailingSlash(value: string): string {
+  return value === "/" ? value : value.replace(/\/+$/, "");
+}
+
 function normalizePathLikeToken(token: string): string {
   const raw = token.trim();
 
-  const trimTrailingSlash = (value: string) => {
-    if (value === "/") return value;
-    return value.replace(/\/+$/, "");
-  };
-
-  if (raw.startsWith("${HOME}")) {
-    const replaced = `/__HOME__${raw.slice("${HOME}".length)}`;
-    const normalized = path.posix.normalize(replaced);
-    const mapped = normalized.replace(/^\/__HOME__/, "${HOME}");
-    return trimTrailingSlash(mapped || "${HOME}");
+  for (const prefix of HOME_PREFIXES) {
+    if (!matchesHomePrefix(raw, prefix)) continue;
+    const normalized = path.posix.normalize(`/__HOME__${raw.slice(prefix.length)}`);
+    const mapped = normalized.replace(/^\/__HOME__/, prefix);
+    return trimTrailingSlash(mapped || prefix);
   }
 
-  if (raw.startsWith("$HOME")) {
-    const replaced = `/__HOME__${raw.slice("$HOME".length)}`;
-    const normalized = path.posix.normalize(replaced);
-    const mapped = normalized.replace(/^\/__HOME__/, "$HOME");
-    return trimTrailingSlash(mapped || "$HOME");
-  }
-
-  if (raw === "~" || raw.startsWith("~/")) {
-    const replaced = `/__HOME__${raw.slice(1)}`;
-    const normalized = path.posix.normalize(replaced);
-    const mapped = normalized.replace(/^\/__HOME__/, "~");
-    return trimTrailingSlash(mapped || "~");
-  }
-
-  const normalized = path.posix.normalize(raw);
-  return trimTrailingSlash(normalized || ".");
+  return trimTrailingSlash(path.posix.normalize(raw) || ".");
 }
 
 function isCatastrophicPathTarget(token: string): boolean {
@@ -254,19 +245,10 @@ function resolvePathLikeTokenAbsolute(token: string, cwd: string): string | null
   if (/\$\{(?!HOME\})[^}]+\}/.test(raw)) return null;
   if (/\$(?!HOME\b)[A-Za-z_][A-Za-z0-9_]*/.test(raw)) return null;
 
-  if (raw.startsWith("${HOME}")) {
+  for (const prefix of HOME_PREFIXES) {
+    if (!matchesHomePrefix(raw, prefix)) continue;
     if (!HOME_DIR) return null;
-    return path.resolve(HOME_DIR, `.${raw.slice("${HOME}".length)}`);
-  }
-
-  if (raw.startsWith("$HOME")) {
-    if (!HOME_DIR) return null;
-    return path.resolve(HOME_DIR, `.${raw.slice("$HOME".length)}`);
-  }
-
-  if (raw === "~" || raw.startsWith("~/")) {
-    if (!HOME_DIR) return null;
-    return path.resolve(HOME_DIR, `.${raw.slice(1)}`);
+    return path.resolve(HOME_DIR, `.${raw.slice(prefix.length)}`);
   }
 
   if (path.isAbsolute(raw)) {
