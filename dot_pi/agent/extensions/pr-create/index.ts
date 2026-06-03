@@ -219,16 +219,102 @@ const DESCRIPTION_MODELS: string[] = [
   "openai-codex/gpt-5.5",
 ];
 
+/**
+ * Resolve the ref to diff against. Prefers the remote tracking ref so the
+ * comparison matches what GitHub will show, falling back to the local branch.
+ */
+async function resolveBaseRef(
+  pi: ExtensionAPI,
+  ctx: ExtensionCommandContext,
+  base: string,
+): Promise<string | undefined> {
+  const candidate = base.trim() || (await detectDefaultBranch(pi, ctx));
+  if (!candidate) return undefined;
+  const bare = candidate.replace(/^origin\//, "");
+  for (const ref of [`origin/${bare}`, bare]) {
+    try {
+      const r = await pi.exec("git", ["rev-parse", "--verify", "--quiet", ref], {
+        signal: ctx.signal,
+        timeout: 5_000,
+      });
+      if (r.code === 0 && r.stdout.trim()) return ref;
+    } catch {
+      // ignore
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Compute the diff that the PR will actually introduce using the three-dot
+ * range (merge-base of base and HEAD .. HEAD). This excludes any commits added
+ * to the base branch after this branch was created, so an outdated/updated base
+ * never leaks unrelated changes into the description.
+ */
+async function computeBranchDiff(
+  pi: ExtensionAPI,
+  ctx: ExtensionCommandContext,
+  baseRef: string,
+): Promise<{ stat: string; diff: string; commits: string } | undefined> {
+  const range = `${baseRef}...HEAD`;
+  try {
+    const [stat, diff, commits] = await Promise.all([
+      pi.exec("git", ["diff", "--stat", range], {
+        signal: ctx.signal,
+        timeout: 15_000,
+      }),
+      pi.exec("git", ["diff", range], { signal: ctx.signal, timeout: 15_000 }),
+      pi.exec("git", ["log", "--no-merges", "--pretty=%s", `${baseRef}..HEAD`], {
+        signal: ctx.signal,
+        timeout: 15_000,
+      }),
+    ]);
+    if (stat.code !== 0 || diff.code !== 0) return undefined;
+    return {
+      stat: stat.stdout.trim(),
+      diff: diff.stdout,
+      commits: commits.code === 0 ? commits.stdout.trim() : "",
+    };
+  } catch {
+    return undefined;
+  }
+}
+
 async function generatePrBody(
   ctx: ExtensionCommandContext,
   pi: ExtensionAPI,
+  base: string,
 ): Promise<string | undefined> {
+  const baseRef = await resolveBaseRef(pi, ctx, base);
+  const changes = baseRef
+    ? await computeBranchDiff(pi, ctx, baseRef)
+    : undefined;
+
+  if (!changes) {
+    ctx.ui.notify(
+      "Could not compute the branch diff against the base — skipping description generation",
+      "warning",
+    );
+    return undefined;
+  }
+
+  // Cap the diff to keep the prompt within a sane size.
+  const MAX_DIFF_CHARS = 100_000;
+  const diffText =
+    changes.diff.length > MAX_DIFF_CHARS
+      ? `${changes.diff.slice(0, MAX_DIFF_CHARS)}\n\n[diff truncated]`
+      : changes.diff;
+
   const prompt = [
-    "Use the humanizer skill. Generate a short GitHub pull request description for the current branch.",
+    "Use the humanizer skill. Generate a short GitHub pull request description.",
+    "",
+    "The exact changes introduced by this PR are provided below as a git diff",
+    `against ${baseRef}. Base ONLY your description on this diff. Do NOT run any`,
+    "git commands and do NOT consider any changes outside of the provided diff.",
     "",
     "Requirements:",
     "- Keep it concise and natural.",
-    "- Summarize actual code/config changes in this PR.",
+    "- Summarize only the actual code/config changes shown in the diff.",
     "- Prefer 2-4 bullets.",
     "- Do not invent details.",
     "- Do not include Linear ticket lines.",
@@ -240,6 +326,15 @@ async function generatePrBody(
     "- Do NOT wrap the body in code fences, blockquotes, or horizontal rules (---).",
     "- Do NOT add a title/heading line; start directly with the summary paragraph or bullets.",
     "- The first character of your reply must be the first character of the body.",
+    "",
+    "Commit subjects:",
+    changes.commits || "(none)",
+    "",
+    "Diff stat:",
+    changes.stat || "(empty)",
+    "",
+    "Diff:",
+    diffText,
   ].join("\n");
 
   const errors: string[] = [];
@@ -543,7 +638,7 @@ export default function (pi: ExtensionAPI) {
           }
         }
         // Best-effort description generation; on failure, continue without one.
-        const body = await generatePrBody(ctx, pi);
+        const body = await generatePrBody(ctx, pi, base);
         if (body) bodyPath = writeTempBody(body);
       } else {
         // 1. Title (with auto-suggested option)
@@ -612,7 +707,7 @@ export default function (pi: ExtensionAPI) {
           if (manual && manual.trim()) bodyPath = writeTempBody(manual);
         }
         if (genDesc) {
-          const body = await generatePrBody(ctx, pi);
+          const body = await generatePrBody(ctx, pi, base);
           if (body !== undefined) {
             const edit = await ctx.ui.confirm(
               "Edit description?",
