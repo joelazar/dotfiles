@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: session-analyzer
 description: Analyze coding-agent session transcripts to discover patterns that could become AGENTS.md rules, skills, or prompt templates. Mines your usage history for automation opportunities across local coding-agent tools.
 ---

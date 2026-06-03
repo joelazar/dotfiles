@@ -1,0 +1,55 @@
+#!/bin/bash
+set -euo pipefail
+
+# Enforces skill invocation policy on github-sourced skills.
+#
+# `skills update` re-clones github-sourced skills, wiping any local edits to
+# their SKILL.md. Local-sourced skills (chezmoi, local repos) keep their edits
+# and define their own policy directly in their frontmatter.
+#
+# This script is the single source of truth for which github-sourced skills the
+# model may auto-invoke. Everything else gets `disable-model-invocation: true`,
+# making it reachable only via `/skill:<name>`.
+
+LOCK_FILE="$HOME/.agents/.skill-lock.json"
+SKILLS_DIR="$HOME/.agents/skills"
+
+# Skills the model is allowed to auto-invoke.
+AUTOLOAD=(ai-search humanizer kagi-cli web-search pdf summarize)
+
+is_autoload() {
+    local name="$1"
+    for a in "${AUTOLOAD[@]}"; do
+        [[ "$a" == "$name" ]] && return 0
+    done
+    return 1
+}
+
+set_disable() {
+    local file="$1"
+    grep -q '^disable-model-invocation:' "$file" && return 0
+    awk 'NR==1{print; print "disable-model-invocation: true"; next} {print}' \
+        "$file" >"$file.tmp" && mv "$file.tmp" "$file"
+}
+
+clear_disable() {
+    local file="$1"
+    grep -q '^disable-model-invocation:' "$file" || return 0
+    grep -v '^disable-model-invocation:' "$file" >"$file.tmp" && mv "$file.tmp" "$file"
+}
+
+[[ -f "$LOCK_FILE" ]] || {
+    echo "No lock file at $LOCK_FILE" >&2
+    exit 1
+}
+
+jq -r '.skills | to_entries[] | select(.value.sourceType == "github") | .key' "$LOCK_FILE" |
+    while read -r name; do
+        file="$SKILLS_DIR/$name/SKILL.md"
+        [[ -f "$file" ]] || continue
+        if is_autoload "$name"; then
+            clear_disable "$file"
+        else
+            set_disable "$file"
+        fi
+    done

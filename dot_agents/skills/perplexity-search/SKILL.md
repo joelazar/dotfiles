@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: perplexity-search
 description: "Perplexity-specific search: sonar, raw ranked results, reasoning/deep research, recency/domain/country/date filters. Use only when user names Perplexity/Sonar/deep research or needs these filters; otherwise use web-search."
 allowed-tools: [Bash, Read]

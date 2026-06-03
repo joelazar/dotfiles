@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: exe-dev
 description: Manage and deploy projects on exe.dev VMs. Use this whenever the user mentions exe.dev, exe.xyz hosts, `ssh exe.dev`, deploying Docker/GHCR apps to exe.dev, replacing or updating VMs, configuring exe.dev proxy/public access/custom domains, or setting up GitHub Actions/secrets/API tokens for exe.dev deployments.
 ---

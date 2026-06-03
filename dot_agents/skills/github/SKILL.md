@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: github
 description: "Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, `gh search`, and `gh api` for issues, PRs, CI runs, search, and advanced queries."
 ---

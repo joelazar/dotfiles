@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: reddit
 description: Search Reddit and browse subreddit posts using the public JSON API. Use when you need to find Reddit discussions, community reactions, or story leads from specific subreddits.
 ---

@@ -5,8 +5,7 @@ description: >
   inspect, create, update, delete, query, or automate any Grafana resource —
   dashboards, datasources, alerts, SLOs, synthetic checks, oncall, incidents,
   fleet, k6, knowledge graph, or adaptive telemetry.
-user-invocable: true
-disable-model-invocation: false
+disable-model-invocation: true
 allowed-tools: Bash, Read, Write, Edit, Glob, Grep, Agent, AskUserQuestion
 ---
 
