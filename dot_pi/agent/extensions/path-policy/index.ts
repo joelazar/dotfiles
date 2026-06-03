@@ -353,17 +353,16 @@ function splitShellSubcommands(command: string): string[] {
     }
 
     if (!inSingle && !inDouble) {
-      const isSingleSep = ch === ";" || ch === "\n";
-      const isDoubleSep =
-        (ch === "&" && next === "&") || (ch === "|" && next === "|");
-      const isPipeSep = ch === "|";
-      const isBackgroundSep = ch === "&";
+      const isSeparator =
+        ch === ";" || ch === "\n" || ch === "|" || ch === "&";
 
-      if (isSingleSep || isDoubleSep || isPipeSep || isBackgroundSep) {
+      if (isSeparator) {
         const trimmed = current.trim();
         if (trimmed.length > 0) commands.push(trimmed);
         current = "";
 
+        const isDoubleSep =
+          (ch === "&" && next === "&") || (ch === "|" && next === "|");
         if (isDoubleSep) i += 1;
         continue;
       }
