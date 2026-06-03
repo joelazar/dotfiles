@@ -156,28 +156,19 @@ async function loadPromptHistoryForCwd(
 
     const tail = await readTail(file.filePath);
     if (!tail) continue;
-    const lines = tail.split("\n").filter(Boolean);
-    for (const line of lines) {
-      let entry: any;
-      try {
-        entry = JSON.parse(line);
-      } catch {
-        continue;
-      }
-      if (entry?.type !== "message") continue;
-      const message = entry?.message;
-      if (
-        !message ||
-        message.role !== "user" ||
-        !Array.isArray(message.content)
-      )
-        continue;
-      const text = extractText(message.content);
-      if (!text) continue;
-      const timestamp = Number(
-        message.timestamp ?? entry.timestamp ?? Date.now(),
-      );
-      prompts.push({ text, timestamp });
+    const entries = tail
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => {
+        try {
+          return JSON.parse(line);
+        } catch {
+          return undefined;
+        }
+      })
+      .filter(Boolean);
+    for (const prompt of collectUserPromptsFromEntries(entries)) {
+      prompts.push(prompt);
       if (prompts.length >= MAX_RECENT_PROMPTS) break;
     }
     if (prompts.length >= MAX_RECENT_PROMPTS) break;

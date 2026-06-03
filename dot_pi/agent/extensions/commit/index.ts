@@ -66,12 +66,6 @@ ${commitStyleInstructions}
 - Keep the subject line short (~50 chars). If a body is needed, use terse bullet points, not prose paragraphs.
 - Prefer simple verbs: "fix", "add", "remove", "update", "rename", "move", "split", "drop" over fancy synonyms.`;
 
-const HAIKU_MODEL_ID = "claude-haiku-4-5";
-
-const MODEL_CANDIDATES: Array<{ provider: string; modelId: string }> = [
-  { provider: "anthropic", modelId: HAIKU_MODEL_ID },
-];
-
 // Cap diff size sent to the model. Huge diffs (theme switches,
 // generated files) make Haiku slower without improving the message.
 const MAX_DIFF_CHARS = 60_000;
@@ -262,15 +256,11 @@ async function selectCommitModel(
     return null;
   }
 
-  for (const candidate of MODEL_CANDIDATES) {
-    const model = ctx.modelRegistry.find(candidate.provider, candidate.modelId);
-    if (!model) {
-      continue;
-    }
-
-    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(model);
+  const haiku = ctx.modelRegistry.find("anthropic", "claude-haiku-4-5");
+  if (haiku) {
+    const auth = await ctx.modelRegistry.getApiKeyAndHeaders(haiku);
     if (auth.ok) {
-      return model;
+      return haiku;
     }
   }
 

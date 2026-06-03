@@ -443,10 +443,6 @@ function buildSkillPromptBreakdownFromCommands(
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function joinComma(items: string[]): string {
-  return items.join(", ");
-}
-
 type ContextViewData = {
   usage: {
     // message-based context usage estimate from ctx.getContextUsage()

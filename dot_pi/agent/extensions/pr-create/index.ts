@@ -479,33 +479,6 @@ async function detectLinearFromBranch(
   }
 }
 
-/**
- * Show a select with an "Auto" choice on top, plus "Enter manually" and an
- * optional "Skip" choice. Returns the chosen value, or `undefined` if the
- * user cancels (Esc).
- */
-async function pickStringWithAuto(
-  ctx: ExtensionCommandContext,
-  label: string,
-  autoValue: string | undefined,
-  opts: { allowSkip?: boolean; skipLabel?: string; placeholder?: string } = {},
-): Promise<string | undefined> {
-  const { allowSkip = true, skipLabel = "Skip / use default", placeholder = "" } = opts;
-  const choices: string[] = [];
-  if (autoValue !== undefined && autoValue !== "") {
-    choices.push(`Auto: ${autoValue}`);
-  }
-  choices.push("Enter manually");
-  if (allowSkip) choices.push(skipLabel);
-  const pick = await ctx.ui.select(label, choices);
-  if (!pick) return undefined;
-  if (pick.startsWith("Auto:")) return autoValue ?? "";
-  if (pick === skipLabel) return "";
-  const v = await ctx.ui.input(label, autoValue ?? placeholder);
-  if (v === undefined) return undefined;
-  return v.trim();
-}
-
 async function pickBoolWithAuto(
   ctx: ExtensionCommandContext,
   label: string,
@@ -604,15 +577,14 @@ export default function (pi: ExtensionAPI) {
         return;
       }
 
+      const cancel = () => ctx.ui.notify("Cancelled", "info");
+
       // 0. Mode: automatic vs interactive
       const modePick = await ctx.ui.select("Mode", [
         "Automatic (sensible defaults, no prompts)",
         "Interactive (ask for every field)",
       ]);
-      if (!modePick) {
-        ctx.ui.notify("Cancelled", "info");
-        return;
-      }
+      if (!modePick) return cancel();
       const automatic = modePick.startsWith("Automatic");
 
       let title: string | undefined;
@@ -632,10 +604,7 @@ export default function (pi: ExtensionAPI) {
             "info",
           );
           title = await pickTitle(ctx, pi, rawArgs ?? "");
-          if (!title) {
-            ctx.ui.notify("Cancelled", "info");
-            return;
-          }
+          if (!title) return cancel();
         }
         // Best-effort description generation; on failure, continue without one.
         const body = await generatePrBody(ctx, pi, base);
@@ -643,10 +612,7 @@ export default function (pi: ExtensionAPI) {
       } else {
         // 1. Title (with auto-suggested option)
         title = await pickTitleWithAuto(ctx, pi, rawArgs ?? "");
-        if (!title) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (!title) return cancel();
 
         // 2. Base branch (auto = repo default branch)
         const detectedBase = await detectDefaultBranch(pi, ctx);
@@ -656,10 +622,7 @@ export default function (pi: ExtensionAPI) {
             : "Auto: repo default",
           "Enter manually",
         ]);
-        if (!basePick) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (!basePick) return cancel();
         if (basePick.startsWith("Auto:")) {
           base = ""; // empty = let the script use repo default
         } else {
@@ -672,10 +635,7 @@ export default function (pi: ExtensionAPI) {
 
         // 3. Draft? (auto = No)
         const draftPick = await pickBoolWithAuto(ctx, "Draft PR?", false);
-        if (draftPick === undefined) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (draftPick === undefined) return cancel();
         draft = draftPick;
 
         // 4. Reviewers (auto = Default)
@@ -684,10 +644,7 @@ export default function (pi: ExtensionAPI) {
           "Default (none added)",
           "CNS (peterbornerup, farhadh, jdejnek)",
         ]);
-        if (!reviewerPick) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (!reviewerPick) return cancel();
         reviewers = reviewerPick.includes("CNS") ? "cns" : "default";
 
         // 5. Description (auto = generate)
@@ -696,10 +653,7 @@ export default function (pi: ExtensionAPI) {
           "Write manually in the editor",
           "Skip (no description)",
         ]);
-        if (!descPick) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (!descPick) return cancel();
         const genDesc = descPick.startsWith("Auto:");
         const writeManual = descPick.startsWith("Write");
         if (writeManual) {
@@ -727,10 +681,7 @@ export default function (pi: ExtensionAPI) {
                 "Cancel",
               ],
             );
-            if (!next || next.startsWith("Cancel")) {
-              ctx.ui.notify("Cancelled", "info");
-              return;
-            }
+            if (!next || next.startsWith("Cancel")) return cancel();
             if (next.startsWith("Write")) {
               const manual = await ctx.ui.editor("PR description", "");
               if (manual && manual.trim()) {
@@ -742,18 +693,12 @@ export default function (pi: ExtensionAPI) {
 
         // 6. Linear links (auto = parsed from branch name)
         const linearPick = await collectLinearLinksInteractive(pi, ctx);
-        if (linearPick === undefined) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (linearPick === undefined) return cancel();
         linear = linearPick;
 
         // 7. Push confirmation up-front so the script doesn't have to prompt.
         const pushPick = await pickBoolWithAuto(ctx, "Auto-push branch?", true);
-        if (pushPick === undefined) {
-          ctx.ui.notify("Cancelled", "info");
-          return;
-        }
+        if (pushPick === undefined) return cancel();
         autoPush = pushPick;
       }
 
@@ -769,11 +714,8 @@ export default function (pi: ExtensionAPI) {
         "--no-edit", // we already edited above if requested
       ];
       if (base) args.push("--base", base);
-      if (bodyPath) {
-        args.push("--body-file", bodyPath, "--no-generate-description");
-      } else {
-        args.push("--no-generate-description");
-      }
+      if (bodyPath) args.push("--body-file", bodyPath);
+      args.push("--no-generate-description");
       for (const link of linear) args.push("--linear", link);
 
       const result = await runPrCreate(args, pi, ctx);
