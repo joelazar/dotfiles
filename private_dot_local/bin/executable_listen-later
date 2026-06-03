@@ -1,0 +1,358 @@
+#!/usr/bin/env bash
+# listen-later — turn an article, file, or pasted text into a Kokoro-narrated
+# private episode in the "📥 Listen Later" Spotify show.
+#
+# Usage:
+#   listen-later [options] <url|file>
+#   pbpaste | listen-later [options]
+#
+# Options:
+#   -t, --title <title>   Episode title (default: derived from source)
+#   -v, --voice <voice>   Kokoro voice (default: af_heart)
+#   -s, --speed <n>       Speech speed multiplier (default: 1.0)
+#   -S, --summarize       Summarize the content with pi before narrating
+#       --minutes <n>     Target length in minutes for --summarize (default: 4)
+#       --show <name>     Target show (default: "📥 Listen Later")
+#       --wait            Poll until the episode is READY before exiting
+#       --keep            Keep the work directory after success
+#   -h, --help            Show this help
+#
+# Without --summarize, narrates the full cleaned text verbatim. With
+# --summarize, pi condenses the source to a spoken-word summary first.
+
+set -euo pipefail
+
+source "${HOME}/.local/share/chezmoi/scripts/utils" 2>/dev/null || {
+    cmd_exists() { command -v "$1" >/dev/null 2>&1; }
+}
+
+die()  { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+info() { printf '\033[36m==>\033[0m %s\n' "$*" >&2; }
+
+VOICE="af_heart"
+SPEED="1.0"
+SHOW_NAME="📥 Listen Later"
+TITLE=""
+WAIT=0
+KEEP=0
+SUMMARIZE=0
+MINUTES=4
+INNER_MS=300
+OUTER_MS=600
+WPM=150
+SOURCE=""
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -t|--title) TITLE="$2"; shift 2 ;;
+        -v|--voice) VOICE="$2"; shift 2 ;;
+        -s|--speed) SPEED="$2"; shift 2 ;;
+        -S|--summarize) SUMMARIZE=1; shift ;;
+        --minutes)  MINUTES="$2"; shift 2 ;;
+        --show)     SHOW_NAME="$2"; shift 2 ;;
+        --wait)     WAIT=1; shift ;;
+        --keep)     KEEP=1; shift ;;
+        -h|--help)  sed -n '2,/^$/p' "$0" | sed 's/^# \?//'; exit 0 ;;
+        -*)         die "Unknown option: $1" ;;
+        *)          SOURCE="$1"; shift ;;
+    esac
+done
+
+for bin in kokoro ffmpeg ffprobe jq save-to-spotify uv pandoc; do
+    cmd_exists "$bin" || die "$bin is required but not on PATH"
+done
+
+AUTH=$(save-to-spotify --json auth status 2>/dev/null || true)
+[[ "$(echo "$AUTH" | jq -r '.authenticated // false')" == "true" ]] \
+    || die "not authenticated — run: save-to-spotify auth login"
+
+info "Resolving show: $SHOW_NAME"
+SHOW_URI=$(save-to-spotify --json shows \
+    | jq -r --arg t "$SHOW_NAME" '.shows[] | select(.title == $t) | .show_uri' \
+    | head -n1)
+[[ -n "$SHOW_URI" ]] || die "show not found: $SHOW_NAME (create it once with save-to-spotify shows create)"
+
+slugify() { echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-*//;s/-*$//' | cut -c1-60; }
+
+RAW_HTML=""
+if [[ -z "$SOURCE" || "$SOURCE" == "-" ]]; then
+    [[ -t 0 ]] && die "no input — pass a url/file or pipe text on stdin"
+    RAW_TEXT=$(cat)
+    SRC_URL=""
+    [[ -n "$TITLE" ]] || TITLE="Listen Later $(date +%Y-%m-%d)"
+elif [[ "$SOURCE" =~ ^https?:// ]]; then
+    info "Fetching: $SOURCE"
+    RAW_HTML=$(curl -fsSL --max-time 60 "$SOURCE") || die "failed to fetch $SOURCE"
+    RAW_TEXT=$(echo "$RAW_HTML" | pandoc -f html -t plain --wrap=none 2>/dev/null) || die "failed to extract text"
+    SRC_URL="$SOURCE"
+    if [[ -z "$TITLE" ]]; then
+        TITLE=$(echo "$RAW_HTML" | tr '\n' ' ' | sed -n 's/.*<title[^>]*>\(.*\)<\/title>.*/\1/Ip' | sed 's/&amp;/\&/g;s/^ *//;s/ *$//' | head -n1)
+        [[ -n "$TITLE" ]] || TITLE=$(slugify "$SOURCE" | tr '-' ' ')
+    fi
+elif [[ -f "$SOURCE" ]]; then
+    info "Reading file: $SOURCE"
+    case "$SOURCE" in
+        *.html|*.htm) RAW_TEXT=$(pandoc -f html  -t plain --wrap=none "$SOURCE") ;;
+        *)            RAW_TEXT=$(cat "$SOURCE") ;;
+    esac
+    SRC_URL=""
+    [[ -n "$TITLE" ]] || TITLE=$(basename "${SOURCE%.*}" | tr '_-' '  ')
+else
+    die "source is neither a URL nor an existing file: $SOURCE"
+fi
+
+[[ -n "${RAW_TEXT// /}" ]] || die "extracted text is empty"
+
+SLUG=$(slugify "$TITLE"); [[ -n "$SLUG" ]] || SLUG="episode"
+WORK="/tmp/listen-later/$SLUG"
+rm -rf "$WORK"; mkdir -p "$WORK"
+[[ "$KEEP" -eq 1 ]] || trap 'rm -rf "$WORK"' EXIT
+
+printf '%s' "$RAW_TEXT" > "$WORK/raw.txt"
+info "Title: $TITLE"
+
+if [[ "$SUMMARIZE" -eq 1 ]]; then
+    cmd_exists pi || die "pi is required for --summarize but not on PATH"
+    WORDS=$((MINUTES * WPM))
+    info "Summarizing with pi (~$MINUTES min / ~$WORDS words)"
+    SUM_SYS="You are an editor preparing text for text-to-speech narration. Output ONLY the narration, no preamble, headings, markdown, lists, emojis, or URLs. Write plain declarative sentences. Separate distinct topics into paragraphs with a blank line between them. Expand abbreviations and symbols into words."
+    SUM_MSG="Condense the attached text into a spoken-word summary of about $WORDS words. Preserve the source's structure and key points in order. Group it into 4 to 10 short paragraphs, each a coherent topic."
+    pi -p --no-session --no-tools --thinking off --mode json \
+        --system-prompt "$SUM_SYS" "$SUM_MSG" @"$WORK/raw.txt" 2>/dev/null \
+        | jq -rs 'map(select(.type=="agent_end"))[-1].messages[-1].content[] | select(.type=="text") | .text' \
+        > "$WORK/summary.txt"
+    [[ -s "$WORK/summary.txt" ]] || die "summarization produced no output"
+    mv "$WORK/summary.txt" "$WORK/raw.txt"
+fi
+
+cat > "$WORK/prep.py" <<'PY'
+import json, re, sys
+from pathlib import Path
+
+work = Path(sys.argv[1]); wpm = int(sys.argv[2])
+text = (work / "raw.txt").read_text(encoding="utf-8")
+
+ABBR = {
+    "e.g.": "for example", "i.e.": "that is", "etc.": "and so on",
+    "vs.": "versus", "Dr.": "Doctor", "Mr.": "Mister", "Mrs.": "Misses",
+    "Ms.": "Miss", "Prof.": "Professor", "approx.": "approximately",
+    "&": "and",
+}
+EMOJI = re.compile(
+    "[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF\u2190-\u21FF\u2300-\u23FF]",
+    flags=re.UNICODE,
+)
+
+def clean(s: str) -> str:
+    s = s.translate({0x2014: "-", 0x2013: "-", 0x2018: "'", 0x2019: "'",
+                     0x201C: '"', 0x201D: '"', 0x2026: "..."})
+    s = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", s)
+    s = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", s)
+    s = re.sub(r"https?://\S+", "", s)
+    s = re.sub(r"^[>#\s]*#+\s*", "", s, flags=re.MULTILINE)
+    s = re.sub(r"^\s*[-*+]\s+", "", s, flags=re.MULTILINE)
+    s = re.sub(r"[`*_>]", "", s)
+    s = EMOJI.sub("", s)
+    for k, v in ABBR.items():
+        s = s.replace(k, v)
+    s = s.replace("%", " percent")
+    s = re.sub(r"[ \t]+", " ", s)
+    return s.strip()
+
+paras = [clean(p) for p in re.split(r"\n\s*\n", text)]
+paras = [p for p in paras if len(p.split()) >= 3]
+
+target, hi = wpm * 45 // 60, wpm * 70 // 60
+sents = re.compile(r"(?<=[.!?])\s+")
+
+chunks: list[str] = []
+for p in paras:
+    if len(p.split()) <= hi:
+        chunks.append(p); continue
+    buf: list[str] = []
+    for sent in sents.split(p):
+        buf.append(sent)
+        if sum(len(b.split()) for b in buf) >= target:
+            chunks.append(" ".join(buf)); buf = []
+    if buf:
+        chunks.append(" ".join(buf))
+
+segments: list[str] = []
+for c in chunks:
+    if segments and len(segments[-1].split()) + len(c.split()) <= hi:
+        segments[-1] = segments[-1] + " " + c
+    else:
+        segments.append(c)
+
+if not segments:
+    sys.exit("no narratable segments after cleaning")
+
+def title_of(seg: str) -> str:
+    words = re.sub(r"[^\w\s'-]", "", seg).split()[:7]
+    t = " ".join(words)
+    return (t[:1].upper() + t[1:]) if t else "Section"
+
+meta = {"segments": []}
+for i, seg in enumerate(segments):
+    (work / f"seg_{i:03d}.txt").write_text(seg, encoding="utf-8")
+    meta["segments"].append({"index": i, "title": title_of(seg)})
+(work / "meta.json").write_text(json.dumps(meta), encoding="utf-8")
+print(len(segments))
+PY
+
+NSEG=$(python3 "$WORK/prep.py" "$WORK" "$WPM")
+info "Segments: $NSEG"
+
+info "Rendering with Kokoro (voice=$VOICE speed=$SPEED)"
+printf '%s\0' "$WORK"/seg_*.txt | xargs -0 -P "$(sysctl -n hw.ncpu 2>/dev/null || nproc)" -I{} \
+    sh -c 'kokoro -f "$1" -o "${1%.txt}.wav" --voice "$2" --speed "$3" >/dev/null 2>&1' sh {} "$VOICE" "$SPEED"
+
+FIRST_WAV=$(ls "$WORK"/seg_*.wav | head -n1)
+SR=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$FIRST_WAV")
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i "anullsrc=r=$SR:cl=mono" -t "$(awk "BEGIN{print $INNER_MS/1000}")" "$WORK/inner.wav"
+ffmpeg -hide_banner -loglevel error -y -f lavfi -i "anullsrc=r=$SR:cl=mono" -t "$(awk "BEGIN{print $OUTER_MS/1000}")" "$WORK/outer.wav"
+
+CONCAT="$WORK/concat.txt"; : > "$CONCAT"
+echo "file 'outer.wav'" >> "$CONCAT"
+i=0
+for wav in "$WORK"/seg_*.wav; do
+    [[ $i -gt 0 ]] && echo "file 'inner.wav'" >> "$CONCAT"
+    echo "file '$(basename "$wav")'" >> "$CONCAT"
+    i=$((i+1))
+done
+echo "file 'outer.wav'" >> "$CONCAT"
+
+info "Assembling episode.mp3"
+( cd "$WORK" && ffmpeg -hide_banner -loglevel error -y -f concat -safe 0 -i concat.txt \
+    -af loudnorm -ar 44100 -ac 1 -b:a 192k episode.mp3 )
+
+cat > "$WORK/build.py" <<'PY'
+import json, subprocess, sys
+from pathlib import Path
+
+work = Path(sys.argv[1])
+inner_ms, outer_ms = int(sys.argv[2]), int(sys.argv[3])
+title, src_url = sys.argv[4], sys.argv[5]
+meta = json.loads((work / "meta.json").read_text())
+
+def dur_ms(path: Path) -> int:
+    out = subprocess.check_output(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "csv=p=0", str(path)]).decode().strip()
+    return round(float(out) * 1000)
+
+cursor = outer_ms
+segs = []
+for s in meta["segments"]:
+    d = dur_ms(work / f"seg_{s['index']:03d}.wav")
+    segs.append({"title": s["title"], "start": cursor, "dur": d})
+    cursor += d + inner_ms
+
+chapters, group_start, group_dur, group_title = [], None, 0, None
+for s in segs:
+    if group_start is None:
+        group_start, group_title, group_dur = s["start"], s["title"], s["dur"]
+    else:
+        group_dur += inner_ms + s["dur"]
+    if group_dur >= 30000:
+        chapters.append({"title": group_title, "start_time_ms": group_start})
+        group_start, group_dur, group_title = None, 0, None
+if group_start is not None:
+    if chapters:
+        pass
+    chapters.append({"title": group_title, "start_time_ms": group_start})
+
+if len(chapters) < 2:
+    mid = segs[len(segs) // 2]
+    chapters = [
+        {"title": segs[0]["title"], "start_time_ms": 0},
+        {"title": mid["title"], "start_time_ms": mid["start"]},
+    ]
+else:
+    chapters[0]["start_time_ms"] = 0
+
+(work / "timeline.json").write_text(
+    json.dumps({"items": [{"chapter": c} for c in chapters]}), encoding="utf-8")
+
+def mmss(ms: int) -> str:
+    s = ms // 1000
+    return f"{s // 60}:{s % 60:02d}"
+
+li = "".join(f"<li>{mmss(c['start_time_ms'])} — {c['title']}</li>" for c in chapters)
+link = f'<p>Source: <a href="{src_url}">{src_url}</a></p>' if src_url else ""
+html = f"<p>{title}, narrated for later listening.</p><ul>{li}</ul>{link}"
+(work / "description.html").write_text(html, encoding="utf-8")
+PY
+
+info "Building chapters and description"
+python3 "$WORK/build.py" "$WORK" "$INNER_MS" "$OUTER_MS" "$TITLE" "$SRC_URL"
+
+cat > "$WORK/cover.py" <<'PY'
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["pillow"]
+# ///
+import sys, textwrap
+from PIL import Image, ImageDraw, ImageFont
+title, out = sys.argv[1], sys.argv[2]
+size = 1400
+img = Image.new("RGB", (size, size), (30, 30, 46))
+d = ImageDraw.Draw(img)
+def font(sz):
+    for p in ("/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+              "/System/Library/Fonts/Helvetica.ttc",
+              "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"):
+        try:
+            return ImageFont.truetype(p, sz)
+        except OSError:
+            continue
+    return ImageFont.load_default()
+d.rectangle([0, size - 120, size, size], fill=(203, 166, 247))
+big, small = font(96), font(44)
+lines = textwrap.wrap(title, width=16)[:6]
+total = len(lines) * 120
+y = (size - 120 - total) // 2
+for ln in lines:
+    w = d.textbbox((0, 0), ln, font=big)[2]
+    d.text(((size - w) // 2, y), ln, font=big, fill=(205, 214, 244))
+    y += 120
+foot = "LISTEN LATER"
+w = d.textbbox((0, 0), foot, font=small)[2]
+d.text(((size - w) // 2, size - 88), foot, font=small, fill=(30, 30, 46))
+img.save(out, "JPEG", quality=85)
+PY
+
+info "Generating cover"
+uv run --quiet "$WORK/cover.py" "$TITLE" "$WORK/cover.jpg"
+
+info "Uploading episode"
+RESULT=$(save-to-spotify --json episodes create \
+    --show-id "$SHOW_URI" \
+    --title "$TITLE" \
+    --file "$WORK/episode.mp3" \
+    --image "$WORK/cover.jpg" \
+    --summary "$(cat "$WORK/description.html")" \
+    --language en)
+
+if echo "$RESULT" | jq -e .error >/dev/null 2>&1; then
+    die "upload failed: $(echo "$RESULT" | jq -r .error)"
+fi
+EP_URI=$(echo "$RESULT" | jq -r .episode_uri)
+EP_ID=${EP_URI#spotify:episode:}
+info "Episode: $EP_URI"
+
+info "Setting timeline"
+save-to-spotify --json timeline set --episode-id "$EP_ID" --from-file "$WORK/timeline.json" >/dev/null
+
+if [[ "$WAIT" -eq 1 ]]; then
+    info "Waiting for processing"
+    while true; do
+        STATUS=$(save-to-spotify --json episodes status "$EP_ID" | jq -r .readiness)
+        [[ "$STATUS" == "READY" ]] && break
+        [[ "$STATUS" == "FAILED" ]] && die "processing failed"
+        sleep 15
+    done
+    info "Ready"
+fi
+
+printf '\033[32m✓\033[0m %s\n' "$EP_URI"
