@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 name: listen-later
 description: Convert an article, newsletter, or document into a short Kokoro-narrated audio read-up and upload it as a private episode to the user's "📥 Listen Later" Spotify show. ONLY trigger on explicit phrases like "listen later", "read-up", "save as audio for the commute", "add to my listen-later feed". Do NOT trigger on generic summarize, TTS, save-to-spotify, podcast, or cover-art requests — those route to the `save-to-spotify` skill.
 ---
