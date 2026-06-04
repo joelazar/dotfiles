@@ -12,14 +12,19 @@ prSections:
     filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
   - title: ✅ Ready
     filters: is:open -assignee:@me -is:draft sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
+    limit: 5
   - title: 🚧 Draft
     filters: is:open -assignee:@me is:draft sort:created-desc org:onomondo
+    limit: 5
   - title: 🔒 Recently closed my PRs
     filters: is:closed author:@me sort:created-desc
+    limit: 5
   - title: 📦 Recently closed work PRs
     filters: is:closed sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
+    limit: 5
   - title: 🔧 My PRs but not assigned to me
     filters: is:open author:joelazar -assignee:@me sort:created-desc
+    limit: 5
 issuesSections:
   - title: 📋 My Issues
     filters: is:open author:@me
@@ -28,24 +33,11 @@ issuesSections:
 notificationsSections:
   - title: 📬 All
     filters: ""
-  - title: 🆕 Review Requested
-    filters: "reason:review-requested"
-  - title: 💬 Participating
-    filters: "reason:participating"
-  - title: 📣 Mentioned
-    filters: "reason:mention"
-  - title: ✍️ Created
-    filters: "reason:author"
-  - title: 🏷️ Assigned
-    filters: "reason:assign"
-  - title: 👥 Team Mentioned
-    filters: "reason:team-mention"
-  - title: 🔔 Subscribed
-    filters: "reason:subscribed"
 defaults:
   preview:
     open: true
     width: 80
+    position: auto
   prsLimit: 20
   issuesLimit: 20
   notificationsLimit: 40
@@ -131,6 +123,9 @@ keybindings:
         gh pr checkout {{.PrNumber}} &&
         $SHELL
       name: open shell
+    - key: w
+      builtin: watchChecks
+      name: watch checks
     - key: t
       name: retrigger workflows
       command: >
@@ -159,7 +154,7 @@ theme:
   ui:
     sectionsShowCount: true
     table:
-      showSeparators: true
+      showSeparator: true
       compact: false
   colors:
     text:
@@ -170,9 +165,17 @@ theme:
       warning: "#f9e2af"
       success: "#a6e3a1"
       error: "#f38ba8"
+      actor: "#a6adc8"
     background:
       selected: "#313244"
     border:
       primary: "#cba6f7"
       secondary: "#45475a"
       faint: "#313244"
+    icon:
+      newcontributor: "#a6e3a1"
+      contributor: "#89b4fa"
+      collaborator: "#94e2d5"
+      member: "#f9e2af"
+      owner: "#fab387"
+      unknownrole: "#9399b2"
