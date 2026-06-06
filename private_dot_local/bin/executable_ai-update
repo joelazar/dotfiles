@@ -15,3 +15,9 @@ echo
 echo "🥧 Update Pi extensions"
 "${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
 echo
+
+if command -v gcx >/dev/null 2>&1; then
+    echo "📊 Update gcx Agent Skills"
+    gcx skills install gcx --force
+    echo
+fi

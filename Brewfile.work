@@ -468,6 +468,7 @@ cargo "kagi"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
+npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
 npm "corepack"
