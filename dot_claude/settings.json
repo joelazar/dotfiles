@@ -104,7 +104,8 @@
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -119,8 +120,8 @@
   "autoUpdatesChannel": "stable",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": false,
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
-  "fileCheckpointingEnabled": false
+  "fileCheckpointingEnabled": false,
+  "voiceEnabled": false
 }

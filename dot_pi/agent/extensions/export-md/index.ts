@@ -8,19 +8,27 @@ type Block =
   | { type: "text"; text: string }
   | { type: "thinking"; thinking: string }
   | { type: "image"; mimeType: string }
-  | { type: "toolCall"; id: string; name: string; arguments: Record<string, unknown> };
+  | {
+      type: "toolCall";
+      id: string;
+      name: string;
+      arguments: Record<string, unknown>;
+    };
 
 type Content = string | Block[];
 
-const fence = (lang: string, body: string) => "```" + lang + "\n" + body.replace(/\n+$/, "") + "\n```";
+const fence = (lang: string, body: string) =>
+  "```" + lang + "\n" + body.replace(/\n+$/, "") + "\n```";
 
 const details = (summary: string, body: string) =>
   `<details>\n<summary>${summary}</summary>\n\n${body}\n\n</details>`;
 
 const time = (ts: number | string | undefined) => {
   if (ts === undefined) return "";
-  const d = typeof ts === "number" ? new Date(ts) : new Date(ts);
-  return Number.isNaN(d.getTime()) ? "" : d.toISOString().replace("T", " ").slice(0, 19);
+  const d = new Date(ts);
+  return Number.isNaN(d.getTime())
+    ? ""
+    : d.toISOString().replace("T", " ").slice(0, 19);
 };
 
 function renderContent(content: Content): string {
@@ -32,7 +40,8 @@ function renderContent(content: Content): string {
         if (block.text.trim()) parts.push(block.text.trim());
         break;
       case "thinking":
-        if (block.thinking.trim()) parts.push(details("💭 Thinking", block.thinking.trim()));
+        if (block.thinking.trim())
+          parts.push(details("💭 Thinking", block.thinking.trim()));
         break;
       case "image":
         parts.push(`*(image: ${block.mimeType})*`);
@@ -90,7 +99,10 @@ function renderEntry(entry: any): string | null {
     return null;
   }
   if (entry.type === "compaction") {
-    return details(`📦 Compaction (${entry.tokensBefore} tokens)`, entry.summary ?? "");
+    return details(
+      `📦 Compaction (${entry.tokensBefore} tokens)`,
+      entry.summary ?? "",
+    );
   }
   if (entry.type === "branch_summary") {
     return details("🌿 Branch summary", entry.summary ?? "");
@@ -154,6 +166,13 @@ async function run(ctx: any): Promise<void> {
 
 export default function (pi: ExtensionAPI) {
   pi.registerCommand("md", {
+    description: "Export current session to markdown and open in $EDITOR",
+    handler: async (_args, ctx) => {
+      await run(ctx);
+    },
+  });
+
+  pi.registerCommand("export-md", {
     description: "Export current session to markdown and open in $EDITOR",
     handler: async (_args, ctx) => {
       await run(ctx);
