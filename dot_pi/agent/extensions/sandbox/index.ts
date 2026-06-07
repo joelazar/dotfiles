@@ -14,12 +14,21 @@
  * /sandbox toggles the sandbox on or off at runtime. When off, tools run on
  * the host; when on, they run inside the VM.
  *
+ * Extra host directories can be mounted into the VM at their own absolute path,
+ * either persistently via config.json:
+ *
+ *   { "autostart": false, "mounts": ["~/Code/shared", "/opt/data"] }
+ *
+ * or at runtime with `/sandbox mount <dir>` and `/sandbox unmount <dir>`.
+ * Adding or removing a mount restarts a running VM so the change takes effect.
+ *
  * Requirements:
  *   - Node.js >= 23.6.0 for @earendil-works/gondolin
  *   - QEMU installed (for example, `brew install qemu` on macOS)
  */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { RealFSProvider, VM } from "@earendil-works/gondolin";
 import type {
@@ -51,14 +60,33 @@ import {
 const GUEST_WORKSPACE = "/workspace";
 const DEFAULT_GREP_LIMIT = 100;
 
-function loadAutostart(): boolean {
+function loadConfig(): { autostart: boolean; mounts: string[] } {
   const configPath = path.join(import.meta.dirname, "config.json");
   try {
     const config = JSON.parse(readFileSync(configPath, "utf8"));
-    return config.autostart === true;
+    const mounts = Array.isArray(config.mounts)
+      ? config.mounts.filter(
+          (entry: unknown): entry is string => typeof entry === "string",
+        )
+      : [];
+    return { autostart: config.autostart === true, mounts };
   } catch {
-    return false;
+    return { autostart: false, mounts: [] };
   }
+}
+
+function expandHome(input: string): string {
+  if (input === "~") return os.homedir();
+  if (input.startsWith(`~${path.sep}`) || input.startsWith("~/"))
+    return path.join(os.homedir(), input.slice(2));
+  return input;
+}
+
+/** Resolve a user-supplied directory to its absolute host path and the guest
+ * path it is mounted at (the same absolute path, in posix form). */
+function resolveMount(input: string): { host: string; guest: string } {
+  const host = path.resolve(expandHome(input.trim()));
+  return { host, guest: path.posix.resolve("/", toPosix(host)) };
 }
 
 type TextToolResult<TDetails> = {
@@ -448,13 +476,21 @@ export default function (pi: ExtensionAPI) {
   const localFind = createFindTool(localCwd);
   const localLs = createLsTool(localCwd);
 
+  const config = loadConfig();
   let vm: VM | undefined;
   let vmStarting: Promise<VM> | undefined;
   let shellPath = "/bin/sh";
   let vmShortId = "";
   let starting = false;
-  let enabled = loadAutostart();
+  let enabled = config.autostart;
   let ui: ExtensionContext["ui"] | undefined;
+
+  // guest mount path -> host directory, for directories beyond the workspace.
+  const extraMounts = new Map<string, string>();
+  for (const entry of config.mounts) {
+    const { host, guest } = resolveMount(entry);
+    if (guest !== GUEST_WORKSPACE) extraMounts.set(guest, host);
+  }
 
   const updateStatus = () => {
     if (!ui) return;
@@ -468,19 +504,20 @@ export default function (pi: ExtensionAPI) {
   pi.registerFlag("sandbox", {
     description: "Autostart the sandbox VM when the session starts",
     type: "boolean",
-    default: loadAutostart(),
+    default: config.autostart,
   });
 
   async function startVm(ctx?: ExtensionContext): Promise<VM> {
     starting = true;
     updateStatus();
+    const mounts: Record<string, RealFSProvider> = {
+      [GUEST_WORKSPACE]: new RealFSProvider(localCwd),
+    };
+    for (const [guest, host] of extraMounts)
+      mounts[guest] = new RealFSProvider(host);
     const created = await VM.create({
       sessionLabel: `pi ${path.basename(localCwd)}`,
-      vfs: {
-        mounts: {
-          [GUEST_WORKSPACE]: new RealFSProvider(localCwd),
-        },
-      },
+      vfs: { mounts },
     });
     const bashProbe = await created.exec([
       "/bin/sh",
@@ -492,8 +529,12 @@ export default function (pi: ExtensionAPI) {
     vmShortId = created.id.slice(0, 8);
     starting = false;
     updateStatus();
+    const extraLine =
+      extraMounts.size > 0
+        ? ` Extra mounts: ${Array.from(extraMounts.values()).join(", ")}.`
+        : "";
     ctx?.ui.notify(
-      `Sandbox VM ready. ${localCwd} is mounted at ${GUEST_WORKSPACE}.`,
+      `Sandbox VM ready. ${localCwd} is mounted at ${GUEST_WORKSPACE}.${extraLine}`,
       "info",
     );
     return created;
@@ -517,6 +558,20 @@ export default function (pi: ExtensionAPI) {
     if (activeVm) await activeVm.close();
   }
 
+  // Apply a mount change. Restarts a running VM so the new mount map takes effect.
+  async function applyMountChange(ctx: ExtensionContext): Promise<void> {
+    if (!enabled || (!vm && !vmStarting)) return;
+    await stopVm();
+    await ensureVm(ctx);
+  }
+
+  function mountList(): string {
+    if (extraMounts.size === 0) return "No extra mounts.";
+    return Array.from(extraMounts.entries())
+      .map(([guest, host]) => `${host} → ${guest}`)
+      .join("\n");
+  }
+
   pi.on("session_start", async (_event, ctx) => {
     ui = ctx.ui;
     enabled = pi.getFlag("sandbox");
@@ -529,30 +584,109 @@ export default function (pi: ExtensionAPI) {
     ui = undefined;
   });
 
-  pi.registerCommand("sandbox", {
-    description: "Toggle the sandbox VM on or off",
-    handler: async (_args, ctx) => {
-      ui = ctx.ui;
-      if (enabled) {
-        enabled = false;
-        await stopVm();
-        updateStatus();
-        ctx.ui.notify("Sandbox disabled. Tools now run on the host.", "info");
+  async function toggleSandbox(ctx: ExtensionContext): Promise<void> {
+    if (enabled) {
+      enabled = false;
+      await stopVm();
+      updateStatus();
+      ctx.ui.notify("Sandbox disabled. Tools now run on the host.", "info");
+      return;
+    }
+    enabled = true;
+    const activeVm = await ensureVm(ctx);
+    updateStatus();
+    ctx.ui.notify(
+      [
+        "Sandbox enabled.",
+        `VM: ${activeVm.id}`,
+        `Host workspace: ${localCwd}`,
+        `Guest workspace: ${GUEST_WORKSPACE}`,
+        extraMounts.size > 0 ? `Extra mounts:\n${mountList()}` : undefined,
+        `Shell: ${shellPath}`,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+      "info",
+    );
+  }
+
+  async function mountDir(ctx: ExtensionContext, input: string): Promise<void> {
+    if (!input) {
+      ctx.ui.notify("Usage: /sandbox mount <dir>", "warning");
+      return;
+    }
+    const { host, guest } = resolveMount(input);
+    try {
+      if (!statSync(host).isDirectory()) {
+        ctx.ui.notify(`Not a directory: ${host}`, "error");
         return;
       }
-      enabled = true;
-      const activeVm = await ensureVm(ctx);
-      updateStatus();
-      ctx.ui.notify(
-        [
-          "Sandbox enabled.",
-          `VM: ${activeVm.id}`,
-          `Host workspace: ${localCwd}`,
-          `Guest workspace: ${GUEST_WORKSPACE}`,
-          `Shell: ${shellPath}`,
-        ].join("\n"),
-        "info",
-      );
+    } catch {
+      ctx.ui.notify(`Directory does not exist: ${host}`, "error");
+      return;
+    }
+    if (guest === GUEST_WORKSPACE || guest.startsWith(`${GUEST_WORKSPACE}/`)) {
+      ctx.ui.notify(`${host} is already part of the workspace.`, "warning");
+      return;
+    }
+    if (extraMounts.get(guest) === host) {
+      ctx.ui.notify(`Already mounted: ${host}`, "info");
+      return;
+    }
+    extraMounts.set(guest, host);
+    await applyMountChange(ctx);
+    ctx.ui.notify(`Mounted ${host} at ${guest}.`, "info");
+  }
+
+  async function unmountDir(ctx: ExtensionContext, input: string): Promise<void> {
+    if (!input) {
+      ctx.ui.notify("Usage: /sandbox unmount <dir>", "warning");
+      return;
+    }
+    const { host, guest } = resolveMount(input);
+    if (!extraMounts.has(guest)) {
+      ctx.ui.notify(`Not mounted: ${host}`, "warning");
+      return;
+    }
+    extraMounts.delete(guest);
+    await applyMountChange(ctx);
+    ctx.ui.notify(`Unmounted ${host}.`, "info");
+  }
+
+  pi.registerCommand("sandbox", {
+    description:
+      "Toggle the sandbox VM, or manage mounts: mount <dir> | unmount <dir> | list",
+    getArgumentCompletions: (prefix) => {
+      const sub = ["mount", "unmount", "list"];
+      if (!prefix.includes(" "))
+        return sub
+          .filter((s) => s.startsWith(prefix))
+          .map((s) => ({ value: s, label: s }));
+      return null;
+    },
+    handler: async (args, ctx) => {
+      ui = ctx.ui;
+      const trimmed = args.trim();
+      const [sub, ...rest] = trimmed.split(/\s+/);
+      const target = rest.join(" ");
+      switch (sub) {
+        case "":
+          return toggleSandbox(ctx);
+        case "mount":
+          return mountDir(ctx, target);
+        case "unmount":
+        case "umount":
+          return unmountDir(ctx, target);
+        case "list":
+        case "ls":
+          ctx.ui.notify(mountList(), "info");
+          return;
+        default:
+          ctx.ui.notify(
+            `Unknown subcommand: ${sub}. Use mount, unmount, or list.`,
+            "warning",
+          );
+      }
     },
   });
 

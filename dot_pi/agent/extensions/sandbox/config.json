@@ -1,3 +1,4 @@
 {
-  "autostart": false
+  "autostart": false,
+  "mounts": []
 }
