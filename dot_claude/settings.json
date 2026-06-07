@@ -123,5 +123,6 @@
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "tui": "fullscreen"
 }

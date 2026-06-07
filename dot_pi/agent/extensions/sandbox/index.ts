@@ -1,24 +1,25 @@
 /**
- * Gondolin Tool Routing Example
+ * Sandbox Tool Routing Extension
  *
  * Runs pi's built-in tools inside a local Gondolin micro-VM. The host working
  * directory is mounted at /workspace in the guest. File changes under
  * /workspace write through to the host; other guest filesystem changes are
  * isolated to the VM.
  *
- * Setup:
- *   cd packages/coding-agent/examples/extensions/gondolin
- *   npm install --ignore-scripts
+ * Autostart is controlled by config.json next to this file:
  *
- * Usage:
- *   cd /path/to/project
- *   pi -e /path/to/pi/packages/coding-agent/examples/extensions/gondolin
+ *   { "autostart": false }
+ *
+ * The --sandbox / --no-sandbox CLI flag overrides config.json for a single run.
+ * /sandbox toggles the sandbox on or off at runtime. When off, tools run on
+ * the host; when on, they run inside the VM.
  *
  * Requirements:
  *   - Node.js >= 23.6.0 for @earendil-works/gondolin
  *   - QEMU installed (for example, `brew install qemu` on macOS)
  */
 
+import { readFileSync } from "node:fs";
 import path from "node:path";
 import { RealFSProvider, VM } from "@earendil-works/gondolin";
 import type {
@@ -49,6 +50,16 @@ import {
 
 const GUEST_WORKSPACE = "/workspace";
 const DEFAULT_GREP_LIMIT = 100;
+
+function loadAutostart(): boolean {
+  const configPath = path.join(import.meta.dirname, "config.json");
+  try {
+    const config = JSON.parse(readFileSync(configPath, "utf8"));
+    return config.autostart === true;
+  } catch {
+    return false;
+  }
+}
 
 type TextToolResult<TDetails> = {
   content: Array<{ type: "text"; text: string }>;
@@ -440,12 +451,29 @@ export default function (pi: ExtensionAPI) {
   let vm: VM | undefined;
   let vmStarting: Promise<VM> | undefined;
   let shellPath = "/bin/sh";
+  let vmShortId = "";
+  let starting = false;
+  let enabled = loadAutostart();
+  let ui: ExtensionContext["ui"] | undefined;
+
+  const updateStatus = () => {
+    if (!ui) return;
+    if (!enabled) return ui.setStatus("sandbox", undefined);
+    if (vm) return ui.setStatus("sandbox", ui.theme.fg("accent", `⬢ sandbox ${vmShortId}`));
+    if (starting)
+      return ui.setStatus("sandbox", ui.theme.fg("warning", "⬢ sandbox starting…"));
+    ui.setStatus("sandbox", ui.theme.fg("muted", "⬢ sandbox"));
+  };
+
+  pi.registerFlag("sandbox", {
+    description: "Autostart the sandbox VM when the session starts",
+    type: "boolean",
+    default: loadAutostart(),
+  });
 
   async function startVm(ctx?: ExtensionContext): Promise<VM> {
-    ctx?.ui.setStatus(
-      "gondolin",
-      ctx.ui.theme.fg("accent", `Gondolin: starting ${GUEST_WORKSPACE}`),
-    );
+    starting = true;
+    updateStatus();
     const created = await VM.create({
       sessionLabel: `pi ${path.basename(localCwd)}`,
       vfs: {
@@ -461,15 +489,11 @@ export default function (pi: ExtensionAPI) {
     ]);
     shellPath = bashProbe.stdout.trim() || "/bin/sh";
     vm = created;
-    ctx?.ui.setStatus(
-      "gondolin",
-      ctx.ui.theme.fg(
-        "accent",
-        `Gondolin: ${created.id.slice(0, 8)} (${GUEST_WORKSPACE})`,
-      ),
-    );
+    vmShortId = created.id.slice(0, 8);
+    starting = false;
+    updateStatus();
     ctx?.ui.notify(
-      `Gondolin VM ready. ${localCwd} is mounted at ${GUEST_WORKSPACE}.`,
+      `Sandbox VM ready. ${localCwd} is mounted at ${GUEST_WORKSPACE}.`,
       "info",
     );
     return created;
@@ -485,33 +509,44 @@ export default function (pi: ExtensionAPI) {
     return vmStarting;
   }
 
-  pi.on("session_start", async (_event, ctx) => {
-    await ensureVm(ctx);
-  });
-
-  pi.on("session_shutdown", async (_event, ctx) => {
+  async function stopVm(): Promise<void> {
     const activeVm = vm;
     vm = undefined;
     vmStarting = undefined;
-    if (!activeVm) return;
-    ctx.ui.setStatus(
-      "gondolin",
-      ctx.ui.theme.fg("muted", "Gondolin: stopping"),
-    );
-    try {
-      await activeVm.close();
-    } finally {
-      ctx.ui.setStatus("gondolin", undefined);
-    }
+    starting = false;
+    if (activeVm) await activeVm.close();
+  }
+
+  pi.on("session_start", async (_event, ctx) => {
+    ui = ctx.ui;
+    enabled = pi.getFlag("sandbox");
+    if (enabled) await ensureVm(ctx);
+    updateStatus();
   });
 
-  pi.registerCommand("gondolin", {
-    description: "Show Gondolin VM status",
+  pi.on("session_shutdown", async (_event, _ctx) => {
+    await stopVm();
+    ui = undefined;
+  });
+
+  pi.registerCommand("sandbox", {
+    description: "Toggle the sandbox VM on or off",
     handler: async (_args, ctx) => {
+      ui = ctx.ui;
+      if (enabled) {
+        enabled = false;
+        await stopVm();
+        updateStatus();
+        ctx.ui.notify("Sandbox disabled. Tools now run on the host.", "info");
+        return;
+      }
+      enabled = true;
       const activeVm = await ensureVm(ctx);
+      updateStatus();
       ctx.ui.notify(
         [
-          `Gondolin VM: ${activeVm.id}`,
+          "Sandbox enabled.",
+          `VM: ${activeVm.id}`,
           `Host workspace: ${localCwd}`,
           `Guest workspace: ${GUEST_WORKSPACE}`,
           `Shell: ${shellPath}`,
@@ -524,6 +559,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localRead,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localRead.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createReadTool(GUEST_WORKSPACE, {
         operations: createGondolinReadOps(activeVm, localCwd),
@@ -535,6 +571,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localWrite,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localWrite.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createWriteTool(GUEST_WORKSPACE, {
         operations: createGondolinWriteOps(activeVm, localCwd),
@@ -546,6 +583,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localEdit,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localEdit.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createEditTool(GUEST_WORKSPACE, {
         operations: createGondolinEditOps(activeVm, localCwd),
@@ -557,6 +595,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localBash,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localBash.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createBashTool(GUEST_WORKSPACE, {
         operations: createGondolinBashOps(activeVm, localCwd, shellPath),
@@ -568,6 +607,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localLs,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localLs.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createLsTool(GUEST_WORKSPACE, {
         operations: createGondolinLsOps(activeVm, localCwd),
@@ -579,6 +619,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     ...localFind,
     async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localFind.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       const tool = createFindTool(GUEST_WORKSPACE, {
         operations: createGondolinFindOps(activeVm, localCwd),
@@ -589,19 +630,21 @@ export default function (pi: ExtensionAPI) {
 
   pi.registerTool({
     ...localGrep,
-    async execute(_id, params, signal, _onUpdate, ctx) {
+    async execute(id, params, signal, onUpdate, ctx) {
+      if (!enabled) return localGrep.execute(id, params, signal, onUpdate);
       const activeVm = await ensureVm(ctx);
       return executeGondolinGrep(activeVm, localCwd, params, signal);
     },
   });
 
   pi.on("user_bash", async (_event, ctx) => {
+    if (!enabled) return;
     const activeVm = await ensureVm(ctx);
     return { operations: createGondolinBashOps(activeVm, localCwd, shellPath) };
   });
 
-  pi.on("before_agent_start", async (event, ctx) => {
-    await ensureVm(ctx);
+  pi.on("before_agent_start", async (event, _ctx) => {
+    if (!enabled) return;
     const localLine = `Current working directory: ${localCwd}`;
     const guestLine = `Current working directory: ${GUEST_WORKSPACE} (Gondolin VM; host workspace mounted from ${localCwd})`;
     const systemPrompt = event.systemPrompt.includes(localLine)

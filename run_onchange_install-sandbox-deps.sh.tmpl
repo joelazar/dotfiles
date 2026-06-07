@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Install npm dependencies for the sandbox pi extension.
+# Re-runs whenever package.json or package-lock.json changes.
+#
+# package.json hash: {{ include "dot_pi/agent/extensions/sandbox/package.json" | sha256sum }}
+# package-lock.json hash: {{ include "dot_pi/agent/extensions/sandbox/package-lock.json" | sha256sum }}
+
+set -euo pipefail
+
+EXT_DIR="{{ .chezmoi.homeDir }}/.pi/agent/extensions/sandbox"
+
+if [ -d "$EXT_DIR" ]; then
+    echo "==> Installing sandbox extension dependencies"
+    (cd "$EXT_DIR" && npm install --ignore-scripts)
+fi

@@ -110,8 +110,6 @@ brew "ffmpegthumbnailer"
 brew "fish"
 # Plugin manager for the Fish shell
 brew "fisher"
-# Command-line tools for fly.io services
-brew "flyctl"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GNU compiler collection
@@ -322,6 +320,8 @@ brew "zig"
 brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
+# Git diff pager based on delta but with a file tree, à la GitHub
+brew "dlvhdr/formulae/diffnav"
 # Grafana Cloud CLI
 brew "grafana/grafana/gcx"
 # Terraform
