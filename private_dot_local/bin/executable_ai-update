@@ -18,6 +18,6 @@ echo
 
 if command -v gcx >/dev/null 2>&1; then
     echo "📊 Update gcx Agent Skills"
-    gcx skills install gcx --force
+    gcx agent skills install --all --force
     echo
 fi
