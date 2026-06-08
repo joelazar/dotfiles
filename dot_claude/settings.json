@@ -118,11 +118,11 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
+  "tui": "fullscreen",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
-  "voiceEnabled": false,
-  "tui": "fullscreen"
+  "voiceEnabled": false
 }

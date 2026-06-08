@@ -4,16 +4,13 @@ description = "A channel to select files and directories"
 requirements = ["fd", "bat"]
 
 [source]
-# Press Ctrl+S to cycle between modes:
-# files, gitignored files, hidden + gitignored files,
-# directories, gitignored directories, hidden + gitignored directories
 command = [
-  "fd -t f",
-  "fd -t f -I",
-  "fd -t f -H -I",
-  "fd -t d",
-  "fd -t d -I",
-  "fd -t d -H -I",
+  { name = "Files",          run = "fd -t f" },
+  { name = "Files +ignored", run = "fd -t f -I" },
+  { name = "Files +hidden",  run = "fd -t f -H -I" },
+  { name = "Dirs",           run = "fd -t d" },
+  { name = "Dirs +ignored",  run = "fd -t d -I" },
+  { name = "Dirs +hidden",   run = "fd -t d -H -I" },
 ]
 
 [preview]

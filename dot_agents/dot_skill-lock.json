@@ -105,9 +105,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/blader/humanizer.git",
       "skillPath": "SKILL.md",
-      "skillFolderHash": "a2ace14a88a6746f64f1f53ed8272d6788828038",
+      "skillFolderHash": "9600f2b7241cb4eed6ad803abee5ea01d67fe8e4",
       "installedAt": "2026-05-25T13:30:00.000Z",
-      "updatedAt": "2026-05-30T10:38:26.596Z"
+      "updatedAt": "2026-06-08T08:48:15.298Z"
     },
     "kagi-cli": {
       "source": "/Users/joelazar/Code/rust/kagi-cli/docs",
@@ -258,9 +258,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/pbakaus/impeccable.git",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
-      "skillFolderHash": "6cb8c637f757ba5b580c1d5398309ba80f350dbc",
+      "skillFolderHash": "9fe84c4d60e8cfc09cc38cc873918ba2fd8f1495",
       "installedAt": "2026-05-30T10:39:26.849Z",
-      "updatedAt": "2026-05-30T10:39:26.849Z"
+      "updatedAt": "2026-06-08T08:48:24.674Z"
     }
   },
   "dismissed": {
