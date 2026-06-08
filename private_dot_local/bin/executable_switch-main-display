@@ -15,12 +15,12 @@
 current_display_config=$(displayplacer list | tail -n 1)
 
 invert_origin() {
-  local origin=$1
-  local x=$(echo "$origin" | sed -E 's/origin:\(([^,]+),.*/\1/')
-  local y=$(echo "$origin" | sed -E 's/origin:\([^,]+,([^)]*)\)/\1/')
-  local inverted_x=$((-1 * x))
-  local inverted_y=$((-1 * y))
-  echo "origin:($inverted_x,$inverted_y)"
+    local origin=$1
+    local x=$(echo "$origin" | sed -E 's/origin:\(([^,]+),.*/\1/')
+    local y=$(echo "$origin" | sed -E 's/origin:\([^,]+,([^)]*)\)/\1/')
+    local inverted_x=$((-1 * x))
+    local inverted_y=$((-1 * y))
+    echo "origin:($inverted_x,$inverted_y)"
 }
 
 # Extract the displays

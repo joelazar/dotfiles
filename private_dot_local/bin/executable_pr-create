@@ -3,12 +3,12 @@ set -euo pipefail
 
 temp_files=()
 cleanup() {
-  rm -f "${temp_files[@]}"
+    rm -f "${temp_files[@]}"
 }
 trap cleanup EXIT
 
 usage() {
-  cat <<'EOF'
+    cat <<'EOF'
 Usage: pr-create [options]
 
 All options are optional. Anything not provided is asked for interactively
@@ -34,84 +34,134 @@ EOF
 # Defaults for --yes mode.
 title=""
 base=""
-draft=""              # "yes" | "no" | ""
-reviewers=""          # "default" | "cns" | ""
-gen_desc=""           # "yes" | "no" | ""
+draft=""     # "yes" | "no" | ""
+reviewers="" # "default" | "cns" | ""
+gen_desc=""  # "yes" | "no" | ""
 body_file=""
-edit_desc=""          # "yes" | "no" | ""
-push_choice=""        # "yes" | "no" | ""
+edit_desc=""   # "yes" | "no" | ""
+push_choice="" # "yes" | "no" | ""
 linear_links=()
 assume_yes=0
 
 while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --title) title=$2; shift 2 ;;
-    --base) base=$2; shift 2 ;;
-    --draft) draft="yes"; shift ;;
-    --no-draft) draft="no"; shift ;;
-    --reviewers) reviewers=$(printf '%s' "$2" | tr '[:upper:]' '[:lower:]'); shift 2 ;;
-    --generate-description) gen_desc="yes"; shift ;;
-    --no-generate-description) gen_desc="no"; shift ;;
-    --body-file) body_file=$2; gen_desc="no"; shift 2 ;;
-    --linear) linear_links+=("$2"); shift 2 ;;
-    --edit) edit_desc="yes"; shift ;;
-    --no-edit) edit_desc="no"; shift ;;
-    --push) push_choice="yes"; shift ;;
-    --no-push) push_choice="no"; shift ;;
-    -y|--yes) assume_yes=1; shift ;;
-    -h|--help) usage; exit 0 ;;
-    *) echo "Unknown option: $1" >&2; usage >&2; exit 2 ;;
-  esac
+    case "$1" in
+    --title)
+        title=$2
+        shift 2
+        ;;
+    --base)
+        base=$2
+        shift 2
+        ;;
+    --draft)
+        draft="yes"
+        shift
+        ;;
+    --no-draft)
+        draft="no"
+        shift
+        ;;
+    --reviewers)
+        reviewers=$(printf '%s' "$2" | tr '[:upper:]' '[:lower:]')
+        shift 2
+        ;;
+    --generate-description)
+        gen_desc="yes"
+        shift
+        ;;
+    --no-generate-description)
+        gen_desc="no"
+        shift
+        ;;
+    --body-file)
+        body_file=$2
+        gen_desc="no"
+        shift 2
+        ;;
+    --linear)
+        linear_links+=("$2")
+        shift 2
+        ;;
+    --edit)
+        edit_desc="yes"
+        shift
+        ;;
+    --no-edit)
+        edit_desc="no"
+        shift
+        ;;
+    --push)
+        push_choice="yes"
+        shift
+        ;;
+    --no-push)
+        push_choice="no"
+        shift
+        ;;
+    -y | --yes)
+        assume_yes=1
+        shift
+        ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    *)
+        echo "Unknown option: $1" >&2
+        usage >&2
+        exit 2
+        ;;
+    esac
 done
 
 prompt_input() {
-  local prompt=$1
-  if [[ $assume_yes -eq 1 ]]; then
-    printf ''
-    return
-  fi
-  if command -v gum >/dev/null 2>&1; then
-    gum input --prompt "$prompt: "
-  else
-    local value
-    read -r -p "$prompt: " value
-    printf '%s\n' "$value"
-  fi
+    local prompt=$1
+    if [[ $assume_yes -eq 1 ]]; then
+        printf ''
+        return
+    fi
+    if command -v gum >/dev/null 2>&1; then
+        gum input --prompt "$prompt: "
+    else
+        local value
+        read -r -p "$prompt: " value
+        printf '%s\n' "$value"
+    fi
 }
 
 prompt_menu() {
-  local title=$1
-  shift
-  if [[ $assume_yes -eq 1 ]]; then
-    printf '%s\n' "$1"
-    return
-  fi
-  if command -v gum >/dev/null 2>&1; then
-    gum choose --header "$title" "$@"
-  else
-    local choice
-    select choice in "$@"; do
-      [[ -n "$choice" ]] && printf '%s\n' "$choice" && break
-    done
-  fi
+    local title=$1
+    shift
+    if [[ $assume_yes -eq 1 ]]; then
+        printf '%s\n' "$1"
+        return
+    fi
+    if command -v gum >/dev/null 2>&1; then
+        gum choose --header "$title" "$@"
+    else
+        local choice
+        select choice in "$@"; do
+            [[ -n "$choice" ]] && printf '%s\n' "$choice" && break
+        done
+    fi
 }
 
 # Normalize a yes/no value (case-insensitive) to "Yes"/"No"; empty stays empty.
 normalize_yn() {
-  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
-    yes|y|true|1) printf 'Yes' ;;
-    no|n|false|0) printf 'No' ;;
+    case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
+    yes | y | true | 1) printf 'Yes' ;;
+    no | n | false | 0) printf 'No' ;;
     *) printf '' ;;
-  esac
+    esac
 }
 
 generate_pr_description() {
-  local body_file=$1
-  local prompt_file
-  prompt_file=$(mktemp)
-  temp_files+=("$prompt_file")
+    local body_file=$1
+    local prompt_file
+    prompt_file=$(mktemp)
+    temp_files+=("$prompt_file")
 
-  cat >"$prompt_file" <<'EOF'
+    cat >"$prompt_file" <<'EOF'
 Use the humanizer skill. Generate a short GitHub pull request description for the current branch.
 
 Requirements:
@@ -123,44 +173,44 @@ Requirements:
 - Output only the PR description body.
 EOF
 
-  if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
-    gum spin --title "Generating PR description with pi..." -- pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
-  else
-    echo "Generating PR description with pi..." >&2
-    pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
-  fi
+    if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
+        gum spin --title "Generating PR description with pi..." -- pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
+    else
+        echo "Generating PR description with pi..." >&2
+        pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
+    fi
 }
 
 edit_pr_description() {
-  local body_file=$1
-  local editor=${EDITOR:-vi}
-  "$editor" "$body_file"
+    local body_file=$1
+    local editor=${EDITOR:-vi}
+    "$editor" "$body_file"
 }
 
 ensure_branch_pushed() {
-  local choice
-  if ! git rev-parse --verify --quiet '@{u}' >/dev/null; then
-    choice=$(normalize_yn "$push_choice")
-    [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has no upstream. Push branch now?" "Yes" "No")
-    if [[ "$choice" != "Yes" ]]; then
-      echo "Current branch has no upstream. Push branch first." >&2
-      exit 1
+    local choice
+    if ! git rev-parse --verify --quiet '@{u}' >/dev/null; then
+        choice=$(normalize_yn "$push_choice")
+        [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has no upstream. Push branch now?" "Yes" "No")
+        if [[ "$choice" != "Yes" ]]; then
+            echo "Current branch has no upstream. Push branch first." >&2
+            exit 1
+        fi
+        git push --set-upstream origin "$(git branch --show-current)"
+        return
     fi
-    git push --set-upstream origin "$(git branch --show-current)"
-    return
-  fi
 
-  local unpushed
-  unpushed=$(git rev-list --count '@{u}..HEAD')
-  if [[ "$unpushed" -ne 0 ]]; then
-    choice=$(normalize_yn "$push_choice")
-    [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has $unpushed unpushed commit(s). Push branch now?" "Yes" "No")
-    if [[ "$choice" != "Yes" ]]; then
-      echo "Current branch has $unpushed unpushed commit(s). Push branch first." >&2
-      exit 1
+    local unpushed
+    unpushed=$(git rev-list --count '@{u}..HEAD')
+    if [[ "$unpushed" -ne 0 ]]; then
+        choice=$(normalize_yn "$push_choice")
+        [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has $unpushed unpushed commit(s). Push branch now?" "Yes" "No")
+        if [[ "$choice" != "Yes" ]]; then
+            echo "Current branch has $unpushed unpushed commit(s). Push branch first." >&2
+            exit 1
+        fi
+        git push
     fi
-    git push
-  fi
 }
 
 ensure_branch_pushed
@@ -169,91 +219,94 @@ ensure_branch_pushed
 allowed_types=(feat fix docs style refactor perf test build ci chore revert deps)
 
 validate_title() {
-  local t=$1
-  # Match: type(optional-scope)!?: subject
-  local re='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|deps)(\([^)]+\))?!?: .+'
-  [[ "$t" =~ $re ]]
+    local t=$1
+    # Match: type(optional-scope)!?: subject
+    local re='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|deps)(\([^)]+\))?!?: .+'
+    [[ "$t" =~ $re ]]
 }
 
 title_hint="format: <type>[(scope)]: <subject>  |  types: ${allowed_types[*]}"
 
 if [[ -n "$title" ]] && ! validate_title "$title"; then
-  echo "Invalid PR title: '$title'" >&2
-  echo "$title_hint" >&2
-  exit 1
+    echo "Invalid PR title: '$title'" >&2
+    echo "$title_hint" >&2
+    exit 1
 fi
 
 while [[ -z "$title" ]]; do
-  title=$(prompt_input "Pull Request Title ($title_hint)")
-  if [[ -z "$title" ]]; then
-    echo "PR title is required." >&2
-    [[ $assume_yes -eq 1 ]] && exit 1
-    continue
-  fi
-  if ! validate_title "$title"; then
-    echo "Invalid title. $title_hint" >&2
-    [[ $assume_yes -eq 1 ]] && exit 1
-    title=""
-  fi
+    title=$(prompt_input "Pull Request Title ($title_hint)")
+    if [[ -z "$title" ]]; then
+        echo "PR title is required." >&2
+        [[ $assume_yes -eq 1 ]] && exit 1
+        continue
+    fi
+    if ! validate_title "$title"; then
+        echo "Invalid title. $title_hint" >&2
+        [[ $assume_yes -eq 1 ]] && exit 1
+        title=""
+    fi
 done
 
 # Only prompt for base if user did not pass --base at all (empty is a valid explicit value when --yes).
 if [[ -z "$base" && $assume_yes -eq 0 ]]; then
-  # Allow an empty answer to mean "default branch".
-  base=$(prompt_input "Base Branch (leave empty for default branch)")
+    # Allow an empty answer to mean "default branch".
+    base=$(prompt_input "Base Branch (leave empty for default branch)")
 fi
 
 draft_norm=$(normalize_yn "$draft")
 [[ -z "$draft_norm" ]] && draft_norm=$(prompt_menu "Create as draft PR?" "No" "Yes")
 
 if [[ -z "$reviewers" ]]; then
-  reviewer_choice=$(prompt_menu "Add Reviewers" "Default" "CNS")
+    reviewer_choice=$(prompt_menu "Add Reviewers" "Default" "CNS")
 else
-  case "$reviewers" in
+    case "$reviewers" in
     default) reviewer_choice="Default" ;;
-    cns)     reviewer_choice="CNS" ;;
-    *) echo "Unknown --reviewers value: $reviewers (expected default|cns)" >&2; exit 2 ;;
-  esac
+    cns) reviewer_choice="CNS" ;;
+    *)
+        echo "Unknown --reviewers value: $reviewers (expected default|cns)" >&2
+        exit 2
+        ;;
+    esac
 fi
 
 if [[ -z "$body_file" ]]; then
-  gen_norm=$(normalize_yn "$gen_desc")
-  [[ -z "$gen_norm" ]] && gen_norm=$(prompt_menu "Generate PR description with pi?" "No" "Yes")
-  if [[ "$gen_norm" == "Yes" ]]; then
-    body_file=$(mktemp -t pr-description.XXXXXX.md)
-    temp_files+=("$body_file")
-    generate_pr_description "$body_file"
-  fi
+    gen_norm=$(normalize_yn "$gen_desc")
+    [[ -z "$gen_norm" ]] && gen_norm=$(prompt_menu "Generate PR description with pi?" "No" "Yes")
+    if [[ "$gen_norm" == "Yes" ]]; then
+        body_file=$(mktemp -t pr-description.XXXXXX.md)
+        temp_files+=("$body_file")
+        generate_pr_description "$body_file"
+    fi
 fi
 
 # Interactive Linear collection only when no --linear flags were passed and not --yes.
 if [[ ${#linear_links[@]} -eq 0 && $assume_yes -eq 0 ]]; then
-  add_linear=$(prompt_menu "Any Linear ticket(s) linked to this PR?" "No" "Yes")
-  while [[ "$add_linear" == "Yes" ]]; do
-    linear_ticket=$(prompt_input "Linear ticket ID (example: ABC-123)")
-    linear_relation=$(prompt_menu "Relationship for $linear_ticket" "Closes" "Ref")
-    if [[ -n "$linear_ticket" ]]; then
-      linear_links+=("$linear_relation $linear_ticket")
-    fi
-    add_linear=$(prompt_menu "Add another Linear ticket?" "No" "Yes")
-  done
+    add_linear=$(prompt_menu "Any Linear ticket(s) linked to this PR?" "No" "Yes")
+    while [[ "$add_linear" == "Yes" ]]; do
+        linear_ticket=$(prompt_input "Linear ticket ID (example: ABC-123)")
+        linear_relation=$(prompt_menu "Relationship for $linear_ticket" "Closes" "Ref")
+        if [[ -n "$linear_ticket" ]]; then
+            linear_links+=("$linear_relation $linear_ticket")
+        fi
+        add_linear=$(prompt_menu "Add another Linear ticket?" "No" "Yes")
+    done
 fi
 
 if [[ -n "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
-  {
-    printf '\n\n'
-    printf '%s\n' "${linear_links[@]}"
-  } >>"$body_file"
+    {
+        printf '\n\n'
+        printf '%s\n' "${linear_links[@]}"
+    } >>"$body_file"
 fi
 
 edit_norm=$(normalize_yn "$edit_desc")
 [[ -z "$edit_norm" ]] && edit_norm=$(prompt_menu "Open PR description in \$EDITOR before creating PR?" "No" "Yes")
 if [[ "$edit_norm" == "Yes" ]]; then
-  if [[ -z "$body_file" ]]; then
-    body_file=$(mktemp -t pr-description.XXXXXX.md)
-    temp_files+=("$body_file")
-  fi
-  edit_pr_description "$body_file"
+    if [[ -z "$body_file" ]]; then
+        body_file=$(mktemp -t pr-description.XXXXXX.md)
+        temp_files+=("$body_file")
+    fi
+    edit_pr_description "$body_file"
 fi
 
 args=(pr create --assignee @me --title "$title" --fill)
@@ -268,15 +321,15 @@ printf '%s\n' "$pr_url"
 
 # If we created the PR without a body but have Linear links, append them after creation.
 if [[ -z "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
-  edit_body_file=$(mktemp -t pr-description.XXXXXX.md)
-  temp_files+=("$edit_body_file")
+    edit_body_file=$(mktemp -t pr-description.XXXXXX.md)
+    temp_files+=("$edit_body_file")
 
-  gh pr view "$pr_url" --json body --jq '.body' >"$edit_body_file"
-  {
-    printf '\n\n'
-    printf '%s\n' "${linear_links[@]}"
-  } >>"$edit_body_file"
+    gh pr view "$pr_url" --json body --jq '.body' >"$edit_body_file"
+    {
+        printf '\n\n'
+        printf '%s\n' "${linear_links[@]}"
+    } >>"$edit_body_file"
 
-  gh pr edit "$pr_url" --body-file "$edit_body_file" >/dev/null
-  echo "Added Linear links to PR description." >&2
+    gh pr edit "$pr_url" --body-file "$edit_body_file" >/dev/null
+    echo "Added Linear links to PR description." >&2
 fi

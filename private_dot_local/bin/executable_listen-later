@@ -26,7 +26,10 @@ source "${HOME}/.local/share/chezmoi/scripts/utils" 2>/dev/null || {
     cmd_exists() { command -v "$1" >/dev/null 2>&1; }
 }
 
-die()  { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+die() {
+    printf '\033[31merror:\033[0m %s\n' "$*" >&2
+    exit 1
+}
 info() { printf '\033[36m==>\033[0m %s\n' "$*" >&2; }
 
 VOICE="af_heart"
@@ -44,17 +47,47 @@ SOURCE=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -t|--title) TITLE="$2"; shift 2 ;;
-        -v|--voice) VOICE="$2"; shift 2 ;;
-        -s|--speed) SPEED="$2"; shift 2 ;;
-        -S|--summarize) SUMMARIZE=1; shift ;;
-        --minutes)  MINUTES="$2"; shift 2 ;;
-        --show)     SHOW_NAME="$2"; shift 2 ;;
-        --wait)     WAIT=1; shift ;;
-        --keep)     KEEP=1; shift ;;
-        -h|--help)  sed -n '2,/^$/p' "$0" | sed 's/^# \?//'; exit 0 ;;
-        -*)         die "Unknown option: $1" ;;
-        *)          SOURCE="$1"; shift ;;
+    -t | --title)
+        TITLE="$2"
+        shift 2
+        ;;
+    -v | --voice)
+        VOICE="$2"
+        shift 2
+        ;;
+    -s | --speed)
+        SPEED="$2"
+        shift 2
+        ;;
+    -S | --summarize)
+        SUMMARIZE=1
+        shift
+        ;;
+    --minutes)
+        MINUTES="$2"
+        shift 2
+        ;;
+    --show)
+        SHOW_NAME="$2"
+        shift 2
+        ;;
+    --wait)
+        WAIT=1
+        shift
+        ;;
+    --keep)
+        KEEP=1
+        shift
+        ;;
+    -h | --help)
+        sed -n '2,/^$/p' "$0" | sed 's/^# \?//'
+        exit 0
+        ;;
+    -*) die "Unknown option: $1" ;;
+    *)
+        SOURCE="$1"
+        shift
+        ;;
     esac
 done
 
@@ -63,13 +96,13 @@ for bin in kokoro ffmpeg ffprobe jq save-to-spotify uv pandoc; do
 done
 
 AUTH=$(save-to-spotify --json auth status 2>/dev/null || true)
-[[ "$(echo "$AUTH" | jq -r '.authenticated // false')" == "true" ]] \
-    || die "not authenticated — run: save-to-spotify auth login"
+[[ "$(echo "$AUTH" | jq -r '.authenticated // false')" == "true" ]] ||
+    die "not authenticated — run: save-to-spotify auth login"
 
 info "Resolving show: $SHOW_NAME"
-SHOW_URI=$(save-to-spotify --json shows \
-    | jq -r --arg t "$SHOW_NAME" '.shows[] | select(.title == $t) | .show_uri' \
-    | head -n1)
+SHOW_URI=$(save-to-spotify --json shows |
+    jq -r --arg t "$SHOW_NAME" '.shows[] | select(.title == $t) | .show_uri' |
+    head -n1)
 [[ -n "$SHOW_URI" ]] || die "show not found: $SHOW_NAME (create it once with save-to-spotify shows create)"
 
 slugify() { echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-*//;s/-*$//' | cut -c1-60; }
@@ -92,8 +125,8 @@ elif [[ "$SOURCE" =~ ^https?:// ]]; then
 elif [[ -f "$SOURCE" ]]; then
     info "Reading file: $SOURCE"
     case "$SOURCE" in
-        *.html|*.htm) RAW_TEXT=$(pandoc -f html  -t plain --wrap=none "$SOURCE") ;;
-        *)            RAW_TEXT=$(cat "$SOURCE") ;;
+    *.html | *.htm) RAW_TEXT=$(pandoc -f html -t plain --wrap=none "$SOURCE") ;;
+    *) RAW_TEXT=$(cat "$SOURCE") ;;
     esac
     SRC_URL=""
     [[ -n "$TITLE" ]] || TITLE=$(basename "${SOURCE%.*}" | tr '_-' '  ')
@@ -103,12 +136,14 @@ fi
 
 [[ -n "${RAW_TEXT// /}" ]] || die "extracted text is empty"
 
-SLUG=$(slugify "$TITLE"); [[ -n "$SLUG" ]] || SLUG="episode"
+SLUG=$(slugify "$TITLE")
+[[ -n "$SLUG" ]] || SLUG="episode"
 WORK="/tmp/listen-later/$SLUG"
-rm -rf "$WORK"; mkdir -p "$WORK"
+rm -rf "$WORK"
+mkdir -p "$WORK"
 [[ "$KEEP" -eq 1 ]] || trap 'rm -rf "$WORK"' EXIT
 
-printf '%s' "$RAW_TEXT" > "$WORK/raw.txt"
+printf '%s' "$RAW_TEXT" >"$WORK/raw.txt"
 info "Title: $TITLE"
 
 if [[ "$SUMMARIZE" -eq 1 ]]; then
@@ -118,14 +153,14 @@ if [[ "$SUMMARIZE" -eq 1 ]]; then
     SUM_SYS="You are an editor preparing text for text-to-speech narration. Output ONLY the narration, no preamble, headings, markdown, lists, emojis, or URLs. Write plain declarative sentences. Separate distinct topics into paragraphs with a blank line between them. Expand abbreviations and symbols into words."
     SUM_MSG="Condense the attached text into a spoken-word summary of about $WORDS words. Preserve the source's structure and key points in order. Group it into 4 to 10 short paragraphs, each a coherent topic."
     pi -p --no-session --no-tools --thinking off --mode json \
-        --system-prompt "$SUM_SYS" "$SUM_MSG" @"$WORK/raw.txt" 2>/dev/null \
-        | jq -rs 'map(select(.type=="agent_end"))[-1].messages[-1].content[] | select(.type=="text") | .text' \
-        > "$WORK/summary.txt"
+        --system-prompt "$SUM_SYS" "$SUM_MSG" @"$WORK/raw.txt" 2>/dev/null |
+        jq -rs 'map(select(.type=="agent_end"))[-1].messages[-1].content[] | select(.type=="text") | .text' \
+            >"$WORK/summary.txt"
     [[ -s "$WORK/summary.txt" ]] || die "summarization produced no output"
     mv "$WORK/summary.txt" "$WORK/raw.txt"
 fi
 
-cat > "$WORK/prep.py" <<'PY'
+cat >"$WORK/prep.py" <<'PY'
 import json, re, sys
 from pathlib import Path
 
@@ -212,21 +247,22 @@ SR=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of c
 ffmpeg -hide_banner -loglevel error -y -f lavfi -i "anullsrc=r=$SR:cl=mono" -t "$(awk "BEGIN{print $INNER_MS/1000}")" "$WORK/inner.wav"
 ffmpeg -hide_banner -loglevel error -y -f lavfi -i "anullsrc=r=$SR:cl=mono" -t "$(awk "BEGIN{print $OUTER_MS/1000}")" "$WORK/outer.wav"
 
-CONCAT="$WORK/concat.txt"; : > "$CONCAT"
-echo "file 'outer.wav'" >> "$CONCAT"
+CONCAT="$WORK/concat.txt"
+: >"$CONCAT"
+echo "file 'outer.wav'" >>"$CONCAT"
 i=0
 for wav in "$WORK"/seg_*.wav; do
-    [[ $i -gt 0 ]] && echo "file 'inner.wav'" >> "$CONCAT"
-    echo "file '$(basename "$wav")'" >> "$CONCAT"
-    i=$((i+1))
+    [[ $i -gt 0 ]] && echo "file 'inner.wav'" >>"$CONCAT"
+    echo "file '$(basename "$wav")'" >>"$CONCAT"
+    i=$((i + 1))
 done
-echo "file 'outer.wav'" >> "$CONCAT"
+echo "file 'outer.wav'" >>"$CONCAT"
 
 info "Assembling episode.mp3"
-( cd "$WORK" && ffmpeg -hide_banner -loglevel error -y -f concat -safe 0 -i concat.txt \
-    -af loudnorm -ar 44100 -ac 1 -b:a 192k episode.mp3 )
+(cd "$WORK" && ffmpeg -hide_banner -loglevel error -y -f concat -safe 0 -i concat.txt \
+    -af loudnorm -ar 44100 -ac 1 -b:a 192k episode.mp3)
 
-cat > "$WORK/build.py" <<'PY'
+cat >"$WORK/build.py" <<'PY'
 import json, subprocess, sys
 from pathlib import Path
 
@@ -287,7 +323,7 @@ PY
 info "Building chapters and description"
 python3 "$WORK/build.py" "$WORK" "$INNER_MS" "$OUTER_MS" "$TITLE" "$SRC_URL"
 
-cat > "$WORK/cover.py" <<'PY'
+cat >"$WORK/cover.py" <<'PY'
 # /// script
 # requires-python = ">=3.10"
 # dependencies = ["pillow"]

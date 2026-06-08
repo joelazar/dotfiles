@@ -149,7 +149,10 @@ async function pickTitle(
     if (subject === undefined) return undefined; // Esc -> cancel
     const subjectTrim = subject.trim();
     if (!subjectTrim) {
-      ctx.ui.notify("Subject is required — try again or press Esc to cancel", "warning");
+      ctx.ui.notify(
+        "Subject is required — try again or press Esc to cancel",
+        "warning",
+      );
       continue;
     }
     const scopePart = scope.trim() ? `(${scope.trim()})` : "";
@@ -233,10 +236,14 @@ async function resolveBaseRef(
   const bare = candidate.replace(/^origin\//, "");
   for (const ref of [`origin/${bare}`, bare]) {
     try {
-      const r = await pi.exec("git", ["rev-parse", "--verify", "--quiet", ref], {
-        signal: ctx.signal,
-        timeout: 5_000,
-      });
+      const r = await pi.exec(
+        "git",
+        ["rev-parse", "--verify", "--quiet", ref],
+        {
+          signal: ctx.signal,
+          timeout: 5_000,
+        },
+      );
       if (r.code === 0 && r.stdout.trim()) return ref;
     } catch {
       // ignore
@@ -264,10 +271,14 @@ async function computeBranchDiff(
         timeout: 15_000,
       }),
       pi.exec("git", ["diff", range], { signal: ctx.signal, timeout: 15_000 }),
-      pi.exec("git", ["log", "--no-merges", "--pretty=%s", `${baseRef}..HEAD`], {
-        signal: ctx.signal,
-        timeout: 15_000,
-      }),
+      pi.exec(
+        "git",
+        ["log", "--no-merges", "--pretty=%s", `${baseRef}..HEAD`],
+        {
+          signal: ctx.signal,
+          timeout: 15_000,
+        },
+      ),
     ]);
     if (stat.code !== 0 || diff.code !== 0) return undefined;
     return {
@@ -343,15 +354,7 @@ async function generatePrBody(
     try {
       const result = await pi.exec(
         "pi",
-        [
-          "-p",
-          "--no-session",
-          "--model",
-          model,
-          "--thinking",
-          "low",
-          prompt,
-        ],
+        ["-p", "--no-session", "--model", model, "--thinking", "low", prompt],
         { signal: ctx.signal, timeout: 120_000 },
       );
       if (result.code === 0) {
@@ -445,7 +448,14 @@ async function detectDefaultBranch(
   try {
     const r = await pi.exec(
       "gh",
-      ["repo", "view", "--json", "defaultBranchRef", "--jq", ".defaultBranchRef.name"],
+      [
+        "repo",
+        "view",
+        "--json",
+        "defaultBranchRef",
+        "--jq",
+        ".defaultBranchRef.name",
+      ],
       { signal: ctx.signal, timeout: 10_000 },
     );
     if (r.code === 0) {
@@ -532,7 +542,10 @@ async function pickTitleWithAuto(
         if (t === undefined) return undefined;
         const trimmed = t.trim();
         if (!trimmed) {
-          ctx.ui.notify("Title is required — try again or press Esc to cancel", "warning");
+          ctx.ui.notify(
+            "Title is required — try again or press Esc to cancel",
+            "warning",
+          );
           continue;
         }
         if (!TITLE_RE.test(trimmed)) {
@@ -554,7 +567,11 @@ function writeTempBody(body: string): string {
   return path;
 }
 
-async function runPrCreate(args: string[], pi: ExtensionAPI, ctx: ExtensionCommandContext) {
+async function runPrCreate(
+  args: string[],
+  pi: ExtensionAPI,
+  ctx: ExtensionCommandContext,
+) {
   ctx.ui.setStatus("pr-create", "Creating PR…");
   try {
     const result = await pi.exec(SCRIPT, args, {

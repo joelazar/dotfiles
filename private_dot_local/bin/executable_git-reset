@@ -46,9 +46,9 @@ get_default_branch() {
 # Function to check if repo has local changes
 has_local_changes() {
     # Check for uncommitted changes (staged, unstaged, or untracked)
-    if ! git diff --quiet HEAD 2>/dev/null || \
-       ! git diff --cached --quiet 2>/dev/null || \
-       [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
+    if ! git diff --quiet HEAD 2>/dev/null ||
+        ! git diff --cached --quiet 2>/dev/null ||
+        [[ -n $(git ls-files --others --exclude-standard 2>/dev/null) ]]; then
         return 0
     fi
     return 1

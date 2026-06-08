@@ -29,14 +29,18 @@ MODEL_DIR="${WHISPER_MODEL_DIR:-$HOME/.local/share/whisper-models}"
 DEFAULT_MODEL="large-v3-turbo-q5_0"
 HF_BASE="https://huggingface.co/ggerganov/whisper.cpp/resolve/main"
 
-die() { printf '\033[31merror:\033[0m %s\n' "$*" >&2; exit 1; }
+die() {
+    printf '\033[31merror:\033[0m %s\n' "$*" >&2
+    exit 1
+}
 info() { printf '\033[36m==>\033[0m %s\n' "$*" >&2; }
 
 # whisper.cpp installs as `whisper-cli` (newer) or `main` (older); detect.
 detect_whisper_bin() {
     for b in whisper-cli whisper-cpp main; do
         if command -v "$b" >/dev/null 2>&1; then
-            echo "$b"; return
+            echo "$b"
+            return
         fi
     done
     die "whisper.cpp not found. Install with: brew install whisper-cpp"
@@ -47,7 +51,8 @@ ensure_model() {
     local file="$MODEL_DIR/ggml-${model}.bin"
     mkdir -p "$MODEL_DIR"
     if [[ -f "$file" ]]; then
-        echo "$file"; return
+        echo "$file"
+        return
     fi
     info "Downloading model: ggml-${model}.bin (this happens once)"
     if cmd_exists gum; then
@@ -80,19 +85,57 @@ FILES=()
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -m|--model)       MODEL="$2"; shift 2 ;;
-        -l|--language)    LANG="$2"; shift 2 ;;
-        -f|--format)      FORMAT="$2"; shift 2 ;;
-        -o|--output-dir)  OUT_DIR="$2"; shift 2 ;;
-        -t|--threads)     THREADS="$2"; shift 2 ;;
-        --translate)      EXTRA_ARGS+=(--translate); shift ;;
-        --diarize)        EXTRA_ARGS+=(--diarize); shift ;;
-        --list-models)    list_models; exit 0 ;;
-        --download)       ensure_model "$2" >/dev/null; info "OK"; exit 0 ;;
-        -h|--help)        sed -n '2,/^$/p' "$0" | sed 's/^# \?//'; exit 0 ;;
-        --)               shift; FILES+=("$@"); break ;;
-        -*)               die "Unknown option: $1" ;;
-        *)                FILES+=("$1"); shift ;;
+    -m | --model)
+        MODEL="$2"
+        shift 2
+        ;;
+    -l | --language)
+        LANG="$2"
+        shift 2
+        ;;
+    -f | --format)
+        FORMAT="$2"
+        shift 2
+        ;;
+    -o | --output-dir)
+        OUT_DIR="$2"
+        shift 2
+        ;;
+    -t | --threads)
+        THREADS="$2"
+        shift 2
+        ;;
+    --translate)
+        EXTRA_ARGS+=(--translate)
+        shift
+        ;;
+    --diarize)
+        EXTRA_ARGS+=(--diarize)
+        shift
+        ;;
+    --list-models)
+        list_models
+        exit 0
+        ;;
+    --download)
+        ensure_model "$2" >/dev/null
+        info "OK"
+        exit 0
+        ;;
+    -h | --help)
+        sed -n '2,/^$/p' "$0" | sed 's/^# \?//'
+        exit 0
+        ;;
+    --)
+        shift
+        FILES+=("$@")
+        break
+        ;;
+    -*) die "Unknown option: $1" ;;
+    *)
+        FILES+=("$1")
+        shift
+        ;;
     esac
 done
 
@@ -104,15 +147,15 @@ MODEL_FILE="$(ensure_model "$MODEL")"
 
 # Build whisper output flags
 declare -a OUT_FLAGS=()
-IFS=',' read -ra FMTS <<< "$FORMAT"
+IFS=',' read -ra FMTS <<<"$FORMAT"
 for f in "${FMTS[@]}"; do
     case "$f" in
-        txt)  OUT_FLAGS+=(--output-txt) ;;
-        srt)  OUT_FLAGS+=(--output-srt) ;;
-        vtt)  OUT_FLAGS+=(--output-vtt) ;;
-        json) OUT_FLAGS+=(--output-json) ;;
-        all)  OUT_FLAGS+=(--output-txt --output-srt --output-vtt --output-json) ;;
-        *)    die "Unknown format: $f" ;;
+    txt) OUT_FLAGS+=(--output-txt) ;;
+    srt) OUT_FLAGS+=(--output-srt) ;;
+    vtt) OUT_FLAGS+=(--output-vtt) ;;
+    json) OUT_FLAGS+=(--output-json) ;;
+    all) OUT_FLAGS+=(--output-txt --output-srt --output-vtt --output-json) ;;
+    *) die "Unknown format: $f" ;;
     esac
 done
 
@@ -120,7 +163,10 @@ TMPDIR_WORK="$(mktemp -d -t transcribe.XXXXXX)"
 trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
 for input in "${FILES[@]}"; do
-    [[ -f "$input" ]] || { echo "skip (not a file): $input" >&2; continue; }
+    [[ -f "$input" ]] || {
+        echo "skip (not a file): $input" >&2
+        continue
+    }
 
     base="$(basename "${input%.*}")"
     out_base="${OUT_DIR:+$OUT_DIR/}${OUT_DIR:-$(dirname "$input")/}${base}"

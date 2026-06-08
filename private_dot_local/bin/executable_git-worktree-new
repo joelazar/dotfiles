@@ -144,8 +144,8 @@ create_worktree() {
         fi
     else
         # Branch was specified - verify it exists
-        if ! git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null && \
-           ! git show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
+        if ! git show-ref --verify --quiet "refs/heads/$branch" 2>/dev/null &&
+            ! git show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
             print_error "Branch does not exist: $branch"
             exit 1
         fi
@@ -193,39 +193,39 @@ main() {
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
-            --help|-h)
-                print_help
-                exit 0
-                ;;
-            --no-copy|-n)
-                copy_env=false
-                shift
-                ;;
-            --base|-b)
-                base_branch="$2"
-                shift 2
-                ;;
-            --list|-l)
-                list_worktrees
-                exit 0
-                ;;
-            -*)
-                print_error "Unknown option: $1"
+        --help | -h)
+            print_help
+            exit 0
+            ;;
+        --no-copy | -n)
+            copy_env=false
+            shift
+            ;;
+        --base | -b)
+            base_branch="$2"
+            shift 2
+            ;;
+        --list | -l)
+            list_worktrees
+            exit 0
+            ;;
+        -*)
+            print_error "Unknown option: $1"
+            print_help
+            exit 1
+            ;;
+        *)
+            if [[ -z "$worktree_name" ]]; then
+                worktree_name="$1"
+            elif [[ -z "$branch" ]]; then
+                branch="$1"
+            else
+                print_error "Too many arguments"
                 print_help
                 exit 1
-                ;;
-            *)
-                if [[ -z "$worktree_name" ]]; then
-                    worktree_name="$1"
-                elif [[ -z "$branch" ]]; then
-                    branch="$1"
-                else
-                    print_error "Too many arguments"
-                    print_help
-                    exit 1
-                fi
-                shift
-                ;;
+            fi
+            shift
+            ;;
         esac
     done
 
