@@ -642,7 +642,7 @@ export default function (pi: ExtensionAPI) {
         const reviewerPick = await ctx.ui.select("Reviewers", [
           "Auto: Default (none added)",
           "Default (none added)",
-          "CNS (peterbornerup, farhadh, jdejnek)",
+          "CNS (peterbornerup, farhadh, jdejnek, finoutlook, befe-oh-no)",
         ]);
         if (!reviewerPick) return cancel();
         reviewers = reviewerPick.includes("CNS") ? "cns" : "default";

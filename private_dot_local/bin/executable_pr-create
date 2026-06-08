@@ -261,7 +261,7 @@ args=(pr create --assignee @me --title "$title" --fill)
 [[ -n "$body_file" ]] && args+=(--body-file "$body_file")
 [[ -n "$base" ]] && args+=(--base "$base")
 [[ "$draft_norm" == "Yes" ]] && args+=(--draft)
-[[ "$reviewer_choice" == "CNS" ]] && args+=(--reviewer "peterbornerup,farhadh,jdejnek")
+[[ "$reviewer_choice" == "CNS" ]] && args+=(--reviewer "peterbornerup,farhadh,jdejnek,finoutlook,befe-oh-no")
 
 pr_url=$(gh "${args[@]}")
 printf '%s\n' "$pr_url"
