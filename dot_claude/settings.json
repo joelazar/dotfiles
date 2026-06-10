@@ -118,7 +118,7 @@
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "stable",
-  "tui": "fullscreen",
+  "tui": "default",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
