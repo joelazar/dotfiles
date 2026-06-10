@@ -27,6 +27,7 @@ MANAGED_CONFIG='{
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity",
     "git:github.com/supabitapp/supaterm-skills"
   ],
+  "defaultProjectTrust": "ask",
   "transport": "auto",
   "treeFilterMode": "default",
   "steeringMode": "all",
