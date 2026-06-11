@@ -1,4 +1,8 @@
 #!/bin/bash
+SOURCE_DIR=$(chezmoi source-path)
+
+. "$SOURCE_DIR/scripts/utils_install" &&
+    . "$SOURCE_DIR/scripts/utils"
 
 echo "🧑‍💻 Updating Claude Code"
 brew upgrade claude-code@latest
@@ -16,8 +20,7 @@ echo "🥧 Update Pi extensions"
 "${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
 echo
 
-if command -v gcx >/dev/null 2>&1; then
-    echo "📊 Update gcx Agent Skills"
+ask_for_confirmation "📊 Do you want to update gcx Agent Skills?"
+if answer_is_yes; then
     gcx agent skills install --all --force
-    echo
 fi
