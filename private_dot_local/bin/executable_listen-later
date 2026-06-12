@@ -3,7 +3,7 @@
 # private episode in the "📥 Listen Later" Spotify show.
 #
 # Usage:
-#   listen-later [options] <url|file>
+#   listen-later [options] <url|file> [url|file ...]
 #   pbpaste | listen-later [options]
 #
 # Options:
@@ -43,7 +43,7 @@ MINUTES=4
 INNER_MS=300
 OUTER_MS=600
 WPM=150
-SOURCE=""
+SOURCES=()
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -85,7 +85,7 @@ while [[ $# -gt 0 ]]; do
         ;;
     -*) die "Unknown option: $1" ;;
     *)
-        SOURCE="$1"
+        SOURCES+=("$1")
         shift
         ;;
     esac
@@ -107,36 +107,48 @@ SHOW_URI=$(save-to-spotify --json shows |
 
 slugify() { echo "$1" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9' '-' | sed 's/^-*//;s/-*$//' | cut -c1-60; }
 
-RAW_HTML=""
-if [[ -z "$SOURCE" || "$SOURCE" == "-" ]]; then
-    [[ -t 0 ]] && die "no input — pass a url/file or pipe text on stdin"
-    RAW_TEXT=$(cat)
-    SRC_URL=""
-    [[ -n "$TITLE" ]] || TITLE="Listen Later $(date +%Y-%m-%d)"
-elif [[ "$SOURCE" =~ ^https?:// ]]; then
-    info "Fetching: $SOURCE"
-    RAW_HTML=$(curl -fsSL --max-time 60 "$SOURCE") || die "failed to fetch $SOURCE"
-    RAW_TEXT=$(echo "$RAW_HTML" | pandoc -f html -t plain --wrap=none 2>/dev/null) || die "failed to extract text"
-    SRC_URL="$SOURCE"
-    if [[ -z "$TITLE" ]]; then
-        TITLE=$(echo "$RAW_HTML" | tr '\n' ' ' | sed -n 's/.*<title[^>]*>\(.*\)<\/title>.*/\1/Ip' | sed 's/&amp;/\&/g;s/^ *//;s/ *$//' | head -n1)
-        [[ -n "$TITLE" ]] || TITLE=$(slugify "$SOURCE" | tr '-' ' ')
-    fi
-elif [[ -f "$SOURCE" ]]; then
-    info "Reading file: $SOURCE"
-    case "$SOURCE" in
-    *.html | *.htm) RAW_TEXT=$(pandoc -f html -t plain --wrap=none "$SOURCE") ;;
-    *) RAW_TEXT=$(cat "$SOURCE") ;;
-    esac
-    SRC_URL=""
-    [[ -n "$TITLE" ]] || TITLE=$(basename "${SOURCE%.*}" | tr '_-' '  ')
-else
-    die "source is neither a URL nor an existing file: $SOURCE"
+if [[ ${#SOURCES[@]} -eq 0 ]]; then
+    SOURCES=("-")
+fi
+if [[ ${#SOURCES[@]} -gt 1 && -n "$TITLE" ]]; then
+    die "--title can only be used with a single source"
 fi
 
-[[ -n "${RAW_TEXT// /}" ]] || die "extracted text is empty"
+process_source() {
+    local SOURCE="$1"
+    local EP_TITLE="$TITLE"
+    local RAW_HTML=""
+    local RAW_TEXT=""
+    local SRC_URL=""
 
-SLUG=$(slugify "$TITLE")
+    if [[ "$SOURCE" == "-" ]]; then
+        [[ -t 0 ]] && die "no input — pass a url/file or pipe text on stdin"
+        RAW_TEXT=$(cat)
+        [[ -n "$EP_TITLE" ]] || EP_TITLE="Listen Later $(date +%Y-%m-%d)"
+    elif [[ "$SOURCE" =~ ^https?:// ]]; then
+        info "Fetching: $SOURCE"
+        RAW_HTML=$(curl -fsSL --max-time 60 "$SOURCE") || die "failed to fetch $SOURCE"
+        RAW_TEXT=$(echo "$RAW_HTML" | pandoc -f html -t plain --wrap=none 2>/dev/null) || die "failed to extract text"
+        SRC_URL="$SOURCE"
+        if [[ -z "$EP_TITLE" ]]; then
+            EP_TITLE=$(echo "$RAW_HTML" | tr '\n' ' ' | sed -n 's/.*<title[^>]*>\(.*\)<\/title>.*/\1/Ip' | sed 's/&amp;/\&/g;s/^ *//;s/ *$//' | head -n1)
+            [[ -n "$EP_TITLE" ]] || EP_TITLE=$(slugify "$SOURCE" | tr '-' ' ')
+        fi
+    elif [[ -f "$SOURCE" ]]; then
+        info "Reading file: $SOURCE"
+        case "$SOURCE" in
+        *.html | *.htm) RAW_TEXT=$(pandoc -f html -t plain --wrap=none "$SOURCE") ;;
+        *) RAW_TEXT=$(cat "$SOURCE") ;;
+        esac
+        [[ -n "$EP_TITLE" ]] || EP_TITLE=$(basename "${SOURCE%.*}" | tr '_-' '  ')
+    else
+        die "source is neither a URL nor an existing file: $SOURCE"
+    fi
+
+    [[ -n "${RAW_TEXT// /}" ]] || die "extracted text is empty"
+
+    TITLE="$EP_TITLE"
+    SLUG=$(slugify "$TITLE")
 [[ -n "$SLUG" ]] || SLUG="episode"
 WORK="/tmp/listen-later/$SLUG"
 rm -rf "$WORK"
@@ -392,3 +404,8 @@ if [[ "$WAIT" -eq 1 ]]; then
 fi
 
 printf '\033[32m✓\033[0m %s\n' "$EP_URI"
+}
+
+for SOURCE in "${SOURCES[@]}"; do
+    process_source "$SOURCE"
+done

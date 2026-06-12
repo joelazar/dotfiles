@@ -101,6 +101,7 @@
     ],
     "defaultMode": "default"
   },
+  "model": "opus[1m]",
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
@@ -124,5 +125,7 @@
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
   "voiceEnabled": false
 }

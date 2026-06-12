@@ -15,6 +15,7 @@ tap "oven-sh/bun"
 tap "protonpass/tap"
 tap "schpet/tap"
 tap "steipete/tap"
+tap "tonisives/tap"
 tap "tw93/tap"
 # Run your GitHub Actions locally
 brew "act"
@@ -124,6 +125,8 @@ brew "ghq"
 brew "git-delta"
 # Git extension for versioning large files
 brew "git-lfs"
+# Git extension to generate reports for standup meetings
+brew "git-standup"
 # Turn any Git repository into a prompt-friendly text ingest for LLMs
 brew "gitingest"
 # Interactive command-line tool for using emoji in commit messages
@@ -350,6 +353,8 @@ cask "1password"
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
 cask "nikitabobko/tap/aerospace"
+# Browse, search and analyse your past AI coding sessions
+cask "agentsview"
 # Android SDK component
 cask "android-platform-tools"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
@@ -400,6 +405,8 @@ cask "inkscape"
 cask "karabiner-elements"
 # Voice-to-text transcription and paste tool
 cask "kitlangton-hex"
+# Intercept, modify, replay, save HTTP/S traffic
+cask "mitmproxy"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
@@ -408,6 +415,8 @@ cask "obsidian"
 cask "openai/tools/openai"
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
+# WebKit based web browser
+cask "orion"
 # Desktop client for Proton Pass
 cask "proton-pass"
 # VPN client focusing on security
@@ -435,7 +444,7 @@ cask "thaw"
 # Multimedia player
 cask "vlc"
 # Menu bar app for USB-C cable diagnostics
-cask "darrylmorley/whatcable/whatcable"
+cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor

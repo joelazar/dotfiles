@@ -261,6 +261,15 @@
       "skillFolderHash": "9fe84c4d60e8cfc09cc38cc873918ba2fd8f1495",
       "installedAt": "2026-05-30T10:39:26.849Z",
       "updatedAt": "2026-06-08T08:48:24.674Z"
+    },
+    "last30days": {
+      "source": "mvanhorn/last30days-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/mvanhorn/last30days-skill.git",
+      "skillPath": "skills/last30days/SKILL.md",
+      "skillFolderHash": "63ee58e42ad33abd1e5b114f8f28f367681cb8ff",
+      "installedAt": "2026-06-11T20:36:45.909Z",
+      "updatedAt": "2026-06-11T20:36:45.909Z"
     }
   },
   "dismissed": {
@@ -269,15 +278,14 @@
   "lastSelectedAgents": [
     "amp",
     "antigravity",
+    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
     "deepagents",
-    "dexto",
-    "firebender",
     "gemini-cli",
     "github-copilot",
-    "kimi-cli",
+    "kimi-code-cli",
     "opencode",
     "warp",
     "zed"

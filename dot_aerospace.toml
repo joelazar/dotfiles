@@ -219,6 +219,10 @@ run = 'move-node-to-workspace 2'
 if.app-id = 'net.imput.helium'
 run = 'move-node-to-workspace 2'
 
+[[on-window-detected]]
+if.app-id = 'com.kagi.kagimacOS'
+run = 'move-node-to-workspace 2'
+
 # [[on-window-detected]]
 # if.app-id = 'com.1password.1password'
 # run = ['layout floating', 'move-node-to-workspace 3']
