@@ -1,96 +1,132 @@
 #!/usr/bin/env bash
-# Tiered web-search dispatcher. One provider per call.
-# Picks the right backend (kagi quick / codex / claude-code / openai-cli / perplexity)
-# and normalizes invocation/output. See SKILL.md for tier order + escalation rules.
+# kagi-only web research dispatcher.
+# Modes: search | quick | ask | summarize.
+# Every mode post-processes kagi-cli JSON down to the minimal meaningful text
+# so the caller's context never sees HTML, favicons, traces, or metadata.
 set -uo pipefail
 
-PROVIDER=""
-QUERY=""
-PURPOSE="general research support"
-TIMEOUT_MS=180000
+MODE=""
+INPUT=""
+LIMIT=5
+THREAD_ID=""
+SUMMARY_TYPE="summary"
+LENGTH=""
+FOLLOWUPS=0
 
 usage() {
-  cat <<'EOF'
+    cat <<'EOF'
 Usage:
-  search.sh --provider <kagi|codex|claude-code|openai-cli|perplexity> "<query>" [--purpose "<why>"] [--timeout <ms>]
+  search.sh <mode> "<query|url>" [flags]
 
-Tier order (see SKILL.md):
-  1. kagi         — fastest grounded answer, source confidence %
-  2. codex        — deeper synthesis with clean canonical URLs (gpt-5.5, low reasoning)
-  3. claude-code  — second analytical opinion (haiku 4.5, low thinking)
-  4. openai-cli   — OpenAI API web_search fallback (gpt-5.3-chat-latest)
-  5. perplexity   — most citations, last resort
+Modes:
+  search     List results (title + url + snippet). Cheapest, no synthesis.
+  quick      Grounded answer with ranked source links. Default for facts.
+  ask        Kagi Assistant for deeper synthesis / multi-step reasoning.
+  summarize  Condense one URL into key text.
+
+Flags:
+  --limit <n>          search: number of results (default 5)
+  --thread-id <id>     ask: continue an existing assistant thread
+  --summary-type <t>   summarize: summary | keypoints (default summary)
+  --length <l>         summarize: short | digest | etc.
+  --followups          quick: also print follow-up questions
 
 Examples:
-  search.sh --provider kagi "latest python release" --purpose "update deps"
-  search.sh --provider codex "vite 7 breaking changes"
+  search.sh quick "latest stable rust version"
+  search.sh search "vite 7 breaking changes" --limit 8
+  search.sh ask "compare uv vs poetry for monorepos"
+  search.sh summarize "https://example.com/article"
 EOF
 }
 
+[[ $# -eq 0 ]] && {
+    usage
+    exit 2
+}
+MODE="$1"
+shift
+
 while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --provider)  PROVIDER="$2"; shift 2 ;;
-    --provider=*) PROVIDER="${1#*=}"; shift ;;
-    --purpose)   PURPOSE="$2"; shift 2 ;;
-    --purpose=*) PURPOSE="${1#*=}"; shift ;;
-    --timeout)   TIMEOUT_MS="$2"; shift 2 ;;
-    --timeout=*) TIMEOUT_MS="${1#*=}"; shift ;;
-    -h|--help)   usage; exit 0 ;;
-    --) shift; QUERY="${QUERY:+$QUERY }$*"; break ;;
-    -*) echo "Unknown flag: $1" >&2; usage; exit 2 ;;
-    *)  QUERY="${QUERY:+$QUERY }$1"; shift ;;
-  esac
+    case "$1" in
+    --limit)
+        LIMIT="$2"
+        shift 2
+        ;;
+    --thread-id)
+        THREAD_ID="$2"
+        shift 2
+        ;;
+    --summary-type)
+        SUMMARY_TYPE="$2"
+        shift 2
+        ;;
+    --length)
+        LENGTH="$2"
+        shift 2
+        ;;
+    --followups)
+        FOLLOWUPS=1
+        shift
+        ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    -*)
+        echo "Unknown flag: $1" >&2
+        usage
+        exit 2
+        ;;
+    *)
+        INPUT="${INPUT:+$INPUT }$1"
+        shift
+        ;;
+    esac
 done
 
-if [[ -z "$PROVIDER" || -z "$QUERY" ]]; then
-  usage
-  exit 2
-fi
-
-NWS_DIR="$HOME/.agents/skills/ai-search"
-PPLX_DIR="$HOME/.agents/skills/perplexity-search"
-
-run_kagi() {
-  if ! command -v kagi >/dev/null 2>&1; then
-    echo "ERROR: kagi CLI not on PATH" >&2; return 127
-  fi
-  local prompt="$QUERY
-
-Purpose: $PURPOSE
-
-Provide concise summary, key findings, full canonical URLs (https://...), call out source disagreements."
-  # cd $HOME so .kagi.toml is picked up (kagi-cli looks at relative path)
-  ( cd "$HOME" && kagi quick --format markdown "$prompt" )
+[[ -z "$INPUT" ]] && {
+    usage
+    exit 2
 }
 
-run_search_mjs() {
-  local provider="$1"
-  if [[ ! -f "$NWS_DIR/search.mjs" ]]; then
-    echo "ERROR: ai-search skill not found at $NWS_DIR" >&2; return 127
-  fi
-  node "$NWS_DIR/search.mjs" "$QUERY" \
-    --purpose "$PURPOSE" \
-    --provider "$provider" \
-    --timeout "$TIMEOUT_MS"
+command -v kagi >/dev/null 2>&1 || {
+    echo "ERROR: kagi CLI not on PATH" >&2
+    exit 127
 }
+# cd $HOME so kagi-cli resolves the session token in ~/.kagi.toml
+cd "$HOME" || exit 1
 
-run_perplexity() {
-  if [[ ! -f "$PPLX_DIR/perplexity_search.py" ]]; then
-    echo "ERROR: perplexity-search skill not found at $PPLX_DIR" >&2; return 127
-  fi
-  local prompt="$QUERY
+case "$MODE" in
+search)
+    kagi search --limit "$LIMIT" "$INPUT" |
+        jq -r '.data[]? | select(.url) | "- [\(.title)](\(.url))\n  \(.snippet // "" | gsub("\\s+"; " "))"'
+    ;;
 
-Purpose: $PURPOSE
+quick)
+    out="$(kagi quick "$INPUT")"
+    jq -r '.message.markdown' <<<"$out"
+    echo
+    jq -r '.references.markdown // empty' <<<"$out"
+    [[ "$FOLLOWUPS" -eq 1 ]] && jq -r '(.followup_questions // [])[] | "- " + .' <<<"$out"
+    ;;
 
-Provide concise summary, key findings, full canonical URLs (https://...), call out source disagreements."
-  python3 "$PPLX_DIR/perplexity_search.py" --ask "$prompt"
-}
+ask)
+    if [[ -n "$THREAD_ID" ]]; then
+        kagi assistant --thread-id "$THREAD_ID" --format markdown "$INPUT"
+    else
+        kagi assistant --format markdown "$INPUT"
+    fi
+    ;;
 
-case "$PROVIDER" in
-  kagi|kagi-quick)              run_kagi ;;
-  codex|openai-codex)           run_search_mjs codex ;;
-  claude-code|claude|anthropic) run_search_mjs claude-code ;;
-  openai-cli|openai-api)        run_search_mjs openai-cli ;;
-  perplexity|pplx|sonar)        run_perplexity ;;
-  *) echo "Unknown provider: $PROVIDER" >&2; usage; exit 2 ;;
+summarize)
+    args=(summarize --subscriber --url "$INPUT" --summary-type "$SUMMARY_TYPE")
+    [[ -n "$LENGTH" ]] && args+=(--length "$LENGTH")
+    kagi "${args[@]}" | jq -r '.data.markdown // .data.output // empty'
+    ;;
+
+*)
+    echo "Unknown mode: $MODE" >&2
+    usage
+    exit 2
+    ;;
 esac

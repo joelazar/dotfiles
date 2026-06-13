@@ -15,8 +15,6 @@ MANAGED_CONFIG='{
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-8",
-    "anthropic/claude-fable-5",
-    "anthropic-extra/claude-fable-5",
     "anthropic-extra/claude-opus-4-8"
   ],
   "showHardwareCursor": true,
@@ -27,8 +25,7 @@ MANAGED_CONFIG='{
     "/Users/joelazar/Code/ai/pi/pi-nvim",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-fast",
-    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity",
-    "git:github.com/supabitapp/supaterm-skills"
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",

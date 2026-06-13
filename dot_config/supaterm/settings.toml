@@ -1,7 +1,0 @@
-
-[notifications]
-system_notifications = true
-
-[privacy]
-analytics_enabled = false
-crash_reports_enabled = false

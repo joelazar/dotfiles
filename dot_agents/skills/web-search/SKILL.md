@@ -1,94 +1,85 @@
 ---
 name: web-search
-description: "Default for web lookup/research/latest/current/URL/package/docs questions. Uses kagi→codex→claude-code→openai-cli→perplexity, escalating only if needed. Prefer this over provider skills unless user explicitly names kagi, perplexity, codex/claude-code/openai-cli, or ai-search."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions. Backed entirely by kagi-cli (search, quick answer, assistant, summarize). Returns only minimal, meaningful text — no HTML, traces, or metadata. Prefer this over provider skills unless the user explicitly names another tool."
 allowed-tools: [Bash, Read]
 ---
 
-# Web Search (tiered)
+# Web Search
 
-Single entry point for web research. Runs providers in a strict cost/speed order
-and lets you escalate when the previous tier's answer is not good enough.
+Single entry point for web research, powered by `kagi-cli`. Each mode strips the
+raw JSON down to the smallest meaningful payload (answer text + canonical URLs),
+so your context never fills with HTML, favicon proxies, traces, or scoring noise.
 
-## Tier order (always follow)
+## Modes
 
-| Tier | Provider          | Why first / when                                             |
-| ---- | ----------------- | ------------------------------------------------------------ |
-| 1    | `kagi quick`      | Fastest grounded answer, source confidence %, free w/ subscription |
-| 2    | `codex`           | Deeper synthesis, clean canonical URLs, code-aware; uses `gpt-5.5` with low reasoning |
-| 3    | `claude-code`     | Second analytical opinion when codex hedges or gets it wrong; uses Haiku 4.5 with low thinking |
-| 4    | `openai-cli`      | OpenAI API web-search fallback; uses `gpt-5.3-chat-latest`   |
-| 5    | `perplexity`      | Most citations, last resort for hard or very recent topics   |
+| Mode        | Backend                       | Use when                                                      |
+| ----------- | ----------------------------- | ------------------------------------------------------------- |
+| `quick`     | `kagi quick`                  | **Default.** A fact or short answer with ranked source links. |
+| `search`    | `kagi search`                 | You want raw result links to pick from, no synthesis.         |
+| `ask`       | `kagi assistant`              | Deeper synthesis, comparisons, multi-step reasoning.          |
+| `summarize` | `kagi summarize --subscriber` | Condense one known URL into key text.                         |
 
-**Always start at tier 1.** Only escalate to the next tier if the current
-answer is insufficient (vague, hedged, missing key facts, contradicts known
-truth, no real URLs, or explicitly says it could not find X).
-
-Do **not** call multiple tiers in parallel — the whole point is to save tokens
-and time when tier 1 already answers the question.
+Start with `quick`. Escalate to `ask` only when the answer needs reasoning or
+synthesis across sources. Use `search` when you specifically want a link list.
+Use `summarize` only when you already have a URL.
 
 ## Usage
 
-Single script, one provider per call:
-
 ```bash
-~/.agents/skills/web-search/search.sh --provider <kagi|codex|claude-code|openai-cli|perplexity> "<query>" [--purpose "<why>"]
+~/.agents/skills/web-search/search.sh <mode> "<query|url>" [flags]
 ```
 
 Examples:
 
 ```bash
-# Tier 1 — start here every time
-~/.agents/skills/web-search/search.sh --provider kagi \
-  "latest stable Firefox version macOS user agent" \
-  --purpose "update hardcoded UA in nvim plugin"
+# Default — grounded answer + ranked source links
+~/.agents/skills/web-search/search.sh quick "latest stable rust version"
 
-# Tier 2 — escalate if tier 1 was vague or missed the version
-~/.agents/skills/web-search/search.sh --provider codex \
-  "latest stable Firefox version macOS user agent" \
-  --purpose "update hardcoded UA in nvim plugin"
+# Raw link list, choose your own limit
+~/.agents/skills/web-search/search.sh search "vite 7 breaking changes" --limit 8
 
-# Tier 3+ — only when needed
-~/.agents/skills/web-search/search.sh --provider claude-code "..."
-~/.agents/skills/web-search/search.sh --provider openai-cli "..."
-~/.agents/skills/web-search/search.sh --provider perplexity "..."
+# Deeper synthesis / comparison
+~/.agents/skills/web-search/search.sh ask "compare uv vs poetry for monorepos"
+
+# Continue an assistant thread (id printed by a prior ask)
+~/.agents/skills/web-search/search.sh ask "now show a migration example" --thread-id "<id>"
+
+# Condense one page
+~/.agents/skills/web-search/search.sh summarize "https://example.com/article"
+~/.agents/skills/web-search/search.sh summarize "<url>" --summary-type keypoints
 ```
 
-## Escalation rubric
+## Flags
 
-After each tier's output, ask yourself:
+- `--limit <n>` — `search`: number of results (default 5).
+- `--thread-id <id>` — `ask`: continue an existing assistant thread.
+- `--summary-type <summary|keypoints>` — `summarize` (default `summary`).
+- `--length <short|digest|...>` — `summarize` output length.
+- `--followups` — `quick`: also print Kagi's follow-up question suggestions.
 
-1. **Did it answer the actual question?** A hedge ("not directly available")
-   counts as no — escalate.
-2. **Are there real canonical URLs** (not just titles, not redirect wrappers)?
-   If no, escalate.
-3. **Does the data look current?** If purpose mentions "latest" and the answer
-   cites an old version, escalate.
-4. **Did sources disagree without resolution?** Escalate to corroborate.
+## Context hygiene (why this skill exists)
 
-If tier-1 answer satisfies all four → stop. Don't run tier 2+.
+The script never forwards raw kagi-cli JSON. It extracts only:
 
-## Provider notes
+- `quick` → `.message.markdown` answer + `.references.markdown` (titled links
+  with confidence %). HTML, tooltips, favicon proxies, and traces are dropped.
+- `search` → `title`, `url`, `snippet` per result; snippets whitespace-collapsed.
+- `ask` → assistant markdown text only (via `--format markdown`).
+- `summarize` → `.data.markdown` only.
 
-- **kagi**: requires `KAGI_API_KEY` env (already set) and `~/.kagi.toml` with
-  session token. Wrapper does `cd $HOME` automatically. Output includes
-  source confidence percentages and follow-up questions.
-- **codex / claude-code / openai-cli**: thin wrappers over the
-  `ai-search` skill's `search.mjs`, using its current model defaults and
-  reasoning settings.
-- **openai-cli**: additionally requires the `openai` binary on `PATH` and
-  `OPENAI_API_KEY` in the environment.
-- **perplexity**: requires `PERPLEXITY_API_KEY` env. Wraps `perplexity-search`
-  skill's `--ask` mode (sonar model).
+Keep queries tight and prefer `quick`/`search` before `ask`, since the assistant
+returns the most text. Raise `--limit` deliberately, not by default.
+
+## Requirements
+
+- `kagi` CLI on `PATH` and a Kagi subscription.
+- `~/.kagi.toml` with a session token (the script `cd`s to `$HOME` so kagi-cli
+  resolves it). Set up once with `kagi auth`.
+- `jq` for the minimal-output post-processing.
 
 ## When NOT to use this skill
 
-- For raw search results with no synthesis → use `kagi search` or
-  `perplexity --search` directly.
-- For deep research reports → use `perplexity --deep` directly.
-- For reading a known URL → use `defuddle` or `summarize` skill, not search.
-
-## Related skills (kept for specialized use)
-
-- `kagi` — full kagi-cli toolbox (translate, summarize, news, batch, etc.)
-- `perplexity-search` — search/research/reason/deep modes
-- `ai-search` — direct provider control for codex/claude-code/openai-cli
+- Reading a known URL in full → use the `summarize` skill or `defuddle`, not
+  `search` mode.
+- Full kagi-cli toolbox (translate, news, batch, lenses, bangs) → use `kagi`
+  directly; this skill intentionally exposes only the four research modes.
