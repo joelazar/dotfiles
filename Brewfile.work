@@ -7,6 +7,7 @@ tap "hashicorp/tap", trusted: true
 tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
 tap "macos-fuse-t/cask", trusted: true
+tap "microck/kagi"
 tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
@@ -305,6 +306,8 @@ brew "hashicorp/tap/terraform"
 brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 # A utility toolkit of most commonly used tools by software developers and IT professionals
 brew "ksdme/tap/ut", trusted: true
+# Agent-native Rust CLI for Kagi subscribers with JSON-first output
+brew "microck/kagi/kagi", trusted: true
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
 # NATS utility
@@ -427,9 +430,8 @@ go "github.com/josharian/impl"
 go "github.com/tmc/json-to-struct"
 go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
-cargo "bpf-linker"
 cargo "cargo-audit"
-cargo "kagi"
+cargo "cargo-update"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
