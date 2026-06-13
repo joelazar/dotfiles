@@ -24,3 +24,5 @@
 - Expose what must be exposed, hide what must be hidden
 - Every line will be judged at the scales
 - Occam's Razor in code
+
+@RTK.md

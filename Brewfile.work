@@ -1,32 +1,26 @@
-tap "aws/tap"
-tap "buo/cask-upgrade"
-tap "darrylmorley/whatcable"
+tap "aws/tap", trusted: true
+tap "buo/cask-upgrade", trusted: true
+tap "darrylmorley/whatcable", trusted: true
 tap "dlvhdr/formulae"
-tap "grafana/grafana"
-tap "hashicorp/tap"
+tap "grafana/grafana", trusted: true
+tap "hashicorp/tap", trusted: true
 tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
-tap "macos-fuse-t/cask"
-tap "mongodb/brew"
-tap "nats-io/nats-tools"
-tap "nikitabobko/tap"
+tap "macos-fuse-t/cask", trusted: true
+tap "mongodb/brew", trusted: true
+tap "nats-io/nats-tools", trusted: true
+tap "nikitabobko/tap", trusted: true
 tap "openai/tools"
-tap "oven-sh/bun"
-tap "protonpass/tap"
+tap "oven-sh/bun", trusted: true
+tap "protonpass/tap", trusted: true
 tap "schpet/tap"
-tap "steipete/tap"
-tap "tonisives/tap"
 tap "tw93/tap"
-# Run your GitHub Actions locally
-brew "act"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Simple, modern, secure file encryption
 brew "age"
-# Arduino command-line interface
-brew "arduino-cli"
 # Record and share terminal sessions
 brew "asciinema"
 # Code searching, linting, rewriting
@@ -127,30 +121,18 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
-# Turn any Git repository into a prompt-friendly text ingest for LLMs
-brew "gitingest"
 # Interactive command-line tool for using emoji in commit messages
 brew "gitmoji"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Stricter gofmt
-brew "gofumpt"
-# Language server for `golangci-lint`
-brew "golangci-lint-langserver"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
-# Go Language's command-line interface for database migrations
-brew "goose"
-# Human friendly `go test` runner
-brew "gotestsum"
 # Tool for glamorous shell scripts
 brew "gum"
 # Open-source video transcoder available for Linux, Mac, and Windows
 brew "handbrake"
 # Kubernetes package manager
 brew "helm"
-# Language server for Helm
-brew "helm-ls"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -193,8 +175,6 @@ brew "qemu"
 brew "lima-additional-guestagents"
 # CLI for SQLite Databases with auto-completion and syntax highlighting
 brew "litecli"
-# LLM inference in C/C++
-brew "llama.cpp"
 # Next-gen compiler infrastructure
 brew "llvm"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -207,8 +187,6 @@ brew "mas"
 brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-# Tool for smooth Git handover in mob programming sessions
-brew "mob"
 # MongoDB Shell to connect, configure, query, and work with your MongoDB database
 brew "mongosh"
 # NCurses Disk Usage
@@ -259,18 +237,12 @@ brew "ripgrep-all"
 brew "rtk"
 # Powerful, clean, object-oriented scripting language
 brew "ruby"
-# CLI search and replace | Space Age seD
-brew "sad"
-# Display and control your Android device
-brew "scrcpy"
 # Intuitive find & replace CLI
 brew "sd"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
 # CLI to update and use Solo 2 security keys
 brew "solo2-cli"
-# Generate type safe Go from SQL
-brew "sqlc"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Very fast implementation of tldr in Rust
@@ -324,15 +296,15 @@ brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
 # Git diff pager based on delta but with a file tree, à la GitHub
-brew "dlvhdr/formulae/diffnav"
+brew "dlvhdr/formulae/diffnav", trusted: true
 # Grafana Cloud CLI
 brew "grafana/grafana/gcx"
 # Terraform
 brew "hashicorp/tap/terraform"
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.
-brew "jakehilborn/jakehilborn/displayplacer"
+brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 # A utility toolkit of most commonly used tools by software developers and IT professionals
-brew "ksdme/tap/ut"
+brew "ksdme/tap/ut", trusted: true
 # This package contains standard utilities for interacting with MongoDB.
 brew "mongodb/brew/mongodb-database-tools"
 # NATS utility
@@ -341,12 +313,8 @@ brew "nats-io/nats-tools/nats"
 brew "oven-sh/bun/bun"
 # Proton Pass CLI - Command-line interface for Proton Pass
 brew "protonpass/tap/pass-cli"
-# CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
-brew "schpet/tap/linear"
-# Command-line ElevenLabs TTS with mac-style flags
-brew "steipete/tap/sag"
 # Comprehensive macOS cleanup and application uninstall tool
-brew "tw93/tap/mole"
+brew "tw93/tap/mole", trusted: true
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
@@ -355,8 +323,6 @@ cask "1password-cli"
 cask "nikitabobko/tap/aerospace"
 # Browse, search and analyse your past AI coding sessions
 cask "agentsview"
-# Android SDK component
-cask "android-platform-tools"
 # Compact TeX distribution as alternative to the full TeX Live / MacTeX
 cask "basictex"
 # Open source IDE for exploring and testing APIs
@@ -373,14 +339,10 @@ cask "claude-code@latest"
 cask "cleanshot"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-# OpenAI's Codex desktop app for managing coding agents
-cask "codex-app"
 # Voice and text chat software
 cask "discord"
 # Web browser
 cask "firefox"
-cask "font-fira-code"
-cask "font-fira-code-nerd-font"
 cask "font-maple-mono"
 cask "font-maple-mono-nf"
 # Kext-less implementation of FUSE
@@ -393,8 +355,6 @@ cask "ghostty"
 cask "google-chrome"
 # Client for the Google Drive storage service
 cask "google-drive"
-# Native desktop AI assistant from Google
-cask "google-gemini"
 # Chromium-based web browser
 cask "helium-browser"
 # Free and open-source media player
@@ -403,8 +363,6 @@ cask "iina"
 cask "inkscape"
 # Keyboard customiser
 cask "karabiner-elements"
-# Voice-to-text transcription and paste tool
-cask "kitlangton-hex"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
 # Tool to control external monitor brightness & volume
@@ -412,7 +370,7 @@ cask "monitorcontrol"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # The official CLI for the OpenAI API.
-cask "openai/tools/openai"
+cask "openai/tools/openai", trusted: true
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
 # WebKit based web browser
@@ -433,8 +391,6 @@ cask "sonos"
 cask "spotify"
 # Video game digital distribution service
 cask "steam"
-# Native terminal coding agents command center
-cask "supacode"
 # Native GUI tool for relational databases
 cask "tableplus"
 # Mesh VPN based on WireGuard

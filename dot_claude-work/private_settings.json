@@ -124,5 +124,18 @@
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  }
 }

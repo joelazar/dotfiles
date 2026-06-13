@@ -24,9 +24,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/frontend-design/SKILL.md",
-      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "skillFolderHash": "0d5b74a14bdf3ebcd64f352d06376a2ef05ed296",
       "installedAt": "2026-05-25T13:30:00.000Z",
-      "updatedAt": "2026-05-30T10:38:03.978Z"
+      "updatedAt": "2026-06-13T21:48:51.027Z"
     },
     "gcx": {
       "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/gcx",
@@ -258,9 +258,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/pbakaus/impeccable.git",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
-      "skillFolderHash": "9fe84c4d60e8cfc09cc38cc873918ba2fd8f1495",
+      "skillFolderHash": "b8f5ff07669681920b944fc1b7e8b0c3bbb09884",
       "installedAt": "2026-05-30T10:39:26.849Z",
-      "updatedAt": "2026-06-08T08:48:24.674Z"
+      "updatedAt": "2026-06-13T21:49:24.896Z"
     },
     "last30days": {
       "source": "mvanhorn/last30days-skill",
