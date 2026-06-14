@@ -332,8 +332,6 @@ cask "basictex"
 cask "bruno"
 # E-books management software
 cask "calibre"
-# OpenAI's official ChatGPT desktop app
-cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Terminal-based AI coding assistant
