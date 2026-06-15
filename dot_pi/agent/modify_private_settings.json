@@ -21,6 +21,8 @@ MANAGED_CONFIG='{
   "quietStartup": true,
   "extensions": [],
   "packages": [
+    "git:github.com/aliou/pi-guardrails",
+    "git:github.com/aliou/pi-processes",
     "/Users/joelazar/Code/ai/pi/pi-review",
     "/Users/joelazar/Code/ai/pi/pi-nvim",
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",

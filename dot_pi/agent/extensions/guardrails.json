@@ -1,0 +1,241 @@
+{
+  "$schema": "https://unpkg.com/@aliou/pi-guardrails@0.13.2/schema.json",
+  "enabled": true,
+  "applyBuiltinDefaults": true,
+  "onboarding": {
+    "completed": true
+  },
+  "features": {
+    "policies": true,
+    "permissionGate": true,
+    "pathAccess": false
+  },
+  "policies": {
+    "rules": [
+      {
+        "id": "joe-secrets",
+        "name": "Credentials and secrets",
+        "description": "Migrated from path-policy.json blockedPaths",
+        "protection": "noAccess",
+        "onlyIfExists": false,
+        "blockMessage": "Accessing {file} is not allowed: it may contain secrets or credentials. Explain why you need it and ask the user to act if changes are required.",
+        "patterns": [
+          {
+            "pattern": "**/*.key"
+          },
+          {
+            "pattern": "**/*.p12"
+          },
+          {
+            "pattern": "**/*.pem"
+          },
+          {
+            "pattern": "**/*.pfx"
+          },
+          {
+            "pattern": "**/.aws/**"
+          },
+          {
+            "pattern": "**/.azure/**"
+          },
+          {
+            "pattern": "**/.config/gcloud/**"
+          },
+          {
+            "pattern": "**/.config/gh/hosts.yml"
+          },
+          {
+            "pattern": "**/.env*"
+          },
+          {
+            "pattern": "**/.gem/credentials"
+          },
+          {
+            "pattern": "**/.git-credentials"
+          },
+          {
+            "pattern": "**/.kube/**"
+          },
+          {
+            "pattern": "**/.netrc"
+          },
+          {
+            "pattern": "**/.npmrc"
+          },
+          {
+            "pattern": "**/.pypirc"
+          },
+          {
+            "pattern": "**/.secret*"
+          },
+          {
+            "pattern": "**/.terraform.d/credentials.tfrc.json"
+          },
+          {
+            "pattern": "**/.yarnrc.yml"
+          },
+          {
+            "pattern": "**/Obsidian/journal/**"
+          },
+          {
+            "pattern": "**/credentials/**"
+          },
+          {
+            "pattern": "**/id_ed25519"
+          },
+          {
+            "pattern": "**/id_rsa"
+          },
+          {
+            "pattern": "**/pip.conf"
+          },
+          {
+            "pattern": "**/secrets/**"
+          },
+          {
+            "pattern": "~/.aws/**"
+          },
+          {
+            "pattern": "~/.azure/**"
+          },
+          {
+            "pattern": "~/.codex/auth.json"
+          },
+          {
+            "pattern": "~/.config/exercism/user.json"
+          },
+          {
+            "pattern": "~/.config/gcloud/**"
+          },
+          {
+            "pattern": "~/.config/gcx/config.yaml"
+          },
+          {
+            "pattern": "~/.config/gh/hosts.yml"
+          },
+          {
+            "pattern": "~/.config/github-copilot/**"
+          },
+          {
+            "pattern": "~/.config/gws/**"
+          },
+          {
+            "pattern": "~/.config/pip/pip.conf"
+          },
+          {
+            "pattern": "~/.config/save-to-spotify/**"
+          },
+          {
+            "pattern": "~/.fly/**"
+          },
+          {
+            "pattern": "~/.gem/credentials"
+          },
+          {
+            "pattern": "~/.git-credentials"
+          },
+          {
+            "pattern": "~/.gnupg/**"
+          },
+          {
+            "pattern": "~/.kube/**"
+          },
+          {
+            "pattern": "~/.netrc"
+          },
+          {
+            "pattern": "~/.npmrc"
+          },
+          {
+            "pattern": "~/.pi/auth.json"
+          },
+          {
+            "pattern": "~/.pypirc"
+          },
+          {
+            "pattern": "~/.ssh/**"
+          },
+          {
+            "pattern": "~/.terraform.d/credentials.tfrc.json"
+          },
+          {
+            "pattern": "~/.config/op/**"
+          },
+          {
+            "pattern": "~/.config/sops/**"
+          },
+          {
+            "pattern": "~/*.gpg"
+          },
+          {
+            "pattern": "~/.gpg-agent.conf"
+          }
+        ],
+        "allowedPatterns": [
+          {
+            "pattern": "~/.ssh/*.pub"
+          }
+        ]
+      }
+    ]
+  },
+  "permissionGate": {
+    "requireConfirmation": true,
+    "patterns": [
+      {
+        "pattern": "chmod\\b.*o\\+w",
+        "description": "world-writable permission (o+w)",
+        "regex": true
+      },
+      {
+        "pattern": "(psql|pgcli|mysql|mariadb|sqlite3|duckdb|sqlcmd|clickhouse-client)\\b[\\s\\S]*\\b(DROP\\s+(TABLE|DATABASE|SCHEMA|VIEW|INDEX|ROLE|USER|EXTENSION)|TRUNCATE(\\s+TABLE)?|DELETE\\s+FROM)\\b",
+        "description": "destructive SQL statement",
+        "regex": true
+      },
+      {
+        "pattern": "git\\s+clean\\b.*-[a-z]*f",
+        "description": "git clean (removes untracked files)",
+        "regex": true
+      },
+      {
+        "pattern": "git\\s+reset\\b.*--hard",
+        "description": "git reset --hard (loses uncommitted changes)",
+        "regex": true
+      },
+      {
+        "pattern": "find\\b.*-delete\\b",
+        "description": "file deletion (find -delete)",
+        "regex": true
+      },
+      {
+        "pattern": "find\\b.*-exec\\s+rm\\b",
+        "description": "file deletion (find -exec rm)",
+        "regex": true
+      },
+      {
+        "pattern": "(curl|wget)\\b[^|]*\\|\\s*(ba)?sh\\b",
+        "description": "remote code execution (pipe to shell)",
+        "regex": true
+      },
+      {
+        "pattern": ">\\s*/dev/sd[a-z]",
+        "description": "write to raw block device",
+        "regex": true
+      }
+    ],
+    "autoDenyPatterns": [
+      {
+        "pattern": "rm\\s+(-[a-zA-Z]+\\s+)*(/|~|\\$HOME|\\$\\{HOME\\})(\\s|$)",
+        "description": "catastrophic rm target (/ or home)",
+        "regex": true
+      },
+      {
+        "pattern": "rm\\s+(-[a-zA-Z]+\\s+)*(/|~|\\$HOME|\\$\\{HOME\\}|\\.|\\.\\.)/\\*",
+        "description": "catastrophic rm wildcard target",
+        "regex": true
+      }
+    ],
+    "allowedPatterns": []
+  },
+  "version": "0.9.0-20260327"
+}
