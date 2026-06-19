@@ -21,7 +21,7 @@ ctrl-enter = "actions:edit"
 
 [actions.cd]
 description = "Open a new shell in the selected repository"
-command = "cd '{}' && $SHELL"
+command = "cd {} && $SHELL"
 mode = "execute"
 
 [actions.edit]

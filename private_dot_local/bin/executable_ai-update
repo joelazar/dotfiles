@@ -13,10 +13,10 @@ brew upgrade codex
 echo
 
 echo "🥧 Update Pi"
-pi update --self
+pi update --all
 echo
 
-echo "🥧 Update Pi extensions"
+echo "🥧 Update Pi local packages"
 "${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
 echo
 

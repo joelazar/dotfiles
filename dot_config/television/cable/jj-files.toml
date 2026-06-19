@@ -22,5 +22,5 @@ mode = "execute"
 
 [actions.restore]
 description = "Discard changes to the selected file"
-command = "jj restore '{}'"
+command = "jj restore {}"
 mode = "fork"
