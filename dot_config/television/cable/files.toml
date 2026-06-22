@@ -5,16 +5,14 @@ requirements = ["fd", "bat"]
 
 [source]
 command = [
-  { name = "Files",          run = "fd -t f" },
-  { name = "Files +ignored", run = "fd -t f -I" },
-  { name = "Files +hidden",  run = "fd -t f -H -I" },
-  { name = "Dirs",           run = "fd -t d" },
-  { name = "Dirs +ignored",  run = "fd -t d -I" },
-  { name = "Dirs +hidden",   run = "fd -t d -H -I" },
+  { name = "Files", run = "git ls-files 2>/dev/null || fd -t f" },
+  { name = "Files +ignored +hidden", run = "fd -t f -I -H" },
+  { name = "Dirs", run = "fd -t d" },
+  { name = "Dirs +ignored +hidden", run = "fd -t d -I -H" },
 ]
 
 [preview]
-command = "if test -d '{}'; ls -la '{}'; else; bat -n --color=always '{}'; end"
+command = "if test -d '{}'; ls -la '{}'; else if test -f '{}'; bat -n --color=always '{}'; else; echo '{}'; end"
 shell = "fish"
 env = { BAT_THEME = "ansi" }
 
