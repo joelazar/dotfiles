@@ -48,17 +48,18 @@ A few quick facts:
 
 ## What lives here 📁
 
-| Path                                                                                                                     | What it contains                                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more          |
-| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, prompts, themes, modes, and local extensions                                                                        |
-| [`dot_agents/`](dot_agents/)                                                                                             | Local skill library organized into `skills/`, `frontend-skills/`, and `python-skills/`, plus `improve-skill` and `skill-creator` meta-tools |
-| [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                                   |
-| [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                                       |
-| [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                               |
-| [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                                    |
-| [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                                           |
-| [`Brewfile.private`](Brewfile.private), [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                                |
+| Path                                                                                                                     | What it contains                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more                |
+| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, prompts, themes, modes, and local extensions                                                                              |
+| [`dot_agents/`](dot_agents/)                                                                                             | Local skill library in `skills/`, tracked alongside the global skill lock file [`dot_agents/dot_skill-lock.json`](dot_agents/dot_skill-lock.json) |
+| [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration                                                                                                                         |
+| [`dot_claude-work/`](dot_claude-work/)                                                                                   | Separate Claude Code profile for work                                                                                                             |
+| [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templates                                                                                                                     |
+| [`dot_ipython/`](dot_ipython/)                                                                                           | IPython profile config                                                                                                                            |
+| [`private_dot_local/bin/`](private_dot_local/bin/)                                                                       | Personal utility scripts                                                                                                                          |
+| [`scripts/`](scripts/)                                                                                                   | Shared helper scripts used by install/setup flows, including `pi-packages-update` and `pi-extensions-sync`                                        |
+| [`Brewfile.private`](Brewfile.private), [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                                      |
 
 ---
 
@@ -101,7 +102,7 @@ A lot of this setup is about moving around quickly:
 - [Yazi](https://yazi-rs.github.io/) for file management via [`dot_config/yazi/`](dot_config/yazi/)
 - [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) for fast terminal navigation
 - [Eza](https://github.com/eza-community/eza) for directory listings via [`dot_config/eza/`](dot_config/eza/)
-- [Television](https://github.com/alexpasmantier/television) with **97 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
+- [Television](https://github.com/alexpasmantier/television) with **105 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
 
 Those Television channels cover far more than files. There are pickers for git branches, worktrees, diffs, repositories, Docker and Kubernetes resources, AWS resources, ports, launchd services, recent files, markdown search, and more.
 
@@ -153,32 +154,32 @@ Pi is where most of the custom work happens.
 
 The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 
-- Catppuccin Mocha theme
+- Catppuccin Mocha theme in [`dot_pi/agent/themes/`](dot_pi/agent/themes/)
 - local model definitions in [`dot_pi/agent/models.json`](dot_pi/agent/models.json)
-- path blocking for secrets and sensitive files in [`dot_pi/agent/path-policy.json`](dot_pi/agent/path-policy.json)
-- prompt templates in [`dot_pi/agent/prompts/`](dot_pi/agent/prompts/)
-- a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json)
+- guardrails for secrets, sensitive files, and permissions in [`dot_pi/agent/extensions/guardrails.json`](dot_pi/agent/extensions/guardrails.json)
+- a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json) that tracks shared keys while preserving local-only ones
 
-Models are switched with Pi's built-in selector, bound to `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels` in the managed settings.
+Models cycle forward with `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels` in the managed settings.
 
 ### Local Pi extensions 🧩
 
-There are **9 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
+There are **12 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
 
-- `default-tools` to enable `grep` and `find` by default
-- `lazygit` and `ghostty` integrations
-- `path-policy`, `permission-gate`, and `sandbox` for guardrails
-- `todos`, `loop`, `session-breakdown`, and `auto-session-name` for session management
-- `uv` to steer Python workflows toward `uv`
-- `whimsical` for diagram generation
+- `lazygit` integration
+- `sandbox` and the `guardrails.json` config for policy and permission control
+- `answer`, `context`, and `split-fork` for session and context handling
+- `commit` and `pr-create` for git and GitHub workflows
+- `copy-command`, `cwd-history`, and `export-md` for everyday shortcuts
+- `project-trust` and `anthropic-extra` for provider and trust setup
+- `private_rtk.ts`, which rewrites bash commands through `rtk` to save tokens
 
 ### Local skills 🎯
 
 The skill library under [`dot_agents/`](dot_agents/) uses the `skills` CLI's global lock file, tracked as [`dot_agents/dot_skill-lock.json`](dot_agents/dot_skill-lock.json) and applied to `~/.agents/.skill-lock.json`.
 
-Local skills live under [`dot_agents/skills/`](dot_agents/skills/). Remote skills are tracked in the lock file and updated with `skills update -g`.
+Local skills live under [`dot_agents/skills/`](dot_agents/skills/) and include `exe-dev`, `github`, `listen-later`, `mermaid`, `presenterm`, `reddit`, `session-analyzer`, `simplify`, `uv`, and `web-search`, plus symlinked `kagi-cli` and `save-to-spotify`. Remote skills are tracked in the lock file and updated with `skills update -g`.
 
-Two meta-tools, `improve-skill` and `skill-creator`, live at the `dot_agents/` level. They're for building and evaluating new skills rather than using them directly.
+The [`skills-invocation`](private_dot_local/bin/executable_skills-invocation) script re-applies the local invocation policy after `skills update` re-clones github-sourced skills.
 
 ---
 
@@ -190,14 +191,14 @@ Package installation is split by machine type:
 - [`Brewfile.work`](Brewfile.work)
 - [`Brewfile.workstation`](Brewfile.workstation)
 
-On first apply, [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) takes care of the rest. That script installs Homebrew packages, Bun globals, Go tools, UV tools, GitHub CLI plugins, Yazi plugins, and a few extra utilities.
+On first apply, [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, Yazi plugins, and Magic from Modular.
 
 Some notable pieces from the current setup:
 
-- Bun packages for Pi, Codex usage tooling, Defuddle, Obsidian automation, and Google Workspace CLI access
-- UV-managed tools such as `gitingest`, `pylatexenc`, and `nginx-language-server`
-- GitHub CLI plugins like `gh-dash`, `gh-repo-man`, and `gh-markdown-preview`
-- Casks: Helium browser, Karabiner-Elements, Inkscape, Grafana
+- Node globals managed by mise through [`dot_default-npm-packages`](dot_default-npm-packages): Pi, `gondolin`, `ccusage`, `defuddle`, `npm-check`, `obsidian-headless`, and `skills`
+- UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`) and `pgcli` (with Catppuccin styling and `psycopg[binary]`)
+- GitHub CLI plugins `gh-dash` and `gh-repo-man`
+- Casks vary by machine type, for example Karabiner-Elements, plus Helium browser and Inkscape on the work profile
 
 ---
 
@@ -262,34 +263,42 @@ chezmoi apply            # push source changes into the live home directory
 chezmoi diff             # preview what will change
 ```
 
-There is also a local Pi extension in [`.pi/extensions/chezmoi-auto-apply/`](.pi/extensions/chezmoi-auto-apply/) that automatically runs `chezmoi apply` after agent-driven edits in this repo.
-
 ---
 
 ## Custom scripts 🧑‍💻
 
 Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_local/bin/).
 
-| Script                                                                        | What it does                                                               |
-| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [`agent-md`](private_dot_local/bin/executable_agent-md)                       | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for coding-agent projects |
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                     | Updates Claude Code, Codex, Pi, and Pi extensions                          |
-| [`backup`](private_dot_local/bin/executable_backup)                           | Encrypted backups with `restic` and `age`                                  |
-| [`cht`](private_dot_local/bin/executable_cht)                                 | Quick cheat-sheet lookup via cht.sh                                        |
-| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Runs broader system and tool updates                                       |
-| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Checks terminal font rendering                                             |
-| [`formatter`](private_dot_local/bin/executable_formatter)                     | Formats USB drives and SD cards with a `gum` UI                            |
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)       | Finds git repos recursively and offers interactive actions                 |
-| [`git-reset`](private_dot_local/bin/executable_git-reset)                     | Resets repos back to their default branch state                            |
-| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)       | Creates sibling worktrees for the current repo                             |
-| [`init-windows`](private_dot_local/bin/executable_init-windows)               | Opens my usual app set for a work session                                  |
-| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)         | Triggers Obsidian plugin and theme updates across vaults                   |
-| [`pr-create`](private_dot_local/bin/executable_pr-create)                     | Creates pull requests with a guided interactive prompt                     |
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups                        |
-| [`transfer`](private_dot_local/bin/executable_transfer)                       | Uploads files through transfer.sh                                          |
-| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Repeats a command until it fails                                           |
-| [`update-submodules`](private_dot_local/bin/executable_update-submodules)     | Updates git submodules                                                     |
-| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Shows what is listening on a port and can kill it                          |
+| Script                                                                                  | What it does                                                               |
+| --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [`agent-md`](private_dot_local/bin/executable_agent-md)                                 | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for coding-agent projects |
+| [`ai-update`](private_dot_local/bin/executable_ai-update)                               | Updates Claude Code, Codex, Pi, and Pi local packages                      |
+| [`backup`](private_dot_local/bin/executable_backup)                                     | Encrypted backups with `restic` and `age`                                  |
+| [`chatterbox`](private_dot_local/bin/executable_chatterbox)                             | Local text-to-speech via the Chatterbox TTS model                          |
+| [`cht`](private_dot_local/bin/executable_cht)                                           | Quick cheat-sheet lookup via cht.sh                                        |
+| [`claude-private`](private_dot_local/bin/executable_claude-private)                     | Launches the Claude desktop app with the default profile                   |
+| [`claude-work`](private_dot_local/bin/executable_claude-work)                           | Launches the Claude desktop app with a separate work data dir              |
+| [`code-snippet.applescript`](private_dot_local/bin/executable_code-snippet.applescript) | Raycast script that wraps selected text in a code block                    |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)                       | Runs broader system and tool updates                                       |
+| [`discord-summary`](private_dot_local/bin/executable_discord-summary)                   | Summarizes the last 24h of selected Discord channels via kagi              |
+| [`fonttest`](private_dot_local/bin/executable_fonttest)                                 | Checks terminal font rendering                                             |
+| [`formatter`](private_dot_local/bin/executable_formatter)                               | Formats USB drives and SD cards with a `gum` UI                            |
+| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)                 | Finds git repos recursively and offers interactive actions                 |
+| [`git-reset`](private_dot_local/bin/executable_git-reset)                               | Resets repos back to their default branch state                            |
+| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)                 | Creates sibling worktrees for the current repo                             |
+| [`init-windows`](private_dot_local/bin/executable_init-windows)                         | Opens my usual app set for a work session                                  |
+| [`kokoro`](private_dot_local/bin/executable_kokoro)                                     | Local text-to-speech via the Kokoro ONNX model                             |
+| [`listen-later`](private_dot_local/bin/executable_listen-later)                         | Turns an article, file, or text into a Kokoro-narrated Spotify episode     |
+| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)                   | Triggers Obsidian plugin and theme updates across vaults                   |
+| [`pi`](private_dot_local/bin/executable_pi)                                             | Runs the Pi agent CLI through the mise-managed Node 24 runtime             |
+| [`pr-create`](private_dot_local/bin/executable_pr-create)                               | Creates pull requests with a guided interactive prompt                     |
+| [`skills-invocation`](private_dot_local/bin/executable_skills-invocation)               | Re-applies the skill invocation policy after `skills update`               |
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display)           | Changes the primary display on multi-monitor setups                        |
+| [`transcribe`](private_dot_local/bin/executable_transcribe)                             | Offline audio/video transcription via whisper.cpp                          |
+| [`transfer`](private_dot_local/bin/executable_transfer)                                 | Uploads files through transfer.sh                                          |
+| [`untilfail`](private_dot_local/bin/executable_untilfail)                               | Repeats a command until it fails                                           |
+| [`update-submodules`](private_dot_local/bin/executable_update-submodules)               | Updates git submodules                                                     |
+| [`wtfport`](private_dot_local/bin/executable_wtfport)                                   | Shows what is listening on a port and can kill it                          |
 
 Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
 
@@ -309,12 +318,12 @@ Some helper functions and setup patterns were originally adapted from [alrra/dot
 
 Parts of the Pi setup are also adapted from or inspired by work from:
 
-| Author          | GitHub                                       | Contributions                                                                                                                                                                                                                       |
-| --------------- | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Mario Zechner   | [@badlogic](https://github.com/badlogic)     | Pi itself, plus extensions and skills adapted from the Pi ecosystem, including `antigravity-image-gen`, `editor-with-context`, `notify`, `permission-gate`, `sandbox`, `session-name`, and `youtube-transcript`-related work        |
-| Armin Ronacher  | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions and skills adapted from `agent-stuff`, including `answer`, `context`, `loop`, `prompt-editor`, `session-breakdown`, `todos`, `whimsical`, `frontend-design`, `github`, `humanizer`, `summarize`, `uv`, and `web-browser` |
-| Daniel Griesser | [@HazAT](https://github.com/HazAT)           | `ghostty` extension from `pi-ghostty`                                                                                                                                                                                               |
-| Fero            | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from the Pi skills ecosystem                                                                                                                                                                               |
+| Author         | GitHub                                       | Contributions                                                                                     |
+| -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Mario Zechner  | [@badlogic](https://github.com/badlogic)     | Pi itself, plus extensions and skills adapted from the Pi ecosystem, such as `sandbox`            |
+| Armin Ronacher | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions and skills adapted from `agent-stuff`, including `answer`, `context`, and `split-fork` |
+| Aliou Diallo   | [@aliou](https://github.com/aliou)           | `pi-guardrails` and `pi-processes` packages                                                       |
+| Fero           | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from the Pi skills ecosystem                                             |
 
 ---
 
