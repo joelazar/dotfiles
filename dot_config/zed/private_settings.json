@@ -591,6 +591,15 @@
         "semanticTokens": true,
         "directoryFilters": ["-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules"],
         "experimentalPostfixCompletions": true,
+        "ui.codelenses": {
+          "gc_details": true,
+        },
+        "ui.diagnostic.annotations": {
+          "escape": true,
+          "inline": true,
+          "bounds": true,
+          "nil": true,
+        },
         "codelenses": {
           "gc_details": true,
           "generate": true,
