@@ -9,7 +9,7 @@ import {
   type Api,
   type Model,
   type UserMessage,
-} from "@earendil-works/pi-ai";
+} from "@earendil-works/pi-ai/compat";
 import { BorderedLoader } from "@earendil-works/pi-coding-agent";
 import type {
   ExtensionAPI,

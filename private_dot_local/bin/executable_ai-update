@@ -19,8 +19,3 @@ echo
 echo "🥧 Update Pi local packages"
 "${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
 echo
-
-ask_for_confirmation "📊 Do you want to update gcx Agent Skills?"
-if answer_is_yes; then
-    gcx agent skills install --all --force
-fi
