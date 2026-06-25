@@ -7,14 +7,14 @@ tap "hashicorp/tap", trusted: true
 tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
 tap "macos-fuse-t/cask", trusted: true
-tap "microck/kagi"
+tap "microck/kagi", "https://github.com/Microck/homebrew-kagi"
 tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
 tap "openai/tools"
 tap "oven-sh/bun", trusted: true
 tap "protonpass/tap", trusted: true
-tap "schpet/tap"
+tap "schpet/tap", trusted: { formulae: ["linea"] }
 tap "tw93/tap"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
@@ -204,6 +204,8 @@ brew "ollama"
 brew "opentofu"
 # Painless compression and decompression for your terminal
 brew "ouch"
+# AI agent toolkit
+brew "pi-coding-agent"
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager
@@ -434,7 +436,6 @@ uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/gondolin"
-npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
 npm "corepack"
 npm "defuddle"
