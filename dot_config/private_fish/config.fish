@@ -143,6 +143,9 @@ zoxide init fish | source
 mise activate fish | source
 atuin init fish --disable-up-arrow | source
 source $HOME/.config/television/shell/integration.fish
+for mode in default insert
+    bind --mode $mode \ct tv_channels
+end
 
 # Done plugin config
 set -U __done_min_cmd_duration 10000

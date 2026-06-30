@@ -93,6 +93,9 @@
             "pattern": "**/secrets/**"
           },
           {
+            "pattern": "**/vault_password"
+          },
+          {
             "pattern": "~/.aws/**"
           },
           {
