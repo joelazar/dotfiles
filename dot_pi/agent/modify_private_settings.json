@@ -15,7 +15,12 @@ MANAGED_CONFIG='{
   "enabledModels": [
     "openai-codex/gpt-5.5",
     "anthropic/claude-opus-4-8",
-    "anthropic-extra/claude-opus-4-8"
+    "anthropic-extra/claude-opus-4-8",
+    "anthropic-extra/claude-sonnet-5",
+    "openrouter/z-ai/glm-5.2",
+    "openrouter/deepseek/deepseek-v4-flash",
+    "openrouter/deepseek/deepseek-v4-pro",
+    "anthropic/claude-sonnet-5"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
@@ -44,7 +49,7 @@ MANAGED_CONFIG='{
 }'
 
 # Local-only keys — preserved from the existing file, never overwritten.
-LOCAL_KEYS='["lastChangelogVersion", "defaultThinkingLevel", "defaultProvider", "defaultModel"]'
+LOCAL_KEYS='["lastChangelogVersion", "defaultThinkingLevel", "defaultProvider", "defaultModel", "outputPad"]'
 
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
