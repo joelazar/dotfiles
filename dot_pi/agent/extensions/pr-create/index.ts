@@ -218,8 +218,8 @@ async function collectLinearLinks(
 
 // Models to try, in order, when generating a PR description.
 const DESCRIPTION_MODELS: string[] = [
-  "anthropic/claude-sonnet-4-6",
-  "openai-codex/gpt-5.5",
+  "anthropic-extra/claude-opus-4-8",
+  "anthropic/claude-opus-4-8",
 ];
 
 /**
@@ -354,7 +354,7 @@ async function generatePrBody(
     try {
       const result = await pi.exec(
         "pi",
-        ["-p", "--no-session", "--model", model, "--thinking", "low", prompt],
+        ["-p", "--no-session", "--model", model, "--thinking", "off", prompt],
         { signal: ctx.signal, timeout: 120_000 },
       );
       if (result.code === 0) {

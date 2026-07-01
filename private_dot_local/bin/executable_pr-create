@@ -173,12 +173,20 @@ Requirements:
 - Output only the PR description body.
 EOF
 
-    if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
-        gum spin --title "Generating PR description with pi..." -- pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
-    else
-        echo "Generating PR description with pi..." >&2
-        pi -p --no-session --model openai-codex/gpt-5.5 --thinking low "$(cat "$prompt_file")" >"$body_file"
-    fi
+    local prompt
+    prompt=$(cat "$prompt_file")
+    local models=(anthropic-extra/claude-opus-4-8 anthropic/claude-opus-4-8)
+    local model
+    for model in "${models[@]}"; do
+        if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
+            gum spin --title "Generating PR description with pi ($model)..." -- pi -p --no-session --model "$model" --thinking off "$prompt" >"$body_file"
+        else
+            echo "Generating PR description with pi ($model)..." >&2
+            pi -p --no-session --model "$model" --thinking off "$prompt" >"$body_file"
+        fi
+        [[ -s $body_file ]] && return 0
+    done
+    return 1
 }
 
 edit_pr_description() {
