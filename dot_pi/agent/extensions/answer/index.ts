@@ -84,32 +84,15 @@ Example output:
   ]
 }`;
 
-const CODEX_MODEL_IDS = [
-  "gpt-5.4-mini",
-  "gpt-5.3-codex-spark",
-  "gpt-5.4",
-  "gpt-5.3-codex",
-];
 const HAIKU_MODEL_ID = "claude-haiku-4-5";
 
 /**
- * Prefer a fast configured Codex model for extraction, then haiku, then the
- * current model.
+ * Prefer haiku for fast extraction, then fall back to the current model.
  */
 async function selectExtractionModel(
   currentModel: Model<Api>,
   modelRegistry: ModelRegistry,
 ): Promise<Model<Api>> {
-  for (const modelId of CODEX_MODEL_IDS) {
-    const codexModel = modelRegistry.find("openai-codex", modelId);
-    if (codexModel) {
-      const auth = await modelRegistry.getApiKeyAndHeaders(codexModel);
-      if (auth.ok) {
-        return codexModel;
-      }
-    }
-  }
-
   const haikuModel = modelRegistry.find("anthropic", HAIKU_MODEL_ID);
   if (!haikuModel) {
     return currentModel;
