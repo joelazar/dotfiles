@@ -13,14 +13,14 @@ MANAGED_CONFIG='{
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "openai-codex/gpt-5.5",
-    "anthropic/claude-opus-4-8",
     "anthropic-extra/claude-opus-4-8",
-    "anthropic-extra/claude-sonnet-5",
-    "openrouter/z-ai/glm-5.2",
+    "anthropic-extra/claude-fable-5",
+    "anthropic/claude-opus-4-8",
+    "anthropic/claude-fable-5",
+    "openai-codex/gpt-5.5",
     "openrouter/deepseek/deepseek-v4-flash",
     "openrouter/deepseek/deepseek-v4-pro",
-    "anthropic/claude-sonnet-5"
+    "openrouter/z-ai/glm-5.2"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
