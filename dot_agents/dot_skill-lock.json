@@ -105,9 +105,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/blader/humanizer.git",
       "skillPath": "SKILL.md",
-      "skillFolderHash": "9600f2b7241cb4eed6ad803abee5ea01d67fe8e4",
+      "skillFolderHash": "1b48564898e999219882660237fde01bf4843a0f",
       "installedAt": "2026-05-25T13:30:00.000Z",
-      "updatedAt": "2026-06-08T08:48:15.298Z"
+      "updatedAt": "2026-07-03T15:57:11.671Z"
     },
     "kagi-cli": {
       "source": "/Users/joelazar/Code/rust/kagi-cli/docs",
@@ -249,18 +249,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/pbakaus/impeccable.git",
       "skillPath": ".agents/skills/impeccable/SKILL.md",
-      "skillFolderHash": "ac166ee0055d8e09737f91b2e4a38c64f1976650",
+      "skillFolderHash": "2e7b84ab4a9ccd5e78f8bcc812042b2461229be2",
       "installedAt": "2026-05-30T10:39:26.849Z",
-      "updatedAt": "2026-06-28T21:03:55.939Z"
+      "updatedAt": "2026-07-03T15:57:18.713Z"
     },
     "last30days": {
       "source": "mvanhorn/last30days-skill",
       "sourceType": "github",
       "sourceUrl": "https://github.com/mvanhorn/last30days-skill.git",
       "skillPath": "skills/last30days/SKILL.md",
-      "skillFolderHash": "6dfec70ff15907612abb15f7fb7c07db3ffb2b34",
+      "skillFolderHash": "a72d37162d3a6ba326c98b20c172200284e60a0c",
       "installedAt": "2026-06-11T20:36:45.909Z",
-      "updatedAt": "2026-06-28T21:03:59.345Z"
+      "updatedAt": "2026-07-03T15:57:22.346Z"
     },
     "hunk-review": {
       "source": "modem-dev/hunk",
