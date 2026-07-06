@@ -1,9 +1,9 @@
 {
   "app.models.clearAll": ["alt+x"],
   "app.model.cycleForward": ["ctrl+space"],
-  "app.model.cycleBackward": [],
+  "app.model.cycleBackward": ["ctrl+shift+space"],
   "app.thinking.cycle": ["alt+t"],
-  "tui.select.down": ["down", "tab", "ctrl+n"],
-  "tui.select.up": ["up", "shift+tab", "ctrl+p"],
-  "tui.input.tab": ["ctrl+y", "ctrl+enter"]
+  "tui.select.down": ["down", "ctrl+n"],
+  "tui.select.up": ["up", "ctrl+p"],
+  "tui.input.tab": ["tab", "ctrl+enter"]
 }
