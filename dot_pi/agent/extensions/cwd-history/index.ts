@@ -50,14 +50,6 @@ class HistoryEditor extends CustomEditor {
   }
 }
 
-function extractText(content: Array<{ type: string; text?: string }>): string {
-  return content
-    .filter((item) => item.type === "text" && typeof item.text === "string")
-    .map((item) => item.text ?? "")
-    .join("")
-    .trim();
-}
-
 function collectUserPromptsFromEntries(entries: Array<any>): PromptEntry[] {
   const prompts: PromptEntry[] = [];
 
@@ -66,7 +58,14 @@ function collectUserPromptsFromEntries(entries: Array<any>): PromptEntry[] {
     const message = entry?.message;
     if (!message || message.role !== "user" || !Array.isArray(message.content))
       continue;
-    const text = extractText(message.content);
+    const text = message.content
+      .filter(
+        (item: { type: string; text?: string }) =>
+          item.type === "text" && typeof item.text === "string",
+      )
+      .map((item: { text?: string }) => item.text ?? "")
+      .join("")
+      .trim();
     if (!text) continue;
     const timestamp = Number(
       message.timestamp ?? entry.timestamp ?? Date.now(),
@@ -160,11 +159,13 @@ async function loadPromptHistoryForCwd(
       .split("\n")
       .filter(Boolean)
       .map((line) => {
+        let entry: unknown;
         try {
-          return JSON.parse(line);
+          entry = JSON.parse(line);
         } catch {
-          return undefined;
+          // The tail can start mid-record; skip lines that are not valid JSON.
         }
+        return entry;
       })
       .filter(Boolean);
     for (const prompt of collectUserPromptsFromEntries(entries)) {

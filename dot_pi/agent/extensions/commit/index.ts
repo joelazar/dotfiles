@@ -215,12 +215,13 @@ function buildCommitUserMessage(
 
 function extractText(
   content: ReadonlyArray<{ type: string; text?: string }>,
-): string {
-  return content
+): string | null {
+  const text = content
     .filter((c): c is { type: "text"; text: string } => c.type === "text")
     .map((c) => c.text)
     .join("\n")
     .trim();
+  return text || null;
 }
 
 function buildCommitUrl(remoteUrl: string, hash: string): string {
@@ -300,8 +301,7 @@ async function generateCommitMessage(
       return null;
     }
 
-    const text = extractText(response.content);
-    return text || null;
+    return extractText(response.content);
   }
 
   return ctx.ui.custom<string | null>((tui, theme, _kb, done) => {
@@ -332,8 +332,7 @@ async function generateCommitMessage(
         return null;
       }
 
-      const text = extractText(response.content);
-      return text || null;
+      return extractText(response.content);
     };
 
     doGenerate()

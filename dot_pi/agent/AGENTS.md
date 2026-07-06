@@ -3,6 +3,7 @@
 ## General preferences
 
 - Always address me using my name 'Joe'
+- Keep explanations concise and easy to understand
 
 ## Shell tool preferences
 

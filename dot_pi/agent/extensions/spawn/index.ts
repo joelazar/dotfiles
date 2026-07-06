@@ -103,8 +103,9 @@ async function completeDirectories(
   try {
     entries = await fs.readdir(listDir, { withFileTypes: true });
   } catch {
-    return null;
+    // Directory missing or unreadable; no completions to offer.
   }
+  if (!entries) return null;
 
   const fragmentLower = fragment.toLowerCase();
   const showHidden = fragment.startsWith(".");

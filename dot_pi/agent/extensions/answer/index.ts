@@ -167,15 +167,14 @@ function parseExtractionResult(text: string): ExtractionResult | null {
   }
 
   for (const candidate of candidates) {
+    let result: ExtractionResult | null = null;
     try {
-      const result = toExtractionResult(
-        parseJsonWithRepair<unknown>(candidate),
-      );
-      if (result) {
-        return result;
-      }
+      result = toExtractionResult(parseJsonWithRepair<unknown>(candidate));
     } catch {
-      // Try the next candidate.
+      // Malformed JSON; fall through to the next candidate.
+    }
+    if (result) {
+      return result;
     }
   }
 

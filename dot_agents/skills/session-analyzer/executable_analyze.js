@@ -97,36 +97,38 @@ function runSubagent(prompt, cwd) {
         const rl = createInterface({ input: child.stdout });
 
         rl.on("line", (line) => {
+            let event;
             try {
-                const event = JSON.parse(line);
-                if (event.type === "message_update" && event.assistantMessageEvent) {
-                    if (event.assistantMessageEvent.type === "text_delta" && event.assistantMessageEvent.delta) {
-                        textBuffer += event.assistantMessageEvent.delta;
-                    }
-                } else if (event.type === "tool_execution_start" && event.toolName) {
-                    if (textBuffer.trim()) {
-                        console.log(`  ${truncateLine(textBuffer, 100)}`);
-                        textBuffer = "";
-                    }
-                    let argsStr = "";
-                    if (event.args) {
-                        if (event.toolName === "read") {
-                            argsStr = event.args.path || "";
-                            if (event.args.offset) argsStr += ` offset=${event.args.offset}`;
-                            if (event.args.limit) argsStr += ` limit=${event.args.limit}`;
-                        } else if (event.toolName === "write") {
-                            argsStr = event.args.path || "";
-                        }
-                    }
-                    console.log(`  [${event.toolName}] ${argsStr}`);
-                } else if (event.type === "turn_end") {
-                    if (textBuffer.trim()) {
-                        console.log(`  ${truncateLine(textBuffer, 100)}`);
-                    }
+                event = JSON.parse(line);
+            } catch {
+                // Not a JSON event line; skip it.
+            }
+            if (!event) return;
+            if (event.type === "message_update" && event.assistantMessageEvent) {
+                if (event.assistantMessageEvent.type === "text_delta" && event.assistantMessageEvent.delta) {
+                    textBuffer += event.assistantMessageEvent.delta;
+                }
+            } else if (event.type === "tool_execution_start" && event.toolName) {
+                if (textBuffer.trim()) {
+                    console.log(`  ${truncateLine(textBuffer, 100)}`);
                     textBuffer = "";
                 }
-            } catch {
-                // Ignore malformed JSON
+                let argsStr = "";
+                if (event.args) {
+                    if (event.toolName === "read") {
+                        argsStr = event.args.path || "";
+                        if (event.args.offset) argsStr += ` offset=${event.args.offset}`;
+                        if (event.args.limit) argsStr += ` limit=${event.args.limit}`;
+                    } else if (event.toolName === "write") {
+                        argsStr = event.args.path || "";
+                    }
+                }
+                console.log(`  [${event.toolName}] ${argsStr}`);
+            } else if (event.type === "turn_end") {
+                if (textBuffer.trim()) {
+                    console.log(`  ${truncateLine(textBuffer, 100)}`);
+                }
+                textBuffer = "";
             }
         });
 

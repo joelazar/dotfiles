@@ -166,6 +166,23 @@ async function pickTitle(
   }
 }
 
+async function tryExec(
+  pi: ExtensionAPI,
+  ctx: ExtensionCommandContext,
+  cmd: string,
+  args: string[],
+  timeout: number,
+): Promise<string | undefined> {
+  let out: string | undefined;
+  try {
+    const r = await pi.exec(cmd, args, { signal: ctx.signal, timeout });
+    out = r.code === 0 ? r.stdout : undefined;
+  } catch {
+    // Command missing or aborted; callers fall back to other sources.
+  }
+  return out;
+}
+
 async function autoTitle(
   pi: ExtensionAPI,
   ctx: ExtensionCommandContext,
@@ -175,17 +192,10 @@ async function autoTitle(
   const normalized = normalizeTitleCandidate(t);
   if (t && TITLE_RE.test(t)) return t;
   if (normalized && TITLE_RE.test(normalized)) return normalized;
-  try {
-    const r = await pi.exec("git", ["log", "-1", "--pretty=%s"], {
-      signal: ctx.signal,
-      timeout: 5_000,
-    });
-    if (r.code === 0) {
-      const s = normalizeTitleCandidate(r.stdout);
-      if (s && TITLE_RE.test(s)) return s;
-    }
-  } catch {
-    // ignore
+  const subject = await tryExec(pi, ctx, "git", ["log", "-1", "--pretty=%s"], 5_000);
+  if (subject) {
+    const s = normalizeTitleCandidate(subject);
+    if (s && TITLE_RE.test(s)) return s;
   }
   return undefined;
 }
@@ -235,19 +245,14 @@ async function resolveBaseRef(
   if (!candidate) return undefined;
   const bare = candidate.replace(/^origin\//, "");
   for (const ref of [`origin/${bare}`, bare]) {
-    try {
-      const r = await pi.exec(
-        "git",
-        ["rev-parse", "--verify", "--quiet", ref],
-        {
-          signal: ctx.signal,
-          timeout: 5_000,
-        },
-      );
-      if (r.code === 0 && r.stdout.trim()) return ref;
-    } catch {
-      // ignore
-    }
+    const r = await tryExec(
+      pi,
+      ctx,
+      "git",
+      ["rev-parse", "--verify", "--quiet", ref],
+      5_000,
+    );
+    if (r?.trim()) return ref;
   }
   return undefined;
 }
@@ -431,41 +436,24 @@ async function detectDefaultBranch(
   ctx: ExtensionCommandContext,
 ): Promise<string | undefined> {
   // Try the symbolic-ref of origin/HEAD first (no network).
-  try {
-    const r = await pi.exec(
-      "git",
-      ["symbolic-ref", "--short", "refs/remotes/origin/HEAD"],
-      { signal: ctx.signal, timeout: 5_000 },
-    );
-    if (r.code === 0) {
-      const s = r.stdout.trim().replace(/^origin\//, "");
-      if (s) return s;
-    }
-  } catch {
-    // ignore
-  }
+  const symbolic = await tryExec(
+    pi,
+    ctx,
+    "git",
+    ["symbolic-ref", "--short", "refs/remotes/origin/HEAD"],
+    5_000,
+  );
+  const local = symbolic?.trim().replace(/^origin\//, "");
+  if (local) return local;
   // Fall back to gh repo view.
-  try {
-    const r = await pi.exec(
-      "gh",
-      [
-        "repo",
-        "view",
-        "--json",
-        "defaultBranchRef",
-        "--jq",
-        ".defaultBranchRef.name",
-      ],
-      { signal: ctx.signal, timeout: 10_000 },
-    );
-    if (r.code === 0) {
-      const s = r.stdout.trim();
-      if (s) return s;
-    }
-  } catch {
-    // ignore
-  }
-  return undefined;
+  const remote = await tryExec(
+    pi,
+    ctx,
+    "gh",
+    ["repo", "view", "--json", "defaultBranchRef", "--jq", ".defaultBranchRef.name"],
+    10_000,
+  );
+  return remote?.trim() || undefined;
 }
 
 async function detectLinearFromBranch(

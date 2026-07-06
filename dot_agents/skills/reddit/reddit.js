@@ -98,10 +98,7 @@ async function cmdPost(opts) {
   if (!opts.target) { console.error("Error: post requires a URL or post path"); process.exit(1); }
   // Extract path from full URL or use as-is
   let path = opts.target;
-  try {
-    const u = new URL(path);
-    path = u.pathname;
-  } catch {}
+  if (URL.canParse(path)) path = new URL(path).pathname;
   // Ensure path ends cleanly
   path = path.replace(/\/$/, "");
 

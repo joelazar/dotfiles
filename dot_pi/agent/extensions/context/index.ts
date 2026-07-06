@@ -31,7 +31,6 @@ import {
 import os from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
-import { existsSync } from "node:fs";
 
 function formatUsd(cost: number): string {
   if (!Number.isFinite(cost) || cost <= 0) return "$0.00";
@@ -86,7 +85,6 @@ function getAgentDir(): string {
 async function readFileIfExists(
   filePath: string,
 ): Promise<{ path: string; content: string; bytes: number } | null> {
-  if (!existsSync(filePath)) return null;
   try {
     const buf = await fs.readFile(filePath);
     return {
@@ -94,7 +92,8 @@ async function readFileIfExists(
       content: buf.toString("utf8"),
       bytes: buf.byteLength,
     };
-  } catch {
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
     return null;
   }
 }
@@ -160,7 +159,7 @@ function parseDisableModelInvocationFromFrontmatter(
 async function readDisableModelInvocation(
   filePath: string,
 ): Promise<boolean> {
-  if (!filePath || !existsSync(filePath)) return false;
+  if (!filePath) return false;
   try {
     // Frontmatter sits at the top; read a small slice instead of the full file.
     const fh = await fs.open(filePath, "r");
@@ -173,7 +172,8 @@ async function readDisableModelInvocation(
     } finally {
       await fh.close();
     }
-  } catch {
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
     return false;
   }
 }
