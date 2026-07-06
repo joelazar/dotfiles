@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# kagi-only web research dispatcher.
-# Modes: search | quick | ask | summarize.
+# Web research dispatcher.
+# Modes: search | quick | ask | summarize (kagi) | google (agy) | claude (claude-code).
 # Every mode post-processes kagi-cli JSON down to the minimal meaningful text
 # so the caller's context never sees HTML, favicons, traces, or metadata.
 set -uo pipefail
@@ -23,6 +23,8 @@ Modes:
   quick      Grounded answer with ranked source links. Default for facts.
   ask        Kagi Assistant for deeper synthesis / multi-step reasoning.
   summarize  Condense one URL into key text.
+  google     Google-grounded answer via Antigravity CLI (agy).
+  claude     Web-grounded answer via Claude Code (claude -p).
 
 Flags:
   --limit <n>          search: number of results (default 5)
@@ -36,6 +38,8 @@ Examples:
   search.sh search "vite 7 breaking changes" --limit 8
   search.sh ask "compare uv vs poetry for monorepos"
   search.sh summarize "https://example.com/article"
+  search.sh google "weather in budapest next 7 days"
+  search.sh claude "weather in budapest next 7 days"
 EOF
 }
 
@@ -89,12 +93,31 @@ done
     exit 2
 }
 
+cd "$HOME" || exit 1
+
+PROMPT="Search the web for: $INPUT. Give a compact, factual answer with source URLs."
+
+case "$MODE" in
+google)
+    command -v agy >/dev/null 2>&1 || {
+        echo "ERROR: agy CLI not on PATH" >&2
+        exit 127
+    }
+    exec agy -p "$PROMPT" --print-timeout 2m
+    ;;
+claude)
+    command -v claude >/dev/null 2>&1 || {
+        echo "ERROR: claude CLI not on PATH" >&2
+        exit 127
+    }
+    exec claude -p "$PROMPT" --allowedTools WebSearch WebFetch
+    ;;
+esac
+
 command -v kagi >/dev/null 2>&1 || {
     echo "ERROR: kagi CLI not on PATH" >&2
     exit 127
 }
-# cd $HOME so kagi-cli resolves the session token in ~/.kagi.toml
-cd "$HOME" || exit 1
 
 case "$MODE" in
 search)

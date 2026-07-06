@@ -1,14 +1,10 @@
 ---
 name: web-search
-description: "Default for web lookup/research/latest/current/URL/package/docs questions. Backed entirely by kagi-cli (search, quick answer, assistant, summarize). Returns only minimal, meaningful text — no HTML, traces, or metadata. Prefer this over provider skills unless the user explicitly names another tool."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions. Backed by kagi-cli, plus google (agy) and claude (claude-code) modes. Returns only minimal, meaningful text."
 allowed-tools: [Bash, Read]
 ---
 
 # Web Search
-
-Single entry point for web research, powered by `kagi-cli`. Each mode strips the
-raw JSON down to the smallest meaningful payload (answer text + canonical URLs),
-so your context never fills with HTML, favicon proxies, traces, or scoring noise.
 
 ## Modes
 
@@ -18,10 +14,13 @@ so your context never fills with HTML, favicon proxies, traces, or scoring noise
 | `search`    | `kagi search`                 | You want raw result links to pick from, no synthesis.         |
 | `ask`       | `kagi assistant`              | Deeper synthesis, comparisons, multi-step reasoning.          |
 | `summarize` | `kagi summarize --subscriber` | Condense one known URL into key text.                         |
+| `google`    | `agy -p` (Antigravity CLI)    | User says "use google" / "google it". Google-grounded agent.  |
+| `claude`    | `claude -p` (Claude Code)     | User says "use claude" / "ask claude". Web-grounded agent.    |
 
 Start with `quick`. Escalate to `ask` only when the answer needs reasoning or
 synthesis across sources. Use `search` when you specifically want a link list.
-Use `summarize` only when you already have a URL.
+Use `summarize` only when you already have a URL. Use `google` when the user
+explicitly asks for Google, `claude` when the user explicitly asks for Claude.
 
 ## Usage
 
@@ -47,6 +46,12 @@ Examples:
 # Condense one page
 ~/.agents/skills/web-search/search.sh summarize "https://example.com/article"
 ~/.agents/skills/web-search/search.sh summarize "<url>" --summary-type keypoints
+
+# User asked for Google — grounded answer via Antigravity CLI
+~/.agents/skills/web-search/search.sh google "weather in budapest next 7 days"
+
+# User asked for Claude — grounded answer via Claude Code
+~/.agents/skills/web-search/search.sh claude "weather in budapest next 7 days"
 ```
 
 ## Flags
@@ -66,6 +71,8 @@ The script never forwards raw kagi-cli JSON. It extracts only:
 - `search` → `title`, `url`, `snippet` per result; snippets whitespace-collapsed.
 - `ask` → assistant markdown text only (via `--format markdown`).
 - `summarize` → `.data.markdown` only.
+- `google` → plain-text agent response from `agy -p` (no JSON involved).
+- `claude` → plain-text agent response from `claude -p` (no JSON involved).
 
 Keep queries tight and prefer `quick`/`search` before `ask`, since the assistant
 returns the most text. Raise `--limit` deliberately, not by default.
@@ -76,6 +83,9 @@ returns the most text. Raise `--limit` deliberately, not by default.
 - `~/.kagi.toml` with a session token (the script `cd`s to `$HOME` so kagi-cli
   resolves it). Set up once with `kagi auth`.
 - `jq` for the minimal-output post-processing.
+- `google` mode only: `agy` (Antigravity CLI) on `PATH`, authenticated via its
+  interactive Google OAuth flow.
+- `claude` mode only: `claude` (Claude Code) on `PATH`, authenticated.
 
 ## When NOT to use this skill
 
