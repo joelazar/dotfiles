@@ -41,11 +41,15 @@ const commitStyleInstructions = `**IMPORTANT**: Before creating commit messages:
    - :rewind: revert
    - :tada: initial commit / project setup
    Default to :wrench: ONLY for genuine config tweaks. For everything else, pick the matching emoji above.
-4. **Body — when to include one**:
-   - NO body for: single-file edits, renames, version bumps, config tweaks, simple removals, one-line fixes, anything obvious from the subject.
-   - YES body for: multiple unrelated files, refactors that need rationale, behavior changes, anything where a teammate would ask "why?".
-   - When in doubt, omit the body. Subject-only commits are good.
-5. **Body format** (when present): wrap at ~72 chars, use \`-\` bullets, one per logical change. Max 3-5 bullets. No prose paragraphs, no wall of text. Skip the body entirely rather than padding it.`;
+4. **Subject — name the concrete change, not the file**:
+   - Say WHAT changed (the thing added/removed/renamed/fixed), not just "update config" or "tweak settings". \`add git-standup and orion cask\` beats \`update brewfile\`; \`enable claude-fable-5 model\` beats \`update enabled models configuration\`.
+   - Lowercase, imperative, ~50 chars, one change.
+   - **Avoid "and" in the subject.** Needing "and" to fit two things in means the diff has more than one logical change — either pick the dominant one for the subject and put the rest in the body, or (better) suggest the user run \`atomic-commit\` instead. Never cram two unrelated changes into one subject.
+5. **Body — include by default for multi-change commits**:
+   - A body IS required when: the diff touches 2+ files for distinct concerns, OR contains 2+ logical changes, OR a teammate reading just the subject still wouldn't know what actually changed.
+   - A body is optional only for: a single logical change obvious from the subject (one-file rename, one version bump, one one-line fix, one config toggle).
+   - **When in doubt, include the body.** A short, accurate body is always better than a vague subject with no detail. Do not omit just because the files are "only configs" — distinct config changes are exactly when a body helps.
+6. **Body format**: wrap at ~72 chars, use \`\-\` bullets, one per logical change. Name the concrete delta on each line (what was added/removed/changed, ideally with the file or scope), not "update X". Max 3-5 bullets; if there are more, group related ones. No prose paragraphs, no wall of text.`;
 
 const COMMIT_MESSAGE_SYSTEM_PROMPT = `You are a git commit message generator.
 
