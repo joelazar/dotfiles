@@ -162,15 +162,18 @@ generate_pr_description() {
     temp_files+=("$prompt_file")
 
     cat >"$prompt_file" <<'EOF'
-Use the humanizer skill. Generate a short GitHub pull request description for the current branch.
+Use the humanizer skill's audit loop internally to self-check the prose, then return ONLY the final result. Do not output the draft, the "still-AI" bullets, or any summary of changes — output only the final PR body, nothing else.
+
+Generate a short GitHub pull request description for the current branch.
 
 Requirements:
-- Keep it concise and natural.
+- Concise and natural.
 - Summarize actual code/config changes in this PR.
+- Start directly with the bullets. No summary or intro sentence; the title is a separate field.
 - Prefer 2-4 bullets.
 - Do not invent details.
 - Do not include Linear ticket lines.
-- Output only the PR description body.
+- Output only the final PR description body.
 EOF
 
     local prompt

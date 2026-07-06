@@ -425,6 +425,7 @@ export default function goalExtension(pi: ExtensionAPI) {
   let activeSinceMs: number | null = null;
   let activeGoalIdAtAgentStart: string | null = null;
   let continuationQueued = false;
+  let goalToolsRegistered = false;
 
   function currentGoalSnapshot(): Goal | null {
     if (!goal) return null;
@@ -635,6 +636,100 @@ export default function goalExtension(pi: ExtensionAPI) {
       activeSinceMs = Date.now();
     }
     updateStatus(ctx);
+    if (goal) {
+      registerGoalTools();
+    }
+  }
+
+  function registerGoalTools(): void {
+    if (goalToolsRegistered) return;
+    goalToolsRegistered = true;
+
+    pi.registerTool({
+      name: "get_goal",
+      label: "Get Goal",
+      description:
+        "Get the current goal for this thread, including status, budgets, token and elapsed-time usage, and remaining token budget.",
+      promptSnippet:
+        "Get the current long-running thread goal and its usage/budget state",
+      parameters: Type.Object({}),
+      async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
+        const snapshot = currentGoalSnapshot();
+        const response = goalResponse(
+          snapshot,
+          ctx.sessionManager.getSessionId(),
+        );
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+          details: response,
+        };
+      },
+    });
+
+    pi.registerTool({
+      name: "create_goal",
+      label: "Create Goal",
+      description:
+        "Create a goal only when explicitly requested by the user or system/developer instructions; do not infer goals from ordinary tasks. Set token_budget only when an explicit token budget is requested. Fails if an unfinished goal exists; if the previous goal is complete, it is replaced.",
+      promptSnippet:
+        "Create a new active long-running thread goal when explicitly requested",
+      promptGuidelines: [
+        "Use create_goal only when the user explicitly asks to create a long-running goal; do not infer goals from ordinary tasks.",
+        "Use update_goal with status complete only when the active goal is actually achieved and no required work remains.",
+        "Use update_goal with status blocked only when the strict blocked audit is satisfied.",
+      ],
+      parameters: CreateGoalParams,
+      async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
+        if (goal && isUnfinishedGoal(goal)) {
+          throw new Error(
+            "cannot create a new goal because this thread already has an unfinished goal; complete it with update_goal or ask the user to clear or replace it",
+          );
+        }
+        setGoal(params.objective, params.token_budget);
+        persist("set");
+        updateStatus(ctx);
+        const response = goalResponse(
+          currentGoalSnapshot(),
+          ctx.sessionManager.getSessionId(),
+        );
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+          details: response,
+        };
+      },
+    });
+
+    pi.registerTool({
+      name: "update_goal",
+      label: "Update Goal",
+      description:
+        "Update the existing goal. Use this tool only to mark the goal achieved or genuinely blocked. Set status to complete only when the objective has actually been achieved and no required work remains. Set status to blocked only when the same blocking condition has repeated for at least three consecutive goal turns and the agent is at an impasse. Do not mark a goal complete merely because its budget is nearly exhausted or because you are stopping work.",
+      promptSnippet:
+        "Mark the current goal complete or blocked after verifying the required conditions",
+      promptGuidelines: [
+        "Use update_goal only to mark the active goal complete or blocked after verifying the required conditions; never use it for pause, resume, budget-limit, or usage-limit changes.",
+      ],
+      parameters: UpdateGoalParams,
+      async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
+        if (params.status !== "complete" && params.status !== "blocked") {
+          throw new Error(
+            "update_goal can only mark the existing goal complete or blocked; pause, resume, budget-limited, and usage-limited status changes are controlled by the user or system",
+          );
+        }
+        setGoalStatus(params.status);
+        persist("status");
+        updateStatus(ctx);
+        const response = goalResponse(
+          currentGoalSnapshot(),
+          ctx.sessionManager.getSessionId(),
+          params.status === "complete",
+        );
+        return {
+          content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
+          details: response,
+        };
+      },
+    });
   }
 
   pi.on("session_start", async (_event, ctx) => reconstructState(ctx));
@@ -817,6 +912,7 @@ export default function goalExtension(pi: ExtensionAPI) {
         case "resume": {
           try {
             setGoalStatus("active");
+            registerGoalTools();
             persist("status");
             showGoalMessage(
               `Goal active\n\n${goalSummary(currentGoalSnapshot()!)}`,
@@ -891,6 +987,7 @@ export default function goalExtension(pi: ExtensionAPI) {
       }
 
       setGoal(objective);
+      registerGoalTools();
       persist("set");
       showGoalMessage(`Goal active\n\n${goalSummary(goal!)}`);
       updateStatus(ctx);
@@ -898,89 +995,5 @@ export default function goalExtension(pi: ExtensionAPI) {
     },
   });
 
-  pi.registerTool({
-    name: "get_goal",
-    label: "Get Goal",
-    description:
-      "Get the current goal for this thread, including status, budgets, token and elapsed-time usage, and remaining token budget.",
-    promptSnippet:
-      "Get the current long-running thread goal and its usage/budget state",
-    parameters: Type.Object({}),
-    async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
-      const snapshot = currentGoalSnapshot();
-      const response = goalResponse(
-        snapshot,
-        ctx.sessionManager.getSessionId(),
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
-        details: response,
-      };
-    },
-  });
-
-  pi.registerTool({
-    name: "create_goal",
-    label: "Create Goal",
-    description:
-      "Create a goal only when explicitly requested by the user or system/developer instructions; do not infer goals from ordinary tasks. Set token_budget only when an explicit token budget is requested. Fails if an unfinished goal exists; if the previous goal is complete, it is replaced.",
-    promptSnippet:
-      "Create a new active long-running thread goal when explicitly requested",
-    promptGuidelines: [
-      "Use create_goal only when the user explicitly asks to create a long-running goal; do not infer goals from ordinary tasks.",
-      "Use update_goal with status complete only when the active goal is actually achieved and no required work remains.",
-      "Use update_goal with status blocked only when the strict blocked audit is satisfied.",
-    ],
-    parameters: CreateGoalParams,
-    async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-      if (goal && isUnfinishedGoal(goal)) {
-        throw new Error(
-          "cannot create a new goal because this thread already has an unfinished goal; complete it with update_goal or ask the user to clear or replace it",
-        );
-      }
-      setGoal(params.objective, params.token_budget);
-      persist("set");
-      updateStatus(ctx);
-      const response = goalResponse(
-        currentGoalSnapshot(),
-        ctx.sessionManager.getSessionId(),
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
-        details: response,
-      };
-    },
-  });
-
-  pi.registerTool({
-    name: "update_goal",
-    label: "Update Goal",
-    description:
-      "Update the existing goal. Use this tool only to mark the goal achieved or genuinely blocked. Set status to complete only when the objective has actually been achieved and no required work remains. Set status to blocked only when the same blocking condition has repeated for at least three consecutive goal turns and the agent is at an impasse. Do not mark a goal complete merely because its budget is nearly exhausted or because you are stopping work.",
-    promptSnippet:
-      "Mark the current goal complete or blocked after verifying the required conditions",
-    promptGuidelines: [
-      "Use update_goal only to mark the active goal complete or blocked after verifying the required conditions; never use it for pause, resume, budget-limit, or usage-limit changes.",
-    ],
-    parameters: UpdateGoalParams,
-    async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-      if (params.status !== "complete" && params.status !== "blocked") {
-        throw new Error(
-          "update_goal can only mark the existing goal complete or blocked; pause, resume, budget-limited, and usage-limited status changes are controlled by the user or system",
-        );
-      }
-      setGoalStatus(params.status);
-      persist("status");
-      updateStatus(ctx);
-      const response = goalResponse(
-        currentGoalSnapshot(),
-        ctx.sessionManager.getSessionId(),
-        params.status === "complete",
-      );
-      return {
-        content: [{ type: "text", text: JSON.stringify(response, null, 2) }],
-        details: response,
-      };
-    },
-  });
 }
+
