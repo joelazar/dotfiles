@@ -7,6 +7,14 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Create a temp file that ends in .md so editors detect markdown.
+new_md_tempfile() {
+    local f
+    f=$(mktemp -t pr-description.XXXXXX)
+    mv "$f" "$f.md"
+    printf '%s.md' "$f"
+}
+
 usage() {
     cat <<'EOF'
 Usage: pr-create [options]
@@ -284,7 +292,7 @@ if [[ -z "$body_file" ]]; then
     gen_norm=$(normalize_yn "$gen_desc")
     [[ -z "$gen_norm" ]] && gen_norm=$(prompt_menu "Generate PR description with pi?" "No" "Yes")
     if [[ "$gen_norm" == "Yes" ]]; then
-        body_file=$(mktemp -t pr-description.XXXXXX.md)
+        body_file=$(new_md_tempfile)
         temp_files+=("$body_file")
         generate_pr_description "$body_file"
     fi
@@ -314,7 +322,7 @@ edit_norm=$(normalize_yn "$edit_desc")
 [[ -z "$edit_norm" ]] && edit_norm=$(prompt_menu "Open PR description in \$EDITOR before creating PR?" "No" "Yes")
 if [[ "$edit_norm" == "Yes" ]]; then
     if [[ -z "$body_file" ]]; then
-        body_file=$(mktemp -t pr-description.XXXXXX.md)
+        body_file=$(new_md_tempfile)
         temp_files+=("$body_file")
     fi
     edit_pr_description "$body_file"
@@ -332,7 +340,7 @@ printf '%s\n' "$pr_url"
 
 # If we created the PR without a body but have Linear links, append them after creation.
 if [[ -z "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
-    edit_body_file=$(mktemp -t pr-description.XXXXXX.md)
+    edit_body_file=$(new_md_tempfile)
     temp_files+=("$edit_body_file")
 
     gh pr view "$pr_url" --json body --jq '.body' >"$edit_body_file"
