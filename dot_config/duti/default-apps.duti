@@ -1,0 +1,96 @@
+# Default application associations, applied with `duti`.
+# Format: <bundle-id> <UTI-or-.extension> <role>
+# System source-code types are set by UTI so they override Xcode's claims.
+
+# --- Zed: text & source code (by UTI) ---
+dev.zed.Zed public.plain-text all
+dev.zed.Zed public.source-code all
+dev.zed.Zed public.script all
+dev.zed.Zed public.shell-script all
+dev.zed.Zed public.bash-script all
+dev.zed.Zed public.zsh-script all
+dev.zed.Zed public.python-script all
+dev.zed.Zed public.ruby-script all
+dev.zed.Zed public.perl-script all
+dev.zed.Zed public.php-script all
+dev.zed.Zed public.c-source all
+dev.zed.Zed public.c-header all
+dev.zed.Zed public.c-plus-plus-source all
+dev.zed.Zed public.c-plus-plus-header all
+dev.zed.Zed public.objective-c-source all
+dev.zed.Zed public.objective-c-plus-plus-source all
+dev.zed.Zed public.swift-source all
+dev.zed.Zed public.assembly-source all
+dev.zed.Zed public.make-source all
+dev.zed.Zed com.apple.rez-source all
+dev.zed.Zed com.netscape.javascript-source all
+dev.zed.Zed public.json all
+dev.zed.Zed public.yaml all
+dev.zed.Zed public.xml all
+dev.zed.Zed com.apple.property-list all
+dev.zed.Zed public.comma-separated-values-text all
+
+# --- Zed: text & config (by extension) ---
+dev.zed.Zed .md all
+dev.zed.Zed .markdown all
+dev.zed.Zed .mdx all
+dev.zed.Zed .log all
+dev.zed.Zed .jsonc all
+dev.zed.Zed .toml all
+dev.zed.Zed .ini all
+dev.zed.Zed .conf all
+dev.zed.Zed .cfg all
+dev.zed.Zed .tsv all
+dev.zed.Zed .env all
+dev.zed.Zed .patch all
+dev.zed.Zed .diff all
+dev.zed.Zed .fish all
+dev.zed.Zed .command all
+dev.zed.Zed .lua all
+dev.zed.Zed .go all
+dev.zed.Zed .rs all
+dev.zed.Zed .kt all
+dev.zed.Zed .kts all
+dev.zed.Zed .scala all
+dev.zed.Zed .jsx all
+dev.zed.Zed .ts all
+dev.zed.Zed .tsx all
+dev.zed.Zed .vue all
+dev.zed.Zed .svelte all
+dev.zed.Zed .scss all
+dev.zed.Zed .sass all
+dev.zed.Zed .less all
+dev.zed.Zed .sql all
+dev.zed.Zed .gradle all
+dev.zed.Zed .pm all
+dev.zed.Zed .jl all
+dev.zed.Zed .dart all
+dev.zed.Zed .ex all
+dev.zed.Zed .exs all
+dev.zed.Zed .erl all
+dev.zed.Zed .hs all
+dev.zed.Zed .clj all
+dev.zed.Zed .tf all
+dev.zed.Zed .hcl all
+dev.zed.Zed .proto all
+dev.zed.Zed .graphql all
+dev.zed.Zed .gql all
+dev.zed.Zed .properties all
+dev.zed.Zed .tex all
+dev.zed.Zed .bib all
+
+# --- IINA: video (by extension) ---
+com.colliderli.iina .mp4 all
+com.colliderli.iina .mkv all
+com.colliderli.iina .avi all
+com.colliderli.iina .mov all
+com.colliderli.iina .wmv all
+com.colliderli.iina .flv all
+com.colliderli.iina .webm all
+com.colliderli.iina .m4v all
+com.colliderli.iina .mpg all
+com.colliderli.iina .mpeg all
+com.colliderli.iina .3gp all
+com.colliderli.iina .vob all
+com.colliderli.iina .ogv all
+com.colliderli.iina .rmvb all

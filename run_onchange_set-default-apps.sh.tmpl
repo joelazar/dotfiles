@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Apply default application associations via duti.
+#
+# Zed is the default editor for text/source files (neovim is a TUI and cannot
+# be a macOS default app, so Zed wins wherever Xcode would otherwise claim a
+# source-code UTI). IINA handles video. Xcode-specific project files
+# (.xcodeproj, .storyboard, .xib, ...) are intentionally left with Xcode.
+#
+# Re-runs whenever the duti settings file changes.
+# duti file hash: {{ include "dot_config/duti/default-apps.duti" | sha256sum }}
+
+set -euo pipefail
+
+DUTI_FILE="{{ .chezmoi.homeDir }}/.config/duti/default-apps.duti"
+
+if ! command -v duti >/dev/null 2>&1; then
+    echo "==> duti not installed, skipping default-app configuration"
+    exit 0
+fi
+
+echo "==> Applying default-app associations"
+# duti exits non-zero for extensions that resolve to dynamic UTIs; that is
+# harmless, so don't let it abort the run.
+duti "$DUTI_FILE" || true
+
+echo "==> Default-app configuration complete"

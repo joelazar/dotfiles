@@ -101,39 +101,8 @@ execute "killall Finder" "Restart Finder to apply changes"
 
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
 
-execute "duti -s dev.zed.Zed public.plain-text all" "Set Zed as the default app for plain text files"
-
-execute "duti -s dev.zed.Zed public.comma-separated-values-text all" "Set Zed as the default app for CSV files"
-
-execute "duti -s com.colliderli.iina .mp4 all" "Set IINA as the default app for MP4 files"
-
-execute "duti -s com.colliderli.iina .mkv all" "Set IINA as the default app for MKV files"
-
-execute "duti -s com.colliderli.iina .avi all" "Set IINA as the default app for AVI files"
-
-execute "duti -s com.colliderli.iina .mov all" "Set IINA as the default app for MOV files"
-
-execute "duti -s com.colliderli.iina .wmv all" "Set IINA as the default app for WMV files"
-
-execute "duti -s com.colliderli.iina .flv all" "Set IINA as the default app for FLV files"
-
-execute "duti -s com.colliderli.iina .webm all" "Set IINA as the default app for WebM files"
-
-execute "duti -s com.colliderli.iina .m4v all" "Set IINA as the default app for M4V files"
-
-execute "duti -s com.colliderli.iina .mpg all" "Set IINA as the default app for MPG files"
-
-execute "duti -s com.colliderli.iina .mpeg all" "Set IINA as the default app for MPEG files"
-
-execute "duti -s com.colliderli.iina .3gp all" "Set IINA as the default app for 3GP files"
-
-execute "duti -s com.colliderli.iina .ts all" "Set IINA as the default app for TS files"
-
-execute "duti -s com.colliderli.iina .vob all" "Set IINA as the default app for VOB files"
-
-execute "duti -s com.colliderli.iina .ogv all" "Set IINA as the default app for OGV files"
-
-execute "duti -s com.colliderli.iina .rmvb all" "Set IINA as the default app for RMVB files"
+# Default application associations live in dot_config/duti/default-apps.duti
+# and are applied by run_onchange_set-default-apps.sh.tmpl
 
 show_section "🐳 Docker Configuration" "$PINK"
 

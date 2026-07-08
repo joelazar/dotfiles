@@ -29,6 +29,11 @@ rules = [
     "open",
     "reveal",
   ] },
+  # Text/code by extension (wins over mime detection quirks on empty files)
+  { url = "*.{md,markdown,txt,log,json,jsonc,yaml,yml,toml,ini,conf,csv,tsv,sh,bash,fish,zsh,lua,py,rs,go,c,h,cpp,hpp,js,jsx,ts,tsx,vue,html,css,scss,sql,env,gitignore,dockerfile}", use = [
+    "edit",
+    "reveal",
+  ] },
   # HTML
   { mime = "text/html", use = [
     "browser",
