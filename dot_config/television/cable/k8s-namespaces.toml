@@ -1,0 +1,27 @@
+[metadata]
+name = "k8s-namespaces"
+description = "List and switch Kubernetes namespaces"
+requirements = ["kubectl"]
+
+[source]
+command = "kubectl get namespaces -o name | cut -d/ -f2"
+
+[preview]
+command = "kubectl describe namespace {}"
+
+[ui]
+layout = "portrait"
+
+[keybindings]
+enter = "actions:use"
+ctrl-d = "actions:delete"
+
+[actions.use]
+description = "Set the selected namespace as default for the current context"
+command = "kubectl config set-context --current --namespace={}"
+mode = "execute"
+
+[actions.delete]
+description = "Delete the selected namespace"
+command = "kubectl delete namespace {}"
+mode = "execute"

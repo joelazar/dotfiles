@@ -80,6 +80,7 @@
     "thinkingMedium": "sapphire",
     "thinkingHigh": "mauve",
     "thinkingXhigh": "pink",
+    "thinkingMax": "red",
     "bashMode": "green"
   },
   "export": {
