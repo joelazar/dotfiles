@@ -16,10 +16,7 @@ MANAGED_CONFIG='{
     "anthropic-extra/claude-opus-4-8",
     "anthropic-extra/claude-fable-5",
     "anthropic/claude-opus-4-8",
-    "anthropic/claude-fable-5",
-    "openrouter/deepseek/deepseek-v4-flash",
-    "openrouter/deepseek/deepseek-v4-pro",
-    "openrouter/z-ai/glm-5.2"
+    "anthropic/claude-fable-5"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,

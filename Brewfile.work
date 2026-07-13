@@ -164,8 +164,6 @@ brew "jupyterlab"
 brew "k9s"
 # Save disk space by cleaning non-essential files from software projects
 brew "kondo"
-# Tool that can switch between kubectl contexts easily and create aliases
-brew "kubectx"
 # Kubernetes command-line interface
 brew "kubernetes-cli"
 # Lazier way to manage everything docker
