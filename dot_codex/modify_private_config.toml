@@ -52,12 +52,6 @@ js_repl = false
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
 
-# If no existing file, just output managed config
-if [ -z "$EXISTING" ]; then
-  echo "$MANAGED_CONFIG"
-  exit 0
-fi
-
 # Merge tracked config with app-generated, machine-specific sections preserved
 # from the existing file (codex writes these itself; tracking them would create
 # perpetual diffs and leak machine-specific paths):

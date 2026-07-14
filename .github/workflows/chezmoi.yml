@@ -1,0 +1,111 @@
+name: chezmoi
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  HOMEBREW_NO_ANALYTICS: "1"
+  HOMEBREW_NO_ENV_HINTS: "1"
+  HOMEBREW_NO_INSTALL_CLEANUP: "1"
+
+jobs:
+  apply:
+    name: Apply (${{ matrix.type }})
+    runs-on: macos-26
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        type: [work, private, workstation]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: brew install chezmoi python-yq
+
+      - name: Apply chezmoi
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          home="$RUNNER_TEMP/home"
+          cache="$RUNNER_TEMP/chezmoi-cache"
+          config="$RUNNER_TEMP/chezmoi.toml"
+          state="$RUNNER_TEMP/chezmoi-state/chezmoistate.boltdb"
+
+          mkdir -p "$home" "$cache" "$(dirname "$state")"
+          export HOME="$home"
+
+          cat > "$config" <<EOF
+          [data]
+              email = "ci@example.com"
+              name = "CI"
+              type = "${{ matrix.type }}"
+          EOF
+
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$home" \
+            --cache "$cache" \
+            --config "$config" \
+            --persistent-state "$state" \
+            --no-tty \
+            --force \
+            apply --exclude=scripts
+
+      - name: Verify chezmoi
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          home="$RUNNER_TEMP/home"
+          cache="$RUNNER_TEMP/chezmoi-cache"
+          config="$RUNNER_TEMP/chezmoi.toml"
+          state="$RUNNER_TEMP/chezmoi-state/chezmoistate.boltdb"
+
+          export HOME="$home"
+
+          chezmoi \
+            --source "$GITHUB_WORKSPACE" \
+            --destination "$home" \
+            --cache "$cache" \
+            --config "$config" \
+            --persistent-state "$state" \
+            --no-tty \
+            verify --exclude=scripts
+
+  scripts:
+    name: Lint scripts
+    runs-on: macos-26
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: brew install shellcheck
+
+      - name: Check bash syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r script; do
+            echo "bash -n $script"
+            bash -n "$script"
+          done < <(grep -rl '^#!/bin/bash' scripts bootstrap.sh)
+
+      - name: Run shellcheck
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -rl '^#!/bin/bash' scripts bootstrap.sh | xargs shellcheck --severity=error
