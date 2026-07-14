@@ -40,7 +40,7 @@ A few quick facts:
 - **Dotfile manager:** [chezmoi](https://www.chezmoi.io/)
 - **Profiles:** `private`, `work`, and `workstation`
 - **Bootstrap path:** [`bootstrap.sh`](bootstrap.sh)
-- **First-run automation:** [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) and [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
+- **First-run automation:** [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) and [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl)
 - **Theme:** Catppuccin Mocha across most of the stack
 - **Fonts:** Maple Mono / Maple Mono NF
 
@@ -124,7 +124,7 @@ This repo also handles the machine itself, not just terminal tools.
 
 - [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager config in [`dot_aerospace.toml`](dot_aerospace.toml)
 - [Karabiner-Elements](https://karabiner-elements.pqrs.org/) keyboard remapping in [`dot_config/private_karabiner/`](dot_config/private_karabiner/), including a `disable_cmd_tab.json` profile
-- macOS defaults and shell/editor bootstrapping in [`run_once_settings.sh.tmpl`](run_once_settings.sh.tmpl)
+- macOS defaults and shell/editor bootstrapping in [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl)
 - launch agents in [`private_Library/LaunchAgents/`](private_Library/LaunchAgents/)
 - app defaults, file associations, Dock behavior, keyboard repeat, Touch ID for `sudo`, and similar setup tasks
 
@@ -191,7 +191,7 @@ Package installation is split by machine type:
 - [`Brewfile.work`](Brewfile.work)
 - [`Brewfile.workstation`](Brewfile.workstation)
 
-On first apply, [`run_once_install_packages.sh.tmpl`](run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, Yazi plugins, and Magic from Modular.
+On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, Yazi plugins, and Magic from Modular.
 
 Some notable pieces from the current setup:
 

@@ -1,8 +1,29 @@
-- **Key directories**: `dot_config/` (app configs), `private_dot_local/bin/` (custom scripts), `scripts/` (utilities)
-- **File naming**: `dot_*` → dotfiles, `private_*` → sensitive data, `run_once_*` → setup scripts, `.tmpl` → templates
-- **Templates**: Use Go text/template with variables like `{{ .email }}`, `{{ .name }}`, `{{ .chezmoi.sourceDir }}`
-- **Always run `chezmoi apply` after making changes** to deploy them to the actual dotfile locations. Without this step, edits in the chezmoi source directory have no effect on the live system.
-- **Shell**: Bash with error handling, use `scripts/utils` patterns, descriptive function names
-  - Use `gum` for interactive prompts, spinners, styled output, and confirmations (with plain fallbacks when gum is unavailable)
-  - Source `scripts/utils` for consistent color/style helper functions
-  - Validate scripts with `bash -n` and `shellcheck` before finishing
+# Instructions
+
+## Common operations
+
+```bash
+chezmoi diff             # preview changes
+chezmoi apply <target>   # apply individual files, never all at once
+```
+
+Always apply changed targets after editing, edits in this source directory have no effect on the live system until applied.
+
+## Structure
+
+This repo root is the chezmoi source directory.
+
+- `dot_*` → `~/.*`, `private_*` → sensitive files, `.tmpl` → Go text/template (variables: `{{ .email }}`, `{{ .name }}`, `{{ .type }}`, `{{ .chezmoi.sourceDir }}`)
+- `.chezmoiscripts/` — `run_once_*`/`run_onchange_*` setup scripts
+- `scripts/` — shared shell utilities, not deployed
+- `Brewfile.{work,private,workstation}` — packages per machine type (`type` is prompted on `chezmoi init`)
+
+## Shell scripts
+
+- Bash with error handling and descriptive function names
+- Source `scripts/utils` for color/style helpers; use `gum` for prompts and spinners, with plain fallbacks
+- Validate with `bash -n` and `shellcheck` before finishing
+
+## CI
+
+`.github/workflows/chezmoi.yml` applies and verifies all three machine types and lints scripts.
