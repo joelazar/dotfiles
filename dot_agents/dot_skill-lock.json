@@ -123,9 +123,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/schpet/linear-cli.git",
       "skillPath": "skills/linear-cli/SKILL.md",
-      "skillFolderHash": "5db263378a03ca0d733e3b55695bffab4ccc7896",
+      "skillFolderHash": "9e0f996df1840e86ee292c61dacc112e7cc18f70",
       "installedAt": "2026-05-25T13:30:00.000Z",
-      "updatedAt": "2026-07-13T10:49:02.619Z"
+      "updatedAt": "2026-07-14T17:28:25.879Z"
     },
     "listen-later": {
       "source": "/Users/joelazar/.local/share/chezmoi/dot_agents/skills/listen-later",
@@ -267,9 +267,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/modem-dev/hunk.git",
       "skillPath": "skills/hunk-review/SKILL.md",
-      "skillFolderHash": "dcdffe55e1a26317d4639174fe2b66ae71686b6c",
+      "skillFolderHash": "f955a7b7c2808b57cb72c5facd3fa9579af1ca1c",
       "installedAt": "2026-06-25T10:09:02.608Z",
-      "updatedAt": "2026-06-25T10:09:02.608Z"
+      "updatedAt": "2026-07-14T17:28:27.851Z"
     }
   },
   "dismissed": {

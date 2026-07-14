@@ -1,6 +1,6 @@
 ---
 name: web-search
-description: "Default for web lookup/research/latest/current/URL/package/docs questions. Backed by kagi-cli, plus google (agy) and claude (claude-code) modes. Returns only minimal, meaningful text."
+description: "Default for web lookup/research/latest/current/URL/package/docs questions, and for summarizing URLs, articles, and YouTube videos. Backed by kagi-cli, plus google (agy) and claude (claude-code) modes. Returns only minimal, meaningful text."
 allowed-tools: [Bash, Read]
 ---
 
@@ -13,7 +13,7 @@ allowed-tools: [Bash, Read]
 | `quick`     | `kagi quick`                  | **Default.** A fact or short answer with ranked source links. |
 | `search`    | `kagi search`                 | You want raw result links to pick from, no synthesis.         |
 | `ask`       | `kagi assistant`              | Deeper synthesis, comparisons, multi-step reasoning.          |
-| `summarize` | `kagi summarize --subscriber` | Condense one known URL into key text.                         |
+| `summarize` | `kagi summarize --subscriber` | Condense one known URL (incl. YouTube videos) into key text.  |
 | `google`    | `agy -p` (Antigravity CLI)    | User says "use google" / "google it". Google-grounded agent.  |
 | `claude`    | `claude -p` (Claude Code)     | User says "use claude" / "ask claude". Web-grounded agent.    |
 
@@ -43,8 +43,9 @@ Examples:
 # Continue an assistant thread (id printed by a prior ask)
 ~/.agents/skills/web-search/search.sh ask "now show a migration example" --thread-id "<id>"
 
-# Condense one page
+# Condense one page or YouTube video
 ~/.agents/skills/web-search/search.sh summarize "https://example.com/article"
+~/.agents/skills/web-search/search.sh summarize "https://youtu.be/dQw4w9WgXcQ"
 ~/.agents/skills/web-search/search.sh summarize "<url>" --summary-type keypoints
 
 # User asked for Google — grounded answer via Antigravity CLI
@@ -89,7 +90,7 @@ returns the most text. Raise `--limit` deliberately, not by default.
 
 ## When NOT to use this skill
 
-- Reading a known URL in full → use the `summarize` skill or `defuddle`, not
-  `search` mode.
+- Reading a known URL in full → use `defuddle`, not `search` mode.
+- Full YouTube transcript (not a summary) → use the `youtube-transcript` skill.
 - Full kagi-cli toolbox (translate, news, batch, lenses, bangs) → use `kagi`
   directly; this skill intentionally exposes only the four research modes.
