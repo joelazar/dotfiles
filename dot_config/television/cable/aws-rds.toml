@@ -12,3 +12,11 @@ command = "aws rds describe-db-instances --db-instance-identifier '{split:\t:0}'
 [ui.preview_panel]
 size = 60
 
+[keybindings]
+enter = "actions:copy"
+
+[actions.copy]
+description = "Copy the instance details (preview content) to the clipboard"
+command = "aws rds describe-db-instances --db-instance-identifier '{split:\t:0}' --output json | pbcopy"
+mode = "fork"
+

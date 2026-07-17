@@ -13,6 +13,14 @@ command = "aws ec2 describe-instances --output json --instance-ids {split:\t:0} 
 layout = "portrait"
 preview_panel = { size = 60 }
 
+[keybindings]
+enter = "actions:copy"
+
+[actions.copy]
+description = "Copy the instance details (preview content) to the clipboard"
+command = "aws ec2 describe-instances --output json --instance-ids {split:\t:0} --query 'Reservations[*].Instances[0]' | pbcopy"
+mode = "fork"
+
 [actions.start]
 description = "Start the selected EC2 instance"
 command = "aws ec2 start-instances --instance-ids {split:\t:0}"

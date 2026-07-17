@@ -12,3 +12,11 @@ command = "aws elasticache describe-cache-clusters --cache-cluster-id '{split:\t
 [ui.preview_panel]
 size = 60
 
+[keybindings]
+enter = "actions:copy"
+
+[actions.copy]
+description = "Copy the cluster details (preview content) to the clipboard"
+command = "aws elasticache describe-cache-clusters --cache-cluster-id '{split:\t:0}' --output json | pbcopy"
+mode = "fork"
+
