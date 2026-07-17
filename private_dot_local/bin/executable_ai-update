@@ -14,6 +14,7 @@ echo
 
 echo "🥧 Update Pi"
 pi update --all
+pi update --models
 echo
 
 echo "🥧 Update Pi local packages"

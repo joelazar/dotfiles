@@ -13,6 +13,7 @@ import {
   type ExtensionAPI,
   type ExtensionCommandContext,
   type ExtensionContext,
+  type ModelRuntime,
   type ResourceLoader,
 } from "@earendil-works/pi-coding-agent";
 import {
@@ -34,6 +35,15 @@ import {
 import { readFileSync, statSync, mkdtempSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
+
+// pi 0.80.8 replaced createAgentSession's `modelRegistry` option with
+// `modelRuntime`. Extensions only get the ModelRegistry facade, so reach
+// into its (runtime-public) `runtime` field to share providers/auth with
+// side sessions (needed for extension-registered providers like
+// anthropic-extra).
+function getModelRuntime(ctx: ExtensionContext): ModelRuntime {
+  return (ctx.modelRegistry as unknown as { runtime: ModelRuntime }).runtime;
+}
 
 const BTW_ENTRY_TYPE = "btw-thread-entry";
 const BTW_RESET_TYPE = "btw-thread-reset";
@@ -703,7 +713,7 @@ export default function (pi: ExtensionAPI) {
     const { session } = await createAgentSession({
       sessionManager: SessionManager.inMemory(),
       model: ctx.model,
-      modelRegistry: ctx.modelRegistry as AgentSession["modelRegistry"],
+      modelRuntime: getModelRuntime(ctx),
       thinkingLevel: pi.getThinkingLevel() as SessionThinkingLevel,
       tools: ["read", "bash", "edit", "write"],
       resourceLoader: await createBtwResourceLoader(ctx),
@@ -916,7 +926,7 @@ export default function (pi: ExtensionAPI) {
     const { session } = await createAgentSession({
       sessionManager: SessionManager.inMemory(),
       model,
-      modelRegistry: ctx.modelRegistry as AgentSession["modelRegistry"],
+      modelRuntime: getModelRuntime(ctx),
       thinkingLevel: "off",
       tools: [],
       resourceLoader: await createBtwResourceLoader(ctx, [BTW_SUMMARY_PROMPT]),

@@ -1,14 +1,17 @@
 #!/bin/bash
 # Managed by chezmoi — tracked settings are defined below.
 # Local-only sections like [projects.*] are preserved from the existing file.
+# NOTE: this is a bash script, not TOML — do not run TOML formatters on it.
 
 set -euo pipefail
 
 # --- Tracked config (edit here) ---
-MANAGED_CONFIG='model = "gpt-5.5"
+MANAGED_CONFIG='model = "gpt-5.6-luna"
 model_reasoning_effort = "low"
 approval_policy = "on-request"
-personality = "pragmatic"
+personality = "friendly"
+
+notify = ["/Users/joelazar/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [tui]
 status_line = [
@@ -41,12 +44,34 @@ git-branch-prefix = ""
 git-commit-instructions = "check my previous commits styling and follow that when you make commits"
 git-pr-instructions = "when you open up pull request, summarize the changes in a couple of bullet points, make them concise"
 default-service-tier = "priority"
+dock-icon-preference = "codex-system"
+conversationDetailMode = "STEPS_PROSE"
+show-context-window-usage = true
+appearanceDarkCodeThemeId = "catppuccin"
+selected-avatar-id = "seedy"
 
 [desktop.open-in-target-preferences]
 global = "zed"
 
+[desktop.appearanceDarkChromeTheme]
+accent = "#cba6f7"
+contrast = 60
+ink = "#cdd6f4"
+opaqueWindows = false
+surface = "#1e1e2e"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#a6e3a1"
+diffRemoved = "#f38ba8"
+skill = "#cba6f7"
+
 [features]
 js_repl = false
+
+[apps.connector_openai_codex_document_control]
+enabled = false
 '
 
 # --- Read existing file from stdin ---

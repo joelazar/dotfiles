@@ -150,7 +150,7 @@
             "pattern": "~/.npmrc"
           },
           {
-            "pattern": "~/.pi/auth.json"
+            "pattern": "~/.pi/**/auth.json"
           },
           {
             "pattern": "~/.pypirc"
