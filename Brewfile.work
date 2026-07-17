@@ -118,8 +118,6 @@ brew "gcc"
 brew "gh"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
-# Remote repository management made easy
-brew "ghq"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Git extension for versioning large files
@@ -206,8 +204,6 @@ brew "ollama"
 brew "opentofu"
 # Painless compression and decompression for your terminal
 brew "ouch"
-# AI agent toolkit
-brew "pi-coding-agent"
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager
@@ -342,6 +338,8 @@ cask "basictex"
 cask "bruno"
 # E-books management software
 cask "calibre"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
 # Anthropic's official Claude AI desktop app
 cask "claude"
 # Terminal-based AI coding assistant
@@ -444,8 +442,8 @@ uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/gondolin"
+npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
-npm "corepack"
 npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"

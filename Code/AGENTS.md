@@ -1,6 +1,6 @@
 ## Coding fundamental principles
 
-- Clone new repos with `ghq get <url>` (root is `~/Code`, layout `~/Code/<host>/<owner>/<repo>`)
+- Always clone new repos with `gj get <url>` (root is `~/Code`, layout `~/Code/<owner>/<repo>`)
 - Always have a bird's eye view of the code - "See the forest, not just the trees"
 - Never do backwards compatibility, we move only forward
 - Do not have any dead code, unused code should be cleaned up

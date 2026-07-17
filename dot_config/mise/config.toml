@@ -4,4 +4,4 @@ auto_install = true
 trusted_config_paths = ["~/Code/onomondo", "~/Code/joelazar"]
 
 [tools]
-node = "24"
+node = "26"

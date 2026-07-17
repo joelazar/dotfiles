@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+script_name=$(basename "$0")
+version="0.1.0"
+
+usage() {
+    cat <<EOF
+Usage:
+  $script_name get [git clone flags...] <repo>
+
+Config:
+  gj.root   Existing directory where repositories are stored.
+
+Examples:
+  $script_name get org/repo
+  $script_name get gitlab.com/org/repo
+  $script_name get https://github.com/org/repo
+  $script_name get --depth 1 git@gitlab.com:org/repo.git
+EOF
+}
+
+die() {
+    printf '%s\n' "$*" >&2
+    exit 1
+}
+
+require_git() {
+    command -v git >/dev/null 2>&1 || die "git is required on PATH"
+}
+
+expand_shorthand() {
+    local input=$1
+
+    # Full URLs and scp-like syntax pass through untouched.
+    if [[ "$input" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*:// || "$input" == *@*:* ]]; then
+        printf '%s\n' "$input"
+    # org/repo defaults to GitHub.
+    elif [[ "$input" =~ ^[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$ ]]; then
+        printf 'https://github.com/%s\n' "$input"
+    # host/org/repo works for any remote (e.g. gitlab.com/org/repo).
+    elif [[ "$input" =~ ^[a-zA-Z0-9.-]+\.[a-zA-Z]+(/[a-zA-Z0-9_.-]+){2,}$ ]]; then
+        printf 'https://%s\n' "$input"
+    else
+        return 1
+    fi
+}
+
+parse_repo() {
+    local input=$1
+    local path no_scheme
+
+    if [[ "$input" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*:// ]]; then
+        no_scheme="${input#*://}"
+        path="${no_scheme#*/}"
+    elif [[ "$input" == *@*:* ]]; then
+        path="${input#*:}"
+    else
+        path="${input#*/}"
+    fi
+
+    path="${path#/}"
+    path="${path%.git}"
+
+    if [[ -z "$path" || "$path" != */* ]]; then
+        return 1
+    fi
+
+    printf '%s\n' "$path"
+}
+
+run_get() {
+    local repo url dest rel
+    local flags=()
+
+    if [[ $# -lt 1 ]]; then
+        usage
+        exit 2
+    fi
+
+    root=$(git config --global --get gj.root || true)
+    if [[ -z "$root" ]]; then
+        die "gj.root is not set in git config"
+    fi
+
+    root="${root/#\~/$HOME}"
+    if [[ ! -d "$root" ]]; then
+        die "gj.root does not exist: $root"
+    fi
+
+    if [[ $# -eq 1 ]]; then
+        repo="$1"
+    else
+        repo="${*: -1}"
+        flags=("${@:1:$#-1}")
+    fi
+
+    if ! url=$(expand_shorthand "$repo"); then
+        die "Could not parse repo: $repo"
+    fi
+    repo="$url"
+
+    if ! rel=$(parse_repo "$repo"); then
+        die "Could not parse repo: $repo"
+    fi
+
+    dest="$root/$rel"
+
+    if [[ -e "$dest" ]]; then
+        if [[ -d "$dest/.git" ]]; then
+            git -C "$dest" remote update --prune
+            printf '%s\n' "$dest"
+            return 0
+        fi
+        die "Destination exists and is not a git repo: $dest"
+    fi
+
+    mkdir -p "$(dirname "$dest")"
+    git clone ${flags[@]+"${flags[@]}"} "$repo" "$dest"
+    printf '%s\n' "$dest"
+}
+
+main() {
+    if [[ $# -lt 1 ]]; then
+        usage
+        exit 2
+    fi
+
+    case "$1" in
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    --version)
+        printf '%s\n' "$version"
+        exit 0
+        ;;
+    get)
+        shift
+        require_git
+        run_get "$@"
+        ;;
+    *)
+        die "Unknown command: $1"
+        ;;
+    esac
+}
+
+main "$@"

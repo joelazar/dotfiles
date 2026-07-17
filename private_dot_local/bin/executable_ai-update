@@ -13,8 +13,7 @@ brew upgrade codex
 echo
 
 echo "🥧 Update Pi"
-brew upgrade pi-coding-agent
-pi update --extensions
+pi update --all
 echo
 
 echo "🥧 Update Pi local packages"

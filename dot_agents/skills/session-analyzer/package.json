@@ -1,7 +1,0 @@
-{
-    "name": "session-analyzer",
-    "type": "module",
-    "dependencies": {
-        "@earendil-works/pi-coding-agent": "*"
-    }
-}
