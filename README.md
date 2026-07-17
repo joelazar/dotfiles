@@ -144,7 +144,7 @@ This repo currently tracks config for:
 - a separate Claude work profile in [`dot_claude-work/`](dot_claude-work/)
 - [Pi](https://github.com/mariozechner/pi-coding-agent) in [`dot_pi/`](dot_pi/)
 - [Codex](https://github.com/openai/codex) templates in [`dot_codex/`](dot_codex/)
-- [Ollama](https://ollama.com/) for local models
+- [llama.cpp](https://github.com/ggml-org/llama.cpp) (`llama-server`) for local models
 
 There is also a small helper script, [`ai-update`](private_dot_local/bin/executable_ai-update), that updates the main CLI agents and Pi extensions.
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  User LaunchAgent: run llama-server (llama.cpp) at login with performance
+  flags baked in. Replaces the previous Ollama agent — same OpenAI-compatible
+  API on the same port (11434), so clients don't need to change.
+
+  Target hardware: MacBook Pro M4 Pro, 48 GB unified memory.
+  Target model:    Qwen3.6 35B-A3B (MoE, ~3B active params) at UD-Q5_K_XL
+                   (~25 GB weights + ~6 GB KV cache at 64K q8_0).
+                   MTP variant: embedded multi-token-prediction head gives
+                   a large decode speedup at identical quality.
+
+  Notes:
+    - The model is downloaded from Hugging Face on first start and cached
+      under ~/Library/Caches/llama.cpp.
+    - Weights are mmap'd, so macOS can reclaim the memory under pressure;
+      no keep-alive/idle-unload logic is needed.
+    - Web UI available at http://127.0.0.1:11434
+
+  Manage with:
+    launchctl load   ~/Library/LaunchAgents/com.joelazar.llama-server.plist
+    launchctl unload ~/Library/LaunchAgents/com.joelazar.llama-server.plist
+    launchctl kickstart -k gui/$(id -u)/com.joelazar.llama-server   # restart
+
+  Logs:
+    tail -f /tmp/com.joelazar.llama-server.out
+    tail -f /tmp/com.joelazar.llama-server.err
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.joelazar.llama-server</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/opt/homebrew/bin/llama-server</string>
+
+        <!-- Pull model (and mmproj for vision, if present) from HF. -->
+        <string>-hf</string>
+        <string>unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q5_K_XL</string>
+
+        <!-- Stable alias exposed via /v1/models, referenced in pi's
+             models.json. -->
+        <string>--alias</string>
+        <string>qwen3.6-35b-a3b</string>
+
+        <!-- Same port Ollama used — drop-in for existing clients. -->
+        <string>--host</string>
+        <string>127.0.0.1</string>
+        <string>--port</string>
+        <string>11434</string>
+
+        <!-- 64K context — 32K fills up fast in an agent loop.
+             KV cache at 64K q8_0 ≈ ~6 GB, leaves headroom on 48 GB. -->
+        <string>-c</string>
+        <string>65536</string>
+
+        <!-- Flash attention: required for KV cache quantization, pure win
+             on Metal. -->
+        <string>-fa</string>
+        <string>on</string>
+
+        <!-- q8_0 KV cache halves its RAM with near-zero quality loss. -->
+        <string>-ctk</string>
+        <string>q8_0</string>
+        <string>-ctv</string>
+        <string>q8_0</string>
+
+        <!-- Offload all layers to the GPU (Metal). -->
+        <string>-ngl</string>
+        <string>99</string>
+
+        <!-- Single parallel request — predictable RAM on 48 GB. -->
+        <string>-np</string>
+        <string>1</string>
+
+        <!-- Use the model's embedded chat template — proper tool-calling
+             and thinking-block parsing. -->
+        <string>--jinja</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- Ensure the binary finds Homebrew's env. -->
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+
+        <!-- Needed so the HF download cache resolves under ~/Library. -->
+        <key>HOME</key>
+        <string>/Users/joelazar</string>
+    </dict>
+
+    <!-- Start at login and keep alive (restart on crash). -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>KeepAlive</key>
+    <true/>
+
+    <!-- Throttle respawn if it keeps crashing. -->
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/com.joelazar.llama-server.out</string>
+
+    <key>StandardErrorPath</key>
+    <string>/tmp/com.joelazar.llama-server.err</string>
+
+    <key>ProcessType</key>
+    <string>Interactive</string>
+</dict>
+</plist>

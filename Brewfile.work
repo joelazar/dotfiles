@@ -176,6 +176,8 @@ brew "qemu"
 brew "lima-additional-guestagents"
 # CLI for SQLite Databases with auto-completion and syntax highlighting
 brew "litecli"
+# LLM inference in C/C++
+brew "llama.cpp"
 # Next-gen compiler infrastructure
 brew "llvm"
 # Just-In-Time Compiler (JIT) for the Lua programming language
@@ -198,8 +200,6 @@ brew "tree-sitter"
 brew "neovim"
 # Libraries for security-enabled client and server applications
 brew "nss"
-# Create, run, and share large language models (LLMs)
-brew "ollama"
 # Drop-in replacement for Terraform. Infrastructure as Code Tool
 brew "opentofu"
 # Painless compression and decompression for your terminal
