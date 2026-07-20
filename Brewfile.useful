@@ -1,0 +1,27 @@
+# Simple, modern, secure file encryption
+brew "age"
+# Remove large files or passwords from Git history like git-filter-branch
+brew "bfg"
+# Duplicate file utility
+brew "czkawka"
+# Secure runtime for JavaScript and TypeScript
+brew "deno"
+# Tool for exploring each layer in a docker image
+brew "dive"
+# Measure DNS performance by simulating network conditions
+brew "dnsperf"
+# Embeddable SQL OLAP Database Management System
+brew "duckdb"
+# Command-line tool to interact with exercism.io
+brew "exercism"
+# Command-line benchmarking tool
+brew "hyperfine"
+# MongoDB Shell to connect, configure, query, and work with your MongoDB database
+brew "mongosh"
+# Lightweight BitTorrent client
+brew "transmission-cli"
+# HTTP benchmarking tool
+brew "wrk"
+# This package contains standard utilities for interacting with MongoDB.
+brew "mongodb/brew/mongodb-database-tools"
+

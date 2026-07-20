@@ -18,16 +18,6 @@ tap "protonpass/tap", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
 tap "steipete/tap", trusted: true
 tap "tw93/tap"
-# Easily download, build, install, upgrade, and uninstall Python packages
-brew "python-setuptools"
-# OpenType text shaping engine
-brew "harfbuzz"
-# Simple, modern, secure file encryption
-brew "age"
-# Record and share terminal sessions
-brew "asciinema"
-# Code searching, linting, rewriting
-brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -36,8 +26,6 @@ brew "awscli"
 brew "bash"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# Remove large files or passwords from Git history like git-filter-branch
-brew "bfg"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Open-source, cross-platform JavaScript runtime environment
@@ -46,6 +34,8 @@ brew "node"
 brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Easily download, build, install, upgrade, and uninstall Python packages
+brew "python-setuptools"
 # Mozilla CA bundle for Python
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -60,20 +50,10 @@ brew "colima"
 brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Play, record, convert, and stream select audio and video codecs
-brew "ffmpeg"
-# Package compiler and linker metadata toolkit
-brew "pkgconf"
-# Duplicate file utility
-brew "czkawka"
 # Extract article content and metadata from web pages
 brew "defuddle"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
-# Tool for exploring each layer in a docker image
-brew "dive"
-# Measure DNS performance by simulating network conditions
-brew "dnsperf"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Docker CLI plugin for extended build capabilities with BuildKit
@@ -88,14 +68,10 @@ brew "docker-credential-helper-ecr"
 brew "doggo"
 # View disk space usage and delete unwanted data, fast
 brew "dua-cli"
-# Embeddable SQL OLAP Database Management System
-brew "duckdb"
 # Disk Usage/Free Utility - a better 'df' alternative
 brew "duf"
 # Select default apps for documents and URL schemes on macOS
 brew "duti"
-# Command-line tool to interact with exercism.io
-brew "exercism"
 # Perl lib for reading and writing EXIF metadata
 brew "exiftool"
 # Modern, maintained replacement for ls
@@ -104,6 +80,10 @@ brew "eza"
 brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# OpenType text shaping engine
+brew "harfbuzz"
 # Create thumbnails for your video files
 brew "ffmpegthumbnailer"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -142,8 +122,6 @@ brew "htop"
 brew "httpie"
 # Configurable static site generator
 brew "hugo"
-# Command-line benchmarking tool
-brew "hyperfine"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # CLI wrapper for basic network utilities on macOS - ip command
@@ -190,10 +168,6 @@ brew "mas"
 brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-# MongoDB Shell to connect, configure, query, and work with your MongoDB database
-brew "mongosh"
-# NCurses Disk Usage
-brew "ncdu"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -204,12 +178,12 @@ brew "nss"
 brew "opentofu"
 # Painless compression and decompression for your terminal
 brew "ouch"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
 # Paste PNG into files
 brew "pngpaste"
 # Fast, disk space efficient package manager
 brew "pnpm"
-# Python package management tool
-brew "poetry"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Cross-platform library for audio I/O
@@ -250,8 +224,6 @@ brew "starship"
 brew "yt-dlp"
 # Multi-modal AI tool to extract and summarize content
 brew "summarize"
-# Very fast implementation of tldr in Rust
-brew "tealdeer"
 # General purpose fuzzy finder TUI
 brew "television"
 # Secrets management tool for developers
@@ -264,8 +236,6 @@ brew "tmux"
 brew "tokei"
 # Upgrade all the things
 brew "topgrade"
-# Lightweight BitTorrent client
-brew "transmission-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Parser generator tool
@@ -286,8 +256,6 @@ brew "wget"
 brew "whisper-cpp"
 # Lexical database for the English language
 brew "wordnet"
-# HTTP benchmarking tool
-brew "wrk"
 # JavaScript package manager
 brew "yarn"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -312,14 +280,10 @@ brew "ksdme/tap/ut", trusted: true
 brew "microck/kagi/kagi", trusted: true
 # Desktop-inspired terminal diff viewer for agent-authored changesets
 brew "modem-dev/tap/hunk", trusted: true
-# This package contains standard utilities for interacting with MongoDB.
-brew "mongodb/brew/mongodb-database-tools"
 # NATS utility
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
-# Proton Pass CLI - Command-line interface for Proton Pass
-brew "protonpass/tap/pass-cli"
 # Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole", trusted: true
 # Password manager that keeps all passwords secure behind one password
@@ -384,8 +348,6 @@ cask "openai/tools/openai", trusted: true
 cask "openvpn-connect"
 # WebKit based web browser
 cask "orion"
-# Desktop client for Proton Pass
-cask "proton-pass"
 # VPN client focusing on security
 cask "protonvpn"
 # Control your tools with a few keystrokes
@@ -448,4 +410,3 @@ npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"
 npm "skills"
-npm "slop-scan"
