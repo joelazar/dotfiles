@@ -16,6 +16,38 @@ import { isToolCallEventType } from "@earendil-works/pi-coding-agent"
 const REWRITE_TIMEOUT_MS = 2_000
 const MIN_SUPPORTED_RTK_MINOR = 23
 
+// True if the command pipes into another command (outside quotes).
+// rtk's compact output is not line-compatible with grep/awk/sed/head/wc/...,
+// so piped commands must stay raw. Logical OR (||) and pipes inside quotes
+// don't count; |& (pipe with stderr) does.
+function hasPipe(cmd: string): boolean {
+  let inSingle = false
+  let inDouble = false
+  for (let i = 0; i < cmd.length; i++) {
+    const ch = cmd[i]
+    if (ch === "\\" && !inSingle) {
+      i++ // skip escaped char
+      continue
+    }
+    if (ch === "'" && !inDouble) {
+      inSingle = !inSingle
+      continue
+    }
+    if (ch === '"' && !inSingle) {
+      inDouble = !inDouble
+      continue
+    }
+    if (ch === "|" && !inSingle && !inDouble) {
+      if (cmd[i + 1] === "|") {
+        i++ // logical OR, not a pipe
+        continue
+      }
+      return true
+    }
+  }
+  return false
+}
+
 // Parse "X.Y.Z" semver, return [major, minor, patch] or null.
 function parseSemver(raw: string): [number, number, number] | null {
   const m = raw.trim().match(/(\d+)\.(\d+)\.(\d+)/)
@@ -65,6 +97,10 @@ export default async function (pi: ExtensionAPI) {
 
       if (cmd.startsWith("rtk ")) return
       if (process.env.RTK_DISABLED === "1") return
+
+      // Piped output is post-processed by line-oriented tools; rtk's compact
+      // format would break them (e.g. `git diff | grep '^-'`). Keep raw.
+      if (hasPipe(cmd)) return
 
       // Delegate to RTK.
       const rewritten = await rewriteCommand(pi, cmd, ctx.signal)
