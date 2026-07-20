@@ -311,12 +311,14 @@ if [[ ${#linear_links[@]} -eq 0 && $assume_yes -eq 0 ]]; then
     done
 fi
 
-if [[ -n "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
+linear_appended=0
+append_linear_links() {
     {
         printf '\n\n'
         printf '%s\n' "${linear_links[@]}"
-    } >>"$body_file"
-fi
+    } >>"$1"
+    linear_appended=1
+}
 
 edit_norm=$(normalize_yn "$edit_desc")
 [[ -z "$edit_norm" ]] && edit_norm=$(prompt_menu "Open PR description in \$EDITOR before creating PR?" "No" "Yes")
@@ -325,7 +327,15 @@ if [[ "$edit_norm" == "Yes" ]]; then
         body_file=$(new_md_tempfile)
         temp_files+=("$body_file")
     fi
+    # Append Linear links before editing so they are part of the description the
+    # user customizes (and are not lost when a fresh body file is edited).
+    [[ ${#linear_links[@]} -gt 0 ]] && append_linear_links "$body_file"
     edit_pr_description "$body_file"
+fi
+
+# Append Linear links if we have a body file and haven't done so already.
+if [[ $linear_appended -eq 0 && -n "$body_file" && ${#linear_links[@]} -gt 0 ]]; then
+    append_linear_links "$body_file"
 fi
 
 args=(pr create --assignee @me --title "$title" --fill)
