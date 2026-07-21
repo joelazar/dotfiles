@@ -12,6 +12,10 @@ echo "🚀 Update Codex"
 brew upgrade codex
 echo
 
+echo "🌐 Update Antigravity-cli"
+brew upgrade antigravity-cli
+echo
+
 echo "🥧 Update Pi"
 pi update --all
 pi update --models
