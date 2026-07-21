@@ -15,6 +15,12 @@
  *   system prompt and tool-name remapping. So this extension only
  *   contributes the OAuth dance and a fresh provider id; pi handles
  *   the rest. No npm deps required.
+ *
+ *   pi >= 0.81 also supports registering a complete pi-ai provider via
+ *   pi.registerProvider(createProvider({ ... })) with native auth, model
+ *   refresh, filtering, and custom streaming. We intentionally stay on the
+ *   legacy provider-config form (still fully supported): it's less code and
+ *   the built-in anthropic-messages streamer already does everything needed.
  */
 
 import type { OAuthCredentials, OAuthLoginCallbacks } from "@earendil-works/pi-ai";

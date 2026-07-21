@@ -12,6 +12,13 @@
                    a large decode speedup at identical quality.
 
   Notes:
+    - Deliberately single-model mode (-hf), NOT llama.cpp router mode.
+      pi >= 0.81 has built-in router support (/login llama.cpp, /llama), but
+      it requires --models-dir without -hf, only exposes explicitly loaded
+      models, and registers them with reasoning disabled and no
+      qwen-chat-template compat — a regression for Qwen thinking blocks.
+      The custom "llama-cpp" provider in pi's models.json keeps full
+      reasoning support and doesn't clash with the built-in "llama.cpp" id.
     - The model is downloaded from Hugging Face on first start and cached
       under ~/Library/Caches/llama.cpp.
     - Weights are mmap'd, so macOS can reclaim the memory under pressure;
