@@ -16,7 +16,8 @@ MANAGED_CONFIG='{
     "anthropic-extra/claude-opus-4-8",
     "anthropic-extra/claude-fable-5",
     "anthropic/claude-opus-4-8",
-    "anthropic/claude-fable-5"
+    "anthropic/claude-fable-5",
+    "llama-cpp/qwen3.6-35b-a3b"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
