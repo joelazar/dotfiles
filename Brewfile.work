@@ -406,7 +406,6 @@ uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
-npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"
 npm "skills"

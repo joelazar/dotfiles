@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Mount the restic repo in $RESTIC_REPOSITORY to browse and copy files.
+# Runs in the foreground; press Ctrl-C to unmount.
+#
+set -Eeuo pipefail
+
+MOUNTPOINT="${1:-$HOME/mnt/restic}"
+
+if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
+    echo '❌ RESTIC_REPOSITORY is not set' >&2
+    exit 1
+fi
+
+ensure_repository_ready() {
+    local volume
+    volume="$(dirname "$RESTIC_REPOSITORY")"
+    if [[ ! -d "$volume" ]]; then
+        printf '❌ Backup volume "%s" is not mounted\n' "$volume" >&2
+        exit 1
+    fi
+    if ! restic cat config >/dev/null 2>&1; then
+        printf '❌ No restic repository found at "%s"\n' "$RESTIC_REPOSITORY" >&2
+        exit 1
+    fi
+}
+
+cleanup_mountpoint() {
+    # Remove the mountpoint dir if we created it and it is empty
+    rmdir "$MOUNTPOINT" 2>/dev/null || true
+}
+
+mount_repository() {
+    mkdir -p "$MOUNTPOINT"
+    trap cleanup_mountpoint EXIT
+    printf '🔍 Mounting "%s" at "%s" (Ctrl-C to unmount)\n' "$RESTIC_REPOSITORY" "$MOUNTPOINT"
+    printf '📂 Browse snapshots under "%s/snapshots/latest"\n' "$MOUNTPOINT"
+    restic mount "$MOUNTPOINT"
+}
+
+ensure_repository_ready
+mount_repository
