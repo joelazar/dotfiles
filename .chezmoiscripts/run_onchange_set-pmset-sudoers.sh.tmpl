@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Install a sudoers rule allowing passwordless `pmset -a disablesleep`.
+#
+# This lets the `toggle-lid-sleep` Raycast script command flip the clamshell
+# (lid-closed) sleep flag without an interactive password prompt. The rule is
+# scoped to exactly that command so it grants no broader privilege.
+#
+# Re-runs whenever this script (and thus the rule below) changes.
+
+set -euo pipefail
+
+SUDOERS_FILE="/etc/sudoers.d/pmset-disablesleep"
+RULE="{{ .chezmoi.username }} ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep *"
+
+# Validate the rule in a temp file before touching the real sudoers directory;
+# an invalid sudoers file can lock you out of sudo entirely.
+TMP_FILE="$(mktemp)"
+trap 'rm -f "$TMP_FILE"' EXIT
+printf '%s\n' "$RULE" >"$TMP_FILE"
+
+if ! visudo -cf "$TMP_FILE" >/dev/null 2>&1; then
+    echo "==> Refusing to install: sudoers rule failed validation" >&2
+    exit 1
+fi
+
+# Skip the write (and sudo prompt) if the rule is already in place.
+if [ -f "$SUDOERS_FILE" ] && diff -q "$TMP_FILE" "$SUDOERS_FILE" >/dev/null 2>&1; then
+    echo "==> pmset sudoers rule already installed"
+    exit 0
+fi
+
+echo "==> Installing pmset sudoers rule to $SUDOERS_FILE"
+sudo install -m 0440 -o root -g wheel "$TMP_FILE" "$SUDOERS_FILE"
+echo "==> pmset sudoers rule installed"

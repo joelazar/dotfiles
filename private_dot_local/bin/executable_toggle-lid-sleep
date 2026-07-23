@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title Toggle lid sleep
+# @raycast.mode compact
+
+# Optional parameters:
+# @raycast.icon ☕
+# @raycast.description Toggle whether the Mac sleeps when the lid is closed (clamshell).
+
+# Documentation:
+# @raycast.author joelazar
+# @raycast.authorURL https://raycast.com/joelazar
+
+# Read current SleepDisabled flag (0 = sleeps on lid close, 1 = stays awake)
+current=$(pmset -g | awk '/SleepDisabled/ {print $2}')
+
+if [ "$current" = "1" ]; then
+    sudo pmset -a disablesleep 0
+    echo "😴 Lid sleep enabled — Mac will sleep when the lid is closed"
+else
+    sudo pmset -a disablesleep 1
+    echo "☕ Lid sleep disabled — Mac stays awake with the lid closed"
+fi
