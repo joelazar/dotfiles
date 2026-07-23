@@ -31,6 +31,7 @@ INCLUDE=(
     "$HOME/.local/share/atuin"
     "$HELIUM_SUPPORT"
     "$HOME/Library/Preferences/net.imput.helium.plist"
+    "$HOME/Library/Application Support/zoxide"
     "$HOME/Library/Application Support/com.tinyapp.TablePlus"
     "$HOME/Library/Preferences/com.tinyapp.TablePlus.plist"
 )
