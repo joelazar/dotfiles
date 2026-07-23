@@ -34,8 +34,8 @@ brew "node"
 brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Easily download, build, install, upgrade, and uninstall Python packages
-brew "python-setuptools"
+# Cargo subcommand for checking and applying updates to installed executables
+brew "cargo-update"
 # Mozilla CA bundle for Python
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -82,8 +82,6 @@ brew "fastfetch"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
-# OpenType text shaping engine
-brew "harfbuzz"
 # Create thumbnails for your video files
 brew "ffmpegthumbnailer"
 # User-friendly command-line shell for UNIX-like operating systems
@@ -96,6 +94,8 @@ brew "fzf"
 brew "gcc"
 # GitHub command-line tool
 brew "gh"
+# OpenType text shaping engine
+brew "harfbuzz"
 # Interpreter for PostScript and PDF
 brew "ghostscript"
 # Syntax-highlighting pager for git and diff output
@@ -196,6 +196,8 @@ brew "pre-commit"
 brew "presenterm"
 # OpenBSD and Darwin versions of pgrep, pkill, and pfind
 brew "proctools"
+# Easily download, build, install, upgrade, and uninstall Python packages
+brew "python-setuptools"
 # Command-line YAML and XML processor that wraps jq
 brew "python-yq"
 # Multi-purpose desktop calculator
@@ -212,6 +214,8 @@ brew "ripgrep-all"
 brew "rtk"
 # Powerful, clean, object-oriented scripting language
 brew "ruby"
+# Safe, concurrent, practical language
+brew "rust"
 # Intuitive find & replace CLI
 brew "sd"
 # 7-Zip is a file archiver with a high compression ratio
@@ -265,13 +269,13 @@ brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
-brew "aws/tap/eks-node-viewer"
+brew "aws/tap/eks-node-viewer", trusted: true
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav", trusted: true
 # Grafana Cloud CLI
-brew "grafana/grafana/gcx"
+brew "grafana/grafana/gcx", trusted: true
 # Terraform
-brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform", trusted: true
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.
 brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 # A utility toolkit of most commonly used tools by software developers and IT professionals
@@ -281,9 +285,9 @@ brew "microck/kagi/kagi", trusted: true
 # Desktop-inspired terminal diff viewer for agent-authored changesets
 brew "modem-dev/tap/hunk", trusted: true
 # NATS utility
-brew "nats-io/nats-tools/nats"
+brew "nats-io/nats-tools/nats", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun"
+brew "oven-sh/bun/bun", trusted: true
 # Comprehensive macOS cleanup and application uninstall tool
 brew "tw93/tap/mole", trusted: true
 # Password manager that keeps all passwords secure behind one password
@@ -399,7 +403,6 @@ go "github.com/tmc/json-to-struct"
 go "go.uber.org/mock/mockgen"
 go "github.com/kyoh86/richgo"
 cargo "cargo-audit"
-cargo "cargo-update"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "pgcli", with: ["catppuccin", "psycopg"]
