@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Configure CleanShot X preferences.
+#
+# Only non-secret, machine-independent settings are managed here. The license
+# (activationKey), cloud account, update group and window/status-item positions
+# are intentionally left out so they never land in this public repo.
+#
+# Re-runs whenever the settings below change.
+
+set -euo pipefail
+
+DOMAIN="pl.maketheweb.cleanshotx"
+
+if ! defaults read "$DOMAIN" >/dev/null 2>&1; then
+    echo "==> CleanShot X not installed, skipping configuration"
+    exit 0
+fi
+
+echo "==> Applying CleanShot X preferences"
+
+defaults write "$DOMAIN" exportPath -string "{{ .chezmoi.homeDir }}/Pictures/screenshots"
+defaults write "$DOMAIN" playSounds -bool false
+defaults write "$DOMAIN" captureWithoutDesktopIcons -bool false
+defaults write "$DOMAIN" analyticsAllowed -bool false
+defaults write "$DOMAIN" SUEnableAutomaticChecks -bool false
+defaults write "$DOMAIN" autoClosePopup -bool true
+defaults write "$DOMAIN" deletePopupAfterDragging -bool true
+defaults write "$DOMAIN" popupAskForDestinationWhenSaving -bool false
+defaults write "$DOMAIN" transparentWindowBackground -bool false
+defaults write "$DOMAIN" selfTimerInterval -int 10
+defaults write "$DOMAIN" historyCapacity -int 2
+defaults write "$DOMAIN" afterScreenshotActions -array 0 2
+defaults write "$DOMAIN" afterVideoActions -array 0 2
+
+echo "==> CleanShot X configuration complete"

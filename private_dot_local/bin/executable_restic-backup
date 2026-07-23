@@ -9,6 +9,8 @@ if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
     exit 1
 fi
 
+HELIUM_SUPPORT="$HOME/Library/Application Support/net.imput.helium"
+
 INCLUDE=(
     "$HOME/.agents"
     "$HOME/.aws"
@@ -24,7 +26,35 @@ INCLUDE=(
     "$HOME/.obsidian-headless"
     "$HOME/.pi"
     "$HOME/.ssh"
+    "$HOME/.local/bin"
     "$HOME/.local/share/fish/fish_history"
+    "$HOME/.local/share/atuin"
+    "$HELIUM_SUPPORT"
+    "$HOME/Library/Preferences/net.imput.helium.plist"
+    "$HOME/Library/Application Support/com.tinyapp.TablePlus"
+    "$HOME/Library/Preferences/com.tinyapp.TablePlus.plist"
+)
+
+# Helium is Chromium-based, so most of its support directory is regenerable
+# cache/telemetry. Keep only the meaningful profile config by dropping the
+# heavy, throwaway paths.
+EXCLUDE=(
+    "$HELIUM_SUPPORT/BrowserMetrics"
+    "$HELIUM_SUPPORT/DeferredBrowserMetrics"
+    "$HELIUM_SUPPORT/Crashpad"
+    "$HELIUM_SUPPORT/CertificateRevocation"
+    "$HELIUM_SUPPORT/GPUPersistentCache"
+    "$HELIUM_SUPPORT/GraphiteDawnCache"
+    "$HELIUM_SUPPORT/component_crx_cache"
+    "$HELIUM_SUPPORT/Webstore Downloads"
+    "$HELIUM_SUPPORT/Default/Service Worker"
+    "$HELIUM_SUPPORT/Default/IndexedDB"
+    "$HELIUM_SUPPORT/Default/File System"
+    "$HELIUM_SUPPORT/Default/GPUCache"
+    "$HELIUM_SUPPORT/Default/DawnWebGPUCache"
+    "$HELIUM_SUPPORT/Default/DawnGraphiteCache"
+    "$HELIUM_SUPPORT/Default/Cache"
+    "$HELIUM_SUPPORT/Default/Code Cache"
 )
 
 ensure_repository_ready() {
@@ -43,10 +73,16 @@ ensure_repository_ready() {
 run_backup() {
     printf '💾 Backing up to "%s"\n' "$RESTIC_REPOSITORY"
     restic unlock
+    local exclude_args=()
+    local path
+    for path in "${EXCLUDE[@]}"; do
+        exclude_args+=(--exclude "$path")
+    done
     restic backup "${INCLUDE[@]}" \
         --retry-lock 3h \
         --compression max \
         --exclude-caches \
+        "${exclude_args[@]}" \
         "$@"
 }
 

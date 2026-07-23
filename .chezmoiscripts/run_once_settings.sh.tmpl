@@ -41,6 +41,10 @@ execute "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false" "Ke
 
 execute 'sudo nvram SystemAudioVolume=" "' "Disable the sound effects on boot"
 
+execute "defaults write NSGlobalDomain com.apple.sound.beep.volume -float 0" "Disable the alert sound"
+
+execute "defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -int 0" "Disable UI sound effects"
+
 execute "defaults write NSGlobalDomain AppleShowAllExtensions -bool true" "Show all filename extensions"
 
 execute "defaults write com.apple.dock autohide -bool true" "Automatically hide and show the Dock"
@@ -102,6 +106,10 @@ execute "defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool
 execute "killall Finder" "Restart Finder to apply changes"
 
 execute "defaults write com.apple.screencapture location ~/Pictures/screenshots/" "Save screenshots to the Pictures/screenshots directory"
+
+execute "defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool true" "Show battery percentage in the menu bar"
+
+execute "killall ControlCenter" "Restart Control Center to apply changes"
 
 # Default application associations live in dot_config/duti/default-apps.duti
 # and are applied by run_onchange_set-default-apps.sh.tmpl
