@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# Back up selected dotfiles and configs to the restic repo in $RESTIC_REPOSITORY.
+#
+set -Eeuo pipefail
+
+if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
+    echo '❌ RESTIC_REPOSITORY is not set' >&2
+    exit 1
+fi
+
+INCLUDE=(
+    "$HOME/.agents"
+    "$HOME/.aws"
+    "$HOME/.claude"
+    "$HOME/.claude-work"
+    "$HOME/.claude.json"
+    "$HOME/.config"
+    "$HOME/.docker/config.json"
+    "$HOME/.gemini"
+    "$HOME/.gnupg"
+    "$HOME/.kube"
+    "$HOME/.npmrc"
+    "$HOME/.obsidian-headless"
+    "$HOME/.pi"
+    "$HOME/.ssh"
+    "$HOME/.local/share/fish/fish_history"
+)
+
+ensure_repository_ready() {
+    local volume
+    volume="$(dirname "$RESTIC_REPOSITORY")"
+    if [[ ! -d "$volume" ]]; then
+        printf '❌ Backup volume "%s" is not mounted\n' "$volume" >&2
+        exit 1
+    fi
+    if ! restic cat config >/dev/null 2>&1; then
+        printf '📦 Initializing new restic repository at "%s"\n' "$RESTIC_REPOSITORY"
+        restic init
+    fi
+}
+
+run_backup() {
+    printf '💾 Backing up to "%s"\n' "$RESTIC_REPOSITORY"
+    restic unlock
+    restic backup "${INCLUDE[@]}" \
+        --retry-lock 3h \
+        --compression max \
+        --exclude-caches \
+        "$@"
+}
+
+ensure_repository_ready
+run_backup "$@"

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# Prune old snapshots from the restic repo in $RESTIC_REPOSITORY.
+#
+set -Eeuo pipefail
+
+if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
+    echo '❌ RESTIC_REPOSITORY is not set' >&2
+    exit 1
+fi
+
+ensure_repository_ready() {
+    if ! restic cat config >/dev/null 2>&1; then
+        printf '❌ No restic repository found at "%s"\n' "$RESTIC_REPOSITORY" >&2
+        exit 1
+    fi
+}
+
+forget_old_snapshots() {
+    printf '🧠 Forgetting extra backups in "%s"\n' "$RESTIC_REPOSITORY"
+    restic unlock
+    restic forget \
+        --retry-lock 3h \
+        --keep-within-daily 7d \
+        --keep-within-weekly 1m \
+        --keep-within-monthly 1y \
+        --keep-within-yearly 100y \
+        --prune
+}
+
+ensure_repository_ready
+forget_old_snapshots

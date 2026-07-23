@@ -273,7 +273,6 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | [`agent-md`](private_dot_local/bin/executable_agent-md)                                 | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for coding-agent projects |
 | [`ai-update`](private_dot_local/bin/executable_ai-update)                               | Updates Claude Code, Codex, Pi, and Pi local packages                      |
-| [`backup`](private_dot_local/bin/executable_backup)                                     | Encrypted backups with `restic` and `age`                                  |
 | [`chatterbox`](private_dot_local/bin/executable_chatterbox)                             | Local text-to-speech via the Chatterbox TTS model                          |
 | [`cht`](private_dot_local/bin/executable_cht)                                           | Quick cheat-sheet lookup via cht.sh                                        |
 | [`claude-private`](private_dot_local/bin/executable_claude-private)                     | Launches the Claude desktop app with the default profile                   |
@@ -292,6 +291,8 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)                   | Triggers Obsidian plugin and theme updates across vaults                   |
 | [`pi`](private_dot_local/bin/executable_pi)                                             | Runs the Pi agent CLI through the mise-managed Node 24 runtime             |
 | [`pr-create`](private_dot_local/bin/executable_pr-create)                               | Creates pull requests with a guided interactive prompt                     |
+| [`restic-backup`](private_dot_local/bin/executable_restic-backup)                       | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic  |
+| [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)                   | Prunes old snapshots from the restic backup repo                           |
 | [`skills-invocation`](private_dot_local/bin/executable_skills-invocation)               | Re-applies the skill invocation policy after `skills update`               |
 | [`switch-main-display`](private_dot_local/bin/executable_switch-main-display)           | Changes the primary display on multi-monitor setups                        |
 | [`transcribe`](private_dot_local/bin/executable_transcribe)                             | Offline audio/video transcription via whisper.cpp                          |
