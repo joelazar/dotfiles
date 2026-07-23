@@ -11,9 +11,25 @@ set -euo pipefail
 
 DOMAIN="pl.maketheweb.cleanshotx"
 
+APP="CleanShot X"
+
 if ! defaults read "$DOMAIN" >/dev/null 2>&1; then
     echo "==> CleanShot X not installed, skipping configuration"
     exit 0
+fi
+
+# CleanShot caches its preferences in memory and rewrites the plist on quit,
+# which would clobber our changes. Quit it first, then relaunch afterwards.
+WAS_RUNNING=0
+if pgrep -x "$APP" >/dev/null 2>&1; then
+    WAS_RUNNING=1
+    echo "==> Quitting CleanShot X before writing preferences"
+    osascript -e 'quit app "CleanShot X"' 2>/dev/null || killall "$APP" 2>/dev/null || true
+    # Give it a moment to flush and exit.
+    for _ in 1 2 3 4 5; do
+        pgrep -x "$APP" >/dev/null 2>&1 || break
+        sleep 0.5
+    done
 fi
 
 echo "==> Applying CleanShot X preferences"
@@ -29,7 +45,12 @@ defaults write "$DOMAIN" popupAskForDestinationWhenSaving -bool false
 defaults write "$DOMAIN" transparentWindowBackground -bool false
 defaults write "$DOMAIN" selfTimerInterval -int 10
 defaults write "$DOMAIN" historyCapacity -int 2
-defaults write "$DOMAIN" afterScreenshotActions -array 0 2
+defaults write "$DOMAIN" afterScreenshotActions -array 0 1
 defaults write "$DOMAIN" afterVideoActions -array 0 2
+
+if [ "$WAS_RUNNING" -eq 1 ]; then
+    echo "==> Relaunching CleanShot X"
+    open -a "$APP" 2>/dev/null || true
+fi
 
 echo "==> CleanShot X configuration complete"

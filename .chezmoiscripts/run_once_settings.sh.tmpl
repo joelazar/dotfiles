@@ -39,6 +39,8 @@ execute "defaults write NSGlobalDomain InitialKeyRepeat -int 13" "Keyboard: Set 
 
 execute "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false" "Keyboard: Disable tooltip when holding key"
 
+execute "defaults write com.apple.HIToolbox AppleFnUsageType -int 0" "Keyboard: Globe/Fn key does nothing"
+
 execute 'sudo nvram SystemAudioVolume=" "' "Disable the sound effects on boot"
 
 execute "defaults write NSGlobalDomain com.apple.sound.beep.volume -float 0" "Disable the alert sound"
@@ -58,6 +60,15 @@ execute "defaults write com.apple.dock expose-group-apps -bool true" "Group wind
 execute "defaults write com.apple.spaces spans-displays -bool true" "Allow Spaces to span across displays"
 
 execute "defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false" "Disable click wallpaper to reveal desktop"
+
+# Hot corners: value 1 = no action, modifier 0 = no modifier key.
+execute "defaults write com.apple.dock wvous-tl-corner -int 1 && defaults write com.apple.dock wvous-tl-modifier -int 0" "Hot corners: disable top-left"
+
+execute "defaults write com.apple.dock wvous-tr-corner -int 1 && defaults write com.apple.dock wvous-tr-modifier -int 0" "Hot corners: disable top-right"
+
+execute "defaults write com.apple.dock wvous-bl-corner -int 1 && defaults write com.apple.dock wvous-bl-modifier -int 0" "Hot corners: disable bottom-left"
+
+execute "defaults write com.apple.dock wvous-br-corner -int 1 && defaults write com.apple.dock wvous-br-modifier -int 0" "Hot corners: disable bottom-right"
 
 execute "killall Dock" "Restart Dock to apply changes"
 
@@ -113,6 +124,51 @@ execute "killall ControlCenter" "Restart Control Center to apply changes"
 
 # Default application associations live in dot_config/duti/default-apps.duti
 # and are applied by run_onchange_set-default-apps.sh.tmpl
+
+show_section "🖱️  Trackpad Configuration" "$CYAN"
+
+# Tap to click (write to both the built-in and Bluetooth trackpad domains plus
+# the per-host global toggle so it sticks).
+execute "defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true" "Trackpad: enable tap to click"
+
+execute "defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true" "Trackpad: enable tap to click (Bluetooth)"
+
+execute "defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1" "Trackpad: tap to click (per-host)"
+
+execute "defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1" "Trackpad: tap to click (global)"
+
+execute "defaults write NSGlobalDomain com.apple.trackpad.scaling -float 2" "Trackpad: set tracking speed"
+
+execute "defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool false" "Trackpad: disable Force Click"
+
+show_section "🌙 Night Shift Configuration" "$PINK"
+
+# Night Shift lives in the root-owned CoreBrightness plist, keyed by the user's
+# GeneratedUID (which equals the CBUser-<UUID> key). Rebuild that key so the
+# schedule and warmth match the configured values on any machine.
+CB_PLIST="/var/root/Library/Preferences/com.apple.CoreBrightness.plist"
+CB_UID="$(dscl . -read "/Users/$USER" GeneratedUID | awk '{print $2}')"
+
+if [ -n "$CB_UID" ]; then
+    # BlueReductionMode 2 = Sunset to Sunrise; BlueReductionEnabled 1 = on until
+    # sunrise. Warmth (~2997K) is set separately below.
+    execute "sudo defaults write $CB_PLIST 'CBUser-$CB_UID' -dict-add CBBlueReductionStatus '{
+        AutoBlueReductionEnabled = 1;
+        BlueReductionAvailable = 1;
+        BlueReductionEnabled = 1;
+        BlueReductionMode = 2;
+        BlueReductionSunScheduleAllowed = 1;
+        Version = 1;
+    }'" "Night Shift: Sunset to Sunrise, on until sunrise"
+
+    execute "sudo defaults write $CB_PLIST 'CBUser-$CB_UID' -dict-add CBBlueLightReductionCCTTargetRaw -float 2997.006" "Night Shift: set warmth (~2997K)"
+
+    execute "sudo defaults write $CB_PLIST 'Keyboard Dim Time' -int 30" "Keyboard: turn backlight off after 30s inactivity"
+
+    execute "sudo killall corebrightnessd 2>/dev/null || true" "Restart corebrightnessd to apply Night Shift"
+else
+    print_error "Could not determine GeneratedUID; skipped Night Shift"
+fi
 
 show_section "🐳 Docker Configuration" "$PINK"
 
