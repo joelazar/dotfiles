@@ -340,6 +340,8 @@ cask "iina"
 cask "inkscape"
 # Keyboard customiser
 cask "karabiner-elements"
+# Voice-to-text transcription and paste tool
+cask "kitlangton-hex"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
 # Tool to control external monitor brightness & volume
@@ -372,6 +374,8 @@ cask "tableplus"
 cask "tailscale-app"
 # Menu bar manager
 cask "thaw"
+# To-do list
+cask "todoist-app"
 # Multimedia player
 cask "vlc"
 # Menu bar app for USB-C cable diagnostics
@@ -409,6 +413,7 @@ uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
+npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"
 npm "skills"
