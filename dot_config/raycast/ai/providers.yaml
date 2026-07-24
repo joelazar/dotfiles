@@ -1,0 +1,33 @@
+# Raycast AI custom providers — local llama.cpp server.
+#
+# Backend: llama-server launchd agent (com.joelazar.llama-server) on
+# 127.0.0.1:11434, OpenAI-compatible API, single model exposed via --alias.
+# No api_keys: local server, no auth.
+#
+# Requires the "Custom Providers" experiment enabled in
+# Raycast Settings → AI → Experiments.
+providers:
+  - id: llama-cpp
+    name: llama.cpp
+    base_url: http://127.0.0.1:11434/v1
+    # Disable Qwen's thinking blocks: Raycast doesn't render reasoning_content,
+    # so with thinking on the chat looks dead for ~25 s before any reply.
+    additional_parameters:
+      chat_template_kwargs:
+        enable_thinking: false
+    models:
+      - id: qwen3.6-35b-a3b # must match --alias in the launchd plist
+        name: Qwen3.6 35B-A3B (local)
+        description: Qwen3.6 35B-A3B MoE via llama.cpp on-device
+        context: 65536
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: false
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: false
