@@ -49,6 +49,7 @@ conversationDetailMode = "STEPS_PROSE"
 show-context-window-usage = true
 appearanceDarkCodeThemeId = "catppuccin"
 selected-avatar-id = "seedy"
+followUpQueueMode = "queue"
 
 [desktop.open-in-target-preferences]
 global = "zed"
@@ -83,6 +84,7 @@ EXISTING="$(cat)"
 #   - projects.*                  : per-machine trust levels
 #   - marketplaces.*.last_updated : auto-written timestamps
 #   - extra plugins / marketplaces / mcp_servers : runtime-generated
+#   - shell_environment_policy      : app-managed env vars
 #   - tui.model_availability_nux  : a counter the app decrements
 echo "$MANAGED_CONFIG" | tomlq -t \
   --slurpfile existing <(echo "$EXISTING" | tomlq '.') \
@@ -99,6 +101,7 @@ echo "$MANAGED_CONFIG" | tomlq -t \
     | .plugins = (($managed.plugins // {}) + ($e.plugins // {}))
     | if ($e.mcp_servers) then .mcp_servers = $e.mcp_servers else . end
     | if ($e.projects) then .projects = $e.projects else . end
+    | if ($e.shell_environment_policy) then .shell_environment_policy = $e.shell_environment_policy else . end
     | if ($e.tui.model_availability_nux)
         then .tui.model_availability_nux = $e.tui.model_availability_nux
         else . end
