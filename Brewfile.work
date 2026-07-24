@@ -342,6 +342,8 @@ cask "inkscape"
 cask "karabiner-elements"
 # Voice-to-text transcription and paste tool
 cask "kitlangton-hex"
+# App to manage software development and track bugs
+cask "linear"
 # Intercept, modify, replay, save HTTP/S traffic
 cask "mitmproxy"
 # Tool to control external monitor brightness & volume
