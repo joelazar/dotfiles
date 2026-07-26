@@ -374,6 +374,8 @@ cask "tableplus"
 cask "tailscale-app"
 # Menu bar manager
 cask "thaw"
+# Editor for .tldr files
+cask "tldraw"
 # To-do list
 cask "todoist-app"
 # Multimedia player

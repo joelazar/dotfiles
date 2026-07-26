@@ -130,7 +130,9 @@ quick)
     jq -r '.message.markdown' <<<"$out"
     echo
     jq -r '.references.markdown // empty' <<<"$out"
-    [[ "$FOLLOWUPS" -eq 1 ]] && jq -r '(.followup_questions // [])[] | "- " + .' <<<"$out"
+    if [[ "$FOLLOWUPS" -eq 1 ]]; then
+        jq -r '(.followup_questions // [])[] | "- " + .' <<<"$out"
+    fi
     ;;
 
 ask)

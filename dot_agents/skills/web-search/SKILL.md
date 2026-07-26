@@ -55,6 +55,13 @@ Examples:
 ~/.agents/skills/web-search/search.sh claude "weather in budapest next 7 days"
 ```
 
+## Timing
+
+`ask` is slow: short prompts return in a few seconds, but long multi-part
+questions can take **2–3 minutes**. That is normal, not a hang. Always run it
+with a generous tool timeout (300s) and let it finish — do not abort it or fall
+back to `quick`, which is far less thorough.
+
 ## Flags
 
 - `--limit <n>` — `search`: number of results (default 5).

@@ -252,6 +252,10 @@ if.app-id = 'net.kovidgoyal.calibre'
 run = 'move-node-to-workspace 4'
 
 [[on-window-detected]]
+if.app-id = 'com.tldraw.desktop'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
 run = ['layout tiling', 'move-node-to-workspace 5']
 
