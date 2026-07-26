@@ -156,6 +156,17 @@ export default function (pi: ExtensionAPI) {
 				maxTokens: 128_000,
 			},
 			{
+				id: "claude-opus-5",
+				name: "Claude Opus 5 (Extra)",
+				reasoning: true,
+				compat: { forceAdaptiveThinking: true, supportsTemperature: false, supportsStrictTools: true },
+				thinkingLevelMap: { xhigh: "xhigh", max: "max" },
+				input: ["text", "image"],
+				cost: { input: 5, output: 25, cacheRead: 0.5, cacheWrite: 6.25 },
+				contextWindow: 1_000_000,
+				maxTokens: 128_000,
+			},
+			{
 				id: "claude-opus-4-8",
 				name: "Claude Opus 4.8 (Extra)",
 				reasoning: true,
