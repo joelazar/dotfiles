@@ -17,7 +17,7 @@ tap "oven-sh/bun", trusted: true
 tap "protonpass/tap", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
 tap "steipete/tap", trusted: true
-tap "tw93/tap"
+tap "tw93/tap", trusted: { formulae: ["mole"] }
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -168,6 +168,8 @@ brew "mas"
 brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
+# Deep clean and optimize your Mac
+brew "mole"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -194,8 +196,6 @@ brew "postgresql@18"
 brew "pre-commit"
 # Terminal slideshow tool
 brew "presenterm"
-# OpenBSD and Darwin versions of pgrep, pkill, and pfind
-brew "proctools"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # Command-line YAML and XML processor that wraps jq
@@ -288,8 +288,6 @@ brew "modem-dev/tap/hunk", trusted: true
 brew "nats-io/nats-tools/nats", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun", trusted: true
-# Comprehensive macOS cleanup and application uninstall tool
-brew "tw93/tap/mole", trusted: true
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
