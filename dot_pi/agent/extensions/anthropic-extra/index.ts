@@ -199,6 +199,16 @@ export default function (pi: ExtensionAPI) {
 				contextWindow: 1_000_000,
 				maxTokens: 128_000,
 			},
+			{
+				id: "claude-haiku-4-5",
+				name: "Claude Haiku 4.5 (Extra)",
+				reasoning: true,
+				compat: { supportsStrictTools: true },
+				input: ["text", "image"],
+				cost: { input: 1, output: 5, cacheRead: 0.1, cacheWrite: 1.25 },
+				contextWindow: 200_000,
+				maxTokens: 64_000,
+			},
 		],
 
 		oauth: {

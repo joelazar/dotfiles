@@ -55,9 +55,7 @@
       "Bash(wc:*)",
       "Bash(which:*)",
       "Read(~/Code/**)",
-      "Edit(~/Code/**)",
-      "Write(~/Code/**)",
-      "NotebookEdit(~/Code/**)"
+      "Edit(~/Code/**)"
     ],
     "deny": [
       "Bash(> /dev/sda)",
