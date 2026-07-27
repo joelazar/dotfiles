@@ -192,7 +192,13 @@ async function autoTitle(
   const normalized = normalizeTitleCandidate(t);
   if (t && TITLE_RE.test(t)) return t;
   if (normalized && TITLE_RE.test(normalized)) return normalized;
-  const subject = await tryExec(pi, ctx, "git", ["log", "-1", "--pretty=%s"], 5_000);
+  const subject = await tryExec(
+    pi,
+    ctx,
+    "git",
+    ["log", "-1", "--pretty=%s"],
+    5_000,
+  );
   if (subject) {
     const s = normalizeTitleCandidate(subject);
     if (s && TITLE_RE.test(s)) return s;
@@ -228,8 +234,8 @@ async function collectLinearLinks(
 
 // Models to try, in order, when generating a PR description.
 const DESCRIPTION_MODELS: string[] = [
-  "anthropic-extra/claude-opus-4-8",
-  "anthropic/claude-opus-4-8",
+  "anthropic-extra/claude-opus-5",
+  "anthropic/claude-opus-5",
 ];
 
 /**
@@ -450,7 +456,14 @@ async function detectDefaultBranch(
     pi,
     ctx,
     "gh",
-    ["repo", "view", "--json", "defaultBranchRef", "--jq", ".defaultBranchRef.name"],
+    [
+      "repo",
+      "view",
+      "--json",
+      "defaultBranchRef",
+      "--jq",
+      ".defaultBranchRef.name",
+    ],
     10_000,
   );
   return remote?.trim() || undefined;

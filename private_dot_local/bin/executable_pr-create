@@ -186,7 +186,7 @@ EOF
 
     local prompt
     prompt=$(cat "$prompt_file")
-    local models=(anthropic-extra/claude-opus-4-8 anthropic/claude-opus-4-8)
+    local models=(anthropic-extra/claude-opus-5 anthropic/claude-opus-5)
     local model
     for model in "${models[@]}"; do
         if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
