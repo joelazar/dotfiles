@@ -108,7 +108,7 @@
 
     abbrev = 12
     attributesfile = ~/.gitattributes
-    excludesfile = ~/.gitignore
+    excludesfile = ~/.config/git/ignore
     eol = lf
     autocrlf = false
     fileMode = false
@@ -208,4 +208,9 @@
     defaultBranch = main
 
 [gj]
+
     root = ~/Code
+
+[includeIf "gitdir:~/Code/work/"]
+
+    path = "~/.config/git/work_config"
