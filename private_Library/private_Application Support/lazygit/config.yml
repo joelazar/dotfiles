@@ -50,6 +50,11 @@ gui:
     "*": "#b4befe"
 update:
   method: never
+keybinding:
+  universal:
+    # freed up <ctrl+d> for the CodeDiff custom command (matches gh-dash)
+    scrollDownMain-alt2: <ctrl+f>
+    scrollUpMain-alt2: <ctrl+b>
 customCommands:
   - key: "<c-n>"
     description: "New branch with prefix"
@@ -203,8 +208,35 @@ customCommands:
     command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
     context: "commitFiles"
     description: "Compare (difftool) with local copy"
-  - key: "V"
-    command: "git add -AN 2>/dev/null; git diff | diffnav"
+  - key: "<c-d>"
+    command: "nvim -c ':CodeDiff'"
     context: "files"
-    description: "View diff in diffnav"
+    description: "View working tree diff in CodeDiff"
+    output: terminal
+  - key: "<c-d>"
+    command: "nvim -c ':CodeDiff {{.SelectedLocalCommit.Sha}}~ {{.SelectedLocalCommit.Sha}}'"
+    context: "commits"
+    description: "View commit diff in CodeDiff"
+    output: terminal
+  - key: "<c-d>"
+    command: "nvim -c ':CodeDiff {{.SelectedLocalBranch.Name}}'"
+    context: "localBranches"
+    description: "View branch diff in CodeDiff"
+    output: terminal
+  - key: "<c-t>"
+    command: "tuicr -w"
+    context: "files"
+    description: "Review working tree in tuicr"
+    output: terminal
+  - key: "<c-t>"
+    command: "tuicr -r {{.SelectedLocalCommit.Sha}}"
+    context: "commits"
+    description: "Review commit in tuicr"
+    output: terminal
+  - key: "<c-t>"
+    command: >
+      pr=$(gh pr view {{.SelectedLocalBranch.Name}} --json number --jq .number 2>/dev/null);
+      if [ -n "$pr" ]; then tuicr pr "$pr"; else tuicr -r {{.SelectedLocalBranch.Name}}; fi
+    context: "localBranches"
+    description: "Review branch in tuicr (PR if one exists)"
     output: terminal
