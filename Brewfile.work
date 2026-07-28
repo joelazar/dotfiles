@@ -1,3 +1,4 @@
+tap "agavra/tap"
 tap "aws/tap", trusted: true
 tap "buo/cask-upgrade", trusted: true
 tap "darrylmorley/whatcable", trusted: true
@@ -268,6 +269,8 @@ brew "yazi"
 brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
+brew "agavra/tap/tuicr", trusted: true
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer", trusted: true
 # Git diff pager based on delta but with a file tree, à la GitHub

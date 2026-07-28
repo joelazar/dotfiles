@@ -1,0 +1,32 @@
+# tuicr - code review TUI
+# https://github.com/agavra/tuicr/blob/main/docs/CONFIG.md
+
+theme = "catppuccin-mocha"
+diff_view = "side-by-side"
+transparent_background = false
+
+show_file_list = true
+show_commits = true
+cursor_line = true
+scroll_offset = 5
+wrap = false
+mouse = true
+
+leader = " "
+comment_vim = true
+comment_tab_width = 2
+
+backend = "libgit2"
+no_update_check = true
+review_watch_interval_ms = 1000
+
+comment_types = [
+  { id = "issue", color = "red", definition = "must be fixed before merge" },
+  { id = "suggestion", color = "yellow", definition = "possible improvement, non-blocking" },
+  { id = "question", color = "blue", definition = "ask for clarification" },
+  { id = "nit", label = "nitpick", color = "#d19a66", definition = "small optional tweak, style or naming" },
+  { id = "praise", color = "green", definition = "positive feedback" },
+]
+
+[forge]
+comment_type_prefix = true
