@@ -100,6 +100,19 @@
     "defaultMode": "default"
   },
   "model": "opus[1m]",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
@@ -122,18 +135,5 @@
   "theme": "dark-ansi",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
-  "voiceEnabled": false,
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "rtk hook claude"
-          }
-        ]
-      }
-    ]
-  }
+  "voiceEnabled": false
 }

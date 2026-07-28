@@ -346,6 +346,8 @@ cask "linear"
 cask "mitmproxy"
 # Tool to control external monitor brightness & volume
 cask "monitorcontrol"
+# Neovim Client
+cask "neovide-app"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # The official CLI for the OpenAI API.

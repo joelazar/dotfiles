@@ -1,0 +1,14 @@
+# Startup-only Neovide settings. Runtime settings (animations, keymaps) live in
+# ~/.config/nvim/lua/config/{options,keymaps}.lua
+frame = "buttonless"
+maximized = true
+fork = true      # detach from the terminal, don't block the shell
+idle = true      # don't redraw when idle
+theme = "dark"
+title-hidden = true
+no-multigrid = false
+
+[font]
+normal = ["Maple Mono NF"]
+size = 13.0
+features = { "Maple Mono NF" = ["+cv02", "+cv05", "+cv61", "+cv63"] }

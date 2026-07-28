@@ -2,82 +2,88 @@
 # Format: <bundle-id> <UTI-or-.extension> <role>
 # System source-code types are set by UTI so they override Xcode's claims.
 
-# --- Zed: text & source code (by UTI) ---
-dev.zed.Zed public.plain-text all
-dev.zed.Zed public.source-code all
-dev.zed.Zed public.script all
-dev.zed.Zed public.shell-script all
-dev.zed.Zed public.bash-script all
-dev.zed.Zed public.zsh-script all
-dev.zed.Zed public.python-script all
-dev.zed.Zed public.ruby-script all
-dev.zed.Zed public.perl-script all
-dev.zed.Zed public.php-script all
-dev.zed.Zed public.c-source all
-dev.zed.Zed public.c-header all
-dev.zed.Zed public.c-plus-plus-source all
-dev.zed.Zed public.c-plus-plus-header all
-dev.zed.Zed public.objective-c-source all
-dev.zed.Zed public.objective-c-plus-plus-source all
-dev.zed.Zed public.swift-source all
-dev.zed.Zed public.assembly-source all
-dev.zed.Zed public.make-source all
-dev.zed.Zed com.apple.rez-source all
-dev.zed.Zed com.netscape.javascript-source all
-dev.zed.Zed public.json all
-dev.zed.Zed public.yaml all
-dev.zed.Zed public.xml all
-dev.zed.Zed com.apple.property-list all
-dev.zed.Zed public.comma-separated-values-text all
+# --- Neovide: text & source code (by UTI) ---
+com.neovide.neovide public.plain-text all
+com.neovide.neovide public.source-code all
+com.neovide.neovide public.script all
+com.neovide.neovide public.shell-script all
+com.neovide.neovide public.bash-script all
+com.neovide.neovide public.zsh-script all
+com.neovide.neovide public.python-script all
+com.neovide.neovide public.ruby-script all
+com.neovide.neovide public.perl-script all
+com.neovide.neovide public.php-script all
+com.neovide.neovide public.c-source all
+com.neovide.neovide public.c-header all
+com.neovide.neovide public.c-plus-plus-source all
+com.neovide.neovide public.c-plus-plus-header all
+com.neovide.neovide public.objective-c-source all
+com.neovide.neovide public.objective-c-plus-plus-source all
+com.neovide.neovide public.swift-source all
+com.neovide.neovide public.assembly-source all
+com.neovide.neovide public.make-source all
+com.neovide.neovide com.apple.rez-source all
+com.neovide.neovide com.netscape.javascript-source all
+com.neovide.neovide public.json all
+com.neovide.neovide public.yaml all
+com.neovide.neovide public.xml all
+com.neovide.neovide com.apple.property-list all
+com.neovide.neovide public.comma-separated-values-text all
 
-# --- Zed: text & config (by extension) ---
-dev.zed.Zed .md all
-dev.zed.Zed .markdown all
-dev.zed.Zed .mdx all
-dev.zed.Zed .log all
-dev.zed.Zed .jsonc all
-dev.zed.Zed .toml all
-dev.zed.Zed .ini all
-dev.zed.Zed .conf all
-dev.zed.Zed .cfg all
-dev.zed.Zed .tsv all
-dev.zed.Zed .env all
-dev.zed.Zed .patch all
-dev.zed.Zed .diff all
-dev.zed.Zed .fish all
-dev.zed.Zed .command all
-dev.zed.Zed .lua all
-dev.zed.Zed .go all
-dev.zed.Zed .rs all
-dev.zed.Zed .kt all
-dev.zed.Zed .kts all
-dev.zed.Zed .scala all
-dev.zed.Zed .jsx all
-dev.zed.Zed .ts all
-dev.zed.Zed .tsx all
-dev.zed.Zed .vue all
-dev.zed.Zed .svelte all
-dev.zed.Zed .scss all
-dev.zed.Zed .sass all
-dev.zed.Zed .less all
-dev.zed.Zed .sql all
-dev.zed.Zed .gradle all
-dev.zed.Zed .pm all
-dev.zed.Zed .jl all
-dev.zed.Zed .dart all
-dev.zed.Zed .ex all
-dev.zed.Zed .exs all
-dev.zed.Zed .erl all
-dev.zed.Zed .hs all
-dev.zed.Zed .clj all
-dev.zed.Zed .tf all
-dev.zed.Zed .hcl all
-dev.zed.Zed .proto all
-dev.zed.Zed .graphql all
-dev.zed.Zed .gql all
-dev.zed.Zed .properties all
-dev.zed.Zed .tex all
-dev.zed.Zed .bib all
+# --- Neovide: text & config (by extension) ---
+com.neovide.neovide .md all
+com.neovide.neovide .markdown all
+com.neovide.neovide .mdx all
+com.neovide.neovide .log all
+com.neovide.neovide .jsonc all
+com.neovide.neovide .toml all
+com.neovide.neovide .ini all
+com.neovide.neovide .conf all
+com.neovide.neovide .cfg all
+com.neovide.neovide .tsv all
+com.neovide.neovide .env all
+com.neovide.neovide .patch all
+com.neovide.neovide .diff all
+com.neovide.neovide .fish all
+com.neovide.neovide .command all
+com.neovide.neovide .lua all
+com.neovide.neovide .go all
+com.neovide.neovide .rs all
+com.neovide.neovide .kt all
+com.neovide.neovide .kts all
+com.neovide.neovide .scala all
+com.neovide.neovide .jsx all
+com.neovide.neovide .ts all
+com.neovide.neovide .tsx all
+com.neovide.neovide .vue all
+com.neovide.neovide .svelte all
+com.neovide.neovide .scss all
+com.neovide.neovide .sass all
+com.neovide.neovide .less all
+com.neovide.neovide .sql all
+com.neovide.neovide .gradle all
+com.neovide.neovide .pm all
+com.neovide.neovide .jl all
+com.neovide.neovide .dart all
+com.neovide.neovide .ex all
+com.neovide.neovide .exs all
+com.neovide.neovide .erl all
+com.neovide.neovide .hs all
+com.neovide.neovide .clj all
+com.neovide.neovide .tf all
+com.neovide.neovide .hcl all
+com.neovide.neovide .proto all
+com.neovide.neovide .graphql all
+com.neovide.neovide .gql all
+com.neovide.neovide .properties all
+com.neovide.neovide .tex all
+com.neovide.neovide .bib all
+
+# --- Ghostty: run executable scripts ---
+# Executable files are public.unix-executable and use the special "shell" role,
+# which Terminal.app claims by default. Ghostty declares the same role, so
+# double-clicking a script runs it in Ghostty instead of Terminal.
+com.mitchellh.ghostty public.unix-executable shell
 
 # --- IINA: video (by extension) ---
 com.colliderli.iina .mp4 all

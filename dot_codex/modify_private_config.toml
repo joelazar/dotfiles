@@ -50,6 +50,7 @@ show-context-window-usage = true
 appearanceDarkCodeThemeId = "catppuccin"
 selected-avatar-id = "seedy"
 followUpQueueMode = "queue"
+realtimeVoiceScreenContextEnabled = false
 
 [desktop.open-in-target-preferences]
 global = "zed"

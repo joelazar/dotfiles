@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Apply default application associations via duti.
 #
-# Zed is the default editor for text/source files (neovim is a TUI and cannot
-# be a macOS default app, so Zed wins wherever Xcode would otherwise claim a
-# source-code UTI). IINA handles video. Xcode-specific project files
+# Neovide (the Neovim GUI) is the default editor for text/source files, so it
+# wins wherever Xcode would otherwise claim a source-code UTI. IINA handles
+# video. Xcode-specific project files
 # (.xcodeproj, .storyboard, .xib, ...) are intentionally left with Xcode.
 #
 # Re-runs whenever the duti settings file changes.

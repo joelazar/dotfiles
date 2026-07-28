@@ -16,7 +16,12 @@ MANAGED_CONFIG='{
     "anthropic-extra/claude-opus-5",
     "anthropic-extra/claude-fable-5",
     "anthropic/claude-opus-5",
-    "llama-cpp/qwen3.6-35b-a3b"
+    "llama-cpp/qwen3.6-35b-a3b",
+    "anthropic-extra/claude-sonnet-5",
+    "anthropic-extra/claude-haiku-4-5",
+    "openrouter/moonshotai/kimi-k3",
+    "openrouter/z-ai/glm-5.2",
+    "openrouter/openai/gpt-oss-120b"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
