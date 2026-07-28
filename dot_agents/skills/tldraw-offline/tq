@@ -1,0 +1,20 @@
+#!/bin/sh
+# <!-- installed-by:tldraw-desktop-agent-skills -->
+# tq — tldraw canvas-api helper. Usage:
+#   sh tq GET  /api/doc/DOC/script-status
+#   sh tq POST /api/search '{"code":"return await api.getDocs()"}'                # JSON body
+#   sh tq POST /api/doc/DOC/exec 'return editor.getCurrentPageShapes().length'    # raw JS body
+set -e
+sj='/Users/joelazar/Library/Application Support/tldraw/server.json'
+port=$(jq -r .port "$sj"); token=$(jq -r .token "$sj")
+url="http://localhost:$port$2"
+auth="authorization: Bearer $token"
+if [ -z "$3" ]; then
+  curl -s -X "$1" "$url" -H "$auth"
+else
+  case "$3" in
+    '{'*) ctype='content-type: application/json' ;;
+    *)    ctype='content-type: text/plain' ;;
+  esac
+  curl -s -X "$1" "$url" -H "$auth" -H "$ctype" --data-binary "$3"
+fi
