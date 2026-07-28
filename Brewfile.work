@@ -9,7 +9,6 @@ tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
 tap "macos-fuse-t/cask", trusted: true
 tap "microck/kagi", "https://github.com/Microck/homebrew-kagi"
-tap "modem-dev/tap"
 tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
@@ -285,8 +284,6 @@ brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 brew "ksdme/tap/ut", trusted: true
 # Agent-native Rust CLI for Kagi subscribers with JSON-first output
 brew "microck/kagi/kagi", trusted: true
-# Desktop-inspired terminal diff viewer for agent-authored changesets
-brew "modem-dev/tap/hunk", trusted: true
 # NATS utility
 brew "nats-io/nats-tools/nats", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
