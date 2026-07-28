@@ -61,7 +61,7 @@ keybind = super+physical:three=goto_tab:3
 keybind = super+right=text:\x05
 keybind = super+d=new_split:right
 # resize mode: super+r to enter, h/j/k/l to resize, escape to exit
-keybind = super+shift+r=activate_key_table:resize
+keybind = super+r=activate_key_table:resize
 keybind = resize/h=resize_split:left,10
 keybind = resize/j=resize_split:down,10
 keybind = resize/k=resize_split:up,10
@@ -119,6 +119,10 @@ keybind = super+shift+c=text:\x1b[99;6u
 keybind = super+shift+e=text:\x1b[101;6u
 # remap cmd+shift+m to ctrl+shift+m (CSI u: 109='m', 6=1+shift+ctrl)
 keybind = super+shift+m=text:\x1b[109;6u
+# remap cmd+shift+a to ctrl+shift+a (CSI u: 97='a', 6=1+shift+ctrl)
+keybind = super+shift+a=text:\x1b[97;6u
+# remap cmd+shift+r to ctrl+shift+r (CSI u: 114='r', 6=1+shift+ctrl)
+keybind = super+shift+r=text:\x1b[114;6u
 
 # search entire scrollback history in default text editor
 keybind = super+shift+f=write_screen_file:open
@@ -139,7 +143,7 @@ keybind = super+shift+t=prompt_tab_title
 keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
 
-keybind = super+shift+r=reload_config
+# cmd+shift+r is remapped for pi below; reload config from the menu instead
 
 keybind = super+grave_accent=goto_window:next
 keybind = super+shift+grave_accent=goto_window:previous
