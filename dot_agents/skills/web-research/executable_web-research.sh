@@ -1,45 +1,42 @@
 #!/usr/bin/env bash
-# Web research dispatcher.
-# Modes: search | quick | ask | summarize (kagi) | google (agy) | claude (claude-code).
-# Every mode post-processes kagi-cli JSON down to the minimal meaningful text
+# Web research dispatcher for answers that need synthesis.
+# Modes: quick | ask (kagi) | google (agy) | claude (claude-code).
+# Link lists and single-URL summaries are NOT here on purpose: use the pi
+# web-tools extension (websearch / webfetch summarize=...) for those.
+# Every kagi mode post-processes CLI JSON down to the minimal meaningful text
 # so the caller's context never sees HTML, favicons, traces, or metadata.
 set -uo pipefail
 
 MODE=""
 INPUT=""
-LIMIT=5
 THREAD_ID=""
-SUMMARY_TYPE="summary"
-LENGTH=""
 FOLLOWUPS=0
 
 usage() {
     cat <<'EOF'
 Usage:
-  search.sh <mode> "<query|url>" [flags]
+  web-research.sh <mode> "<question>" [flags]
 
 Modes:
-  search     List results (title + url + snippet). Cheapest, no synthesis.
   quick      Grounded answer with ranked source links. Default for facts.
   ask        Kagi Assistant for deeper synthesis / multi-step reasoning.
-  summarize  Condense one URL into key text.
   google     Google-grounded answer via Antigravity CLI (agy).
   claude     Web-grounded answer via Claude Code (claude -p).
 
 Flags:
-  --limit <n>          search: number of results (default 5)
   --thread-id <id>     ask: continue an existing assistant thread
-  --summary-type <t>   summarize: summary | keypoints (default summary)
-  --length <l>         summarize: short | digest | etc.
   --followups          quick: also print follow-up questions
 
 Examples:
-  search.sh quick "latest stable rust version"
-  search.sh search "vite 7 breaking changes" --limit 8
-  search.sh ask "compare uv vs poetry for monorepos"
-  search.sh summarize "https://example.com/article"
-  search.sh google "weather in budapest next 7 days"
-  search.sh claude "weather in budapest next 7 days"
+  web-research.sh quick "latest stable rust version"
+  web-research.sh ask "compare uv vs poetry for monorepos"
+  web-research.sh ask "now show a migration example" --thread-id "<id>"
+  web-research.sh google "weather in budapest next 7 days"
+  web-research.sh claude "weather in budapest next 7 days"
+
+Not this skill:
+  raw result links        -> websearch tool (pi web-tools extension)
+  read/summarize one URL  -> webfetch tool, optionally summarize=summary
 EOF
 }
 
@@ -52,20 +49,8 @@ shift
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-    --limit)
-        LIMIT="$2"
-        shift 2
-        ;;
     --thread-id)
         THREAD_ID="$2"
-        shift 2
-        ;;
-    --summary-type)
-        SUMMARY_TYPE="$2"
-        shift 2
-        ;;
-    --length)
-        LENGTH="$2"
         shift 2
         ;;
     --followups)
@@ -120,11 +105,6 @@ command -v kagi >/dev/null 2>&1 || {
 }
 
 case "$MODE" in
-search)
-    kagi search --limit "$LIMIT" "$INPUT" |
-        jq -r '.data[]? | select(.url) | "- [\(.title)](\(.url))\n  \(.snippet // "" | gsub("\\s+"; " "))"'
-    ;;
-
 quick)
     out="$(kagi quick "$INPUT")"
     jq -r '.message.markdown' <<<"$out"
@@ -141,12 +121,6 @@ ask)
     else
         kagi assistant --format markdown "$INPUT"
     fi
-    ;;
-
-summarize)
-    args=(summarize --subscriber --url "$INPUT" --summary-type "$SUMMARY_TYPE")
-    [[ -n "$LENGTH" ]] && args+=(--length "$LENGTH")
-    kagi "${args[@]}" | jq -r '.data.markdown // .data.output // empty'
     ;;
 
 *)

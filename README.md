@@ -177,7 +177,7 @@ There are **12 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agen
 
 The skill library under [`dot_agents/`](dot_agents/) uses the `skills` CLI's global lock file, tracked as [`dot_agents/dot_skill-lock.json`](dot_agents/dot_skill-lock.json) and applied to `~/.agents/.skill-lock.json`.
 
-Local skills live under [`dot_agents/skills/`](dot_agents/skills/) and include `exe-dev`, `github`, `listen-later`, `mermaid`, `presenterm`, `reddit`, `session-analyzer`, `simplify`, `uv`, and `web-search`, plus symlinked `kagi-cli` and `save-to-spotify`. Remote skills are tracked in the lock file and updated with `skills update -g`.
+Local skills live under [`dot_agents/skills/`](dot_agents/skills/) and include `exe-dev`, `github`, `listen-later`, `mermaid`, `presenterm`, `reddit`, `session-analyzer`, `simplify`, `uv`, and `web-research`, plus symlinked `kagi-cli` and `save-to-spotify`. Remote skills are tracked in the lock file and updated with `skills update -g`.
 
 The [`skills-invocation`](private_dot_local/bin/executable_skills-invocation) script re-applies the local invocation policy after `skills update` re-clones github-sourced skills.
 
