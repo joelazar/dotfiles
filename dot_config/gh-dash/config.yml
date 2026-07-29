@@ -80,18 +80,18 @@ defaults:
         hidden: true
 repoPaths:
   onomondo/*: ~/Code/onomondo/*
+  joelazar/*: ~/Code/joelazar/*
 pager:
   diff: diffnav
 showAuthorIcons: true
 smartFilteringAtLaunch: true
 confirmQuit: true
 keybindings:
-  universal:
+  prs:
     - key: g
+      name: lazygit
       command: >
         cd {{.RepoPath}} && lazygit
-      name: lazygit
-  prs:
     - key: ctrl+d
       command: >
         cd {{.RepoPath}} &&
@@ -154,6 +154,10 @@ keybindings:
         echo "Done!"
         '
   issues:
+    - key: g
+      name: lazygit
+      command: >
+        cd {{.RepoPath}} && lazygit
     - key: C
       command: >
         cd {{.RepoPath}} && nvim
