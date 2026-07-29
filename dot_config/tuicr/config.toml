@@ -6,7 +6,7 @@ diff_view = "side-by-side"
 transparent_background = false
 
 show_file_list = true
-show_commits = true
+# show_commits = true  # re-add once released (not in 0.19.1, default is true)
 cursor_line = true
 scroll_offset = 5
 wrap = false
