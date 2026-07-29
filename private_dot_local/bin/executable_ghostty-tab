@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+# Open a new Ghostty tab in a directory, optionally pre-typing a command.
+#
+# Usage: ghostty-tab [-t|--title <title>] <dir> [command ...]
+#
+# The title is exported as TAB_TITLE; ~/.config/fish/functions/fish_title.fish
+# turns that into the tab label so fish's per-prompt title does not clobber it.
+# Falls back to a new window when Ghostty has no windows open.
+set -euo pipefail
+
+usage() {
+	echo "usage: ghostty-tab [-t|--title <title>] <dir> [command ...]" >&2
+	exit 64
+}
+
+# Render a string as an ASCII-only fish `printf` format: osascript decodes its
+# argv as MacRoman, so anything non-ASCII (emoji) must travel as \UXXXX escapes
+# and be rebuilt by fish inside the new tab.
+fish_printf_ascii() {
+	printf '%s' "$1" | perl -CSD -pe '
+		s/\\/\\\\/g;
+		s/%/%%/g;
+		s/'\''/\\'\''/g;
+		s/([^\x20-\x7e])/sprintf("\\U%04X",ord($1))/ge;
+	'
+}
+
+main() {
+	local title=""
+	while [[ ${1:-} == -* ]]; do
+		case $1 in
+		-t | --title)
+			[[ $# -ge 2 ]] || usage
+			title=$2
+			shift 2
+			;;
+		--)
+			shift
+			break
+			;;
+		*) usage ;;
+		esac
+	done
+
+	[[ $# -ge 1 ]] || usage
+
+	local raw_dir="$1"
+	shift
+
+	# Expand a leading ~ and resolve to an absolute path; AppleScript will not.
+	local dir="${raw_dir/#\~/$HOME}"
+	if [[ ! -d $dir ]]; then
+		echo "ghostty-tab: not a directory: $dir" >&2
+		exit 66
+	fi
+	dir="$(cd "$dir" && pwd -P)"
+
+	# Title and command go in as separate lines: fish computes the title before
+	# running a command line, so TAB_TITLE must already be set by then.
+	local input=""
+	if [[ -n $title ]]; then
+		input="set -gx TAB_TITLE (printf '$(fish_printf_ascii "$title")')"$'\n'
+	fi
+	if [[ $# -gt 0 ]]; then
+		input+="$*"$'\n'
+	fi
+
+	osascript - "$dir" "$input" <<-'APPLESCRIPT'
+		on run argv
+			set targetCwd to item 1 of argv
+			set startupInput to item 2 of argv
+			tell application "Ghostty"
+				set cfg to new surface configuration
+				set initial working directory of cfg to targetCwd
+				if startupInput is not "" then
+					set initial input of cfg to startupInput
+				end if
+				if (count of windows) > 0 then
+					new tab in front window with configuration cfg
+				else
+					new window with configuration cfg
+				end if
+				activate
+			end tell
+		end run
+	APPLESCRIPT
+}
+
+main "$@"
