@@ -27,4 +27,4 @@ ui:
   sideBySide: true
 
   # How many levels of folders to open on start (-1 = all, 0 = none, 1 = first level, etc.)
-  startFoldersOpenDepth: 1
+  startFoldersOpenDepth: -1
