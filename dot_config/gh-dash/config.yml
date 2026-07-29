@@ -109,11 +109,11 @@ keybindings:
       name: approve
     - key: ctrl+m
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --admin --delete-branch
-      name: merge (admin)
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --admin --delete-branch
+      name: merge (admin, squash)
     - key: n
       command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --auto --delete-branch
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --auto --delete-branch
       name: enable auto merge
     - key: ctrl+n
       command: >
@@ -125,16 +125,36 @@ keybindings:
         gh pr checkout {{.PrNumber}} &&
         nvim
       name: open in nvim
-    - key: P
+    - key: B
+      name: copy branch name
       command: >
-        gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo
-      name: move to draft
+        printf '%s' '{{.HeadRefName}}' | pbcopy
+    - key: c
+      name: comment
+      command: >
+        gh pr comment --repo {{.RepoName}} {{.PrNumber}}
+        --body "$(gum write --placeholder 'Comment (ctrl+d to submit)' --width 80 --height 10)"
+    - key: W
+      name: toggle draft
+      command: >
+        fish -c '
+        set state (gh pr view {{.PrNumber}} --repo {{.RepoName}} --json isDraft --jq ".isDraft");
+        if test "$state" = "true";
+        echo "Marking PR #{{.PrNumber}} ready for review...";
+        gh pr ready --repo {{.RepoName}} {{.PrNumber}};
+        else;
+        echo "Converting PR #{{.PrNumber}} to draft...";
+        gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo;
+        end
+        '
+    - key: m
+      name: merge (squash)
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --delete-branch
     - key: S
-      command: >
-        cd {{.RepoPath}} &&
-        gh pr checkout {{.PrNumber}} &&
-        $SHELL
       name: open shell
+      command: >
+        ghostty-tab '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
     - key: w
       builtin: watchChecks
       name: watch checks
