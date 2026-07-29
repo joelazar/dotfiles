@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Open my daily Ghostty workspace: an Obsidian vault in nvim and gh-dash.
+#
+# Usage: workspace-tabs
+set -euo pipefail
+
+readonly OBSIDIAN_DIR="$HOME/Obsidian"
+
+main() {
+	local script_dir
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+	local ghostty_tab="$script_dir/ghostty-tab"
+
+	if [[ ! -x $ghostty_tab ]]; then
+		echo "workspace-tabs: missing helper: $ghostty_tab" >&2
+		exit 69
+	fi
+
+	"$ghostty_tab" --title "Obsidian 🟪" "$OBSIDIAN_DIR" nvim .
+	"$ghostty_tab" --title "GitHub 🐙" "$HOME" gh dash
+}
+
+main "$@"
