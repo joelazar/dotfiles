@@ -122,7 +122,7 @@ The Lazygit setup includes custom PR commands, conventional commit helpers, GitH
 
 This repo also handles the machine itself, not just terminal tools.
 
-- [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager config in [`dot_aerospace.toml`](dot_aerospace.toml)
+- [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager config in [`dot_config/aerospace/aerospace.toml`](dot_config/aerospace/aerospace.toml)
 - [Karabiner-Elements](https://karabiner-elements.pqrs.org/) keyboard remapping in [`dot_config/private_karabiner/`](dot_config/private_karabiner/), including a `disable_cmd_tab.json` profile
 - macOS defaults and shell/editor bootstrapping in [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl)
 - launch agents in [`private_Library/LaunchAgents/`](private_Library/LaunchAgents/)

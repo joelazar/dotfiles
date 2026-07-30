@@ -6,6 +6,11 @@ set -U fish_greeting
 
 fish_vi_key_bindings
 
+# XDG base directories
+set -gx XDG_CONFIG_HOME $HOME/.config
+# curl looks for $CURL_HOME/.curlrc (XDG support varies by curl version)
+set -gx CURL_HOME $XDG_CONFIG_HOME/curl
+
 # Make default programs
 set -gx BROWSER "/Applications/Helium.app/Contents/MacOS/Helium"
 set -gx PAGER "bat --plain"
