@@ -190,10 +190,16 @@ customCommands:
         body: "Are you sure you want to commit?"
     command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
     loadingText: "Creating conventional commit..."
+  # mirrors pi's ctrl+shift+c / ctrl+shift+a (terminals can't send ctrl+shift+<letter>)
   - key: "<c-c>"
     command: "pi -p --no-session '/commit'"
     context: "files"
     description: "AI commit with pi"
+    output: log
+  - key: "<c-a>"
+    command: "pi -p --no-session '/atomic-commit'"
+    context: "files"
+    description: "AI atomic commits with pi"
     output: log
   - key: "<c-g>"
     command: "gitmoji -c"
