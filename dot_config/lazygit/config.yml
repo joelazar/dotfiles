@@ -241,8 +241,13 @@ customCommands:
     output: terminal
   - key: "<c-t>"
     command: >
-      pr=$(gh pr view {{.SelectedLocalBranch.Name}} --json number --jq .number 2>/dev/null);
-      if [ -n "$pr" ]; then tuicr pr "$pr"; else tuicr -r {{.SelectedLocalBranch.Name}}; fi
+      set pr (gh pr view {{.SelectedLocalBranch.Name}} --json number --jq .number 2>/dev/null);
+      if test -n "$pr";
+        tuicr pr "$pr";
+      else;
+        set base (git merge-base (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null; or echo origin/main) {{.SelectedLocalBranch.Name}});
+        tuicr -r "$base..{{.SelectedLocalBranch.Name}}";
+      end
     context: "localBranches"
     description: "Review branch in tuicr (PR if one exists)"
     output: terminal
