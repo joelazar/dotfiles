@@ -1,2 +1,6 @@
 # extend PATH with brew path
 export PATH="/opt/homebrew/bin/:$PATH"
+
+# XDG base directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export CURL_HOME="$XDG_CONFIG_HOME/curl"

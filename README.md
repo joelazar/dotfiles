@@ -110,7 +110,7 @@ Those Television channels cover far more than files. There are pickers for git b
 
 Git tooling is a big part of this repo:
 
-- [Lazygit](https://github.com/jesseduffield/lazygit) config in [`private_Library/private_Application Support/lazygit/config.yml`](private_Library/private_Application%20Support/lazygit/config.yml)
+- [Lazygit](https://github.com/jesseduffield/lazygit) config in [`dot_config/lazygit/config.yml`](dot_config/lazygit/config.yml)
 - [gh-dash](https://github.com/dlvhdr/gh-dash) config in [`dot_config/gh-dash/config.yml`](dot_config/gh-dash/config.yml)
 - [gh-repo-man](https://github.com/2kabhishek/gh-repo-man) config in [`dot_config/gh-repo-man/config.yml`](dot_config/gh-repo-man/config.yml)
 - `delta` + `diffnav` for readable diffs
