@@ -13,10 +13,16 @@ MANAGED_CONFIG='{
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "anthropic-extra/claude-fable-5",
+    "anthropic-extra/claude-haiku-4-5",
     "anthropic-extra/claude-opus-5",
+    "anthropic-extra/claude-fable-5",
+    "anthropic/claude-haiku-4-5",
     "anthropic/claude-opus-5",
     "llama-cpp/qwen3.6-35b-a3b",
+    "openrouter/openai/gpt-5.6-luna",
+    "openrouter/openai/gpt-5.6-luna-pro",
+    "openrouter/openai/gpt-5.6-terra",
+    "openrouter/openai/gpt-5.6-terra-pro",
     "openrouter/moonshotai/kimi-k3",
     "openrouter/z-ai/glm-5.2"
   ],
@@ -47,7 +53,13 @@ MANAGED_CONFIG='{
 }'
 
 # Local-only keys — preserved from the existing file, never overwritten.
-LOCAL_KEYS='["lastChangelogVersion", "defaultThinkingLevel", "defaultProvider", "defaultModel", "outputPad"]'
+LOCAL_KEYS='[
+  "lastChangelogVersion",
+  "defaultThinkingLevel",
+  "defaultProvider",
+  "defaultModel",
+  "outputPad"
+]'
 
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
