@@ -45,7 +45,9 @@ defaults write "$DOMAIN" popupAskForDestinationWhenSaving -bool false
 defaults write "$DOMAIN" transparentWindowBackground -bool false
 defaults write "$DOMAIN" selfTimerInterval -int 10
 defaults write "$DOMAIN" historyCapacity -int 2
-defaults write "$DOMAIN" afterScreenshotActions -array 0 1
+# After capture actions: 0 = Quick Access Overlay, 1 = copy file to clipboard,
+# 2 = save to export location.
+defaults write "$DOMAIN" afterScreenshotActions -array 0 1 2
 defaults write "$DOMAIN" afterVideoActions -array 0 2
 
 if [ "$WAS_RUNNING" -eq 1 ]; then
