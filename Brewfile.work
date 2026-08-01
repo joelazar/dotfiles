@@ -1,4 +1,4 @@
-tap "agavra/tap"
+tap "agavra/tap", trusted: true
 tap "aws/tap", trusted: true
 tap "buo/cask-upgrade", trusted: true
 tap "darrylmorley/whatcable", trusted: true
@@ -12,7 +12,7 @@ tap "microck/kagi", "https://github.com/Microck/homebrew-kagi"
 tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
-tap "openai/tools"
+tap "openai/tools", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "protonpass/tap", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
@@ -269,15 +269,15 @@ brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
-brew "agavra/tap/tuicr", trusted: true
+brew "agavra/tap/tuicr"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
-brew "aws/tap/eks-node-viewer", trusted: true
+brew "aws/tap/eks-node-viewer"
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav", trusted: true
 # Grafana Cloud CLI
-brew "grafana/grafana/gcx", trusted: true
+brew "grafana/grafana/gcx"
 # Terraform
-brew "hashicorp/tap/terraform", trusted: true
+brew "hashicorp/tap/terraform"
 # macOS command line utility to configure multi-display resolutions and arrangements. Essentially XRandR for macOS.
 brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 # A utility toolkit of most commonly used tools by software developers and IT professionals
@@ -285,15 +285,15 @@ brew "ksdme/tap/ut", trusted: true
 # Agent-native Rust CLI for Kagi subscribers with JSON-first output
 brew "microck/kagi/kagi", trusted: true
 # NATS utility
-brew "nats-io/nats-tools/nats", trusted: true
+brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun", trusted: true
+brew "oven-sh/bun/bun"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
 # AeroSpace is an i3-like tiling window manager for macOS
-cask "nikitabobko/tap/aerospace", trusted: true
+cask "nikitabobko/tap/aerospace"
 # Browse, search and analyse your past AI coding sessions
 cask "agentsview"
 # Terminal interface for Antigravity agents
