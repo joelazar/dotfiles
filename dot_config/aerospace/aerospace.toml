@@ -85,7 +85,8 @@ outer.right = 0
 #
 
 cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
-cmd-ctrl-alt-space = 'exec-and-forget open /Applications/Claude.app'
+cmd-ctrl-alt-space = 'exec-and-forget open /Applications/ChatGPT.app'
+cmd-ctrl-alt-shift-space = 'exec-and-forget open /Applications/Claude.app'
 cmd-ctrl-alt-d = 'exec-and-forget open -a Discord'
 cmd-ctrl-alt-z = 'exec-and-forget open /Applications/Zed.app'
 cmd-ctrl-alt-n = 'exec-and-forget open /Applications/Neovide.app'
@@ -108,7 +109,6 @@ cmd-ctrl-alt-shift-f = 'macos-native-fullscreen'
 # cmd-ctrl-alt-w = 'layout h_accordion'               # 'layout tabbed' in i3
 cmd-ctrl-alt-w = 'layout accordion horizontal vertical'
 cmd-ctrl-alt-e = 'layout tiles horizontal vertical'     # 'layout toggle split' in i3
-cmd-ctrl-alt-shift-space = 'layout floating tiling'     # 'floating toggle' in i3
 
 cmd-ctrl-alt-shift-c = 'reload-config'
 
