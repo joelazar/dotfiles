@@ -370,8 +370,6 @@ cask "sonos"
 cask "spotify"
 # Video game digital distribution service
 cask "steam"
-# Native GUI tool for relational databases
-cask "tableplus"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
 # Menu bar manager
