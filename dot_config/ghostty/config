@@ -60,8 +60,10 @@ keybind = shift+page_up=adjust_selection:page_up
 keybind = super+physical:three=goto_tab:3
 keybind = super+right=text:\x05
 keybind = super+d=new_split:right
-# resize mode: super+r to enter, h/j/k/l to resize, escape to exit
-keybind = super+r=activate_key_table:resize
+# resize mode: super+ctrl+r to enter, h/j/k/l to resize, escape to exit
+keybind = super+ctrl+r=activate_key_table:resize
+# remap cmd+r to <D-r> for nvim (CSI u: 114='r', 9=1+super)
+keybind = super+r=text:\x1b[114;9u
 keybind = resize/h=resize_split:left,10
 keybind = resize/j=resize_split:down,10
 keybind = resize/k=resize_split:up,10
