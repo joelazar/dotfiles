@@ -133,6 +133,7 @@
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
+  "editorMode": "normal",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
   "voiceEnabled": false

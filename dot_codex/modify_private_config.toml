@@ -79,31 +79,29 @@ enabled = false
 # --- Read existing file from stdin ---
 EXISTING="$(cat)"
 
-# Merge tracked config with app-generated, machine-specific sections preserved
-# from the existing file (codex writes these itself; tracking them would create
-# perpetual diffs and leak machine-specific paths):
-#   - projects.*                  : per-machine trust levels
-#   - marketplaces.*.last_updated : auto-written timestamps
-#   - extra plugins / marketplaces / mcp_servers : runtime-generated
-#   - shell_environment_policy      : app-managed env vars
-#   - tui.model_availability_nux  : a counter the app decrements
+# Strategy: start from the EXISTING file and deep-merge the tracked config on
+# top. This preserves the existing key order (codex rewrites the file in its own
+# order, so emitting managed keys first would produce a perpetual diff) and
+# keeps any app-generated section we don't know about (e.g. [hooks.state],
+# [projects.*], mcp_servers, marketplaces.*.last_updated).
+#
+# Caveat: because existing keys are never dropped, deleting a key from
+# MANAGED_CONFIG will not remove it from the target file — do that by hand.
+#
+# App-owned values are explicitly restored from the existing file afterwards:
+#   - tui.model_availability_nux : a counter the app decrements
 echo "$MANAGED_CONFIG" | tomlq -t \
   --slurpfile existing <(echo "$EXISTING" | tomlq '.') \
   '
-    ($existing[0] // {}) as $e
-    | . as $managed
-    | .marketplaces = (
-        (($managed.marketplaces // {}) + ($e.marketplaces // {}))
-        | with_entries(
-            .value.last_updated = (($e.marketplaces // {})[.key].last_updated // .value.last_updated // null)
-            | .value |= with_entries(select(.value != null))
-          )
-      )
-    | .plugins = (($managed.plugins // {}) + ($e.plugins // {}))
-    | if ($e.mcp_servers) then .mcp_servers = $e.mcp_servers else . end
-    | if ($e.projects) then .projects = $e.projects else . end
-    | if ($e.shell_environment_policy) then .shell_environment_policy = $e.shell_environment_policy else . end
-    | if ($e.tui.model_availability_nux)
-        then .tui.model_availability_nux = $e.tui.model_availability_nux
+    def dm($a; $b):
+      if ($a | type) == "object" and ($b | type) == "object"
+      then reduce ($b | keys_unsorted[]) as $k ($a; .[$k] = dm($a[$k]; $b[$k]))
+      else $b
+      end;
+
+    . as $managed
+    | dm(($existing[0] // {}); $managed)
+    | if ($existing[0].tui.model_availability_nux)
+        then .tui.model_availability_nux = $existing[0].tui.model_availability_nux
         else . end
   '
