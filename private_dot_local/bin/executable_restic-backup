@@ -15,7 +15,6 @@ INCLUDE=(
     "$HOME/.agents"
     "$HOME/.aws"
     "$HOME/.claude"
-    "$HOME/.claude-work"
     "$HOME/.claude.json"
     "$HOME/.config"
     "$HOME/.docker/config.json"

@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# Teach AgentsView about the extra Claude Code profile directories.
+# Teach AgentsView about the Claude Code project directories.
 #
-# AgentsView only scans ~/.claude/projects by default, so the separate work
-# profile in ~/.claude-work is invisible to it. The config file also holds
-# generated secrets (auth_token, cursor_secret), so it cannot be managed as a
-# plain dotfile: this script only inserts/updates the claude_project_dirs key.
+# The config file holds generated secrets (auth_token, cursor_secret), so it
+# cannot be managed as a plain dotfile: this script only inserts/updates the
+# claude_project_dirs key.
 #
 # Re-runs whenever the directory list below changes.
 
@@ -14,7 +13,6 @@ CONFIG="{{ .chezmoi.homeDir }}/.agentsview/config.toml"
 
 DIRS=(
     "{{ .chezmoi.homeDir }}/.claude/projects"
-    "{{ .chezmoi.homeDir }}/.claude-work/projects"
 )
 
 if [ ! -d "{{ .chezmoi.homeDir }}/.agentsview" ]; then

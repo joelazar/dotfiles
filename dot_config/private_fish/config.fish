@@ -104,7 +104,6 @@ alias v='nvim'
 alias vc='nvim --clean'
 alias vi='nvim'
 alias vim='nvim'
-alias claude-work='CLAUDE_CONFIG_DIR=~/.claude-work command claude'
 
 # infra
 alias k='kubectl'
