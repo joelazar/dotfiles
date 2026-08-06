@@ -5,5 +5,7 @@
   "app.thinking.cycle": ["alt+t"],
   "tui.select.down": ["down", "ctrl+n"],
   "tui.select.up": ["up", "ctrl+p"],
-  "tui.input.tab": ["tab", "ctrl+enter"]
+  "tui.input.tab": ["tab", "ctrl+enter"],
+  "tui.editor.historyPrevious": ["ctrl+p"],
+  "tui.editor.historyNext": ["ctrl+n"]
 }

@@ -42,6 +42,7 @@
     "text": "",
     "thinkingText": "overlay1",
     "selectedBg": "surface0",
+    "scrollbarThumb": "surface2",
     "userMessageBg": "surface0",
     "userMessageText": "",
     "customMessageBg": "surface1",
