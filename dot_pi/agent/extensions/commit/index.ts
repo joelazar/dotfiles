@@ -261,7 +261,7 @@ async function selectCommitModel(
     return null;
   }
 
-  const haiku = ctx.modelRegistry.find("anthropic", "claude-haiku-4-5");
+  const haiku = ctx.modelRegistry.find("anthropic-extra", "claude-haiku-4-5");
   if (haiku) {
     const auth = await ctx.modelRegistry.getApiKeyAndHeaders(haiku);
     if (auth.ok) {
@@ -712,7 +712,7 @@ Do not use any other tools or do anything else besides resetting, staging and co
   }
 }
 
-export default function (pi: ExtensionAPI) {
+export default function(pi: ExtensionAPI) {
   pi.registerCommand("commit", {
     description: "Create a git commit",
     handler: async (args, ctx) => {

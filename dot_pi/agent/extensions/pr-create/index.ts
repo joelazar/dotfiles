@@ -141,7 +141,7 @@ async function pickTitle(
     title;
 
   // Loop until we get a valid subject or the user cancels (Esc).
-  for (;;) {
+  for (; ;) {
     const subject = await ctx.ui.input(
       `Subject (imperative, lowercase, ≤72 chars)`,
       initialSubject,
@@ -216,7 +216,7 @@ async function collectLinearLinks(
   );
   if (!first) return links;
 
-  for (;;) {
+  for (; ;) {
     const ticket = await ctx.ui.input("Ticket ID (e.g. ABC-123)", "");
     if (ticket === undefined) break;
     const id = ticket.trim();
@@ -235,7 +235,6 @@ async function collectLinearLinks(
 // Models to try, in order, when generating a PR description.
 const DESCRIPTION_MODELS: string[] = [
   "anthropic-extra/claude-opus-5",
-  "anthropic/claude-opus-5",
 ];
 
 /**
@@ -538,7 +537,7 @@ async function pickTitleWithAuto(
     if (!pick) return undefined;
     if (pick.startsWith("Auto:")) return auto;
     if (pick.startsWith("Enter directly")) {
-      for (;;) {
+      for (; ;) {
         const t = await ctx.ui.input(`Title (${TITLE_HINT})`, auto);
         if (t === undefined) return undefined;
         const trimmed = t.trim();
@@ -585,7 +584,7 @@ async function runPrCreate(
   }
 }
 
-export default function (pi: ExtensionAPI) {
+export default function(pi: ExtensionAPI) {
   pi.registerCommand("pr-create", {
     description:
       "Create a GitHub PR via ~/.local/bin/pr-create using interactive pi dialogs",
