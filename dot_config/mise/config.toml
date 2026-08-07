@@ -5,3 +5,4 @@ trusted_config_paths = ["~/Code/onomondo", "~/Code/joelazar"]
 
 [tools]
 node = "26"
+"github:agavra/tuicr" = "latest"
