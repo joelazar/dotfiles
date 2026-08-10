@@ -23,6 +23,7 @@ MANAGED_CONFIG='{
     "openrouter/openai/gpt-5.6-terra",
     "openrouter/openai/gpt-5.6-terra-pro",
     "openrouter/moonshotai/kimi-k3",
+    "openrouter/deepseek/deepseek-v4-flash-0731",
     "openrouter/z-ai/glm-5.2",
     "openai-codex/gpt-5.6-luna",
     "openai-codex/gpt-5.6-terra"
