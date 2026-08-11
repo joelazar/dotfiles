@@ -1,0 +1,103 @@
+# herdr configuration
+# Docs: https://herdr.dev/docs/config-reference/
+# Reload after editing: herdr server reload-config  (or prefix+shift+r)
+
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"  # new panes/tabs inherit the current working directory
+
+#------------------------------------------
+# Key Mappings (tmux-style)
+#------------------------------------------
+[keys]
+prefix = "ctrl+a"
+
+# Panes: vim navigation, tmux-style splits
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+split_horizontal = "prefix+v"            # stacked split, like `bind v split-window -v`
+split_vertical = "prefix+s"              # side-by-side split, like `bind s split-window -h`
+close_pane = "prefix+x"
+zoom = "prefix+z"
+resize_mode = "prefix+r"
+rename_pane = "prefix+shift+p"
+last_pane = "prefix+a"                   # like `bind a last-window`
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+
+# Tabs (tmux windows)
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+rename_tab = "prefix+shift+t"
+close_tab = "prefix+shift+x"
+switch_tab = "prefix+1..9"
+
+# Workspaces (tmux sessions)
+new_workspace = "prefix+shift+n"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+workspace_picker = "prefix+w"
+switch_workspace = "prefix+shift+1..9"
+previous_workspace = "prefix+alt+p"
+next_workspace = "prefix+alt+n"
+
+# Misc
+help = "prefix+?"
+settings = "prefix+comma"
+detach = "prefix+d"
+reload_config = "prefix+shift+r"
+toggle_sidebar = "prefix+b"
+goto = "prefix+g"
+edit_scrollback = "prefix+e"
+
+# Navigate mode: vim keys
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
+
+# lazygit popup
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "90%"
+height = "90%"
+
+# scratch terminal popup
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+description = "scratch terminal"
+width = "80%"
+height = "80%"
+
+#------------------------------------------
+# UI
+#------------------------------------------
+[ui]
+accent = "#cba6f7"                       # catppuccin mauve, same as tmux status accent
+pane_borders = true
+pane_gaps = true
+show_agent_labels_on_pane_borders = true
+hide_tab_bar_when_single_tab = true
+confirm_close = true
+copy_on_select = true
+mouse_capture = true
+
+[ui.toast]
+delivery = "system"
+delay_seconds = 1
+
+[ui.sound]
+enabled = false
