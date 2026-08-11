@@ -9,6 +9,7 @@ tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
 tap "macos-fuse-t/cask", trusted: true
 tap "microck/kagi", "https://github.com/Microck/homebrew-kagi"
+tap "mike-engel/jwt-cli"
 tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
@@ -116,6 +117,8 @@ brew "gum"
 brew "handbrake"
 # Kubernetes package manager
 brew "helm"
+# Agent multiplexer that lives in your terminal
+brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
 # User-friendly cURL replacement (command-line HTTP client)
@@ -268,8 +271,6 @@ brew "yazi"
 brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
-# Terminal UI for Code Reviews - review AI-generated diffs like a GitHub PR
-brew "agavra/tap/tuicr"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
 # Git diff pager based on delta but with a file tree, à la GitHub
@@ -284,6 +285,8 @@ brew "jakehilborn/jakehilborn/displayplacer", trusted: true
 brew "ksdme/tap/ut", trusted: true
 # Agent-native Rust CLI for Kagi subscribers with JSON-first output
 brew "microck/kagi/kagi", trusted: true
+# Super fast CLI tool to decode and encode JWTs built in Rust
+brew "mike-engel/jwt-cli/jwt-cli", trusted: true
 # NATS utility
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
