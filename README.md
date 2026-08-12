@@ -48,11 +48,11 @@ A few quick facts:
 
 ## What lives here 📁
 
-| Path                                                                                                                     | What it contains          [... omitted end of long line]
+| Path | What it contains [... omitted end of long line]
 | ------------------------------------------------------------------------------------------------------------------------ | ------------------------- [... omitted end of long line]
-| [`dot_config/`](dot_config/)                                                                                             | App and CLI configuration [... omitted end of long line]
-| [`dot_pi/`](dot_pi/)                                                                                                     | Pi agent configuration, p [... omitted end of long line]
-| [`dot_agents/`](dot_agents/)                                                                                             | Local skill library in `s [... omitted end of long line]
+| [`dot_config/`](dot_config/) | App and CLI configuration [... omitted end of long line]
+| [`dot_pi/`](dot_pi/) | Pi agent configuration, p [... omitted end of long line]
+| [`dot_agents/`](dot_agents/) | Local skill library in `s [... omitted end of long line]
 | [`dot_claude/`](dot_claude/)                                                                                             | Claude Code configuration [... omitted end of long line]
 | [`dot_codex/`](dot_codex/)                                                                                               | Codex configuration templ [... omitted end of long line]
 | [`dot_ipython/`](dot_ipython/)                                                                                           | IPython profile config    [... omitted end of long line]
@@ -99,7 +99,7 @@ Neovim lives in a separate repo: [joelazar/nvim-config](https://github.com/joela
 A lot of this setup is about moving around quickly:
 
 - [Yazi](https://yazi-rs.github.io/) for file management via [`dot_config/yazi/`](dot_config/yazi/)
-- [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) for fast terminal  [... omitted end of long line]
+- [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) for fast terminal [... omitted end of long line]
 - [Eza](https://github.com/eza-community/eza) for directory listings via [`dot_config/eza/`](dot_config/eza/)
 - [Television](https://github.com/alexpasmantier/television) with **105 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
 
@@ -157,7 +157,7 @@ The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 - guardrails for secrets, sensitive files, and permissions in [`dot_pi/agent/extensions/guardrails.json`](dot_pi/agent/extensions/guardrails.json)
 - a managed settings modifier in [`dot_pi/agent/modify_private_settings.json`](dot_pi/agent/modify_private_settings.json) that tracks shared keys whil [... omitted end of long line]
 
-Models cycle forward with `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels`  [... omitted end of long line]
+Models cycle forward with `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels` [... omitted end of long line]
 
 ### Local Pi extensions 🧩
 
@@ -187,7 +187,7 @@ Package installation is split by machine type:
 - [`Brewfile.work`](Brewfile.work)
 - [`Brewfile.workstation`](Brewfile.workstation)
 
-On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs  [... omitted end of long line]
+On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs [... omitted end of long line]
 
 Some notable pieces from the current setup:
 
@@ -265,35 +265,35 @@ chezmoi diff             # preview what will change
 
 Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_local/bin/).
 
-| Script                                                                                  | What it does                                               [... omitted end of long line]
+| Script | What it does [... omitted end of long line]
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------- [... omitted end of long line]
-| [`agent-md`](private_dot_local/bin/executable_agent-md)                                 | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for codin [... omitted end of long line]
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                               | Updates Claude Code, Codex, Pi, and Pi local packages      [... omitted end of long line]
-| [`chatterbox`](private_dot_local/bin/executable_chatterbox)                             | Local text-to-speech via the Chatterbox TTS model          [... omitted end of long line]
-| [`cht`](private_dot_local/bin/executable_cht)                                           | Quick cheat-sheet lookup via cht.sh                        [... omitted end of long line]
-| [`code-snippet.applescript`](private_dot_local/bin/executable_code-snippet.applescript) | Raycast script that wraps selected text in a code block    [... omitted end of long line]
-| [`custom-update`](private_dot_local/bin/executable_custom-update)                       | Runs broader system and tool updates                       [... omitted end of long line]
-| [`discord-summary`](private_dot_local/bin/executable_discord-summary)                   | Summarizes the last 24h of selected Discord channels via k [... omitted end of long line]
-| [`fonttest`](private_dot_local/bin/executable_fonttest)                                 | Checks terminal font rendering                             [... omitted end of long line]
-| [`formatter`](private_dot_local/bin/executable_formatter)                               | Formats USB drives and SD cards with a `gum` UI            [... omitted end of long line]
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)                 | Finds git repos recursively and offers interactive actions [... omitted end of long line]
-| [`git-reset`](private_dot_local/bin/executable_git-reset)                               | Resets repos back to their default branch state            [... omitted end of long line]
-| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new)                 | Creates sibling worktrees for the current repo             [... omitted end of long line]
-| [`init-windows`](private_dot_local/bin/executable_init-windows)                         | Opens my usual app set for a work session                  [... omitted end of long line]
-| [`kokoro`](private_dot_local/bin/executable_kokoro)                                     | Local text-to-speech via the Kokoro ONNX model             [... omitted end of long line]
-| [`listen-later`](private_dot_local/bin/executable_listen-later)                         | Turns an article, file, or text into a Kokoro-narrated Spo [... omitted end of long line]
-| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update)                   | Triggers Obsidian plugin and theme updates across vaults   [... omitted end of long line]
-| [`pi`](private_dot_local/bin/executable_pi)                                             | Runs the Pi agent CLI through the mise-managed Node 24 run [... omitted end of long line]
-| [`pr-create`](private_dot_local/bin/executable_pr-create)                               | Creates pull requests with a guided interactive prompt     [... omitted end of long line]
-| [`restic-backup`](private_dot_local/bin/executable_restic-backup)                       | Backs up selected dotfiles and configs to `$RESTIC_REPOSIT [... omitted end of long line]
+| [`agent-md`](private_dot_local/bin/executable_agent-md) | Creates or fixes `AGENTS.md` / `CLAUDE.md` files for codin [... omitted end of long line]
+| [`ai-update`](private_dot_local/bin/executable_ai-update) | Updates Claude Code, Codex, Pi, and Pi local packages [... omitted end of long line]
+| [`chatterbox`](private_dot_local/bin/executable_chatterbox) | Local text-to-speech via the Chatterbox TTS model [... omitted end of long line]
+| [`cht`](private_dot_local/bin/executable_cht) | Quick cheat-sheet lookup via cht.sh [... omitted end of long line]
+| [`code-snippet.applescript`](private_dot_local/bin/executable_code-snippet.applescript) | Raycast script that wraps selected text in a code block [... omitted end of long line]
+| [`custom-update`](private_dot_local/bin/executable_custom-update) | Runs broader system and tool updates [... omitted end of long line]
+| [`discord-summary`](private_dot_local/bin/executable_discord-summary) | Summarizes the last 24h of selected Discord channels via k [... omitted end of long line]
+| [`fonttest`](private_dot_local/bin/executable_fonttest) | Checks terminal font rendering [... omitted end of long line]
+| [`formatter`](private_dot_local/bin/executable_formatter) | Formats USB drives and SD cards with a `gum` UI [... omitted end of long line]
+| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager) | Finds git repos recursively and offers interactive actions [... omitted end of long line]
+| [`git-reset`](private_dot_local/bin/executable_git-reset) | Resets repos back to their default branch state [... omitted end of long line]
+| [`git-worktree-new`](private_dot_local/bin/executable_git-worktree-new) | Creates sibling worktrees for the current repo [... omitted end of long line]
+| [`init-windows`](private_dot_local/bin/executable_init-windows) | Opens my usual app set for a work session [... omitted end of long line]
+| [`kokoro`](private_dot_local/bin/executable_kokoro) | Local text-to-speech via the Kokoro ONNX model [... omitted end of long line]
+| [`listen-later`](private_dot_local/bin/executable_listen-later) | Turns an article, file, or text into a Kokoro-narrated Spo [... omitted end of long line]
+| [`obsidian-update`](private_dot_local/bin/executable_obsidian-update) | Triggers Obsidian plugin and theme updates across vaults [... omitted end of long line]
+| [`pi`](private_dot_local/bin/executable_pi) | Runs the Pi agent CLI through the mise-managed Node 24 run [... omitted end of long line]
+| [`pr-create`](private_dot_local/bin/executable_pr-create) | Creates pull requests with a guided interactive prompt [... omitted end of long line]
+| [`restic-backup`](private_dot_local/bin/executable_restic-backup) | Backs up selected dotfiles and configs to `$RESTIC_REPOSIT [... omitted end of long line]
 | [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)                   | Prunes old snapshots from the restic backup repo           [... omitted end of long line]
 | [`skills-invocation`](private_dot_local/bin/executable_skills-invocation)               | Re-applies the skill invocation policy after `skills updat [... omitted end of long line]
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display)           | Changes the primary display on multi-monitor setups        [... omitted end of long line]
-| [`transcribe`](private_dot_local/bin/executable_transcribe)                             | Offline audio/video transcription via whisper.cpp          [... omitted end of long line]
-| [`transfer`](private_dot_local/bin/executable_transfer)                                 | Uploads files through transfer.sh                          [... omitted end of long line]
-| [`untilfail`](private_dot_local/bin/executable_untilfail)                               | Repeats a command until it fails                           [... omitted end of long line]
-| [`update-submodules`](private_dot_local/bin/executable_update-submodules)               | Updates git submodules                                     [... omitted end of long line]
-| [`wtfport`](private_dot_local/bin/executable_wtfport)                                   | Shows what is listening on a port and can kill it          [... omitted end of long line]
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups [... omitted end of long line]
+| [`transcribe`](private_dot_local/bin/executable_transcribe) | Offline audio/video transcription via whisper.cpp [... omitted end of long line]
+| [`transfer`](private_dot_local/bin/executable_transfer) | Uploads files through transfer.sh [... omitted end of long line]
+| [`untilfail`](private_dot_local/bin/executable_untilfail) | Repeats a command until it fails [... omitted end of long line]
+| [`update-submodules`](private_dot_local/bin/executable_update-submodules) | Updates git submodules [... omitted end of long line]
+| [`wtfport`](private_dot_local/bin/executable_wtfport) | Shows what is listening on a port and can kill it [... omitted end of long line]
 
 Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
 
@@ -313,12 +313,12 @@ Some helper functions and setup patterns were originally adapted from [alrra/dot
 
 Parts of the Pi setup are also adapted from or inspired by work from:
 
-| Author         | GitHub                                       | Contributions                                                                        [... omitted end of long line]
+| Author | GitHub | Contributions [... omitted end of long line]
 | -------------- | -------------------------------------------- | ------------------------------------------------------------------------------------ [... omitted end of long line]
-| Mario Zechner  | [@badlogic](https://github.com/badlogic)     | Pi itself, plus extensions and skills adapted from the Pi ecosystem, such as `sandbo [... omitted end of long line]
+| Mario Zechner | [@badlogic](https://github.com/badlogic) | Pi itself, plus extensions and skills adapted from the Pi ecosystem, such as `sandbo [... omitted end of long line]
 | Armin Ronacher | [@mitsuhiko](https://github.com/mitsuhiko)   | Extensions and skills adapted from `agent-stuff`, including `answer`, `context`, and [... omitted end of long line]
-| Aliou Diallo   | [@aliou](https://github.com/aliou)           | `pi-guardrails` and `pi-processes` packages                                          [... omitted end of long line]
-| Fero           | [@ferologics](https://github.com/ferologics) | `session-analyzer` skill from the Pi skills ecosystem                                [... omitted end of long line]
+| Aliou Diallo   | [@aliou](https://github.com/aliou)           | `pi-guardrails`and`pi-processes`packages                                          [... omitted end of long line]
+| Fero           | [@ferologics](https://github.com/ferologics) |`session-analyzer` skill from the Pi skills ecosystem [... omitted end of long line]
 
 ---
 
