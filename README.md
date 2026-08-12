@@ -173,10 +173,9 @@ There are **12 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agen
 
 ### Agent skills 🎯
 
-Skills are no longer tracked here. They live in a dedicated repo,
-[`joelazar/skills`](https://github.com/joelazar/skills), which symlinks itself to
-`~/.agents/skills` via its own `install.sh`. `~/.claude/skills` is a symlink to that
-path, so every agent reads the same library.
+Skills live in a separate repo: [joelazar/skills](https://github.com/joelazar/skills).
+This repo bootstraps it during first-run setup, cloning it straight to `~/.agents/skills`.
+`~/.claude/skills` is a symlink to that path, so every agent reads the same library.
 
 ---
 
