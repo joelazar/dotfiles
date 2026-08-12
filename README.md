@@ -159,17 +159,16 @@ The config in [`dot_pi/agent/`](dot_pi/agent/) includes:
 
 Models cycle forward with `ctrl+space` via [`dot_pi/agent/keybindings.json`](dot_pi/agent/keybindings.json). The enabled set lives in `enabledModels` [... omitted end of long line]
 
-### Local Pi extensions 🧩
+### Pi extensions 🧩
 
-There are **12 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agent/extensions/). The ones I rely on most are:
+My extensions live in their own repos and are wired in through the `packages` list in `modify_private_settings.json`:
 
-- `lazygit` integration
-- `sandbox` and the `guardrails.json` config for policy and permission control
-- `answer`, `context`, and `split-fork` for session and context handling
-- `commit` and `pr-create` for git and GitHub workflows
-- `copy-command`, `cwd-history`, and `export-md` for everyday shortcuts
-- `project-trust` and `anthropic-extra` for provider and trust setup
-- `private_rtk.ts`, which rewrites bash commands through `rtk` to save tokens
+- [joelazar/pi-extensions](https://github.com/joelazar/pi-extensions), the personal collection: `sandbox`, `answer`, `context`, `split-fork`, `commit`, `pr-create`, `cwd-history`, `export-md`, `project-trust`, `anthropic-extra`, `web-tools`, `rtk`, and a few more
+- [joelazar/pi-tuicr](https://github.com/joelazar/pi-tuicr), review the diff in tuicr and send the comments back to pi
+- [joelazar/pi-lazygit](https://github.com/joelazar/pi-lazygit), open lazygit from inside a session
+- [joelazar/pi-copy-block](https://github.com/joelazar/pi-copy-block), copy a code block out of the last reply
+
+Only [`dot_pi/agent/extensions/guardrails.json`](dot_pi/agent/extensions/guardrails.json) stays here, since it configures the third-party `pi-guardrails` package rather than an extension of mine.
 
 ### Agent skills 🎯
 
