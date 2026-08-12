@@ -171,13 +171,12 @@ There are **12 local Pi extensions** in [`dot_pi/agent/extensions/`](dot_pi/agen
 - `project-trust` and `anthropic-extra` for provider and trust setup
 - `private_rtk.ts`, which rewrites bash commands through `rtk` to save tokens
 
-### Local skills 🎯
+### Agent skills 🎯
 
-The skill library under [`dot_agents/`](dot_agents/) uses the `skills` CLI's global lock file, tracked as [`dot_agents/dot_skill-lock.json`](dot_agent [... omitted end of long line]
-
-Local skills live under [`dot_agents/skills/`](dot_agents/skills/) and include `exe-dev`, `github`, `listen-later`, `mermaid`, `presenterm`, `reddit`, [... omitted end of long line]
-
-The [`skills-invocation`](private_dot_local/bin/executable_skills-invocation) script re-applies the local invocation policy after `skills update` re-c [... omitted end of long line]
+Skills are no longer tracked here. They live in a dedicated repo,
+[`joelazar/skills`](https://github.com/joelazar/skills), which symlinks itself to
+`~/.agents/skills` via its own `install.sh`. `~/.claude/skills` is a symlink to that
+path, so every agent reads the same library.
 
 ---
 
