@@ -1,6 +1,0 @@
-{
-  "autostart": false,
-  "mounts": [
-    "/Users/joelazar/.local/share/mise/installs/node/24.16.0/lib/node_modules/@earendil-works/pi-coding-agent"
-  ]
-}
