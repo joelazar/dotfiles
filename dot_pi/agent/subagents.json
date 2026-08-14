@@ -7,5 +7,5 @@
   "fleetView": true,
   "schedulingEnabled": true,
   "outputTranscript": true,
-  "toolDescriptionMode": "full"
+  "toolDescriptionMode": "compact"
 }
