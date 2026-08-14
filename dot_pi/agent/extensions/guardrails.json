@@ -238,7 +238,28 @@
         "regex": true
       }
     ],
-    "allowedPatterns": []
+    "allowedPatterns": [
+      {
+        "pattern": "^\\s*rm\\s+(?:-[rRfv]+\\s+)+(?:/private)?/tmp/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?(?:\\s+(?:/private)?/tmp/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?)*\\s*;?\\s*$",
+        "description": "rm -rf confined to /tmp scratch paths",
+        "regex": true
+      },
+      {
+        "pattern": "^\\s*rm\\s+(?:-[rRfv]+\\s+)+/var/folders/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?(?:\\s+/var/folders/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?)*\\s*;?\\s*$",
+        "description": "rm -rf confined to macOS TMPDIR (/var/folders)",
+        "regex": true
+      },
+      {
+        "pattern": "^\\s*rm\\s+(?:-[rRfv]+\\s+)+(?:\\./)?(?:(?!\\.\\.?(?:/|$))[\\w.@%+=-]+/)*(?:node_modules|dist|target|\\.venv|__pycache__)/?(?:\\s+(?:\\./)?(?:(?!\\.\\.?(?:/|$))[\\w.@%+=-]+/)*(?:node_modules|dist|target|\\.venv|__pycache__)/?)*\\s*;?\\s*$",
+        "description": "rm -rf of regenerable build artifacts",
+        "regex": true
+      },
+      {
+        "pattern": "^\\s*rm\\s+(?:-[rRfv]+\\s+)+(?:/Users/joelazar|~|\\$HOME|\\$\\{HOME\\})/go/pkg/mod/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?(?:\\s+(?:/Users/joelazar|~|\\$HOME|\\$\\{HOME\\})/go/pkg/mod/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+(?:/(?!\\.\\.?(?:/|$))[\\w.@%+=-]+)*/?)*\\s*;?\\s*$",
+        "description": "rm -rf of Go module cache (regenerable)",
+        "regex": true
+      }
+    ]
   },
   "version": "0.9.0-20260327"
 }
