@@ -7,5 +7,6 @@
   "tui.select.up": ["up", "ctrl+p"],
   "tui.input.tab": ["tab", "ctrl+enter"],
   "tui.editor.historyPrevious": ["ctrl+p"],
-  "tui.editor.historyNext": ["ctrl+n"]
+  "tui.editor.historyNext": ["ctrl+n"],
+  "tui.altScreen.searchPrevious": ["shift+enter"]
 }
