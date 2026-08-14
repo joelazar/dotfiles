@@ -30,19 +30,68 @@ MANAGED_CONFIG='{
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
-  "extensions": [],
+  "extensions": [
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/anthropic-extra/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/btw/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/commit/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/context/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/cwd-history/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/export-md/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/pr-create/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/rtk/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/save-md/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/skill-toggle/src/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/spawn/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/split-fork/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/thinking-back/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/web-tools/index.ts",
+    "-/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts"
+  ],
   "packages": [
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/tintinweb/pi-subagents",
-    "/Users/joelazar/Code/joelazar/pi-extensions",
     "npm:@joelazar/pi-tuicr",
     "npm:@joelazar/lazygit",
     "npm:@joelazar/pi-copy-block",
     "/Users/joelazar/Code/ai/pi/pi-review",
-    "/Users/joelazar/Code/ai/pi/pi-nvim",
+    {
+      "source": "/Users/joelazar/Code/ai/pi/pi-nvim",
+      "extensions": [
+        "+index.ts"
+      ]
+    },
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
-    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-fast",
-    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity"
+    {
+      "source": "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-fast",
+      "extensions": [
+        "-extensions/index.ts"
+      ]
+    },
+    {
+      "source": "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-openai-verbosity",
+      "extensions": [
+        "-extensions/index.ts"
+      ]
+    },
+    {
+      "source": "git:github.com/nicobailon/visual-explainer",
+      "extensions": [
+        "-plugins/visual-explainer/extension.ts"
+      ],
+      "skills": [
+        "-plugins/visual-explainer/SKILL.md"
+      ],
+      "prompts": [
+        "-plugins/visual-explainer/commands/diff-review.md",
+        "-plugins/visual-explainer/commands/fact-check.md",
+        "-plugins/visual-explainer/commands/generate-slides.md",
+        "-plugins/visual-explainer/commands/generate-visual-plan.md",
+        "-plugins/visual-explainer/commands/generate-web-diagram.md",
+        "-plugins/visual-explainer/commands/plan-review.md",
+        "-plugins/visual-explainer/commands/project-recap.md"
+      ]
+    }
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
