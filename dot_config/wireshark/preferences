@@ -1,4 +1,4 @@
-# Configuration file for Wireshark 4.6.7.
+# Configuration file for Wireshark 4.6.8.
 #
 # This file is regenerated each time preferences are saved within
 # Wireshark. Making manual changes should be safe, however.
@@ -304,11 +304,11 @@ gui.color_filter_bg.deprecated: e0af68
 
 # Packet list hidden columns
 # List all column indices (1-indexed) to hide in the packet list.
-gui.column.hide: 8,10,11,12,13,14,15,16,17,19,20,21,22,23,24,25,26,27,30
+gui.column.hide: 8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30
 
 # Packet list hidden column formats (deprecated)
 # List all column formats to hide in the packet list. Deprecated in favor of the index-based preference.
-gui.column.hidden: %p,%Cus:e164.country_code:2:R,%Cus:gtpv2.teid:0:U,%Cus:text:0:U,%Cus:gtpv2.tai_tac:0:U,%Cus:gtpv2.enodebid:0:U,%Cus:gtpv2.cellid:0:U,%Cus:gtpv2.f_teid_gre_key:0:U,%Cus:tcp.dstport:0:U,%Cus:nas-eps.nas_msg_esm_type:0:R,%Cus:lte-rrc.releaseCause:0:R,%Cus:gsm_sms.tp-dcs:0:U,%Cus:gsm_sms.dcs.character_set:0:R,%Cus:sccp.calling.ssn:0:R,%Cus:gtpv2.cause || gtp.cause:0:U,%Cus:gtpv2.ambr_up || diameter.Max-Requested-Bandwidth-UL || gtp.qos_max_ul || gsm_map.qos.max_brate_ulink:0:U,%Cus:sctp.retransmission:0:U,%Cus:gsm_a.gm.sm.apn:0:U,%Cus:gsm_old.localValue:0:U
+gui.column.hidden: %p,%Cus:e164.country_code:2:R,%Cus:gtpv2.teid:0:U,%Cus:text:0:U,%Cus:gtpv2.tai_tac:0:U,%Cus:gtpv2.enodebid:0:U,%Cus:gtpv2.cellid:0:U,%Cus:gtpv2.f_teid_gre_key:0:U,%Cus:tcp.dstport:0:U,%Cus:e212.cgi.mcc || e212.rai.mcc || e212.ecgi.mcc || e212.tai.mcc || e212.mcc:0:U,%Cus:nas-eps.nas_msg_esm_type:0:R,%Cus:lte-rrc.releaseCause:0:R,%Cus:gsm_sms.tp-dcs:0:U,%Cus:gsm_sms.dcs.character_set:0:R,%Cus:sccp.calling.ssn:0:R,%Cus:gtpv2.cause || gtp.cause:0:U,%Cus:gtpv2.ambr_up || diameter.Max-Requested-Bandwidth-UL || gtp.qos_max_ul || gsm_map.qos.max_brate_ulink:0:U,%Cus:sctp.retransmission:0:U,%Cus:gsm_a.gm.sm.apn:0:U,%Cus:e212.cgi.mnc || e212.rai.mnc || e212.ecgi.mnc || e212.tai.mnc || e212.mnc:0:U,%Cus:gsm_old.localValue:0:U
 
 # Packet list column format
 # Each pair of strings consists of a column title and its format
@@ -630,7 +630,7 @@ capture.devices_pmode: ap1(1),en0(1),awdl0(1),utun0(1),utun1(1),utun2(1),utun3(1
 
 # Remote capture filter
 # A string
-#extcap.ciscodump.remotefilter: deny tcp host fd7a:115c:a1e0::7201:e6bc any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::7201:e6bc, deny tcp host 100.91.230.71 any eq 22, deny tcp any eq 22 host 100.91.230.71, deny tcp host fe80::98e1:b4f7:6b01:49fd any eq 22, deny tcp any eq 22 host fe80::98e1:b4f7:6b01:49fd, deny tcp host fe80::654d:e39f:7d9f:266b any eq 22, deny tcp any eq 22 host fe80::654d:e39f:7d9f:266b, deny tcp host fe80::6e71:47b7:21e0:e582 any eq 22, deny tcp any eq 22 host fe80::6e71:47b7:21e0:e582, deny tcp host fe80::9588:2388:9a3a:21d7 any eq 22, deny tcp any eq 22 host fe80::9588:2388:9a3a:21d7, deny tcp host fe80::9aa4:9cad:2122:839c any eq 22, deny tcp any eq 22 host fe80::9aa4:9cad:2122:839c, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::f831:cda7:2f03:eac2 any eq 22, deny tcp any eq 22 host fe80::f831:cda7:2f03:eac2, deny tcp host fe80::61f2:f77e:a892:bd1b any eq 22, deny tcp any eq 22 host fe80::61f2:f77e:a892:bd1b, deny tcp host fe80::685a:9185:b8fa:a291 any eq 22, deny tcp any eq 22 host fe80::685a:9185:b8fa:a291, deny tcp host fe80::6020:43ff:fe44:5a5c any eq 22, deny tcp any eq 22 host fe80::6020:43ff:fe44:5a5c, deny tcp host fe80::6020:43ff:fe44:5a5c any eq 22, deny tcp any eq 22 host fe80::6020:43ff:fe44:5a5c, deny tcp host 192.168.1.121 any eq 22, deny tcp any eq 22 host 192.168.1.121, deny tcp host 2a02:aa7:4116:6e0d:60a9:b9c4:9785:78c8 any eq 22, deny tcp any eq 22 host 2a02:aa7:4116:6e0d:60a9:b9c4:9785:78c8, deny tcp host 2a02:aa7:4116:6e0d:36:13b3:603:e912 any eq 22, deny tcp any eq 22 host 2a02:aa7:4116:6e0d:36:13b3:603:e912, deny tcp host fe80::8ab:4c41:b4a0:a010 any eq 22, deny tcp any eq 22 host fe80::8ab:4c41:b4a0:a010, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
+#extcap.ciscodump.remotefilter: deny tcp host fd7a:115c:a1e0::7201:e6bc any eq 22, deny tcp any eq 22 host fd7a:115c:a1e0::7201:e6bc, deny tcp host 100.91.230.71 any eq 22, deny tcp any eq 22 host 100.91.230.71, deny tcp host fe80::98e1:b4f7:6b01:49fd any eq 22, deny tcp any eq 22 host fe80::98e1:b4f7:6b01:49fd, deny tcp host 10.2.0.2 any eq 22, deny tcp any eq 22 host 10.2.0.2, deny tcp host fe80::654d:e39f:7d9f:266b any eq 22, deny tcp any eq 22 host fe80::654d:e39f:7d9f:266b, deny tcp host fe80::6e71:47b7:21e0:e582 any eq 22, deny tcp any eq 22 host fe80::6e71:47b7:21e0:e582, deny tcp host fe80::9588:2388:9a3a:21d7 any eq 22, deny tcp any eq 22 host fe80::9588:2388:9a3a:21d7, deny tcp host fe80::9aa4:9cad:2122:839c any eq 22, deny tcp any eq 22 host fe80::9aa4:9cad:2122:839c, deny tcp host fe80::ce81:b1c:bd2c:69e any eq 22, deny tcp any eq 22 host fe80::ce81:b1c:bd2c:69e, deny tcp host fe80::f831:cda7:2f03:eac2 any eq 22, deny tcp any eq 22 host fe80::f831:cda7:2f03:eac2, deny tcp host fe80::61f2:f77e:a892:bd1b any eq 22, deny tcp any eq 22 host fe80::61f2:f77e:a892:bd1b, deny tcp host fe80::685a:9185:b8fa:a291 any eq 22, deny tcp any eq 22 host fe80::685a:9185:b8fa:a291, deny tcp host fe80::24a3:f4ff:fe5b:9ea6 any eq 22, deny tcp any eq 22 host fe80::24a3:f4ff:fe5b:9ea6, deny tcp host fe80::24a3:f4ff:fe5b:9ea6 any eq 22, deny tcp any eq 22 host fe80::24a3:f4ff:fe5b:9ea6, deny tcp host 2a02:aa7:404e:292f:34f1:d1f6:5907:bbfb any eq 22, deny tcp any eq 22 host 2a02:aa7:404e:292f:34f1:d1f6:5907:bbfb, deny tcp host 2a02:aa7:404e:292f:c53:e1c0:c086:db9d any eq 22, deny tcp any eq 22 host 2a02:aa7:404e:292f:c53:e1c0:c086:db9d, deny tcp host 192.168.1.138 any eq 22, deny tcp any eq 22 host 192.168.1.138, deny tcp host fe80::4b9:711c:8a11:4c2 any eq 22, deny tcp any eq 22 host fe80::4b9:711c:8a11:4c2, deny tcp host fe80::1 any eq 22, deny tcp any eq 22 host fe80::1, permit ip any any
 
 # Packets to capture
 # A string
@@ -718,7 +718,7 @@ capture.devices_pmode: ap1(1),en0(1),awdl0(1),utun0(1),utun1(1),utun2(1),utun3(1
 
 # Remote capture filter
 # A string
-#extcap.sshdump.remotefilter: not ((host fd7a:115c:a1e0::7201:e6bc or host 100.91.230.71 or host fe80::98e1:b4f7:6b01:49fd or host fe80::654d:e39f:7d9f:266b or host fe80::6e71:47b7:21e0:e582 or host fe80::9588:2388:9a3a:21d7 or host fe80::9aa4:9cad:2122:839c or host fe80::ce81:b1c:bd2c:69e or host fe80::f831:cda7:2f03:eac2 or host fe80::61f2:f77e:a892:bd1b or host fe80::685a:9185:b8fa:a291 or host fe80::6020:43ff:fe44:5a5c or host fe80::6020:43ff:fe44:5a5c or host 192.168.1.121 or host 2a02:aa7:4116:6e0d:60a9:b9c4:9785:78c8 or host 2a02:aa7:4116:6e0d:36:13b3:603:e912 or host fe80::8ab:4c41:b4a0:a010 or host fe80::1) and port 22)
+#extcap.sshdump.remotefilter: not ((host fd7a:115c:a1e0::7201:e6bc or host 100.91.230.71 or host fe80::98e1:b4f7:6b01:49fd or host 10.2.0.2 or host fe80::654d:e39f:7d9f:266b or host fe80::6e71:47b7:21e0:e582 or host fe80::9588:2388:9a3a:21d7 or host fe80::9aa4:9cad:2122:839c or host fe80::ce81:b1c:bd2c:69e or host fe80::f831:cda7:2f03:eac2 or host fe80::61f2:f77e:a892:bd1b or host fe80::685a:9185:b8fa:a291 or host fe80::24a3:f4ff:fe5b:9ea6 or host fe80::24a3:f4ff:fe5b:9ea6 or host 2a02:aa7:404e:292f:34f1:d1f6:5907:bbfb or host 2a02:aa7:404e:292f:c53:e1c0:c086:db9d or host 192.168.1.138 or host fe80::4b9:711c:8a11:4c2 or host fe80::1) and port 22)
 
 # Packets to capture
 # A string
