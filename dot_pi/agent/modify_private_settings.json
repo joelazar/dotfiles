@@ -13,20 +13,13 @@ MANAGED_CONFIG='{
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "anthropic-extra/claude-haiku-4-5",
     "anthropic-extra/claude-sonnet-5",
     "anthropic-extra/claude-opus-5",
     "anthropic-extra/claude-fable-5",
-    "llama-cpp/qwen3.6-35b-a3b",
     "openrouter/openai/gpt-5.6-luna",
-    "openrouter/openai/gpt-5.6-luna-pro",
     "openrouter/openai/gpt-5.6-terra",
-    "openrouter/openai/gpt-5.6-terra-pro",
-    "openrouter/moonshotai/kimi-k3",
     "openrouter/deepseek/deepseek-v4-flash-0731",
-    "openrouter/z-ai/glm-5.2",
-    "openai-codex/gpt-5.6-luna",
-    "openai-codex/gpt-5.6-terra"
+    "openrouter/deepseek/deepseek-v4-pro-0813"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
