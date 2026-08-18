@@ -44,10 +44,10 @@ MANAGED_CONFIG='{
   "packages": [
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/tintinweb/pi-subagents",
-    "npm:@joelazar/pi-tuicr",
     "npm:@joelazar/lazygit",
     "npm:@joelazar/pi-copy-block",
     "/Users/joelazar/Code/ai/pi/pi-review",
+    "/Users/joelazar/Code/joelazar/pi-tuicr",
     {
       "source": "/Users/joelazar/Code/ai/pi/pi-nvim",
       "extensions": [
