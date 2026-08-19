@@ -73,15 +73,12 @@ install_brew_packages() {
     print_in_purple "🍺 Installing packages from Brewfile"
     local brewfile=""
 
-    if [ "$(chezmoi data | jq -r '.type // ""')" = "work" ]; then
-        print_info "Using work Brewfile"
-        brewfile="$SOURCE_DIR/Brewfile.work"
-    elif [ "$(chezmoi data | jq -r '.type // ""')" = "workstation" ]; then
+    if [ "$(chezmoi data | jq -r '.type // ""')" = "workstation" ]; then
         print_info "Using workstation Brewfile"
         brewfile="$SOURCE_DIR/Brewfile.workstation"
     else
-        print_info "Using private Brewfile"
-        brewfile="$SOURCE_DIR/Brewfile.private"
+        print_info "Using work Brewfile"
+        brewfile="$SOURCE_DIR/Brewfile.work"
     fi
 
     if [ -f "$brewfile" ]; then

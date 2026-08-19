@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        type: [work, private, workstation]
+        type: [work, workstation]
 
     steps:
       - name: Checkout
