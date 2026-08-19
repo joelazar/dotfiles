@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# Minimal gitmoji-cli alternative: pick an emoji, write a commit.
+set -euo pipefail
+
+command -v gum >/dev/null || { echo "gum is required" >&2; exit 1; }
+git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repository" >&2; exit 1; }
+git diff --cached --quiet || staged=1
+[[ ${staged:-0} == 1 ]] || { echo "nothing staged to commit" >&2; exit 0; }
+
+EMOJIS=(
+  "🎨 :art: Improve structure / format of the code"
+  "⚡️ :zap: Improve performance"
+  "🔥 :fire: Remove code or files"
+  "🐛 :bug: Fix a bug"
+  "🚑️ :ambulance: Critical hotfix"
+  "✨ :sparkles: Introduce new features"
+  "📝 :memo: Add or update documentation"
+  "🚀 :rocket: Deploy stuff"
+  "💄 :lipstick: Add or update the UI and style files"
+  "🎉 :tada: Begin a project"
+  "✅ :white_check_mark: Add, update, or pass tests"
+  "🔒️ :lock: Fix security or privacy issues"
+  "🔖 :bookmark: Release / version tags"
+  "🚨 :rotating_light: Fix compiler / linter warnings"
+  "🚧 :construction: Work in progress"
+  "💚 :green_heart: Fix CI build"
+  "⬆️ :arrow_up: Upgrade dependencies"
+  "⬇️ :arrow_down: Downgrade dependencies"
+  "📌 :pushpin: Pin dependencies to specific versions"
+  "👷 :construction_worker: Add or update CI build system"
+  "♻️ :recycle: Refactor code"
+  "➕ :heavy_plus_sign: Add a dependency"
+  "➖ :heavy_minus_sign: Remove a dependency"
+  "🔧 :wrench: Add or update configuration files"
+  "🔨 :hammer: Add or update development scripts"
+  "🌐 :globe_with_meridians: Internationalization and localization"
+  "✏️ :pencil2: Fix typos"
+  "⏪️ :rewind: Revert changes"
+  "🔀 :twisted_rightwards_arrows: Merge branches"
+  "📦️ :package: Add or update compiled files or packages"
+  "👽️ :alien: Update code due to external API changes"
+  "🚚 :truck: Move or rename resources"
+  "📄 :page_facing_up: Add or update license"
+  "💥 :boom: Introduce breaking changes"
+  "🍱 :bento: Add or update assets"
+  "♿️ :wheelchair: Improve accessibility"
+  "💡 :bulb: Add or update comments in source code"
+  "🗃️ :card_file_box: Perform database related changes"
+  "🔊 :loud_sound: Add or update logs"
+  "🔇 :mute: Remove logs"
+  "🏗️ :building_construction: Make architectural changes"
+  "🤡 :clown_face: Mock things"
+  "🙈 :see_no_evil: Add or update .gitignore file"
+  "⚗️ :alembic: Perform experiments"
+  "🏷️ :label: Add or update types"
+  "🚩 :triangular_flag_on_post: Add, update, or remove feature flags"
+  "🥅 :goal_net: Catch errors"
+  "💫 :dizzy: Add or update animations and transitions"
+  "🗑️ :wastebasket: Deprecate code that needs cleanup"
+  "🧑‍💻 :technologist: Improve developer experience"
+)
+
+choice=$(printf '%s\n' "${EMOJIS[@]}" | gum filter --height 15 --placeholder "Pick a gitmoji...")
+[[ -n $choice ]] || exit 1
+code=$(awk '{print $2}' <<<"$choice")
+
+scope=$(gum input --cursor.mode=static --placeholder "scope (optional)")
+title=$(gum input --cursor.mode=static --placeholder "commit title" --char-limit 0)
+[[ -n $title ]] || { echo "aborted: empty title" >&2; exit 1; }
+body=$(gum write --cursor.mode=static --placeholder "commit body (optional, ctrl+d to finish)")
+
+[[ -n $scope ]] && scope="($scope):"
+subject="$code ${scope:+$scope }$title"
+
+gum style --border rounded --padding "0 1" "$subject${body:+$'\n\n'$body}"
+gum confirm "Commit?" || exit 1
+
+if [[ -n $body ]]; then
+  git commit -m "$subject" -m "$body" "$@"
+else
+  git commit -m "$subject" "$@"
+fi
