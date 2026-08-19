@@ -21,8 +21,6 @@ execute "ai-update" "Update AI tools"
 
 execute "tv update-channels" "Update Television channels"
 
-execute "obsidian-update" "Update Obsidian plugins and themes"
-
 if command -v save-to-spotify >/dev/null 2>&1; then
     execute "save-to-spotify update" "Update save-to-spotify CLI"
 fi
