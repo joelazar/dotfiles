@@ -2,8 +2,8 @@
 # ~/.config/nvim/lua/config/{options,keymaps}.lua
 frame = "buttonless"
 maximized = true
-fork = true      # detach from the terminal, don't block the shell
-idle = true      # don't redraw when idle
+fork = true          # detach from the terminal, don't block the shell
+idle = true          # don't redraw when idle
 theme = "dark"
 title-hidden = true
 no-multigrid = false
