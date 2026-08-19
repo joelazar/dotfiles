@@ -97,6 +97,7 @@ confirm_close = true
 copy_on_select = true
 mouse_capture = true
 
+agent_panel_sort = "spaces"
 [ui.toast]
 delivery = "system"
 delay_seconds = 1
