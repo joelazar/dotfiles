@@ -31,8 +31,6 @@ brew "bat"
 brew "blueutil"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
-# CLI of the open-source IDE For exploring and testing APIs
-brew "bruno-cli"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Cargo subcommand for checking and applying updates to installed executables
@@ -51,8 +49,6 @@ brew "colima"
 brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Extract article content and metadata from web pages
-brew "defuddle"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # Pack, ship and run any application as a lightweight container
@@ -105,8 +101,6 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
-# Interactive command-line tool for using emoji in commit messages
-brew "gitmoji"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
@@ -377,8 +371,6 @@ cask "steam"
 cask "tailscale-app"
 # Menu bar manager
 cask "thaw"
-# Editor for .tldr files
-cask "tldraw"
 # To-do list
 cask "todoist-app"
 # Multimedia player
@@ -418,7 +410,5 @@ uv "pgcli", with: ["catppuccin", "psycopg"]
 npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
 npm "ccusage"
-npm "defuddle"
 npm "npm-check"
 npm "obsidian-headless"
-npm "skills"
