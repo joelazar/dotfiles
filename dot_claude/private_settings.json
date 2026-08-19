@@ -97,7 +97,7 @@
       "Read(**/.aws/**)",
       "Read(**/.ssh/**)"
     ],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
