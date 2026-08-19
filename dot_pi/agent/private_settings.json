@@ -1,0 +1,65 @@
+{
+  "hideThinkingBlock": true,
+  "shellCommandPrefix": "shopt -s expand_aliases\nexport GIT_PAGER=cat PAGER=cat AWS_PAGER=\"\"\nalias python=python3",
+  "collapseChangelog": false,
+  "theme": "catppuccin-mocha",
+  "doubleEscapeAction": "tree",
+  "enabledModels": [
+    "anthropic-extra/claude-sonnet-5",
+    "anthropic-extra/claude-opus-5",
+    "anthropic-extra/claude-fable-5",
+    "openrouter/openai/gpt-5.6-luna",
+    "openrouter/openai/gpt-5.6-terra",
+    "openrouter/deepseek/deepseek-v4-flash-0731",
+    "openrouter/deepseek/deepseek-v4-pro-0813"
+  ],
+  "showHardwareCursor": true,
+  "quietStartup": true,
+  "extensions": [
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/anthropic-extra/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/btw/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/commit/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/context/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/cwd-history/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/export-md/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/footer/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/pr-create/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/rtk/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/save-md/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/skill-toggle/src/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/spawn/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/split-fork/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/thinking-back/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/web-tools/index.ts",
+    "-/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts",
+    "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts",
+    "/Users/joelazar/Code/ai/pi/my-pi-setup/extensions/ask-user/index.ts"
+  ],
+  "packages": [
+    "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
+    "/Users/joelazar/Code/ai/pi/pi-review",
+    "/Users/joelazar/Code/joelazar/pi-nvim",
+    "/Users/joelazar/Code/joelazar/pi-tuicr",
+    "git:github.com/aliou/pi-guardrails",
+    "git:github.com/nicobailon/visual-explainer",
+    "npm:@joelazar/lazygit",
+    "npm:@joelazar/pi-copy-block"
+  ],
+  "defaultProjectTrust": "ask",
+  "transport": "auto",
+  "treeFilterMode": "default",
+  "steeringMode": "all",
+  "followUpMode": "one-at-a-time",
+  "warnings": {
+    "anthropicExtraUsage": false
+  },
+  "enableInstallTelemetry": true,
+  "terminal": {
+    "showTerminalProgress": true
+  },
+  "lastChangelogVersion": "0.84.2",
+  "defaultThinkingLevel": "low",
+  "defaultProvider": "anthropic-extra",
+  "defaultModel": "claude-opus-5",
+  "outputPad": 0
+}
