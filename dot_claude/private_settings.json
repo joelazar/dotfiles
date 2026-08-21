@@ -99,7 +99,6 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -125,10 +124,8 @@
     ]
   },
   "enabledPlugins": {
-    "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -145,6 +142,7 @@
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
+  "editorMode": "normal",
   "preferredNotifChannel": "ghostty",
   "fileCheckpointingEnabled": false,
   "inputNeededNotifEnabled": true,
