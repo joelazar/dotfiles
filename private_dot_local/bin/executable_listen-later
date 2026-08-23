@@ -14,6 +14,7 @@
 #       --minutes <n>     Target length in minutes for --summarize (default: 4)
 #       --show <name>     Target show (default: "📥 Listen Later")
 #       --wait            Poll until the episode is READY before exiting
+#       --jobs <n>        Parallel Kokoro workers (default: min(4, ncpu))
 #       --keep            Keep the work directory after success
 #   -h, --help            Show this help
 #
@@ -43,6 +44,8 @@ MINUTES=4
 INNER_MS=300
 OUTER_MS=600
 WPM=150
+NCPU=$(sysctl -n hw.ncpu 2>/dev/null || nproc 2>/dev/null || echo 4)
+JOBS=$((NCPU > 4 ? 4 : NCPU))
 SOURCES=()
 
 while [[ $# -gt 0 ]]; do
@@ -74,6 +77,10 @@ while [[ $# -gt 0 ]]; do
     --wait)
         WAIT=1
         shift
+        ;;
+    --jobs)
+        JOBS="$2"
+        shift 2
         ;;
     --keep)
         KEEP=1
@@ -251,8 +258,34 @@ NSEG=$(python3 "$WORK/prep.py" "$WORK" "$WPM")
 info "Segments: $NSEG"
 
 info "Rendering with Kokoro (voice=$VOICE speed=$SPEED)"
-printf '%s\0' "$WORK"/seg_*.txt | xargs -0 -P "$(sysctl -n hw.ncpu 2>/dev/null || nproc)" -I{} \
-    sh -c 'kokoro -f "$1" -o "${1%.txt}.wav" --voice "$2" --speed "$3" >/dev/null 2>&1' sh {} "$VOICE" "$SPEED"
+# Kokoro occasionally exits nonzero under heavy parallelism, so cap the worker
+# count, retry each segment, and keep stderr in a per-segment log.
+printf '%s\0' "$WORK"/seg_*.txt | xargs -0 -P "$JOBS" -I{} \
+    sh -c '
+        f=$1
+        out="${f%.txt}.wav"
+        log="${f%.txt}.log"
+        for try in 1 2 3; do
+            if kokoro -f "$f" -o "$out" --voice "$2" --speed "$3" >/dev/null 2>"$log" &&
+                [ -s "$out" ]; then
+                exit 0
+            fi
+            rm -f "$out"
+            sleep 2
+        done
+        exit 0
+    ' sh {} "$VOICE" "$SPEED"
+
+MISSING=0
+for txt in "$WORK"/seg_*.txt; do
+    wav="${txt%.txt}.wav"
+    if [[ ! -s "$wav" ]]; then
+        MISSING=$((MISSING + 1))
+        printf '\033[31mfailed:\033[0m %s\n' "$(basename "$txt")" >&2
+        [[ -s "${txt%.txt}.log" ]] && tail -n 5 "${txt%.txt}.log" >&2
+    fi
+done
+[[ "$MISSING" -eq 0 ]] || die "$MISSING segment(s) failed to render (see logs above; rerun with --keep to inspect $WORK)"
 
 FIRST_WAV=$(ls "$WORK"/seg_*.wav | head -n1)
 SR=$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$FIRST_WAV")
