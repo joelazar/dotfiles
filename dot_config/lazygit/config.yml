@@ -201,11 +201,13 @@ customCommands:
     context: "files"
     description: "AI commit with pi"
     output: log
+  # /atomic-commit needs the interactive agent loop (it drives git via tools),
+  # so it can't run in headless `-p` mode like /commit
   - key: "<c-a>"
-    command: "pi -p --no-session '/atomic-commit'"
+    command: "pi '/atomic-commit'"
     context: "files"
     description: "AI atomic commits with pi"
-    output: log
+    output: terminal
   - key: "<c-g>"
     command: "gitmoji -c"
     context: "files"
