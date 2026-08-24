@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Rebuild native (N-API/node-gyp) addons of globally installed npm packages.
+#
+# Global packages such as obsidian-headless bundle better-sqlite3, which ships
+# prebuilt binaries only for released ABI versions. After a Node upgrade the
+# binding is missing and the CLI fails with "Could not locate the bindings file".
+#
+# Re-runs whenever the Node ABI version changes.
+# node ABI: {{ output "bash" "-c" "node -p process.versions.modules 2>/dev/null || echo none" | trim }}
+
+set -euo pipefail
+
+if ! command -v node >/dev/null 2>&1 || ! command -v npm >/dev/null 2>&1; then
+    echo "==> node/npm not available, skipping native module rebuild"
+    exit 0
+fi
+
+GLOBAL_ROOT="$(npm root -g 2>/dev/null || true)"
+if [[ -z "$GLOBAL_ROOT" || ! -d "$GLOBAL_ROOT" ]]; then
+    echo "==> No global node_modules found, skipping"
+    exit 0
+fi
+
+echo "==> Checking global native addons under $GLOBAL_ROOT (ABI $(node -p process.versions.modules))"
+
+rebuild_dir() {
+    local dir="$1"
+    local name
+    name="$(basename "$dir")"
+
+    if compgen -G "$dir/build/Release/*.node" >/dev/null; then
+        return 0
+    fi
+
+    echo "==> Rebuilding $name in $dir"
+    if (cd "$dir" && npm_config_build_from_source=true npx --yes node-gyp rebuild >/tmp/node-gyp-rebuild.log 2>&1); then
+        echo "    ok"
+    else
+        echo "    failed (see /tmp/node-gyp-rebuild.log)" >&2
+    fi
+}
+
+while IFS= read -r gypfile; do
+    rebuild_dir "$(dirname "$gypfile")"
+done < <(
+    if command -v fd >/dev/null 2>&1; then
+        fd --hidden --no-ignore --max-depth 4 --type f '^binding\.gyp$' "$GLOBAL_ROOT" 2>/dev/null || true
+    else
+        find "$GLOBAL_ROOT" -maxdepth 4 -type f -name binding.gyp 2>/dev/null || true
+    fi
+)
+
+echo "==> Native module check complete"

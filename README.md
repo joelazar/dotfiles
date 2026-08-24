@@ -187,6 +187,7 @@ On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_i
 Some notable pieces from the current setup:
 
 - Node globals installed by Homebrew bundle `npm` entries: Pi, `gondolin`, `ccusage`, `npm-check`, and `obsidian-headless`
+  - `.chezmoiscripts/run_onchange_rebuild-node-native-modules.sh.tmpl` rebuilds native addons (e.g. `better-sqlite3`) of global npm packages whenever the Node ABI changes
 - UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`) and `pgcli` (with Catppuccin styling and `psycopg[binary]`)
 - GitHub CLI plugins `gh-dash` and `gh-repo-man`
 - Casks vary by machine type, for example Karabiner-Elements, plus Helium browser and Inkscape on the work profile
