@@ -1,0 +1,13 @@
+# Saved display filters (managed by chezmoi)
+"Errors and rejections" gsm_old.errorCode || gtpv2.cause >= 64 || (gtp.cause >= 192 && gtp.cause != 254) || diameter.Experimental-Result-Code || diameter.Result-Code >= 3000 || tcap.abort_element || tcap.reject_element || tcap.returnError_element
+"Attach / location update" gsm_old.localValue in {2,22,23} || gtpv2.message_type in {32,33}
+"Authentication" gsm_old.localValue in {56,57} || diameter.cmd.code == 318
+"Cancel location / purge" gsm_old.localValue in {3,67}
+"Subscriber data" gsm_old.localValue in {7,8}
+"SMS" gsm_sms || gsm_old.localValue in {44,45,46,63}
+"GTPv2 session lifecycle" gtpv2.message_type in {32,33,36,37}
+"GTPv1 PDP context lifecycle" gtp.message in {0x10,0x11,0x14,0x15}
+"Diameter requests only" diameter.flags.request == 1
+"SCTP problems" sctp.chunk_type in {6,9} || sctp.retransmission
+"One IMSI (edit me)" e212.assoc.imsi == "234502124628647"
+"One TCAP dialogue (edit me)" tcap.otid == ab:24:03:9c || tcap.dtid == ab:24:03:9c

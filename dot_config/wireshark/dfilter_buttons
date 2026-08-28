@@ -1,0 +1,9 @@
+# Display filter toolbar buttons (managed by chezmoi)
+"TRUE","Errors","gsm_old.errorCode || gtpv2.cause >= 64 || (gtp.cause >= 192 && gtp.cause != 254) || diameter.Experimental-Result-Code || diameter.Result-Code >= 3000 || tcap.abort_element || tcap.reject_element || tcap.returnError_element || sctp.chunk_type == 6","Rejections, MAP errors, TCAP aborts, SCTP aborts"
+"TRUE","Attach","gsm_old.localValue in {2,22,23,56,57} || gtpv2.message_type in {32,33}","Location update, authentication, create session"
+"TRUE","Session","gtpv2.message_type in {32,33,34,35,36,37} || gtp.message in {0x10,0x11,0x12,0x13,0x14,0x15}","GTP session and PDP context lifecycle"
+"TRUE","Detach","gsm_old.localValue in {3,67} || gtpv2.message_type in {36,37} || gtp.message in {0x14,0x15}","Cancel location, purge, delete session/PDP"
+"TRUE","MAP","gsm_map","GSM MAP only"
+"TRUE","Diameter","diameter","Diameter only"
+"TRUE","SMS","gsm_sms || gsm_old.localValue in {44,45,46,63}","SMS delivery and routing info"
+"TRUE","No retrans","!sctp.retransmission","Hide SCTP retransmissions"
