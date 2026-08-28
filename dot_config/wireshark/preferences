@@ -2069,7 +2069,7 @@ capture.devices_pmode: ap1(1),en0(1),awdl0(1),utun0(1),utun1(1),utun2(1),utun3(1
 
 # Take IMSI value of first AVP with E.212 encoding and add field "Association IMSI"(e212.assoc.imsi) to all messages with the same Session-Id
 # true or false (case-insensitive)
-#diameter.session_imsi: FALSE
+diameter.session_imsi: TRUE
 
 # Create DICOM File Meta Header according to PS 3.10 on export for PDUs. If the captured PDV does not contain a SOP Class UID and SOP Instance UID (e.g. for command PDVs), wireshark specific ones will be created.
 # true or false (case-insensitive)
@@ -2816,7 +2816,7 @@ capture.devices_pmode: ap1(1),en0(1),awdl0(1),utun0(1),utun1(1),utun2(1),utun3(1
 
 # Track GTP session
 # true or false (case-insensitive)
-#gtp.track_gtp_session: FALSE
+gtp.track_gtp_session: TRUE
 
 # Use this setting to decode the Transparent Containers in the SRVCC PS-to-CS messages.
 # This is needed until there's a reliable way to determine the contents of the transparent containers.
@@ -4077,7 +4077,7 @@ json.compact_form: TRUE
 # One of: decimal, hexadecimal, ni-decimal, ni-hexadecimal, dashed
 # Equivalently, one of: Decimal, Hexadecimal, NI-Decimal, NI-Hexadecimal, Dashed
 # (case-insensitive).
-#mtp3.addr_format: Dashed
+mtp3.addr_format: Decimal
 
 # Decode the spare bits of the SIO as the MSU priority (a national option in ITU)
 # true or false (case-insensitive)
@@ -5431,15 +5431,15 @@ json.compact_form: TRUE
 
 # Whether to keep information about messages and their associations
 # true or false (case-insensitive)
-#sccp.trace_sccp: FALSE
+sccp.trace_sccp: TRUE
 
 # Show SLR, DLR, and CAUSE Parameters in the Information Column of the Summary
 # true or false (case-insensitive)
-#sccp.show_more_info: FALSE
+sccp.show_more_info: TRUE
 
 # Set the source and destination addresses to the GT digits (if present).  This may affect TCAP's ability to recognize which messages belong to which TCAP session.
 # true or false (case-insensitive)
-#sccp.set_addresses: FALSE
+sccp.set_addresses: TRUE
 
 # The dissector which should be used to dissect the payload if nothing else has claimed it
 # A dissector name
@@ -5947,7 +5947,7 @@ json.compact_form: TRUE
 
 # Statistics for Response Time
 # true or false (case-insensitive)
-#tcap.persistentsrt: FALSE
+tcap.persistentsrt: TRUE
 
 # Maximal delay for message repetition
 # A decimal number
