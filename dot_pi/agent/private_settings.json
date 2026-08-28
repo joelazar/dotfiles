@@ -11,7 +11,11 @@
     "openrouter/openai/gpt-5.6-luna",
     "openrouter/openai/gpt-5.6-terra",
     "openrouter/deepseek/deepseek-v4-flash-0731",
-    "openrouter/deepseek/deepseek-v4-pro-0813"
+    "openrouter/deepseek/deepseek-v4-flash-vision-exp",
+    "openrouter/deepseek/deepseek-v4-pro-0813",
+    "openrouter/qwen/qwen3.8-flash",
+    "openrouter/z-ai/glm-5.3-flash",
+    "openrouter/google/gemini-3.7-flash"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
