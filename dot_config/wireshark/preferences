@@ -349,7 +349,7 @@ gui.qt.font_name: Maple Mono NF,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Layout type (1-6)
 # A decimal number
-#gui.layout_type: 2
+gui.layout_type: 1
 
 # Layout content of the pane 1
 # One of: NONE, PLIST, PDETAILS, PBYTES, PDIAGRAM
@@ -368,7 +368,7 @@ gui.qt.font_name: Maple Mono NF,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Enable Packet List Separator
 # true or false (case-insensitive)
-#gui.packet_list_separator.enabled: FALSE
+gui.packet_list_separator.enabled: FALSE
 
 # Show column definition in packet list header
 # true or false (case-insensitive)
@@ -380,7 +380,7 @@ gui.qt.font_name: Maple Mono NF,13,-1,5,400,0,0,0,0,0,0,0,0,0,0,1,Regular
 
 # Show selected packet in the Status Bar
 # true or false (case-insensitive)
-#gui.show_selected_packet.enabled: FALSE
+gui.show_selected_packet.enabled: TRUE
 
 # Show file load time in the Status Bar
 # true or false (case-insensitive)
