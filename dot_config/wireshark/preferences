@@ -304,45 +304,39 @@ gui.color_filter_bg.deprecated: f9e2af
 
 # Packet list hidden columns
 # List all column indices (1-indexed) to hide in the packet list.
-gui.column.hide: 8,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30
+gui.column.hide: 3,4,5,7,9,11,14,16,17,18,19,20,22,23,24
 
 # Packet list hidden column formats (deprecated)
 # List all column formats to hide in the packet list. Deprecated in favor of the index-based preference.
-gui.column.hidden: %p,%Cus:e164.country_code:2:R,%Cus:gtpv2.teid:0:U,%Cus:text:0:U,%Cus:gtpv2.tai_tac:0:U,%Cus:gtpv2.enodebid:0:U,%Cus:gtpv2.cellid:0:U,%Cus:gtpv2.f_teid_gre_key:0:U,%Cus:tcp.dstport:0:U,%Cus:e212.cgi.mcc || e212.rai.mcc || e212.ecgi.mcc || e212.tai.mcc || e212.mcc:0:U,%Cus:nas-eps.nas_msg_esm_type:0:R,%Cus:lte-rrc.releaseCause:0:R,%Cus:gsm_sms.tp-dcs:0:U,%Cus:gsm_sms.dcs.character_set:0:R,%Cus:sccp.calling.ssn:0:R,%Cus:gtpv2.cause || gtp.cause:0:U,%Cus:gtpv2.ambr_up || diameter.Max-Requested-Bandwidth-UL || gtp.qos_max_ul || gsm_map.qos.max_brate_ulink:0:U,%Cus:sctp.retransmission:0:U,%Cus:gsm_a.gm.sm.apn:0:U,%Cus:e212.cgi.mnc || e212.rai.mnc || e212.ecgi.mnc || e212.tai.mnc || e212.mnc:0:U,%Cus:gsm_old.localValue:0:U
+#gui.column.hidden: %p,%Cus:e164.country_code:2:R,%Cus:gtpv2.teid:0:U,%Cus:text:0:U,%Cus:gtpv2.tai_tac:0:U,%Cus:gtpv2.enodebid:0:U,%Cus:gtpv2.cellid:0:U,%Cus:gtpv2.f_teid_gre_key:0:U,%Cus:tcp.dstport:0:U,%Cus:nas-eps.nas_msg_esm_type:0:R,%Cus:lte-rrc.releaseCause:0:R,%Cus:gsm_sms.tp-dcs:0:U,%Cus:gsm_sms.dcs.character_set:0:R,%Cus:sccp.calling.ssn:0:R,%Cus:gtpv2.cause || gtp.cause:0:U,%Cus:gtpv2.ambr_up || diameter.Max-Requested-Bandwidth-UL || gtp.qos_max_ul || gsm_map.qos.max_brate_ulink:0:U,%Cus:sctp.retransmission:0:U,%Cus:gsm_a.gm.sm.apn:0:U,%Cus:gsm_old.localValue:0:U
 
 # Packet list column format
 # Each pair of strings consists of a column title and its format
 gui.column.format: 
 	"No.", "%m",
 	"Time (UTC)", "%Yut",
-	"Delta time", "%Tt",
+	"Time of day (UTC)", "%Aut",
+	"Delta", "%Gt",
+	"Delta (captured)", "%Tt",
 	"Source", "%s",
 	"Source Port", "%S",
 	"Destination", "%d",
 	"Destination Port", "%D",
 	"Protocol", "%p",
 	"Length", "%L",
-	"Country Code", "%Cus:e164.country_code:2:R",
-	"Tunnel Endpoint Identifier", "%Cus:gtpv2.teid:0:U",
-	"Text item", "%Cus:text:0:U",
-	"Tracking Area Code", "%Cus:gtpv2.tai_tac:0:U",
-	"eNodeB Id", "%Cus:gtpv2.enodebid:0:U",
-	"CellId", "%Cus:gtpv2.cellid:0:U",
-	"TEID/GRE Key", "%Cus:gtpv2.f_teid_gre_key:0:U",
-	"Destination Port", "%Cus:tcp.dstport:0:U",
-	"MCC", "%Cus:e212.cgi.mcc || e212.rai.mcc || e212.ecgi.mcc || e212.tai.mcc || e212.mcc:0:U",
-	"NAS EPS session management messages", "%Cus:nas-eps.nas_msg_esm_type:0:R",
-	"Release cause", "%Cus:lte-rrc.releaseCause:0:R",
-	"Character Set", "%Cus:gsm_sms.tp-dcs:0:U",
-	"Character Set", "%Cus:gsm_sms.dcs.character_set:0:R",
-	"SubSystem Number", "%Cus:sccp.calling.ssn:0:R",
-	"Cause", "%Cus:gtpv2.cause || gtp.cause:0:U",
-	"Uplink (AMBR / Max bit rate)", "%Cus:gtpv2.ambr_up || diameter.Max-Requested-Bandwidth-UL || gtp.qos_max_ul || gsm_map.qos.max_brate_ulink:0:U",
-	"This TSN is a retransmission of one in frame", "%Cus:sctp.retransmission:0:U",
-	"APN", "%Cus:gsm_a.gm.sm.apn:0:U",
-	"MNC", "%Cus:e212.cgi.mnc || e212.rai.mnc || e212.ecgi.mnc || e212.tai.mnc || e212.mnc:0:U",
-	"Association IMSI", "%Cus:e212.assoc.imsi:0:U",
-	"localValue", "%Cus:gsm_old.localValue:0:U",
+	"VPLMN", "%Cus:e212.tai.mcc || e212.tai.mnc || e212.rai.mcc || e212.rai.mnc:0:U",
+	"VPLMN/CC", "%Cus:e212.mcc || e212.mnc || e164.country_code:2:U",
+	"HPLMN", "%Cus:e212.mcc || e212.mnc:1:U",
+	"IMSI", "%Cus:e212.assoc.imsi:1:U",
+	"MSISDN", "%Cus:e164.msisdn:1:U",
+	"APN", "%Cus:gsm_a.gm.sm.apn || gtpv2.apn:1:U",
+	"OTID", "%Cus:tcap.otid:1:U",
+	"DTID", "%Cus:tcap.dtid:1:U",
+	"TEID", "%Cus:gtpv2.teid || gtp.teid:1:U",
+	"Cause", "%Cus:gtpv2.cause || gtp.cause || diameter.Experimental-Result-Code || diameter.Result-Code || gsm_old.errorCode:1:R",
+	"Calling GT", "%Cus:sccp.calling.digits:1:U",
+	"Called GT", "%Cus:sccp.called.digits:1:U",
+	"Diameter App", "%Cus:diameter.applicationId:1:U",
 	"Info", "%i"
 
 ####### User Interface: Font ########
