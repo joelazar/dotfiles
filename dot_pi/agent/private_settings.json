@@ -65,5 +65,7 @@
   "defaultThinkingLevel": "low",
   "defaultProvider": "anthropic-extra",
   "defaultModel": "claude-opus-5",
-  "outputPad": 0
+  "outputPad": 0,
+  "showCacheMissNotices": true,
+  "tuiMode": "fullscreen"
 }
