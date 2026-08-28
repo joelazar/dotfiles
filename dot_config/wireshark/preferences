@@ -220,11 +220,11 @@
 
 # Foreground color for an active selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.active_frame.fg: c0caf5
+gui.active_frame.fg: cdd6f4
 
 # Background color for an active selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.active_frame.bg: 7aa2f7
+gui.active_frame.bg: 45475a
 
 # Color style for an active selected item
 # One of: DEFAULT, FLAT, GRADIENT
@@ -233,11 +233,11 @@ gui.active_frame.style: FLAT
 
 # Foreground color for an inactive selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.inactive_frame.fg: 9aa5ce
+gui.inactive_frame.fg: a6adc8
 
 # Background color for an inactive selected item
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.inactive_frame.bg: 292e42
+gui.inactive_frame.bg: 313244
 
 # Color style for an inactive selected item
 # One of: DEFAULT, FLAT, GRADIENT
@@ -246,35 +246,35 @@ gui.inactive_frame.style: FLAT
 
 # Color preferences for a marked frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.marked_frame.fg: 24283b
+gui.marked_frame.fg: 1e1e2e
 
 # Color preferences for a marked frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.marked_frame.bg: e0af68
+gui.marked_frame.bg: f9e2af
 
 # Color preferences for a ignored frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.ignored_frame.fg: 565f89
+gui.ignored_frame.fg: 6c7086
 
 # Color preferences for a ignored frame
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.ignored_frame.bg: 24283b
+gui.ignored_frame.bg: 181825
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.stream.client.fg: f7768e
+gui.stream.client.fg: f38ba8
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.stream.client.bg: 2a1f23
+gui.stream.client.bg: 2f2333
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.stream.server.fg: 7dcfff
+gui.stream.server.fg: 89dceb
 
 # TCP stream window color preference
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.stream.server.bg: 1f2335
+gui.stream.server.bg: 22313a
 
 # Valid color filter foreground
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
@@ -282,7 +282,7 @@ gui.stream.server.bg: 1f2335
 
 # Valid color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.color_filter_bg.valid: 9ece6a
+gui.color_filter_bg.valid: a6e3a1
 
 # Invalid color filter foreground
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
@@ -290,7 +290,7 @@ gui.color_filter_bg.valid: 9ece6a
 
 # Invalid color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.color_filter_bg.invalid: f7768e
+gui.color_filter_bg.invalid: f38ba8
 
 # Deprecated color filter foreground
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
@@ -298,7 +298,7 @@ gui.color_filter_bg.invalid: f7768e
 
 # Deprecated color filter background
 # A six-digit hexadecimal RGB color triplet (e.g. fce94f)
-gui.color_filter_bg.deprecated: e0af68
+gui.color_filter_bg.deprecated: f9e2af
 
 ####### User Interface: Columns ########
 
