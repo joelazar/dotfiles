@@ -2,6 +2,7 @@
   // ══════════════════════════════════════════════════════════════════════════════
   // APPEARANCE
   // ══════════════════════════════════════════════════════════════════════════════
+  "proxy": "",
   "debugger": {
     "button": false,
   },
@@ -244,6 +245,7 @@
     "provider": "zed",
   },
   "agent": {
+    "terminal_init_command": "pi",
     "sidebar_side": "left",
     "dock": "left",
     "max_content_width": 1200.0,
@@ -278,6 +280,9 @@
   // AGENT SERVERS (external AI agents)
   // ══════════════════════════════════════════════════════════════════════════════
   "agent_servers": {
+    "antigravity-acp": {
+      "type": "registry"
+    },
     "codex-acp": {
       "type": "registry",
       "default_mode": "full-access",
