@@ -7,6 +7,22 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Ctrl+C: gum handles SIGINT itself and exits 130, so also handle the case where
+# the signal does reach us (plain read/select fallbacks).
+abort() {
+    echo "Aborted." >&2
+    exit 130
+}
+trap abort INT TERM
+
+# Bail out when an interactive prompt was cancelled with Ctrl+C (gum exits 130);
+# other non-zero statuses (e.g. Esc = no selection) are treated as empty input.
+check_cancelled() {
+    local status=$1
+    [[ $status -eq 130 ]] && abort
+    return 0
+}
+
 # Create a temp file that ends in .md so editors detect markdown.
 new_md_tempfile() {
     local f
@@ -153,9 +169,9 @@ prompt_input() {
     fi
     local value
     if command -v gum >/dev/null 2>&1; then
-        value=$(gum input --prompt "$prompt: " ${placeholder:+--placeholder "$placeholder"})
+        value=$(gum input --prompt "$prompt: " ${placeholder:+--placeholder "$placeholder"}) || check_cancelled $?
     else
-        read -r -p "$prompt: " value
+        read -r -p "$prompt: " value || abort
     fi
     record_answer "$prompt" "$value"
     printf '%s\n' "$value"
@@ -170,7 +186,7 @@ prompt_menu() {
     fi
     local choice
     if command -v gum >/dev/null 2>&1; then
-        choice=$(gum choose --header "$title" "$@")
+        choice=$(gum choose --header "$title" "$@") || check_cancelled $?
     else
         select choice in "$@"; do
             [[ -n "$choice" ]] && break
@@ -187,10 +203,10 @@ prompt_multi() {
     [[ $assume_yes -eq 1 || $# -eq 0 ]] && return
     local selection
     if command -v gum >/dev/null 2>&1; then
-        selection=$(gum filter --no-limit --height 15 --header "$title" --placeholder "type to search, tab to select, enter to confirm" "$@" || true)
+        selection=$(gum filter --no-limit --height 15 --header "$title" --placeholder "type to search, tab to select, enter to confirm" "$@") || check_cancelled $?
     else
         local answer
-        read -r -p "$title (space separated, empty for none): " answer
+        read -r -p "$title (space separated, empty for none): " answer || abort
         # shellcheck disable=SC2086 # intentional word splitting
         selection=$(printf '%s\n' $answer)
     fi
