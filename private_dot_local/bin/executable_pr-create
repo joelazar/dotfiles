@@ -25,9 +25,11 @@ All options are optional. Anything not provided is asked for interactively
 Options:
   --title <text>             PR title (must start with a conventional type,
                              e.g. "feat: ...", "fix(api): ...")
+  --generate-title           Generate PR title with pi
   --base <branch>            Base branch ("" = repo default)
   --draft / --no-draft       Create as draft PR
-  --reviewers <default|cns>  Reviewer set
+  --reviewers <group|handles>  Reviewer group from config, comma separated
+                             handles, or "none" (repeatable)
   --generate-description     Generate PR body with pi
   --no-generate-description  Skip body generation
   --body-file <path>         Use this file as the PR body (skips generation)
@@ -36,6 +38,9 @@ Options:
   --push / --no-push         Auto-confirm pushing the branch if needed
   -y, --yes                  Non-interactive: defaults for anything unspecified
   -h, --help                 Show this help
+
+Reviewer groups are read from:
+  ${PR_CREATE_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-~/.config}/pr-create/reviewers.conf}
 EOF
 }
 
@@ -43,8 +48,10 @@ EOF
 title=""
 base=""
 draft=""     # "yes" | "no" | ""
-reviewers="" # "default" | "cns" | ""
+gen_title="" # "yes" | "no" | ""
 gen_desc=""  # "yes" | "no" | ""
+reviewer_args=()
+selected_reviewers=()
 body_file=""
 edit_desc=""   # "yes" | "no" | ""
 push_choice="" # "yes" | "no" | ""
@@ -70,8 +77,12 @@ while [[ $# -gt 0 ]]; do
         shift
         ;;
     --reviewers)
-        reviewers=$(printf '%s' "$2" | tr '[:upper:]' '[:lower:]')
+        reviewer_args+=("$2")
         shift 2
+        ;;
+    --generate-title)
+        gen_title="yes"
+        shift
         ;;
     --generate-description)
         gen_desc="yes"
@@ -122,19 +133,32 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Echo the question/answer pair so the transcript of previous answers stays
+# visible (gum clears its own UI once an answer is given).
+record_answer() {
+    local label=$1 answer=$2
+    [[ -z "$answer" ]] && answer="(default)"
+    if command -v gum >/dev/null 2>&1; then
+        gum style --foreground 2 "✓ $label: $answer" >&2
+    else
+        printf '✓ %s: %s\n' "$label" "$answer" >&2
+    fi
+}
+
 prompt_input() {
-    local prompt=$1
+    local prompt=$1 placeholder=${2:-}
     if [[ $assume_yes -eq 1 ]]; then
         printf ''
         return
     fi
+    local value
     if command -v gum >/dev/null 2>&1; then
-        gum input --prompt "$prompt: "
+        value=$(gum input --prompt "$prompt: " ${placeholder:+--placeholder "$placeholder"})
     else
-        local value
         read -r -p "$prompt: " value
-        printf '%s\n' "$value"
     fi
+    record_answer "$prompt" "$value"
+    printf '%s\n' "$value"
 }
 
 prompt_menu() {
@@ -144,14 +168,131 @@ prompt_menu() {
         printf '%s\n' "$1"
         return
     fi
+    local choice
     if command -v gum >/dev/null 2>&1; then
-        gum choose --header "$title" "$@"
+        choice=$(gum choose --header "$title" "$@")
     else
-        local choice
         select choice in "$@"; do
-            [[ -n "$choice" ]] && printf '%s\n' "$choice" && break
+            [[ -n "$choice" ]] && break
         done
     fi
+    record_answer "$title" "$choice"
+    printf '%s\n' "$choice"
+}
+
+# Multi-select with fuzzy search; prints one selection per line.
+prompt_multi() {
+    local title=$1
+    shift
+    [[ $assume_yes -eq 1 || $# -eq 0 ]] && return
+    local selection
+    if command -v gum >/dev/null 2>&1; then
+        selection=$(gum filter --no-limit --height 15 --header "$title" --placeholder "type to search, tab to select, enter to confirm" "$@" || true)
+    else
+        local answer
+        read -r -p "$title (space separated, empty for none): " answer
+        # shellcheck disable=SC2086 # intentional word splitting
+        selection=$(printf '%s\n' $answer)
+    fi
+    record_answer "$title" "$(printf '%s' "$selection" | tr '\n' ' ')"
+    printf '%s\n' "$selection"
+}
+
+reviewers_file=${PR_CREATE_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/pr-create/reviewers.conf}
+reviewer_group_names=()
+reviewer_group_members=()
+all_reviewers=()
+all_reviewer_labels=()
+
+# dedupe_list <items...>: print items once each, preserving order.
+dedupe_list() {
+    local out=() item existing seen
+    for item in "$@"; do
+        [[ -z "$item" ]] && continue
+        seen=0
+        for existing in "${out[@]:-}"; do
+            [[ "$existing" == "$item" ]] && seen=1 && break
+        done
+        [[ $seen -eq 0 ]] && out+=("$item")
+    done
+    [[ ${#out[@]} -gt 0 ]] && printf '%s\n' "${out[@]}"
+}
+
+# Config format (INI-ish, sections optional; default section is [people]):
+#   [groups]
+#   Core Network Squad = onomondo/core-network-squad
+#   [people]
+#   peterbornerup = Peter S. Bornerup
+add_person() {
+    local handle=$1 name=$2 existing
+    [[ -z "$handle" ]] && return 0
+    for existing in "${all_reviewers[@]:-}"; do
+        [[ "$existing" == "$handle" ]] && return 0
+    done
+    all_reviewers+=("$handle")
+    if [[ -n "$name" ]]; then
+        all_reviewer_labels+=("$handle - $name")
+    else
+        all_reviewer_labels+=("$handle")
+    fi
+}
+
+load_reviewer_config() {
+    [[ -f "$reviewers_file" ]] || return 0
+    local line section=people key value handle
+    local handles=()
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line=${line%%#*}
+        line=$(printf '%s' "$line" | xargs)
+        [[ -z "$line" ]] && continue
+        if [[ "$line" =~ ^\[(.+)\]$ ]]; then
+            section=$(printf '%s' "${BASH_REMATCH[1]}" | tr '[:upper:]' '[:lower:]')
+            continue
+        fi
+        if [[ "$line" == *=* ]]; then
+            key=$(printf '%s' "${line%%=*}" | xargs)
+            value=$(printf '%s' "${line#*=}" | xargs)
+        else
+            key=$line
+            value=""
+        fi
+        [[ -z "$key" ]] && continue
+        if [[ "$section" == "groups" ]]; then
+            [[ -z "$value" ]] && continue
+            value=$(printf '%s' "$value" | tr -d '[:space:]')
+            reviewer_group_names+=("$key")
+            reviewer_group_members+=("$value")
+            IFS=',' read -r -a handles <<<"$value"
+            for handle in "${handles[@]}"; do
+                # Team refs (org/team) are not individually selectable.
+                [[ -n "$handle" && "$handle" != */* ]] && add_person "$handle" ""
+            done
+        else
+            add_person "$key" "$value"
+        fi
+    done <"$reviewers_file"
+}
+
+group_members() {
+    local want=$1 i
+    for i in "${!reviewer_group_names[@]}"; do
+        if [[ "${reviewer_group_names[$i]}" == "$want" ]]; then
+            printf '%s' "${reviewer_group_members[$i]}"
+            return 0
+        fi
+    done
+    return 1
+}
+
+add_reviewers() {
+    local spec=$1 members handle
+    if members=$(group_members "$spec"); then
+        spec=$members
+    fi
+    IFS=',' read -r -a handles <<<"$spec"
+    for handle in "${handles[@]}"; do
+        [[ -n "$handle" ]] && selected_reviewers+=("$handle")
+    done
 }
 
 # Normalize a yes/no value (case-insensitive) to "Yes"/"No"; empty stays empty.
@@ -200,6 +341,44 @@ EOF
     return 1
 }
 
+generate_pr_title() {
+    local prompt out model
+    prompt='Generate a single GitHub pull request title for the current branch.
+
+Requirements:
+- Conventional commit format: <type>[(scope)]: <subject>
+- Allowed types: feat fix docs style refactor perf test build ci chore revert deps
+- Lower case subject, no trailing period, max 72 characters.
+- Base it on the actual changes in this branch. Do not invent details.
+- Output only the title, nothing else.'
+    for model in anthropic-extra/claude-opus-5 anthropic/claude-opus-5; do
+        if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
+            out=$(gum spin --show-output --title "Generating PR title ($model)..." -- pi -p --no-session --model "$model" --thinking off "$prompt")
+        else
+            echo "Generating PR title ($model)..." >&2
+            out=$(pi -p --no-session --model "$model" --thinking off "$prompt")
+        fi
+        out=$(printf '%s' "$out" | head -n1 | xargs)
+        if [[ -n "$out" ]]; then
+            printf '%s\n' "$out"
+            return 0
+        fi
+    done
+    return 1
+}
+
+show_pr_description() {
+    local file=$1
+    [[ -s "$file" ]] || return 0
+    if command -v glow >/dev/null 2>&1; then
+        glow -w 80 "$file" >&2
+    elif command -v gum >/dev/null 2>&1; then
+        gum format --type markdown <"$file" >&2
+    else
+        cat "$file" >&2
+    fi
+}
+
 edit_pr_description() {
     local body_file=$1
     local editor=${EDITOR:-vi}
@@ -210,7 +389,7 @@ ensure_branch_pushed() {
     local choice
     if ! git rev-parse --verify --quiet '@{u}' >/dev/null; then
         choice=$(normalize_yn "$push_choice")
-        [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has no upstream. Push branch now?" "Yes" "No")
+        [[ -z "$choice" ]] && choice=$(prompt_menu "No upstream. Push branch?" "Yes" "No")
         if [[ "$choice" != "Yes" ]]; then
             echo "Current branch has no upstream. Push branch first." >&2
             exit 1
@@ -223,7 +402,7 @@ ensure_branch_pushed() {
     unpushed=$(git rev-list --count '@{u}..HEAD')
     if [[ "$unpushed" -ne 0 ]]; then
         choice=$(normalize_yn "$push_choice")
-        [[ -z "$choice" ]] && choice=$(prompt_menu "Current branch has $unpushed unpushed commit(s). Push branch now?" "Yes" "No")
+        [[ -z "$choice" ]] && choice=$(prompt_menu "$unpushed unpushed commit(s). Push?" "Yes" "No")
         if [[ "$choice" != "Yes" ]]; then
             echo "Current branch has $unpushed unpushed commit(s). Push branch first." >&2
             exit 1
@@ -252,8 +431,34 @@ if [[ -n "$title" ]] && ! validate_title "$title"; then
     exit 1
 fi
 
+if [[ -z "$title" && $assume_yes -eq 0 ]]; then
+    gen_title_norm=$(normalize_yn "$gen_title")
+    [[ -z "$gen_title_norm" ]] && gen_title_norm=$(prompt_menu "Generate title?" "No" "Yes")
+    if [[ "$gen_title_norm" == "Yes" ]]; then
+        while true; do
+            suggested=$(generate_pr_title || true)
+            [[ -z "$suggested" ]] && echo "Title generation failed." >&2 && break
+            record_answer "Suggested title" "$suggested"
+            case "$(prompt_menu "Use this title?" "Yes" "Regenerate" "Write my own")" in
+            Yes)
+                title=$suggested
+                break
+                ;;
+            Regenerate) continue ;;
+            *) break ;;
+            esac
+        done
+        if [[ -n "$title" ]] && ! validate_title "$title"; then
+            echo "Generated title is not conventional: $title" >&2
+            title=""
+        fi
+    fi
+elif [[ -z "$title" && "$(normalize_yn "$gen_title")" == "Yes" ]]; then
+    title=$(generate_pr_title || true)
+fi
+
 while [[ -z "$title" ]]; do
-    title=$(prompt_input "Pull Request Title ($title_hint)")
+    title=$(prompt_input "Title" "$title_hint")
     if [[ -z "$title" ]]; then
         echo "PR title is required." >&2
         [[ $assume_yes -eq 1 ]] && exit 1
@@ -269,45 +474,66 @@ done
 # Only prompt for base if user did not pass --base at all (empty is a valid explicit value when --yes).
 if [[ -z "$base" && $assume_yes -eq 0 ]]; then
     # Allow an empty answer to mean "default branch".
-    base=$(prompt_input "Base Branch (leave empty for default branch)")
+    base=$(prompt_input "Base branch" "empty = default branch")
 fi
 
 draft_norm=$(normalize_yn "$draft")
-[[ -z "$draft_norm" ]] && draft_norm=$(prompt_menu "Create as draft PR?" "No" "Yes")
+[[ -z "$draft_norm" ]] && draft_norm=$(prompt_menu "Draft PR?" "No" "Yes")
 
-if [[ -z "$reviewers" ]]; then
-    reviewer_choice=$(prompt_menu "Add Reviewers" "Default" "CNS")
-else
-    case "$reviewers" in
-    default) reviewer_choice="Default" ;;
-    cns) reviewer_choice="CNS" ;;
-    *)
-        echo "Unknown --reviewers value: $reviewers (expected default|cns)" >&2
-        exit 2
-        ;;
-    esac
+load_reviewer_config
+
+if [[ ${#reviewer_args[@]} -gt 0 ]]; then
+    for spec in "${reviewer_args[@]}"; do
+        [[ "$(printf '%s' "$spec" | tr '[:upper:]' '[:lower:]')" == "none" ]] && continue
+        add_reviewers "$spec"
+    done
+elif [[ $assume_yes -eq 0 ]]; then
+    if [[ ${#reviewer_group_names[@]} -gt 0 ]] && [[ "$(prompt_menu "Reviewer groups?" "No" "Yes")" == "Yes" ]]; then
+        while IFS= read -r group_choice; do
+            [[ -n "$group_choice" ]] && add_reviewers "$group_choice"
+        done < <(prompt_multi "Pick groups" "${reviewer_group_names[@]}")
+    fi
+    extra_candidates=()
+    for i in $(seq 0 $((${#all_reviewers[@]} - 1))); do
+        handle=${all_reviewers[$i]}
+        [[ -z "$handle" ]] && continue
+        skip=0
+        for chosen in "${selected_reviewers[@]:-}"; do
+            [[ "$handle" == "$chosen" ]] && skip=1 && break
+        done
+        [[ $skip -eq 0 ]] && extra_candidates+=("${all_reviewer_labels[$i]}")
+    done
+    if [[ ${#extra_candidates[@]} -gt 0 ]] && [[ "$(prompt_menu "More reviewers?" "No" "Yes")" == "Yes" ]]; then
+        while IFS= read -r label; do
+            # Labels look like "handle - Full Name"; keep the handle.
+            [[ -n "$label" ]] && selected_reviewers+=("${label%% *}")
+        done < <(prompt_multi "Pick reviewers" "${extra_candidates[@]}")
+        manual=$(prompt_input "Extra handles" "comma separated, optional")
+        [[ -n "$manual" ]] && add_reviewers "$manual"
+    fi
 fi
 
 if [[ -z "$body_file" ]]; then
     gen_norm=$(normalize_yn "$gen_desc")
-    [[ -z "$gen_norm" ]] && gen_norm=$(prompt_menu "Generate PR description with pi?" "No" "Yes")
+    [[ -z "$gen_norm" ]] && gen_norm=$(prompt_menu "Generate description?" "No" "Yes")
     if [[ "$gen_norm" == "Yes" ]]; then
         body_file=$(new_md_tempfile)
         temp_files+=("$body_file")
         generate_pr_description "$body_file"
+        show_pr_description "$body_file"
     fi
 fi
 
 # Interactive Linear collection only when no --linear flags were passed and not --yes.
 if [[ ${#linear_links[@]} -eq 0 && $assume_yes -eq 0 ]]; then
-    add_linear=$(prompt_menu "Any Linear ticket(s) linked to this PR?" "No" "Yes")
+    add_linear=$(prompt_menu "Linear ticket(s)?" "No" "Yes")
     while [[ "$add_linear" == "Yes" ]]; do
-        linear_ticket=$(prompt_input "Linear ticket ID (example: ABC-123)")
-        linear_relation=$(prompt_menu "Relationship for $linear_ticket" "Closes" "Ref")
+        linear_ticket=$(prompt_input "Ticket ID" "ABC-123")
+        linear_relation=$(prompt_menu "Relation for $linear_ticket" "Closes" "Ref")
         if [[ -n "$linear_ticket" ]]; then
             linear_links+=("$linear_relation $linear_ticket")
         fi
-        add_linear=$(prompt_menu "Add another Linear ticket?" "No" "Yes")
+        add_linear=$(prompt_menu "Another ticket?" "No" "Yes")
     done
 fi
 
@@ -321,7 +547,7 @@ append_linear_links() {
 }
 
 edit_norm=$(normalize_yn "$edit_desc")
-[[ -z "$edit_norm" ]] && edit_norm=$(prompt_menu "Open PR description in \$EDITOR before creating PR?" "No" "Yes")
+[[ -z "$edit_norm" ]] && edit_norm=$(prompt_menu "Edit description in \$EDITOR?" "No" "Yes")
 if [[ "$edit_norm" == "Yes" ]]; then
     if [[ -z "$body_file" ]]; then
         body_file=$(new_md_tempfile)
@@ -343,7 +569,20 @@ args=(pr create --assignee @me --title "$title" --fill)
 [[ -n "$body_file" ]] && args+=(--body-file "$body_file")
 [[ -n "$base" ]] && args+=(--base "$base")
 [[ "$draft_norm" == "Yes" ]] && args+=(--draft)
-[[ "$reviewer_choice" == "CNS" ]] && args+=(--reviewer "peterbornerup,farhadh,jdejnek,finoutlook,befe-oh-no")
+if [[ ${#selected_reviewers[@]} -gt 0 ]]; then
+    deduped_reviewers=()
+    while IFS= read -r handle; do
+        [[ -n "$handle" ]] && deduped_reviewers+=("$handle")
+    done < <(dedupe_list "${selected_reviewers[@]}")
+    selected_reviewers=("${deduped_reviewers[@]:-}")
+fi
+
+if [[ ${#selected_reviewers[@]} -gt 0 ]]; then
+    args+=(--reviewer "$(
+        IFS=,
+        printf '%s' "${selected_reviewers[*]}"
+    )")
+fi
 
 pr_url=$(gh "${args[@]}")
 printf '%s\n' "$pr_url"
