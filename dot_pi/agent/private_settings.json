@@ -67,7 +67,7 @@
   "defaultModel": "claude-opus-5",
   "outputPad": 0,
   "showCacheMissNotices": true,
-  "tuiMode": "fullscreen",
+  "tuiMode": "regular",
   "fullscreenCopyOnSelect": false,
   "fullscreenScrollbar": "auto",
   "fullscreenExitOutput": "transcript"
