@@ -3,6 +3,7 @@ tap "aws/tap", trusted: true
 tap "buo/cask-upgrade", trusted: true
 tap "darrylmorley/whatcable", trusted: true
 tap "dlvhdr/formulae"
+tap "getsentry/tools"
 tap "grafana/grafana", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "jakehilborn/jakehilborn"
@@ -29,8 +30,6 @@ brew "bash"
 brew "bat"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Cargo subcommand for checking and applying updates to installed executables
@@ -129,6 +128,8 @@ brew "ipython"
 brew "jc"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
 # Interactive environments for writing and running code
@@ -269,6 +270,8 @@ brew "zoxide"
 brew "aws/tap/eks-node-viewer"
 # Git diff pager based on delta but with a file tree, à la GitHub
 brew "dlvhdr/formulae/diffnav", trusted: true
+# Sentry command-line tool for error monitoring and debugging
+brew "getsentry/tools/sentry", trusted: true
 # Grafana Cloud CLI
 brew "grafana/grafana/gcx"
 # Terraform
