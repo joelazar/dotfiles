@@ -147,5 +147,6 @@
   "fileCheckpointingEnabled": false,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "model": "claude-fable-5-1[1m]"
 }
