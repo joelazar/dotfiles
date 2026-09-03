@@ -99,6 +99,7 @@
   // PREVIEW TABS
   // ══════════════════════════════════════════════════════════════════════════════
   "preview_tabs": {
+    "enable_preview_multibuffer_from_code_navigation": true,
     "enabled": true,
     "enable_keep_preview_on_code_navigation": true,
     "enable_preview_from_file_finder": true,
@@ -178,7 +179,7 @@
   // PANELS
   // ══════════════════════════════════════════════════════════════════════════════
   "project_panel": {
-    "dock": "right",
+    "dock": "left",
     "button": false,
     "default_width": 300,
     "auto_fold_dirs": false,
@@ -192,12 +193,12 @@
     "dock": "right",
   },
   "collaboration_panel": {
-    "dock": "right",
+    "dock": "left",
     "button": false,
     "default_width": 300,
   },
   "git_panel": {
-    "dock": "right",
+    "dock": "left",
     "button": false,
     "tree_view": true,
     "sort_by_path": true,
@@ -247,7 +248,7 @@
   "agent": {
     "terminal_init_command": "pi",
     "sidebar_side": "left",
-    "dock": "left",
+    "dock": "right",
     "max_content_width": 1200.0,
     "button": false,
     "single_file_review": false,
