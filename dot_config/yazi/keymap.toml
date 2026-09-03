@@ -4,6 +4,16 @@ run = "plugin diff"
 desc = "Diff the selected with the hovered file"
 
 [[mgr.prepend_keymap]]
+on = ["<S-Up>"]
+run = "seek -1"
+desc = "Seek up 1 unit in the preview"
+
+[[mgr.prepend_keymap]]
+on = ["<S-Down>"]
+run = "seek 1"
+desc = "Seek down 1 unit in the preview"
+
+[[mgr.prepend_keymap]]
 on = ["T", "p"]
 run = "plugin toggle-pane min-preview"
 desc = "Show or hide the preview pane"
@@ -20,13 +30,13 @@ desc = "Smart filter"
 
 [[mgr.prepend_keymap]]
 on = ["!"]
-run = 'shell "$SHELL" --block --confirm'
+run = 'shell "$SHELL" --block'
 desc = "Open shell here"
 
 [[mgr.prepend_keymap]]
 on = ["D"]
 run = "remove --force"
-desc = "Move the files to the trash"
+desc = "Trash selected files without confirmation"
 
 [[mgr.prepend_keymap]]
 on = ["C"]
@@ -36,7 +46,7 @@ desc = "Compress with ouch"
 [[mgr.prepend_keymap]]
 on = [">"]
 run = [
-  'shell "for file in "$@"; do magick "$file" -rotate 90 "${file%}"; done" --confirm',
+  'shell "for file in "$@"; do magick "$file" -rotate 90 "$file"; done"',
   "refresh",
 ]
 desc = "Rotate selected images clockwise"
@@ -44,7 +54,7 @@ desc = "Rotate selected images clockwise"
 [[mgr.prepend_keymap]]
 on = ["P", "p"]
 run = [
-  'shell "for file in "$@"; do magick "$file" "${file%.*}.png"; done" --confirm',
+  'shell "for file in "$@"; do magick "$file" "${file%.*}.png"; done"',
   "refresh",
 ]
 desc = "Convert selected images to PNG"
@@ -52,7 +62,7 @@ desc = "Convert selected images to PNG"
 [[mgr.prepend_keymap]]
 on = ["P", "j"]
 run = [
-  'shell "for file in "$@"; do magick "$file" -quality 75 "${file%.*}.jpg"; done" --confirm',
+  'shell "for file in "$@"; do magick "$file" -quality 75 "${file%.*}.jpg"; done"',
   "refresh",
 ]
 desc = "Convert selected images to JPEG with 75% quality"
@@ -60,7 +70,7 @@ desc = "Convert selected images to JPEG with 75% quality"
 [[mgr.prepend_keymap]]
 on = ["<"]
 run = [
-  'shell "for file in "$@"; do magick "$file" -rotate -90 "${file%}"; done" --confirm',
+  'shell "for file in "$@"; do magick "$file" -rotate -90 "$file"; done"',
   "refresh",
 ]
-desc = "Rotate selected images clockwise"
+desc = "Rotate selected images counter-clockwise"

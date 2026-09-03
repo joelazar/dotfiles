@@ -1,9 +1,17 @@
 [mgr]
 ratio = [1, 2, 4]
+sort_by = "natural"
+sort_dir_first = true
+linemode = "size"
 
 [preview]
+wrap = "yes"
 max_width = 1600
 max_height = 1900
+image_quality = 90
+
+[which]
+sort_by = "key"
 
 [opener]
 edit = [
@@ -24,7 +32,7 @@ play = [
 [open]
 rules = [
   # Folder
-  { url = "*/", use = [
+  { mime = "folder/*", use = [
     "edit",
     "open",
     "reveal",
@@ -57,11 +65,8 @@ rules = [
     "reveal",
   ] },
   # Archive
-  { mime = "application/{,g}zip", use = [
-    "extract",
-    "reveal",
-  ] },
-  { mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", use = [
+  # (yazi strips x-/vnd. prefixes from MIME types, so no application/x-* here)
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", use = [
     "extract",
     "reveal",
   ] },
@@ -75,7 +80,7 @@ rules = [
     "reveal",
   ] },
   # Empty file
-  { mime = "inode/x-empty", use = [
+  { mime = "inode/empty", use = [
     "edit",
     "reveal",
   ] },
@@ -102,12 +107,6 @@ group = "git"
 
 [plugin]
 prepend_previewers = [
-  # Archive previewer
-  { mime = "application/*zip", run = "ouch" },
-  { mime = "application/x-tar", run = "ouch" },
-  { mime = "application/x-bzip2", run = "ouch" },
-  { mime = "application/x-7z-compressed", run = "ouch" },
-  { mime = "application/x-rar", run = "ouch" },
-  { mime = "application/x-xz", run = "ouch" },
-  { mime = "application/xz", run = "ouch" },
+  # Archive previewer (ouch)
+  { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run = "ouch" },
 ]
