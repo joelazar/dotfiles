@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+script_name=$(basename "$0")
+
+usage() {
+    cat <<EOF
+Usage:
+  $script_name <branch>
+
+Creates a worktree for <branch> under <gj.root>/worktree/<owner>/<repo>/<branch>
+and prints its path. Creates the branch if it does not exist.
+
+Config:
+  gj.root   Directory where repositories are stored.
+
+Example:
+  cd ($script_name pb/my-feature)
+EOF
+}
+
+die() {
+    printf '%s\n' "$*" >&2
+    exit 1
+}
+
+main() {
+    [[ $# -eq 1 ]] || {
+        usage
+        exit 2
+    }
+    case "$1" in
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    esac
+
+    local branch=$1 root toplevel dest
+
+    root=$(git config --global --get gj.root || true)
+    [[ -n "$root" ]] || die "gj.root is not set in git config"
+    root="${root/#\~/$HOME}"
+
+    toplevel=$(git rev-parse --show-toplevel 2>/dev/null) || die "Not inside a git repository"
+    [[ "$toplevel" == "$root"/* ]] || die "Repository is not under gj.root: $toplevel"
+
+    dest="$root/worktree/${toplevel#"$root"/}/${branch//\//-}"
+
+    if [[ ! -d "$dest" ]]; then
+        git fetch --prune --quiet
+        if git show-ref --verify --quiet "refs/heads/$branch" || git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+            git worktree add --quiet "$dest" "$branch"
+        else
+            git worktree add --quiet -b "$branch" "$dest"
+        fi
+    fi
+
+    printf '%s\n' "$dest"
+}
+
+main "$@"
