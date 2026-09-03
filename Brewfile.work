@@ -17,7 +17,7 @@ tap "nikitabobko/tap", trusted: true
 tap "openai/tools", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "protonpass/tap", trusted: true
-tap "schpet/tap", trusted: { formulae: ["linea"] }
+tap "schpet/tap", trusted: { formulae: ["linear"] }
 tap "steipete/tap", trusted: true
 tap "tw93/tap", trusted: { formulae: ["mole"] }
 # Improved shell history for zsh, bash, fish and nushell
@@ -288,6 +288,8 @@ brew "mike-engel/jwt-cli/jwt-cli", trusted: true
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
+# CLI for linear.app (distinct from the `linear` desktop app cask)
+brew "schpet/tap/linear"
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
 # Command-line interface for 1Password
