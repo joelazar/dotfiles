@@ -2,6 +2,8 @@
 disableStartupPopups: true
 notARepository: "skip"
 promptToReturnFromSubprocess: false
+os:
+  editPreset: "nvim"
 git:
   diffRenderers:
     - name: delta
@@ -12,6 +14,9 @@ git:
   remoteBranchSortOrder: "alphabetical"
 gui:
   sidePanelWidth: 0.25
+  scrollOffMargin: 5
+  filterMode: "fuzzy"
+  switchTabsWithPanelJumpKeys: true
   useHunkModeInStagingView: true
   skipDiscardChangeWarning: true
   showCommandLog: false
