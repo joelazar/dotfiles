@@ -1,158 +1,108 @@
-font-family = Maple Mono NF
+# Ghostty config. Only non-default settings are listed.
+# `ghostty +show-config --default --docs` for reference; `ghostty +list-keybinds --default` for keys.
 
+# --- Font & theme ---
+font-family = Maple Mono NF
 font-feature = +cv02
 font-feature = +cv05
 font-feature = +cv61
 font-feature = +cv63
-
 font-size = 13.0
-
 theme = Catppuccin Mocha
 
-working-directory = home
+# --- Window ---
+maximize = true
+window-save-state = always
 window-inherit-working-directory = false
 tab-inherit-working-directory = true
 split-inherit-working-directory = false
 window-inherit-font-size = false
+working-directory = home
+macos-window-buttons = hidden
+macos-non-native-fullscreen = visible-menu
+macos-option-as-alt = left
+quit-after-last-window-closed = true
+resize-overlay = never
+
+# --- Terminal behaviour ---
 cursor-style-blink = false
 mouse-hide-while-typing = true
-quit-after-last-window-closed = true
-window-save-state = always
-macos-option-as-alt = left
-# macos-non-native-fullscreen = true
-macos-non-native-fullscreen = visible-menu
-quick-terminal-position = top
-quick-terminal-animation-duration = 0
-scrollback-limit = 1000000000
-resize-overlay = never
-# set height/width to a ridiculous size so it would always start in max window
-window-height = 200
-window-width = 500
-macos-window-buttons = hidden
 clipboard-paste-protection = false
+scrollback-limit = 100000000
+# how long a closed tab/split can be restored with super+z
+undo-timeout = 20s
+shell-integration-features = sudo,title,ssh-env,no-ssh-terminfo
 
-keybind = super+alt+ctrl+l=unbind
-keybind = super+alt+ctrl+h=unbind
-keybind = cmd+alt+ctrl+l=unbind
-keybind = cmd+alt+ctrl+h=unbind
+# Notify when a long-running command finishes in an unfocused surface
+# (replaces the fish `done` plugin)
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 10s
 
-keybind = super+page_up=scroll_page_up
-keybind = super+ctrl+equal=equalize_splits
-keybind = super+physical:four=goto_tab:4
-keybind = super+shift+down=jump_to_prompt:1
-keybind = super+shift+w=close_window
-keybind = super+shift+left_bracket=previous_tab
-keybind = super+backspace=esc:
-keybind = super+alt+i=inspector:toggle
-keybind = super+w=close_surface
-keybind = super+physical:eight=goto_tab:8
-keybind = super+alt+right=goto_split:right
-keybind = shift+up=adjust_selection:up
-keybind = super+down=jump_to_prompt:1
-keybind = super+enter=toggle_fullscreen
-keybind = super+t=new_tab
-keybind = super+c=copy_to_clipboard
-keybind = super+shift+right_bracket=next_tab
+# --- Keybinds: tabs & windows ---
+# physical: keeps digits working on non-US layouts
 keybind = super+physical:one=goto_tab:1
-keybind = shift+left=adjust_selection:left
-keybind = super+equal=increase_font_size:1
-keybind = shift+page_up=adjust_selection:page_up
+keybind = super+physical:two=goto_tab:2
 keybind = super+physical:three=goto_tab:3
-keybind = super+right=text:\x05
-keybind = super+d=new_split:right
+keybind = super+physical:four=goto_tab:4
+keybind = super+physical:five=goto_tab:5
+keybind = super+physical:six=goto_tab:6
+keybind = super+physical:seven=goto_tab:7
+keybind = super+physical:eight=goto_tab:8
+keybind = super+physical:nine=last_tab
+keybind = super+shift+t=prompt_tab_title
+keybind = super+shift+comma=move_tab:-1
+keybind = super+shift+period=move_tab:1
+keybind = super+grave_accent=goto_window:next
+keybind = super+shift+grave_accent=goto_window:previous
+
+# --- Keybinds: splits ---
+keybind = super+ctrl+h=goto_split:left
+keybind = super+ctrl+j=goto_split:bottom
+keybind = super+ctrl+k=goto_split:top
+keybind = super+ctrl+l=goto_split:right
 # resize mode: super+ctrl+r to enter, h/j/k/l to resize, escape to exit
 keybind = super+ctrl+r=activate_key_table:resize
-# remap cmd+r to <D-r> for nvim (CSI u: 114='r', 9=1+super)
-keybind = super+r=text:\x1b[114;9u
 keybind = resize/h=resize_split:left,10
 keybind = resize/j=resize_split:down,10
 keybind = resize/k=resize_split:up,10
 keybind = resize/l=resize_split:right,10
 keybind = resize/escape=deactivate_key_table
 keybind = resize/catch_all=ignore
-keybind = shift+end=adjust_selection:end
+
+# --- Keybinds: font ---
 keybind = super+plus=increase_font_size:0.5
-keybind = super+q=quit
-keybind = super+home=scroll_to_top
-keybind = super+left=text:\x01
-keybind = super+shift+up=jump_to_prompt:-1
-keybind = shift+right=adjust_selection:right
-keybind = super+comma=open_config
 keybind = super+minus=decrease_font_size:0.5
-keybind = shift+page_down=adjust_selection:page_down
-keybind = ctrl+tab=next_tab
-keybind = super+a=select_all
-keybind = super+alt+down=goto_split:bottom
-keybind = super+ctrl+f=toggle_fullscreen
+
+# --- Keybinds: scrollback ---
+# open the full scrollback in the default editor
+keybind = super+shift+f=write_scrollback_file:open
 keybind = super+alt+shift+j=write_scrollback_file:open,html
-keybind = shift+down=adjust_selection:down
-keybind = ctrl+shift+tab=previous_tab
-keybind = super+n=new_window
-keybind = super+alt+left=goto_split:left
-keybind = super+page_down=scroll_page_down
-keybind = super+alt+shift+w=close_all_windows
-keybind = super+alt+up=goto_split:top
-keybind = super+left_bracket=goto_split:previous
-keybind = super+physical:nine=last_tab
-keybind = super+right_bracket=goto_split:next
-keybind = super+end=scroll_to_bottom
 keybind = super+shift+j=write_scrollback_file:paste,html
-keybind = super+shift+d=new_split:down
-keybind = super+zero=reset_font_size
-keybind = super+physical:five=goto_tab:5
-keybind = shift+home=adjust_selection:home
-keybind = super+physical:seven=goto_tab:7
-keybind = super+up=jump_to_prompt:-1
-keybind = super+k=clear_screen
-keybind = super+physical:two=goto_tab:2
-keybind = super+physical:six=goto_tab:6
-keybind = super+v=paste_from_clipboard
 
-# keybind = global:cmd+ctrl+shift+opt+`=toggle_quick_terminal
-# keybind = global:ctrl+`=toggle_quick_terminal
+# --- Keybinds: selection ---
+# performable: only consumed when a selection exists, otherwise passed to the app (yazi uses shift+up/down)
+keybind = performable:shift+up=adjust_selection:up
+keybind = performable:shift+down=adjust_selection:down
+keybind = shift+left=adjust_selection:left
+keybind = shift+right=adjust_selection:right
 
-# remap cmd+p to ctrl+p
-keybind = super+p=text:\x10
-# remap cmd+shift+g to ctrl+shift+g (CSI u: 103='g', 6=1+shift+ctrl)
-keybind = super+shift+g=text:\x1b[103;6u
-# remap cmd+shift+c to ctrl+shift+c (CSI u: 99='c', 6=1+shift+ctrl)
-keybind = super+shift+c=text:\x1b[99;6u
-# remap cmd+shift+e to ctrl+shift+e (CSI u: 101='e', 6=1+shift+ctrl)
-keybind = super+shift+e=text:\x1b[101;6u
-# remap cmd+shift+m to ctrl+shift+m (CSI u: 109='m', 6=1+shift+ctrl)
-keybind = super+shift+m=text:\x1b[109;6u
-# remap cmd+shift+a to ctrl+shift+a (CSI u: 97='a', 6=1+shift+ctrl)
-keybind = super+shift+a=text:\x1b[97;6u
-# remap cmd+shift+r to ctrl+shift+r (CSI u: 114='r', 6=1+shift+ctrl)
-keybind = super+shift+r=text:\x1b[114;6u
-
-# search entire scrollback history in default text editor
-keybind = super+shift+f=write_screen_file:open
-
-# copy scrollback history to the clipboard
-# keybind = super+shift+f=write_screen_file:copy
-
+# --- Keybinds: text sent to the shell / TUIs ---
+keybind = super+left=text:\x01
+keybind = super+right=text:\x05
 keybind = alt+left=unbind
 keybind = alt+right=unbind
-
-keybind = super+ctrl+h=goto_split:left
-keybind = super+ctrl+j=goto_split:bottom
-keybind = super+ctrl+k=goto_split:top
-keybind = super+ctrl+l=goto_split:right
-
-keybind = super+shift+t=prompt_tab_title
-
-keybind = super+shift+comma=move_tab:-1
-keybind = super+shift+period=move_tab:1
-
-# cmd+shift+r is remapped for pi below; reload config from the menu instead
-
-keybind = super+grave_accent=goto_window:next
-keybind = super+shift+grave_accent=goto_window:previous
 keybind = shift+enter=text:\n
-# remap ctrl+enter to CSI u ctrl+enter
 keybind = ctrl+enter=text:\x1b[13;5u
-
-# shell-integration-features = no-cursor,sudo,title
-shell-integration-features = sudo,title,ssh-env,no-ssh-terminfo
-
+# cmd+p -> ctrl+p
+keybind = super+p=text:\x10
+# cmd+r -> <D-r> for nvim (CSI u: 114='r', 9=1+super)
+keybind = super+r=text:\x1b[114;9u
+# cmd+shift+<x> -> ctrl+shift+<x> (CSI u, 6=1+shift+ctrl) for pi/nvim; overrides
+# ghostty's search-nav and reload_config defaults on these keys
+keybind = super+shift+g=text:\x1b[103;6u
+keybind = super+shift+c=text:\x1b[99;6u
+keybind = super+shift+e=text:\x1b[101;6u
+keybind = super+shift+m=text:\x1b[109;6u
+keybind = super+shift+a=text:\x1b[97;6u
+keybind = super+shift+r=text:\x1b[114;6u
