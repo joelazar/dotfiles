@@ -151,10 +151,6 @@ for mode in default insert
     bind --mode $mode \ct tv_channels
 end
 
-# Done plugin config
-set -U __done_min_cmd_duration 10000
-set -U __done_exclude n
-
 if test -e $HOME/.config/fish/.local.fish
     source $HOME/.config/fish/.local.fish
 end
