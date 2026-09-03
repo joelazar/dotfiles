@@ -6,7 +6,9 @@ diff_view = "side-by-side"
 transparent_background = false
 
 show_file_list = true
-# show_commits = true  # re-add once released (not in 0.19.1, default is true)
+show_commits = true
+show_pr_checks = true
+show_pr_comments = true
 cursor_line = true
 scroll_offset = 5
 wrap = false
@@ -18,7 +20,9 @@ comment_tab_width = 2
 
 backend = "libgit2"
 no_update_check = true
+username = "joelazar"
 review_watch_interval_ms = 1000
+diff_watch_interval_ms = 1000
 
 comment_types = [
   { id = "issue", color = "red", definition = "must be fixed before merge" },
@@ -30,3 +34,11 @@ comment_types = [
 
 [forge]
 comment_type_prefix = true
+
+[export]
+intro = "I reviewed your code and have the following comments. Please address them."
+scope_line = true
+pr_metadata = true
+comments_header = "## Local tuicr Comments"
+remote_comments_header = "## Existing GitHub Comments"
+legend = true
