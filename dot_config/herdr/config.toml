@@ -66,6 +66,35 @@ navigate_pane_down = "j"
 navigate_pane_up = "k"
 navigate_pane_right = "l"
 
+# smart-splits.nvim: seamless ctrl+h/j/k/l between herdr panes and Neovim splits.
+# Plugin is linked from the lazy.nvim clone (one-time setup):
+#   herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
+# In a pane without a neighbour the key falls through to the app
+# (so ctrl+l still clears the shell, ctrl+h still backspaces).
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "smart-splits.nvim.left"
+description = "navigate left (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "smart-splits.nvim.down"
+description = "navigate down (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "smart-splits.nvim.up"
+description = "navigate up (vim/herdr)"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "smart-splits.nvim.right"
+description = "navigate right (vim/herdr)"
+
 # lazygit popup
 [[keys.command]]
 key = "prefix+alt+g"
