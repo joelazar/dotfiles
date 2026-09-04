@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://gh-dash.dev/schema.json
 prSections:
   - title: 🚀 My PRs
-    filters: is:open assignee:@me -is:draft sort:created-desc
+    filters: is:open assignee:@me sort:created-desc
   - title: 🆕 Review requested
     filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc updated:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org -author:onomondo-github-actions[bot]
   - title: 👀 Involves me
