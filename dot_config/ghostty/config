@@ -70,6 +70,12 @@ keybind = resize/l=resize_split:right,10
 keybind = resize/escape=deactivate_key_table
 keybind = resize/catch_all=ignore
 
+# --- Keybinds: scrolling ---
+keybind = super+shift+up=scroll_page_lines:-3
+keybind = super+shift+down=scroll_page_lines:3
+keybind = super+shift+home=scroll_to_top
+keybind = super+shift+end=scroll_to_bottom
+
 # --- Keybinds: font ---
 keybind = super+plus=increase_font_size:0.5
 keybind = super+minus=decrease_font_size:0.5
