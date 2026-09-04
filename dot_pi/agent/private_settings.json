@@ -38,10 +38,10 @@
     "/Users/joelazar/Code/ai/pi/pi-review",
     "/Users/joelazar/Code/joelazar/pi-nvim",
     "/Users/joelazar/Code/joelazar/pi-tuicr",
+    "/Users/joelazar/Code/joelazar/pi-copy-block",
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/nicobailon/visual-explainer",
-    "npm:@joelazar/lazygit",
-    "npm:@joelazar/pi-copy-block"
+    "npm:@joelazar/lazygit"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
