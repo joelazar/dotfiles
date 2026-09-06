@@ -55,7 +55,7 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "lastChangelogVersion": "0.85.0",
+  "lastChangelogVersion": "0.85.1",
   "defaultThinkingLevel": "low",
   "defaultProvider": "anthropic-extra",
   "defaultModel": "claude-fable-5-1",
