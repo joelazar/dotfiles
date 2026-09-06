@@ -1,5 +1,7 @@
 tap "dlvhdr/formulae"
 tap "oven-sh/bun"
+# Code searching, linting, rewriting via AST (used by grug-far.nvim)
+brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Bourne-Again SHell, a UNIX command interpreter
