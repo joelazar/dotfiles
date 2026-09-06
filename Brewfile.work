@@ -100,8 +100,6 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
-# Open source programming language to build simple/reliable/efficient software
-brew "go"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
 # Tool for glamorous shell scripts
