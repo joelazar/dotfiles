@@ -83,6 +83,8 @@ brew "ripgrep"
 brew "rtk"
 # 7-Zip is a file archiver with a high compression ratio
 brew "sevenzip"
+# Sound processing tools; provides `rec` for obsidian.nvim audio notes
+brew "sox"
 # Cross-shell prompt for astronauts
 brew "starship"
 # General purpose fuzzy finder TUI
