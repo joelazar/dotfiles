@@ -2,6 +2,23 @@
 # Minimal gitmoji-cli alternative: pick an emoji, write a commit.
 set -euo pipefail
 
+# Parse arguments. This script always runs in commit mode, so gitmoji-cli's
+# "-c/--commit" flag is accepted as a no-op. Only a few safe `git commit`
+# flags are forwarded; anything else is rejected instead of blindly passed
+# through to git commit (which caused "switch 'c' requires a value").
+EXTRA_ARGS=()
+for arg in "$@"; do
+  case "$arg" in
+    -c|--commit) ;; # always in commit mode, nothing to do
+    -a|--all|--amend|--no-edit|--allow-empty|-s|--signoff|--no-verify|-q|--quiet)
+      EXTRA_ARGS+=("$arg") ;;
+    *)
+      echo "error: unsupported argument '$arg'" >&2
+      echo "usage: gitmoji [-c|--commit] [-a|--all] [--amend] [--no-edit] [--signoff] [--no-verify] [--allow-empty]" >&2
+      exit 64 ;;
+  esac
+done
+
 command -v gum >/dev/null || { echo "gum is required" >&2; exit 1; }
 git rev-parse --git-dir >/dev/null 2>&1 || { echo "not a git repository" >&2; exit 1; }
 git diff --cached --quiet || staged=1
@@ -76,7 +93,7 @@ gum style --border rounded --padding "0 1" "$subject${body:+$'\n\n'$body}"
 gum confirm "Commit?" || exit 1
 
 if [[ -n $body ]]; then
-  git commit -m "$subject" -m "$body" "$@"
+  git commit -m "$subject" -m "$body" "${EXTRA_ARGS[@]}"
 else
-  git commit -m "$subject" "$@"
+  git commit -m "$subject" "${EXTRA_ARGS[@]}"
 fi
