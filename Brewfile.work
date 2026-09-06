@@ -376,6 +376,8 @@ cask "tailscale-app"
 cask "thaw"
 # To-do list
 cask "todoist-app"
+# Utility to hide the notch
+cask "topnotch"
 # Multimedia player
 cask "vlc"
 # Menu bar app for USB-C cable diagnostics
