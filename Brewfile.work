@@ -20,6 +20,8 @@ tap "protonpass/tap", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
 tap "steipete/tap", trusted: true
 tap "tw93/tap", trusted: { formulae: ["mole"] }
+# Code searching, linting, rewriting
+brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -218,6 +220,8 @@ brew "sd"
 brew "sevenzip"
 # CLI to update and use Solo 2 security keys
 brew "solo2-cli"
+# SOund eXchange: universal sound sample translator
+brew "sox"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Feature-rich command-line audio/video downloader
@@ -390,12 +394,13 @@ go "golang.org/x/tools/cmd/callgraph"
 go "github.com/go-delve/delve/cmd/dlv"
 go "github.com/davidrjenni/reftools/cmd/fillswitch"
 go "github.com/onsi/ginkgo/v2/ginkgo"
+go "cmd/go"
 go "github.com/abice/go-enum"
+go "cmd/gofmt"
 go "mvdan.cc/gofumpt"
 go "golang.org/x/tools/cmd/goimports"
 go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
 go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
-go "github.com/nametake/golangci-lint-langserver"
 go "github.com/fatih/gomodifytags"
 go "github.com/abenz1267/gomvp"
 go "golang.org/x/tools/cmd/gonew"
