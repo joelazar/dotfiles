@@ -48,6 +48,8 @@ show_section "📚 Installing Language-Specific Packages" "$YELLOW"
 execute "uv tool install ansible-core --with ansible --with netaddr" "ansible-core (with ansible, netaddr)"
 # psycopg[binary] bundles libpq; catppuccin[pygments] provides syntax_style
 execute "uv tool install pgcli --with 'psycopg[binary]' --with 'catppuccin[pygments]'" "pgcli (catppuccin + psycopg-binary)"
+# provides latex2text, used by render-markdown.nvim to render inline LaTeX
+install_uv_tool pylatexenc
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Tools and plugins
