@@ -101,34 +101,6 @@ install_rust() {
     fi
 }
 
-install_magic() {
-    if ! cmd_exists "magic"; then
-        echo ""
-        print_in_purple "🪄 Installing Magic from Modular"
-
-        # Install Magic
-        curl -ssL https://magic.modular.com/deb13a78-95b6-40bf-8bd0-52802eb302a8 | bash
-        print_result $? "Install Magic"
-
-        # Add fish completion if fish is the shell
-        if [ "$SHELL" = "/opt/homebrew/bin/fish" ] && [ -d "$HOME/.config/fish/completions" ]; then
-            # Check if completion already added
-            if ! grep -q "magic completion" "$HOME/.config/fish/completions/magic.fish" 2>/dev/null; then
-                echo 'magic completion --shell fish | source' >>"$HOME/.config/fish/completions/magic.fish"
-                if echo 'magic completion --shell fish | source' >>"$HOME/.config/fish/completions/magic.fish"; then
-                    print_success "Added Magic completion to fish"
-                else
-                    print_error "Failed to add Magic completion to fish"
-                fi
-            else
-                print_success "Magic fish completion already configured"
-            fi
-        fi
-    else
-        print_success "Magic already installed"
-    fi
-}
-
 setup_github_cli() {
     # Check if gh is installed and authenticated
     if cmd_exists "gh"; then
