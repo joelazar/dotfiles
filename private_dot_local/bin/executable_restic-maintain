@@ -4,29 +4,27 @@
 #
 set -Eeuo pipefail
 
-if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
-    echo '❌ RESTIC_REPOSITORY is not set' >&2
-    exit 1
-fi
-
-ensure_repository_ready() {
-    if ! restic cat config >/dev/null 2>&1; then
-        printf '❌ No restic repository found at "%s"\n' "$RESTIC_REPOSITORY" >&2
-        exit 1
-    fi
-}
+# shellcheck source-path=SCRIPTDIR source=../lib/restic-common.sh
+source "$HOME/.local/lib/restic-common.sh"
+require_repository_env
 
 forget_old_snapshots() {
     printf '🧠 Forgetting extra backups in "%s"\n' "$RESTIC_REPOSITORY"
     restic unlock
+    # Group by host only, otherwise every change to the include list starts a
+    # new group whose latest snapshot is kept forever.
     restic forget \
         --retry-lock 3h \
+        --group-by host \
         --keep-within-daily 7d \
         --keep-within-weekly 1m \
         --keep-within-monthly 1y \
         --keep-within-yearly 100y \
-        --prune
+        --prune \
+        "$@"
 }
 
-ensure_repository_ready
-forget_old_snapshots
+ensure_password
+require_volume_mounted
+require_repository_exists
+forget_old_snapshots "$@"

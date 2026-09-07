@@ -4,10 +4,9 @@
 #
 set -Eeuo pipefail
 
-if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
-    echo '❌ RESTIC_REPOSITORY is not set' >&2
-    exit 1
-fi
+# shellcheck source-path=SCRIPTDIR source=../lib/restic-common.sh
+source "$HOME/.local/lib/restic-common.sh"
+require_repository_env
 
 HELIUM_SUPPORT="$HOME/Library/Application Support/net.imput.helium"
 
@@ -33,10 +32,25 @@ INCLUDE=(
     "$HOME/Library/Application Support/zoxide"
 )
 
+# Regenerable or reinstallable data that would otherwise dominate the backup:
+# VM disk images, store-installed extensions, cloned repos, logs, node_modules.
 # Helium is Chromium-based, so most of its support directory is regenerable
-# cache/telemetry. Keep only the meaningful profile config by dropping the
-# heavy, throwaway paths.
+# cache/telemetry; keep only the meaningful profile config.
 EXCLUDE=(
+    "$HOME/.config/colima/_lima"
+    "$HOME/.config/raycast/extensions"
+    "$HOME/.config/raycast/node-compile-cache"
+    "$HOME/.config/gcloud/logs"
+    "$HOME/.pi/agent/git"
+    "$HOME/.claude/debug"
+    "$HOME/.claude/cache"
+    "**/node_modules"
+    "**/.cache"
+    "$HELIUM_SUPPORT/segmentation_platform"
+    "$HELIUM_SUPPORT/Default/History"
+    "$HELIUM_SUPPORT/Default/Favicons"
+    "$HELIUM_SUPPORT/Default/WebStorage"
+    "$HELIUM_SUPPORT/Default/Extensions"
     "$HELIUM_SUPPORT/BrowserMetrics"
     "$HELIUM_SUPPORT/DeferredBrowserMetrics"
     "$HELIUM_SUPPORT/Crashpad"
@@ -56,13 +70,8 @@ EXCLUDE=(
 )
 
 ensure_repository_ready() {
-    local volume
-    volume="$(dirname "$RESTIC_REPOSITORY")"
-    if [[ ! -d "$volume" ]]; then
-        printf '❌ Backup volume "%s" is not mounted\n' "$volume" >&2
-        exit 1
-    fi
-    if ! restic cat config >/dev/null 2>&1; then
+    require_volume_mounted
+    if ! repository_exists; then
         printf '📦 Initializing new restic repository at "%s"\n' "$RESTIC_REPOSITORY"
         restic init
     fi
@@ -84,5 +93,6 @@ run_backup() {
         "$@"
 }
 
+ensure_password
 ensure_repository_ready
 run_backup "$@"

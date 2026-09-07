@@ -5,25 +5,11 @@
 #
 set -Eeuo pipefail
 
+# shellcheck source-path=SCRIPTDIR source=../lib/restic-common.sh
+source "$HOME/.local/lib/restic-common.sh"
+require_repository_env
+
 MOUNTPOINT="${1:-$HOME/mnt/restic}"
-
-if [[ -z "${RESTIC_REPOSITORY:-}" ]]; then
-    echo '❌ RESTIC_REPOSITORY is not set' >&2
-    exit 1
-fi
-
-ensure_repository_ready() {
-    local volume
-    volume="$(dirname "$RESTIC_REPOSITORY")"
-    if [[ ! -d "$volume" ]]; then
-        printf '❌ Backup volume "%s" is not mounted\n' "$volume" >&2
-        exit 1
-    fi
-    if ! restic cat config >/dev/null 2>&1; then
-        printf '❌ No restic repository found at "%s"\n' "$RESTIC_REPOSITORY" >&2
-        exit 1
-    fi
-}
 
 cleanup_mountpoint() {
     # Remove the mountpoint dir if we created it and it is empty
@@ -38,5 +24,7 @@ mount_repository() {
     restic mount "$MOUNTPOINT"
 }
 
-ensure_repository_ready
+ensure_password
+require_volume_mounted
+require_repository_exists
 mount_repository
