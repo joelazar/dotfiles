@@ -41,7 +41,8 @@
     "/Users/joelazar/Code/joelazar/pi-copy-block",
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/nicobailon/visual-explainer",
-    "npm:@joelazar/lazygit"
+    "npm:@joelazar/lazygit",
+    "https://github.com/ayghri/i-have-adhd"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",

@@ -86,6 +86,12 @@ keybind = super+shift+f=write_scrollback_file:open
 keybind = super+alt+shift+j=write_scrollback_file:open,html
 keybind = super+shift+j=write_scrollback_file:paste,html
 
+# --- Keybinds: clipboard ---
+# these are the defaults, but binding them explicitly keeps cmd+c/cmd+v working
+# in native text fields (Change Tab Title dialog, find bar). See ghostty#10749
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+
 # --- Keybinds: selection ---
 # performable: only consumed when a selection exists, otherwise passed to the app (yazi uses shift+up/down)
 keybind = performable:shift+up=adjust_selection:up
