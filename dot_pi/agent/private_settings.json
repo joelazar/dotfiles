@@ -15,6 +15,7 @@
   "quietStartup": true,
   "extensions": [
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/anthropic-extra/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/ask-user/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/btw/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/commit/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/context/index.ts",
@@ -30,19 +31,18 @@
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/thinking-back/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/web-tools/index.ts",
     "-/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts",
-    "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts",
-    "/Users/joelazar/Code/ai/pi/my-pi-setup/extensions/ask-user/index.ts"
+    "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts"
   ],
   "packages": [
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
-    "/Users/joelazar/Code/ai/pi/pi-review",
+    "/Users/joelazar/Code/joelazar/pi-review",
     "/Users/joelazar/Code/joelazar/pi-nvim",
     "/Users/joelazar/Code/joelazar/pi-tuicr",
     "/Users/joelazar/Code/joelazar/pi-copy-block",
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/nicobailon/visual-explainer",
-    "npm:@joelazar/lazygit",
-    "https://github.com/ayghri/i-have-adhd"
+    "git:github.com/ayghri/i-have-adhd",
+    "npm:@joelazar/lazygit"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
