@@ -17,13 +17,9 @@ env:
 
 jobs:
   apply:
-    name: Apply (${{ matrix.type }})
+    name: Apply
     runs-on: macos-26
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        type: [work, workstation]
 
     steps:
       - name: Checkout
@@ -49,7 +45,8 @@ jobs:
           [data]
               email = "ci@example.com"
               name = "CI"
-              type = "${{ matrix.type }}"
+              workEmail = "ci@example.com"
+              workName = "CI"
           EOF
 
           chezmoi \

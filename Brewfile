@@ -1,4 +1,5 @@
 tap "agavra/tap", trusted: true
+tap "anomalyco/tap"
 tap "aws/tap", trusted: true
 tap "buo/cask-upgrade", trusted: true
 tap "darrylmorley/whatcable", trusted: true
@@ -336,14 +337,14 @@ cask "google-chrome"
 cask "google-drive"
 # Chromium-based web browser
 cask "helium-browser"
+# Local-first voice dictation
+cask "anomalyco/tap/hex", trusted: true
 # Free and open-source media player
 cask "iina"
 # Vector graphics editor
 cask "inkscape"
 # Keyboard customiser
 cask "karabiner-elements"
-# Voice-to-text transcription and paste tool
-cask "kitlangton-hex"
 # App to manage software development and track bugs
 cask "linear"
 # Intercept, modify, replay, save HTTP/S traffic

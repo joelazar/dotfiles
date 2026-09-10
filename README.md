@@ -38,7 +38,6 @@ A few quick facts:
 
 - **Platform:** macOS
 - **Dotfile manager:** [chezmoi](https://www.chezmoi.io/)
-- **Profiles:** `work` and `workstation`
 - **Bootstrap path:** [`bootstrap.sh`](bootstrap.sh)
 - **First-run automation:** [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) and [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl)
 - **Theme:** Catppuccin Mocha across most of the stack
@@ -56,7 +55,7 @@ A few quick facts:
 | [`dot_ipython/`](dot_ipython/)                                                   | IPython profile config                                                                                                             |
 | [`private_dot_local/bin/`](private_dot_local/bin/)                               | Personal utility scripts                                                                                                           |
 | [`scripts/`](scripts/)                                                           | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                                  |
-| [`Brewfile.work`](Brewfile.work), [`Brewfile.workstation`](Brewfile.workstation) | Package sets by machine type                                                                                                       |
+| [`Brewfile`](Brewfile)                                                           | Homebrew packages, casks, and npm globals                                                                                          |
 
 ---
 
@@ -177,12 +176,7 @@ This repo bootstraps it during first-run setup, cloning it straight to `~/.agent
 
 ## Package management 📦
 
-Package installation is split by machine type:
-
-- [`Brewfile.work`](Brewfile.work)
-- [`Brewfile.workstation`](Brewfile.workstation)
-
-On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, Yazi plugins, and Magic from Modular.
+Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, Yazi plugins, and Magic from Modular.
 
 Some notable pieces from the current setup:
 
@@ -228,7 +222,7 @@ During initialization, chezmoi asks for:
 
 - git email
 - git username
-- machine type: `work` or `workstation`
+- git email and username for work repositories
 
 Those values come from [`.chezmoi.toml.tmpl`](.chezmoi.toml.tmpl).
 

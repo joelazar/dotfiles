@@ -13,11 +13,6 @@ bootstrap.sh
 **/node_modules/**
 **/.bin/**
 
-# Ignore aerospace config for non-work machines
-{{ if ne .type "work" }}
-.config/aerospace/aerospace.toml
-{{ end }}
-
 .pi/agent/sessions
 .pi/agent/auth.json
 .pi/agent/pi-fff/

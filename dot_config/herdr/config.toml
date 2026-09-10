@@ -138,4 +138,3 @@ enabled = false
 # Experimental local Kitty graphics rendering for attached clients.
 # Requires a Kitty graphics-compatible outer terminal.
 kitty_graphics = true
-

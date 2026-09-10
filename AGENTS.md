@@ -13,10 +13,10 @@ Always apply changed targets after editing, edits in this source directory have 
 
 This repo root is the chezmoi source directory.
 
-- `dot_*` → `~/.*`, `private_*` → sensitive files, `.tmpl` → Go text/template (variables: `{{ .email }}`, `{{ .name }}`, `{{ .type }}`, `{{ .chezmoi.sourceDir }}`)
+- `dot_*` → `~/.*`, `private_*` → sensitive files, `.tmpl` → Go text/template (variables: `{{ .email }}`, `{{ .name }}`, `{{ .workEmail }}`, `{{ .workName }}`, `{{ .chezmoi.sourceDir }}`)
 - `.chezmoiscripts/` — `run_once_*`/`run_onchange_*` setup scripts
 - `scripts/` — shared shell utilities, not deployed
-- `Brewfile.{work,workstation}` — packages per machine type (`type` is prompted on `chezmoi init`)
+- `Brewfile` — Homebrew packages, casks, and npm globals
 
 ## Shell scripts
 
