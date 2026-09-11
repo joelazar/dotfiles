@@ -127,6 +127,7 @@ copy_on_select = true
 mouse_capture = true
 
 agent_panel_sort = "spaces"
+status_indicators = "symbols"
 [ui.toast]
 delivery = "system"
 delay_seconds = 1

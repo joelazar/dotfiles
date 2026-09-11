@@ -26,6 +26,13 @@ set -gx MANPAGER 'nvim +Man!'
 # Customize PATH
 set -gx GOPATH $HOME/go
 set -gx GOBIN $GOPATH/bin
+
+# brew specific paths (added first so user-local bins below take precedence)
+fish_add_path /opt/homebrew/sbin
+fish_add_path /opt/homebrew/bin
+fish_add_path /opt/homebrew/opt/ruby/bin
+fish_add_path /opt/homebrew/opt/openjdk/bin/
+
 fish_add_path $HOME/.yarn/bin
 fish_add_path $HOME/.node/bin
 fish_add_path $HOME/.bun/bin
@@ -35,12 +42,6 @@ fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.modular/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
-
-# brew specific paths
-fish_add_path /opt/homebrew/sbin
-fish_add_path /opt/homebrew/bin
-fish_add_path /opt/homebrew/opt/ruby/bin
-fish_add_path /opt/homebrew/opt/openjdk/bin/
 
 # FZF options
 set -gx FD_DEFAULT_COMMAND 'fd --hidden --follow'
