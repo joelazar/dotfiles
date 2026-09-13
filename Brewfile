@@ -258,7 +258,7 @@ brew "watchexec"
 # Internet file retriever
 brew "wget"
 # Port of OpenAI's Whisper model in C/C++
-brew "whisper-cpp"
+brew "whisper.cpp"
 # Lexical database for the English language
 brew "wordnet"
 # JavaScript package manager
