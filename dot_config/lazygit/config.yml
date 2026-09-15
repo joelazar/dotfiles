@@ -115,7 +115,13 @@ customCommands:
     description: "Copy PR URL to clipboard"
     loadingText: "Copying PR URL to clipboard ..."
   - key: "<c-p>"
-    command: "git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D"
+    command: >-
+      bash -c 'git for-each-ref --format "%(refname:short) %(upstream:track) %(worktreepath)" refs/heads
+      | awk "\$2 == \"[gone]\" {print \$1, \$3}"
+      | while read -r branch path; do
+      [ -n "$path" ] && git worktree remove --force "$path";
+      git branch -D "$branch";
+      done'
     context: "localBranches"
     loadingText: "Pruning..."
     description: "Prune local branches whose upstream is gone"
