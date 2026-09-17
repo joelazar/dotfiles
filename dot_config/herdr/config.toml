@@ -37,12 +37,14 @@ cycle_pane_next = "prefix+tab"
 cycle_pane_previous = "prefix+shift+tab"
 
 # Tabs (tmux windows)
-new_tab = "prefix+c"
-next_tab = "prefix+n"
-previous_tab = "prefix+p"
+new_tab = ["prefix+c", "ctrl+alt+c"]
+next_tab = ["prefix+n", "ctrl+alt+]"]
+previous_tab = ["prefix+p", "ctrl+alt+["]
 rename_tab = "prefix+shift+t"
-close_tab = "prefix+shift+x"
-switch_tab = "prefix+1..9"
+close_tab = ["prefix+shift+x", "ctrl+alt+w"]
+switch_tab = ["prefix+1..9", "ctrl+1..9"]
+move_tab_previous = "alt+shift+left"
+move_tab_next = "alt+shift+right"
 
 # Workspaces (tmux sessions)
 new_workspace = "prefix+shift+n"
@@ -50,13 +52,13 @@ rename_workspace = "prefix+shift+w"
 close_workspace = "prefix+shift+d"
 workspace_picker = "prefix+w"
 switch_workspace = "prefix+shift+1..9"
-previous_workspace = "prefix+alt+p"
-next_workspace = "prefix+alt+n"
+previous_workspace = ["prefix+alt+p", "ctrl+alt+shift+p"]
+next_workspace = ["prefix+alt+n", "ctrl+alt+shift+n"]
 
 # Misc
 help = "prefix+?"
 settings = "prefix+comma"
-detach = "prefix+d"
+detach = ["prefix+d", "prefix+q"]
 reload_config = "prefix+shift+r"
 toggle_sidebar = "prefix+b"
 goto = "prefix+g"
