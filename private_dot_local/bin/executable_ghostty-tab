@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Open a new Ghostty tab in a directory, optionally pre-typing a command.
+# Open a new terminal tab (Herdr or Ghostty) in a directory, optionally pre-typing a command.
 #
 # Usage: ghostty-tab [-t|--title <title>] <dir> [command ...]
 #
-# The title is exported as TAB_TITLE; ~/.config/fish/functions/fish_title.fish
-# turns that into the tab label so fish's per-prompt title does not clobber it.
-# Falls back to a new window when Ghostty has no windows open.
+# Inside a Herdr session (HERDR_ENV=1) the tab is created through the `herdr`
+# CLI, with the title as the Herdr tab label. Otherwise it drives Ghostty via
+# AppleScript, falling back to a new window when Ghostty has no windows open.
+#
+# In both cases the title is exported as TAB_TITLE;
+# ~/.config/fish/functions/fish_title.fish turns that into the tab label so
+# fish's per-prompt title does not clobber it.
 set -euo pipefail
 
 usage() {
@@ -23,6 +27,65 @@ fish_printf_ascii() {
 		s/'\''/\\'\''/g;
 		s/([^\x20-\x7e])/sprintf("\\U%04X",ord($1))/ge;
 	'
+}
+
+in_herdr() {
+	[[ ${HERDR_ENV:-} == 1 ]] && command -v herdr >/dev/null 2>&1
+}
+
+# Create a Herdr tab and run the command in its root pane.
+open_herdr_tab() {
+	local dir="$1" title="$2" command="$3"
+	local args=(tab create --cwd "$dir" --focus)
+	if [[ -n $title ]]; then
+		args+=(--label "$title" --env "TAB_TITLE=$title")
+	fi
+
+	local created pane_id
+	created="$(herdr "${args[@]}")"
+	pane_id="$(jq -er '.result.root_pane.pane_id' <<<"$created")" || {
+		echo "ghostty-tab: herdr did not return a pane id: $created" >&2
+		exit 70
+	}
+
+	if [[ -n $command ]]; then
+		herdr pane run "$pane_id" "$command" >/dev/null
+	fi
+}
+
+# Create a Ghostty tab via AppleScript, typing the startup input into it.
+open_ghostty_tab() {
+	local dir="$1" title="$2" command="$3"
+
+	# Title and command go in as separate lines: fish computes the title before
+	# running a command line, so TAB_TITLE must already be set by then.
+	local input=""
+	if [[ -n $title ]]; then
+		input="set -gx TAB_TITLE (printf '$(fish_printf_ascii "$title")')"$'\n'
+	fi
+	if [[ -n $command ]]; then
+		input+="$command"$'\n'
+	fi
+
+	osascript - "$dir" "$input" <<-'APPLESCRIPT'
+		on run argv
+			set targetCwd to item 1 of argv
+			set startupInput to item 2 of argv
+			tell application "Ghostty"
+				set cfg to new surface configuration
+				set initial working directory of cfg to targetCwd
+				if startupInput is not "" then
+					set initial input of cfg to startupInput
+				end if
+				if (count of windows) > 0 then
+					new tab in front window with configuration cfg
+				else
+					new window with configuration cfg
+				end if
+				activate
+			end tell
+		end run
+	APPLESCRIPT
 }
 
 main() {
@@ -55,35 +118,16 @@ main() {
 	fi
 	dir="$(cd "$dir" && pwd -P)"
 
-	# Title and command go in as separate lines: fish computes the title before
-	# running a command line, so TAB_TITLE must already be set by then.
-	local input=""
-	if [[ -n $title ]]; then
-		input="set -gx TAB_TITLE (printf '$(fish_printf_ascii "$title")')"$'\n'
-	fi
+	local command=""
 	if [[ $# -gt 0 ]]; then
-		input+="$*"$'\n'
+		command="$*"
 	fi
 
-	osascript - "$dir" "$input" <<-'APPLESCRIPT'
-		on run argv
-			set targetCwd to item 1 of argv
-			set startupInput to item 2 of argv
-			tell application "Ghostty"
-				set cfg to new surface configuration
-				set initial working directory of cfg to targetCwd
-				if startupInput is not "" then
-					set initial input of cfg to startupInput
-				end if
-				if (count of windows) > 0 then
-					new tab in front window with configuration cfg
-				else
-					new window with configuration cfg
-				end if
-				activate
-			end tell
-		end run
-	APPLESCRIPT
+	if in_herdr; then
+		open_herdr_tab "$dir" "$title" "$command"
+	else
+		open_ghostty_tab "$dir" "$title" "$command"
+	fi
 }
 
 main "$@"
