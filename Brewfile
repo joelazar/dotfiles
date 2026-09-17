@@ -107,16 +107,12 @@ brew "git-standup"
 brew "googleworkspace-cli"
 # Tool for glamorous shell scripts
 brew "gum"
-# Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake"
 # Kubernetes package manager
 brew "helm"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
-# User-friendly cURL replacement (command-line HTTP client)
-brew "httpie"
 # Configurable static site generator
 brew "hugo"
 # Tools and libraries to manipulate images in select formats
@@ -193,8 +189,6 @@ brew "portaudio"
 brew "postgresql@18"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
-# Terminal slideshow tool
-brew "presenterm"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # Command-line YAML and XML processor that wraps jq
@@ -359,8 +353,6 @@ cask "obsidian"
 cask "openai/tools/openai", trusted: true
 # Client program for the OpenVPN Access Server
 cask "openvpn-connect"
-# WebKit based web browser
-cask "orion"
 # VPN client focusing on security
 cask "protonvpn"
 # Control your tools with a few keystrokes
@@ -377,43 +369,16 @@ cask "spotify"
 cask "steam"
 # Mesh VPN based on WireGuard
 cask "tailscale-app"
-# Menu bar manager
-cask "thaw"
 # To-do list
 cask "todoist-app"
-# Utility to hide the notch
-cask "topnotch"
-# Multimedia player
-cask "vlc"
 # Menu bar app for USB-C cable diagnostics
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
 # Multiplayer code editor
 cask "zed"
-go "golang.org/x/tools/cmd/callgraph"
-go "github.com/go-delve/delve/cmd/dlv"
-go "github.com/davidrjenni/reftools/cmd/fillswitch"
-go "github.com/onsi/ginkgo/v2/ginkgo"
 go "cmd/go"
-go "github.com/abice/go-enum"
 go "cmd/gofmt"
-go "mvdan.cc/gofumpt"
-go "golang.org/x/tools/cmd/goimports"
-go "github.com/twpayne/go-jsonstruct/v3/cmd/gojsonstruct"
-go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
-go "github.com/fatih/gomodifytags"
-go "github.com/abenz1267/gomvp"
-go "golang.org/x/tools/cmd/gonew"
-go "golang.org/x/tools/gopls"
-go "github.com/cweill/gotests/gotests"
-go "gotest.tools/gotestsum"
-go "golang.org/x/vuln/cmd/govulncheck"
-go "github.com/koron/iferr"
-go "github.com/josharian/impl"
-go "github.com/tmc/json-to-struct"
-go "go.uber.org/mock/mockgen"
-go "github.com/kyoh86/richgo"
 cargo "cargo-audit"
 npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
