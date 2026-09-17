@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Open a new terminal tab (Herdr or Ghostty) in a directory, optionally pre-typing a command.
 #
-# Usage: ghostty-tab [-t|--title <title>] <dir> [command ...]
+# Usage: term-tab [-t|--title <title>] <dir> [command ...]
 #
 # Inside a Herdr session (HERDR_ENV=1) the tab is created through the `herdr`
 # CLI, with the title as the Herdr tab label. Otherwise it drives Ghostty via
@@ -13,7 +13,7 @@
 set -euo pipefail
 
 usage() {
-	echo "usage: ghostty-tab [-t|--title <title>] <dir> [command ...]" >&2
+	echo "usage: term-tab [-t|--title <title>] <dir> [command ...]" >&2
 	exit 64
 }
 
@@ -44,7 +44,7 @@ open_herdr_tab() {
 	local created pane_id
 	created="$(herdr "${args[@]}")"
 	pane_id="$(jq -er '.result.root_pane.pane_id' <<<"$created")" || {
-		echo "ghostty-tab: herdr did not return a pane id: $created" >&2
+		echo "term-tab: herdr did not return a pane id: $created" >&2
 		exit 70
 	}
 
@@ -113,7 +113,7 @@ main() {
 	# Expand a leading ~ and resolve to an absolute path; AppleScript will not.
 	local dir="${raw_dir/#\~/$HOME}"
 	if [[ ! -d $dir ]]; then
-		echo "ghostty-tab: not a directory: $dir" >&2
+		echo "term-tab: not a directory: $dir" >&2
 		exit 66
 	fi
 	dir="$(cd "$dir" && pwd -P)"

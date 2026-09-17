@@ -140,7 +140,7 @@ keybindings:
     - key: S
       name: open shell
       command: >
-        ghostty-tab '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
+        term-tab '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
     - key: w
       builtin: watchChecks
       name: watch checks
