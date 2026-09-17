@@ -182,7 +182,7 @@ This repo bootstraps it during first-run setup, cloning it straight to `~/.agent
 
 ## Package management 📦
 
-Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, Rust via `rustup`, UV tools, GitHub CLI plugins, and Yazi plugins.
+Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, Rust via `rustup`, UV tools, GitHub CLI plugins, Yazi plugins, and Herdr plugins.
 
 Some notable pieces from the current setup:
 
@@ -190,6 +190,7 @@ Some notable pieces from the current setup:
   - `.chezmoiscripts/run_onchange_rebuild-node-native-modules.sh.tmpl` rebuilds native addons (e.g. `better-sqlite3`) of global npm packages whenever the Node ABI changes
 - UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`), `pgcli` (with Catppuccin styling and `psycopg[binary]`), and `pylatexenc` for inline LaTeX rendering in Neovim
 - GitHub CLI plugins `gh-dash` and `gh-repo-man`
+- Herdr plugins: Auto Title (tab/pane titles, configured by `private_Library/private_Application Support/herdr-auto-title/config.env`) and `smart-splits.nvim` (linked from the lazy.nvim clone)
 - Yazi plugins `toggle-pane`, `smart-filter`, `diff`, `git`, and `ouch`
 - Casks for the desktop side: Ghostty, Zed, Raycast, AeroSpace, Karabiner-Elements, 1Password, Obsidian, CleanShot, Claude, Codex, Antigravity CLI, and more
 
