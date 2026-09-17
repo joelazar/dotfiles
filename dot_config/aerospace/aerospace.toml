@@ -198,27 +198,19 @@ run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = 'move-node-to-workspace 2'
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = 'move-node-to-workspace 2'
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'net.imput.helium'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-id = 'com.kagi.kagimacOS'
-run = 'move-node-to-workspace 2'
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'org.mozilla.firefox'
-run = 'move-node-to-workspace 2'
-
-[[on-window-detected]]
-if.app-id = 'com.1password.1password'
-run = ['layout floating', 'move-node-to-workspace 9']
+run = ['layout tiling', 'move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
@@ -237,24 +229,12 @@ if.app-id = 'com.hnc.Discord'
 run = ['layout tiling', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
-if.app-id = 'com.linear'
-run = 'move-node-to-workspace 4'
-
-[[on-window-detected]]
 if.app-id = 'md.obsidian'
-run = 'move-node-to-workspace 4'
+run = ['layout tiling', 'move-node-to-workspace 4']
 
 [[on-window-detected]]
-if.app-id = 'com.todoist.mac.Todoist'
-run = 'move-node-to-workspace 4'
-
-[[on-window-detected]]
-if.app-id = 'net.kovidgoyal.calibre'
-run = 'move-node-to-workspace 4'
-
-[[on-window-detected]]
-if.app-id = 'com.tldraw.desktop'
-run = 'move-node-to-workspace 4'
+if.app-id = 'com.linear'
+run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
@@ -262,6 +242,10 @@ run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-id = 'com.neovide.neovide'
+run = ['layout tiling', 'move-node-to-workspace 5']
+
+[[on-window-detected]]
+if.app-id = 'com.usebruno.app'
 run = ['layout tiling', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
@@ -273,12 +257,20 @@ if.app-id = 'com.openai.codex'
 run = ['layout tiling', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
-if.app-id = 'com.usebruno.app'
-run = ['layout tiling', 'move-node-to-workspace 7']
-
-[[on-window-detected]]
 if.app-id = 'org.wireshark.Wireshark'
 run = ['layout tiling', 'move-node-to-workspace 8']
+
+[[on-window-detected]]
+if.app-id = 'com.todoist.mac.Todoist'
+run = ['layout tiling', 'move-node-to-workspace 8']
+
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.calibre'
+run = ['layout tiling', 'move-node-to-workspace 8']
+
+[[on-window-detected]]
+if.app-id = 'com.1password.1password'
+run = ['layout floating', 'move-node-to-workspace 9']
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
