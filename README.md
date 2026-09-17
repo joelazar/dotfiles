@@ -269,7 +269,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | [`discord-summary`](private_dot_local/bin/executable_discord-summary)             | Summarizes the last 24h of selected Discord channels via kagi             |
 | [`fonttest`](private_dot_local/bin/executable_fonttest)                           | Checks terminal font rendering                                            |
 | [`formatter`](private_dot_local/bin/executable_formatter)                         | Formats USB drives and SD cards with a `gum` UI                           |
-| [`ghostty-tab`](private_dot_local/bin/executable_ghostty-tab)                     | Opens a new Ghostty tab in a directory, optionally with a command         |
+| [`term-tab`](private_dot_local/bin/executable_term-tab)                     | Opens a new Herdr or Ghostty tab in a directory, optionally with a command |
 | [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)           | Finds git repos recursively and offers interactive actions                |
 | [`git-reset`](private_dot_local/bin/executable_git-reset)                         | Resets repos back to their default branch state                           |
 | [`git-submodules-update`](private_dot_local/bin/executable_git-submodules-update) | Updates git submodules                                                    |
@@ -287,7 +287,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | [`toggle-lid-sleep`](private_dot_local/bin/executable_toggle-lid-sleep)           | Raycast script that toggles clamshell sleep                               |
 | [`transcribe`](private_dot_local/bin/executable_transcribe)                       | Offline audio/video transcription via whisper.cpp                         |
 | [`untilfail`](private_dot_local/bin/executable_untilfail)                         | Repeats a command until it fails                                          |
-| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)               | Opens the daily Ghostty workspace: Obsidian vault in nvim plus gh-dash    |
+| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)               | Opens the daily terminal workspace: Obsidian vault in nvim plus gh-dash    |
 | [`wtfport`](private_dot_local/bin/executable_wtfport)                             | Shows what is listening on a port and can kill it                         |
 
 The restic scripts share [`private_dot_local/lib/restic-common.sh`](private_dot_local/lib/restic-common.sh). Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
