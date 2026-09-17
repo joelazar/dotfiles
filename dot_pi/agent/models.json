@@ -14,7 +14,10 @@
           "id": "qwen3.6-35b-a3b",
           "name": "Qwen 3.6 35B-A3B (Local)",
           "reasoning": true,
-          "input": ["text", "image"],
+          "input": [
+            "text",
+            "image"
+          ],
           "contextWindow": 65536,
           "maxTokens": 16384,
           "samplingParams": {
@@ -25,9 +28,40 @@
             "presence_penalty": 0.0,
             "repetition_penalty": 1.0
           },
-          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          }
         }
       ]
+    },
+    "openrouter": {
+      "compat": {
+        "openRouterRouting": {
+          "allow_fallbacks": true,
+          "require_parameters": true,
+          "data_collection": "deny",
+          "quantizations": [
+            "fp8",
+            "mxfp8",
+            "fp16",
+            "bf16",
+            "fp6",
+            "fp32",
+            "unknown"
+          ],
+          "preferred_min_throughput": {
+            "p50": 40,
+            "p90": 20
+          },
+          "preferred_max_latency": {
+            "p50": 2,
+            "p90": 5
+          }
+        }
+      }
     }
   }
 }
