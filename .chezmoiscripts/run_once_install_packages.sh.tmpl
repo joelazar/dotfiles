@@ -83,6 +83,36 @@ YAZI_PLUGINS=(
 install_yazi_plugins "${YAZI_PLUGINS[@]}"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Herdr plugins
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+if cmd_exists "herdr"; then
+    echo ""
+    print_in_purple "🪟 Herdr plugins"
+
+    INSTALLED_HERDR_PLUGINS=$(herdr plugin list --json 2>/dev/null | jq -r '.result.plugins[].plugin_id')
+
+    # Auto Title names tabs and panes after the work in them. Its config lives in
+    # private_Library/private_Application Support/herdr-auto-title/.
+    if echo "$INSTALLED_HERDR_PLUGINS" | grep -qx "herdr.auto-title"; then
+        print_success "Herdr Auto Title plugin already installed"
+    else
+        execute "herdr plugin install -y kryptamine/herdr-auto-title" "Herdr Auto Title plugin"
+    fi
+
+    # smart-splits.nvim is linked from the lazy.nvim clone rather than installed
+    # from GitHub, so it may not exist yet on a fresh machine. Link it by hand
+    # once Neovim has installed it:
+    #   herdr plugin link ~/.local/share/nvim/lazy/smart-splits.nvim
+    SMART_SPLITS_DIR="$HOME/.local/share/nvim/lazy/smart-splits.nvim"
+    if [ -d "$SMART_SPLITS_DIR" ] && ! echo "$INSTALLED_HERDR_PLUGINS" | grep -qx "smart-splits.nvim"; then
+        execute "herdr plugin link $SMART_SPLITS_DIR" "Herdr smart-splits.nvim plugin"
+    fi
+else
+    print_warning "herdr not installed. Skipping Herdr plugins."
+fi
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Completion
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
