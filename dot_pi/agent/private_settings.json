@@ -7,8 +7,6 @@
   "enabledModels": [
     "anthropic-extra/claude-opus-5",
     "anthropic-extra/claude-fable-5-1",
-    "openrouter/z-ai/glm-5.3-flash",
-    "openrouter/google/gemini-3.8-flash",
     "openrouter/deepseek/deepseek-v4.1-flash"
   ],
   "showHardwareCursor": true,
