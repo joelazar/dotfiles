@@ -12,6 +12,9 @@ auto_switch = false
 [terminal]
 shell_mode = "auto"
 new_cwd = "follow"  # new panes/tabs inherit the current working directory
+# Render pane images in Kitty graphics-compatible outer terminals.
+kitty_graphics = true
+
 [worktrees]
 directory = "~/Code/worktree"
 
@@ -122,10 +125,11 @@ height = "80%"
 #------------------------------------------
 [ui]
 accent = "#cba6f7"
-pane_borders = true
+pane_borders = "auto"
 pane_gaps = true
 show_agent_labels_on_pane_borders = true
 hide_tab_bar_when_single_tab = true
+prompt_new_tab_name = false
 confirm_close = true
 copy_on_select = true
 mouse_capture = true
@@ -133,13 +137,8 @@ mouse_capture = true
 agent_panel_sort = "spaces"
 status_indicators = "symbols"
 [ui.toast]
-delivery = "system"
+delivery = "terminal"
 delay_seconds = 1
 
 [ui.sound]
 enabled = false
-
-[experimental]
-# Experimental local Kitty graphics rendering for attached clients.
-# Requires a Kitty graphics-compatible outer terminal.
-kitty_graphics = true
