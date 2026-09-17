@@ -12,6 +12,8 @@ auto_switch = false
 [terminal]
 shell_mode = "auto"
 new_cwd = "follow"  # new panes/tabs inherit the current working directory
+[worktrees]
+directory = "~/Code/worktree"
 
 #------------------------------------------
 # Key Mappings (tmux-style)
