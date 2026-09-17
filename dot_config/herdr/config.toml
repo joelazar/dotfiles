@@ -68,9 +68,10 @@ goto = "prefix+g"
 edit_scrollback = "prefix+e"
 
 # Navigate mode: vim keys
+# j/k move the workspace selection; pane up/down uses prefix+j/k or ctrl+j/k instead.
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
 navigate_pane_left = "h"
-navigate_pane_down = "j"
-navigate_pane_up = "k"
 navigate_pane_right = "l"
 
 # smart-splits.nvim: seamless ctrl+h/j/k/l between herdr panes and Neovim splits.
