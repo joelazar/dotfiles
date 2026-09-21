@@ -54,7 +54,7 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "lastChangelogVersion": "0.86.1",
+  "lastChangelogVersion": "0.87.0",
   "defaultThinkingLevel": "medium",
   "defaultProvider": "anthropic-extra",
   "defaultModel": "claude-opus-5",

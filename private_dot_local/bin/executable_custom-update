@@ -71,10 +71,41 @@ export -f update_mason
 
 execute "update_mason" "Update Neovim Mason packages"
 
-ask_for_confirmation "📊 Do you want to update gcx Agent Skills?"
-if answer_is_yes; then
-    gcx agent skills install --all --force
-fi
+update_herdr_integrations() {
+    command -v herdr >/dev/null 2>&1 || return 0
+
+    local line target
+    herdr integration status 2>/dev/null | while IFS= read -r line; do
+        case "$line" in
+        *": not installed"*) continue ;;
+        esac
+        target=${line%%:*}
+        target=${target%% (*}
+        [ -n "$target" ] || continue
+        echo "reinstalling herdr integration: $target"
+        herdr integration install "$target" || true
+    done
+}
+export -f update_herdr_integrations
+
+update_herdr_plugins() {
+    command -v herdr >/dev/null 2>&1 || return 0
+
+    local repo
+    herdr plugin list 2>/dev/null |
+        sed -n 's/.*\[github:\([^]@]*\).*/\1/p' |
+        sort -u |
+        while IFS= read -r repo; do
+            [ -n "$repo" ] || continue
+            echo "updating herdr plugin: $repo"
+            herdr plugin install "$repo" --yes || true
+        done
+}
+export -f update_herdr_plugins
+
+execute "update_herdr_integrations" "Update Herdr agent integrations"
+
+execute "update_herdr_plugins" "Update Herdr plugins"
 
 ask_for_confirmation "Run Mole?"
 if answer_is_yes; then
