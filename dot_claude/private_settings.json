@@ -1,10 +1,6 @@
 {
   "cleanupPeriodDays": 365,
-  "pluginConfigs": {
-    "agents-md@builtin": {
-      "options": { "instructionFiles": "claude-md-and-agents-md" }
-    }
-  },
+  "syncClaudeAiSkills": false,
   "env": {
     "USE_BUILTIN_RIPGREP": "0",
     "DISABLE_ERROR_REPORTING": "1",
@@ -104,7 +100,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "claude-fable-5-1[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -155,6 +151,13 @@
     }
   },
   "effortLevel": "high",
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-and-agents-md"
+      }
+    }
+  },
   "autoUpdatesChannel": "stable",
   "tui": "default",
   "timeFormat": "24-hour",
@@ -168,5 +171,9 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "voiceEnabled": false,
-  "syncClaudeAiSkills": false
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    }
+  }
 }
