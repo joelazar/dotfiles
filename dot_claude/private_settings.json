@@ -162,5 +162,6 @@
   "showTurnDuration": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "syncClaudeAiSkills": false
 }
