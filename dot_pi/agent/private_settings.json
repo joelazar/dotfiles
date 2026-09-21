@@ -55,9 +55,9 @@
     "showTerminalProgress": true
   },
   "lastChangelogVersion": "0.86.1",
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "medium",
   "defaultProvider": "anthropic-extra",
-  "defaultModel": "claude-fable-5-1",
+  "defaultModel": "claude-opus-5",
   "outputPad": 0,
   "showCacheMissNotices": true,
   "tuiMode": "regular",
