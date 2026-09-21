@@ -1,5 +1,10 @@
 {
   "cleanupPeriodDays": 365,
+  "pluginConfigs": {
+    "agents-md@builtin": {
+      "options": { "instructionFiles": "claude-md-and-agents-md" }
+    }
+  },
   "env": {
     "USE_BUILTIN_RIPGREP": "0",
     "DISABLE_ERROR_REPORTING": "1",
