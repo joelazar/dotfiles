@@ -11,6 +11,8 @@ font-size = 13.0
 theme = Catppuccin Mocha
 
 # --- Window ---
+# non-native fullscreen on launch, menu bar visible (matches toggle_fullscreen below)
+fullscreen = non-native-visible-menu
 maximize = true
 window-save-state = always
 window-inherit-working-directory = false
@@ -20,7 +22,8 @@ window-inherit-font-size = false
 working-directory = home
 macos-window-buttons = hidden
 macos-non-native-fullscreen = visible-menu
-macos-option-as-alt = left
+# true (not left) so ctrl+alt and alt+shift herdr chords work from either option key
+macos-option-as-alt = true
 quit-after-last-window-closed = true
 resize-overlay = never
 
@@ -28,13 +31,18 @@ resize-overlay = never
 cursor-style-blink = false
 mouse-hide-while-typing = true
 clipboard-paste-protection = false
-scrollback-limit = 100000000
+# herdr owns pane scrollback (advanced.scrollback_limit_bytes); this only covers
+# non-herdr surfaces
+scrollback-limit = 10000000
+# herdr's ui.mouse_scroll_lines already scrolls 3 lines per wheel event
+mouse-scroll-multiplier = precision:1,discrete:1
 # how long a closed tab/split can be restored with super+z
 undo-timeout = 20s
 shell-integration-features = sudo,title,ssh-env,no-ssh-terminfo
 
 # Notify when a long-running command finishes in an unfocused surface
-# (replaces the fish `done` plugin)
+# (replaces the fish `done` plugin). Inactive inside herdr panes: OSC 133 stops
+# at herdr. Agent alerts come from herdr's [ui.toast] delivery = "terminal".
 notify-on-command-finish = unfocused
 notify-on-command-finish-action = no-bell,notify
 notify-on-command-finish-after = 10s
@@ -82,6 +90,7 @@ keybind = super+minus=decrease_font_size:0.5
 
 # --- Keybinds: scrollback ---
 # open the full scrollback in the default editor
+# (inside herdr these capture the herdr frame, not the pane: use prefix+e there)
 keybind = super+shift+f=write_scrollback_file:open
 keybind = super+alt+shift+j=write_scrollback_file:open,html
 keybind = super+shift+j=write_scrollback_file:paste,html
@@ -100,8 +109,9 @@ keybind = shift+left=adjust_selection:left
 keybind = shift+right=adjust_selection:right
 
 # --- Keybinds: text sent to the shell / TUIs ---
-keybind = super+left=text:\x01
-keybind = super+right=text:\x05
+# home/end, not ctrl+a/ctrl+e: ctrl+a is the herdr prefix
+keybind = super+left=text:\x1b[H
+keybind = super+right=text:\x1b[F
 keybind = alt+left=unbind
 keybind = alt+right=unbind
 keybind = shift+enter=text:\n
