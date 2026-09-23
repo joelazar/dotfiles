@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Move the focused herdr workspace up or down in the sidebar.
+# herdr has no built-in keybinding for this; the server exposes workspace.move
+# over its socket API, so we call it directly.
+# Usage: herdr-move-workspace up|down
+set -euo pipefail
+
+die() {
+	printf 'herdr-move-workspace: %s\n' "$1" >&2
+	exit 1
+}
+
+resolve_herdr_bin() {
+	if [[ -n "${HERDR_BIN_PATH:-}" && -x "${HERDR_BIN_PATH}" ]]; then
+		printf '%s\n' "$HERDR_BIN_PATH"
+	elif command -v herdr >/dev/null 2>&1; then
+		command -v herdr
+	elif [[ -x /opt/homebrew/bin/herdr ]]; then
+		printf '%s\n' /opt/homebrew/bin/herdr
+	else
+		die "herdr binary not found"
+	fi
+}
+
+move_focused_workspace() {
+	local direction="$1"
+	local herdr_bin socket list focused_id focused_index count target_index
+
+	herdr_bin="$(resolve_herdr_bin)"
+	socket="${HERDR_SOCKET_PATH:-$HOME/.config/herdr/herdr.sock}"
+	[[ -S "$socket" ]] || die "socket not found: $socket"
+
+	list="$("$herdr_bin" workspace list)"
+	focused_id="$(jq -r '.result.workspaces[] | select(.focused) | .workspace_id' <<<"$list")"
+	[[ -n "$focused_id" ]] || die "no focused workspace"
+
+	focused_index="$(jq -r --arg id "$focused_id" \
+		'.result.workspaces | map(.workspace_id) | index($id)' <<<"$list")"
+	count="$(jq -r '.result.workspaces | length' <<<"$list")"
+
+	# insert_index is a slot in the list *before* removal (0..count),
+	# so moving down one position means inserting two slots ahead.
+	case "$direction" in
+	up) target_index=$((focused_index - 1)) ;;
+	down) target_index=$((focused_index + 2)) ;;
+	*) die "usage: herdr-move-workspace up|down" ;;
+	esac
+
+	# Already at the edge: nothing to do.
+	((target_index >= 0 && target_index <= count)) || exit 0
+
+	jq -cn --arg id "$focused_id" --argjson idx "$target_index" \
+		'{id: "move-workspace", method: "workspace.move", params: {workspace_id: $id, insert_index: $idx}}' |
+		nc -U -w 2 "$socket" >/dev/null
+}
+
+move_focused_workspace "${1:-}"

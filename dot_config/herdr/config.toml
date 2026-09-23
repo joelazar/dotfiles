@@ -103,6 +103,19 @@ type = "plugin_action"
 command = "smart-splits.nvim.right"
 description = "navigate right (vim/herdr)"
 
+# Reorder workspaces (herdr has no built-in action; script calls workspace.move)
+[[keys.command]]
+key = "alt+shift+up"
+type = "shell"
+command = "$HOME/.local/bin/herdr-move-workspace up"
+description = "move workspace up"
+
+[[keys.command]]
+key = "alt+shift+down"
+type = "shell"
+command = "$HOME/.local/bin/herdr-move-workspace down"
+description = "move workspace down"
+
 # lazygit popup
 [[keys.command]]
 key = "prefix+alt+g"
