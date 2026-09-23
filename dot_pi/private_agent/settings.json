@@ -19,12 +19,12 @@
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/btw/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/commit/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/context/index.ts",
-    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/cwd-history/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/export-md/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/footer/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/pr-create/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/rtk/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/save-md/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/session-name/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/skill-toggle/src/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/spawn/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/split-fork/index.ts",
@@ -32,6 +32,8 @@
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/web-tools/index.ts",
     "-/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts",
     "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/editor-enhancements/index.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/move-session/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/pi-claude-bridge/src/index.ts"
   ],
   "packages": [
