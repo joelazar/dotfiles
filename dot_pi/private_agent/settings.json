@@ -42,10 +42,10 @@
     "/Users/joelazar/Code/joelazar/pi-nvim",
     "/Users/joelazar/Code/joelazar/pi-tuicr",
     "/Users/joelazar/Code/joelazar/pi-copy-block",
+    "/Users/joelazar/Code/joelazar/pi-lazygit",
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/nicobailon/visual-explainer",
-    "git:github.com/ayghri/i-have-adhd",
-    "npm:@joelazar/lazygit"
+    "git:github.com/ayghri/i-have-adhd"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
