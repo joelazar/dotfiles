@@ -1,0 +1,7 @@
+{
+  "systemPrompt": {
+    "replacement": "You are Claude Code, Anthropic's official CLI for Claude.",
+    "includeModelLine": true,
+    "preservePiContext": true
+  }
+}

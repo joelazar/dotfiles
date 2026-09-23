@@ -7,7 +7,9 @@
   "enabledModels": [
     "anthropic-extra/claude-opus-5-5",
     "anthropic-extra/claude-fable-5-1",
-    "openrouter/deepseek/deepseek-v4.1-flash"
+    "openrouter/deepseek/deepseek-v4.1-flash",
+    "pi-claude/claude-opus-5-5",
+    "pi-claude/claude-fable-5-1"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
@@ -29,7 +31,8 @@
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/thinking-back/index.ts",
     "/Users/joelazar/Code/joelazar/pi-extensions/extensions/web-tools/index.ts",
     "-/Users/joelazar/Code/joelazar/pi-extensions/extensions/sandbox/index.ts",
-    "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts"
+    "/Users/joelazar/Code/ai/pi/pi-extensions-ogulcancelik/packages/pi-session-recall/session-recall.ts",
+    "/Users/joelazar/Code/joelazar/pi-extensions/extensions/pi-claude-bridge/src/index.ts"
   ],
   "packages": [
     "/Users/joelazar/Code/ai/pi/pi-packages/packages/pi-claude-code-use",
