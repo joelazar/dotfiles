@@ -5,7 +5,7 @@
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "anthropic-extra/claude-opus-5",
+    "anthropic-extra/claude-opus-5-5",
     "anthropic-extra/claude-fable-5-1",
     "openrouter/deepseek/deepseek-v4.1-flash"
   ],
@@ -54,10 +54,10 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "lastChangelogVersion": "0.87.0",
-  "defaultThinkingLevel": "medium",
+  "lastChangelogVersion": "0.87.1",
+  "defaultThinkingLevel": "high",
   "defaultProvider": "anthropic-extra",
-  "defaultModel": "claude-opus-5",
+  "defaultModel": "claude-opus-5-5",
   "outputPad": 0,
   "showCacheMissNotices": true,
   "tuiMode": "regular",

@@ -343,7 +343,7 @@ EOF
 
     local prompt
     prompt=$(cat "$prompt_file")
-    local models=(anthropic-extra/claude-opus-5 anthropic/claude-opus-5)
+    local models=(anthropic-extra/claude-opus-5-5 anthropic/claude-opus-5-5)
     local model
     for model in "${models[@]}"; do
         if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
@@ -367,7 +367,7 @@ Requirements:
 - Lower case subject, no trailing period, max 72 characters.
 - Base it on the actual changes in this branch. Do not invent details.
 - Output only the title, nothing else.'
-    for model in anthropic-extra/claude-opus-5 anthropic/claude-opus-5; do
+    for model in anthropic-extra/claude-opus-5-5 anthropic/claude-opus-5-5; do
         if command -v gum >/dev/null 2>&1 && [[ $assume_yes -eq 0 ]]; then
             out=$(gum spin --show-output --title "Generating PR title ($model)..." -- pi -p --no-session --model "$model" --thinking off "$prompt")
         else

@@ -151,6 +151,14 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
   "pluginConfigs": {
     "agents-md@builtin": {
       "options": {
@@ -170,10 +178,5 @@
   "showTurnDuration": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": false,
-  "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "high"
-    }
-  }
+  "voiceEnabled": false
 }
