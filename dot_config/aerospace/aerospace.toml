@@ -204,6 +204,12 @@ run = ['layout tiling', 'move-node-to-workspace 2']
 if.app-id = 'com.google.Chrome'
 run = ['layout tiling', 'move-node-to-workspace 2']
 
+# Google Meet picture-in-picture popup (title lacks the " - Helium" suffix)
+[[on-window-detected]]
+if.app-id = 'net.imput.helium'
+if.window-title-regex-substring = '^Meet - (?!.* - Helium$)'
+run = 'layout floating'
+
 [[on-window-detected]]
 if.app-id = 'net.imput.helium'
 run = ['layout tiling', 'move-node-to-workspace 2']
