@@ -194,6 +194,11 @@
     "sonnet"
   ],
   "spinnerTipsEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh",
+    "padding": 0
+  },
   "worktree": {
     "symlinkDirectories": [
       "node_modules"
