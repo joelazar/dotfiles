@@ -11,7 +11,8 @@ Usage:
   $script_name get [git clone flags...] <repo>
 
 Config:
-  gj.root   Existing directory where repositories are stored.
+  gj.root   Existing directory where repositories are stored as
+            <root>/<host>/<org>/<repo> (e.g. ~/Code/github.com/org/repo).
 
 Examples:
   $script_name get org/repo
@@ -49,25 +50,32 @@ expand_shorthand() {
 
 parse_repo() {
     local input=$1
-    local path no_scheme
+    local host path no_scheme
 
     if [[ "$input" =~ ^[a-zA-Z][a-zA-Z0-9+.-]*:// ]]; then
         no_scheme="${input#*://}"
+        host="${no_scheme%%/*}"
         path="${no_scheme#*/}"
     elif [[ "$input" == *@*:* ]]; then
+        host="${input%%:*}"
         path="${input#*:}"
     else
+        host="${input%%/*}"
         path="${input#*/}"
     fi
+
+    # Strip user@ and :port from the host.
+    host="${host##*@}"
+    host="${host%%:*}"
 
     path="${path#/}"
     path="${path%.git}"
 
-    if [[ -z "$path" || "$path" != */* ]]; then
+    if [[ -z "$host" || -z "$path" || "$path" != */* ]]; then
         return 1
     fi
 
-    printf '%s\n' "$path"
+    printf '%s/%s\n' "$host" "$path"
 }
 
 run_get() {
