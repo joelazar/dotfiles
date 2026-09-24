@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Clone my own repos to ~/Code/joelazar/<repo>.
+# Symlinks managed by chezmoi point into these checkouts:
+#   ~/.config/nvim  -> ~/Code/joelazar/nvim-config  (dot_config/symlink_nvim.tmpl)
+#   ~/.agents/skills -> ~/Code/joelazar/skills       (dot_agents/symlink_skills.tmpl)
+# Runs before chezmoi creates the symlinks, and again whenever this list changes.
+
+set -euo pipefail
+
+CODE_DIR="{{ .chezmoi.homeDir }}/Code/joelazar"
+
+REPOS=(
+    nvim-config
+    skills
+)
+
+clone_repo() {
+    local repo="$1"
+    local target="$CODE_DIR/$repo"
+
+    if [ -d "$target/.git" ]; then
+        return
+    fi
+
+    echo "==> Cloning joelazar/$repo to $target"
+    git clone "git@github.com:joelazar/$repo.git" "$target"
+}
+
+mkdir -p "$CODE_DIR"
+
+for repo in "${REPOS[@]}"; do
+    clone_repo "$repo"
+done

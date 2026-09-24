@@ -39,7 +39,7 @@ A few quick facts:
 - **Platform:** macOS
 - **Dotfile manager:** [chezmoi](https://www.chezmoi.io/)
 - **Bootstrap path:** [`bootstrap.sh`](bootstrap.sh)
-- **First-run automation:** [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl), [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl), and [`run_once_clone-skills.sh.tmpl`](.chezmoiscripts/run_once_clone-skills.sh.tmpl), plus `run_onchange_*` scripts for default apps, CleanShot, `pmset` sudoers, and Node native module rebuilds
+- **First-run automation:** [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl), [`run_once_settings.sh.tmpl`](.chezmoiscripts/run_once_settings.sh.tmpl), plus `run_onchange_*` scripts for cloning my repos to `~/Code/joelazar` ([`run_onchange_before_clone-repos.sh.tmpl`](.chezmoiscripts/run_onchange_before_clone-repos.sh.tmpl)), default apps, CleanShot, `pmset` sudoers, and Node native module rebuilds
 - **Theme:** Catppuccin Mocha across most of the stack
 - **Fonts:** Maple Mono / Maple Mono NF
 
@@ -89,7 +89,7 @@ Zed is configured in [`dot_config/zed/`](dot_config/zed/) with:
 - Yazi and Lazygit tasks wired into the editor
 - AI assistant defaults for day-to-day coding work
 
-Neovim lives in a separate repo: [joelazar/nvim-config](https://github.com/joelazar/nvim-config). This repo bootstraps it during first-run setup.
+Neovim lives in a separate repo: [joelazar/nvim-config](https://github.com/joelazar/nvim-config). [`run_onchange_before_clone-repos.sh.tmpl`](.chezmoiscripts/run_onchange_before_clone-repos.sh.tmpl) clones it to `~/Code/joelazar/nvim-config`, and chezmoi symlinks `~/.config/nvim` to that checkout.
 
 ### Search, navigation, and file management 🔎
 
@@ -175,8 +175,8 @@ Only [`dot_pi/agent/extensions/guardrails.json`](dot_pi/agent/extensions/guardra
 ### Agent skills 🎯
 
 Skills live in a separate repo: [joelazar/skills](https://github.com/joelazar/skills).
-This repo bootstraps it during first-run setup, cloning it straight to `~/.agents/skills`.
-`~/.claude/skills` is a symlink to that path, so every agent reads the same library.
+The same clone script puts it in `~/Code/joelazar/skills`, and chezmoi symlinks `~/.agents/skills` to that checkout.
+`~/.claude/skills` is a symlink to `~/.agents/skills`, so every agent reads the same library.
 
 ---
 
