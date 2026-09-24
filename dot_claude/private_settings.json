@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "cleanupPeriodDays": 365,
   "syncClaudeAiSkills": false,
   "env": {
@@ -12,20 +13,15 @@
     "commit": "",
     "pr": ""
   },
-  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
-      "TodoWrite",
-      "Glob",
-      "Task",
-      "WebFetch",
-      "WebSearch",
       "Bash(cat:*)",
       "Bash(docker compose down:*)",
       "Bash(docker compose exec:*)",
       "Bash(docker compose logs:*)",
       "Bash(docker compose up:*)",
       "Bash(docker run:*)",
+      "Bash(fd:*)",
       "Bash(find:*)",
       "Bash(gh:*)",
       "Bash(git add:*)",
@@ -55,50 +51,64 @@
       "Bash(tree:*)",
       "Bash(wc:*)",
       "Bash(which:*)",
+      "Edit(~/Code/**)",
+      "Glob",
       "Read(~/Code/**)",
-      "Edit(~/Code/**)"
+      "Task",
+      "TodoWrite",
+      "WebFetch",
+      "WebSearch"
     ],
     "deny": [
-      "Bash(> /dev/sda)",
-      "Bash(dd if=/dev/zero of=/dev/sda)",
-      "Bash(diskutil apfs changePassphrase)",
-      "Bash(diskutil apfs decryptVolume)",
-      "Bash(diskutil apfs deleteContainer)",
-      "Bash(diskutil apfs deleteSnapshot)",
-      "Bash(diskutil apfs deleteVolume)",
-      "Bash(diskutil apfs deleteVolumeGroup)",
-      "Bash(diskutil apfs eraseVolume)",
-      "Bash(diskutil appleRAID)",
-      "Bash(diskutil coreStorage)",
-      "Bash(diskutil cs)",
-      "Bash(diskutil disableJournal)",
-      "Bash(diskutil disableOwnership)",
-      "Bash(diskutil eraseDisk)",
-      "Bash(diskutil eraseVolume)",
-      "Bash(diskutil partitionDisk)",
-      "Bash(diskutil randomDisk)",
-      "Bash(diskutil reformat)",
-      "Bash(diskutil resetFusion)",
-      "Bash(diskutil zeroDisk)",
-      "Bash(fork bomb)",
-      "Bash(mkfs.ext4 /dev/sda)",
+      "Bash(dd * of=/dev/*)",
+      "Bash(diskutil apfs changePassphrase *)",
+      "Bash(diskutil apfs decryptVolume *)",
+      "Bash(diskutil apfs deleteContainer *)",
+      "Bash(diskutil apfs deleteSnapshot *)",
+      "Bash(diskutil apfs deleteVolume *)",
+      "Bash(diskutil apfs deleteVolumeGroup *)",
+      "Bash(diskutil apfs eraseVolume *)",
+      "Bash(diskutil appleRAID *)",
+      "Bash(diskutil coreStorage *)",
+      "Bash(diskutil cs *)",
+      "Bash(diskutil disableJournal *)",
+      "Bash(diskutil disableOwnership *)",
+      "Bash(diskutil eraseDisk *)",
+      "Bash(diskutil eraseVolume *)",
+      "Bash(diskutil partitionDisk *)",
+      "Bash(diskutil randomDisk *)",
+      "Bash(diskutil reformat *)",
+      "Bash(diskutil resetFusion *)",
+      "Bash(diskutil zeroDisk *)",
+      "Bash(mkfs*)",
+      "Bash(newfs*)",
       "Bash(rm -rf $HOME)",
+      "Bash(rm -rf $HOME/)",
       "Bash(rm -rf $PAI_DIR)",
       "Bash(rm -rf $PAI_HOME)",
       "Bash(rm -rf /)",
       "Bash(rm -rf /*)",
       "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/)",
       "Bash(sudo rm -rf /)",
       "Bash(sudo rm -rf /*)",
-      "Read(**/.env*)",
-      "Read(**/*.pem)",
+      "Bash(sudo rm -rf ~)",
+      "Bash(sudo rm -rf ~/)",
       "Read(**/*.key)",
-      "Read(**/secrets/**)",
-      "Read(**/credentials/**)",
+      "Read(**/*.pem)",
       "Read(**/.aws/**)",
-      "Read(**/.ssh/**)"
+      "Read(**/.env*)",
+      "Read(**/.ssh/**)",
+      "Read(**/credentials/**)",
+      "Read(**/secrets/**)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "ask": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f*)"
+    ]
   },
   "model": "opus[1m]",
   "hooks": {
@@ -178,5 +188,93 @@
   "showTurnDuration": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "outputStyle": "Concise",
+  "fallbackModel": [
+    "sonnet"
+  ],
+  "spinnerTipsEnabled": false,
+  "worktree": {
+    "symlinkDirectories": [
+      "node_modules"
+    ]
+  },
+  "autoMode": {
+    "environment": [
+      "$defaults",
+      "Personal macOS development machine owned by Joe Lazar. Primary use: software development (Go, TypeScript, shell) and dotfiles maintenance",
+      "Source control: github.com/joelazar and all repos under it",
+      "Dotfiles are managed by chezmoi; the source directory is ~/.local/share/chezmoi and changes reach the live system only via chezmoi apply"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Never force-push to main or master",
+      "Never run chezmoi apply without naming specific targets"
+    ],
+    "hard_deny": [
+      "$defaults",
+      "Never erase, partition, reformat, or wipe disks, APFS containers, volumes, or snapshots (diskutil erase/partition/delete, mkfs, newfs, dd to a device)",
+      "Never recursively delete the home directory, the filesystem root, ~/Code, or ~/.local/share/chezmoi"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "excludedCommands": [
+      "docker *",
+      "docker compose *",
+      "gh *",
+      "git push *",
+      "git fetch *",
+      "git pull *",
+      "git clone *"
+    ],
+    "filesystem": {
+      "allowWrite": [
+        "~/Library/Caches/go-build",
+        "~/go/pkg/mod",
+        "~/.npm",
+        "~/.cache"
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "proxy.golang.org",
+        "sum.golang.org",
+        "registry.npmjs.org"
+      ]
+    },
+    "credentials": {
+      "files": [
+        {
+          "path": "~/.aws",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.ssh",
+          "mode": "deny"
+        },
+        {
+          "path": "~/.config/gh/hosts.yml",
+          "mode": "deny"
+        }
+      ],
+      "envVars": [
+        {
+          "name": "GITHUB_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "GH_TOKEN",
+          "mode": "deny"
+        },
+        {
+          "name": "NPM_TOKEN",
+          "mode": "deny"
+        }
+      ]
+    }
+  }
 }
