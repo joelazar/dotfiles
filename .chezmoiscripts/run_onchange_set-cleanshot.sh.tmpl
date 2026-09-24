@@ -49,6 +49,28 @@ defaults write "$DOMAIN" historyCapacity -int 2
 # 2 = save to export location.
 defaults write "$DOMAIN" afterScreenshotActions -array 0 1 2
 defaults write "$DOMAIN" afterVideoActions -array 0 2
+defaults write "$DOMAIN" popupSize -int 1
+
+# Recording
+defaults write "$DOMAIN" doNotDisturbWhileRecording -bool true
+defaults write "$DOMAIN" highlightClicks -bool true
+defaults write "$DOMAIN" showKeystrokes -bool true
+defaults write "$DOMAIN" recordComputerAudio -bool false
+defaults write "$DOMAIN" flipCamera -bool true
+defaults write "$DOMAIN" gifFPS -int 30
+
+# Hotkeys are stored as JSON blobs of Carbon key codes.
+# Modifiers 768 = Cmd (256) + Shift (512). Key codes: 20 = 3, 21 = 4, 23 = 5.
+set_hotkey() {
+    local name="$1" key="$2" modifiers="$3"
+    local json
+    json=$(printf '{"carbonKey":%d,"carbonModifiers":%d}' "$key" "$modifiers")
+    defaults write "$DOMAIN" "$name" -data "$(printf '%s' "$json" | xxd -p | tr -d '\n')"
+}
+
+set_hotkey LAVAtakeFullscreen 20 768 # Cmd+Shift+3
+set_hotkey LAVAtakeArea 21 768       # Cmd+Shift+4
+set_hotkey LAVAtakeAllInOne 23 768   # Cmd+Shift+5
 
 if [ "$WAS_RUNNING" -eq 1 ]; then
     echo "==> Relaunching CleanShot X"
