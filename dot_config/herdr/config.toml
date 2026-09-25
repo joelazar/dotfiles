@@ -116,23 +116,19 @@ type = "shell"
 command = "$HOME/.local/bin/herdr-move-workspace down"
 description = "move workspace down"
 
-# lazygit popup
+# lazygit (temporary zoomed pane; popups are modal and swallow the prefix)
 [[keys.command]]
 key = "prefix+alt+g"
-type = "popup"
+type = "pane"
 command = "lazygit"
 description = "run lazygit"
-width = "90%"
-height = "90%"
 
-# scratch terminal popup
+# scratch terminal (temporary zoomed pane)
 [[keys.command]]
 key = "prefix+t"
-type = "popup"
+type = "pane"
 command = "exec \"${SHELL:-sh}\""
 description = "scratch terminal"
-width = "80%"
-height = "80%"
 
 #------------------------------------------
 # UI
