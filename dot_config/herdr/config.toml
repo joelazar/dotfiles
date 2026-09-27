@@ -137,7 +137,7 @@ description = "scratch terminal"
 accent = "#cba6f7"
 pane_borders = "auto"
 pane_gaps = true
-show_agent_labels_on_pane_borders = true
+show_agent_labels_on_pane_borders = false
 hide_tab_bar_when_single_tab = true
 prompt_new_tab_name = false
 confirm_close = true
@@ -147,7 +147,7 @@ mouse_capture = true
 agent_panel_sort = "spaces"
 status_indicators = "symbols"
 [ui.toast]
-delivery = "terminal"
+delivery = "off"
 delay_seconds = 1
 
 [ui.sound]
