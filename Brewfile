@@ -47,8 +47,6 @@ brew "cmake"
 brew "lima"
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Secure runtime for JavaScript and TypeScript
@@ -89,6 +87,8 @@ brew "fish"
 brew "fisher"
 # Command-line fuzzy finder written in Go
 brew "fzf"
+# GNU awk utility
+brew "gawk"
 # GNU compiler collection
 brew "gcc"
 # GitHub command-line tool
@@ -105,8 +105,12 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
+# GNU implementation of the famous stream editor
+brew "gnu-sed"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
+# GNU grep, egrep and fgrep
+brew "grep"
 # Tool for glamorous shell scripts
 brew "gum"
 # Kubernetes package manager
@@ -243,6 +247,12 @@ brew "tree"
 brew "tree-sitter-cli"
 # Command-line unarchiving tools supporting multiple formats
 brew "unar"
+# Cross-platform Rust rewrite of the GNU coreutils
+brew "uutils-coreutils"
+# Cross-platform Rust rewrite of the GNU diffutils
+brew "uutils-diffutils"
+# Cross-platform Rust rewrite of the GNU findutils
+brew "uutils-findutils"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Your CLI home video recorder

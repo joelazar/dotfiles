@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
 
 function diff
-    /usr/bin/diff -u $argv | diffnav
+    command diff -u $argv | diffnav
 end
