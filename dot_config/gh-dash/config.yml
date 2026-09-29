@@ -26,6 +26,10 @@ issuesSections:
 notificationsSections:
   - title: 📬 All
     filters: ""
+  - title: 🏢 Onomondo
+    filters: "org:onomondo"
+  - title: 🌍 Other
+    filters: "-org:onomondo"
 defaults:
   preview:
     open: true
