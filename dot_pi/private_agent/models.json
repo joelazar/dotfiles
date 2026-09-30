@@ -1,52 +1,5 @@
 {
   "providers": {
-    "llama-cpp": {
-      "baseUrl": "http://localhost:11434/v1",
-      "api": "openai-completions",
-      "apiKey": "llama-cpp",
-      "compat": {
-        "supportsDeveloperRole": false,
-        "supportsReasoningEffort": false,
-        "thinkingFormat": "qwen-chat-template"
-      },
-      "models": [
-        {
-          "id": "qwen3.6-35b-a3b",
-          "name": "Qwen 3.6 35B-A3B (Local)",
-          "reasoning": true,
-          "input": [
-            "text",
-            "image"
-          ],
-          "inputLimits": {
-            "images": {
-              "resize": {
-                "maxWidth": 1024,
-                "maxHeight": 1024,
-                "maxBytes": 524288,
-                "jpegQuality": 75
-              }
-            }
-          },
-          "contextWindow": 65536,
-          "maxTokens": 16384,
-          "samplingParams": {
-            "temperature": 0.6,
-            "top_p": 0.95,
-            "top_k": 20,
-            "min_p": 0.0,
-            "presence_penalty": 0.0,
-            "repetition_penalty": 1.0
-          },
-          "cost": {
-            "input": 0,
-            "output": 0,
-            "cacheRead": 0,
-            "cacheWrite": 0
-          }
-        }
-      ]
-    },
     "openrouter": {
       "compat": {
         "openRouterRouting": {

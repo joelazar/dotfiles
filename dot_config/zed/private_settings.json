@@ -246,8 +246,10 @@
     "provider": "zed",
   },
   "agent": {
+    "threads_sidebar": {
+      "position": "left"
+    },
     "terminal_init_command": "pi",
-    "sidebar_side": "left",
     "dock": "right",
     "max_content_width": 1200.0,
     "button": false,
