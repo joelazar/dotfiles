@@ -66,6 +66,7 @@ reload_config = "prefix+shift+r"
 toggle_sidebar = "prefix+b"
 goto = "prefix+g"
 edit_scrollback = "prefix+e"
+clear_pane = "prefix+ctrl+k"            # clear screen+scrollback, keep prompt (0.9.2+)
 
 # Navigate mode: vim keys
 # j/k move the workspace selection; pane up/down uses prefix+j/k or ctrl+j/k instead.
