@@ -63,6 +63,8 @@ keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
 keybind = super+grave_accent=goto_window:next
 keybind = super+shift+grave_accent=goto_window:previous
+# fullscreen stays on super+ctrl+f
+keybind = super+enter=unbind
 
 # --- Keybinds: splits ---
 keybind = super+ctrl+h=goto_split:left
