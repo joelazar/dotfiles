@@ -11,4 +11,5 @@ no-multigrid = false
 [font]
 normal = ["Maple Mono NF"]
 size = 13.0
+edging = "subpixelantialias"
 features = { "Maple Mono NF" = ["+cv02", "+cv05", "+cv61", "+cv63"] }
