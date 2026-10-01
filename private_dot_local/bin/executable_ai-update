@@ -20,7 +20,3 @@ echo "🥧 Update Pi"
 pi update --all
 pi update --models
 echo
-
-echo "🥧 Update Pi local packages"
-"${CHEZMOI_SOURCE_DIR:-$HOME/.local/share/chezmoi}/scripts/pi-packages-update"
-echo
