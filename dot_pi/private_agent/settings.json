@@ -23,7 +23,8 @@
     "/Users/joelazar/Code/joelazar/pi-review",
     "/Users/joelazar/Code/joelazar/pi-tuicr",
     "git:github.com/aliou/pi-guardrails",
-    "git:github.com/ayghri/i-have-adhd"
+    "git:github.com/ayghri/i-have-adhd",
+    "git:github.com/DietrichGebert/ponytail"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
