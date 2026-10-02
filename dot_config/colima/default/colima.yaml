@@ -1,6 +1,6 @@
 # Number of CPUs to be allocated to the virtual machine.
 # Default: 2
-cpu: 4
+cpu: 8
 
 # Size of the disk in GiB to be allocated to the virtual machine for container data.
 # NOTE: value can only be increased after virtual machine has been created.
@@ -10,7 +10,7 @@ disk: 30
 
 # Size of the memory in GiB to be allocated to the virtual machine.
 # Default: 2
-memory: 6
+memory: 16
 
 # Architecture of the virtual machine (x86_64, aarch64, host).
 #
@@ -149,7 +149,15 @@ forwardAgent: false
 #
 # Colima default behaviour: buildkit enabled
 # Default: {}
-docker: {}
+docker:
+  log-driver: json-file
+  log-opts:
+    max-size: "10m"
+    max-file: "3"
+  builder:
+    gc:
+      enabled: true
+      defaultKeepStorage: 20GB
 
 # Virtual Machine type (krunkit, qemu, vz)
 # NOTE: this is macOS 13 only. For Linux and macOS <13.0, qemu is always used.
