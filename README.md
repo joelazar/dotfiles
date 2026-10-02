@@ -138,7 +138,7 @@ This repo currently tracks config for:
 
 - [Claude Code](https://docs.anthropic.com/en/docs/build-with-claude/claude-code) in [`dot_claude/`](dot_claude/)
 - [Pi](https://github.com/earendil-works/pi-mono) in [`dot_pi/`](dot_pi/)
-- [llama.cpp](https://github.com/ggml-org/llama.cpp) (`llama-server`) for local models, kept running by a launch agent
+- [llama.cpp](https://github.com/ggml-org/llama.cpp) (`llama-server`) for local models in router mode (pi: `/llama`, `/model`), kept running by a launch agent
 
 Codex and Antigravity CLI are installed from the Brewfile but carry no tracked config. The [`ai-update`](private_dot_local/bin/executable_ai-update) script updates all of these agents plus Pi's local packages.
 

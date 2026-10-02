@@ -1,40 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  User LaunchAgent: run llama-server (llama.cpp) at login with performance
-  flags baked in. Replaces the previous Ollama agent — same OpenAI-compatible
-  API on the same port (11434), so clients don't need to change.
+  User LaunchAgent: run llama-server (llama.cpp) in router mode at login.
+  pi's built-in llama.cpp provider talks to it (default URL
+  http://127.0.0.1:8080, no /login needed). Load/unload/download models
+  with /llama, pick them with /model.
 
   Target hardware: MacBook Pro M4 Pro, 48 GB unified memory.
-  Target model:    Qwen3.6 35B-A3B (MoE, ~3B active params) at UD-Q5_K_XL
-                   (~25 GB weights + ~6 GB KV cache at 64K q8_0).
-                   MTP variant: embedded multi-token-prediction head gives
-                   a large decode speedup at identical quality.
 
   Notes:
-    - Deliberately single-model mode (-hf), NOT llama.cpp router mode.
-      pi >= 0.81 has built-in router support (/login llama.cpp, /llama), but
-      it requires --models-dir without -hf, only exposes explicitly loaded
-      models, and registers them with reasoning disabled and no
-      qwen-chat-template compat — a regression for Qwen thinking blocks.
-      The custom "llama-cpp" provider in pi's models.json keeps full
-      reasoning support and doesn't clash with the built-in "llama.cpp" id.
-    - The model is downloaded from Hugging Face on first start and cached
-      under ~/Library/Caches/llama.cpp.
-    - Weights are mmap'd, so macOS can reclaim the memory under pressure;
-      no keep-alive/idle-unload logic is needed.
-    - Web UI available at http://127.0.0.1:11434
+    - Router mode: no -m/-hf. Models come from ~/models (GGUF files;
+      multi-shard/multimodal models in their own subdirectory) and the
+      HF cache under ~/Library/Caches/llama.cpp (/llama downloads land here).
+    - Flags below apply to every model. Per-model overrides: --models-preset.
+    - --models-max 1: one model in memory at a time on 48 GB.
+    - Web UI available at http://127.0.0.1:8080
 
-  Manage with:
-    launchctl load   ~/Library/LaunchAgents/com.joelazar.llama-server.plist
-    launchctl unload ~/Library/LaunchAgents/com.joelazar.llama-server.plist
-    launchctl kickstart -k gui/$(id -u)/com.joelazar.llama-server   # restart
-
-  Logs:
-    tail -f /tmp/com.joelazar.llama-server.out
-    tail -f /tmp/com.joelazar.llama-server.err
--->
-<plist version="1.0">
+  Manage with the fish functions llama-cpp-{start,stop,restart,status,logs}.
+--><plist version="1.0">
 <dict>
     <key>Label</key>
     <string>com.joelazar.llama-server</string>
@@ -43,20 +26,17 @@
     <array>
         <string>/opt/homebrew/bin/llama-server</string>
 
-        <!-- Pull model (and mmproj for vision, if present) from HF. -->
-        <string>-hf</string>
-        <string>unsloth/Qwen3.6-35B-A3B-MTP-GGUF:UD-Q5_K_XL</string>
+        <!-- Router mode: discover GGUFs here (plus the HF cache). -->
+        <string>--models-dir</string>
+        <string>/Users/joelazar/models</string>
+        <string>--models-max</string>
+        <string>1</string>
 
-        <!-- Stable alias exposed via /v1/models, referenced in pi's
-             models.json. -->
-        <string>--alias</string>
-        <string>qwen3.6-35b-a3b</string>
-
-        <!-- Same port Ollama used — drop-in for existing clients. -->
+        <!-- pi's default llama.cpp URL. -->
         <string>--host</string>
         <string>127.0.0.1</string>
         <string>--port</string>
-        <string>11434</string>
+        <string>8080</string>
 
         <!-- 64K context — 32K fills up fast in an agent loop.
              KV cache at 64K q8_0 ≈ ~6 GB, leaves headroom on 48 GB. -->

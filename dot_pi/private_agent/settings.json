@@ -38,13 +38,13 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "lastChangelogVersion": "0.99.2",
+  "lastChangelogVersion": "1.0.0",
   "defaultThinkingLevel": "low",
   "defaultProvider": "anthropic-extra",
   "defaultModel": "claude-opus-5-5",
   "outputPad": 0,
   "showCacheMissNotices": true,
-  "tuiMode": "regular",
+  "tuiMode": "fullscreen",
   "fullscreenCopyOnSelect": false,
   "fullscreenScrollbar": "auto",
   "fullscreenExitOutput": "transcript",
@@ -52,6 +52,6 @@
     "+codemode"
   ],
   "extensions": [
-    "-builtin:llama.cpp"
+    "builtin:llama.cpp"
   ]
 }

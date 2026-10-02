@@ -7,9 +7,9 @@ function llama-cpp-status --description "Show llama-server agent and API status"
         return 1
     end
 
-    set -l health (curl -s --max-time 2 http://127.0.0.1:11434/health)
+    set -l health (curl -s --max-time 2 http://127.0.0.1:8080/health)
     if string match -q '*"ok"*' $health
-        echo "api:   up — "(curl -s --max-time 2 http://127.0.0.1:11434/v1/models | jq -r '.data[].id' | string join ', ')
+        echo "api:   up — "(curl -s --max-time 2 http://127.0.0.1:8080/v1/models | jq -r '.data[].id' | string join ', ')
     else if test -n "$health"
         echo "api:   $health"
     else
