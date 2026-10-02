@@ -132,9 +132,9 @@ alias krm='kubectl delete'
 alias tf='tofu'
 
 # docker
-alias dcleannone='docker rmi (docker images | grep "<none>" | awk \'{print $3}\')'
-alias dstopall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker stop'
-alias dremoveall='docker ps -a | awk \'{print $1}\' | tail -n +2 | xargs docker rm -fv'
+alias dcleannone='docker image prune -f'
+alias dstopall='docker ps -q | xargs docker stop'
+alias dremoveall='docker ps -aq | xargs docker rm -fv'
 
 # git pull++
 alias gcodefaultall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && (git -C {} checkout main || git -C {} checkout master) && echo\''
