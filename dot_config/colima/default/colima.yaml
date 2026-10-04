@@ -150,14 +150,14 @@ forwardAgent: false
 # Colima default behaviour: buildkit enabled
 # Default: {}
 docker:
-  log-driver: json-file
-  log-opts:
-    max-size: "10m"
-    max-file: "3"
   builder:
     gc:
-      enabled: true
       defaultKeepStorage: 20GB
+      enabled: true
+  log-driver: json-file
+  log-opts:
+    max-file: "3"
+    max-size: 10m
 
 # Virtual Machine type (krunkit, qemu, vz)
 # NOTE: this is macOS 13 only. For Linux and macOS <13.0, qemu is always used.
