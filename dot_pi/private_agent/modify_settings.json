@@ -1,3 +1,7 @@
+#!/bin/bash
+# chezmoi modify_: merges managed keys into the live file, keeps pi's runtime state (deviceId, lastChangelogVersion, ...)
+set -euo pipefail
+jq -s --argjson m "$(cat <<'JSON'
 {
   "hideThinkingBlock": true,
   "shellCommandPrefix": "shopt -s expand_aliases\nexport GIT_PAGER=cat PAGER=cat AWS_PAGER=\"\"\nalias python=python3",
@@ -10,7 +14,7 @@
     "pi-claude/claude-opus-5-5",
     "pi-claude/claude-fable-5-1",
     "openrouter/deepseek/deepseek-v4.1-flash",
-    "openai-codex/gpt-6-luna"
+    "openai/gpt-6-luna"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
@@ -38,7 +42,6 @@
   "terminal": {
     "showTerminalProgress": true
   },
-  "lastChangelogVersion": "1.0.2",
   "defaultThinkingLevel": "low",
   "defaultProvider": "anthropic-extra",
   "defaultModel": "claude-opus-5-5",
@@ -55,3 +58,5 @@
     "builtin:llama.cpp"
   ]
 }
+JSON
+)" '(.[0] // {}) * $m'
