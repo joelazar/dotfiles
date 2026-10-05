@@ -16,7 +16,7 @@
     cp       = cherry-pick
     d        = "!git add -AN 2>/dev/null; git diff"
     dc       = diff --cached
-    dn       = "!git add -AN 2>/dev/null; git diff | diffnav"
+    dn       = "!git add -AN 2>/dev/null; nvim -c ':CodeDiff'"
     f        = fetch --prune
     hash     = rev-parse HEAD
     lc       = shortlog --email --numbered --summary --no-merges
@@ -69,7 +69,7 @@
 
 [merge]
 
-    conflictstyle = diff3
+    conflictstyle = zdiff3
     tool = nvim
 
 [color]
@@ -116,10 +116,11 @@
 
 [pager]
 
-    diff = diffnav
     log = delta
     reflog = delta
     show = delta
+    blame = delta
+    grep = delta
 
 [interactive]
 
@@ -131,7 +132,6 @@
 
 [delta]
 
-    dark = true
     features = catppuccin-mocha
     syntax-theme = Catppuccin Mocha
     navigate = true

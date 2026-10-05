@@ -277,8 +277,6 @@ brew "zig"
 brew "zoxide"
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
-# Git diff pager based on delta but with a file tree, à la GitHub
-brew "dlvhdr/formulae/diffnav", trusted: true
 # Sentry command-line tool for error monitoring and debugging
 brew "getsentry/tools/sentry", trusted: true
 # Grafana Cloud CLI

@@ -72,7 +72,7 @@ repoPaths:
   onomondo/*: ~/Code/onomondo/*
   joelazar/*: ~/Code/joelazar/*
 pager:
-  diff: diffnav
+  diff: delta
 showAuthorIcons: true
 smartFilteringAtLaunch: true
 confirmQuit: true

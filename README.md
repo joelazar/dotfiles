@@ -108,8 +108,7 @@ Git tooling is a big part of this repo:
 
 - [Lazygit](https://github.com/jesseduffield/lazygit) config in [`dot_config/lazygit/config.yml`](dot_config/lazygit/config.yml)
 - [gh-dash](https://github.com/dlvhdr/gh-dash) config in [`dot_config/gh-dash/config.yml`](dot_config/gh-dash/config.yml)
-- [gh-repo-man](https://github.com/2kabhishek/gh-repo-man) config in [`dot_config/gh-repo-man/config.yml`](dot_config/gh-repo-man/config.yml)
-- `delta` + `diffnav` for readable diffs
+- `delta` + `codediff.nvim` for readable diffs
 - custom scripts for repo cleanup, submodule updates, and recursive repo management
 
 The Lazygit setup includes custom PR commands, conventional commit helpers, GitHub shortcuts, Catppuccin Mocha styling, and delta-powered diff views.
@@ -189,7 +188,7 @@ Some notable pieces from the current setup:
 - Node globals installed by Homebrew bundle `npm` entries: Pi, `gondolin`, `ccusage`, `npm-check`, and `obsidian-headless`
   - `.chezmoiscripts/run_onchange_rebuild-node-native-modules.sh.tmpl` rebuilds native addons (e.g. `better-sqlite3`) of global npm packages whenever the Node ABI changes
 - UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`), `pgcli` (with Catppuccin styling and `psycopg[binary]`), and `pylatexenc` for inline LaTeX rendering in Neovim
-- GitHub CLI plugins `gh-dash` and `gh-repo-man`
+- GitHub CLI plugin `gh-dash`
 - Herdr plugins: Auto Title (tab/pane titles, configured by `dot_config/herdr-auto-title/config.env`) and `smart-splits.nvim` (linked from the lazy.nvim clone)
 - Yazi plugins `toggle-pane`, `smart-filter`, `diff`, `git`, and `ouch`
 - Casks for the desktop side: Ghostty, Zed, Raycast, AeroSpace, Karabiner-Elements, 1Password, Obsidian, CleanShot, Claude, Codex, Antigravity CLI, and more

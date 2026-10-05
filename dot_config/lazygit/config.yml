@@ -7,9 +7,9 @@ os:
 git:
   diffRenderers:
     - name: delta
-      command: delta --dark --paging=never --no-gitconfig --line-numbers --hunk-header-style=omit --file-modified-label='' --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: delta --paging=never --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
     - name: delta-side-by-side
-      command: delta --dark --paging=never --no-gitconfig --line-numbers --hunk-header-style=omit --file-modified-label='' --side-by-side --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
+      command: delta --paging=never --side-by-side --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   parseEmoji: true
   remoteBranchSortOrder: "alphabetical"
 gui:

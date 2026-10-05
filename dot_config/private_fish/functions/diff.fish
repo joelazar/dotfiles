@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
 
 function diff
-    command diff -u $argv | diffnav
+    nvim $argv[1] $argv[2] +"CodeDiff file $argv[1] $argv[2]"
 end
