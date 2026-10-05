@@ -77,54 +77,50 @@ showAuthorIcons: true
 smartFilteringAtLaunch: true
 confirmQuit: true
 keybindings:
+  # Custom keys are listed in help in this order. Builtins left untouched:
+  # g c C W m t P ctrl+d are builtin, so customs avoid them.
   prs:
-    - key: g
-      name: lazygit
-      command: >
-        cd {{.RepoPath}} && lazygit
-    - key: ctrl+d
-      command: >
-        cd {{.RepoPath}} &&
-        gh pr checkout {{.PrNumber}} &&
-        nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"
-      name: diff in CodeDiff
-    - key: ctrl+t
-      command: >
-        cd {{.RepoPath}} &&
-        tuicr pr {{.PrNumber}} --repo-url https://github.com/{{.RepoName}}
-      name: review with tuicr
-    - key: ctrl+a
-      command: >
-        gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
-      name: approve
-    - key: ctrl+m
-      command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --admin --delete-branch
-      name: merge (admin, squash)
-    - key: n
-      command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --auto --delete-branch
-      name: enable auto merge
-    - key: ctrl+n
-      command: >
-        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
-      name: disable auto merge
-    - key: C
+    # ── Open / tools ─────────────────────────────
+    - key: e
+      name: open in nvim
       command: >
         cd {{.RepoPath}} &&
         gh pr checkout {{.PrNumber}} &&
         nvim
-      name: open in nvim
+    - key: E
+      name: diff in CodeDiff
+      command: >
+        cd {{.RepoPath}} &&
+        gh pr checkout {{.PrNumber}} &&
+        nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"
+    - key: T
+      name: review with tuicr
+      command: >
+        cd {{.RepoPath}} &&
+        tuicr pr {{.PrNumber}} --repo-url https://github.com/{{.RepoName}}
+    - key: ctrl+g
+      name: lazygit
+      command: >
+        cd {{.RepoPath}} && lazygit
+    - key: S
+      name: open shell
+      command: >
+        term-tab '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
     - key: B
       name: copy branch name
       command: >
         printf '%s' '{{.HeadRefName}}' | pbcopy
-    - key: c
-      name: comment
+    # ── Review ───────────────────────────────────
+    - key: ctrl+a
+      name: approve (with comment)
+      command: >
+        gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
+    - key: i
+      name: comment (gum)
       command: >
         gh pr comment --repo {{.RepoName}} {{.PrNumber}}
         --body "$(gum write --placeholder 'Comment (ctrl+d to submit)' --width 80 --height 10)"
-    - key: W
+    - key: D
       name: toggle draft
       command: >
         fish -c '
@@ -137,45 +133,51 @@ keybindings:
         gh pr ready --repo {{.RepoName}} {{.PrNumber}} --undo;
         end
         '
-    - key: m
+    # ── Merge ────────────────────────────────────
+    - key: M
       name: merge (squash)
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --delete-branch
-    - key: S
-      name: open shell
+    - key: alt+m
+      name: merge (admin, squash)
       command: >
-        term-tab '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --admin --delete-branch
+    - key: n
+      name: enable auto merge
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --auto --delete-branch
+    - key: ctrl+n
+      name: disable auto merge
+      command: >
+        gh pr merge --repo {{.RepoName}} {{.PrNumber}} --disable-auto
+    # ── CI ───────────────────────────────────────
     - key: w
       builtin: watchChecks
       name: watch checks
-    - key: t
+    - key: ctrl+r
       name: retrigger workflows
       command: >
         fish -c '
-        echo "Getting PR branch name...";
-        echo gh pr view {{.PrNumber}} --repo {{.RepoName}} --json headRefName --jq ".headRefName";
         set BRANCH (gh pr view {{.PrNumber}} --repo {{.RepoName}} --json headRefName --jq ".headRefName");
         echo "Branch: $BRANCH";
-        echo "Getting latest workflow run ID...";
         set RUN_ID (gh run list --branch $BRANCH --repo {{.RepoName}} --limit 1 --json databaseId --jq ".[0].databaseId");
-        echo "Run ID: $RUN_ID";
-        echo "Retriggering workflow...";
+        echo "Retriggering run $RUN_ID...";
         gh run rerun --repo {{.RepoName}} $RUN_ID;
         echo "Done!"
         '
   issues:
-    - key: g
+    - key: e
+      name: open in nvim
+      command: >
+        cd {{.RepoPath}} && nvim
+    - key: ctrl+g
       name: lazygit
       command: >
         cd {{.RepoPath}} && lazygit
-    - key: C
-      command: >
-        cd {{.RepoPath}} && nvim
-      name: open in nvim
-    - key: P
+    - key: ctrl+p
+      name: pin issue
       command: >
         gh issue pin {{.IssueNumber}} --repo {{.RepoName}}
-      name: pin issue
 theme:
   ui:
     sectionsShowCount: true
