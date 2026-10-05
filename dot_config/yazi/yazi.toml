@@ -3,12 +3,16 @@ ratio = [1, 2, 4]
 sort_by = "natural"
 sort_dir_first = true
 linemode = "size"
+scrolloff = 5
+title_format = "yazi: {cwd}"
 
 [preview]
 wrap = "yes"
 max_width = 1600
 max_height = 1900
 image_quality = 90
+image_filter = "lanczos3"
+image_delay = 30
 
 [which]
 sort_by = "key"
