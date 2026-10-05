@@ -1,0 +1,6 @@
+-o ~/Downloads/%(title)s [%(id)s].%(ext)s
+-f bv*[height<=1080]+ba/b
+--embed-metadata
+--embed-chapters
+--embed-subs
+--sub-langs en.*
