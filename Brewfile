@@ -105,8 +105,6 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
-# GNU implementation of the famous stream editor
-brew "gnu-sed"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
 # GNU grep, egrep and fgrep

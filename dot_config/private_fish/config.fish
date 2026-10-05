@@ -41,8 +41,7 @@ fish_add_path $HOME/.local/share/nvim/mason/bin
 fish_add_path $HOME/.modular/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
-# GNU sed/grep/awk (no uutils equivalent yet) shadow the BSD versions
-fish_add_path --move /opt/homebrew/opt/gnu-sed/libexec/gnubin
+# GNU grep/awk (no uutils equivalent yet) shadow the BSD versions
 fish_add_path --move /opt/homebrew/opt/grep/libexec/gnubin
 fish_add_path --move /opt/homebrew/opt/gawk/libexec/gnubin
 
