@@ -15,10 +15,8 @@ set -gx CURL_HOME $XDG_CONFIG_HOME/curl
 set -gx BROWSER "/Applications/Helium.app/Contents/MacOS/Helium"
 set -gx PAGER "bat --plain"
 set -gx TERMINAL ghostty
-if not set -q ZED_TERM
-    set -gx EDITOR nvim
-    set -gx VISUAL nvim
-end
+set -gx EDITOR nvim
+set -gx VISUAL nvim
 
 # Set nvim as man pager
 set -gx MANPAGER 'nvim +Man!'

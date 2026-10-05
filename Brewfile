@@ -385,8 +385,6 @@ cask "todoist-app"
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
-# Multiplayer code editor
-cask "zed"
 go "cmd/go"
 go "cmd/gofmt"
 cargo "cargo-audit"

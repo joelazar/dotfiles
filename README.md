@@ -22,10 +22,6 @@
 
 ![joedotfiles - zen](https://github.com/user-attachments/assets/bdd31b4c-c3e2-4267-8675-871ec7266585)
 
-### [Zed](https://zed.dev/) 📝
-
-![joedotfiles - zed](https://github.com/user-attachments/assets/7b08edeb-661a-4548-bfab-18ffc43b273e)
-
 ---
 
 ## Overview 🧰
@@ -49,7 +45,7 @@ A few quick facts:
 
 | Path                                               | What it contains                                                                                                                   |
 | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| [`dot_config/`](dot_config/)                       | App and CLI configuration for tools like Fish, Ghostty, Zed, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
+| [`dot_config/`](dot_config/)                       | App and CLI configuration for tools like Fish, Ghostty, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
 | [`dot_pi/`](dot_pi/)                               | Pi agent configuration, prompts, themes, skills, and extension config                                                              |
 | [`dot_claude/`](dot_claude/)                       | Claude Code configuration                                                                                                          |
 | [`dot_ipython/`](dot_ipython/)                     | IPython profile config                                                                                                             |
@@ -78,16 +74,7 @@ The terminal is [Ghostty](https://ghostty.org/), configured in [`dot_config/ghos
 
 ### Editors ✍️
 
-I mostly use [Zed](https://zed.dev/) and Neovim.
-
-Zed is configured in [`dot_config/zed/`](dot_config/zed/) with:
-
-- Vim mode and which-key hints
-- custom pane and tab navigation
-- tuned git panel and inline blame
-- Television-powered file and text search tasks
-- Yazi and Lazygit tasks wired into the editor
-- AI assistant defaults for day-to-day coding work
+I mostly use Neovim.
 
 Neovim lives in a separate repo: [joelazar/nvim-config](https://github.com/joelazar/nvim-config). [`run_onchange_before_clone-repos.sh.tmpl`](.chezmoiscripts/run_onchange_before_clone-repos.sh.tmpl) clones it to `~/Code/joelazar/nvim-config`, and chezmoi symlinks `~/.config/nvim` to that checkout.
 
@@ -191,7 +178,7 @@ Some notable pieces from the current setup:
 - GitHub CLI plugin `gh-dash`
 - Herdr plugins: Auto Title (tab/pane titles, configured by `dot_config/herdr-auto-title/config.env`) and `smart-splits.nvim` (linked from the lazy.nvim clone)
 - Yazi plugins `toggle-pane`, `smart-filter`, `diff`, `git`, and `ouch`
-- Casks for the desktop side: Ghostty, Zed, Raycast, AeroSpace, Karabiner-Elements, 1Password, Obsidian, CleanShot, Claude, Codex, Antigravity CLI, and more
+- Casks for the desktop side: Ghostty, Raycast, AeroSpace, Karabiner-Elements, 1Password, Obsidian, CleanShot, Claude, Codex, Antigravity CLI, and more
 
 ---
 
@@ -296,7 +283,7 @@ The restic scripts share [`private_dot_local/lib/restic-common.sh`](private_dot_
 
 ## Theming 🎨
 
-Catppuccin Mocha is the common thread through most of the environment: Ghostty, Tmux, Fish, Yazi, Television, Lazygit, Bat, Btop, Starship, Atuin, Eza, Delta, Fzf, Gh-Dash, K9s, and Zed all use it in one form or another.
+Catppuccin Mocha is the common thread through most of the environment: Ghostty, Tmux, Fish, Yazi, Television, Lazygit, Bat, Btop, Starship, Atuin, Eza, Delta, Fzf, Gh-Dash, and K9s all use it in one form or another.
 
 Fonts are centered on Maple Mono and Maple Mono NF, including OpenType alternates like `cv02`, `cv05`, `cv61`, and `cv63`.
 
