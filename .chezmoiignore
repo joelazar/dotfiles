@@ -17,3 +17,4 @@ bootstrap.sh
 .pi/agent/auth.json
 .pi/agent/pi-fff/
 .git
+.editorconfig
