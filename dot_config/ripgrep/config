@@ -4,9 +4,14 @@
 
 # Make search case insensitive, unless an uppercase letter is used.
 --smart-case
+--hidden
 --glob=!.git/
 --glob=!package-lock.json
 --glob=!yarn.lock
+--glob=!pnpm-lock.yaml
+--glob=!Cargo.lock
+--glob=!go.sum
+--glob=!*.min.js
 
 # Catppuccin Mocha colors
 # mauve=#cba6f7(203,166,247) blue=#89b4fa(137,180,250)
@@ -16,4 +21,5 @@
 --colors=line:fg:249,226,175
 --colors=column:fg:166,227,161
 --colors=match:fg:203,166,247
+--colors=match:bg:69,71,90
 --colors=match:style:bold
