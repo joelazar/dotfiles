@@ -177,7 +177,7 @@ Some notable pieces from the current setup:
 - UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`), `pgcli` (with Catppuccin styling and `psycopg[binary]`), and `pylatexenc` for inline LaTeX rendering in Neovim
 - GitHub CLI plugin `gh-dash`
 - Herdr plugins: Auto Title (tab/pane titles, configured by `dot_config/herdr-auto-title/config.env`) and `smart-splits.nvim` (linked from the lazy.nvim clone)
-- Yazi plugins `toggle-pane`, `smart-filter`, `diff`, `git`, and `ouch`
+- Yazi plugins `toggle-pane`, `smart-filter`, `diff`, `git`, `ouch`, `smart-enter`, and `fr`
 - Casks for the desktop side: Ghostty, Raycast, AeroSpace, Karabiner-Elements, 1Password, Obsidian, CleanShot, Claude, Codex, Antigravity CLI, and more
 
 ---

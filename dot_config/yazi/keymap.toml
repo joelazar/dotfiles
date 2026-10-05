@@ -74,3 +74,23 @@ run = [
   "refresh",
 ]
 desc = "Rotate selected images counter-clockwise"
+
+[[mgr.prepend_keymap]]
+on = ["l"]
+run = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[mgr.prepend_keymap]]
+on = ["<Enter>"]
+run = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[mgr.prepend_keymap]]
+on = ["f", "r"]
+run = "plugin fr rg"
+desc = "Search file by content (rg)"
+
+[[mgr.prepend_keymap]]
+on = ["f", "a"]
+run = "plugin fr rga"
+desc = "Search file by content (rga)"
