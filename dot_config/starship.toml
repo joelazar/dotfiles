@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+command_timeout = 1000
 add_newline = false
 palette = "catppuccin_mocha"
 
@@ -49,6 +51,19 @@ disabled = false
 
 [cmd_duration]
 disabled = false
+min_time = 5000
+
+[status]
+disabled = false
+symbol = "✘ "
+map_symbol = true
+
+[git_branch]
+style = "bold mauve"
+
+[character]
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
 
 [docker_context]
 disabled = true
