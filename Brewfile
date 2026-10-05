@@ -117,8 +117,6 @@ brew "gum"
 brew "helm"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
-# Improved top (interactive process viewer)
-brew "htop"
 # Configurable static site generator
 brew "hugo"
 # Tools and libraries to manipulate images in select formats
