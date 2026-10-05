@@ -1,24 +1,43 @@
 {
   "cli": {
-    "enabled": ["pi", "claude", "agy"],
+    "enabled": [
+      "pi",
+      "claude",
+      "agy"
+    ],
     "autoFallback": {
       "enabled": true,
       "onlyWhenNoApiKeys": true,
-      "order": ["pi", "claude", "agy"]
+      "order": [
+        "pi",
+        "claude",
+        "agy"
+      ]
     },
-    "codex": { "model": "gpt-5.6-luna" },
-    "gemini": { "model": "flash", "extraArgs": ["--verbose"] },
+    "codex": {
+      "model": "gpt-6-luna"
+    },
+    "gemini": {
+      "model": "flash",
+      "extraArgs": [
+        "--verbose"
+      ]
+    },
     "claude": {
       "model": "sonnet",
       "binary": "/usr/local/bin/claude",
-      "extraArgs": ["--verbose"]
+      "extraArgs": [
+        "--verbose"
+      ]
     },
     "agy": {
       "binary": "/usr/local/bin/agy"
     },
     "pi": {
       "binary": "/usr/local/bin/pi",
-      "extraArgs": ["--provider anthropic-extra --model claude-sonnet-5"]
+      "extraArgs": [
+        "--provider anthropic-extra --model claude-sonnet-5"
+      ]
     }
   }
 }
