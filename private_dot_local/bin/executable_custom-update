@@ -15,18 +15,6 @@ end try
 APPLESCRIPT
 }
 
-execute "fish -c 'fish_update_completions'" "Update fish completions"
-
-execute "ai-update" "Update AI tools"
-
-execute "tv update-channels" "Update Television channels"
-
-if command -v save-to-spotify >/dev/null 2>&1; then
-    execute "save-to-spotify update" "Update save-to-spotify CLI"
-fi
-
-execute "brew cleanup" "Cleanup brew"
-
 update_mason() {
     local script
     script=$(mktemp -t mason-update.XXXXXX.lua)
