@@ -5,6 +5,9 @@
     # Specify the username of the author/committer.
     name = "{{ .name }}"
 
+    # Sign commits and tags with the SSH key.
+    signingkey = ~/.ssh/id_ed25519.pub
+
 [alias]
 
     a        = commit --amend --no-edit
@@ -65,7 +68,16 @@
 
 [commit]
 
+    gpgsign = true
     verbose = true
+
+[tag]
+
+    gpgsign = true
+
+[gpg]
+
+    format = ssh
 
 [merge]
 
