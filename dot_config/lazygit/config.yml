@@ -12,12 +12,14 @@ git:
       command: delta --paging=never --side-by-side --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
   parseEmoji: true
   remoteBranchSortOrder: "alphabetical"
+  autoForwardBranches: "allBranches"
 gui:
   sidePanelWidth: 0.25
+  shrinkSidePanelsToContent: false
   scrollOffMargin: 5
   filterMode: "fuzzy"
   switchTabsWithPanelJumpKeys: true
-  useHunkModeInStagingView: true
+  useHunkModeInDiffView: true
   skipDiscardChangeWarning: true
   showCommandLog: false
   showDivergenceFromBaseBranch: "arrowAndNumber"
@@ -56,8 +58,8 @@ gui:
       - "#f38ba8"
     defaultFgColor:
       - "#cdd6f4"
-  authorColors:
-    "*": "#b4befe"
+    authorColors:
+      "*": "#b4befe"
 update:
   method: never
 keybinding:
@@ -66,7 +68,7 @@ keybinding:
     scrollDownMain-alt2: <ctrl+f>
     scrollUpMain-alt2: <ctrl+b>
 customCommands:
-  - key: "<c-n>"
+  - key: "<ctrl+n>"
     description: "New branch with prefix"
     prompts:
       - type: "menu"
@@ -93,7 +95,7 @@ customCommands:
     command: "git checkout -b {{index .PromptResponses 0}}/{{index .PromptResponses 1}}"
     context: "localBranches"
     loadingText: "Creating branch"
-  - key: "<c-r>"
+  - key: "<ctrl+r>"
     description: "Create pull request on GitHub"
     context: files, localBranches
     command: "pr-create"
@@ -114,23 +116,18 @@ customCommands:
     context: "localBranches"
     description: "Copy PR URL to clipboard"
     loadingText: "Copying PR URL to clipboard ..."
-  - key: "<c-p>"
+  - key: "<ctrl+p>"
     command: >-
-      bash -c 'git for-each-ref --format "%(refname:short) %(upstream:track) %(worktreepath)" refs/heads
-      | awk "\$2 == \"[gone]\" {print \$1, \$3}"
-      | while read -r branch path; do
-      [ -n "$path" ] && git worktree remove --force "$path";
-      git branch -D "$branch";
-      done'
+      bash -c 'git for-each-ref --format "%(refname:short) %(upstream:track) %(worktreepath)" refs/heads | awk "\$2 == \"[gone]\" {print \$1, \$3}" | while read -r branch path; do [ -n "$path" ] && git worktree remove --force "$path"; git branch -D "$branch"; done'
     context: "localBranches"
     loadingText: "Pruning..."
     description: "Prune local branches whose upstream is gone"
-  - key: "<c-p>"
+  - key: "<ctrl+p>"
     command: "git remote prune {{.SelectedRemote.Name}}"
     context: "remotes"
     description: "Prune deleted remote branches"
     loadingText: "Pruning..."
-  - key: "<c-v>"
+  - key: "<ctrl+v>"
     context: "global"
     description: "Create new conventional commit"
     prompts:
@@ -207,19 +204,19 @@ customCommands:
     command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
     loadingText: "Creating conventional commit..."
   # mirrors pi's ctrl+shift+c / ctrl+shift+a (terminals can't send ctrl+shift+<letter>)
-  - key: "<c-c>"
+  - key: "<ctrl+c>"
     command: "pi -p --no-session '/commit'"
     context: "files"
     description: "AI commit with pi"
     output: log
   # /atomic-commit needs the interactive agent loop (it drives git via tools),
   # so it can't run in headless `-p` mode like /commit
-  - key: "<c-a>"
+  - key: "<ctrl+a>"
     command: "pi '/atomic-commit'"
     context: "files"
     description: "AI atomic commits with pi"
     output: terminal
-  - key: "<c-g>"
+  - key: "<ctrl+g>"
     command: "gitmoji -c"
     context: "files"
     description: "Open gitmoji"
@@ -232,40 +229,42 @@ customCommands:
     command: "git difftool -y {{.SelectedLocalCommit.Sha}} -- {{.SelectedCommitFile.Name}}"
     context: "commitFiles"
     description: "Compare (difftool) with local copy"
-  - key: "<c-d>"
+  - key: "<ctrl+d>"
     command: "nvim -c ':CodeDiff'"
     context: "files"
     description: "View working tree diff in CodeDiff"
     output: terminal
-  - key: "<c-d>"
+  - key: "<ctrl+d>"
     command: "nvim -c ':CodeDiff {{.SelectedLocalCommit.Sha}}~ {{.SelectedLocalCommit.Sha}}'"
     context: "commits"
     description: "View commit diff in CodeDiff"
     output: terminal
-  - key: "<c-d>"
+  - key: "<ctrl+d>"
     command: "nvim -c ':CodeDiff {{.SelectedLocalBranch.Name}}'"
     context: "localBranches"
     description: "View branch diff in CodeDiff"
     output: terminal
-  - key: "<c-t>"
+  - key: "<ctrl+t>"
     command: "tuicr -w"
     context: "files"
     description: "Review working tree in tuicr"
     output: terminal
-  - key: "<c-t>"
+  - key: "<ctrl+t>"
     command: "tuicr -r {{.SelectedLocalCommit.Sha}}"
     context: "commits"
     description: "Review commit in tuicr"
     output: terminal
-  - key: "<c-t>"
+  - key: "<ctrl+t>"
     command: >
-      set pr (gh pr view {{.SelectedLocalBranch.Name}} --json number --jq .number 2>/dev/null);
-      if test -n "$pr";
+      set pr (gh pr view {{.SelectedLocalBranch.Name}} --json number --jq .number 2>/dev/null); if test -n "$pr";
+
         tuicr pr "$pr";
       else;
+
         set base (git merge-base (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null; or echo origin/main) {{.SelectedLocalBranch.Name}});
         tuicr -r "$base..{{.SelectedLocalBranch.Name}}";
       end
+
     context: "localBranches"
     description: "Review branch in tuicr (PR if one exists)"
     output: terminal
