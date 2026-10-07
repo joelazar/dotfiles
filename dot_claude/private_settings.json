@@ -114,6 +114,18 @@
   "fallbackModel": [
     "sonnet"
   ],
+  "skillOverrides": {
+    "bro": "off",
+    "excalidraw-diagram": "off",
+    "explain-diff-html": "off",
+    "grilling": "off",
+    "humanizer": "off",
+    "improve-codebase-architecture": "off",
+    "pdf": "off",
+    "save-to-spotify": "off",
+    "web-research": "off",
+    "writing-for-agents": "off"
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -150,20 +162,7 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "code-review@claude-plugins-official": false,
-    "code-simplifier@claude-plugins-official": false
-  },
-  "skillOverrides": {
-    "bro": "off",
-    "excalidraw-diagram": "off",
-    "explain-diff-html": "off",
-    "grilling": "off",
-    "humanizer": "off",
-    "improve-codebase-architecture": "off",
-    "pdf": "off",
-    "save-to-spotify": "off",
-    "web-research": "off",
-    "writing-for-agents": "off"
+    "cc-plugin-you-should-know@builtin": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
