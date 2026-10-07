@@ -111,6 +111,8 @@ brew "gum"
 brew "helm"
 # Agent multiplexer that lives in your terminal
 brew "herdr"
+# Improved top (interactive process viewer)
+brew "htop"
 # Configurable static site generator
 brew "hugo"
 # Tools and libraries to manipulate images in select formats
@@ -281,7 +283,7 @@ brew "mike-engel/jwt-cli/jwt-cli", trusted: true
 brew "nats-io/nats-tools/nats"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
-# CLI tool for linear.app that uses git branch names and directory names to open issues and team pages
+# Work with Linear issues, projects and teams from the command line
 brew "schpet/tap/linear", trusted: true
 # Password manager that keeps all passwords secure behind one password
 cask "1password"
