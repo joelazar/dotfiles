@@ -87,8 +87,6 @@ brew "fish"
 brew "fisher"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# GNU awk utility
-brew "gawk"
 # GNU compiler collection
 brew "gcc"
 # GitHub command-line tool
@@ -107,8 +105,6 @@ brew "git-lfs"
 brew "git-standup"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
-# GNU grep, egrep and fgrep
-brew "grep"
 # Tool for glamorous shell scripts
 brew "gum"
 # Kubernetes package manager
@@ -243,12 +239,6 @@ brew "tree"
 brew "tree-sitter-cli"
 # Command-line unarchiving tools supporting multiple formats
 brew "unar"
-# Cross-platform Rust rewrite of the GNU coreutils
-brew "uutils-coreutils"
-# Cross-platform Rust rewrite of the GNU diffutils
-brew "uutils-diffutils"
-# Cross-platform Rust rewrite of the GNU findutils
-brew "uutils-findutils"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Your CLI home video recorder
