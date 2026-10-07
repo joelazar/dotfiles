@@ -13,17 +13,8 @@ Always apply changed targets after editing, edits in this source directory have 
 
 This repo root is the chezmoi source directory.
 
-- `dot_*` → `~/.*`, `private_*` → sensitive files, `.tmpl` → Go text/template (variables: `{{ .email }}`, `{{ .name }}`, `{{ .workEmail }}`, `{{ .workName }}`, `{{ .chezmoi.sourceDir }}`)
-- `.chezmoiscripts/` — `run_once_*`/`run_onchange_*` setup scripts
-- `scripts/` — shared shell utilities, not deployed
-- `Brewfile` — Homebrew packages, casks, and npm globals
-
 ## Shell scripts
 
 - Bash with error handling and descriptive function names
 - Source `scripts/utils` for color/style helpers; use `gum` for prompts and spinners, with plain fallbacks
 - Validate with `bash -n` and `shellcheck` before finishing
-
-## CI
-
-`.github/workflows/chezmoi.yml` applies and verifies all three machine types and lints scripts.

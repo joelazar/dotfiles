@@ -126,17 +126,6 @@
         ]
       }
     ],
-    "SubagentStart": [
-      {
-        "matcher": "tldraw-offline",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "sh '/Users/joelazar/skills/tldraw-offline/inject-server-context.sh' SubagentStart"
-          }
-        ]
-      }
-    ],
     "SessionStart": [
       {
         "matcher": "^(startup|resume|clear|compact|fork)$",
@@ -161,8 +150,20 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-review@claude-plugins-official": false,
+    "code-simplifier@claude-plugins-official": false
+  },
+  "skillOverrides": {
+    "bro": "off",
+    "excalidraw-diagram": "off",
+    "explain-diff-html": "off",
+    "grilling": "off",
+    "humanizer": "off",
+    "improve-codebase-architecture": "off",
+    "pdf": "off",
+    "save-to-spotify": "off",
+    "web-research": "off",
+    "writing-for-agents": "off"
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
