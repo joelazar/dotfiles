@@ -9,7 +9,7 @@
   Target hardware: MacBook Pro M4 Pro, 48 GB unified memory.
 
   Notes:
-    - Router mode: no -m/-hf. Models come from ~/models (GGUF files;
+    - Router mode: no -m/-hf. Models come from ~/Models (GGUF files;
       multi-shard/multimodal models in their own subdirectory) and the
       HF cache under ~/Library/Caches/llama.cpp (/llama downloads land here).
     - Flags below apply to every model. Per-model overrides: --models-preset.
@@ -28,20 +28,20 @@
 
         <!-- Router mode: discover GGUFs here (plus the HF cache). -->
         <string>--models-dir</string>
-        <string>/Users/joelazar/models</string>
+        <string>/Users/joelazar/Models</string>
         <string>--models-max</string>
         <string>1</string>
+
+        <!-- Context size lives here, not below: CLI flags beat presets,
+             so per-model overrides only work for flags left off the CLI. -->
+        <string>--models-preset</string>
+        <string>/Users/joelazar/.config/llama.cpp/presets.ini</string>
 
         <!-- pi's default llama.cpp URL. -->
         <string>--host</string>
         <string>127.0.0.1</string>
         <string>--port</string>
         <string>8080</string>
-
-        <!-- 64K context — 32K fills up fast in an agent loop.
-             KV cache at 64K q8_0 ≈ ~6 GB, leaves headroom on 48 GB. -->
-        <string>-c</string>
-        <string>65536</string>
 
         <!-- Flash attention: required for KV cache quantization, pure win
              on Metal. -->
