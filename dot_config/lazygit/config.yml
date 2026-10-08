@@ -13,6 +13,8 @@ git:
   parseEmoji: true
   remoteBranchSortOrder: "alphabetical"
   autoForwardBranches: "allBranches"
+  # gpg-agent caches the passphrase, so lazygit can sign without prompting
+  overrideGpg: true
 gui:
   sidePanelWidth: 0.25
   shrinkSidePanelsToContent: false

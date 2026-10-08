@@ -56,6 +56,10 @@ jq -s --argjson m "$(cat <<'JSON'
   "defaultTools": [
     "+codemode"
   ],
+  "codemode": {
+    "mode": "only",
+    "inlineBudget": 6000
+  },
   "extensions": [
     "builtin:llama.cpp"
   ]
