@@ -9,8 +9,10 @@ jq -s --argjson m "$(cat <<'JSON'
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
   "enabledModels": [
-    "anthropic-extra/claude-opus-5-5",
-    "anthropic-extra/claude-fable-5-1",
+    "anthropic/claude-haiku-5-5",
+    "anthropic/claude-sonnet-5-5",
+    "anthropic/claude-opus-5-5",
+    "anthropic/claude-fable-5-1",
     "pi-claude/claude-opus-5-5",
     "pi-claude/claude-fable-5-1",
     "openrouter/deepseek/deepseek-v4.1-flash",
@@ -43,7 +45,7 @@ jq -s --argjson m "$(cat <<'JSON'
     "showTerminalProgress": true
   },
   "defaultThinkingLevel": "low",
-  "defaultProvider": "anthropic-extra",
+  "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-5-5",
   "outputPad": 0,
   "showCacheMissNotices": true,

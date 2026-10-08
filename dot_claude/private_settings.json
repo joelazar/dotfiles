@@ -116,7 +116,6 @@
   ],
   "skillOverrides": {
     "bro": "off",
-    "excalidraw-diagram": "off",
     "explain-diff-html": "off",
     "grilling": "off",
     "humanizer": "off",
@@ -162,7 +161,8 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "cc-plugin-you-should-know@builtin": true
+    "cc-plugin-you-should-know@builtin": true,
+    "cowork-plugin-management@synced": false
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {

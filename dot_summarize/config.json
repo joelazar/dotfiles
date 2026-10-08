@@ -36,7 +36,7 @@
     "pi": {
       "binary": "/usr/local/bin/pi",
       "extraArgs": [
-        "--provider anthropic-extra --model claude-sonnet-5"
+        "--provider anthropic --model claude-sonnet-5"
       ]
     }
   }
