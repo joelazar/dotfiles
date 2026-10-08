@@ -7,7 +7,8 @@
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_FEEDBACK_COMMAND": "1",
     "DISABLE_AUTOUPDATER": "1",
-    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1"
+    "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5"
   },
   "attribution": {
     "commit": "",
