@@ -322,27 +322,28 @@ normalize_yn() {
 
 generate_pr_description() {
     local body_file=$1
-    local prompt_file
-    prompt_file=$(mktemp)
-    temp_files+=("$prompt_file")
+    local prompt
+    prompt=$(
+        cat <<'EOF'
+Write the GitHub pull request body for the current branch.
 
-    cat >"$prompt_file" <<'EOF'
-Use the humanizer skill's audit loop internally to self-check the prose, then return ONLY the final result. Do not output the draft, the "still-AI" bullets, or any summary of changes — output only the final PR body, nothing else.
-
-Generate a short GitHub pull request description for the current branch.
+Read the pr skill and follow its template: ## Summary, ## Evidence, ## Merge Danger.
+Then apply the unslop skill to the prose internally. Output only the final body.
 
 Requirements:
-- Concise and natural.
-- Summarize actual code/config changes in this PR.
-- Start directly with the bullets. No summary or intro sentence; the title is a separate field.
-- Prefer 2-4 bullets.
+- Summary: pick the smallest visual (diff-sketch, call tree, file tree, pseudocode, or mermaid) that shows the change. One or two short lines of text at most.
+- Evidence: do not run tests or builds. Use tests added or changed in the branch, shown as pseudocode of the case that failed before and passes after. If the branch adds or changes no tests, omit the whole ## Evidence section. Never invent output.
+- Merge Danger: judge door and blast radius from the branch diff only.
 - Do not invent details.
 - Do not include Linear ticket lines.
-- Output only the final PR description body.
-EOF
 
-    local prompt
-    prompt=$(cat "$prompt_file")
+Output rules (strict):
+- Output ONLY the raw PR description body as plain markdown.
+- Do NOT include any preamble, closing remarks, or sign-offs.
+- Do NOT wrap the body in code fences, blockquotes, or horizontal rules (---).
+- Do NOT add a title/heading line.
+EOF
+    )
     local models=(anthropic/claude-opus-5-5)
     local model
     for model in "${models[@]}"; do
