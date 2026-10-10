@@ -116,7 +116,7 @@ keybind = super+left=text:\x1b[H
 keybind = super+right=text:\x1b[F
 keybind = alt+left=unbind
 keybind = alt+right=unbind
-keybind = shift+enter=text:\n
+keybind = shift+enter=csi:13;2u
 keybind = ctrl+enter=text:\x1b[13;5u
 # cmd+p -> ctrl+p
 keybind = super+p=text:\x10
