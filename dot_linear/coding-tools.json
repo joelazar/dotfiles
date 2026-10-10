@@ -1,0 +1,13 @@
+{
+  "openIssue": {
+    "path": "/Users/joelazar/.local/bin/linear-pi",
+    "args": [
+      "{{workDir}}",
+      "{{issue.branchName}}",
+      "{{issue.identifier}}"
+    ],
+    "env": [
+      "LINEAR_PROMPT"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# Linear "Work on issue → Custom script" handler: open the issue in a Herdr
+# workspace and start pi with Linear's prompt.
+# Git repo: worktree via `gwt <branch>`. Otherwise: workDir as-is.
+# Wired up in ~/.linear/coding-tools.json.
+#
+# Usage: linear-pi <workDir> <branch> <identifier>   (prompt via LINEAR_PROMPT)
+set -euo pipefail
+
+export PATH="/opt/homebrew/bin:$HOME/.local/bin:$PATH"
+LOG="${TMPDIR:-/tmp}/linear-pi.log"
+exec 2>>"$LOG"
+
+die() {
+    printf 'linear-pi: %s\n' "$1" >&2
+    osascript -e "display notification \"$1\" with title \"linear-pi\"" >/dev/null 2>&1 || true
+    exit 1
+}
+
+# Focus the workspace labelled <label>, or create it in <dir>.
+# Prints "new <pane_id>" or "existing".
+open_workspace() {
+    local dir="$1" label="$2" list existing out
+    list="$(herdr workspace list)" || die "herdr workspace list failed"
+    existing="$(jq -r --arg l "$label" '.result.workspaces[] | select(.label == $l) | .workspace_id' <<<"$list" | head -n1)"
+    if [[ -n $existing ]]; then
+        herdr workspace focus "$existing" >/dev/null
+        echo existing
+        return
+    fi
+    out="$(herdr workspace create --cwd "$dir" --label "$label" --focus 2>&1)" ||
+        die "herdr workspace create failed: $out"
+    printf 'new %s\n' "$(jq -r '.result.root_pane.pane_id // empty' <<<"$out")"
+}
+
+start_pi() {
+    local pane="$1" id="$2" name
+    name="$(tr '[:upper:]' '[:lower:]' <<<"$id" | tr -c 'a-z0-9_-\n' '-' | cut -c1-32)"
+    [[ $name == [a-z]* ]] || name="l$name"
+    # The fresh shell drops keystrokes until its prompt is drawn.
+    herdr pane wait-output "$pane" --match "❯" --timeout 15000 >/dev/null ||
+        die "shell prompt never appeared in $pane"
+    herdr agent start "$name" --kind pi --pane "$pane" -- "${LINEAR_PROMPT:-Work on Linear issue $id}" >/dev/null ||
+        die "pi failed to start in $pane"
+}
+
+main() {
+    [[ $# -eq 3 ]] || die "usage: linear-pi <workDir> <branch> <identifier>"
+    local dir="${1/#\~/$HOME}" branch="$2" id="$3"
+    [[ -d $dir ]] || die "not a directory: $dir"
+
+    if git -C "$dir" rev-parse --git-dir >/dev/null 2>&1; then
+        dir="$(cd "$dir" && gwt "$branch" 2>&1)" || die "gwt failed: $dir"
+    fi
+
+    local state pane
+    read -r state pane < <(open_workspace "$dir" "$id")
+    if [[ $state == new && -n $pane ]]; then
+        start_pi "$pane" "$id"
+    fi
+
+    open -a Ghostty
+}
+
+main "$@"
