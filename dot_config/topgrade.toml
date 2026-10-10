@@ -4,7 +4,7 @@ pre_sudo = true
 assume_yes = true
 no_retry = true
 cleanup = true
-disable = ["chezmoi", "containers", "pnpm", "helm"]
+disable = ["chezmoi", "containers", "pnpm", "helm", "antigravity_cli"]
 ignore_failures = ["git_repos"]
 
 # Run in listed order; "Custom update script" stays last (it ends with interactive prompts)
