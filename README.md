@@ -266,7 +266,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | [`kokoro`](private_dot_local/bin/executable_kokoro)                               | Local text-to-speech via the Kokoro ONNX model                            |
 | [`listen-later`](private_dot_local/bin/executable_listen-later)                   | Turns an article, file, or text into a Kokoro-narrated Spotify episode    |
 | [`pi`](private_dot_local/bin/executable_pi)                                       | Runs the Pi agent CLI through the mise-managed Node 26 runtime            |
-| [`pr-create`](private_dot_local/bin/executable_pr-create)                         | Creates pull requests with a guided interactive prompt                    |
+| [`pr-create`](private_dot_local/bin/executable_pr-create)                         | Creates pull requests: fills in every field, then shows a review screen   |
 | [`restic-backup`](private_dot_local/bin/executable_restic-backup)                 | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic |
 | [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)             | Prunes old snapshots from the restic backup repo                          |
 | [`restic-mount`](private_dot_local/bin/executable_restic-mount)                   | Mounts the restic repo to browse and copy files                           |
