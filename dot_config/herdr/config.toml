@@ -147,6 +147,14 @@ mouse_capture = true
 
 agent_panel_sort = "spaces"
 status_indicators = "symbols"
+
+# Second row: what the active tab is doing, reported by herdr.auto-title.
+[ui.sidebar.spaces]
+rows = [
+  ["state_icon", "workspace", "branch", "git_status"],
+  [{ token = "$topic", bold = true, dim = false }],
+]
+
 [ui.toast]
 delivery = "off"
 delay_seconds = 1
