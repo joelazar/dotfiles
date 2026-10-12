@@ -40,7 +40,8 @@ cycle_pane_next = "prefix+tab"
 cycle_pane_previous = "prefix+shift+tab"
 
 # Tabs (tmux windows)
-new_tab = ["prefix+c", "ctrl+alt+c"]
+# new_tab is replaced by herdr-new-tab-adjacent (see [[keys.command]] below)
+new_tab = []
 next_tab = ["prefix+n", "ctrl+alt+]"]
 previous_tab = ["prefix+p", "ctrl+alt+["]
 rename_tab = "prefix+shift+t"
@@ -116,6 +117,19 @@ key = "alt+shift+down"
 type = "shell"
 command = "$HOME/.local/bin/herdr-move-workspace down"
 description = "move workspace down"
+
+# New tab right after the focused one (built-in new_tab always appends)
+[[keys.command]]
+key = "prefix+c"
+type = "shell"
+command = "$HOME/.local/bin/herdr-new-tab-adjacent"
+description = "new tab next to current"
+
+[[keys.command]]
+key = "ctrl+alt+c"
+type = "shell"
+command = "$HOME/.local/bin/herdr-new-tab-adjacent"
+description = "new tab next to current"
 
 # lazygit (temporary zoomed pane; popups are modal and swallow the prefix)
 [[keys.command]]
