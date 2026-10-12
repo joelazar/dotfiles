@@ -191,7 +191,7 @@ prompt_menu() {
     local title=$1 choice
     shift
     if has_gum; then
-        choice=$(gum choose --header "$title" "$@") || check_cancelled $?
+        choice=$(gum choose --header "$title" --cursor "❯ " --header.foreground "#cba6f7" --header.bold --cursor.foreground "#f5c2e7" "$@") || check_cancelled $?
     else
         select choice in "$@"; do
             [[ -n "$choice" ]] && break
@@ -584,6 +584,9 @@ push_status() {
 
 show_body() {
     [[ -s "$body_file" ]] || return 0
+    if has_gum; then
+        gum style --foreground "#cba6f7" --bold --margin "1 0 0 0" "── PR body ──────────────────────────────" >&2
+    fi
     if command -v glow >/dev/null 2>&1; then
         glow -w 100 "$body_file" >&2
     elif has_gum; then
@@ -598,17 +601,18 @@ show_summary() {
     [[ -s "$body_file" ]] && body_info="$(wc -l <"$body_file" | tr -d ' ') lines, $body_source"
     reviewers=$(reviewers_csv)
     linear=$(printf '%s\n' "${linear_links[@]:-}" | paste -sd, - | sed 's/,/, /g')
+    local k=$'\e[1;38;2;137;180;250m' r=$'\e[0m'
     local lines=(
-        "Title      ${title:-(missing)}"
-        "Base       ${base:-$default_base (default)}"
-        "Draft      $draft"
-        "Reviewers  ${reviewers:-none}"
-        "Linear     ${linear:-none}"
-        "Body       $body_info"
-        "Push       $push ($(push_status))"
+        "${k}Title${r}      ${title:-(missing)}"
+        "${k}Base${r}       ${base:-$default_base (default)}"
+        "${k}Draft${r}      $draft"
+        "${k}Reviewers${r}  ${reviewers:-none}"
+        "${k}Linear${r}     ${linear:-none}"
+        "${k}Body${r}       $body_info"
+        "${k}Push${r}       $push ($(push_status))"
     )
     if has_gum; then
-        gum style --border rounded --padding "0 1" "${lines[@]}" >&2
+        gum style --border rounded --border-foreground "#cba6f7" --padding "0 1" --margin "1 0" "${lines[@]}" >&2
     else
         printf '%s\n' "${lines[@]}" >&2
     fi
