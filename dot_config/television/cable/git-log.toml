@@ -20,15 +20,15 @@ ctrl-o = "actions:checkout"
 
 [actions.cherry-pick]
 description = "Cherry-pick the selected commit"
-command = "git cherry-pick '{strip_ansi|split: :1}'"
+command = "begin; git cherry-pick '{strip_ansi|split: :1}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.revert]
 description = "Revert the selected commit"
-command = "git revert '{strip_ansi|split: :1}'"
+command = "begin; git revert '{strip_ansi|split: :1}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.checkout]
 description = "Checkout the selected commit"
-command = "git checkout '{strip_ansi|split: :1}'"
+command = "begin; git checkout '{strip_ansi|split: :1}'; end >&2; echo >&2"
 mode = "execute"

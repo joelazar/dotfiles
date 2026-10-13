@@ -14,5 +14,5 @@ enter = "actions:run"
 
 [actions.run]
 description = "Run the selected make target"
-command = "make {}"
+command = "begin; make {}; end >&2; echo >&2"
 mode = "execute"

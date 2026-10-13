@@ -37,5 +37,5 @@ ctrl-d = "actions:delete"
 
 [actions.delete]
 description = "Delete the selected Service"
-command = "kubectl delete -n {0} services/{1}"
+command = "kubectl delete -n {0} services/{1} >&2; echo >&2"
 mode = "execute"

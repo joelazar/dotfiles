@@ -18,10 +18,10 @@ ctrl-d = "actions:delete"
 
 [actions.use]
 description = "Set the selected namespace as default for the current context"
-command = "kubectl config set-context --current --namespace={}"
+command = "kubectl config set-context --current --namespace={} >&2; echo >&2"
 mode = "execute"
 
 [actions.delete]
 description = "Delete the selected namespace"
-command = "kubectl delete namespace {}"
+command = "kubectl delete namespace {} >&2; echo >&2"
 mode = "execute"

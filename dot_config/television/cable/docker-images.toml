@@ -20,15 +20,15 @@ ctrl-s = "actions:shell"
 
 [actions.run]
 description = "Run a container from the selected image"
-command = "docker run -it '{split: :-1}'"
+command = "begin; docker run -it '{split: :-1}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.shell]
 description = "Run a shell in the selected image"
-command = "docker run -it '{split: :-1}' /bin/sh"
+command = "begin; docker run -it '{split: :-1}' /bin/sh; end >&2; echo >&2"
 mode = "execute"
 
 [actions.remove]
 description = "Remove the selected image"
-command = "docker rmi '{split: :-1}'"
+command = "begin; docker rmi '{split: :-1}'; end >&2; echo >&2"
 mode = "execute"

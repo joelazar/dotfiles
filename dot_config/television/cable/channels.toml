@@ -15,5 +15,5 @@ enter = "actions:channel-enter"
 
 [actions.channel-enter]
 description = "Enter a television channel"
-command = "tv {}"
+command = "begin; tv {}; end >&2; echo >&2"
 mode = "execute"

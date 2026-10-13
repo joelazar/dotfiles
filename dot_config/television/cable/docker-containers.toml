@@ -42,15 +42,15 @@ mode = "fork"
 
 [actions.logs]
 description = "Follow logs of the selected container"
-command = "docker logs -f '{split:\\t:0}'"
+command = "begin; docker logs -f '{split:\\t:0}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.exec]
 description = "Execute shell in the selected container"
-command = "docker exec -it '{split:\\t:0}' /bin/sh"
+command = "begin; docker exec -it '{split:\\t:0}' /bin/sh; end >&2; echo >&2"
 mode = "execute"
 
 [actions.remove]
 description = "Remove the selected container"
-command = "docker rm '{split:\\t:0}'"
+command = "begin; docker rm '{split:\\t:0}'; end >&2; echo >&2"
 mode = "execute"

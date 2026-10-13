@@ -17,7 +17,7 @@ enter = "actions:open"
 
 [actions.open]
 description = "Open the selected man page in the system pager"
-command = "man '{0}'"
+command = "begin; man '{0}'; end >&2; echo >&2"
 mode = "execute"
 
 [ui]

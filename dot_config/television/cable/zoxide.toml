@@ -17,7 +17,7 @@ ctrl-d = "actions:remove"
 
 [actions.cd]
 description = "Change to the selected directory"
-command = "cd {} && $SHELL"
+command = "begin; cd {} && $SHELL; end >&2; echo >&2"
 mode = "execute"
 
 [actions.remove]

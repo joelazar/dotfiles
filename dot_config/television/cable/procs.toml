@@ -19,12 +19,12 @@ ctrl-c = "actions:cont"
 
 [actions.kill]
 description = "Kill the selected process (SIGKILL)"
-command = "kill -9 {split: :0}"
+command = "begin; kill -9 {split: :0}; end >&2; echo >&2"
 mode = "execute"
 
 [actions.term]
 description = "Terminate the selected process (SIGTERM)"
-command = "kill -15 {split: :0}"
+command = "begin; kill -15 {split: :0}; end >&2; echo >&2"
 mode = "execute"
 
 [actions.stop]

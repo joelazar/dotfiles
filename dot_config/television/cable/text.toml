@@ -25,6 +25,6 @@ ctrl-enter = "actions:edit"
 
 [actions.edit]
 description = "Open file in editor at line"
-command = "${EDITOR:-vim} '+{strip_ansi|split:\\::1}' '{strip_ansi|split:\\::0}'"
+command = "exec >&2; ${EDITOR:-vim} '+{strip_ansi|split:\\::1}' '{strip_ansi|split:\\::0}'; echo"
 shell = "bash"
 mode = "execute"

@@ -23,15 +23,15 @@ ctrl-d = "actions:drop"
 
 [actions.apply]
 description = "Apply the selected stash"
-command = "git stash apply '{strip_ansi|split:\\::0}'"
+command = "begin; git stash apply '{strip_ansi|split:\\::0}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.pop]
 description = "Pop the selected stash (apply and remove)"
-command = "git stash pop '{strip_ansi|split:\\::0}'"
+command = "begin; git stash pop '{strip_ansi|split:\\::0}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.drop]
 description = "Drop the selected stash"
-command = "git stash drop '{strip_ansi|split:\\::0}'"
+command = "begin; git stash drop '{strip_ansi|split:\\::0}'; end >&2; echo >&2"
 mode = "execute"

@@ -16,5 +16,5 @@ layout = "portrait"
 
 [actions.remove]
 description = "Remove the selected network"
-command = "docker network rm '{split:\t:0}'"
+command = "begin; docker network rm '{split:\t:0}'; end >&2; echo >&2"
 mode = "execute"

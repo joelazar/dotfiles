@@ -19,10 +19,10 @@ ctrl-r = "actions:reset"
 
 [actions.checkout]
 description = "Checkout the selected reflog entry"
-command = "git checkout '{0|strip_ansi}'"
+command = "begin; git checkout '{0|strip_ansi}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.reset]
 description = "Reset --hard to the selected reflog entry"
-command = "git reset --hard '{0|strip_ansi}'"
+command = "begin; git reset --hard '{0|strip_ansi}'; end >&2; echo >&2"
 mode = "execute"

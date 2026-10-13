@@ -18,10 +18,10 @@ ctrl-d = "actions:delete"
 
 [actions.use]
 description = "Switch to the selected context"
-command = "kubectl config use-context {}"
+command = "kubectl config use-context {} >&2; echo >&2"
 mode = "execute"
 
 [actions.delete]
 description = "Delete the selected context"
-command = "kubectl config delete-context {}"
+command = "kubectl config delete-context {} >&2; echo >&2"
 mode = "execute"

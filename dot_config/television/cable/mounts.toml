@@ -15,5 +15,5 @@ enter = "actions:cd"
 
 [actions.cd]
 description = "Open a shell in the selected mount point"
-command = "cd {} && $SHELL"
+command = "begin; cd {} && $SHELL; end >&2; echo >&2"
 mode = "execute"

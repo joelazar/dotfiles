@@ -28,5 +28,5 @@ mode = "fork"
 
 [actions.logs]
 description = "Follow logs of the selected service"
-command = "docker compose logs -f '{split:\t:1}'"
+command = "begin; docker compose logs -f '{split:\t:1}'; end >&2; echo >&2"
 mode = "execute"

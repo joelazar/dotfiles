@@ -17,10 +17,10 @@ ctrl-d = "actions:delete"
 
 [actions.checkout]
 description = "Checkout the selected tag"
-command = "git checkout {}"
+command = "begin; git checkout {}; end >&2; echo >&2"
 mode = "execute"
 
 [actions.delete]
 description = "Delete the selected tag"
-command = "git tag -d {}"
+command = "begin; git tag -d {}; end >&2; echo >&2"
 mode = "execute"

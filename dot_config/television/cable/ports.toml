@@ -15,5 +15,5 @@ size = 40
 
 [actions.kill]
 description = "Kill the process listening on the selected port"
-command = "fuser -k {split: :0}/tcp"
+command = "begin; fuser -k {split: :0}/tcp; end >&2; echo >&2"
 mode = "execute"

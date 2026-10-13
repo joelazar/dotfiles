@@ -33,5 +33,5 @@ mode = "fork"
 
 [actions.ssm]
 description = "Start an SSM session on the selected instance"
-command = "aws ssm start-session --target {split:\t:0}"
+command = "begin; aws ssm start-session --target {split:\t:0}; end >&2; echo >&2"
 mode = "execute"

@@ -17,10 +17,10 @@ shortcut = "f2"
 
 [actions.cd]
 description = "Open a shell in the selected directory"
-command = "cd {} && $SHELL"
+command = "begin; cd {} && $SHELL; end >&2; echo >&2"
 mode = "execute"
 
 [actions.goto_parent_dir]
 description = "Re-opens tv in the parent directory"
-command = "tv dirs .."
+command = "begin; tv dirs ..; end >&2; echo >&2"
 mode = "execute"

@@ -12,7 +12,7 @@ command = "cat 'node_modules/{}/package.json' 2>/dev/null | jq -C '{name, versio
 
 [actions.readme]
 description = "View the package README"
-command = "cat node_modules/{}/README.md 2>/dev/null | less"
+command = "begin; cat node_modules/{}/README.md 2>/dev/null | less; end >&2; echo >&2"
 mode = "execute"
 
 [actions.homepage]

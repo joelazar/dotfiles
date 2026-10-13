@@ -18,10 +18,10 @@ ctrl-d = "actions:uninstall"
 
 [actions.upgrade]
 description = "Upgrade the selected package"
-command = "pip install --upgrade {}"
+command = "begin; pip install --upgrade {}; end >&2; echo >&2"
 mode = "execute"
 
 [actions.uninstall]
 description = "Uninstall the selected package"
-command = "pip uninstall {}"
+command = "begin; pip uninstall {}; end >&2; echo >&2"
 mode = "execute"

@@ -16,5 +16,5 @@ preview_panel = { size = 30 }
 
 [actions.edit]
 description = "Open crontab for editing"
-command = "crontab -e"
+command = "begin; crontab -e; end >&2; echo >&2"
 mode = "execute"

@@ -22,7 +22,7 @@ mode = "fork"
 
 [actions.delete]
 description = "Delete the selected file"
-command = "rm -i {}"
+command = "begin; rm -i {}; end >&2; echo >&2"
 mode = "execute"
 
 [actions.move]

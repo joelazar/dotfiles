@@ -14,6 +14,6 @@ ctrl-enter = "actions:connect"
 
 [actions.connect]
 description = "SSH into the selected host"
-command = "ssh '{}'"
+command = "begin; ssh '{}'; end >&2; echo >&2"
 shell = "fish"
 mode = "execute"

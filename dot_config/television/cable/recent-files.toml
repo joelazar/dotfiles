@@ -19,6 +19,6 @@ ctrl-enter = "actions:edit"
 
 [actions.edit]
 description = "Open the selected file in editor"
-command = "${EDITOR:-vim} {}"
+command = "exec >&2; ${EDITOR:-vim} {}; echo"
 shell = "bash"
 mode = "execute"

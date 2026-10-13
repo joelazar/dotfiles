@@ -85,7 +85,7 @@ A lot of this setup is about moving around quickly:
 - [Yazi](https://yazi-rs.github.io/) for file management via [`dot_config/yazi/`](dot_config/yazi/)
 - [fzf](https://github.com/junegunn/fzf), [fd](https://github.com/sharkdp/fd), and [ripgrep](https://github.com/BurntSushi/ripgrep) for fast terminal navigation
 - [Eza](https://github.com/eza-community/eza) for directory listings via [`dot_config/eza/`](dot_config/eza/)
-- [Television](https://github.com/alexpasmantier/television) with **107 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
+- [Television](https://github.com/alexpasmantier/television) with **67 channels** in [`dot_config/television/cable/`](dot_config/television/cable/)
 
 Those Television channels cover far more than files. There are pickers for git branches, worktrees, diffs, repositories, Docker and Kubernetes resources, AWS resources, ports, launchd services, recent files, markdown search, and more.
 

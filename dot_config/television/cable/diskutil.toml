@@ -20,7 +20,7 @@ ctrl-v = "actions:verify"
 
 [actions.cd]
 description = "Open a shell in the selected mount point"
-command = "cd '{split:\t:0}' && $SHELL"
+command = "exec >&2; cd '{split:\t:0}' && $SHELL; echo"
 shell = "bash"
 mode = "execute"
 
@@ -31,15 +31,15 @@ mode = "fork"
 
 [actions.info]
 description = "Show full disk info for the selected mount point in a pager"
-command = "diskutil info '{split:\t:0}' | less"
+command = "begin; diskutil info '{split:\t:0}' | less; end >&2; echo >&2"
 mode = "execute"
 
 [actions.eject]
 description = "Eject the selected volume"
-command = "diskutil eject '{split:\t:0}'"
+command = "begin; diskutil eject '{split:\t:0}'; end >&2; echo >&2"
 mode = "execute"
 
 [actions.verify]
 description = "Verify the filesystem on the selected volume"
-command = "diskutil verifyVolume '{split:\t:0}'"
+command = "begin; diskutil verifyVolume '{split:\t:0}'; end >&2; echo >&2"
 mode = "execute"

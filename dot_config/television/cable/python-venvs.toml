@@ -11,10 +11,10 @@ command = "cat '{}/pyvenv.cfg' 2>/dev/null && echo '' && echo 'Packages:' && '{}
 
 [actions.activate]
 description = "Open a shell with the selected venv activated"
-command = "source '{}/bin/activate' && $SHELL"
+command = "begin; source '{}/bin/activate' && $SHELL; end >&2; echo >&2"
 mode = "execute"
 
 [actions.packages]
 description = "List all packages in the selected venv"
-command = "'{}/bin/pip' list | less"
+command = "begin; '{}/bin/pip' list | less; end >&2; echo >&2"
 mode = "execute"

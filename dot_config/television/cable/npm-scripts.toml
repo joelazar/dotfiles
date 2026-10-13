@@ -18,5 +18,5 @@ enter = "actions:run"
 
 [actions.run]
 description = "Run the selected npm script"
-command = "npm run '{split:\\t:0}'"
+command = "begin; npm run '{split:\\t:0}'; end >&2; echo >&2"
 mode = "execute"

@@ -18,5 +18,5 @@ enter = "actions:run"
 
 [actions.run]
 description = "Run the selected cargo command"
-command = "cargo {}"
+command = "begin; cargo {}; end >&2; echo >&2"
 mode = "execute"

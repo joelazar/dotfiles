@@ -16,10 +16,10 @@ ctrl-d = "actions:remove"
 
 [actions.cd]
 description = "Change to the selected worktree"
-command = "cd {split: :0} && $SHELL"
+command = "begin; cd {split: :0} && $SHELL; end >&2; echo >&2"
 mode = "execute"
 
 [actions.remove]
 description = "Remove the selected worktree"
-command = "git worktree remove {split: :0}"
+command = "begin; git worktree remove {split: :0}; end >&2; echo >&2"
 mode = "execute"
