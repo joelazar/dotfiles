@@ -29,6 +29,9 @@ reveal = [{ run = "open -R %s1", desc = "Reveal", for = "macos" }]
 extract = [
   { run = "ya pub extract --list %s", desc = "Extract here", for = "macos" },
 ]
+wireshark = [
+  { run = 'open -a Wireshark %s', desc = "Wireshark", orphan = true, for = "macos" },
+]
 play = [
   { run = 'open -a IINA %s', desc = "Play", orphan = true, for = "macos" },
 ]
@@ -86,6 +89,11 @@ rules = [
   # Empty file
   { mime = "inode/empty", use = [
     "edit",
+    "reveal",
+  ] },
+  # .cap captures: Wireshark doesn't declare .cap, so duti can't make it the default
+  { url = "*.cap", use = [
+    "wireshark",
     "reveal",
   ] },
   # Fallback

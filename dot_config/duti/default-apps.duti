@@ -100,3 +100,9 @@ com.colliderli.iina .3gp all
 com.colliderli.iina .vob all
 com.colliderli.iina .ogv all
 com.colliderli.iina .rmvb all
+
+# --- Wireshark: packet captures (by extension) ---
+# .cap is not declared by Wireshark, so duti fails on it (error -50);
+# yazi handles .cap via its own opener rule instead.
+org.wireshark.Wireshark .pcap all
+org.wireshark.Wireshark .pcapng all
