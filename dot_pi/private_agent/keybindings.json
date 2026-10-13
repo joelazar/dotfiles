@@ -1,4 +1,5 @@
 {
+  "$schema": "https://pi.dev/schemas/keybindings.schema.json",
   "app.models.clearAll": ["alt+x"],
   "app.model.cycleForward": ["ctrl+space"],
   "app.model.cycleBackward": ["ctrl+shift+space"],
