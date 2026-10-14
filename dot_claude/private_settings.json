@@ -282,5 +282,6 @@
       "Dotfiles are managed by chezmoi; the source directory is ~/.local/share/chezmoi and changes reach the live system only via chezmoi apply"
     ]
   },
-  "voiceEnabled": false
+  "voiceEnabled": false,
+  "switchModelsOnFlag": true
 }
