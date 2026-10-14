@@ -44,8 +44,14 @@ rules = [
     "open",
     "reveal",
   ] },
+  # HTML by extension (before text/code so it opens in the browser)
+  { url = "*.{html,htm}", use = [
+    "browser",
+    "edit",
+    "reveal",
+  ] },
   # Text/code by extension (wins over mime detection quirks on empty files)
-  { url = "*.{md,markdown,txt,log,json,jsonc,yaml,yml,toml,ini,conf,csv,tsv,sh,bash,fish,zsh,lua,py,rs,go,c,h,cpp,hpp,js,jsx,ts,tsx,vue,html,css,scss,sql,env,gitignore,dockerfile}", use = [
+  { url = "*.{md,markdown,txt,log,json,jsonc,yaml,yml,toml,ini,conf,csv,tsv,sh,bash,fish,zsh,lua,py,rs,go,c,h,cpp,hpp,js,jsx,ts,tsx,vue,css,scss,sql,env,gitignore,dockerfile}", use = [
     "edit",
     "reveal",
   ] },
