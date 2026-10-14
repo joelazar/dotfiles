@@ -79,15 +79,7 @@ export -f update_herdr_integrations
 update_herdr_plugins() {
     command -v herdr >/dev/null 2>&1 || return 0
 
-    local repo
-    herdr plugin list 2>/dev/null |
-        sed -n 's/.*\[github:\([^]@]*\).*/\1/p' |
-        sort -u |
-        while IFS= read -r repo; do
-            [ -n "$repo" ] || continue
-            echo "updating herdr plugin: $repo"
-            herdr plugin install "$repo" --yes || true
-        done
+    herdr plugin update --yes || true
 }
 export -f update_herdr_plugins
 
