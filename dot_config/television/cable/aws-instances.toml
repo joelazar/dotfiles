@@ -14,7 +14,7 @@ layout = "portrait"
 preview_panel = { size = 60 }
 
 [keybindings]
-enter = "actions:copy"
+enter = "actions:open"
 
 [actions.copy]
 description = "Copy the instance details (preview content) to the clipboard"
@@ -34,4 +34,10 @@ mode = "fork"
 [actions.ssm]
 description = "Start an SSM session on the selected instance"
 command = "begin; aws ssm start-session --target {split:\t:0}; end >&2; echo >&2"
+mode = "execute"
+
+[actions.open]
+description = "Open the resource as JSON in $EDITOR"
+command = "exec >&2; d=$(mktemp -d); aws ec2 describe-instances --output json --instance-ids {split:\t:0} --query 'Reservations[*].Instances[0]' > \"$d/resource.json\" && ${EDITOR:-vim} \"$d/resource.json\"; rm -rf \"$d\""
+shell = "bash"
 mode = "execute"
