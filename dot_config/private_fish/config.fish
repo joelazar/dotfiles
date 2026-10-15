@@ -22,7 +22,7 @@ set -gx VISUAL nvim
 set -gx MANPAGER 'nvim +Man!'
 
 # Customize PATH
-set -gx GOPATH $HOME/go
+set -gx GOPATH $HOME/Go
 set -gx GOBIN $GOPATH/bin
 
 # brew specific paths (added first so user-local bins below take precedence)

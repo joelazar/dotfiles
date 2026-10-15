@@ -190,7 +190,7 @@
     "filesystem": {
       "allowWrite": [
         "~/Library/Caches/go-build",
-        "~/go/pkg/mod",
+        "~/Go/pkg/mod",
         "~/.npm",
         "~/.cache"
       ]
