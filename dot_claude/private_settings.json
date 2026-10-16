@@ -55,7 +55,6 @@
       "Edit(~/Code/**)",
       "Glob",
       "Read(~/Code/**)",
-      "Task",
       "TodoWrite",
       "WebFetch",
       "WebSearch"
@@ -185,6 +184,9 @@
         "proxy.golang.org",
         "sum.golang.org",
         "registry.npmjs.org"
+      ],
+      "allowUnixSockets": [
+        "~/.config/colima/default/docker.sock"
       ]
     },
     "filesystem": {

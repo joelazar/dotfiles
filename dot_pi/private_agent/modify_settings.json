@@ -9,6 +9,7 @@ jq -s --argjson m "$(cat <<'JSON'
   "collapseChangelog": false,
   "theme": "catppuccin-mocha",
   "doubleEscapeAction": "tree",
+  "sessionShareDestination": "gist",
   "enabledModels": [
     "anthropic/claude-haiku-5-5",
     "anthropic/claude-sonnet-5-5",
