@@ -93,7 +93,10 @@ if answer_is_yes; then
     mo optimize
 fi
 
-execute "backup do" "Backup"
+ask_for_confirmation "Run Restic backup?"
+if answer_is_yes; then
+    restic-backup
+fi
 
 ask_for_confirmation "Empty macOS Trash?"
 if answer_is_yes; then

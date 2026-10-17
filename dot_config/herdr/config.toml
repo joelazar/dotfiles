@@ -9,6 +9,13 @@ name = "catppuccin"
 
 auto_switch = false
 
+# Layered depth like herdr.dev: sidebar darker than panes (Catppuccin Mocha).
+# Without sidebar_bg the sidebar uses the terminal bg, so everything looks flat.
+[theme.custom]
+sidebar_bg = "#181825"     # mantle
+active_row_bg = "#1e1e2e"  # base
+selection_bg = "#313244"   # surface0
+
 [terminal]
 shell_mode = "auto"
 new_cwd = "follow"  # new panes/tabs inherit the current working directory
