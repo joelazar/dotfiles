@@ -80,7 +80,8 @@ Options:
   -y, --yes                  Skip the review screen and create directly
   -h, --help                 Show this help
 
-Models come from the "fast" chain in ~/.pi/agent/extension-models.json.
+Title and body come from the /pr-title and /pr-body pi commands (pi-extensions
+pr-create), using the "fast" chain in ~/.pi/agent/extension-models.json.
 Reviewer groups are read from:
   ${PR_CREATE_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-~/.config}/pr-create/reviewers.conf}
 EOF
@@ -397,39 +398,15 @@ resolve_base_ref() {
     return 1
 }
 
-max_diff_bytes=100000
 base_ref=""
-ctx_file=""
 
-# Write the branch diff to $ctx_file so pi gets exactly the PR changes.
+# Resolve the base ref; generation is disabled when it cannot be resolved.
 build_context() {
-    ctx_file=""
     base_ref=$(resolve_base_ref "${base:-$default_base}") || {
         echo "Could not resolve base '${base:-$default_base}': generation disabled." >&2
         base_ref=""
-        return 0
     }
-    local diff_file
-    new_tempfile diff_file
-    git diff "$base_ref...HEAD" >"$diff_file"
-    new_tempfile ctx_file
-    {
-        echo "The exact changes introduced by this PR are provided as a git diff"
-        echo "against $base_ref. Base ONLY your output on this diff. Do NOT run any"
-        echo "git commands and do NOT consider any changes outside of the provided diff."
-        echo
-        echo "Commit subjects:"
-        git log --no-merges --pretty=%s "$base_ref..HEAD"
-        echo
-        echo "Diff stat:"
-        git diff --stat "$base_ref...HEAD"
-        echo
-        echo "Diff:"
-        head -c "$max_diff_bytes" "$diff_file"
-        if [[ $(wc -c <"$diff_file") -gt $max_diff_bytes ]]; then
-            printf '\n\n[diff truncated]\n'
-        fi
-    } >"$ctx_file"
+    return 0
 }
 
 # Linear ticket IDs at the start of the branch or after a slash: ONO-123-x, joe/ono-123-x.
@@ -445,111 +422,31 @@ branch_linear_links() {
 
 # --- pi generation ---------------------------------------------------------
 
-pi_models() {
-    local cfg=${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/extension-models.json
-    local models=""
-    if [[ -f "$cfg" ]] && command -v jq >/dev/null 2>&1; then
-        models=$(jq -r '.fast[]? | strings' "$cfg" 2>/dev/null || true)
-    fi
-    printf '%s\n' "${models:-current}"
-}
-
-# run_pi <label> <accept-fn> <prompt> [pi args...]: try each model, print the
-# first output the accept function turns into something non-empty.
+# run_pi <label> <command>: run a pr-create extension generator (/pr-title,
+# /pr-body) in print mode. The extension computes the diff, builds its own prompt
+# with the pr/unslop skills, tries the "fast" model chain and validates output.
 run_pi() {
-    local label=$1 accept=$2 prompt=$3 model out accepted
-    shift 3
-    local args=()
-    [[ -n "$ctx_file" ]] || return 1
-    while IFS= read -r model; do
-        [[ -z "$model" ]] && continue
-        args=(-p --no-session --thinking off "$@")
-        [[ "$model" != current ]] && args+=(--model "$model")
-        args+=("@$ctx_file" "$prompt")
-        if has_gum; then
-            out=$(gum spin --show-stdout --title "$label ($model)..." -- pi "${args[@]}") || check_cancelled $?
-        else
-            echo "$label ($model)..." >&2
-            out=$(pi "${args[@]}") || true
-        fi
-        accepted=$("$accept" <<<"$out") || true
-        if [[ -n "$accepted" ]]; then
-            printf '%s\n' "$accepted"
-            return 0
-        fi
-        echo "$model: unusable output" >&2
-    done < <(pi_models)
-    return 1
+    local label=$1 command=$2 out
+    [[ -n "$base_ref" ]] || return 1
+    if has_gum; then
+        out=$(gum spin --show-stdout --title "$label..." -- pi -p --no-session "$command $base_ref") || check_cancelled $?
+    else
+        echo "$label..." >&2
+        out=$(pi -p --no-session "$command $base_ref") || true
+    fi
+    [[ -n "$out" ]] || return 1
+    printf '%s\n' "$out"
 }
-
-accept_title() {
-    local first
-    first=$(awk 'NF { print; exit }')
-    normalize_title "$first"
-}
-
-# Strip a wrapping code fence, leading preamble/blank/hr lines and trailing
-# blank/hr lines from a generated body.
-sanitize_body() {
-    awk -v q="'" -v rq="’" '
-        function blank(l) { return l ~ /^[[:space:]]*$/ }
-        function hr(l) { return l ~ /^[[:space:]]*[-*_][-*_][-*_]+[[:space:]]*$/ }
-        function preamble(l) {
-            return tolower(l) ~ ("^[[:space:]]*(here(" q "|" rq ")?s|here is|below is|sure|of course|certainly|okay|ok)([^a-z]|$)")
-        }
-        { sub(/\r$/, ""); line[++n] = $0 }
-        END {
-            s = 1; e = n
-            while (s <= e && blank(line[s])) s++
-            while (e >= s && blank(line[e])) e--
-            if (e > s && line[s] ~ /^```[A-Za-z0-9_-]*[[:space:]]*$/ && line[e] ~ /^```[[:space:]]*$/) { s++; e-- }
-            while (s <= e && (blank(line[s]) || hr(line[s]) || preamble(line[s]))) s++
-            while (e >= s && (blank(line[e]) || hr(line[e]))) e--
-            for (i = s; i <= e; i++) print line[i]
-        }
-    '
-}
-
-title_prompt="Generate a single GitHub pull request title for this branch.
-
-Requirements:
-- Conventional commit format: <type>[(scope)]: <subject>
-- Allowed types: ${allowed_types[*]}
-- Lower case subject, no trailing period, max 72 characters.
-- Do not invent details.
-- Output only the title, nothing else."
-
-body_prompt=$(
-    cat <<'EOF'
-Write the GitHub pull request body for this branch.
-
-Read the pr skill and follow its template: ## Summary, ## Evidence.
-Then apply the unslop skill to the prose internally. Output only the final body.
-
-Requirements:
-- Summary: pick the smallest visual (diff-sketch, call tree, file tree, pseudocode, or mermaid) that shows the change. One or two short lines of text at most.
-- Evidence: you cannot run anything. Use tests added or changed in the diff, shown as pseudocode of the case that failed before and passes after. If the diff adds or changes no tests, omit the whole ## Evidence section. Never invent output.
-- Do not invent details.
-- Do not include Linear ticket lines.
-
-Output rules (strict):
-- Output ONLY the raw PR description body as plain markdown.
-- Do NOT include any preamble, closing remarks, or sign-offs.
-- Do NOT wrap the body in code fences, blockquotes, or horizontal rules (---).
-- Do NOT add a title/heading line.
-EOF
-)
 
 generate_title() {
     [[ $generate == yes ]] || return 1
-    run_pi "Generating PR title" accept_title "$title_prompt" --no-tools
+    run_pi "Generating PR title" /pr-title
 }
 
 generate_body() {
     [[ $generate == yes ]] || return 1
     local out
-    # The read tool lets pi load the pr and unslop skills.
-    out=$(run_pi "Generating PR description" sanitize_body "$body_prompt" --tools read) || {
+    out=$(run_pi "Generating PR description" /pr-body) || {
         echo "Description generation failed." >&2
         return 1
     }

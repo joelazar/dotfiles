@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# pi-oneshot [pi args...]: run `pi -p` for scripted one-shot generation, isolated
+# from session-wide prompt injectors (i-have-adhd/ponytail packages, AGENTS.md,
+# skill discovery). Those make models reply with chatty "Next:" refusals instead
+# of the raw output a script expects.
+set -euo pipefail
+
+# Claude subscription auth lives in an extension; re-add it after -ne.
+auth_ext=${PI_ONESHOT_AUTH_EXT:-$HOME/Code/joelazar/pi-claude-code-use/index.ts}
+
+args=(-p --no-session --thinking off -nc -ns -ne)
+[[ -f "$auth_ext" ]] && args+=(-e "$auth_ext")
+
+# settings.json enabledModels lists pi-claude/* models whose provider lives in a
+# disabled extension; scoping the cycle list to the chosen model silences the warnings.
+model=""
+prev=""
+for a in "$@"; do
+    [[ "$prev" == --model ]] && model=$a
+    prev=$a
+done
+if [[ -z "$model" ]]; then
+    model=$(jq -r 'if .defaultModel then (if .defaultProvider then .defaultProvider + "/" else "" end) + .defaultModel else empty end' \
+        "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}/settings.json" 2>/dev/null || true)
+fi
+[[ -n "$model" ]] && args+=(--models "$model")
+
+exec pi "${args[@]}" "$@"
