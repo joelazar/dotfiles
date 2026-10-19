@@ -426,10 +426,16 @@ branch_linear_links() {
 # /pr-body) in print mode. The extension computes the diff, builds its own prompt
 # with the pr/unslop skills, tries the "fast" model chain and validates output.
 run_pi() {
-    local label=$1 command=$2 out
+    local label=$1 command=$2 out out_file
     [[ -n "$base_ref" ]] || return 1
     if has_gum; then
-        out=$(gum spin --show-stdout --title "$label..." -- pi -p --no-session "$command $base_ref") || check_cancelled $?
+        # gum spin --show-stdout prints to the terminal instead of stdout when
+        # run on a tty, so capture through a file.
+        new_tempfile out_file
+        # shellcheck disable=SC2016 # $1/$2 expand in the inner sh
+        gum spin --title "$label..." -- sh -c 'pi -p --no-session "$1" >"$2"' _ "$command $base_ref" "$out_file" || check_cancelled $?
+        out=$(<"$out_file")
+        rm -f "$out_file" # run_pi runs in a subshell, so the EXIT cleanup misses it
     else
         echo "$label..." >&2
         out=$(pi -p --no-session "$command $base_ref") || true
