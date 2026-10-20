@@ -49,8 +49,8 @@ cycle_pane_previous = "prefix+shift+tab"
 # Tabs (tmux windows)
 # new_tab is replaced by herdr-new-tab-adjacent (see [[keys.command]] below)
 new_tab = []
-next_tab = ["prefix+n", "ctrl+alt+]"]
-previous_tab = ["prefix+p", "ctrl+alt+["]
+next_tab = ["alt+n", "prefix+n", "ctrl+alt+]"]
+previous_tab = ["alt+p", "prefix+p", "ctrl+alt+["]
 rename_tab = "prefix+shift+t"
 close_tab = ["prefix+shift+x", "ctrl+alt+w"]
 switch_tab = ["prefix+1..9", "ctrl+1..9"]
@@ -63,8 +63,8 @@ rename_workspace = "prefix+shift+w"
 close_workspace = "prefix+shift+d"
 workspace_picker = "prefix+w"
 switch_workspace = "prefix+shift+1..9"
-previous_workspace = ["prefix+alt+p", "ctrl+alt+shift+p"]
-next_workspace = ["prefix+alt+n", "ctrl+alt+shift+n"]
+previous_workspace = ["alt+shift+p", "prefix+alt+p", "ctrl+alt+shift+p"]
+next_workspace = ["alt+shift+n", "prefix+alt+n", "ctrl+alt+shift+n"]
 
 # Misc
 help = "prefix+?"
