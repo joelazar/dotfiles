@@ -89,7 +89,14 @@ alias chmod='chmod --preserve-root'
 alias chown='chown --preserve-root'
 alias g="git"
 alias l='eza --color=auto --icons=auto --group-directories-first'
-alias lg='lazygit'
+function lg
+    set -x LAZYGIT_NEW_DIR_FILE ~/.lazygit/newdir
+    command lazygit $argv
+    if test -f $LAZYGIT_NEW_DIR_FILE
+        cd (cat $LAZYGIT_NEW_DIR_FILE)
+        rm -f $LAZYGIT_NEW_DIR_FILE
+    end
+end
 alias ll='eza --long --all --color=auto --icons=auto --group-directories-first --git'
 alias ls='eza --color=auto --icons=auto --group-directories-first'
 alias lzd='lazydocker'
