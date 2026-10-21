@@ -11,12 +11,14 @@
 {{- $name := promptString "Git username for the author/committer" }}
 {{- $workEmail := promptStringOnce . "workEmail" "Git email address for work repositories" $email }}
 {{- $workName := promptStringOnce . "workName" "Git username for work repositories" $name }}
+{{- $gjRoot := promptStringOnce . "gjRoot" "Root directory for gj repositories" }}
 
 [data]
     email = "{{ $email }}"
     name = "{{ $name }}"
     workEmail = "{{ $workEmail }}"
     workName = "{{ $workName }}"
+    gjRoot = "{{ $gjRoot }}"
 
 [diff]
     format = "git"
