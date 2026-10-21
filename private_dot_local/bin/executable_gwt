@@ -11,6 +11,9 @@ Usage:
 
 Creates a worktree for <branch> under <gj.root>/worktree/<owner>/<repo>/<branch>
 and prints its path. Creates the branch if it does not exist.
+If <branch> is already checked out in a worktree, prints that path. If it is
+checked out in the main repository, that checkout is switched to the default
+branch (or detached) first, so the branch can move to its own worktree.
 
 Config:
   gj.root   Directory where repositories are stored.
@@ -18,6 +21,28 @@ Config:
 Example:
   cd ($script_name pb/my-feature)
 EOF
+}
+
+# Prints the path of the worktree that has <branch> checked out, if any.
+worktree_for_branch() {
+    git worktree list --porcelain | awk -v ref="branch refs/heads/$1" '
+        /^worktree / { path = substr($0, 10) }
+        $0 == ref { print path; exit }'
+}
+
+# Frees <branch> from the worktree at <path> so it can be checked out elsewhere.
+release_branch() {
+    local branch=$1 path=$2 default
+    [[ -z "$(git -C "$path" status --porcelain)" ]] ||
+        die "$branch is checked out in $path with uncommitted changes; commit or stash first"
+    default=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || true)
+    default=${default#origin/}
+    if [[ -n "$default" && "$default" != "$branch" ]] && git -C "$path" switch --quiet "$default" 2>/dev/null; then
+        printf 'Switched %s to %s\n' "$path" "$default" >&2
+    else
+        git -C "$path" switch --quiet --detach
+        printf 'Detached HEAD in %s\n' "$path" >&2
+    fi
 }
 
 die() {
@@ -37,7 +62,7 @@ main() {
         ;;
     esac
 
-    local branch=$1 root toplevel dest
+    local branch=$1 root toplevel common main dest existing
 
     root=$(git config --global --get gj.root || true)
     [[ -n "$root" ]] || die "gj.root is not set in git config"
@@ -46,7 +71,21 @@ main() {
     toplevel=$(git rev-parse --show-toplevel 2>/dev/null) || die "Not inside a git repository"
     [[ "$toplevel" == "$root"/* ]] || die "Repository is not under gj.root: $toplevel"
 
+    # Use the main repository path even when run from inside a linked worktree.
+    common=$(git rev-parse --path-format=absolute --git-common-dir)
+    main=${common%/.git}
+    if [[ "$toplevel" == "$root"/worktree/* ]]; then
+        toplevel=$main
+    fi
+
     dest="$root/worktree/${toplevel#"$root"/}/${branch//\//-}"
+
+    existing=$(worktree_for_branch "$branch")
+    if [[ -n "$existing" && "$existing" != "$main" ]]; then
+        printf '%s\n' "$existing"
+        return
+    fi
+    [[ -z "$existing" ]] || release_branch "$branch" "$existing"
 
     if [[ ! -d "$dest" ]]; then
         git fetch --prune --quiet
