@@ -84,7 +84,7 @@ outer.right = 0
 # (like in i3)
 #
 
-cmd-ctrl-alt-enter = 'exec-and-forget open /Applications/Ghostty.app'
+cmd-ctrl-alt-enter = 'exec-and-forget open -a "Rex Beta"'
 cmd-ctrl-alt-space = 'exec-and-forget open /Applications/Claude.app'
 cmd-ctrl-alt-shift-space = 'exec-and-forget open /Applications/ChatGPT.app'
 cmd-ctrl-alt-d = 'exec-and-forget open -a Discord'
@@ -193,6 +193,16 @@ esc = 'mode main'
 # Auto-assign apps to specific workspaces
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
+run = ['layout tiling', 'move-node-to-workspace 1']
+
+# Rex settings window ("Settings - <pane>"); must come before the tiling rule below
+[[on-window-detected]]
+if.app-id = 'com.superlogical.rex'
+if.window-title-regex-substring = '^Settings( - |$)'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.superlogical.rex'
 run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
