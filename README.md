@@ -43,15 +43,15 @@ A few quick facts:
 
 ## What lives here 📁
 
-| Path                                               | What it contains                                                                                                                   |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Path                                               | What it contains                                                                                                              |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | [`dot_config/`](dot_config/)                       | App and CLI configuration for tools like Fish, Ghostty, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
-| [`dot_pi/`](dot_pi/)                               | Pi agent configuration, prompts, themes, skills, and extension config                                                              |
-| [`dot_claude/`](dot_claude/)                       | Claude Code configuration                                                                                                          |
-| [`dot_ipython/`](dot_ipython/)                     | IPython profile config                                                                                                             |
-| [`private_dot_local/bin/`](private_dot_local/bin/) | Personal utility scripts                                                                                                           |
-| [`scripts/`](scripts/)                             | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                                  |
-| [`Brewfile`](Brewfile)                             | Homebrew packages, casks, and npm globals                                                                                          |
+| [`dot_pi/`](dot_pi/)                               | Pi agent configuration, prompts, themes, skills, and extension config                                                         |
+| [`dot_claude/`](dot_claude/)                       | Claude Code configuration                                                                                                     |
+| [`dot_ipython/`](dot_ipython/)                     | IPython profile config                                                                                                        |
+| [`private_dot_local/bin/`](private_dot_local/bin/) | Personal utility scripts                                                                                                      |
+| [`scripts/`](scripts/)                             | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                             |
+| [`Brewfile`](Brewfile)                             | Homebrew packages, casks, and npm globals                                                                                     |
 
 ---
 
@@ -249,33 +249,33 @@ chezmoi diff             # preview what will change
 
 Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_local/bin/).
 
-| Script                                                                            | What it does                                                              |
-| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                         | Updates Claude Code, Codex, Antigravity CLI, Pi, and Pi local packages    |
-| [`custom-update`](private_dot_local/bin/executable_custom-update)                 | Runs broader system and tool updates                                      |
-| [`discord-summary`](private_dot_local/bin/executable_discord-summary)             | Summarizes the last 24h of selected Discord channels via kagi             |
-| [`fonttest`](private_dot_local/bin/executable_fonttest)                           | Checks terminal font rendering                                            |
-| [`formatter`](private_dot_local/bin/executable_formatter)                         | Formats USB drives and SD cards with a `gum` UI                           |
-| [`term-tab`](private_dot_local/bin/executable_term-tab)                     | Opens a new Herdr or Ghostty tab in a directory, optionally with a command |
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)           | Finds git repos recursively and offers interactive actions                |
-| [`git-reset`](private_dot_local/bin/executable_git-reset)                         | Resets repos back to their default branch state                           |
-| [`git-submodules-update`](private_dot_local/bin/executable_git-submodules-update) | Updates git submodules                                                    |
-| [`gitmoji`](private_dot_local/bin/executable_gitmoji)                             | Interactive gitmoji commit helper built on `gum`                          |
-| [`gj`](private_dot_local/bin/executable_gj)                                       | Clones repos into a `gj.root`-based directory layout                      |
-| [`gwt`](private_dot_local/bin/executable_gwt)                                     | Creates a git worktree for a branch under the `gj` layout                 |
-| [`kokoro`](private_dot_local/bin/executable_kokoro)                               | Local text-to-speech via the Kokoro ONNX model                            |
-| [`listen-later`](private_dot_local/bin/executable_listen-later)                   | Turns an article, file, or text into a Kokoro-narrated Spotify episode    |
-| [`pi`](private_dot_local/bin/executable_pi)                                       | Runs the Pi agent CLI through the mise-managed Node 26 runtime            |
-| [`pr-create`](private_dot_local/bin/executable_pr-create)                         | Creates pull requests: fills in every field, then shows a review screen   |
-| [`restic-backup`](private_dot_local/bin/executable_restic-backup)                 | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic |
-| [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)             | Prunes old snapshots from the restic backup repo                          |
-| [`restic-mount`](private_dot_local/bin/executable_restic-mount)                   | Mounts the restic repo to browse and copy files                           |
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display)     | Changes the primary display on multi-monitor setups                       |
-| [`toggle-lid-sleep`](private_dot_local/bin/executable_toggle-lid-sleep)           | Raycast script that toggles clamshell sleep                               |
-| [`transcribe`](private_dot_local/bin/executable_transcribe)                       | Offline audio/video transcription via whisper.cpp                         |
-| [`untilfail`](private_dot_local/bin/executable_untilfail)                         | Repeats a command until it fails                                          |
-| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)               | Opens the daily terminal workspace: Obsidian vault in nvim plus gh-dash    |
-| [`wtfport`](private_dot_local/bin/executable_wtfport)                             | Shows what is listening on a port and can kill it                         |
+| Script                                                                            | What it does                                                                    |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [`ai-update`](private_dot_local/bin/executable_ai-update)                         | Updates Claude Code, Codex, Antigravity CLI, Pi, and Pi local packages          |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)                 | Runs broader system and tool updates                                            |
+| [`discord-summary`](private_dot_local/bin/executable_discord-summary)             | Summarizes the last 24h of selected Discord channels via kagi                   |
+| [`fonttest`](private_dot_local/bin/executable_fonttest)                           | Checks terminal font rendering                                                  |
+| [`formatter`](private_dot_local/bin/executable_formatter)                         | Formats USB drives and SD cards with a `gum` UI                                 |
+| [`term-tab`](private_dot_local/bin/executable_term-tab)                           | Opens a new Herdr, Rex or Ghostty tab in a directory, optionally with a command |
+| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)           | Finds git repos recursively and offers interactive actions                      |
+| [`git-reset`](private_dot_local/bin/executable_git-reset)                         | Resets repos back to their default branch state                                 |
+| [`git-submodules-update`](private_dot_local/bin/executable_git-submodules-update) | Updates git submodules                                                          |
+| [`gitmoji`](private_dot_local/bin/executable_gitmoji)                             | Interactive gitmoji commit helper built on `gum`                                |
+| [`gj`](private_dot_local/bin/executable_gj)                                       | Clones repos into a `gj.root`-based directory layout                            |
+| [`gwt`](private_dot_local/bin/executable_gwt)                                     | Creates a git worktree for a branch under the `gj` layout                       |
+| [`kokoro`](private_dot_local/bin/executable_kokoro)                               | Local text-to-speech via the Kokoro ONNX model                                  |
+| [`listen-later`](private_dot_local/bin/executable_listen-later)                   | Turns an article, file, or text into a Kokoro-narrated Spotify episode          |
+| [`pi`](private_dot_local/bin/executable_pi)                                       | Runs the Pi agent CLI through the mise-managed Node 26 runtime                  |
+| [`pr-create`](private_dot_local/bin/executable_pr-create)                         | Creates pull requests: fills in every field, then shows a review screen         |
+| [`restic-backup`](private_dot_local/bin/executable_restic-backup)                 | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic       |
+| [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)             | Prunes old snapshots from the restic backup repo                                |
+| [`restic-mount`](private_dot_local/bin/executable_restic-mount)                   | Mounts the restic repo to browse and copy files                                 |
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display)     | Changes the primary display on multi-monitor setups                             |
+| [`toggle-lid-sleep`](private_dot_local/bin/executable_toggle-lid-sleep)           | Raycast script that toggles clamshell sleep                                     |
+| [`transcribe`](private_dot_local/bin/executable_transcribe)                       | Offline audio/video transcription via whisper.cpp                               |
+| [`untilfail`](private_dot_local/bin/executable_untilfail)                         | Repeats a command until it fails                                                |
+| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)               | Opens the daily terminal workspace: Obsidian vault in nvim plus gh-dash         |
+| [`wtfport`](private_dot_local/bin/executable_wtfport)                             | Shows what is listening on a port and can kill it                               |
 
 The restic scripts share [`private_dot_local/lib/restic-common.sh`](private_dot_local/lib/restic-common.sh). Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
 

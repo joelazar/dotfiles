@@ -1,27 +1,29 @@
 #!/usr/bin/env bash
-# Open a new terminal tab (Herdr or Ghostty) in a directory, optionally pre-typing a command.
+# Open a new terminal tab (Herdr, Rex or Ghostty) in a directory, optionally pre-typing a command.
 #
 # Usage: term-tab [-t|--title <title>] <dir> [command ...]
 #
 # Inside a Herdr session (HERDR_ENV=1) the tab is created through the `herdr`
-# CLI, with the title as the Herdr tab label. Otherwise it drives Ghostty via
-# AppleScript, falling back to a new window when Ghostty has no windows open.
+# CLI, with the title as the Herdr tab label. Inside Rex (REX_SESSION set) it
+# opens a Rex window in the current session, labelled with the title.
+# Otherwise it drives Ghostty via AppleScript, falling back to a new window
+# when Ghostty has no windows open.
 #
-# In both cases the title is exported as TAB_TITLE;
+# For Herdr and Ghostty the title is also exported as TAB_TITLE;
 # ~/.config/fish/functions/fish_title.fish turns that into the tab label so
 # fish's per-prompt title does not clobber it.
 set -euo pipefail
 
 usage() {
-	echo "usage: term-tab [-t|--title <title>] <dir> [command ...]" >&2
-	exit 64
+    echo "usage: term-tab [-t|--title <title>] <dir> [command ...]" >&2
+    exit 64
 }
 
 # Render a string as an ASCII-only fish `printf` format: osascript decodes its
 # argv as MacRoman, so anything non-ASCII (emoji) must travel as \UXXXX escapes
 # and be rebuilt by fish inside the new tab.
 fish_printf_ascii() {
-	printf '%s' "$1" | perl -CSD -pe '
+    printf '%s' "$1" | perl -CSD -pe '
 		s/\\/\\\\/g;
 		s/%/%%/g;
 		s/'\''/\\'\''/g;
@@ -30,44 +32,68 @@ fish_printf_ascii() {
 }
 
 in_herdr() {
-	[[ ${HERDR_ENV:-} == 1 ]] && command -v herdr >/dev/null 2>&1
+    [[ ${HERDR_ENV:-} == 1 ]] && command -v herdr >/dev/null 2>&1
 }
 
 # Create a Herdr tab and run the command in its root pane.
 open_herdr_tab() {
-	local dir="$1" title="$2" command="$3"
-	local args=(tab create --cwd "$dir" --focus)
-	if [[ -n $title ]]; then
-		args+=(--label "$title" --env "TAB_TITLE=$title")
-	fi
+    local dir="$1" title="$2" command="$3"
+    local args=(tab create --cwd "$dir" --focus)
+    if [[ -n $title ]]; then
+        args+=(--label "$title" --env "TAB_TITLE=$title")
+    fi
 
-	local created pane_id
-	created="$(herdr "${args[@]}")"
-	pane_id="$(jq -er '.result.root_pane.pane_id' <<<"$created")" || {
-		echo "term-tab: herdr did not return a pane id: $created" >&2
-		exit 70
-	}
+    local created pane_id
+    created="$(herdr "${args[@]}")"
+    pane_id="$(jq -er '.result.root_pane.pane_id' <<<"$created")" || {
+        echo "term-tab: herdr did not return a pane id: $created" >&2
+        exit 70
+    }
 
-	if [[ -n $command ]]; then
-		herdr pane run "$pane_id" "$command" >/dev/null
-	fi
+    if [[ -n $command ]]; then
+        herdr pane run "$pane_id" "$command" >/dev/null
+    fi
+}
+
+in_rex() {
+    [[ -n ${REX_SESSION:-} ]] && command -v rex >/dev/null 2>&1
+}
+
+# Create a Rex window (tab) in the current session and type the command into its shell.
+open_rex_tab() {
+    local dir="$1" title="$2" command="$3"
+    local args=(window new -s "$REX_SESSION" -c "$dir" --json)
+    if [[ -n $title ]]; then
+        args+=("$title")
+    fi
+
+    local created block_id
+    created="$(rex "${args[@]}")"
+    block_id="$(jq -er '.block_ids[0]' <<<"$created")" || {
+        echo "term-tab: rex did not return a block id: $created" >&2
+        exit 70
+    }
+
+    if [[ -n $command ]]; then
+        rex send -b "$block_id" "$command"$'\n' >/dev/null
+    fi
 }
 
 # Create a Ghostty tab via AppleScript, typing the startup input into it.
 open_ghostty_tab() {
-	local dir="$1" title="$2" command="$3"
+    local dir="$1" title="$2" command="$3"
 
-	# Title and command go in as separate lines: fish computes the title before
-	# running a command line, so TAB_TITLE must already be set by then.
-	local input=""
-	if [[ -n $title ]]; then
-		input="set -gx TAB_TITLE (printf '$(fish_printf_ascii "$title")')"$'\n'
-	fi
-	if [[ -n $command ]]; then
-		input+="$command"$'\n'
-	fi
+    # Title and command go in as separate lines: fish computes the title before
+    # running a command line, so TAB_TITLE must already be set by then.
+    local input=""
+    if [[ -n $title ]]; then
+        input="set -gx TAB_TITLE (printf '$(fish_printf_ascii "$title")')"$'\n'
+    fi
+    if [[ -n $command ]]; then
+        input+="$command"$'\n'
+    fi
 
-	osascript - "$dir" "$input" <<-'APPLESCRIPT'
+    osascript - "$dir" "$input" <<-'APPLESCRIPT'
 		on run argv
 			set targetCwd to item 1 of argv
 			set startupInput to item 2 of argv
@@ -89,45 +115,48 @@ open_ghostty_tab() {
 }
 
 main() {
-	local title=""
-	while [[ ${1:-} == -* ]]; do
-		case $1 in
-		-t | --title)
-			[[ $# -ge 2 ]] || usage
-			title=$2
-			shift 2
-			;;
-		--)
-			shift
-			break
-			;;
-		*) usage ;;
-		esac
-	done
+    local title=""
+    while [[ ${1:-} == -* ]]; do
+        case $1 in
+        -t | --title)
+            [[ $# -ge 2 ]] || usage
+            title=$2
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *) usage ;;
+        esac
+    done
 
-	[[ $# -ge 1 ]] || usage
+    [[ $# -ge 1 ]] || usage
 
-	local raw_dir="$1"
-	shift
+    local raw_dir="$1"
+    shift
 
-	# Expand a leading ~ and resolve to an absolute path; AppleScript will not.
-	local dir="${raw_dir/#\~/$HOME}"
-	if [[ ! -d $dir ]]; then
-		echo "term-tab: not a directory: $dir" >&2
-		exit 66
-	fi
-	dir="$(cd "$dir" && pwd -P)"
+    # Expand a leading ~ and resolve to an absolute path; AppleScript will not.
+    local dir="${raw_dir/#\~/$HOME}"
+    if [[ ! -d $dir ]]; then
+        echo "term-tab: not a directory: $dir" >&2
+        exit 66
+    fi
+    dir="$(cd "$dir" && pwd -P)"
 
-	local command=""
-	if [[ $# -gt 0 ]]; then
-		command="$*"
-	fi
+    local command=""
+    if [[ $# -gt 0 ]]; then
+        command="$*"
+    fi
 
-	if in_herdr; then
-		open_herdr_tab "$dir" "$title" "$command"
-	else
-		open_ghostty_tab "$dir" "$title" "$command"
-	fi
+    # herdr first: a herdr pane inside Rex inherits REX_SESSION too
+    if in_herdr; then
+        open_herdr_tab "$dir" "$title" "$command"
+    elif in_rex; then
+        open_rex_tab "$dir" "$title" "$command"
+    else
+        open_ghostty_tab "$dir" "$title" "$command"
+    fi
 }
 
 main "$@"
