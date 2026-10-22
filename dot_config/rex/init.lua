@@ -105,7 +105,6 @@ rex.action({
 })
 
 rex.action({ name = "float_lazygit", title = "Lazygit (floating)", category = "Layouts", run = float({ "lazygit" }) })
-rex.action({ name = "float_shell", title = "Scratch Shell (floating)", category = "Layouts", run = float(nil) })
 
 ------------------------------------------------------------------------
 -- Tabs
@@ -176,7 +175,6 @@ rex.bind("ctrl+l", smart_nav("right"))
 -- Floats
 ------------------------------------------------------------------------
 rex.bind("cmd+alt+g", "float_lazygit")
-rex.bind("cmd+alt+t", "float_shell")
 
 ------------------------------------------------------------------------
 -- Text sent to the shell / TUIs
