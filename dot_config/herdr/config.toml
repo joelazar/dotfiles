@@ -12,9 +12,9 @@ auto_switch = false
 # Layered depth like herdr.dev: sidebar darker than panes (Catppuccin Mocha).
 # Without sidebar_bg the sidebar uses the terminal bg, so everything looks flat.
 [theme.custom]
-sidebar_bg = "#181825"     # mantle
-active_row_bg = "#1e1e2e"  # base
-selection_bg = "#313244"   # surface0
+sidebar_bg = "#181825"    # mantle
+active_row_bg = "#1e1e2e" # base
+selection_bg = "#313244"  # surface0
 
 [terminal]
 shell_mode = "auto"
@@ -74,7 +74,7 @@ reload_config = "prefix+shift+r"
 toggle_sidebar = "prefix+b"
 goto = "prefix+g"
 edit_scrollback = "prefix+e"
-clear_pane = "prefix+ctrl+k"            # clear screen+scrollback, keep prompt (0.9.2+)
+clear_pane = "prefix+ctrl+k"      # clear screen+scrollback, keep prompt (0.9.2+)
 
 # Navigate mode: vim keys
 # j/k move the workspace selection; pane up/down uses prefix+j/k or ctrl+j/k instead.
@@ -172,8 +172,15 @@ status_indicators = "symbols"
 # Second row: what the active tab is doing, reported by herdr.auto-title.
 [ui.sidebar.spaces]
 rows = [
-  ["state_icon", "workspace", "branch", "git_status"],
-  [{ token = "$topic", bold = true, dim = false }],
+  [
+    "state_icon",
+    "workspace",
+    "branch",
+    "git_status",
+  ],
+  [
+    { token = "$topic", bold = true, dim = false },
+  ],
 ]
 
 [ui.toast]
