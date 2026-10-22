@@ -192,6 +192,7 @@ local sends = {
   -- cmd+r -> <D-r> for nvim (CSI u: 114='r', 9=1+super)
   ["cmd+r"] = "\27[114;9u",
   -- cmd+shift+<x> -> ctrl+shift+<x> (CSI u, 6=1+shift+ctrl) for pi/nvim
+  ["cmd+shift+g"] = "\27[103;6u",
   ["cmd+shift+c"] = "\27[99;6u",
   ["cmd+shift+e"] = "\27[101;6u",
   ["cmd+shift+m"] = "\27[109;6u",
