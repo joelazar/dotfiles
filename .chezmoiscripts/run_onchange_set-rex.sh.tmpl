@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Configure Rex app settings (theme, font, ...). Keybindings live in
+# ~/.config/rex/init.lua instead. Only non-default settings are listed.
+#
+# To add one: change it in Rex Settings, then `defaults read com.superlogical.rex`
+# and copy the key here.
+#
+# Re-runs whenever this script or the theme file changes.
+
+set -euo pipefail
+
+DOMAIN="com.superlogical.rex"
+
+if ! defaults read "$DOMAIN" >/dev/null 2>&1; then
+    echo "==> Rex not launched yet, skipping configuration"
+    exit 0
+fi
+
+echo "==> Applying Rex preferences"
+
+# Theme: Catppuccin Mocha, imported from Ghostty's theme file (Import Theme File).
+# Stored as a JSON array of custom themes; this replaces any other custom theme.
+THEME_JSON=$(cat <<'EOF'
+{{ include "scripts/rex-theme-catppuccin-mocha.json" }}
+EOF
+)
+THEME_ID=$(printf '%s' "$THEME_JSON" | jq -r '.id')
+defaults write "$DOMAIN" Workspace.customThemes -data "$(printf '%s' "$THEME_JSON" | jq -c '[.]' | tr -d '\n' | xxd -p | tr -d '\n')"
+defaults write "$DOMAIN" Workspace.darkThemeID -string "$THEME_ID"
+
+# Appearance
+defaults write "$DOMAIN" Workspace.interfaceStyle -string useTheme
+defaults write "$DOMAIN" Workspace.paneDensity -string compact
+defaults write "$DOMAIN" Workspace.usesPaneGlass -bool false
+defaults write "$DOMAIN" Workspace.shellIconTheme -string themed
+defaults write "$DOMAIN" Workspace.tabIconColorMode -string always
+defaults write "$DOMAIN" Workspace.tabIconCount -int 3
+defaults write "$DOMAIN" Workspace.tabsFillAvailableSpace -bool false
+defaults write "$DOMAIN" Workspace.tintsPanesWithProgramBackground -bool false
+
+# Font
+defaults write "$DOMAIN" Workspace.terminalFontName -string "Maple Mono NF"
+defaults write "$DOMAIN" Workspace.terminalFontPointSize -float 12
+defaults write "$DOMAIN" Workspace.terminalFontSmoothing -bool false
+
+# Cursor
+defaults write "$DOMAIN" Workspace.terminalCursorBlinkIntervalMilliseconds -int 0
+defaults write "$DOMAIN" Workspace.terminalCursorBlinkUsesCustomInterval -bool false
+defaults write "$DOMAIN" Workspace.terminalCursorStyleForced -bool false
+
+# Behaviour
+defaults write "$DOMAIN" Workspace.focusFollowsMouse -bool true
+
+if pgrep -x Rex >/dev/null 2>&1; then
+    echo "==> Restart Rex Beta to pick up the new settings"
+fi
+
+echo "==> Rex configuration complete"
