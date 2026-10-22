@@ -22,12 +22,12 @@ rex.action({
 
 -- Floating terminal over the current window, in the focused pane's directory.
 -- Closes when its program exits.
-local function float(command)
+local function float(command, bounds)
   return function(ctx)
     local p = rex.block.call(terminal, "process", { block_id = ctx.block_id })
     local cwd = p and p.foreground and p.foreground.cwd
     local _, err = rex.session.new_layer({
-      bounds = { 0.05, 0.05, 0.9, 0.9 },
+      bounds = bounds or { 0.05, 0.05, 0.9, 0.9 },
       focus = true,
       layout = rex.layout.block({
         flavor = "com.superlogical.terminal.shell",
@@ -104,7 +104,32 @@ rex.action({
   end,
 })
 
-rex.action({ name = "float_lazygit", title = "Lazygit (floating)", category = "Layouts", run = float({ "lazygit" }) })
+-- Toggle: inside the lazygit float, quit it (the float closes on exit); otherwise open one.
+local open_lazygit = float({ "lazygit" }, { 0, 0, 1, 1 })
+rex.action({
+  name = "float_lazygit",
+  title = "Lazygit (floating)",
+  category = "Layouts",
+  run = function(ctx)
+    local p = ctx.block_id and rex.block.call(terminal, "process", { block_id = ctx.block_id })
+    if p and p.foreground and p.foreground.name == "lazygit" then
+      rex.block.call(terminal, "write", { block_id = ctx.block_id, data = "q" })
+      return
+    end
+    open_lazygit(ctx)
+  end,
+})
+
+-- Like Ghostty's write_scrollback_file:open: focused pane's scrollback in $EDITOR, floating.
+rex.action({
+  name = "edit_scrollback",
+  title = "Edit Scrollback",
+  category = "Terminal",
+  run = function(ctx)
+    local script = 'f=$(mktemp -t rex-scrollback); rex capture -b "$1" --trim --unwrap > "$f" && ${EDITOR:-nvim} + "$f"; rm -f "$f"'
+    float({ "sh", "-c", script, "sh", ctx.block_id }, { 0, 0, 1, 1 })(ctx)
+  end,
+})
 
 ------------------------------------------------------------------------
 -- Tabs
@@ -175,6 +200,7 @@ rex.bind("ctrl+l", smart_nav("right"))
 -- Floats
 ------------------------------------------------------------------------
 rex.bind("cmd+alt+g", "float_lazygit")
+rex.bind("cmd+shift+f", "edit_scrollback")
 
 ------------------------------------------------------------------------
 -- Text sent to the shell / TUIs
