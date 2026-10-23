@@ -226,3 +226,8 @@ local sends = {
 for key, text in pairs(sends) do
   rex.bind(key, "send_text", { text = text })
 end
+
+-- Pass alt+arrows through as real <M-Left>/<M-Right> (nvim buffer cycling),
+-- not the client's default word-jump (ESC b / ESC f). Same as Ghostty's unbind.
+rex.unbind("alt+left")
+rex.unbind("alt+right")
