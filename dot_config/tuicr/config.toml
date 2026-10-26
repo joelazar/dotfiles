@@ -9,9 +9,11 @@ show_file_list = true
 show_commits = true
 show_pr_checks = true
 show_pr_comments = true
+pr_comments_visibility = "all"
 cursor_line = true
 scroll_offset = 5
-wrap = false
+wrap = true
+wrap_style = "gutter"
 mouse = true
 
 leader = " "
