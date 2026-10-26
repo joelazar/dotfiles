@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+# Runs node@26 global CLIs regardless of the active mise node; dispatches on the invoked name.
 MISE="$(command -v mise || echo /opt/homebrew/bin/mise)"
 NODE="$("$MISE" where node@26)"
-exec "$NODE/bin/node" \
-    "$NODE/lib/node_modules/@earendil-works/pi-coding-agent/dist/cli.js" "$@"
+case "$(basename "$0")" in
+excalidraw) entry=@excalidraw/cli/dist/main.js ;;
+*) entry=@earendil-works/pi-coding-agent/dist/cli.js ;;
+esac
+exec "$NODE/bin/node" "$NODE/lib/node_modules/$entry" "$@"
