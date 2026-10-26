@@ -100,7 +100,7 @@ customCommands:
   - key: "<ctrl+r>"
     description: "Create pull request on GitHub"
     context: files, localBranches
-    command: "pr-create"
+    command: "git pr"
     output: terminal
     loadingText: "Creating pull request on GitHub"
   - key: "o"
@@ -129,6 +129,11 @@ customCommands:
     context: "remotes"
     description: "Prune deleted remote branches"
     loadingText: "Pruning..."
+  - key: "U"
+    context: "global"
+    command: "git sync"
+    description: "Sync repo: fetch, fast-forward default branch, update submodules"
+    output: terminal
   - key: "<ctrl+v>"
     context: "global"
     description: "Create new conventional commit"
@@ -217,9 +222,9 @@ customCommands:
     description: "AI atomic commits with pi"
     output: log
   - key: "<ctrl+g>"
-    command: "gitmoji -c"
+    command: "git moji"
     context: "files"
-    description: "Open gitmoji"
+    description: "Gitmoji commit"
     output: terminal
   - key: "R"
     command: "git reset --soft HEAD~1"
@@ -261,7 +266,7 @@ customCommands:
         tuicr pr "$pr";
       else;
 
-        set base (git merge-base (git rev-parse --abbrev-ref origin/HEAD 2>/dev/null; or echo origin/main) {{.SelectedLocalBranch.Name}});
+        set base (git merge-base origin/(git default-branch) {{.SelectedLocalBranch.Name}});
         tuicr -r "$base..{{.SelectedLocalBranch.Name}}";
       end
 
