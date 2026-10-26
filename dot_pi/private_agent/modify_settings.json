@@ -4,7 +4,7 @@ set -euo pipefail
 jq -s --argjson m "$(cat <<'JSON'
 {
   "$schema": "https://pi.dev/schemas/settings.schema.json",
-  "hideThinkingBlock": true,
+  "hideThinkingBlock": false,
   "shellCommandPrefix": "shopt -s expand_aliases\nexport GIT_PAGER=cat PAGER=cat AWS_PAGER=\"\"\nalias python=python3",
   "collapseChangelog": false,
   "theme": "catppuccin-mocha",
