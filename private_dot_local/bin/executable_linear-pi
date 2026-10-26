@@ -2,7 +2,7 @@
 # Linear "Work on issue → Custom script" handler: open the issue in a Rex
 # session (when the Rex app is running) or a Herdr workspace, and start pi
 # with Linear's prompt.
-# Git repo: worktree via `gwt <branch>`. Otherwise: workDir as-is.
+# Git repo: worktree via `git wt <branch>`. Otherwise: workDir as-is.
 # Wired up in ~/.linear/coding-tools.json.
 #
 # Usage: linear-pi <workDir> <branch> <identifier>   (prompt via LINEAR_PROMPT)
@@ -76,7 +76,7 @@ main() {
     [[ -d $dir ]] || die "not a directory: $dir"
 
     if git -C "$dir" rev-parse --git-dir >/dev/null 2>&1; then
-        dir="$(cd "$dir" && gwt "$branch" 2>&1)" || die "gwt failed: $dir"
+        dir="$(cd "$dir" && git wt "$branch" 2>&1)" || die "git wt failed: $dir"
     fi
 
     if use_rex; then

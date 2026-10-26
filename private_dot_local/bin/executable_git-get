@@ -2,23 +2,23 @@
 
 set -Eeuo pipefail
 
-script_name=$(basename "$0")
+script_name="git get"
 version="0.1.0"
 
 usage() {
     cat <<EOF
 Usage:
-  $script_name get [git clone flags...] <repo>
+  $script_name [git clone flags...] <repo>
 
 Config:
   gj.root   Existing directory where repositories are stored as
             <root>/<host>/<org>/<repo> (e.g. ~/Code/github.com/org/repo).
 
 Examples:
-  $script_name get org/repo
-  $script_name get gitlab.com/org/repo
-  $script_name get https://github.com/org/repo
-  $script_name get --depth 1 git@gitlab.com:org/repo.git
+  $script_name org/repo
+  $script_name gitlab.com/org/repo
+  $script_name https://github.com/org/repo
+  $script_name --depth 1 git@gitlab.com:org/repo.git
 EOF
 }
 
@@ -144,13 +144,11 @@ main() {
         printf '%s\n' "$version"
         exit 0
         ;;
-    get)
-        shift
+    *)
+        # "get" is accepted for the old `gj get <repo>` form.
+        [[ "$1" == get ]] && shift
         require_git
         run_get "$@"
-        ;;
-    *)
-        die "Unknown command: $1"
         ;;
     esac
 }

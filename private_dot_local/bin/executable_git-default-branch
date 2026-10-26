@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# git default-branch: print origin's default branch (main, master, ...).
+# Uses origin/HEAD; falls back to origin/main, then origin/master.
+b=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null) && {
+    echo "${b#origin/}"
+    exit 0
+}
+for b in main master; do
+    git show-ref --quiet --verify "refs/remotes/origin/$b" && {
+        echo "$b"
+        exit 0
+    }
+done
+echo "git default-branch: cannot determine origin's default branch (try: git remote set-head origin --auto)" >&2
+exit 1

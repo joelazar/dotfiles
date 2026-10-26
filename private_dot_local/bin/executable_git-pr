@@ -54,7 +54,7 @@ trim() {
 
 usage() {
     cat <<'EOF'
-Usage: pr-create [options]
+Usage: git pr [options]
 
 Fills in every field automatically, then shows a review screen where you can
 change anything before the PR is created. --yes skips the review.
@@ -378,11 +378,7 @@ normalize_title() {
 # --- branch context --------------------------------------------------------
 
 default_branch() {
-    local b
-    if b=$(git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null); then
-        printf '%s' "${b#origin/}"
-        return 0
-    fi
+    git default-branch 2>/dev/null && return 0
     gh repo view --json defaultBranchRef --jq .defaultBranchRef.name 2>/dev/null
 }
 

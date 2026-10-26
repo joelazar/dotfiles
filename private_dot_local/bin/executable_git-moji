@@ -14,7 +14,7 @@ for arg in "$@"; do
       EXTRA_ARGS+=("$arg") ;;
     *)
       echo "error: unsupported argument '$arg'" >&2
-      echo "usage: gitmoji [-c|--commit] [-a|--all] [--amend] [--no-edit] [--signoff] [--no-verify] [--allow-empty]" >&2
+      echo "usage: git moji [-c|--commit] [-a|--all] [--amend] [--no-edit] [--signoff] [--no-verify] [--allow-empty]" >&2
       exit 64 ;;
   esac
 done

@@ -2,7 +2,7 @@
 
 set -Eeuo pipefail
 
-script_name=$(basename "$0")
+script_name="git wt"
 
 usage() {
     cat <<EOF
@@ -35,8 +35,7 @@ release_branch() {
     local branch=$1 path=$2 default
     [[ -z "$(git -C "$path" status --porcelain)" ]] ||
         die "$branch is checked out in $path with uncommitted changes; commit or stash first"
-    default=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null || true)
-    default=${default#origin/}
+    default=$(git -C "$path" default-branch 2>/dev/null || true)
     if [[ -n "$default" && "$default" != "$branch" ]] && git -C "$path" switch --quiet "$default" 2>/dev/null; then
         printf 'Switched %s to %s\n' "$path" "$default" >&2
     else
