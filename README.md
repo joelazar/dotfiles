@@ -126,7 +126,7 @@ This repo currently tracks config for:
 - [Pi](https://github.com/earendil-works/pi-mono) in [`dot_pi/`](dot_pi/)
 - [llama.cpp](https://github.com/ggml-org/llama.cpp) (`llama-server`) for local models in router mode (pi: `/llama`, `/model`), kept running by a launch agent
 
-Codex and Antigravity CLI are installed from the Brewfile but carry no tracked config. The [`ai-update`](private_dot_local/bin/executable_ai-update) script updates all of these agents plus Pi's local packages.
+Codex and Antigravity CLI are installed from the Brewfile but carry no tracked config. Topgrade updates all of these agents (brew step) plus Pi's local packages.
 
 ### Pi agent 🥧
 
@@ -251,22 +251,20 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 
 | Script                                                                            | What it does                                                                    |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [`ai-update`](private_dot_local/bin/executable_ai-update)                         | Updates Claude Code, Codex, Antigravity CLI, Pi, and Pi local packages          |
-| [`custom-update`](private_dot_local/bin/executable_custom-update)                 | Runs broader system and tool updates                                            |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)                 | Interactive end-of-topgrade steps                                               |
 | [`discord-summary`](private_dot_local/bin/executable_discord-summary)             | Summarizes the last 24h of selected Discord channels via kagi                   |
 | [`fonttest`](private_dot_local/bin/executable_fonttest)                           | Checks terminal font rendering                                                  |
 | [`formatter`](private_dot_local/bin/executable_formatter)                         | Formats USB drives and SD cards with a `gum` UI                                 |
 | [`term-tab`](private_dot_local/bin/executable_term-tab)                           | Opens a new Herdr, Rex or Ghostty tab in a directory, optionally with a command |
-| [`git-repo-manager`](private_dot_local/bin/executable_git-repo-manager)           | Finds git repos recursively and offers interactive actions                      |
-| [`git-reset`](private_dot_local/bin/executable_git-reset)                         | Resets repos back to their default branch state                                 |
-| [`git-submodules-update`](private_dot_local/bin/executable_git-submodules-update) | Updates git submodules                                                          |
-| [`gitmoji`](private_dot_local/bin/executable_gitmoji)                             | Interactive gitmoji commit helper built on `gum`                                |
-| [`gj`](private_dot_local/bin/executable_gj)                                       | Clones repos into a `gj.root`-based directory layout                            |
-| [`gwt`](private_dot_local/bin/executable_gwt)                                     | Creates a git worktree for a branch under the `gj` layout                       |
+| [`git-default-branch`](private_dot_local/bin/executable_git-default-branch) | Prints origin's default branch; shared by the other git scripts |
+| [`git-get`](private_dot_local/bin/executable_git-get) | `git get <repo>`: clones into a `gj.root`-based directory layout |
+| [`git-moji`](private_dot_local/bin/executable_git-moji) | `git moji`: gitmoji commit picker built on `gum` (lazygit `ctrl+g`; conventional commits on `ctrl+v`) |
+| [`git-pr`](private_dot_local/bin/executable_git-pr) | `git pr`: fills in every PR field, then shows a review screen (lazygit `ctrl+r`) |
+| [`git-sync`](private_dot_local/bin/executable_git-sync) | `git sync [--hard] [--submodules] [dir...]`: fetch and fast-forward repos and submodules (lazygit `U`) |
+| [`git-wt`](private_dot_local/bin/executable_git-wt) | `git wt <branch>`: worktree under the `gj` layout; fish `gwt` also cds into it |
 | [`kokoro`](private_dot_local/bin/executable_kokoro)                               | Local text-to-speech via the Kokoro ONNX model                                  |
 | [`listen-later`](private_dot_local/bin/executable_listen-later)                   | Turns an article, file, or text into a Kokoro-narrated Spotify episode          |
 | [`pi`](private_dot_local/bin/executable_pi)                                       | Runs the Pi agent CLI through the mise-managed Node 26 runtime                  |
-| [`pr-create`](private_dot_local/bin/executable_pr-create)                         | Creates pull requests: fills in every field, then shows a review screen         |
 | [`restic-backup`](private_dot_local/bin/executable_restic-backup)                 | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic       |
 | [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)             | Prunes old snapshots from the restic backup repo                                |
 | [`restic-mount`](private_dot_local/bin/executable_restic-mount)                   | Mounts the restic repo to browse and copy files                                 |
