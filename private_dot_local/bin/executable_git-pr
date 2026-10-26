@@ -83,7 +83,7 @@ Options:
 Title and body come from the /pr-title and /pr-body pi commands (pi-extensions
 pr-create), using the "fast" chain in ~/.pi/agent/extension-models.json.
 Reviewer groups are read from:
-  ${PR_CREATE_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-~/.config}/pr-create/reviewers.conf}
+  ${GIT_PR_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-~/.config}/git-pr/reviewers.conf}
 EOF
 }
 
@@ -219,7 +219,7 @@ prompt_multi() {
 
 # --- reviewers -------------------------------------------------------------
 
-reviewers_file=${PR_CREATE_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/pr-create/reviewers.conf}
+reviewers_file=${GIT_PR_REVIEWERS_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/git-pr/reviewers.conf}
 reviewer_group_names=()
 reviewer_group_members=()
 all_reviewers=()
