@@ -10,7 +10,9 @@ ignore_failures = ["git_repos"]
 # Run in listed order; "Custom update script" stays last (it ends with interactive prompts)
 [commands]
 "Fish completions" = "fish -c fish_update_completions"
-"AI tools" = "ai-update"
+"Pi" = "pi update --all && pi update --models"
+"Mason" = "nvim --headless +MasonUpdateAll +qa"
+"Herdr integrations" = "command -v herdr >/dev/null || exit 0; herdr integration status | awk -F: '!/: not installed/ {sub(/ \\(.*/, \"\", $1); print $1}' | xargs -n1 herdr integration install; herdr plugin update --yes"
 "save-to-spotify" = "command -v save-to-spotify >/dev/null && save-to-spotify update || true"
 "Custom update script" = "custom-update"
 
