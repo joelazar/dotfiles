@@ -16,7 +16,7 @@
     - --models-max 1: one model in memory at a time on 48 GB.
     - Web UI available at http://127.0.0.1:8080
 
-  Manage with the fish functions llama-cpp-{start,stop,restart,status,logs}.
+  Manage with the fish functions llama-cpp {start,stop,restart,status,logs}.
 --><plist version="1.0">
 <dict>
     <key>Label</key>
