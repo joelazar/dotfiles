@@ -125,13 +125,13 @@ rex.action({
 })
 
 -- Like Ghostty's write_scrollback_file:open: focused pane's scrollback, with colors, floating.
--- Pager: ~/.config/nvim/scrollback.lua (minimal nvim; y/gy copy, q quit, [[ ]] prompts, e full nvim).
+-- Pager: ~/.config/nvim/scrollback.lua (minimal nvim; y/gy copy, q quit, [[ ]] prompts, ]u [u <space>u URLs, e full nvim).
 rex.action({
   name = "edit_scrollback",
   title = "Edit Scrollback",
   category = "Terminal",
   run = function(ctx)
-    local script = 'f=$(mktemp -t rex-scrollback); rex capture -b "$1" --format=vt --trim > "$f" && { nvim --clean -u ~/.config/nvim/scrollback.lua "$f"; [ $? -eq 3 ] && nvim + "$f"; }; rm -f "$f"'
+    local script = 'f=$(mktemp -t rex-scrollback); rex capture -b "$1" --format=vt --trim --unwrap > "$f" && { nvim --clean -u ~/.config/nvim/scrollback.lua "$f"; [ $? -eq 3 ] && nvim + "$f"; }; rm -f "$f"'
     float({ "sh", "-c", script, "sh", ctx.block_id }, { 0, 0, 1, 1 })(ctx)
   end,
 })
