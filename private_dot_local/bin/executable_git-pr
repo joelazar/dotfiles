@@ -557,7 +557,7 @@ review() {
             ;;
         "Edit body")
             [[ -n "$body_file" ]] || new_tempfile body_file .md
-            "${EDITOR:-vi}" "$body_file"
+            "${VISUAL:-${EDITOR:-nvim}}" "$body_file"
             body_source="edited"
             ;;
         "Regenerate body") generate_body && show_body ;;
