@@ -1,5 +1,9 @@
 -- Rex config. Only non-default bindings are listed.
 -- Docs: https://www.superlogical.com/rex/docs
+--   All pages as markdown: curl -sL https://www.superlogical.com/rex/docs/llms.txt (links to *.md pages)
+--   Grep all: curl -sL .../llms.txt | rg -o 'https://[^)]+\.md' | xargs -n1 curl -sL | rg -i <term>
+--   Bindable actions: rex actions, rex -C "<client label>" actions (labels: rex client ls)
+--   API methods: rex api list, rex api describe <method>; keys: rex keymap; offline guide: rex __internal skill
 -- Default shortcuts: command palette (cmd+shift+p) or "Change Shortcut…".
 -- Check: rex config check   Reload: rex config reload (Rex doesn't watch this file)
 -- Appearance, font and other app settings live in the app (see run_onchange_set-rex).
