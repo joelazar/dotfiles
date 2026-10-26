@@ -131,11 +131,6 @@ alias dcleannone='docker image prune -f'
 alias dstopall='docker ps -q | xargs docker stop'
 alias dremoveall='docker ps -aq | xargs docker rm -fv'
 
-# git pull++
-alias gcodefaultall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && (git -C {} checkout main || git -C {} checkout master) && echo\''
-alias gpullall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} bash -c \'echo {} && git -C {} pull\''
-alias gresetall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -P10 -I{} bash -c \'echo {} && git -C {} reset --hard origin && git -C {} clean -fd && git -C {} checkout .\''
-alias gstatusall='fd --type d --hidden \'.git$\' | rev | cut -d \'/\' -f3- | rev | xargs -I{} bash -c \'echo {} && git -C {} show --summary && echo\''
 
 # other
 alias get-local-ip="ifconfig \

@@ -1,0 +1,159 @@
+#!/usr/bin/env bash
+# git sync [--hard] [--submodules] [dir...]
+#
+# Bring repos up to date with origin. Dirs default to the current directory;
+# a dir that is not a repo is scanned two levels deep for repos.
+#
+#   default       fetch, fast-forward the default branch (and the current
+#                 branch if it tracks a remote), update pinned submodules.
+#                 Repos with local changes are fetched but left untouched.
+#   --hard        check out the default branch and reset to origin, dropping
+#                 local changes (asks first for dirty repos).
+#   --submodules  move submodules to the tip of their own default branch
+#                 instead of the pinned commit.
+#
+# Fetches run in parallel (GIT_SYNC_JOBS, default 8).
+
+set -uo pipefail
+
+hard=false
+latest_subs=false
+dirs=()
+for arg in "$@"; do
+    case "$arg" in
+    --hard) hard=true ;;
+    --submodules) latest_subs=true ;;
+    -h | --help)
+        sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
+        exit 0
+        ;;
+    -*)
+        echo "git sync: unknown option $arg" >&2
+        exit 2
+        ;;
+    *) dirs+=("$arg") ;;
+    esac
+done
+[[ ${#dirs[@]} -gt 0 ]] || dirs=("$PWD")
+jobs=${GIT_SYNC_JOBS:-8}
+
+confirm() {
+    if command -v gum >/dev/null; then
+        gum confirm "$1" </dev/tty
+    else
+        local a
+        read -r -p "$1 [y/N] " a </dev/tty
+        [[ "$a" == [yY]* ]]
+    fi
+}
+
+# ---- discover repos ----
+repos=()
+for dir in "${dirs[@]}"; do
+    if [[ ! -d "$dir" ]]; then
+        echo "❌ $dir → not a directory"
+    elif [[ -e "$dir/.git" ]]; then
+        repos+=("$(cd "$dir" && pwd)")
+    else
+        while IFS= read -r gitdir; do
+            repos+=("$(dirname "$gitdir")")
+        done < <(fd --hidden --no-ignore --max-depth 2 --glob .git "$dir" --absolute-path | sed 's#/$##')
+    fi
+done
+[[ ${#repos[@]} -gt 0 ]] || {
+    echo "no git repositories found"
+    exit 0
+}
+
+# ---- --hard: ask about dirty repos before touching anything ----
+if $hard; then
+    keep=()
+    for repo in "${repos[@]}"; do
+        status=$(git -C "$repo" status --short)
+        if [[ -n "$status" ]]; then
+            printf '\n⚠️  %s has local changes:\n%s\n' "$repo" "$(head -10 <<<"$status")"
+            confirm "Drop local changes in $(basename "$repo")?" || {
+                echo "  ⏭️  skipped"
+                continue
+            }
+        fi
+        keep+=("$repo")
+    done
+    repos=("${keep[@]+"${keep[@]}"}")
+    [[ ${#repos[@]} -gt 0 ]] || exit 0
+fi
+
+# ---- parallel fetch ----
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+echo "⬇️  fetching ${#repos[@]} repo(s)..."
+for i in "${!repos[@]}"; do
+    (git -C "${repos[$i]}" fetch --quiet origin &>/dev/null && touch "$tmp/$i") &
+    while [[ $(jobs -rp | wc -l) -ge $jobs ]]; do wait -n; done
+done
+wait
+
+# ---- update each repo ----
+sync_submodules() {
+    [[ -f .gitmodules ]] || return 0
+    if $latest_subs; then
+        # shellcheck disable=SC2016 # expanded by git submodule foreach
+        git submodule foreach --quiet --recursive '
+            git fetch --quiet origin
+            b=$(git default-branch) || { echo "    ❌ submodule $name: no default branch"; exit 0; }
+            git checkout --quiet "$b" && git merge --quiet --ff-only "origin/$b" &&
+                echo "    ↳ submodule $name → $b" || echo "    ❌ submodule $name: could not update $b"
+        '
+    else
+        git submodule update --quiet --init --recursive || echo "    ❌ submodule update failed"
+    fi
+}
+
+sync_repo() {
+    local repo=$1 def cur
+    cd "$repo" || return
+    def=$(git default-branch) || {
+        echo "❌ $repo → no default branch"
+        return
+    }
+    cur=$(git branch --show-current)
+
+    if $hard; then
+        # shellcheck disable=SC2015 # any step failing means the reset failed
+        git reset --quiet --hard && git clean -fdq &&
+            git checkout --quiet -f "$def" && git reset --quiet --hard "origin/$def" ||
+            {
+                echo "❌ $repo → reset failed"
+                return
+            }
+        echo "✅ $repo → reset to origin/$def"
+        sync_submodules
+        return
+    fi
+
+    if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
+        echo "⏭️  $repo → local changes, fetched only"
+        return
+    fi
+    if [[ "$cur" == "$def" ]]; then
+        git merge --quiet --ff-only "origin/$def" 2>/dev/null ||
+            {
+                echo "⚠️  $repo → $def diverged from origin, not updated"
+                return
+            }
+    else
+        # Fast-forward the default branch without checking it out; refuses non-ff.
+        git fetch --quiet . "origin/$def:$def" 2>/dev/null || echo "⚠️  $repo → $def diverged from origin, not updated"
+        git rev-parse --quiet --verify '@{u}' >/dev/null && git merge --quiet --ff-only '@{u}' 2>/dev/null
+    fi
+    echo "✅ $repo → ${cur:-detached} (default: $def)"
+    sync_submodules
+}
+
+for i in "${!repos[@]}"; do
+    if [[ -e "$tmp/$i" ]]; then
+        (sync_repo "${repos[$i]}")
+    else
+        echo "❌ ${repos[$i]} → fetch failed"
+    fi
+done
