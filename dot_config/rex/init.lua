@@ -124,15 +124,51 @@ rex.action({
   end,
 })
 
--- Like Ghostty's write_scrollback_file:open: focused pane's scrollback, with colors, floating.
--- Pager: ~/.config/nvim/scrollback.lua (minimal nvim; y/gy copy, q quit, [[ ]] prompts, ]u [u <space>u URLs, e full nvim).
+-- Like Ghostty's write_scrollback_file:open: the pane's scrollback, with colors, in place of that pane.
+-- Pager: ~/.config/nvim/scrollback.lua (minimal nvim; y/gy copy, q quit, [[ ]] prompts, ]u [u <space>u URLs,
+-- e full nvim, ctrl+h/j/k/l move between panes).
+-- The pane is detached (keeps running) while the pager takes its slot, and put back when the pager exits.
+local restore_pane = [[
+rex.session.move_block({ block_id = rex.args.pane, anchor_block_id = rex.args.pager, side = "before" })
+rex.session.focus_block({ block_id = rex.args.pane })
+]]
+local scrollback_script = [[
+pane=$1 pager=$REX_BLOCK; export REX=$2
+f=$(mktemp -t rex-scrollback)
+trap '"$REX" do -e "$3" pane="$pane" pager="$pager"; rm -f "$f"' EXIT
+"$REX" capture -b "$pane" --format=vt --trim --unwrap > "$f" || exit
+nvim --clean -u ~/.config/nvim/scrollback.lua "$f"
+[ $? -eq 3 ] && nvim + "$f"
+]]
 rex.action({
   name = "edit_scrollback",
   title = "Edit Scrollback",
   category = "Terminal",
   run = function(ctx)
-    local script = 'f=$(mktemp -t rex-scrollback); rex capture -b "$1" --format=vt --trim --unwrap > "$f" && { nvim --clean -u ~/.config/nvim/scrollback.lua "$f"; [ $? -eq 3 ] && nvim + "$f"; }; rm -f "$f"'
-    float({ "sh", "-c", script, "sh", ctx.block_id }, { 0, 0, 1, 1 })(ctx)
+    local pane = ctx.block_id
+    local p = rex.block.call(terminal, "process", { block_id = pane })
+    local s, err = rex.session.new_split({
+      anchor_id = pane,
+      direction = "horizontal",
+      side = "after",
+      focus = true,
+      layout = rex.layout.block({
+        flavor = "com.superlogical.terminal.shell",
+        options = {
+          command = { "sh", "-c", scrollback_script, "sh", pane, rex_bin, restore_pane },
+          cwd = p and p.foreground and p.foreground.cwd,
+        },
+      }),
+    })
+    if s == nil then
+      error(err, 0)
+    end
+    local _, derr = rex.session.detach_block({ block_id = pane })
+    if derr ~= nil then
+      error(derr, 0)
+    end
+    -- detaching moves focus to a neighbour; put it on the pager
+    rex.session.focus_block({ block_id = s.block_ids[1] })
   end,
 })
 
