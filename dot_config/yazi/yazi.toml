@@ -19,7 +19,7 @@ sort_by = "key"
 
 [opener]
 edit = [
-  { run = '${EDITOR:-vi} %s', desc = "Edit", block = true, orphan = false, for = "macos" },
+  { run = '${EDITOR:-nvim} %s', desc = "Edit", block = true, orphan = false, for = "macos" },
 ]
 browser = [
   { run = '${BROWSER:-/Applications/Helium.app/Contents/MacOS/Helium} %s', desc = "Browser", orphan = true, for = "macos" },

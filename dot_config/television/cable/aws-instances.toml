@@ -38,6 +38,6 @@ mode = "execute"
 
 [actions.open]
 description = "Open the resource as JSON in $EDITOR"
-command = "exec >&2; d=$(mktemp -d); aws ec2 describe-instances --output json --instance-ids {split:\t:0} --query 'Reservations[*].Instances[0]' > \"$d/resource.json\" && ${EDITOR:-vim} \"$d/resource.json\"; rm -rf \"$d\""
+command = "exec >&2; d=$(mktemp -d); aws ec2 describe-instances --output json --instance-ids {split:\t:0} --query 'Reservations[*].Instances[0]' > \"$d/resource.json\" && ${EDITOR:-nvim} \"$d/resource.json\"; rm -rf \"$d\""
 shell = "bash"
 mode = "execute"

@@ -52,7 +52,7 @@ mode = "execute"
 
 [actions.plist]
 description = "View the plist file for the selected service"
-command = "exec >&2; plist=$( (launchctl print gui/$(id -u)/'{split:\t:0}' 2>/dev/null || launchctl print user/$(id -u)/'{split:\t:0}' 2>/dev/null || launchctl print system/'{split:\t:0}' 2>/dev/null) | sed -n 's/^\\tpath = //p'); if [ -n \"$plist\" ]; then $EDITOR \"$plist\"; else echo 'Plist not found'; fi; echo"
+command = "exec >&2; plist=$( (launchctl print gui/$(id -u)/'{split:\t:0}' 2>/dev/null || launchctl print user/$(id -u)/'{split:\t:0}' 2>/dev/null || launchctl print system/'{split:\t:0}' 2>/dev/null) | sed -n 's/^\\tpath = //p'); if [ -n \"$plist\" ]; then ${EDITOR:-nvim} \"$plist\"; else echo 'Plist not found'; fi; echo"
 shell = "bash"
 mode = "execute"
 

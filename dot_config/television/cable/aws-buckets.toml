@@ -24,6 +24,6 @@ enter = "actions:open"
 
 [actions.open]
 description = "Open the resource as JSON in $EDITOR"
-command = "exec >&2; d=$(mktemp -d); aws s3api list-objects-v2 --bucket {split: :3|trim} --output json > \"$d/resource.json\" && ${EDITOR:-vim} \"$d/resource.json\"; rm -rf \"$d\""
+command = "exec >&2; d=$(mktemp -d); aws s3api list-objects-v2 --bucket {split: :3|trim} --output json > \"$d/resource.json\" && ${EDITOR:-nvim} \"$d/resource.json\"; rm -rf \"$d\""
 shell = "bash"
 mode = "execute"

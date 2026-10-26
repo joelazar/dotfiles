@@ -23,6 +23,6 @@ mode = "fork"
 
 [actions.open]
 description = "Open the resource as JSON in $EDITOR"
-command = "exec >&2; d=$(mktemp -d); aws rds describe-db-instances --db-instance-identifier '{split:\t:0}' --output json > \"$d/resource.json\" && ${EDITOR:-vim} \"$d/resource.json\"; rm -rf \"$d\""
+command = "exec >&2; d=$(mktemp -d); aws rds describe-db-instances --db-instance-identifier '{split:\t:0}' --output json > \"$d/resource.json\" && ${EDITOR:-nvim} \"$d/resource.json\"; rm -rf \"$d\""
 shell = "bash"
 mode = "execute"
