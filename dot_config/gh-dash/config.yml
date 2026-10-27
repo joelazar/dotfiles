@@ -86,25 +86,25 @@ keybindings:
     - key: e
       name: open in nvim
       command: >
-        term-tab -t 'PR #{{.PrNumber}}' '{{.RepoPath}}' 'gh pr checkout {{.PrNumber}} && nvim'
+        term-tab -t 'nvim: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}' 'gh pr checkout {{.PrNumber}} && nvim'
     - key: E
       name: diff in CodeDiff
       command: >
-        term-tab -t 'PR #{{.PrNumber}} diff' '{{.RepoPath}}'
+        term-tab -t 'diff: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}'
         'gh pr checkout {{.PrNumber}} && nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"'
     - key: T
       name: review with tuicr
       command: >
-        term-tab -t 'PR #{{.PrNumber}} review' '{{.RepoPath}}'
+        term-tab -t 'tuicr review: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}'
         'tuicr pr {{.PrNumber}} --repo-url https://github.com/{{.RepoName}}'
     - key: ctrl+g
       name: lazygit
       command: >
-        term-tab -t lazygit '{{.RepoPath}}' lazygit
+        term-tab -t 'lazygit: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}' lazygit
     - key: S
       name: open shell
       command: >
-        term-tab -t 'PR #{{.PrNumber}}' '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
+        term-tab -t 'shell: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
     - key: B
       name: copy branch name
       command: >
@@ -168,11 +168,11 @@ keybindings:
     - key: e
       name: open in nvim
       command: >
-        term-tab -t 'Issue #{{.IssueNumber}}' '{{.RepoPath}}' nvim
+        term-tab -t 'nvim: {{.RepoName}} issue #{{.IssueNumber}}' '{{.RepoPath}}' nvim
     - key: ctrl+g
       name: lazygit
       command: >
-        term-tab -t lazygit '{{.RepoPath}}' lazygit
+        term-tab -t 'lazygit: {{.RepoName}} issue #{{.IssueNumber}}' '{{.RepoPath}}' lazygit
     - key: ctrl+p
       name: pin issue
       command: >
