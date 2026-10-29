@@ -24,26 +24,6 @@ rex.action({
   end,
 })
 
--- Floating terminal over the current window, in the focused pane's directory.
--- Closes when its program exits.
-local function float(command, bounds)
-  return function(ctx)
-    local p = rex.block.call(terminal, "process", { block_id = ctx.block_id })
-    local cwd = p and p.foreground and p.foreground.cwd
-    local _, err = rex.session.new_layer({
-      bounds = bounds or { 0.05, 0.05, 0.9, 0.9 },
-      focus = true,
-      layout = rex.layout.block({
-        flavor = "com.superlogical.terminal.shell",
-        options = { command = command, cwd = cwd },
-      }),
-    })
-    if err ~= nil then
-      error(err, 0)
-    end
-  end
-end
-
 -- New tab right after the active one (client.tab.new always appends).
 -- The app's own new tab is the only reliable way to get it selected, so let the
 -- app create it, and move it in a detached `rex do` helper: queued app actions
@@ -105,22 +85,6 @@ rex.action({
       end
     end
     rex.client.queue("client.tab.new")
-  end,
-})
-
--- Toggle: inside the lazygit float, quit it (the float closes on exit); otherwise open one.
-local open_lazygit = float({ "lazygit" }, { 0, 0, 1, 1 })
-rex.action({
-  name = "float_lazygit",
-  title = "Lazygit (floating)",
-  category = "Layouts",
-  run = function(ctx)
-    local p = ctx.block_id and rex.block.call(terminal, "process", { block_id = ctx.block_id })
-    if p and p.foreground and p.foreground.name == "lazygit" then
-      rex.block.call(terminal, "write", { block_id = ctx.block_id, data = "q" })
-      return
-    end
-    open_lazygit(ctx)
   end,
 })
 
@@ -240,7 +204,6 @@ rex.bind("ctrl+l", smart_nav("right"))
 ------------------------------------------------------------------------
 -- Floats
 ------------------------------------------------------------------------
-rex.bind("cmd+alt+g", "float_lazygit")
 rex.bind("cmd+shift+f", "edit_scrollback")
 
 ------------------------------------------------------------------------
