@@ -26,14 +26,12 @@ macos-non-native-fullscreen = visible-menu
 macos-option-as-alt = true
 quit-after-last-window-closed = true
 resize-overlay = never
+drag-handle = never
 
 # --- Terminal behaviour ---
 cursor-style-blink = false
 mouse-hide-while-typing = true
 clipboard-paste-protection = false
-# herdr owns pane scrollback (advanced.scrollback_limit_bytes); this only covers
-# non-herdr surfaces
-scrollback-limit = 10000000
 # herdr's ui.mouse_scroll_lines already scrolls 3 lines per wheel event
 mouse-scroll-multiplier = precision:1,discrete:1
 # how long a closed tab/split can be restored with super+z
@@ -61,6 +59,7 @@ keybind = super+physical:nine=last_tab
 keybind = super+shift+t=prompt_tab_title
 keybind = super+shift+comma=move_tab:-1
 keybind = super+shift+period=move_tab:1
+keybind = super+shift+n=move_tab_to_new_window
 keybind = super+grave_accent=goto_window:next
 keybind = super+shift+grave_accent=goto_window:previous
 # fullscreen stays on super+ctrl+f
