@@ -32,7 +32,8 @@ jq -s --argjson m "$(cat <<'JSON'
     "/Users/joelazar/Code/joelazar/pi-tuicr",
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/ayghri/i-have-adhd",
-    "git:github.com/DietrichGebert/ponytail"
+    "git:github.com/DietrichGebert/ponytail",
+    "git:github.com/dimk90/pi-context-view"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
