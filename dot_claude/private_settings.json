@@ -8,7 +8,10 @@
     "DISABLE_FEEDBACK_COMMAND": "1",
     "DISABLE_AUTOUPDATER": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5",
+    "GIT_PAGER": "cat",
+    "PAGER": "cat",
+    "AWS_PAGER": ""
   },
   "attribution": {
     "commit": "",
@@ -94,13 +97,109 @@
       "Bash(sudo rm -rf /*)",
       "Bash(sudo rm -rf ~)",
       "Bash(sudo rm -rf ~/)",
+      "Edit(**/*.key)",
+      "Edit(**/*.p12)",
+      "Edit(**/*.pem)",
+      "Edit(**/*.pfx)",
+      "Edit(**/.aws/**)",
+      "Edit(**/.azure/**)",
+      "Edit(**/.config/gcloud/**)",
+      "Edit(**/.config/gh/hosts.yml)",
+      "Edit(**/.env*)",
+      "Edit(**/.gem/credentials)",
+      "Edit(**/.git-credentials)",
+      "Edit(**/.kube/**)",
+      "Edit(**/.netrc)",
+      "Edit(**/.npmrc)",
+      "Edit(**/.pypirc)",
+      "Edit(**/.secret*)",
+      "Edit(**/.terraform.d/credentials.tfrc.json)",
+      "Edit(**/.yarnrc.yml)",
+      "Edit(**/Obsidian/journal/**)",
+      "Edit(**/credentials/**)",
+      "Edit(**/id_ed25519)",
+      "Edit(**/id_rsa)",
+      "Edit(**/pip.conf)",
+      "Edit(**/secrets/**)",
+      "Edit(**/vault_password)",
+      "Edit(~/*.gpg)",
+      "Edit(~/.aws/**)",
+      "Edit(~/.azure/**)",
+      "Edit(~/.codex/auth.json)",
+      "Edit(~/.config/exercism/user.json)",
+      "Edit(~/.config/gcloud/**)",
+      "Edit(~/.config/gcx/config.yaml)",
+      "Edit(~/.config/gh/hosts.yml)",
+      "Edit(~/.config/github-copilot/**)",
+      "Edit(~/.config/gws/**)",
+      "Edit(~/.config/op/**)",
+      "Edit(~/.config/pip/pip.conf)",
+      "Edit(~/.config/save-to-spotify/**)",
+      "Edit(~/.config/sops/**)",
+      "Edit(~/.fly/**)",
+      "Edit(~/.gem/credentials)",
+      "Edit(~/.git-credentials)",
+      "Edit(~/.gnupg/**)",
+      "Edit(~/.gpg-agent.conf)",
+      "Edit(~/.kube/**)",
+      "Edit(~/.netrc)",
+      "Edit(~/.npmrc)",
+      "Edit(~/.pi/**/auth.json)",
+      "Edit(~/.pypirc)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.terraform.d/credentials.tfrc.json)",
       "Read(**/*.key)",
+      "Read(**/*.p12)",
       "Read(**/*.pem)",
+      "Read(**/*.pfx)",
       "Read(**/.aws/**)",
+      "Read(**/.azure/**)",
+      "Read(**/.config/gcloud/**)",
+      "Read(**/.config/gh/hosts.yml)",
       "Read(**/.env*)",
+      "Read(**/.gem/credentials)",
+      "Read(**/.git-credentials)",
+      "Read(**/.kube/**)",
+      "Read(**/.netrc)",
+      "Read(**/.npmrc)",
+      "Read(**/.pypirc)",
+      "Read(**/.secret*)",
       "Read(**/.ssh/**)",
+      "Read(**/.terraform.d/credentials.tfrc.json)",
+      "Read(**/.yarnrc.yml)",
+      "Read(**/Obsidian/journal/**)",
       "Read(**/credentials/**)",
-      "Read(**/secrets/**)"
+      "Read(**/id_ed25519)",
+      "Read(**/id_rsa)",
+      "Read(**/pip.conf)",
+      "Read(**/secrets/**)",
+      "Read(**/vault_password)",
+      "Read(~/*.gpg)",
+      "Read(~/.aws/**)",
+      "Read(~/.azure/**)",
+      "Read(~/.codex/auth.json)",
+      "Read(~/.config/exercism/user.json)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.config/gcx/config.yaml)",
+      "Read(~/.config/gh/hosts.yml)",
+      "Read(~/.config/github-copilot/**)",
+      "Read(~/.config/gws/**)",
+      "Read(~/.config/op/**)",
+      "Read(~/.config/pip/pip.conf)",
+      "Read(~/.config/save-to-spotify/**)",
+      "Read(~/.config/sops/**)",
+      "Read(~/.fly/**)",
+      "Read(~/.gem/credentials)",
+      "Read(~/.git-credentials)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.gpg-agent.conf)",
+      "Read(~/.kube/**)",
+      "Read(~/.netrc)",
+      "Read(~/.npmrc)",
+      "Read(~/.pi/**/auth.json)",
+      "Read(~/.pypirc)",
+      "Read(~/.ssh/**)",
+      "Read(~/.terraform.d/credentials.tfrc.json)"
     ],
     "ask": [
       "Bash(git push --force*)",
@@ -171,7 +270,9 @@
   },
   "enabledPlugins": {
     "cc-plugin-you-should-know@builtin": true,
-    "cowork-plugin-management@synced": false
+    "cowork-plugin-management@synced": false,
+    "ponytail@ponytail": true,
+    "i-have-adhd@i-have-adhd": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -180,6 +281,18 @@
         "repo": "anthropics/skills"
       },
       "autoUpdate": true
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
     }
   },
   "outputStyle": "Concise",
@@ -271,6 +384,7 @@
   "theme": "dark-ansi",
   "editorMode": "normal",
   "preferredNotifChannel": "ghostty",
+  "switchModelsOnFlag": true,
   "fileCheckpointingEnabled": true,
   "showTurnDuration": true,
   "inputNeededNotifEnabled": true,
@@ -293,6 +407,5 @@
       "Dotfiles are managed by chezmoi; the source directory is ~/.local/share/chezmoi and changes reach the live system only via chezmoi apply"
     ]
   },
-  "voiceEnabled": false,
-  "switchModelsOnFlag": true
+  "voiceEnabled": false
 }
