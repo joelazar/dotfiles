@@ -69,6 +69,11 @@
 
     format = ssh
 
+[gpg "ssh"]
+
+    # Trusted keys for verifying SSH signatures locally (git log --show-signature).
+    allowedSignersFile = ~/.config/git/allowed_signers
+
 [merge]
 
     conflictstyle = zdiff3
