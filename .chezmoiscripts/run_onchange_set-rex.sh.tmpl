@@ -21,7 +21,7 @@ echo "==> Applying Rex preferences"
 # Theme: Catppuccin Mocha, imported from Ghostty's theme file (Import Theme File).
 # Stored as a JSON array of custom themes; this replaces any other custom theme.
 THEME_JSON=$(cat <<'EOF'
-{{ include "scripts/rex-theme-catppuccin-mocha.json" }}
+{{ include ".chezmoitemplates/rex-theme-catppuccin-mocha.json" }}
 EOF
 )
 THEME_ID=$(printf '%s' "$THEME_JSON" | jq -r '.id')
