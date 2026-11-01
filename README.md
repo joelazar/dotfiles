@@ -48,7 +48,6 @@ A few quick facts:
 | [`dot_config/`](dot_config/)                       | App and CLI configuration for tools like Fish, Ghostty, Yazi, Television, Starship, Mise, Lazygit, pgcli, Wireshark, and more |
 | [`dot_pi/`](dot_pi/)                               | Pi agent configuration, prompts, themes, skills, and extension config                                                         |
 | [`dot_claude/`](dot_claude/)                       | Claude Code configuration                                                                                                     |
-| [`dot_ipython/`](dot_ipython/)                     | IPython profile config                                                                                                        |
 | [`private_dot_local/bin/`](private_dot_local/bin/) | Personal utility scripts                                                                                                      |
 | [`scripts/`](scripts/)                             | Shared helper scripts used by install/setup flows, including `pi-packages-update`                                             |
 | [`Brewfile`](Brewfile)                             | Homebrew packages, casks, and npm globals                                                                                     |
