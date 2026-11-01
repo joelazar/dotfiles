@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Linear "Work on issue → Custom script" handler: open the issue in a Rex
-# session (when the Rex app is running) or a Herdr workspace, and start pi
-# with Linear's prompt.
+# session and start pi with Linear's prompt. Needs the Rex app running.
 # Git repo: worktree via `git wt <branch>`. Otherwise: workDir as-is.
 # Wired up in ~/.linear/coding-tools.json.
 #
@@ -18,33 +17,6 @@ die() {
     printf 'linear-pi: %s\n' "$1" >&2
     osascript -e "display notification \"$1\" with title \"linear-pi\"" >/dev/null 2>&1 || true
     exit 1
-}
-
-# Focus the workspace labelled <label>, or create it in <dir>.
-# Prints "new <pane_id>" or "existing".
-open_workspace() {
-    local dir="$1" label="$2" list existing out
-    list="$(herdr workspace list)" || die "herdr workspace list failed"
-    existing="$(jq -r --arg l "$label" '.result.workspaces[] | select(.label == $l) | .workspace_id' <<<"$list" | head -n1)"
-    if [[ -n $existing ]]; then
-        herdr workspace focus "$existing" >/dev/null
-        echo existing
-        return
-    fi
-    out="$(herdr workspace create --cwd "$dir" --label "$label" --focus 2>&1)" ||
-        die "herdr workspace create failed: $out"
-    printf 'new %s\n' "$(jq -r '.result.root_pane.pane_id // empty' <<<"$out")"
-}
-
-start_pi() {
-    local pane="$1" id="$2" name
-    name="$(tr '[:upper:]' '[:lower:]' <<<"$id" | tr -c 'a-z0-9_-\n' '-' | cut -c1-32)"
-    [[ $name == [a-z]* ]] || name="l$name"
-    # The fresh shell drops keystrokes until its prompt is drawn.
-    herdr pane wait-output "$pane" --match "❯" --timeout 15000 >/dev/null ||
-        die "shell prompt never appeared in $pane"
-    herdr agent start "$name" --kind pi --pane "$pane" -- "${LINEAR_PROMPT:-Work on Linear issue $id}" >/dev/null ||
-        die "pi failed to start in $pane"
 }
 
 use_rex() {
@@ -79,18 +51,8 @@ main() {
         dir="$(cd "$dir" && git wt "$branch" 2>&1)" || die "git wt failed: $dir"
     fi
 
-    if use_rex; then
-        open_rex "$dir" "$id"
-        return
-    fi
-
-    local state pane
-    read -r state pane < <(open_workspace "$dir" "$id")
-    if [[ $state == new && -n $pane ]]; then
-        start_pi "$pane" "$id"
-    fi
-
-    open -a Ghostty
+    use_rex || die "Rex is not running"
+    open_rex "$dir" "$id"
 }
 
 main "$@"

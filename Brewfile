@@ -109,8 +109,6 @@ brew "googleworkspace-cli"
 brew "gum"
 # Kubernetes package manager
 brew "helm"
-# Agent multiplexer that lives in your terminal
-brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
 # Configurable static site generator
