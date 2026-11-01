@@ -15,8 +15,6 @@ jq -s --argjson m "$(cat <<'JSON'
     "anthropic/claude-sonnet-5-5",
     "anthropic/claude-opus-5-5",
     "anthropic/claude-fable-5-1",
-    "pi-claude/claude-opus-5-5",
-    "pi-claude/claude-fable-5-1",
     "openrouter/deepseek/deepseek-v4.1-flash",
     "openai/gpt-6-luna"
   ],
