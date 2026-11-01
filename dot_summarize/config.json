@@ -14,29 +14,19 @@
         "agy"
       ]
     },
-    "codex": {
-      "model": "gpt-6-luna"
-    },
-    "gemini": {
-      "model": "flash",
-      "extraArgs": [
-        "--verbose"
-      ]
-    },
     "claude": {
-      "model": "sonnet",
-      "binary": "/usr/local/bin/claude",
+      "model": "haiku",
       "extraArgs": [
         "--verbose"
       ]
     },
-    "agy": {
-      "binary": "/usr/local/bin/agy"
-    },
+    "agy": {},
     "pi": {
-      "binary": "/usr/local/bin/pi",
       "extraArgs": [
-        "--provider anthropic --model claude-sonnet-5"
+        "--provider",
+        "anthropic",
+        "--model",
+        "claude-haiku-5-5"
       ]
     }
   }
