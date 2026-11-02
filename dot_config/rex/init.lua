@@ -167,20 +167,8 @@ rex.bind("resize/l", "pane.resize", { direction = "right" })
 
 -- smart-splits: ctrl+h/j/k/l moves between Rex panes, but passes the key
 -- through when nvim is in the foreground (nvim moves out at its own edge, see
--- ~/Code/joelazar/smart-splits-rex.md) or when there is no pane that way
--- (so ctrl+l still clears the shell, ctrl+h still backspaces).
-local function focused_block()
-  local v = rex.session.view({})
-  if v == nil then
-    return nil
-  end
-  for _, w in ipairs(v.windows or {}) do
-    if w.window_id == v.active_window_id then
-      return w.focused_block_id
-    end
-  end
-end
-
+-- ~/Code/joelazar/smart-splits-rex.md). At the window edge the key is
+-- swallowed, so ctrl+l never clears the shell by accident.
 local function smart_nav(direction)
   return function(ctx)
     if ctx.block_id == nil then
@@ -192,7 +180,7 @@ local function smart_nav(direction)
       return false
     end
     rex.session.focus_direction({ direction = direction })
-    return focused_block() ~= ctx.block_id
+    return true
   end
 end
 
