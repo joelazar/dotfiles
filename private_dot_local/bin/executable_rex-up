@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Recreate my standard Rex sessions on the local server.
+#
+# Usage: rex-up
+#
+# Each session gets one shell tab; the command is typed into fish so quitting
+# the app drops back to a shell. Sessions whose label already exists are skipped.
+set -euo pipefail
+
+# label|cwd|command (empty command = plain shell)
+SESSIONS=(
+    "Obsidian 🟪|$HOME/Obsidian|nvim"
+    "GitHub 🐙|$HOME|gh dash"
+    "Private 🧑‍💻|$HOME/.local/share/chezmoi|"
+    "Work 🧑‍🏭|$HOME|"
+)
+
+existing_labels() {
+    rex ls --json | jq -r '.sessions[].label'
+}
+
+create_session() {
+    local label="$1" dir="$2" command="$3"
+    local created session_id block_id
+
+    created="$(rex new "$label" -c "$dir" --json)"
+    session_id="$(jq -er '.session_id' <<<"$created")"
+    block_id="$(jq -er '.initial_windows[0].block_ids[0]' <<<"$created")" || {
+        echo "rex-up: rex did not return a block id for '$label': $created" >&2
+        return 70
+    }
+
+    if [[ -n $command ]]; then
+        rex send -s "$session_id" -b "$block_id" "$command"$'\n' >/dev/null
+    fi
+    echo "created: $label"
+}
+
+main() {
+    local labels entry label dir command
+    labels="$(existing_labels)"
+
+    for entry in "${SESSIONS[@]}"; do
+        IFS='|' read -r label dir command <<<"$entry"
+        if grep -Fqx -- "$label" <<<"$labels"; then
+            echo "exists:  $label"
+            continue
+        fi
+        create_session "$label" "$dir" "$command"
+    done
+}
+
+main "$@"
