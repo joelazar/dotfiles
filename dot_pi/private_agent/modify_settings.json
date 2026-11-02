@@ -15,6 +15,10 @@ jq -s --argjson m "$(cat <<'JSON'
     "anthropic/claude-sonnet-5-5",
     "anthropic/claude-opus-5-5",
     "anthropic/claude-fable-5-1",
+    "claude-code/claude-haiku-5-5",
+    "claude-code/claude-sonnet-5-5",
+    "claude-code/claude-opus-5-5",
+    "claude-code/claude-fable-5-1",
     "openrouter/deepseek/deepseek-v4.1-flash",
     "openai/gpt-6-luna"
   ],
@@ -31,7 +35,8 @@ jq -s --argjson m "$(cat <<'JSON'
     "git:github.com/aliou/pi-guardrails",
     "git:github.com/ayghri/i-have-adhd",
     "git:github.com/DietrichGebert/ponytail",
-    "git:github.com/dimk90/pi-context-view"
+    "git:github.com/dimk90/pi-context-view",
+    "git:github.com/earendil-works/pi-claude-code"
   ],
   "defaultProjectTrust": "ask",
   "transport": "auto",
