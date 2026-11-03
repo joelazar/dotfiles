@@ -309,15 +309,15 @@
       ]
     },
     "filesystem": {
-      "denyRead": [
-        "~/**/.env",
-        "~/**/.env.*"
-      ],
       "allowWrite": [
         "~/Library/Caches/go-build",
         "~/Go/pkg/mod",
         "~/.npm",
         "~/.cache"
+      ],
+      "denyRead": [
+        "~/**/.env",
+        "~/**/.env.*"
       ]
     },
     "credentials": {
@@ -394,7 +394,7 @@
     ],
     "environment": [
       "$defaults",
-      "Personal macOS development machine owned by Joe Lazar. Primary use: software development (Go, TypeScript, shell) and dotfiles maintenance",
+      "Personal macOS development machine owned by Joe Lazar. Primary use: software development (Go, TypeScript, shell)",
       "Source control: github.com/joelazar and all repos under it",
       "Dotfiles are managed by chezmoi; the source directory is ~/.local/share/chezmoi and changes reach the live system only via chezmoi apply"
     ]
