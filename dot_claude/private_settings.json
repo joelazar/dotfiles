@@ -9,6 +9,7 @@
     "DISABLE_AUTOUPDATER": "1",
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5",
+    "CLAUDE_CODE_SUBAGENT_EFFORT": "medium",
     "GIT_PAGER": "cat",
     "PAGER": "cat",
     "AWS_PAGER": ""
@@ -205,9 +206,15 @@
       "Bash(git push --force*)",
       "Bash(git push -f*)",
       "Bash(git push * --force*)",
-      "Bash(git push * -f*)"
+      "Bash(git push * -f*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh api * -X DELETE*)",
+      "Bash(gh api * --method DELETE*)",
+      "Bash(find * -delete*)",
+      "Bash(find * -exec*)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "blockWritesOutsideWorkingDirectories": false
   },
   "model": "opus[1m]",
   "fallbackModel": [
@@ -302,6 +309,10 @@
       ]
     },
     "filesystem": {
+      "denyRead": [
+        "~/**/.env",
+        "~/**/.env.*"
+      ],
       "allowWrite": [
         "~/Library/Caches/go-build",
         "~/Go/pkg/mod",
@@ -351,14 +362,6 @@
   },
   "spinnerTipsEnabled": false,
   "effortLevel": "high",
-  "modelSettings": {
-    "claude-opus-5": {
-      "effortLevel": "high"
-    },
-    "claude-opus-5-5": {
-      "effortLevel": "high"
-    }
-  },
   "pluginConfigs": {
     "agents-md@builtin": {
       "options": {
@@ -366,7 +369,6 @@
       }
     }
   },
-  "autoUpdatesChannel": "stable",
   "tui": "default",
   "timeFormat": "24-hour",
   "showThinkingSummaries": true,
