@@ -150,7 +150,7 @@ keybindings:
         end
         '
     # ── Merge ────────────────────────────────────
-    - key: M
+    - key: m
       name: merge (squash)
       command: >
         gh pr merge --repo {{.RepoName}} {{.PrNumber}} --squash --delete-branch
