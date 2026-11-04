@@ -8,8 +8,12 @@ prSections:
     filters: is:open -is:draft reviewed-by:@me review-requested:@me -author:@me sort:updated-desc
   - title: 👀 Involves me
     filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
+    # head: is a prefix match and repeated head: qualifiers are ORed.
+  - title: 🚢 Release PRs
+    filters: is:open org:onomondo head:release-please--branches-- head:renovate/self-update -head:renovate/self-update/edge sort:created-desc
+    limit: 30
   - title: 🤖 Bot PRs
-    filters: is:open -is:draft sort:created-desc org:onomondo author:app/renovate author:onomondo-github-actions[bot] author:onomondo-org author:dependabot[bot] author:github-actions[bot]
+    filters: is:open -is:draft sort:created-desc org:onomondo author:app/renovate author:onomondo-github-actions[bot] author:onomondo-org author:dependabot[bot] author:github-actions[bot] -head:release-please--branches-- -head:renovate/self-update
     limit: 10
   - title: 🔒 Recently closed my PRs
     filters: is:closed author:@me sort:created-desc
@@ -82,6 +86,19 @@ keybindings:
   # Custom keys are listed in help in this order. Builtins left untouched:
   # g c C W m t P ctrl+d are builtin, so customs avoid them.
   prs:
+    # ── Pi sessions (git wt worktree + new Rex tab) ──
+    - key: alt+r
+      name: review in pi
+      command: >
+        term-tab -t 'review: {{.RepoName}} PR #{{.PrNumber}}'
+        (git -C {{.RepoPath}} wt {{.HeadRefName}})
+        'pi "/review pr {{.PrNumber}}"'
+    - key: alt+f
+      name: fix in pi
+      command: >
+        term-tab -t 'fix: {{.RepoName}} PR #{{.PrNumber}}'
+        (git -C {{.RepoPath}} wt {{.HeadRefName}})
+        'pi "PR {{.PrNumber}} in {{.RepoName}} has failing checks or a merge conflict. Inspect it with gh pr checks and gh pr view, fix the cause in this worktree and run the relevant tests. Show me the diff before you commit or push."'
     # ── Open / tools ─────────────────────────────
     - key: e
       name: open in nvim
