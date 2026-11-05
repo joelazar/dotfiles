@@ -5,6 +5,7 @@
 #
 # Each session gets one shell tab; the command is typed into fish so quitting
 # the app drops back to a shell. Sessions whose label already exists are skipped.
+# Afterwards the sessions are reordered to match SESSIONS.
 set -euo pipefail
 
 # label|cwd|command (empty command = plain shell)
@@ -36,6 +37,18 @@ create_session() {
     echo "created: $label"
 }
 
+order_sessions() {
+    local sessions_json entry label session_id index=1
+    sessions_json="$(rex ls --json)"
+
+    for entry in "${SESSIONS[@]}"; do
+        label="${entry%%|*}"
+        session_id="$(jq -er --arg l "$label" 'first(.sessions[] | select(.label == $l) | .session_id)' <<<"$sessions_json")"
+        rex session move "$session_id" --index "$index" >/dev/null
+        index=$((index + 1))
+    done
+}
+
 main() {
     local labels entry label dir command
     labels="$(existing_labels)"
@@ -48,6 +61,8 @@ main() {
         fi
         create_session "$label" "$dir" "$command"
     done
+
+    order_sessions
 }
 
 main "$@"
