@@ -51,7 +51,7 @@ jq -s --argjson m "$(cat <<'JSON'
     "showTerminalProgress": true
   },
   "defaultThinkingLevel": "low",
-  "defaultProvider": "anthropic",
+  "defaultProvider": "claude-code",
   "defaultModel": "claude-opus-5-5",
   "outputPad": 0,
   "showCacheMissNotices": true,

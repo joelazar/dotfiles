@@ -1,0 +1,12 @@
+{
+  "fast": [
+    "claude-code/claude-haiku-5-5",
+    "anthropic/claude-haiku-5-5",
+    "current"
+  ],
+  "smart": [
+    "claude-code/claude-opus-5-5",
+    "anthropic/claude-opus-5-5",
+    "anthropic/claude-sonnet-5-5"
+  ]
+}
