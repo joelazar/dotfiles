@@ -15,6 +15,6 @@ ctrl-enter = "actions:edit"
 
 [actions.edit]
 description = "Edit the selected dotfile"
-command = "exec >&2; ${EDITOR:-nvim} {}; echo"
+command = "exec >&2; test -n \"$EDITOR\" || EDITOR=nvim; $EDITOR {}; echo"
 shell = "bash"
 mode = "execute"
