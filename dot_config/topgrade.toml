@@ -21,3 +21,5 @@ autoremove = true
 [git]
 max_concurrency = 10
 repos = ["~/Code/**"]
+# Feature branches without an upstream: fetch the default branch instead of failing
+fallback_to_fetch_default = true
