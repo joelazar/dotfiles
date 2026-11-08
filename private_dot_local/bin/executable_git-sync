@@ -7,6 +7,8 @@
 #   default       fetch, fast-forward the default branch (and the current
 #                 branch if it tracks a remote), update pinned submodules.
 #                 Repos with local changes are fetched but left untouched.
+#                 On another branch, asks whether to check out the default
+#                 one (interactive terminals only).
 #   --hard        check out the default branch and reset to origin, dropping
 #                 local changes (asks first for dirty repos).
 #   --submodules  move submodules to the tip of their own default branch
@@ -24,7 +26,7 @@ for arg in "$@"; do
     --hard) hard=true ;;
     --submodules) latest_subs=true ;;
     -h | --help)
-        sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
+        sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'
         exit 0
         ;;
     -*)
@@ -145,6 +147,9 @@ sync_repo() {
         # Fast-forward the default branch without checking it out; refuses non-ff.
         git fetch --quiet . "origin/$def:$def" 2>/dev/null || echo "⚠️  $repo → $def diverged from origin, not updated"
         git rev-parse --quiet --verify '@{u}' >/dev/null && git merge --quiet --ff-only '@{u}' 2>/dev/null
+        if [[ -t 0 ]] && confirm "$(basename "$repo"): on $cur, check out $def?"; then
+            git checkout --quiet "$def" && cur=$def || echo "❌ $repo → could not check out $def"
+        fi
     fi
     echo "✅ $repo → ${cur:-detached} (default: $def)"
     sync_submodules
