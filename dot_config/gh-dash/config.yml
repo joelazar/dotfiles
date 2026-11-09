@@ -103,11 +103,11 @@ keybindings:
     - key: e
       name: open in nvim
       command: >
-        term-tab -t 'nvim: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}' 'gh pr checkout {{.PrNumber}} && nvim'
+        term-tab -t 'nvim: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}}) 'gh pr checkout {{.PrNumber}} && nvim'
     - key: E
       name: diff in CodeDiff
       command: >
-        term-tab -t 'diff: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}'
+        term-tab -t 'diff: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}})
         'gh pr checkout {{.PrNumber}} && nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"'
     - key: T
       name: review with tuicr
@@ -121,7 +121,7 @@ keybindings:
     - key: S
       name: open shell
       command: >
-        term-tab -t 'shell: {{.RepoName}} PR #{{.PrNumber}}' '{{.RepoPath}}' gh pr checkout {{.PrNumber}}
+        term-tab -t 'shell: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}}) gh pr checkout {{.PrNumber}}
     - key: B
       name: copy branch name
       command: >
