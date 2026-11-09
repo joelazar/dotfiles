@@ -7,6 +7,15 @@
           "allow_fallbacks": true,
           "require_parameters": true,
           "data_collection": "deny",
+          "zdr": true,
+          "only": [
+            "deepinfra",
+            "fireworks",
+            "together",
+            "nebius",
+            "openai",
+            "baseten"
+          ],
           "quantizations": [
             "fp8",
             "mxfp8",
