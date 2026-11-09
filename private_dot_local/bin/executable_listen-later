@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# listen-later — turn an article, file, or pasted text into a Kokoro-narrated
+# listen-later — turn an article, file, or pasted text into a locally narrated
 # private episode in the "📥 Listen Later" Spotify show.
 #
 # Usage:
@@ -8,13 +8,14 @@
 #
 # Options:
 #   -t, --title <title>   Episode title (default: derived from source)
-#   -v, --voice <voice>   Kokoro voice (default: af_heart)
+#   -e, --engine <name>   TTS engine: phonon or kokoro (default: phonon)
+#   -v, --voice <voice>   Voice (default: Hadley for phonon, af_heart for kokoro)
 #   -s, --speed <n>       Speech speed multiplier (default: 1.0)
 #   -S, --summarize       Summarize the content with pi before narrating
 #       --minutes <n>     Target length in minutes for --summarize (default: 4)
 #       --show <name>     Target show (default: "📥 Listen Later")
 #       --wait            Poll until the episode is READY before exiting
-#       --jobs <n>        Parallel Kokoro workers (default: min(4, ncpu))
+#       --jobs <n>        Parallel kokoro workers (default: min(4, ncpu))
 #       --keep            Keep the work directory after success
 #   -h, --help            Show this help
 #
@@ -35,7 +36,8 @@ die() {
 }
 info() { printf '\033[36m==>\033[0m %s\n' "$*" >&2; }
 
-VOICE="af_heart"
+ENGINE="phonon"
+VOICE=""
 SPEED="1.0"
 SHOW_NAME="📥 Listen Later"
 TITLE=""
@@ -54,6 +56,10 @@ while [[ $# -gt 0 ]]; do
     case "$1" in
     -t | --title)
         TITLE="$2"
+        shift 2
+        ;;
+    -e | --engine)
+        ENGINE="$2"
         shift 2
         ;;
     -v | --voice)
@@ -100,7 +106,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-for bin in kokoro ffmpeg ffprobe jq save-to-spotify uv curl; do
+case "$ENGINE" in
+phonon) : "${VOICE:=Hadley}" ;;
+kokoro) : "${VOICE:=af_heart}" ;;
+*) die "unknown engine: $ENGINE (use phonon or kokoro)" ;;
+esac
+[[ "$ENGINE" == "kokoro" ]] && { cmd_exists kokoro || die "kokoro is required but not on PATH"; }
+
+for bin in ffmpeg ffprobe jq save-to-spotify uv curl; do
     cmd_exists "$bin" || die "$bin is required but not on PATH"
 done
 
@@ -306,10 +319,45 @@ PY
     NSEG=$(python3 "$WORK/prep.py" "$WORK" "$WPM")
     info "Segments: $NSEG"
 
-    info "Rendering with Kokoro (voice=$VOICE speed=$SPEED)"
-    # One process, model loaded per worker, CPU threads split between workers.
-    kokoro --voice "$VOICE" --speed "$SPEED" --jobs "$JOBS" "$WORK"/seg_*.txt \
-        2>"$WORK/kokoro.log" || true
+    info "Rendering with $ENGINE (voice=$VOICE speed=$SPEED)"
+    if [[ "$ENGINE" == "phonon" ]]; then
+        cat >"$WORK/phonon.py" <<'PY'
+# /// script
+# requires-python = ">=3.10"
+# dependencies = ["ptts>=0.6"]
+# ///
+import sys
+import ptts
+
+voice, speed, files = sys.argv[1], float(sys.argv[2]), sys.argv[3:]
+tts = ptts.TTS(lang="en")
+# shortcut: duration_delta is not a true multiplier (-0.3 ~ 1.2x, +0.3 ~ 0.87x on Hadley);
+# calibrate if you start using speeds far from 1.0.
+if speed != 1.0:
+    tts.set_conditions({"duration_delta": round(1.0 - speed, 2)})
+failed = 0
+for f in files:
+    text = open(f, encoding="utf-8").read().strip()
+    out = f.rsplit(".", 1)[0] + ".wav"
+    for attempt in range(3):
+        try:
+            # Fixed seed keeps the timbre consistent across segments.
+            tts.save(out, text, voice=voice, seed=1 + attempt)
+            print(f"[phonon] wrote {out}", file=sys.stderr)
+            break
+        except Exception as e:  # noqa: BLE001 - retry any synthesis failure
+            print(f"[phonon] {f} attempt {attempt + 1} failed: {e}", file=sys.stderr)
+    else:
+        failed += 1
+sys.exit(1 if failed else 0)
+PY
+        uv run --quiet "$WORK/phonon.py" "$VOICE" "$SPEED" "$WORK"/seg_*.txt \
+            2>"$WORK/tts.log" || true
+    else
+        # One process, model loaded per worker, CPU threads split between workers.
+        kokoro --voice "$VOICE" --speed "$SPEED" --jobs "$JOBS" "$WORK"/seg_*.txt \
+            2>"$WORK/tts.log" || true
+    fi
 
     MISSING=0
     for txt in "$WORK"/seg_*.txt; do
@@ -319,7 +367,7 @@ PY
             printf '\033[31mfailed:\033[0m %s\n' "$(basename "$txt")" >&2
         fi
     done
-    [[ "$MISSING" -eq 0 ]] || tail -n 10 "$WORK/kokoro.log" >&2
+    [[ "$MISSING" -eq 0 ]] || tail -n 10 "$WORK/tts.log" >&2
     [[ "$MISSING" -eq 0 ]] || die "$MISSING segment(s) failed to render (see logs above; rerun with --keep to inspect $WORK)"
 
     FIRST_WAV=$(ls "$WORK"/seg_*.wav | head -n1)
