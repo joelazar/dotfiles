@@ -5,8 +5,8 @@
 # of the raw output a script expects.
 set -euo pipefail
 
-# Claude subscription auth lives in an extension; re-add it after -ne.
-auth_ext=${PI_ONESHOT_AUTH_EXT:-$HOME/Code/joelazar/pi-claude-code-use/index.ts}
+# Claude models come from the claude-code provider extension; re-add it after -ne.
+auth_ext=${PI_ONESHOT_AUTH_EXT:-$HOME/Code/joelazar/pi-claude-code/src/index.ts}
 
 args=(-p --no-session --thinking off -nc -ns -ne)
 [[ -f "$auth_ext" ]] && args+=(-e "$auth_ext")
