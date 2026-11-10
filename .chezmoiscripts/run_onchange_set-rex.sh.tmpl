@@ -33,15 +33,27 @@ defaults write "$DOMAIN" Workspace.interfaceStyle -string useTheme
 defaults write "$DOMAIN" Workspace.paneDensity -string compact
 defaults write "$DOMAIN" Workspace.usesPaneGlass -bool false
 defaults write "$DOMAIN" Workspace.shellIconTheme -string themed
-defaults write "$DOMAIN" Workspace.tabIconColorMode -string always
+defaults write "$DOMAIN" Workspace.tabIconColorMode -string activePanes
+defaults write "$DOMAIN" Workspace.tabIconTintMode -string off
+defaults write "$DOMAIN" Workspace.tabStyle -string vertical
 defaults write "$DOMAIN" Workspace.tabIconCount -int 3
 defaults write "$DOMAIN" Workspace.tabsFillAvailableSpace -bool false
 defaults write "$DOMAIN" Workspace.tintsPanesWithProgramBackground -bool false
+defaults write "$DOMAIN" Workspace.animationStyle -string snappy
+defaults write "$DOMAIN" Workspace.inactivePaneFadeMode -string both
+defaults write "$DOMAIN" Workspace.usesStandardInactiveWindowPaneStyles -bool true
+
+# Sidebar
+defaults write "$DOMAIN" Workspace.sidebarShowsActivity -bool false
+defaults write "$DOMAIN" Workspace.sidebarSwipe -string swipe
+defaults write "$DOMAIN" Workspace.sidebarTextPointSize -int 13
 
 # Font
 defaults write "$DOMAIN" Workspace.terminalFontName -string "Maple Mono NF"
 defaults write "$DOMAIN" Workspace.terminalFontPointSize -float 12
 defaults write "$DOMAIN" Workspace.terminalFontSmoothing -bool false
+defaults write "$DOMAIN" Workspace.terminalSmoothScrolling -bool true
+defaults write "$DOMAIN" Workspace.terminalSelectionForeground -string theme
 
 # Cursor
 defaults write "$DOMAIN" Workspace.terminalCursorBlinkIntervalMilliseconds -int 0
@@ -49,7 +61,8 @@ defaults write "$DOMAIN" Workspace.terminalCursorBlinkUsesCustomInterval -bool f
 defaults write "$DOMAIN" Workspace.terminalCursorStyleForced -bool false
 
 # Behaviour
-defaults write "$DOMAIN" Workspace.focusFollowsMouse -bool true
+defaults write "$DOMAIN" Workspace.focusFollowsMouse -bool false
+defaults write "$DOMAIN" Workspace.terminalOptionKeyBehavior -string actsAsAlt
 
 if pgrep -x Rex >/dev/null 2>&1; then
     echo "==> Restart Rex Beta to pick up the new settings"
