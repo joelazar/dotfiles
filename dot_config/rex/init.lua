@@ -10,7 +10,7 @@
 
 local terminal = "com.superlogical.terminal"
 
--- Type raw bytes into the focused terminal, like Ghostty's `text:` keybind.
+-- Type raw bytes into the focused terminal.
 rex.action({
   name = "send_text",
   title = "Send Text",
@@ -88,7 +88,7 @@ rex.action({
   end,
 })
 
--- Like Ghostty's write_scrollback_file:open: the pane's scrollback, with colors, in place of that pane.
+-- Open the pane's scrollback, with colors, in nvim in place of that pane.
 -- Pager: ~/.config/nvim/scrollback.lua (minimal nvim; y/gy copy, q quit, [[ ]] prompts, ]u [u <space>u URLs,
 -- e full nvim, ctrl+h/j/k/l move between panes).
 -- The pane is detached (keeps running) while the pager takes its slot, and put back when the pager exits.
@@ -157,6 +157,11 @@ rex.bind("cmd+ctrl+j", "pane.focus.down")
 rex.bind("cmd+ctrl+k", "pane.focus.up")
 rex.bind("cmd+ctrl+l", "pane.focus.right")
 
+-- Scroll by page (Rex has no line scroll).
+-- Replaces Rex's default shift+cmd+up = Split Pane Up.
+rex.bind("shift+cmd+up", "client.scroll.page_up")
+rex.bind("shift+cmd+down", "client.scroll.page_down")
+
 -- resize mode: cmd+ctrl+r, then h/j/k/l; escape leaves
 rex.mode("resize", { exclusive = true })
 rex.bind("cmd+ctrl+r", "client.mode.enter", { name = "resize" })
@@ -220,6 +225,6 @@ for key, text in pairs(sends) do
 end
 
 -- Pass alt+arrows through as real <M-Left>/<M-Right> (nvim buffer cycling),
--- not the client's default word-jump (ESC b / ESC f). Same as Ghostty's unbind.
+-- not the client's default word-jump (ESC b / ESC f).
 rex.unbind("alt+left")
 rex.unbind("alt+right")
