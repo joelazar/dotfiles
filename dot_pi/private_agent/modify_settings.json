@@ -1,7 +1,8 @@
 #!/bin/bash
 # chezmoi modify_: merges managed keys into the live file, keeps pi's runtime state (deviceId, lastChangelogVersion, ...)
 set -euo pipefail
-jq -s --argjson m "$(cat <<'JSON'
+# pi writes without a trailing newline; match it so chezmoi diff stays clean
+printf '%s' "$(jq -s --argjson m "$(cat <<'JSON'
 {
   "$schema": "https://pi.dev/schemas/settings.schema.json",
   "hideThinkingBlock": true,
@@ -68,4 +69,4 @@ jq -s --argjson m "$(cat <<'JSON'
   ]
 }
 JSON
-)" '(.[0] // {}) * $m'
+)" '(.[0] // {}) * $m')"
