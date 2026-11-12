@@ -169,6 +169,8 @@ f = [
   'mode main',
 ] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
+# Restart Dock: macOS keeps a stale Dock strip in visibleFrame after Mission Control, leaving a gap
+d = ['exec-and-forget killall Dock', 'mode main']
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 #s = ['layout sticky tiling', 'mode main']
