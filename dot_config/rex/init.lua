@@ -1,7 +1,8 @@
 -- Rex config. Only non-default bindings are listed.
 -- Docs: https://www.superlogical.com/rex/docs
 --   All pages as markdown: curl -sL https://www.superlogical.com/rex/docs/llms.txt (links to *.md pages)
---   Grep all: curl -sL .../llms.txt | rg -o 'https://[^)]+\.md' | xargs -n1 curl -sL | rg -i <term>
+--   Grep all: curl -sL .../llms.txt | rg -o 'https://[^)]+\.md' | xargs -n1 curl -sL | perl -pe 's/<[^>]+>//g' > /tmp/rexdocs.md
+--     then rg -i <term> /tmp/rexdocs.md (tags stripped; raw pages have long <span hidden> lines)
 --   Bindable actions: rex actions, rex -C "<client label>" actions (labels: rex client ls)
 --   API methods: rex api list, rex api describe <method>; keys: rex keymap; offline guide: rex __internal skill
 -- Default shortcuts: command palette (cmd+shift+p) or "Change Shortcut…".
