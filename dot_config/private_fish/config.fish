@@ -1,3 +1,7 @@
+# chezmoi's dot_config/mise/config.toml looks like an untrusted project config to mise;
+# config.toml can't ignore it (read after the trust check), so set it in the env
+set -gx MISE_IGNORED_CONFIG_PATHS $HOME/.local/share/chezmoi/dot_config/mise/config.toml
+
 if not status is-interactive
     return
 end
