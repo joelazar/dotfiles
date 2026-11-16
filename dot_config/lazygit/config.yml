@@ -28,6 +28,8 @@ gui:
   showNumstatInFilesView: true
   nerdFontsVersion: "3"
   showFileTree: true
+  # auto only picks detailed in kitty/Ghostty, so force it for Rex
+  commitGraphStyle: "detailed"
   fileTreeSortOrder: "foldersFirst"
   showBottomLine: false
   showRandomTip: false
