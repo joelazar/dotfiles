@@ -11,7 +11,12 @@ Always apply changed targets after editing, edits in this source directory have 
 
 ## Structure
 
-This repo root is the chezmoi source directory.
+This repo root is the chezmoi source directory. Map a live path to its source with `chezmoi source-path <target>`; if it says "not managed", run `readlink` on the path, since these live in other repos:
+
+- `~/.pi/agent/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/Code/AGENTS.md` -> `~/Code/joelazar/agents-md/files/` (edit there, symlinks reject `sed -i`)
+- `~/.agents/skills`, `~/.claude/skills` -> `~/Code/joelazar/skills`
+- `~/.config/nvim` -> `~/Code/joelazar/nvim-config`
+- pi extensions (commit, split-fork, subq, sandbox, ...) -> `~/Code/joelazar/pi-extensions/extensions/<name>/`; Claude Code provider -> `~/Code/joelazar/pi-claude-code`
 
 ## Shell scripts
 
