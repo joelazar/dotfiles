@@ -3,9 +3,11 @@
 
 theme = "catppuccin-mocha"
 diff_view = "side-by-side"
+ignore_whitespace = "auto"
 transparent_background = false
 
 show_file_list = true
+compact_folders = true
 show_commits = true
 show_pr_checks = true
 show_pr_comments = true
