@@ -327,7 +327,7 @@ cask "google-chrome"
 cask "google-drive"
 # Chromium-based web browser
 cask "helium-browser"
-# Local-first voice dictation
+# Local voice dictation
 cask "anomalyco/tap/hex", trusted: true
 # Free and open-source media player
 cask "iina"
@@ -343,6 +343,8 @@ cask "mitmproxy"
 cask "monitorcontrol"
 # Neovim Client
 cask "neovide-app"
+# Cloud gaming platform
+cask "nvidia-geforce-now"
 # Knowledge base that works on top of a local folder of plain text Markdown files
 cask "obsidian"
 # The official CLI for the OpenAI API.
@@ -375,6 +377,11 @@ go "cmd/go"
 go "cmd/gofmt"
 cargo "cargo-audit"
 cargo "television"
+uv "ansible"
+uv "ansible-core", with: ["ansible", "netaddr"]
+uv "ansible-lint"
+uv "pgcli", with: ["catppuccin", "psycopg"]
+uv "pylatexenc"
 npm "@earendil-works/gondolin"
 npm "@earendil-works/pi-coding-agent"
 npm "@excalidraw/cli"
