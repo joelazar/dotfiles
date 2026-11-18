@@ -30,13 +30,8 @@ notificationsSections:
     filters: "-org:onomondo"
 defaults:
   preview:
-    open: true
     width: 80
-    position: auto
-  prsLimit: 20
-  issuesLimit: 20
   notificationsLimit: 40
-  view: prs
   prApproveComment: ""
   dateFormat: relative
   refetchIntervalMinutes: 10
@@ -46,33 +41,16 @@ defaults:
         width: 7
       repo:
         width: 15
-      author:
-        width: 15
-      assignees:
-        width: 20
-        hidden: true
-      base:
-        width: 15
-        hidden: true
       lines:
         width: 16
     issues:
       updatedAt:
         width: 7
-      repo:
-        width: 15
-      creator:
-        width: 10
-      assignees:
-        width: 20
-        hidden: true
 repoPaths:
   onomondo/*: ~/Code/onomondo/*
   joelazar/*: ~/Code/joelazar/*
 pager:
   diff: delta
-showAuthorIcons: true
-smartFilteringAtLaunch: true
 confirmQuit: true
 keybindings:
   # Custom keys are listed in help in this order. Builtins left untouched:
@@ -187,11 +165,6 @@ keybindings:
       command: >
         gh issue pin {{.IssueNumber}} --repo {{.RepoName}}
 theme:
-  ui:
-    sectionsShowCount: true
-    table:
-      showSeparator: true
-      compact: false
   colors:
     text:
       primary: "#cdd6f4"
