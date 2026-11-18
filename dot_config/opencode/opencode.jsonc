@@ -1,0 +1,967 @@
+// Basic OpenCode v2 setup ported from pi. Backlog: PORTING.md next to this file.
+// Generated from ~/.pi/agent/extensions/guardrails.json (secrets deny-list + shell gate).
+// Last matching permission rule wins.
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "claude-agent/opus",
+  "skills": [
+    "~/Code/onomondo/.pi/skills"
+  ],
+  "permissions": [
+    {
+      "action": "read",
+      "resource": ".env*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.env*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".secret*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.secret*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*.p12",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/*.p12",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*.pfx",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/*.pfx",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "id_rsa",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/id_rsa",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "id_ed25519",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/id_ed25519",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "vault_password",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/vault_password",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".netrc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.netrc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".npmrc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.npmrc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".pypirc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.pypirc",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".git-credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.git-credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".yarnrc.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.yarnrc.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".gem/credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.gem/credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".terraform.d/credentials.tfrc.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.terraform.d/credentials.tfrc.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".aws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.aws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".azure/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.azure/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".kube/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.kube/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".ssh/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.ssh/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".gnupg/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.gnupg/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".fly/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.fly/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/gcloud/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/gcloud/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/gh/hosts.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/gh/hosts.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/op/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/op/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/sops/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/sops/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/gws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/gws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/github-copilot/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/github-copilot/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/gcx/config.yaml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/gcx/config.yaml",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/pip/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/pip/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/exercism/user.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/exercism/user.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".config/save-to-spotify/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.config/save-to-spotify/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".codex/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.codex/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".pi/agent/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.pi/agent/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "credentials/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/credentials/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "Obsidian/journal/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/Obsidian/journal/*",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*.gpg",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/*.gpg",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": ".gpg-agent.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.gpg-agent.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".env*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.env*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".secret*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.secret*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.p12",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/*.p12",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.pfx",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/*.pfx",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "id_rsa",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/id_rsa",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "id_ed25519",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/id_ed25519",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "vault_password",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/vault_password",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".netrc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.netrc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".npmrc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.npmrc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".pypirc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.pypirc",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".git-credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.git-credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".yarnrc.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.yarnrc.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".gem/credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.gem/credentials",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".terraform.d/credentials.tfrc.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.terraform.d/credentials.tfrc.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".aws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.aws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".azure/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.azure/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".kube/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.kube/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".ssh/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.ssh/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".gnupg/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.gnupg/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".fly/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.fly/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/gcloud/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/gcloud/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/gh/hosts.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/gh/hosts.yml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/op/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/op/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/sops/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/sops/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/gws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/gws/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/github-copilot/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/github-copilot/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/gcx/config.yaml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/gcx/config.yaml",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/pip/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/pip/pip.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/exercism/user.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/exercism/user.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".config/save-to-spotify/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.config/save-to-spotify/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".codex/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.codex/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".pi/agent/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.pi/agent/auth.json",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "credentials/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/credentials/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/secrets/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "Obsidian/journal/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/Obsidian/journal/*",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*.gpg",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/*.gpg",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".gpg-agent.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "*/.gpg-agent.conf",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "*/.ssh/*.pub",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git reset --hard*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git clean *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git push --force*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git push -f*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "find * -delete*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "find * -exec rm *",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "curl * | sh*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "curl * | bash*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "wget * | sh*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "wget * | bash*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "chmod *o+w*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf /",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf //*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr /",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr //*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r /",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r //*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf ~",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf ~/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr ~",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr ~/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r ~",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r ~/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf $HOME",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -rf $HOME/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr $HOME",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -fr $HOME/*",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r $HOME",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm -r $HOME/*",
+      "effect": "deny"
+    },
+    {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "ask"
+    }
+  ]
+}

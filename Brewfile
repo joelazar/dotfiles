@@ -261,6 +261,8 @@ brew "yazi"
 brew "zig"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# OpenCode V2 - the AI coding agent for the terminal
+brew "anomalyco/tap/opencode-v2", trusted: true
 # eks-node-viewer is a tool for visualizing dynamic node usage within an EKS cluster.
 brew "aws/tap/eks-node-viewer"
 # Sentry command-line tool for error monitoring and debugging
