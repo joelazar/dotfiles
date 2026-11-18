@@ -13,7 +13,8 @@ Creates a worktree for <branch> under <gj.root>/worktree/<owner>/<repo>/<branch>
 and prints its path. Creates the branch if it does not exist.
 If <branch> is already checked out in a worktree, prints that path. If it is
 checked out in the main repository, that checkout is switched to the default
-branch (or detached) first, so the branch can move to its own worktree.
+branch (or detached) first, so the branch can move to its own worktree. If that
+checkout has uncommitted changes, its path is printed instead.
 
 Config:
   gj.root   Directory where repositories are stored.
@@ -33,8 +34,6 @@ worktree_for_branch() {
 # Frees <branch> from the worktree at <path> so it can be checked out elsewhere.
 release_branch() {
     local branch=$1 path=$2 default
-    [[ -z "$(git -C "$path" status --porcelain)" ]] ||
-        die "$branch is checked out in $path with uncommitted changes; commit or stash first"
     default=$(git -C "$path" default-branch 2>/dev/null || true)
     if [[ -n "$default" && "$default" != "$branch" ]] && git -C "$path" switch --quiet "$default" 2>/dev/null; then
         printf 'Switched %s to %s\n' "$path" "$default" >&2
@@ -81,6 +80,12 @@ main() {
 
     existing=$(worktree_for_branch "$branch")
     if [[ -n "$existing" && "$existing" != "$main" ]]; then
+        printf '%s\n' "$existing"
+        return
+    fi
+    # Dirty main checkout: use it as-is instead of failing, so callers still get a path.
+    if [[ -n "$existing" && -n "$(git -C "$existing" status --porcelain)" ]]; then
+        printf 'Using %s: %s is checked out there with uncommitted changes\n' "$existing" "$branch" >&2
         printf '%s\n' "$existing"
         return
     fi
