@@ -1,29 +1,21 @@
 # yaml-language-server: $schema=https://gh-dash.dev/schema.json
 prSections:
   - title: 🚀 My PRs
-    filters: is:open assignee:@me sort:created-desc
+    # golang-migrate#1286 is stale upstream, hidden on purpose.
+    filters: is:open author:@me -repo:golang-migrate/migrate sort:created-desc
   - title: 🆕 Review requested
-    filters: is:open -assignee:@me review-requested:@me -is:draft sort:created-desc updated:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org -author:onomondo-github-actions[bot]
-  - title: 🔁 Re-review
-    filters: is:open -is:draft reviewed-by:@me review-requested:@me -author:@me sort:updated-desc
+    filters: is:open -is:draft review-requested:@me -author:@me -assignee:@me sort:updated-desc updated:>={{ nowModify "-4w" }} -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org -author:onomondo-github-actions[bot]
   - title: 👀 Involves me
-    filters: is:open -assignee:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
+    filters: is:open -assignee:@me -author:@me involves:@me -is:draft sort:created-desc -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot]
     # head: is a prefix match and repeated head: qualifiers are ORed.
   - title: 🚢 Release PRs
     filters: is:open org:onomondo head:release-please--branches-- head:renovate/self-update -head:renovate/self-update/edge sort:created-desc
-    limit: 30
+    limit: 10
+    repoOnly: true
   - title: 🤖 Bot PRs
     filters: is:open -is:draft sort:created-desc org:onomondo author:app/renovate author:onomondo-github-actions[bot] author:onomondo-org author:dependabot[bot] author:github-actions[bot] -head:release-please--branches-- -head:renovate/self-update
     limit: 10
-  - title: 🔒 Recently closed my PRs
-    filters: is:closed author:@me sort:created-desc
-    limit: 5
-  - title: 📦 Recently closed work PRs
-    filters: is:closed sort:created-desc org:onomondo -author:renovate[bot] -author:github-actions[bot] -author:dependabot[bot] -author:onomondo-org -author:onomondo-github-actions[bot]
-    limit: 5
-  - title: 🔧 My PRs but not assigned to me
-    filters: is:open author:joelazar -assignee:@me sort:created-desc
-    limit: 5
+    repoOnly: true
 issuesSections:
   - title: 📋 My Issues
     filters: is:open author:@me
