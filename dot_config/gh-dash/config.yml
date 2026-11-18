@@ -62,7 +62,7 @@ keybindings:
       command: >
         term-tab -t 'review: {{.RepoName}} PR #{{.PrNumber}}'
         (git -C {{.RepoPath}} wt {{.HeadRefName}})
-        'pi "/review pr {{.PrNumber}}"'
+        'pi --model claude-code/claude-fable-5-2 --thinking medium "/review pr {{.PrNumber}}"'
     - key: alt+f
       name: fix in pi
       command: >
