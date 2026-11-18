@@ -154,9 +154,7 @@ keybindings:
       name: retrigger workflows
       command: >
         fish -c '
-        set BRANCH (gh pr view {{.PrNumber}} --repo {{.RepoName}} --json headRefName --jq ".headRefName");
-        echo "Branch: $BRANCH";
-        set RUN_ID (gh run list --branch $BRANCH --repo {{.RepoName}} --limit 1 --json databaseId --jq ".[0].databaseId");
+        set RUN_ID (gh run list --branch {{.HeadRefName}} --repo {{.RepoName}} --limit 1 --json databaseId --jq ".[0].databaseId");
         echo "Retriggering run $RUN_ID...";
         gh run rerun --repo {{.RepoName}} $RUN_ID;
         echo "Done!"
