@@ -12,12 +12,12 @@ prSections:
     filters: is:open org:onomondo head:release-please--branches-- head:renovate/self-update -head:renovate/self-update/edge sort:created-desc
     limit: 10
     repoOnly: true
+  - title: 🧑‍💻 Human PRs
+    filters: is:open sort:updated-desc -author:app/renovate -author:onomondo-github-actions[bot] -author:onomondo-org -author:dependabot[bot] -author:github-actions[bot]
+    repoOnly: true
   - title: 🤖 Bot PRs
     filters: is:open -is:draft sort:created-desc org:onomondo author:app/renovate author:onomondo-github-actions[bot] author:onomondo-org author:dependabot[bot] author:github-actions[bot] -head:release-please--branches-- -head:renovate/self-update
     limit: 10
-    repoOnly: true
-  - title: 🧑‍💻 Human PRs
-    filters: is:open sort:updated-desc -author:app/renovate -author:onomondo-github-actions[bot] -author:onomondo-org -author:dependabot[bot] -author:github-actions[bot]
     repoOnly: true
 issuesSections:
   - title: 📋 My Issues
