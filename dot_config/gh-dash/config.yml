@@ -54,7 +54,7 @@ pager:
 confirmQuit: true
 keybindings:
   # Custom keys are listed in help in this order. Builtins left untouched:
-  # g c C W m t P ctrl+d are builtin, so customs avoid them.
+  # g c C W t P ctrl+d are builtin, so customs avoid them (m overrides merge on purpose).
   prs:
     # ── Pi sessions (git wt worktree + new Rex tab) ──
     - key: alt+r
