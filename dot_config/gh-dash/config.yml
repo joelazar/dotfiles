@@ -79,6 +79,16 @@ keybindings:
       command: >
         term-tab -t 'diff: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}})
         'gh pr checkout {{.PrNumber}} && nvim -c ":CodeDiff {{.BaseRefName}}...{{.HeadRefName}}"'
+    - key: O
+      name: open in octo
+      command: >
+        term-tab -t 'octo: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}})
+        'gh pr checkout {{.PrNumber}} && nvim octo://{{.RepoName}}/pull/{{.PrNumber}}'
+    - key: alt+o
+      name: review in octo
+      command: >
+        term-tab -t 'octo review: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}})
+        'gh pr checkout {{.PrNumber}} && nvim -c "Octo review"'
     - key: T
       name: review with tuicr
       command: >
@@ -156,6 +166,11 @@ keybindings:
       name: open in nvim
       command: >
         term-tab -t 'nvim: {{.RepoName}} issue #{{.IssueNumber}}' '{{.RepoPath}}' nvim
+    - key: O
+      name: open in octo
+      command: >
+        term-tab -t 'octo: {{.RepoName}} issue #{{.IssueNumber}}' '{{.RepoPath}}'
+        'nvim octo://{{.RepoName}}/issue/{{.IssueNumber}}'
     - key: ctrl+g
       name: lazygit
       command: >
