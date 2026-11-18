@@ -98,10 +98,8 @@ rex.session.move_block({ block_id = rex.args.pane, anchor_block_id = rex.args.pa
 rex.session.focus_block({ block_id = rex.args.pane })
 ]]
 local scrollback_script = [[
-pane=$1 pager=$REX_BLOCK; export REX=$2
-f=$(mktemp -t rex-scrollback)
+pane=$1 pager=$REX_BLOCK; export REX=$2 f=$4
 trap '"$REX" do -e "$3" pane="$pane" pager="$pager"; rm -f "$f"' EXIT
-"$REX" capture -b "$pane" --format=vt --trim --unwrap > "$f" || exit
 nvim --clean -u ~/.config/nvim/scrollback.lua "$f"
 [ $? -eq 3 ] && nvim + "$f"
 ]]
@@ -111,6 +109,26 @@ rex.action({
   category = "Terminal",
   run = function(ctx)
     local pane = ctx.block_id
+    -- capture before splitting: the split resizes the pane, and TUIs like pi clear scrollback on resize
+    local args = { block_id = pane, format = "vt", trim = true, unwrap = true, max_bytes = 983040 }
+    local r, cerr = rex.block.call(terminal, "format", args)
+    if r == nil then
+      error(cerr, 0)
+    end
+    local chunks = { r.content }
+    local offset = #r.content
+    while r.id ~= nil and not r.eof do
+      r, cerr = rex.block.call(terminal, "blob_read", { block_id = pane, id = r.id, offset = offset })
+      if r == nil then
+        error(cerr, 0)
+      end
+      chunks[#chunks + 1] = r.data
+      offset = offset + #r.data
+    end
+    local path = os.tmpname()
+    local f = assert(io.open(path, "wb"))
+    f:write(table.concat(chunks))
+    f:close()
     local p = rex.block.call(terminal, "process", { block_id = pane })
     local s, err = rex.session.new_split({
       anchor_id = pane,
@@ -120,7 +138,7 @@ rex.action({
       layout = rex.layout.block({
         flavor = "com.superlogical.terminal.shell",
         options = {
-          command = { "sh", "-c", scrollback_script, "sh", pane, rex_bin, restore_pane },
+          command = { "sh", "-c", scrollback_script, "sh", pane, rex_bin, restore_pane, path },
           cwd = p and p.foreground and p.foreground.cwd,
         },
       }),
