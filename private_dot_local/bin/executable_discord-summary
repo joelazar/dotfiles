@@ -1,27 +1,75 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Summarize the last 24h of selected Discord channels via DiscordChatExporter + kagi assistant.
+# Dump (or summarize) recent messages from selected Discord channels.
+#
+# Usage: discord-summary [-t SPAN] [-s] [-p PROMPT] [FILTER...]
+#   -t SPAN    time span: 30m, 12h, 3d, 2w (default: 24h)
+#   -s         summarize each channel with `summarize` instead of printing the log
+#   -p PROMPT  custom summary prompt (implies -s)
+#   FILTER     only channels whose label starts with FILTER, e.g. `rex`, `pi/general`
+#
+# Examples:
+#   discord-summary rex                 # raw rex logs, last 24h
+#   discord-summary -t 3d -s pi         # summarize pi channels, last 3 days
+#   discord-summary -t 1w rex/changelog
 #
 # Requirements:
-#   - DiscordChatExporter.Cli  (https://github.com/Tyrrrz/DiscordChatExporter)
-#       default path below; override with DCE_CMD if installed elsewhere.
-#   - kagi-cli authenticated with a session token.
+#   - DiscordChatExporter.Cli (https://github.com/Tyrrrz/DiscordChatExporter);
+#     override the path with DCE_CMD.
+#   - summarize (only for -s).
 #
-# Config:
-#   ~/.config/discord-summary/config   (sourced bash)
-#     DISCORD_TOKEN="your-user-token"
-#     CHANNELS=(
-#       "111111111111111111:general"
-#       "222222222222222222:dev-chat"
-#     )   # format "<channel_id>:<label>"
+# Config: ~/.config/discord-summary/config (sourced bash)
+#   DISCORD_TOKEN="your-user-token"
+#   CHANNELS=("<channel_id>:<label>" ...)   # e.g. "1547349572299395172:rex/changelog"
+#   Find IDs with: DiscordChatExporter.Cli guilds|channels -t "$DISCORD_TOKEN" [-g <guild_id>]
 #
 # WARNING: uses your personal Discord token. Automating a user account violates
 # Discord's ToS. This runs once and exits to minimize risk; use at your own peril.
 
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/discord-summary/config"
 DCE_CMD="${DCE_CMD:-$HOME/.local/bin/DiscordChatExporter.Cli.osx-arm64/DiscordChatExporter.Cli}"
-HOURS="${HOURS:-24}"
+
+span="24h"
+summarize=false
+prompt='Summarize this Discord channel log. Give a concise bulleted digest: key
+topics, announcements, decisions, open questions, and anything actionable. Skip
+greetings and noise. If nothing substantive happened, say so in one line.'
+
+usage() { sed -n '4,13p' "$0" | sed 's/^# \{0,1\}//'; exit "${1:-0}"; }
+
+while getopts "t:sp:h" opt; do
+  case "$opt" in
+    t) span="$OPTARG" ;;
+    s) summarize=true ;;
+    p) prompt="$OPTARG"; summarize=true ;;
+    h) usage ;;
+    *) usage 1 ;;
+  esac
+done
+shift $((OPTIND - 1))
+filters=("$@")
+
+span_to_minutes() {
+  local n="${1%[mhdw]}" unit="${1: -1}"
+  [[ "$n" =~ ^[0-9]+$ ]] || { echo "invalid span: $1 (use e.g. 30m, 12h, 3d, 2w)" >&2; exit 1; }
+  case "$unit" in
+    m) echo "$n" ;;
+    h) echo $((n * 60)) ;;
+    d) echo $((n * 1440)) ;;
+    w) echo $((n * 10080)) ;;
+    *) echo "invalid span: $1 (use e.g. 30m, 12h, 3d, 2w)" >&2; exit 1 ;;
+  esac
+}
+
+matches_filter() {
+  local label="$1" f
+  [[ "${#filters[@]}" -eq 0 ]] && return 0
+  for f in "${filters[@]}"; do
+    [[ "$label" == "$f"* ]] && return 0
+  done
+  return 1
+}
 
 [[ -f "$CONFIG" ]] || { echo "missing config: $CONFIG" >&2; exit 1; }
 # shellcheck disable=SC1090
@@ -29,41 +77,54 @@ source "$CONFIG"
 
 : "${DISCORD_TOKEN:?set DISCORD_TOKEN in config}"
 [[ "${#CHANNELS[@]}" -gt 0 ]] || { echo "no CHANNELS defined in config" >&2; exit 1; }
-
 command -v "$DCE_CMD" >/dev/null || { echo "DiscordChatExporter not found ($DCE_CMD)" >&2; exit 1; }
-command -v kagi >/dev/null || { echo "kagi-cli not found" >&2; exit 1; }
+if $summarize; then
+  command -v summarize >/dev/null || { echo "summarize not found" >&2; exit 1; }
+fi
 
-after="$(date -u -v-"${HOURS}"H '+%Y-%m-%d %H:%M' 2>/dev/null \
-  || date -u -d "${HOURS} hours ago" '+%Y-%m-%d %H:%M')"
+minutes="$(span_to_minutes "$span")"
+after="$(date -u -v-"${minutes}"M '+%Y-%m-%d %H:%M' 2>/dev/null \
+  || date -u -d "${minutes} minutes ago" '+%Y-%m-%d %H:%M')"
 
 workdir="$(mktemp -d)"
 trap 'rm -rf "$workdir"' EXIT
 
-prompt='Summarize the following Discord channel log from the last 24 hours.
-Give a concise bulleted digest: key topics, decisions, questions raised, and
-anything actionable. Skip greetings and noise. If nothing substantive happened,
-say so in one line.'
-
+matched=0
 for entry in "${CHANNELS[@]}"; do
   cid="${entry%%:*}"
   label="${entry#*:}"
+  matches_filter "$label" || continue
+  matched=$((matched + 1))
+  dir="$workdir/$cid/" # a directory: threads export as extra files
   out="$workdir/$cid.txt"
 
-  "$DCE_CMD" export \
-    -t "$DISCORD_TOKEN" \
-    -c "$cid" \
-    --after "$after" \
-    -f PlainText \
-    -o "$out" >/dev/null 2>&1 || { echo "## $label — export failed"; echo; continue; }
-
   printf '\033[1;36m## %s\033[0m\n' "$label"
-  if [[ ! -s "$out" ]] || [[ "$(wc -l <"$out")" -lt 5 ]]; then
-    echo "  (no messages in the last ${HOURS}h)"
+  if ! "$DCE_CMD" export -t "$DISCORD_TOKEN" -c "$cid" --after "$after" \
+    --include-threads All -f PlainText -o "$dir" >"$workdir/dce.log" 2>&1; then
+    echo "  export failed: $(grep -v '^[[:space:]]*$' "$workdir/dce.log" | tail -1)"
     echo
     continue
   fi
 
-  message="$(printf '%s\n\nChannel #%s log:\n---\n%s' "$prompt" "$label" "$(cat "$out")")"
-  kagi assistant --format pretty "$message"
+  # Each file's header and footer are fenced by ==== lines; messages sit between the 2nd and 3rd.
+  # Each file's "Channel:" line is kept as a heading so threads can be told apart.
+  awk 'FNR == 1 { sep = 0 } /^={10,}$/ { sep++; next } sep == 1 && /^Channel:/ { print "--- " $0 } sep == 2' \
+    "$dir"*.txt >"$out" 2>/dev/null || true
+
+  if ! grep -q '^\[[0-9]' "$out"; then
+    echo "  (no messages in the last $span)"
+    echo
+    continue
+  fi
+
+  if $summarize; then
+    summarize "$out" --plain --stream off --length medium \
+      --prompt "$(printf '%s\n\nChannel: #%s, last %s.' "$prompt" "$label" "$span")" \
+      || echo "  summarize failed"
+  else
+    cat "$out"
+  fi
   echo
 done
+
+[[ "$matched" -gt 0 ]] || { echo "no channels match: ${filters[*]}" >&2; exit 1; }

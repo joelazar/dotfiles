@@ -250,7 +250,7 @@ Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_loca
 | Script                                                                        | What it does                                                                                           |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | [`custom-update`](private_dot_local/bin/executable_custom-update)             | Interactive end-of-topgrade steps                                                                      |
-| [`discord-summary`](private_dot_local/bin/executable_discord-summary)         | Summarizes the last 24h of selected Discord channels via kagi                                          |
+| [`discord-summary`](private_dot_local/bin/executable_discord-summary)         | Dumps or summarizes recent messages from selected Discord channels (`-t 3d -s rex`)                    |
 | [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Checks terminal font rendering                                                                         |
 | [`formatter`](private_dot_local/bin/executable_formatter)                     | Formats USB drives and SD cards with a `gum` UI                                                        |
 | [`term-tab`](private_dot_local/bin/executable_term-tab)                       | Opens a new Rex or Ghostty tab in a directory, optionally with a command                        |
