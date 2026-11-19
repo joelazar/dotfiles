@@ -168,6 +168,25 @@ rex.bind("cmd+shift+t", "client.tab.rename")
 rex.bind("cmd+shift+,", "client.tab.move.backward")
 rex.bind("cmd+shift+.", "client.tab.move.forward")
 
+-- Sidebar: focus the current session (no "current session only" setting exists).
+-- Rex has no expand-all, so expand every session on this server.
+rex.action({
+  name = "expand_all_sessions",
+  title = "Expand All Sessions",
+  category = "Session",
+  run = function()
+    local r, err = rex.call("session.list")
+    if r == nil then
+      error(err, 0)
+    end
+    for _, s in ipairs(r.sessions or {}) do
+      rex.client.queue("session.expand", { session_id = s.session_id })
+    end
+  end,
+})
+rex.bind("cmd+shift+o", "session.collapse_others")
+rex.bind("cmd+alt+shift+o", "expand_all_sessions")
+
 ------------------------------------------------------------------------
 -- Panes
 ------------------------------------------------------------------------
