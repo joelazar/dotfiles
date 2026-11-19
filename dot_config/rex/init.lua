@@ -236,6 +236,8 @@ rex.bind("ctrl+l", smart_nav("right"))
 -- Floats
 ------------------------------------------------------------------------
 rex.bind("cmd+shift+f", "edit_scrollback")
+-- Rex default, restated: copy mode (vim keys through scrollback)
+rex.bind("cmd+shift+c", "pane.copy_mode.enter")
 
 ------------------------------------------------------------------------
 -- Text sent to the shell / TUIs
@@ -252,7 +254,6 @@ local sends = {
   ["cmd+r"] = "\27[114;9u",
   -- cmd+shift+<x> -> ctrl+shift+<x> (CSI u, 6=1+shift+ctrl) for pi/nvim
   ["cmd+shift+g"] = "\27[103;6u",
-  ["cmd+shift+c"] = "\27[99;6u",
   ["cmd+shift+e"] = "\27[101;6u",
   ["cmd+shift+m"] = "\27[109;6u",
   ["cmd+shift+a"] = "\27[97;6u",
