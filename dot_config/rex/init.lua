@@ -267,3 +267,67 @@ end
 -- not the client's default word-jump (ESC b / ESC f).
 rex.unbind("alt+left")
 rex.unbind("alt+right")
+
+------------------------------------------------------------------------
+-- Ideas for later (features from Nov 2026 previews, not used yet)
+------------------------------------------------------------------------
+-- rex.ui: actions can ask questions in the command palette.
+--   Docs: https://www.superlogical.com/rex/docs/customize/custom-ui
+--   Needs control API revision 17 (server preview.21+; check `rex version`).
+--   Only inside an action's run(): not in rex.bind(key, fn), rex.on handlers,
+--   pcall, rex.invoke or at top level (returns nil, "failed" there).
+--   Both return nil, why on no answer: cancelled|timeout|no_client|unsupported|busy|failed.
+--   Every connected app (Mac, iPhone) gets the prompt; first answer wins.
+--
+--   rex.ui.input{ title=, placeholder=, value=, confirm=, timeout= }  -> string
+--   rex.ui.pick{ title=, items=, multiple=, allow_other=, ... }        -> id
+--     items: "plain" or { id=, title=, subtitle=, icon=, detail=, selected= }
+--     icons: document folder branch terminal code server database package
+--            globe link person tag clock star gear plus
+--     multiple=true -> list of ids (cmd+return confirms)
+--     allow_other=true -> { text = "typed" } when nothing picked
+--
+--   Example: snippet picker on top of send_text (could replace some `sends`):
+--   rex.action({
+--     name = "pick_snippet",
+--     title = "Send Snippet…",
+--     category = "Terminal",
+--     run = function(ctx)
+--       local id = rex.ui.pick({
+--         title = "Send snippet",
+--         items = {
+--           { id = "git status -sb\r", title = "git status", icon = "branch" },
+--           { id = "kubectl get pods\r", title = "pods", icon = "server" },
+--         },
+--         allow_other = true,
+--       })
+--       if id == nil then return end
+--       if type(id) == "table" then id = id.text .. "\r" end
+--       rex.invoke("send_text", { text = id })
+--     end,
+--   })
+--   Make args optional so `rex do` can skip the prompt:
+--   args = { name = "string?" }; local v = args.name or rex.ui.input{...}
+--
+-- Copy mode: cmd+shift+c (bound above). Rebind keys with "copy/<key>":
+--   rex.bind("copy/v", "pane.copy_mode.select", { mode = "..." })
+--   Actions: pane.copy_mode.{move,select,yank,search,find,swap_ends,exit}
+--   List: rex -C "<client>" actions | grep copy_mode
+--
+-- Port forwarding:
+--   cmd+click a localhost URL in a remote pane -> auto-forward + open browser
+--   Palette: "Forward Port…"; CLI: rex forward open <block-id|host:port>,
+--   rex forward ls / close --orphaned. Terminal block method `ports` and event
+--   `ports_changed` list listening ports (e.g. react to a dev server starting).
+--
+-- Every setting is an action: rex do client.setting.<group>.<key> [value=...]
+--   e.g. client.setting.interface.panes.density value=compact; bindable too.
+--   From the CLI needs Settings > Rex Server > Remote Control on.
+--
+-- Other things to try:
+--   cmd+y Quick Look all links/files in pane (arrows step, works on remote files)
+--   Toolbar behavior: Settings > Interface > Toolbar (Show on hover / Hidden,
+--     opt+cmd+t reveals); pane headers On hover / Never (opt+shift+cmd+t)
+--   Activity by priority: client.sidebar.activity.by_priority (agent status)
+--   client.tab.mute: silence a noisy tab; "Insert File…" uploads to remote panes
+--   rex.after / rex.every timers: only in `rex do` scripts, not this file
