@@ -73,11 +73,7 @@ keybindings:
         (git -C {{.RepoPath}} wt {{.HeadRefName}})
         'pi "PR {{.PrNumber}} in {{.RepoName}} has failing checks or a merge conflict. Inspect it with gh pr checks and gh pr view, fix the cause in this worktree and run the relevant tests. Show me the diff before you commit or push."'
     # ── Open / tools ─────────────────────────────
-    - key: e
-      name: open in nvim
-      command: >
-        term-tab -t 'nvim: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}}) 'gh pr checkout {{.PrNumber}} && nvim'
-    - key: E
+    - key: alt+e
       name: diff in CodeDiff
       command: >
         term-tab -t 'diff: {{.RepoName}} PR #{{.PrNumber}}' (git -C {{.RepoPath}} wt {{.HeadRefName}})
@@ -110,15 +106,6 @@ keybindings:
       command: >
         printf '%s' '{{.HeadRefName}}' | pbcopy
     # ── Review ───────────────────────────────────
-    - key: ctrl+a
-      name: approve (with comment)
-      command: >
-        gh pr review --repo {{.RepoName}} --approve --body "$(gum input --prompt='Approval Comment: ')" {{.PrNumber}}
-    - key: i
-      name: comment (gum)
-      command: >
-        gh pr comment --repo {{.RepoName}} {{.PrNumber}}
-        --body "$(gum write --placeholder 'Comment (ctrl+d to submit)' --width 80 --height 10)"
     - key: D
       name: toggle draft
       command: >
@@ -163,10 +150,6 @@ keybindings:
         echo "Done!"
         '
   issues:
-    - key: e
-      name: open in nvim
-      command: >
-        term-tab -t 'nvim: {{.RepoName}} issue #{{.IssueNumber}}' '{{.RepoPath}}' nvim
     - key: O
       name: open in octo
       command: >
