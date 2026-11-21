@@ -7,3 +7,4 @@ trusted_config_paths = ["~/Code/onomondo", "~/Code/joelazar"]
 node = "26"
 "github:agavra/tuicr" = "latest"
 go = "1.27.4"
+uv = "latest"
