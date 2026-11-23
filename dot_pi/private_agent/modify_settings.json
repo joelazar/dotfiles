@@ -20,8 +20,9 @@ printf '%s' "$(jq -s --argjson m "$(cat <<'JSON'
     "claude-code/claude-sonnet-5-5",
     "claude-code/claude-opus-5-5",
     "claude-code/claude-fable-5-2",
+    "openai/gpt-6-luna",
     "openrouter/deepseek/deepseek-v4.1-flash",
-    "openai/gpt-6-luna"
+    "llama.cpp/Inkling-2-Mini-IQ4_NL"
   ],
   "showHardwareCursor": true,
   "quietStartup": true,
