@@ -24,6 +24,7 @@ A comment earns its place when it carries what the code cannot show:
 - **Definitions**: a doc comment that pins down a term beyond its name ("delivered means acked").
 - **Debt with a condition**: `TODO`/`shortcut:` that names the limit and when to fix it.
 - **Tool directives**: `eslint-disable`, `noqa`, `//go:build`, `# shellcheck`, type-ignore, license headers. Leave these exactly as they are.
+- **Linter-required docs**: a doc comment the project's linter demands (Go exported symbols, JSDoc rules). Trim it to one line instead of deleting it.
 
 ## Rewrite
 
@@ -34,6 +35,7 @@ Read every kept comment against the code it sits on and hold it to the bar. A co
 - **Plain**: literal words, no figurative phrases ("load-bearing", "permanent home of"), no humanizer tells.
 - **Tight**: the shortest wording that keeps every claim; one line where one line holds it.
 - **Present tense**: describes what the code does, in the language's doc-comment convention.
+- **At the point of use**: a rule that constrains one function sits directly above that function, not only in a file or package header. Move it there.
 
 You may merge adjacent comments that make one point, and move a comment onto the line it explains.
 
@@ -47,9 +49,10 @@ A rewrite keeps every claim of the original, including a contrast between two pl
 - Banners and dividers that label obvious sections.
 - Comments the code contradicts. If the stale comment hid a real why, rewrite it to match the code; otherwise delete it.
 - TODOs with no condition or owner.
+- Vague warnings ("be careful", "tricky", "order matters") that name no rule or consequence. Rewrite them to say which rule and what breaks if you can verify it from the code; otherwise delete them.
 
 ## Finish
 
 1. Every directory in scope is marked done, and every comment in it is classified keep, rewrite, or delete.
 2. `git diff` shows comment-only changes. Run the project's formatter or linter if one exists.
-3. Report: counts per directory (kept / rewritten / deleted) and up to 5 notable rewrites as before → after. List every comment whose claims changed (fact added, corrected, or dropped) with `file:line`. List any spot where you found missing context the code needs but could not infer; leave those for me.
+3. Report: counts per directory (kept / rewritten / deleted) and up to 5 notable rewrites as before → after. List every comment whose claims changed (fact added, corrected, or dropped) with `file:line`. List any spot where you found missing context the code needs but could not infer; leave those for me. List kept comments whose rule a type, assert, named constant, or test could enforce instead; leave those for me too.
