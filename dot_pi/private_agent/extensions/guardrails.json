@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/@aliou/pi-guardrails@0.18.1/schema.json",
+  "$schema": "https://unpkg.com/@aliou/pi-guardrails@0.24.0/schema.json",
   "enabled": true,
   "applyBuiltinDefaults": true,
   "onboarding": {
@@ -17,7 +17,7 @@
         "name": "Credentials and secrets",
         "description": "Migrated from path-policy.json blockedPaths",
         "protection": "noAccess",
-        "onlyIfExists": false,
+        "onlyIfExists": true,
         "blockMessage": "Accessing {file} is not allowed: it may contain secrets or credentials. Explain why you need it and ask the user to act if changes are required.",
         "patterns": [
           {
@@ -177,6 +177,33 @@
         "allowedPatterns": [
           {
             "pattern": "~/.ssh/*.pub"
+          },
+          {
+            "pattern": ".env.example"
+          },
+          {
+            "pattern": ".env.sample"
+          },
+          {
+            "pattern": ".env.template"
+          },
+          {
+            "pattern": ".env.test"
+          },
+          {
+            "pattern": ".envrc.template"
+          },
+          {
+            "pattern": ".envrc.example"
+          },
+          {
+            "pattern": "*.example.env"
+          },
+          {
+            "pattern": "~/.ssh/config"
+          },
+          {
+            "pattern": "~/.aws/config"
           }
         ]
       }
@@ -230,12 +257,14 @@
       {
         "pattern": "rm\\s+(-[a-zA-Z]+\\s+)*(/|~|\\$HOME|\\$\\{HOME\\})(\\s|$)",
         "description": "catastrophic rm target (/ or home)",
-        "regex": true
+        "regex": true,
+        "terminate": true
       },
       {
         "pattern": "rm\\s+(-[a-zA-Z]+\\s+)*(/|~|\\$HOME|\\$\\{HOME\\}|\\.|\\.\\.)/\\*",
         "description": "catastrophic rm wildcard target",
-        "regex": true
+        "regex": true,
+        "terminate": true
       }
     ],
     "allowedPatterns": [
@@ -261,5 +290,5 @@
       }
     ]
   },
-  "version": "0.19.0"
+  "version": "0.24.0"
 }
