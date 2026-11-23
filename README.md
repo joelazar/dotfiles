@@ -247,31 +247,31 @@ chezmoi diff             # preview what will change
 
 Most of the personal helpers live in [`private_dot_local/bin/`](private_dot_local/bin/).
 
-| Script                                                                        | What it does                                                                                           |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Interactive end-of-topgrade steps                                                                      |
-| [`discord-summary`](private_dot_local/bin/executable_discord-summary)         | Dumps or summarizes recent messages from selected Discord channels (`-t 3d -s rex`)                    |
-| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Checks terminal font rendering                                                                         |
-| [`formatter`](private_dot_local/bin/executable_formatter)                     | Formats USB drives and SD cards with a `gum` UI                                                        |
-| [`term-tab`](private_dot_local/bin/executable_term-tab)                       | Opens a new Rex or Ghostty tab in a directory, optionally with a command                        |
-| [`git-default-branch`](private_dot_local/bin/executable_git-default-branch)   | Prints origin's default branch; shared by the other git scripts                                        |
-| [`git-get`](private_dot_local/bin/executable_git-get)                         | `git get <repo>`: clones into a `gj.root`-based directory layout                                       |
-| [`git-moji`](private_dot_local/bin/executable_git-moji)                       | `git moji`: gitmoji commit picker built on `gum` (lazygit `ctrl+g`; conventional commits on `ctrl+v`)  |
-| [`git-pr`](private_dot_local/bin/executable_git-pr)                           | `git pr`: fills in every PR field, then shows a review screen (lazygit `ctrl+r`)                       |
-| [`git-sync`](private_dot_local/bin/executable_git-sync)                       | `git sync [--hard] [--submodules] [dir...]`: fetch and fast-forward repos and submodules (lazygit `U`) |
-| [`git-wt`](private_dot_local/bin/executable_git-wt)                           | `git wt <branch>`: worktree under the `gj` layout; fish `gwt` also cds into it                         |
-| [`kokoro`](private_dot_local/bin/executable_kokoro)                           | Local text-to-speech via the Kokoro ONNX model                                                         |
-| [`listen-later`](private_dot_local/bin/executable_listen-later)               | Turns an article, file, or text into a Kokoro-narrated Spotify episode                                 |
-| [`pi`](private_dot_local/bin/executable_pi)                                   | Runs the Pi agent CLI through the mise-managed Node 26 runtime                                         |
-| [`restic-backup`](private_dot_local/bin/executable_restic-backup)             | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic                              |
-| [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)         | Prunes old snapshots from the restic backup repo                                                       |
-| [`restic-mount`](private_dot_local/bin/executable_restic-mount)               | Mounts the restic repo to browse and copy files                                                        |
-| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups                                                    |
-| [`toggle-lid-sleep`](private_dot_local/bin/executable_toggle-lid-sleep)       | Raycast script that toggles clamshell sleep                                                            |
-| [`transcribe`](private_dot_local/bin/executable_transcribe)                   | Offline audio/video transcription via whisper.cpp                                                      |
-| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Repeats a command until it fails                                                                       |
-| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)           | Opens the daily terminal workspace: Obsidian vault in nvim plus gh-dash                                |
-| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Shows what is listening on a port and can kill it                                                      |
+| Script                                                                        | What it does                                                                                              |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [`custom-update`](private_dot_local/bin/executable_custom-update)             | Interactive end-of-topgrade steps                                                                         |
+| [`discord-summary`](private_dot_local/bin/executable_discord-summary)         | Dumps or summarizes recent messages from selected Discord channels (`-t 3d -s rex`)                       |
+| [`fonttest`](private_dot_local/bin/executable_fonttest)                       | Checks terminal font rendering                                                                            |
+| [`formatter`](private_dot_local/bin/executable_formatter)                     | Formats USB drives and SD cards with a `gum` UI                                                           |
+| [`term-tab`](private_dot_local/bin/executable_term-tab)                       | Opens a new Rex or Ghostty tab in a directory, optionally with a command                                  |
+| [`git-default-branch`](private_dot_local/bin/executable_git-default-branch)   | Prints origin's default branch; shared by the other git scripts                                           |
+| [`git-get`](private_dot_local/bin/executable_git-get)                         | `git get <repo>`: clones into a `gj.root`-based directory layout                                          |
+| [`git-moji`](private_dot_local/bin/executable_git-moji)                       | `git moji`: gitmoji commit picker built on `gum` (lazygit `ctrl+g`; conventional commits on `ctrl+v`)     |
+| [`git-pr`](private_dot_local/bin/executable_git-pr)                           | `git pr`: fills in every PR field, then shows a review screen (lazygit `ctrl+r`)                          |
+| [`git-sync`](private_dot_local/bin/executable_git-sync)                       | `git sync [--hard] [--submodules] [dir...]`: fetch and fast-forward repos and submodules (lazygit `U`)    |
+| [`git-wt`](private_dot_local/bin/executable_git-wt)                           | `git wt <branch>`: worktree under the `gj` layout; fish `gwt` also cds into it                            |
+| [`kokoro`](private_dot_local/bin/executable_kokoro)                           | Local text-to-speech via the Kokoro ONNX model                                                            |
+| [`listen-later`](private_dot_local/bin/executable_listen-later)               | Turns an article, file, or text into a Kokoro-narrated Spotify episode                                    |
+| [`pi`](private_dot_local/bin/executable_pi)                                   | Runs the Pi agent CLI through the mise-managed Node 26 runtime                                            |
+| [`restic-backup`](private_dot_local/bin/executable_restic-backup)             | Backs up selected dotfiles and configs to `$RESTIC_REPOSITORY` via restic                                 |
+| [`restic-maintain`](private_dot_local/bin/executable_restic-maintain)         | Prunes old snapshots from the restic backup repo                                                          |
+| [`restic-mount`](private_dot_local/bin/executable_restic-mount)               | Mounts the restic repo to browse and copy files                                                           |
+| [`switch-main-display`](private_dot_local/bin/executable_switch-main-display) | Changes the primary display on multi-monitor setups                                                       |
+| [`toggle-lid-sleep`](private_dot_local/bin/executable_toggle-lid-sleep)       | Raycast script that toggles clamshell sleep                                                               |
+| [`transcribe`](private_dot_local/bin/executable_transcribe)                   | Local audio transcription via Hex (Orukeet), optional markdown output, asks for the language if not given |
+| [`untilfail`](private_dot_local/bin/executable_untilfail)                     | Repeats a command until it fails                                                                          |
+| [`workspace-tabs`](private_dot_local/bin/executable_workspace-tabs)           | Opens the daily terminal workspace: Obsidian vault in nvim plus gh-dash                                   |
+| [`wtfport`](private_dot_local/bin/executable_wtfport)                         | Shows what is listening on a port and can kill it                                                         |
 
 The restic scripts share [`private_dot_local/lib/restic-common.sh`](private_dot_local/lib/restic-common.sh). Shared shell helpers used by the setup scripts live in [`scripts/utils`](scripts/utils) and [`scripts/utils_install`](scripts/utils_install).
 
