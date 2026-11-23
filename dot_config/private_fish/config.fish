@@ -2,6 +2,10 @@
 # config.toml can't ignore it (read after the trust check), so set it in the env
 set -gx MISE_IGNORED_CONFIG_PATHS $HOME/.local/share/chezmoi/dot_config/mise/config.toml
 
+if test -e $HOME/.config/fish/.local.fish
+    source $HOME/.config/fish/.local.fish
+end
+
 if not status is-interactive
     return
 end
@@ -135,7 +139,6 @@ alias dcleannone='docker image prune -f'
 alias dstopall='docker ps -q | xargs docker stop'
 alias dremoveall='docker ps -aq | xargs docker rm -fv'
 
-
 # other
 alias get-local-ip="ifconfig \
                     | grep 'inet ' \
@@ -154,8 +157,4 @@ atuin init fish --disable-up-arrow | source
 source $HOME/.config/television/shell/integration.fish
 for mode in default insert
     bind --mode $mode \ct tv_channels
-end
-
-if test -e $HOME/.config/fish/.local.fish
-    source $HOME/.config/fish/.local.fish
 end
