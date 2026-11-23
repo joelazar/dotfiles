@@ -24,7 +24,11 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/opt/homebrew/bin/llama-server</string>
+        <!-- Official ggml-org prebuilt (~/.local/opt/llama.cpp symlinks to a
+             versioned dir). Brew stable 1.0.0 (b12359) is too old for
+             Inkling 2 Mini (needs >= b12611). Switch back to
+             /opt/homebrew/bin/llama-server once brew catches up. -->
+        <string>/Users/joelazar/.local/opt/llama.cpp/llama-server</string>
 
         <!-- Router mode: discover GGUFs here (plus the HF cache). -->
         <string>--models-dir</string>
