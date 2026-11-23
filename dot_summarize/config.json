@@ -23,8 +23,10 @@
     "agy": {},
     "pi": {
       "extraArgs": [
+        "-e",
+        "/Users/joelazar/Code/joelazar/pi-claude-code/src/index.ts",
         "--provider",
-        "anthropic",
+        "claude-code",
         "--model",
         "claude-haiku-5-5"
       ]
