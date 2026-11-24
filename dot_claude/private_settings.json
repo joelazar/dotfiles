@@ -10,6 +10,7 @@
     "CLAUDE_CODE_DISABLE_FEEDBACK_SURVEY": "1",
     "CLAUDE_CODE_SUBAGENT_MODEL": "claude-haiku-5-5",
     "CLAUDE_CODE_SUBAGENT_EFFORT": "medium",
+    "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE": "1",
     "GIT_PAGER": "cat",
     "PAGER": "cat",
     "AWS_PAGER": ""
