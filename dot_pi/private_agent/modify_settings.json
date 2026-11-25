@@ -52,12 +52,17 @@ printf '%s' "$(jq -s --argjson m "$(cat <<'JSON'
   "terminal": {
     "showTerminalProgress": true
   },
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "medium",
   "defaultProvider": "claude-code",
   "defaultModel": "claude-opus-5-5",
   "outputPad": 0,
   "cacheWarming": "idle",
-  "showCacheMissNotices": true,
+  "notices": {
+    "cacheMisses": true,
+    "cacheWarming": true,
+    "compactionCosts": true,
+    "reasoningDrops": true
+  },
   "tuiMode": "regular",
   "fullscreenCopyOnSelect": false,
   "fullscreenScrollbar": "auto",
