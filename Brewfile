@@ -32,8 +32,6 @@ brew "certifi"
 brew "chezmoi"
 # Cross-platform make
 brew "cmake"
-# Linux virtual machines
-brew "lima"
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
 # Get a file from an HTTP, HTTPS or FTP server
@@ -132,10 +130,6 @@ brew "lazydocker"
 brew "lazygit"
 # Provides library functionality for FIDO U2F & FIDO 2.0, including USB
 brew "libfido2"
-# Generic machine emulator and virtualizer
-brew "qemu"
-# Additional guest agents for Lima
-brew "lima-additional-guestagents"
 # CLI for SQLite Databases with auto-completion and syntax highlighting
 brew "litecli"
 # LLM inference in C/C++
