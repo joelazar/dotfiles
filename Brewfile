@@ -80,6 +80,8 @@ brew "fzf"
 brew "gcc"
 # GitHub command-line tool
 brew "gh"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Interpreter for PostScript and PDF
@@ -206,6 +208,8 @@ brew "solo2-cli"
 brew "sox"
 # Cross-shell prompt for astronauts
 brew "starship"
+# Code review TUI with vim keybindings
+brew "tuicr"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
 # Multi-modal AI tool to extract and summarize content
@@ -364,8 +368,6 @@ cask "todoist-app"
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
-go "cmd/go"
-go "cmd/gofmt"
 cargo "cargo-audit"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
