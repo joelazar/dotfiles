@@ -167,7 +167,7 @@ The same clone script puts it in `~/Code/joelazar/skills`, and chezmoi symlinks 
 
 ## Package management 📦
 
-Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, Rust via `rustup`, UV tools, GitHub CLI plugins, and Yazi plugins.
+Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_install_packages.sh.tmpl`](.chezmoiscripts/run_once_install_packages.sh.tmpl) takes care of the rest. That script installs the Homebrew bundle, UV tools, GitHub CLI plugins, and Yazi plugins.
 
 Some notable pieces from the current setup:
 

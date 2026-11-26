@@ -81,17 +81,6 @@ install_brew_packages() {
     fi
 }
 
-install_rust() {
-    if ! cmd_exists "rustc"; then
-        echo ""
-        print_in_purple "🦀 Installing Rust using rustup"
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-        print_success "Rust installed and configured"
-    else
-        print_success "Rust already installed"
-    fi
-}
-
 setup_github_cli() {
     # Check if gh is installed and authenticated
     if cmd_exists "gh"; then
@@ -179,12 +168,6 @@ install_npm_package() {
     declare -r PACKAGENAME="$1"
 
     execute "npm install -g $PACKAGENAME" "$PACKAGENAME"
-}
-
-install_rust_package() {
-    declare -r PACKAGENAME="$1"
-
-    execute "cargo install $PACKAGENAME" "$PACKAGENAME"
 }
 
 install_pip_package() {
