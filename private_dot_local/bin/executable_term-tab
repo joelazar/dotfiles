@@ -3,7 +3,7 @@
 #
 # Usage: term-tab [-t|--title <title>] <dir> [command ...]
 #
-# Inside Rex (REX_SESSION set) it
+# Inside Rex (REX_BLOCK set) it
 # opens a Rex window in the current session, labelled with the title.
 # Otherwise it drives Ghostty via AppleScript, falling back to a new window
 # when Ghostty has no windows open.
@@ -31,13 +31,13 @@ fish_printf_ascii() {
 }
 
 in_rex() {
-    [[ -n ${REX_SESSION:-} ]] && command -v rex >/dev/null 2>&1
+    [[ -n ${REX_BLOCK:-} ]] && command -v rex >/dev/null 2>&1
 }
 
 # Create a Rex window (tab) in the current session and type the command into its shell.
 open_rex_tab() {
     local dir="$1" title="$2" command="$3"
-    local args=(window new -s "$REX_SESSION" -c "$dir" --json)
+    local args=(window new -s "$REX_BLOCK" -c "$dir" --json)
     if [[ -n $title ]]; then
         args+=("$title")
     fi

@@ -1,6 +1,6 @@
 // lazygit from inside OpenCode, ported from ~/Code/joelazar/pi-lazygit.
 // `/lazygit` or ctrl+shift+g opens lazygit in the current session's directory:
-// - inside Rex (REX_SESSION set): a full-window floating layer over this tab; quitting lazygit closes it
+// - inside Rex (REX_BLOCK set): a full-window floating layer over this tab; quitting lazygit closes it
 // - elsewhere: suspends the TUI, hands lazygit the terminal, and resumes when it exits
 // TUI-only, so it's loaded from cli.json rather than the server's plugins/ discovery.
 import { spawn, spawnSync } from "node:child_process"
@@ -27,7 +27,7 @@ function openRexLayer(cwd: string): string | null {
   }
   const result = spawnSync(
     "rex",
-    ["api", "call", "-s", process.env.REX_SESSION!, "session.new_layer", JSON.stringify(layer)],
+    ["api", "call", "-s", process.env.REX_BLOCK!, "session.new_layer", JSON.stringify(layer)],
     { encoding: "utf8" },
   )
   if (result.error) return result.error.message
@@ -69,7 +69,7 @@ export default Plugin.define({
         return
       }
       const cwd = directory()
-      if (process.env.REX_SESSION) {
+      if (process.env.REX_BLOCK) {
         const error = openRexLayer(cwd)
         if (!error) return
         context.ui.toast.show({ message: `Rex layer failed, running inline: ${error}`, variant: "warning" })
