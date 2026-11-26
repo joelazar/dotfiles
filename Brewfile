@@ -194,8 +194,6 @@ brew "ruby"
 brew "rust"
 # Intuitive find & replace CLI
 brew "sd"
-# 7-Zip is a file archiver with a high compression ratio
-brew "sevenzip"
 # CLI to update and use Solo 2 security keys
 brew "solo2-cli"
 # SOund eXchange: universal sound sample translator
@@ -224,8 +222,6 @@ brew "topgrade"
 brew "tree"
 # Parser generator tool
 brew "tree-sitter-cli"
-# Command-line unarchiving tools supporting multiple formats
-brew "unar"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Your CLI home video recorder
