@@ -1,26 +1,17 @@
-tap "agavra/tap", trusted: true
 tap "anomalyco/tap"
 tap "aws/tap", trusted: true
-tap "buo/cask-upgrade", trusted: true
-tap "darrylmorley/whatcable", trusted: true
-tap "dlvhdr/formulae"
 tap "getsentry/tools"
 tap "grafana/grafana", trusted: true
 tap "hashicorp/tap", trusted: true
 tap "jakehilborn/jakehilborn"
 tap "ksdme/tap"
-tap "macos-fuse-t/cask", trusted: true
 tap "microck/kagi", "https://github.com/Microck/homebrew-kagi"
 tap "mike-engel/jwt-cli"
-tap "mongodb/brew", trusted: true
 tap "nats-io/nats-tools", trusted: true
 tap "nikitabobko/tap", trusted: true
 tap "openai/tools", trusted: true
 tap "oven-sh/bun", trusted: true
-tap "protonpass/tap", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
-tap "steipete/tap", trusted: true
-tap "tw93/tap", trusted: { formulae: ["mole"] }
 # Code searching, linting, rewriting
 brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
