@@ -26,8 +26,6 @@ brew "bat"
 brew "blueutil"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Cargo subcommand for checking and applying updates to installed executables
-brew "cargo-update"
 # Mozilla CA bundle for Python
 brew "certifi"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -369,7 +367,6 @@ cask "wireshark-app"
 go "cmd/go"
 go "cmd/gofmt"
 cargo "cargo-audit"
-cargo "television"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
 uv "ansible-lint"
