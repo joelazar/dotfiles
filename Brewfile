@@ -12,8 +12,6 @@ tap "nikitabobko/tap", trusted: true
 tap "openai/tools", trusted: true
 tap "oven-sh/bun", trusted: true
 tap "schpet/tap", trusted: { formulae: ["linea"] }
-# Code searching, linting, rewriting
-brew "ast-grep"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Official Amazon AWS command-line interface
@@ -36,8 +34,6 @@ brew "cmake"
 brew "colima"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
-# Secure runtime for JavaScript and TypeScript
-brew "deno"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Docker CLI plugin for extended build capabilities with BuildKit
@@ -272,8 +268,6 @@ cask "nikitabobko/tap/aerospace"
 cask "agentsview"
 # Terminal interface for Antigravity agents
 cask "antigravity-cli"
-# Compact TeX distribution as alternative to the full TeX Live / MacTeX
-cask "basictex"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
 # E-books management software
