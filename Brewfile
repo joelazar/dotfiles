@@ -106,6 +106,8 @@ brew "ipython"
 brew "jc"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Port scanning utility for large networks
+brew "nmap"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Swiss-army knife of markup format conversion
@@ -142,6 +144,8 @@ brew "mise"
 brew "mole"
 # Fast Git hook manager, drop-in alternative to pre-commit
 brew "prek"
+# Display and control your Android device
+brew "scrcpy"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -264,6 +268,8 @@ cask "1password-cli"
 cask "nikitabobko/tap/aerospace"
 # Browse, search and analyse your past AI coding sessions
 cask "agentsview"
+# Android SDK component (adb, fastboot)
+cask "android-platform-tools"
 # Terminal interface for Antigravity agents
 cask "antigravity-cli"
 # Open source IDE for exploring and testing APIs
