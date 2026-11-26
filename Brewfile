@@ -154,6 +154,8 @@ brew "mermaid-cli"
 brew "mise"
 # Deep clean and optimize your Mac
 brew "mole"
+# Fast Git hook manager, drop-in alternative to pre-commit
+brew "prek"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
@@ -176,8 +178,6 @@ brew "poppler"
 brew "portaudio"
 # Object-relational database system
 brew "postgresql@18"
-# Framework for managing multi-language pre-commit hooks
-brew "pre-commit"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # Command-line YAML and XML processor that wraps jq
