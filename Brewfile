@@ -202,8 +202,6 @@ brew "television"
 brew "teller"
 # Powerful free data recovery utility
 brew "testdisk"
-# Terminal multiplexer
-brew "tmux"
 # Program that allows you to count code, quickly
 brew "tokei"
 # Upgrade all the things
