@@ -126,8 +126,6 @@ brew "kubernetes-cli"
 brew "lazydocker"
 # Simple terminal UI for git commands
 brew "lazygit"
-# Provides library functionality for FIDO U2F & FIDO 2.0, including USB
-brew "libfido2"
 # CLI for SQLite Databases with auto-completion and syntax highlighting
 brew "litecli"
 # LLM inference in C/C++
