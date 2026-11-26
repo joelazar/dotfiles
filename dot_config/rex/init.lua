@@ -11,6 +11,13 @@
 
 local terminal = "com.superlogical.terminal"
 
+-- Resume pi after a server restart. The rex-resume extension in ~/Code/joelazar/pi-extensions
+-- reports `pi --session <file>` over OSC 7577; claude/codex/opencode rules are built in.
+-- Inspect: rex block call -b "$REX_BLOCK" program_resume_records; rex config check
+rex.set("resume.trust.pi", {
+  command = { "pi", "--session", rex.match.under("~/.pi/agent/sessions") },
+})
+
 -- Type raw bytes into the focused terminal.
 rex.action({
   name = "send_text",
