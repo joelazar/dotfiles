@@ -30,10 +30,14 @@ brew "certifi"
 brew "chezmoi"
 # Cross-platform make
 brew "cmake"
+# Linux virtual machines
+brew "lima"
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+# Secure runtime for JavaScript and TypeScript
+brew "deno"
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 # Docker CLI plugin for extended build capabilities with BuildKit
@@ -74,8 +78,6 @@ brew "fzf"
 brew "gcc"
 # GitHub command-line tool
 brew "gh"
-# Open source programming language to build simple/reliable/efficient software
-brew "go"
 # OpenType text shaping engine
 brew "harfbuzz"
 # Interpreter for PostScript and PDF
@@ -88,6 +90,8 @@ brew "git-delta"
 brew "git-lfs"
 # Git extension to generate reports for standup meetings
 brew "git-standup"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 brew "googleworkspace-cli"
 # Tool for glamorous shell scripts
@@ -106,8 +110,6 @@ brew "ipython"
 brew "jc"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Port scanning utility for large networks
-brew "nmap"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Swiss-army knife of markup format conversion
@@ -142,14 +144,12 @@ brew "mermaid-cli"
 brew "mise"
 # Deep clean and optimize your Mac
 brew "mole"
-# Fast Git hook manager, drop-in alternative to pre-commit
-brew "prek"
-# Display and control your Android device
-brew "scrcpy"
 # Incremental parsing library
 brew "tree-sitter"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
+# Port scanning utility for large networks
+brew "nmap"
 # Libraries for security-enabled client and server applications
 brew "nss"
 # Drop-in replacement for Terraform. Infrastructure as Code Tool
@@ -166,6 +166,8 @@ brew "poppler"
 brew "portaudio"
 # Object-relational database system
 brew "postgresql@18"
+# Fast Git hook manager written in Rust, drop-in alternative to pre-commit
+brew "prek"
 # Easily download, build, install, upgrade, and uninstall Python packages
 brew "python-setuptools"
 # Command-line YAML and XML processor that wraps jq
@@ -186,6 +188,8 @@ brew "rtk"
 brew "ruby"
 # Safe, concurrent, practical language
 brew "rust"
+# Display and control your Android device
+brew "scrcpy"
 # Intuitive find & replace CLI
 brew "sd"
 # CLI to update and use Solo 2 security keys
@@ -194,8 +198,6 @@ brew "solo2-cli"
 brew "sox"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Code review TUI with vim keybindings
-brew "tuicr"
 # Feature-rich command-line audio/video downloader
 brew "yt-dlp"
 # Multi-modal AI tool to extract and summarize content
@@ -214,6 +216,8 @@ brew "topgrade"
 brew "tree"
 # Parser generator tool
 brew "tree-sitter-cli"
+# Code review TUI with vim keybindings
+brew "tuicr"
 # Extremely fast Python package installer and resolver, written in Rust
 brew "uv"
 # Your CLI home video recorder
@@ -268,7 +272,7 @@ cask "1password-cli"
 cask "nikitabobko/tap/aerospace"
 # Browse, search and analyse your past AI coding sessions
 cask "agentsview"
-# Android SDK component (adb, fastboot)
+# Android SDK component
 cask "android-platform-tools"
 # Terminal interface for Antigravity agents
 cask "antigravity-cli"
@@ -308,8 +312,6 @@ cask "helium-browser"
 cask "anomalyco/tap/hex", trusted: true
 # Free and open-source media player
 cask "iina"
-# Vector graphics editor
-cask "inkscape"
 # Keyboard customiser
 cask "karabiner-elements"
 # App to manage software development and track bugs
@@ -350,6 +352,8 @@ cask "todoist-app"
 cask "whatcable"
 # Network protocol analyzer
 cask "wireshark-app"
+go "mvdan.cc/gofumpt"
+go "github.com/nametake/golangci-lint-langserver"
 cargo "cargo-audit"
 uv "ansible"
 uv "ansible-core", with: ["ansible", "netaddr"]
