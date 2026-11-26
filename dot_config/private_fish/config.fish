@@ -37,16 +37,11 @@ set -gx GOBIN $GOPATH/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/opt/ruby/bin
-fish_add_path /opt/homebrew/opt/openjdk/bin/
 
-fish_add_path $HOME/.yarn/bin
-fish_add_path $HOME/.node/bin
-fish_add_path $HOME/.bun/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $GOBIN
 fish_add_path $HOME/.cargo/bin
 fish_add_path $HOME/.local/share/nvim/mason/bin
-fish_add_path $HOME/.modular/bin
 fish_add_path /Applications/Obsidian.app/Contents/MacOS
 
 # FZF options
@@ -89,7 +84,6 @@ set -gx LC_COLLATE C
 set -gx _ZO_ECHO 1
 set -gx _ZO_EXCLUDE_DIRS "$HOME/.cache:$HOME/.local/share/nvim/lazy"
 
-alias :q="exit"
 alias c="clear"
 alias cat="bat"
 alias chgrp='chgrp --preserve-root'
@@ -110,45 +104,19 @@ alias ls='eza --color=auto --icons=auto --group-directories-first'
 alias lzd='lazydocker'
 alias mkdir='mkdir -p -v'
 alias ping='ping -c 5'
-alias psql="psql-18"
 alias python='python3'
-alias q="exit"
-alias rmf='/bin/rm'
 alias v='nvim'
 alias vc='nvim --clean'
-alias vi='nvim'
 alias vim='nvim'
 
 # infra
 alias k='kubectl'
-alias kd='kubectl describe'
-alias kdd='kubectl describe deployment'
-alias kdp='kubectl describe pod'
-alias kei='kubectl exec -it'
-alias kg='kubectl get'
-alias kgall='kubectl get --all-namespaces all'
-alias kgd='kubectl get deployments'
-alias kgp='kubectl get pod'
-alias kgsvc='kubectl get service'
-alias kl='kubectl logs --all-containers=true'
-alias krm='kubectl delete'
 alias tf='tofu'
 
 # docker
 alias dcleannone='docker image prune -f'
 alias dstopall='docker ps -q | xargs docker stop'
 alias dremoveall='docker ps -aq | xargs docker rm -fv'
-
-# other
-alias get-local-ip="ifconfig \
-                    | grep 'inet ' \
-                    | grep -v '127.0.0.1' \
-                    | awk '{print $2}'"
-alias get-ext-ip="http -b ipinfo.io/ip"
-alias urldecode='python3 -c "import sys, urllib.parse as ul; \
-    print(ul.unquote_plus(sys.argv[1]))"'
-alias urlencode='python3 -c "import sys, urllib.parse as ul; \
-    print (ul.quote_plus(sys.argv[1]))"'
 
 starship init fish | source
 zoxide init fish | source
