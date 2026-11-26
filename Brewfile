@@ -96,8 +96,6 @@ brew "git-standup"
 brew "googleworkspace-cli"
 # Tool for glamorous shell scripts
 brew "gum"
-# Kubernetes package manager
-brew "helm"
 # Improved top (interactive process viewer)
 brew "htop"
 # Configurable static site generator
@@ -164,8 +162,6 @@ brew "ouch"
 brew "pkgconf"
 # Paste PNG into files
 brew "pngpaste"
-# Fast, disk space efficient package manager
-brew "pnpm"
 # PDF rendering library (based on the xpdf-3.0 code base)
 brew "poppler"
 # Cross-platform library for audio I/O
