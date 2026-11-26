@@ -171,7 +171,7 @@ Packages are listed in the [`Brewfile`](Brewfile). On first apply, [`run_once_in
 
 Some notable pieces from the current setup:
 
-- Node globals installed by Homebrew bundle `npm` entries: Pi, `gondolin`, `ccusage`, `npm-check`, and `obsidian-headless`
+- Node globals installed by Homebrew bundle `npm` entries: Pi, `gondolin`, `ccusage`, `defuddle`, `knap`, `npm-check`, and `obsidian-headless`
   - `.chezmoiscripts/run_onchange_rebuild-node-native-modules.sh.tmpl` rebuilds native addons (e.g. `better-sqlite3`) of global npm packages whenever the Node ABI changes
 - UV tools installed with extra dependencies: `ansible-core` (with `ansible` and `netaddr`), `pgcli` (with Catppuccin styling and `psycopg[binary]`), and `pylatexenc` for inline LaTeX rendering in Neovim
 - GitHub CLI plugin `gh-dash`
