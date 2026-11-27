@@ -48,7 +48,6 @@ printf '%s' "$(jq -s --argjson m "$(cat <<'JSON'
   "warnings": {
     "anthropicExtraUsage": false
   },
-  "enableInstallTelemetry": true,
   "terminal": {
     "showTerminalProgress": true
   },
@@ -75,4 +74,4 @@ printf '%s' "$(jq -s --argjson m "$(cat <<'JSON'
   ]
 }
 JSON
-)" '(.[0] // {}) * $m')"
+)" '(.[0] // {}) * $m | del(.enableInstallTelemetry)')"

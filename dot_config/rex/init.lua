@@ -11,13 +11,13 @@
 
 local terminal = "com.superlogical.terminal"
 
--- Resume pi after a server restart. The rex-resume extension in ~/Code/joelazar/pi-extensions
--- reports `pi --session <file>` over OSC 7577; claude/codex/opencode rules are built in.
--- Stopgap: drop this rule (and the extension) once pi > 1.6.1 and a Rex server with the
--- built-in pi rule are installed (rex config check lists "pi (built in)").
+-- Resume pi after a server restart. pi >= 1.7 reports `pi --session <uuid>` over OSC 7577
+-- (plus any restriction flags it was started with; each combination needs its own rule).
+-- claude/codex/opencode rules are built in; drop this rule once `rex config check` lists
+-- "pi (built in)".
 -- Inspect: rex block call -b "$REX_BLOCK" program_resume_records; rex config check
 rex.set("resume.trust.pi", {
-  command = { "pi", "--session", rex.match.under("~/.pi/agent/sessions") },
+  command = { "pi", "--session", rex.match.uuid },
 })
 
 -- Type raw bytes into the focused terminal.
