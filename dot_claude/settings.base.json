@@ -269,8 +269,8 @@
   "enabledPlugins": {
     "cc-plugin-you-should-know@builtin": true,
     "cowork-plugin-management@synced": false,
-    "ponytail@ponytail": true,
-    "i-have-adhd@i-have-adhd": true
+    "ponytail@ponytail": false,
+    "i-have-adhd@i-have-adhd": false
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {

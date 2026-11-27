@@ -1,0 +1,11 @@
+#!/bin/bash
+# Renders ~/.claude/settings.json from settings.base.json, keeping local-only
+# keys (deniedMcpServers) from the live file so they stay out of the repo.
+set -euo pipefail
+
+current=$(cat)
+[ -n "$current" ] || current='{}'
+
+jq --argjson cur "$current" \
+  '. + ($cur | with_entries(select(.key == "deniedMcpServers")))' \
+  "$CHEZMOI_SOURCE_DIR/dot_claude/settings.base.json"

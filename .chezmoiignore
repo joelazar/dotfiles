@@ -18,3 +18,5 @@ bootstrap.sh
 .pi/agent/pi-fff/
 .git
 .editorconfig
+
+.claude/settings.base.json
