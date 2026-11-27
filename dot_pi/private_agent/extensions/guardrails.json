@@ -17,7 +17,7 @@
         "name": "Credentials and secrets",
         "description": "Migrated from path-policy.json blockedPaths",
         "protection": "noAccess",
-        "onlyIfExists": true,
+        "onlyIfExists": false,
         "blockMessage": "Accessing {file} is not allowed: it may contain secrets or credentials. Explain why you need it and ask the user to act if changes are required.",
         "patterns": [
           {
@@ -172,6 +172,21 @@
           },
           {
             "pattern": "~/.gpg-agent.conf"
+          },
+          {
+            "pattern": "~/.local/share/fish/fish_history"
+          },
+          {
+            "pattern": "~/.zsh_history"
+          },
+          {
+            "pattern": "~/.bash_history"
+          },
+          {
+            "pattern": "~/.local/share/atuin/**"
+          },
+          {
+            "pattern": "~/.docker/config.json"
           }
         ],
         "allowedPatterns": [
@@ -251,6 +266,16 @@
         "pattern": ">\\s*/dev/sd[a-z]",
         "description": "write to raw block device",
         "regex": true
+      },
+      {
+        "pattern": "(^|[;&|(\\x60'\"\\n]|\\$\\()\\s*(\\w+=\\S*\\s+)*((sudo|env|exec|command|time|nohup)\\s+)*(\\S*/)?(ssh|scp|sftp|mosh|autossh)(\\s|$)",
+        "description": "remote shell / file transfer (ssh, scp, sftp, mosh)",
+        "regex": true
+      },
+      {
+        "pattern": "(^|[;&|(\\x60'\"\\n]|\\$\\()\\s*(\\w+=\\S*\\s+)*((sudo|env|exec|command|time|nohup)\\s+)*(\\S*/)?rsync\\s[^;&|\\n]*?(^|\\s)[\\w.@-]+:",
+        "description": "rsync to/from a remote host",
+        "regex": true
       }
     ],
     "autoDenyPatterns": [
@@ -265,6 +290,31 @@
         "description": "catastrophic rm wildcard target",
         "regex": true,
         "terminate": true
+      },
+      {
+        "pattern": "\\b(ssh|scp|rsync|sftp)\\b[\\s\\S]*(^|[\\s'\"/=:*])\\.env(rc)?(?!\\.(example|sample|template|test)\\b)(?=$|[\\s'\"./*;&|)])",
+        "description": "reading .env files on a remote host is not allowed: they may contain secrets. Explain why you need it and ask the user to act instead.",
+        "regex": true
+      },
+      {
+        "pattern": "(^|[;&|(\\x60'\"\\s])(echo|printf)\\b(?![^\\n;&|]*\\|(\\s*(shasum|sha\\d+sum|md5sum|md5|wc)\\b|[^\\n;&]*--password-stdin))[^\\n;&|\\[]*\\$\\{?(?![#!])\\w*(TOKEN|SECRET|PASSW(OR)?D|PASSPHRASE|API_?KEY|PRIVATE_KEY|ACCESS_KEY|CREDENTIALS?|DATABASE_URL|DB_URL|REDIS_URL|DSN|CONNECTION_STRING)\\w*(?!\\w|:?\\+)",
+        "description": "printing a secret environment variable. Check presence with ${VAR:+set} or length with ${#VAR} instead, and pass it to commands without echoing it.",
+        "regex": true
+      },
+      {
+        "pattern": "(^|[;&|(\\x60'\"\\s])printenv\\s+\\w*(TOKEN|SECRET|PASSW(OR)?D|PASSPHRASE|API_?KEY|PRIVATE_KEY|ACCESS_KEY|CREDENTIALS?|DATABASE_URL|DB_URL|REDIS_URL|DSN|CONNECTION_STRING)\\w*(?!\\w)(?!\\s*\\|\\s*(shasum|sha\\d+sum|md5sum|md5|wc)\\b)",
+        "description": "printing a secret environment variable (locally or via exec/ssh). Pipe to wc -c if you only need to know it is set.",
+        "regex": true
+      },
+      {
+        "pattern": "(^|[;&(\\x60\\n]|\\|\\s|\\s)(printenv|env)\\s*($|[;&)\\x60'\"\\n]|\\|(?!\\s*(cut\\s+-d\\s*['\"]?=['\"]?\\s+-f\\s*1|sed\\s+(-E\\s+)?['\"]?s/=\\.?\\*|(rg|grep)\\s+['\"]?\\^PI_['\"]?(\\s|$))))",
+        "description": "dumping the whole environment exposes secrets. List names only with `env | cut -d= -f1`, or check one var with ${VAR:+set}.",
+        "regex": true
+      },
+      {
+        "pattern": "/proc/[^/\\n]*/environ",
+        "description": "reading a process environment (/proc/*/environ) exposes secrets.",
+        "regex": true
       }
     ],
     "allowedPatterns": [
