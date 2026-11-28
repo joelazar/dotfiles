@@ -205,10 +205,13 @@ rex.bind("cmd+ctrl+k", "pane.focus.up")
 rex.bind("cmd+ctrl+l", "pane.focus.right")
 
 -- Scroll by half a page (cmd+pageup/pagedown: full page, cmd+home/end: top/bottom).
--- Line scroll: client.scroll.lines { count = n }. Negative counts scroll up.
+-- Negative counts scroll up.
 -- Replaces Rex's default shift+cmd+up = Split Pane Up.
 rex.bind("shift+cmd+up", "client.scroll.pages", { count = -0.5 })
 rex.bind("shift+cmd+down", "client.scroll.pages", { count = 0.5 })
+-- One line at a time. Replaces Rex's default cmd+up/down = Jump to Previous/Next Prompt.
+rex.bind("cmd+up", "client.scroll.lines", { count = -1 })
+rex.bind("cmd+down", "client.scroll.lines", { count = 1 })
 
 -- resize mode: cmd+ctrl+r, then h/j/k/l; escape leaves
 rex.mode("resize", { exclusive = true })
